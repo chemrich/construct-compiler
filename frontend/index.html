@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construct Compiler</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e1e4e8; }
+        :root {
+            --bg: #0f1117; --bg-card: #161b22; --bg-input: #1c2129;
+            --border: #30363d; --text: #e1e4e8; --text-muted: #8b949e;
+            --accent: #58a6ff; --accent-green: #3fb950; --accent-orange: #d29922;
+            --accent-red: #f85149; --accent-purple: #bc8cff;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+const { useState, useCallback, useMemo, useRef, useEffect } = React;
+
+// --- Color palette for part types ---
+const PART_COLORS = {
+    Promoter: '#3fb950', RBS: '#58a6ff', CDS: '#d29922',
+    PurificationTag: '#bc8cff', SolubilityTag: '#f778ba', CleavageSite: '#f85149',
+    Linker: '#8b949e', Terminator: '#8a5c3a', Spacer: '#484f58', Backbone: '#30363d',
+};
+
+const PART_LABELS = {
+    Promoter: 'P', RBS: 'R', CDS: 'CDS', PurificationTag: 'Tag',
+    SolubilityTag: 'Sol', CleavageSite: '/', Linker: '~', Terminator: 'T', Spacer: '...',
+};
+
+// --- Circular plasmid map (SVG) ---
+function PlasmidMap({ parts, constructName, insertLength }) {
+    const size = 400, cx = size / 2, cy = size / 2, r = 140;
+    const totalLen = parts.reduce((s, p) => s + (p.length_bp || 50), 0);
+    if (totalLen === 0) return null;
+
+    let cumulative = 0;
+    const arcs = parts.map((part, i) => {
+        const len = part.length_bp || 50;
+        const startAngle = (cumulative / totalLen) * 2 * Math.PI - Math.PI / 2;
+        cumulative += len;
+        const endAngle = (cumulative / totalLen) * 2 * Math.PI - Math.PI / 2;
+        const midAngle = (startAngle + endAngle) / 2;
+
+        const x1 = cx + r * Math.cos(startAngle);
+        const y1 = cy + r * Math.sin(startAngle);
+        const x2 = cx + r * Math.cos(endAngle);
+        const y2 = cy + r * Math.sin(endAngle);
+        const largeArc = (endAngle - startAngle) > Math.PI ? 1 : 0;
+
+        const labelR = r + 28;
+        const lx = cx + labelR * Math.cos(midAngle);
+        const ly = cy + labelR * Math.sin(midAngle);
+
+        const tickR1 = r + 2, tickR2 = r + 10;
+        const tx1 = cx + tickR1 * Math.cos(midAngle);
+        const ty1 = cy + tickR1 * Math.sin(midAngle);
+        const tx2 = cx + tickR2 * Math.cos(midAngle);
+        const ty2 = cy + tickR2 * Math.sin(midAngle);
+
+        return { part, x1, y1, x2, y2, largeArc, lx, ly, tx1, ty1, tx2, ty2, midAngle, startAngle, endAngle };
+    });
+
+    return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display: 'block', margin: '0 auto' }}>
+            {/* Background circle */}
+            <circle cx={cx} cy={cy} r={r} fill="none" stroke="#30363d" strokeWidth="2" />
+
+            {/* Part arcs */}
+            {arcs.map((a, i) => (
+                <g key={i}>
+                    <path
+                        d={`M ${a.x1} ${a.y1} A ${r} ${r} 0 ${a.largeArc} 1 ${a.x2} ${a.y2}`}
+                        fill="none" stroke={a.part.color || PART_COLORS[a.part.type] || '#666'}
+                        strokeWidth="14" strokeLinecap="butt"
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <title>{`${a.part.name} (${a.part.type}, ${a.part.length_bp || '?'} bp)`}</title>
+                    </path>
+                    {/* Tick marks */}
+                    <line x1={a.tx1} y1={a.ty1} x2={a.tx2} y2={a.ty2}
+                          stroke="#484f58" strokeWidth="1" />
+                    {/* Labels for bigger parts */}
+                    {(a.part.length_bp || 0) > totalLen * 0.04 && (
+                        <text x={a.lx} y={a.ly} textAnchor="middle" dominantBaseline="central"
+                              fill="#e1e4e8" fontSize="10" fontWeight="500">
+                            {a.part.name.length > 10 ? a.part.name.slice(0, 9) + '..' : a.part.name}
+                        </text>
+                    )}
+                </g>
+            ))}
+
+            {/* Center text */}
+            <text x={cx} y={cy - 14} textAnchor="middle" fill="#e1e4e8" fontSize="13" fontWeight="600">
+                {constructName ? (constructName.length > 22 ? constructName.slice(0, 20) + '..' : constructName) : 'Construct'}
+            </text>
+            <text x={cx} y={cy + 6} textAnchor="middle" fill="#8b949e" fontSize="11">
+                {insertLength ? `${insertLength.toLocaleString()} bp` : ''}
+            </text>
+            <text x={cx} y={cy + 22} textAnchor="middle" fill="#484f58" fontSize="10">
+                {parts.length} parts
+            </text>
+        </svg>
+    );
+}
+
+// --- Cost comparison bar chart ---
+function CostChart({ strategies }) {
+    if (!strategies.length) return null;
+    const maxCost = Math.max(...strategies.map(s => s.total_cost));
+
+    return (
+        <div style={{ marginTop: 16 }}>
+            {strategies.map((s, i) => {
+                const pct = (s.total_cost / maxCost) * 100;
+                const isRec = s.recommended;
+                return (
+                    <div key={i} style={{ marginBottom: 14 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                            <span style={{ fontSize: 13, fontWeight: isRec ? 700 : 400, color: isRec ? '#3fb950' : '#e1e4e8' }}>
+                                {s.name} {isRec && ' (recommended)'}
+                            </span>
+                            <span style={{ fontSize: 13, fontWeight: 600, color: isRec ? '#3fb950' : '#e1e4e8' }}>
+                                ${s.total_cost.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            </span>
+                        </div>
+                        <div style={{ height: 24, background: '#1c2129', borderRadius: 4, overflow: 'hidden', display: 'flex' }}>
+                            <div style={{ width: `${(s.synthesis_cost / maxCost) * 100}%`, background: '#d29922', transition: 'width .4s' }}
+                                 title={`Synthesis: $${s.synthesis_cost.toFixed(0)}`} />
+                            <div style={{ width: `${(s.researcher_cost / maxCost) * 100}%`, background: '#58a6ff', transition: 'width .4s' }}
+                                 title={`Researcher: $${s.researcher_cost.toFixed(0)} (${s.researcher_hours}h)`} />
+                            <div style={{ width: `${(s.reagent_cost / maxCost) * 100}%`, background: '#bc8cff', transition: 'width .4s' }}
+                                 title={`Reagents: $${s.reagent_cost.toFixed(0)}`} />
+                            <div style={{ width: `${(s.risk_surcharge / maxCost) * 100}%`, background: '#f85149', transition: 'width .4s' }}
+                                 title={`Risk: $${s.risk_surcharge.toFixed(0)}`} />
+                        </div>
+                        <div style={{ display: 'flex', gap: 6, marginTop: 3, fontSize: 11, color: '#8b949e' }}>
+                            <span>{s.wall_clock_days[0]}-{s.wall_clock_days[1]} days</span>
+                            <span>|</span>
+                            <span>{s.num_fragments} fragment{s.num_fragments > 1 ? 's' : ''}</span>
+                            <span>|</span>
+                            <span>{s.researcher_hours}h hands-on</span>
+                        </div>
+                    </div>
+                );
+            })}
+            <div style={{ display: 'flex', gap: 12, fontSize: 11, color: '#8b949e', marginTop: 8 }}>
+                <span><span style={{ display: 'inline-block', width: 10, height: 10, background: '#d29922', borderRadius: 2, marginRight: 4 }}/>Synthesis</span>
+                <span><span style={{ display: 'inline-block', width: 10, height: 10, background: '#58a6ff', borderRadius: 2, marginRight: 4 }}/>Researcher</span>
+                <span><span style={{ display: 'inline-block', width: 10, height: 10, background: '#bc8cff', borderRadius: 2, marginRight: 4 }}/>Reagents</span>
+                <span><span style={{ display: 'inline-block', width: 10, height: 10, background: '#f85149', borderRadius: 2, marginRight: 4 }}/>Risk</span>
+            </div>
+        </div>
+    );
+}
+
+// --- Cistron builder row ---
+function CistronRow({ cistron, index, onChange, onRemove }) {
+    const update = (field, value) => onChange(index, { ...cistron, [field]: value });
+
+    return (
+        <div style={{ background: '#1c2129', borderRadius: 8, padding: 14, marginBottom: 10, border: '1px solid #30363d' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                <span style={{ fontSize: 13, fontWeight: 600, color: '#58a6ff' }}>Cistron {index + 1}: {cistron.label || 'unnamed'}</span>
+                <button onClick={() => onRemove(index)}
+                        style={{ background: 'none', border: 'none', color: '#f85149', cursor: 'pointer', fontSize: 18 }}>&times;</button>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>Label</span>
+                    <input style={inputStyle} value={cistron.label} onChange={e => update('label', e.target.value)} placeholder="target" />
+                </label>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>Expression</span>
+                    <select style={inputStyle} value={cistron.expression} onChange={e => update('expression', e.target.value)}>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                        <option value="very_low">Very low</option>
+                    </select>
+                </label>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>Fused</span>
+                    <select style={inputStyle} value={cistron.fused ? 'yes' : 'no'} onChange={e => update('fused', e.target.value === 'yes')}>
+                        <option value="yes">Yes (fusion)</option>
+                        <option value="no">No (independent)</option>
+                    </select>
+                </label>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>Gene ID</span>
+                    <input style={inputStyle} value={cistron.geneId} onChange={e => update('geneId', e.target.value)} placeholder="mEGFP" />
+                </label>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>Source</span>
+                    <select style={inputStyle} value={cistron.geneSource} onChange={e => update('geneSource', e.target.value)}>
+                        <option value="fpbase">FPbase</option>
+                        <option value="uniprot">UniProt</option>
+                        <option value="local">Local</option>
+                    </select>
+                </label>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginTop: 8 }}>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>N-term tag</span>
+                    <select style={inputStyle} value={cistron.nTag} onChange={e => update('nTag', e.target.value)}>
+                        <option value="">None</option>
+                        <option value="6xHis">6xHis</option>
+                        <option value="8xHis">8xHis</option>
+                        <option value="Strep-II">Strep-II</option>
+                        <option value="Twin-Strep">Twin-Strep</option>
+                        <option value="FLAG">FLAG</option>
+                    </select>
+                </label>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>Cleavage site</span>
+                    <select style={inputStyle} value={cistron.cleavage} onChange={e => update('cleavage', e.target.value)}>
+                        <option value="">None</option>
+                        <option value="TEV">TEV</option>
+                        <option value="3C">3C (PreScission)</option>
+                        <option value="Thrombin">Thrombin</option>
+                        <option value="Factor_Xa">Factor Xa</option>
+                    </select>
+                </label>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>Solubility tag</span>
+                    <select style={inputStyle} value={cistron.solTag} onChange={e => update('solTag', e.target.value)}>
+                        <option value="">None</option>
+                        <option value="MBP">MBP</option>
+                        <option value="GST">GST</option>
+                        <option value="SUMO">SUMO</option>
+                        <option value="Trx">Trx</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+    );
+}
+
+// --- Styles ---
+const labelStyle = { display: 'flex', flexDirection: 'column', gap: 3 };
+const labelTextStyle = { fontSize: 11, color: '#8b949e', textTransform: 'uppercase', letterSpacing: '0.5px' };
+const inputStyle = {
+    background: '#0f1117', border: '1px solid #30363d', borderRadius: 6,
+    color: '#e1e4e8', padding: '6px 10px', fontSize: 13, outline: 'none',
+};
+const btnStyle = {
+    padding: '8px 16px', borderRadius: 6, border: 'none', cursor: 'pointer',
+    fontSize: 13, fontWeight: 600, transition: 'all .15s',
+};
+
+// --- Main App ---
+function App() {
+    const [constructName, setConstructName] = useState('My-Construct');
+    const [host, setHost] = useState('e_coli_bl21');
+    const [promoter, setPromoter] = useState('T7lac');
+    const [terminator, setTerminator] = useState('rrnB_T1');
+    const [resistance, setResistance] = useState('kanamycin');
+    const [ori, setOri] = useState('pBR322');
+    const [enzyme, setEnzyme] = useState('BsaI');
+    const [researcherRate, setResearcherRate] = useState(150);
+    const [overhead, setOverhead] = useState(1.5);
+
+    const [cistrons, setCistrons] = useState([
+        { label: 'target', expression: 'high', fused: true, geneId: 'mEGFP', geneSource: 'fpbase',
+          nTag: '6xHis', cleavage: 'TEV', solTag: 'MBP' },
+    ]);
+
+    const [result, setResult] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [activeTab, setActiveTab] = useState('map');
+
+    const addCistron = () => {
+        setCistrons([...cistrons, {
+            label: `cistron_${cistrons.length + 1}`, expression: 'low', fused: false,
+            geneId: 'mScarlet', geneSource: 'fpbase', nTag: '', cleavage: '', solTag: '',
+        }]);
+    };
+
+    const updateCistron = (index, updated) => {
+        const next = [...cistrons];
+        next[index] = updated;
+        setCistrons(next);
+    };
+
+    const removeCistron = (index) => {
+        setCistrons(cistrons.filter((_, i) => i !== index));
+    };
+
+    const buildSpec = () => {
+        const cassette = [{ promoter }];
+
+        cistrons.forEach((c, i) => {
+            if (i > 0) cassette.push({ spacer: 30 });
+
+            const chain = [];
+            if (c.nTag) chain.push({ tag: c.nTag });
+            if (c.cleavage) chain.push({ cleavage_site: c.cleavage });
+            if (c.solTag) chain.push({ solubility_tag: c.solTag });
+            chain.push({ gene: { id: c.geneId, source: c.geneSource } });
+
+            cassette.push({
+                cistron: {
+                    label: c.label,
+                    expression: c.expression,
+                    fused: c.fused,
+                    ...(chain.length > 1 ? { chain } : { gene: { id: c.geneId, source: c.geneSource } }),
+                }
+            });
+        });
+
+        cassette.push({ terminator });
+
+        return {
+            construct: {
+                name: constructName,
+                host,
+                backbone: { resistance, ori, source: 'addgene' },
+                cassette,
+                constraints: { assembly: 'golden_gate', enzyme, codon_optimization: 'local' },
+                synthesis: { vendor: 'twist' },
+            }
+        };
+    };
+
+    const handleCompile = async () => {
+        setLoading(true);
+        setError('');
+        setResult(null);
+
+        const spec = buildSpec();
+
+        try {
+            const resp = await fetch('/api/compile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    spec,
+                    researcher_rate: researcherRate,
+                    overhead_multiplier: overhead,
+                }),
+            });
+            const data = await resp.json();
+            if (data.success) {
+                setResult(data);
+                setActiveTab('map');
+            } else {
+                setError(data.errors?.join('; ') || 'Compilation failed');
+            }
+        } catch (e) {
+            setError(`Server error: ${e.message}. Is the server running? (python -m construct_compiler.server)`);
+        }
+        setLoading(false);
+    };
+
+    const downloadGenbank = () => {
+        if (!result?.genbank) return;
+        const blob = new Blob([result.genbank], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = `${result.construct_name || 'construct'}.gb`;
+        a.click(); URL.revokeObjectURL(url);
+    };
+
+    const downloadYaml = () => {
+        const spec = buildSpec();
+        // Simple YAML serialization (good enough for this structure)
+        const yaml = JSON.stringify(spec, null, 2)
+            .replace(/"/g, '').replace(/\{/g, '').replace(/\}/g, '')
+            .replace(/\[/g, '').replace(/\]/g, '').replace(/,$/gm, '');
+        const blob = new Blob([JSON.stringify(spec, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = `${constructName || 'construct'}_spec.json`;
+        a.click(); URL.revokeObjectURL(url);
+    };
+
+    return (
+        <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+            {/* Header */}
+            <header style={{ background: '#161b22', borderBottom: '1px solid #30363d', padding: '12px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ fontSize: 20 }}>&#x1F9EC;</span>
+                    <span style={{ fontSize: 16, fontWeight: 700, color: '#e1e4e8' }}>Construct Compiler</span>
+                    <span style={{ fontSize: 12, color: '#8b949e', marginLeft: 4 }}>v0.1.0</span>
+                </div>
+                <div style={{ display: 'flex', gap: 8 }}>
+                    <button onClick={downloadYaml} style={{ ...btnStyle, background: '#21262d', color: '#e1e4e8' }}>
+                        Export Spec
+                    </button>
+                    {result && (
+                        <button onClick={downloadGenbank} style={{ ...btnStyle, background: '#238636', color: '#fff' }}>
+                            Download GenBank
+                        </button>
+                    )}
+                </div>
+            </header>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '420px 1fr', minHeight: 'calc(100vh - 49px)' }}>
+                {/* Left panel: construct builder */}
+                <div style={{ borderRight: '1px solid #30363d', padding: 20, overflowY: 'auto', maxHeight: 'calc(100vh - 49px)' }}>
+                    <h3 style={{ fontSize: 14, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Construct</h3>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+                        <label style={{ ...labelStyle, gridColumn: '1 / -1' }}>
+                            <span style={labelTextStyle}>Name</span>
+                            <input style={inputStyle} value={constructName} onChange={e => setConstructName(e.target.value)} />
+                        </label>
+                        <label style={labelStyle}>
+                            <span style={labelTextStyle}>Host</span>
+                            <select style={inputStyle} value={host} onChange={e => setHost(e.target.value)}>
+                                <option value="e_coli_bl21">E. coli BL21(DE3)</option>
+                                <option value="e_coli">E. coli K-12</option>
+                                <option value="s_cerevisiae">S. cerevisiae</option>
+                            </select>
+                        </label>
+                        <label style={labelStyle}>
+                            <span style={labelTextStyle}>Promoter</span>
+                            <select style={inputStyle} value={promoter} onChange={e => setPromoter(e.target.value)}>
+                                <option value="T7lac">T7lac (IPTG)</option>
+                                <option value="T7">T7</option>
+                                <option value="tac">tac (IPTG)</option>
+                                <option value="araBAD">araBAD (arabinose)</option>
+                                <option value="lacUV5">lacUV5 (IPTG)</option>
+                                <option value="J23100">J23100 (constitutive, strong)</option>
+                                <option value="J23106">J23106 (constitutive, medium)</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 16 }}>
+                        <label style={labelStyle}>
+                            <span style={labelTextStyle}>Resistance</span>
+                            <select style={inputStyle} value={resistance} onChange={e => setResistance(e.target.value)}>
+                                <option value="kanamycin">Kanamycin</option>
+                                <option value="ampicillin">Ampicillin</option>
+                                <option value="chloramphenicol">Chloramphenicol</option>
+                                <option value="spectinomycin">Spectinomycin</option>
+                            </select>
+                        </label>
+                        <label style={labelStyle}>
+                            <span style={labelTextStyle}>Origin</span>
+                            <select style={inputStyle} value={ori} onChange={e => setOri(e.target.value)}>
+                                <option value="pBR322">pBR322</option>
+                                <option value="p15A">p15A</option>
+                                <option value="ColA">ColA</option>
+                                <option value="CloDF13">CloDF13</option>
+                                <option value="SC101">SC101</option>
+                            </select>
+                        </label>
+                        <label style={labelStyle}>
+                            <span style={labelTextStyle}>Terminator</span>
+                            <select style={inputStyle} value={terminator} onChange={e => setTerminator(e.target.value)}>
+                                <option value="rrnB_T1">rrnB T1</option>
+                                <option value="T7term">T7 terminator</option>
+                                <option value="BBa_B0015">BBa_B0015 (double)</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <h3 style={{ fontSize: 14, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10 }}>Cistrons</h3>
+
+                    {cistrons.map((c, i) => (
+                        <CistronRow key={i} cistron={c} index={i} onChange={updateCistron} onRemove={removeCistron} />
+                    ))}
+
+                    <button onClick={addCistron}
+                            style={{ ...btnStyle, background: '#21262d', color: '#58a6ff', width: '100%', marginBottom: 16, border: '1px dashed #30363d' }}>
+                        + Add Cistron (reporter / additional ORF)
+                    </button>
+
+                    <h3 style={{ fontSize: 14, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10 }}>Cost Parameters</h3>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 16 }}>
+                        <label style={labelStyle}>
+                            <span style={labelTextStyle}>$/hr researcher</span>
+                            <input style={inputStyle} type="number" value={researcherRate} onChange={e => setResearcherRate(+e.target.value)} />
+                        </label>
+                        <label style={labelStyle}>
+                            <span style={labelTextStyle}>Overhead</span>
+                            <input style={inputStyle} type="number" step="0.1" value={overhead} onChange={e => setOverhead(+e.target.value)} />
+                        </label>
+                        <label style={labelStyle}>
+                            <span style={labelTextStyle}>Enzyme</span>
+                            <select style={inputStyle} value={enzyme} onChange={e => setEnzyme(e.target.value)}>
+                                <option value="BsaI">BsaI</option>
+                                <option value="BpiI">BpiI</option>
+                                <option value="BbsI">BbsI</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <button onClick={handleCompile} disabled={loading}
+                            style={{ ...btnStyle, background: loading ? '#21262d' : '#238636', color: '#fff', width: '100%', padding: '12px 16px', fontSize: 15 }}>
+                        {loading ? 'Compiling...' : 'Compile Construct'}
+                    </button>
+
+                    {error && (
+                        <div style={{ marginTop: 12, padding: 10, background: '#2d1418', border: '1px solid #f85149', borderRadius: 6, color: '#f85149', fontSize: 12 }}>
+                            {error}
+                        </div>
+                    )}
+                </div>
+
+                {/* Right panel: results */}
+                <div style={{ padding: 20, overflowY: 'auto', maxHeight: 'calc(100vh - 49px)' }}>
+                    {!result ? (
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#484f58' }}>
+                            <div style={{ textAlign: 'center' }}>
+                                <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.3 }}>&#x1F9EC;</div>
+                                <div style={{ fontSize: 15 }}>Configure your construct and click Compile</div>
+                                <div style={{ fontSize: 12, marginTop: 6, color: '#30363d' }}>Results will appear here</div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div>
+                            {/* Tab bar */}
+                            <div style={{ display: 'flex', gap: 2, marginBottom: 20, borderBottom: '1px solid #30363d', paddingBottom: 0 }}>
+                                {['map', 'costs', 'parts', 'genbank'].map(tab => (
+                                    <button key={tab} onClick={() => setActiveTab(tab)}
+                                            style={{
+                                                ...btnStyle, background: 'none', borderRadius: '6px 6px 0 0',
+                                                color: activeTab === tab ? '#e1e4e8' : '#8b949e',
+                                                borderBottom: activeTab === tab ? '2px solid #58a6ff' : '2px solid transparent',
+                                                padding: '8px 16px',
+                                            }}>
+                                        {tab === 'map' ? 'Plasmid Map' : tab === 'costs' ? 'Cost Analysis' : tab === 'parts' ? 'Parts List' : 'GenBank'}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Map tab */}
+                            {activeTab === 'map' && (
+                                <div>
+                                    <PlasmidMap parts={result.parts} constructName={result.construct_name} insertLength={result.insert_length_bp} />
+                                    {result.warnings?.length > 0 && (
+                                        <div style={{ marginTop: 16, padding: 10, background: '#2d2600', border: '1px solid #d29922', borderRadius: 6, fontSize: 12, color: '#d29922' }}>
+                                            {result.warnings.map((w, i) => <div key={i}>{w}</div>)}
+                                        </div>
+                                    )}
+                                    {/* Summary stats */}
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginTop: 20 }}>
+                                        <div style={{ background: '#161b22', borderRadius: 8, padding: 14, border: '1px solid #30363d' }}>
+                                            <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Insert</div>
+                                            <div style={{ fontSize: 22, fontWeight: 700, color: '#e1e4e8' }}>{result.insert_length_bp?.toLocaleString()} bp</div>
+                                        </div>
+                                        <div style={{ background: '#161b22', borderRadius: 8, padding: 14, border: '1px solid #30363d' }}>
+                                            <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Best cost</div>
+                                            <div style={{ fontSize: 22, fontWeight: 700, color: '#3fb950' }}>
+                                                ${result.strategies.find(s => s.recommended)?.total_cost?.toFixed(0) || '?'}
+                                            </div>
+                                        </div>
+                                        <div style={{ background: '#161b22', borderRadius: 8, padding: 14, border: '1px solid #30363d' }}>
+                                            <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Parts</div>
+                                            <div style={{ fontSize: 22, fontWeight: 700, color: '#e1e4e8' }}>{result.parts.length}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Costs tab */}
+                            {activeTab === 'costs' && (
+                                <div>
+                                    <h3 style={{ fontSize: 16, marginBottom: 16, color: '#e1e4e8' }}>Assembly Strategy Comparison</h3>
+                                    <CostChart strategies={result.strategies} />
+
+                                    {/* Detailed breakdown for recommended */}
+                                    {(() => {
+                                        const rec = result.strategies.find(s => s.recommended);
+                                        if (!rec) return null;
+                                        return (
+                                            <div style={{ marginTop: 24, background: '#161b22', borderRadius: 8, padding: 16, border: '1px solid #238636' }}>
+                                                <h4 style={{ color: '#3fb950', marginBottom: 10 }}>Recommended: {rec.name}</h4>
+                                                <table style={{ width: '100%', fontSize: 13, borderCollapse: 'collapse' }}>
+                                                    <tbody>
+                                                        <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Synthesis</td><td style={{ textAlign: 'right' }}>${rec.synthesis_cost.toFixed(2)}</td></tr>
+                                                        <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Reagents (with {overhead}x overhead)</td><td style={{ textAlign: 'right' }}>${rec.reagent_cost.toFixed(2)}</td></tr>
+                                                        <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Researcher ({rec.researcher_hours}h @ ${researcherRate}/hr)</td><td style={{ textAlign: 'right' }}>${rec.researcher_cost.toFixed(2)}</td></tr>
+                                                        <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Failure risk surcharge</td><td style={{ textAlign: 'right' }}>${rec.risk_surcharge.toFixed(2)}</td></tr>
+                                                        <tr style={{ borderTop: '1px solid #30363d' }}><td style={{ padding: '8px 0', fontWeight: 700, color: '#3fb950' }}>Total</td><td style={{ textAlign: 'right', fontWeight: 700, color: '#3fb950' }}>${rec.total_cost.toFixed(2)}</td></tr>
+                                                    </tbody>
+                                                </table>
+                                                <div style={{ marginTop: 8, fontSize: 12, color: '#8b949e' }}>
+                                                    {rec.wall_clock_days[0]}-{rec.wall_clock_days[1]} business days | {rec.num_fragments} fragment(s)
+                                                    {rec.overhangs.length > 0 && ` | Overhangs: ${rec.overhangs.join(' / ')}`}
+                                                </div>
+                                                {rec.notes.map((n, i) => <div key={i} style={{ marginTop: 4, fontSize: 12, color: '#8b949e' }}>{n}</div>)}
+                                            </div>
+                                        );
+                                    })()}
+                                </div>
+                            )}
+
+                            {/* Parts tab */}
+                            {activeTab === 'parts' && (
+                                <div>
+                                    <h3 style={{ fontSize: 16, marginBottom: 16, color: '#e1e4e8' }}>Parts List</h3>
+                                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                                        <thead>
+                                            <tr style={{ borderBottom: '1px solid #30363d' }}>
+                                                <th style={{ textAlign: 'left', padding: '8px 6px', color: '#8b949e' }}></th>
+                                                <th style={{ textAlign: 'left', padding: '8px 6px', color: '#8b949e' }}>Name</th>
+                                                <th style={{ textAlign: 'left', padding: '8px 6px', color: '#8b949e' }}>Type</th>
+                                                <th style={{ textAlign: 'right', padding: '8px 6px', color: '#8b949e' }}>Length</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {result.parts.map((p, i) => (
+                                                <tr key={i} style={{ borderBottom: '1px solid #1c2129' }}>
+                                                    <td style={{ padding: '6px' }}>
+                                                        <div style={{ width: 12, height: 12, borderRadius: 3, background: p.color || PART_COLORS[p.type] || '#666' }} />
+                                                    </td>
+                                                    <td style={{ padding: '6px', fontWeight: 500 }}>{p.name}</td>
+                                                    <td style={{ padding: '6px', color: '#8b949e' }}>{p.type}</td>
+                                                    <td style={{ padding: '6px', textAlign: 'right', fontFamily: 'monospace' }}>{p.length_bp ? `${p.length_bp} bp` : '-'}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+
+                            {/* GenBank tab */}
+                            {activeTab === 'genbank' && (
+                                <div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                                        <h3 style={{ fontSize: 16, color: '#e1e4e8' }}>GenBank Output</h3>
+                                        <button onClick={downloadGenbank} style={{ ...btnStyle, background: '#238636', color: '#fff' }}>Download .gb</button>
+                                    </div>
+                                    <pre style={{
+                                        background: '#0d1117', border: '1px solid #30363d', borderRadius: 8,
+                                        padding: 16, fontSize: 11, fontFamily: 'SF Mono, Menlo, monospace',
+                                        color: '#8b949e', overflow: 'auto', maxHeight: '60vh', whiteSpace: 'pre',
+                                        lineHeight: 1.5,
+                                    }}>
+                                        {result.genbank || 'No GenBank output generated.'}
+                                    </pre>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>

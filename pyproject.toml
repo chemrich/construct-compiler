@@ -33,11 +33,15 @@ classifiers = [
 ]
 dependencies = [
     "biopython>=1.83",
+    "click>=8.1",
     "dnachisel>=3.2",
     "primer3-py>=2.0",
     "pyyaml>=6.0",
     "requests>=2.31",
 ]
+
+[project.scripts]
+construct-compiler = "construct_compiler.__main__:main"
 
 [project.optional-dependencies]
 dev = [
@@ -45,6 +49,10 @@ dev = [
     "pytest-cov",
     "ruff",
     "mypy",
+]
+web = [
+    "fastapi>=0.109",
+    "uvicorn[standard]>=0.27",
 ]
 vendors = [
     # No extra deps needed currently — vendor plugins use requests (core dep).

@@ -22,8 +22,39 @@ The compiler takes a high-level description of your construct (which protein, wh
 ## Quick start
 
 ```bash
-pip install -e ".[dev]"
+pip install -e ".[dev,web]"
 ```
+
+There are three ways to use construct-compiler: the **CLI**, the **Python API**, and the **web UI**.
+
+### CLI
+
+```bash
+# Compile a spec and get cost comparison + GenBank file
+construct-compiler compile my_construct.yaml -o output/
+
+# Just show cost comparison
+construct-compiler compile my_construct.yaml --cost-only -q
+
+# Validate a spec without compiling
+construct-compiler validate my_construct.yaml
+
+# List available parts
+construct-compiler parts --list tags
+construct-compiler parts --list promoters
+```
+
+### Web UI
+
+Start the server and open `http://localhost:8421`:
+
+```bash
+python -m construct_compiler.server
+```
+
+The web UI provides a visual construct builder with a circular plasmid map, interactive cost comparison charts, parts list, and GenBank export. No YAML writing needed — configure your construct through the form and click Compile.
+
+### Python API
 
 Write a construct spec:
 
@@ -263,13 +294,17 @@ The IR is a directed graph where nodes are genetic parts with typed ports. Port 
 ```
 construct_compiler/
 ├── src/construct_compiler/
+│   ├── __main__.py     # CLI (Click)
+│   ├── server.py       # FastAPI server for web UI
 │   ├── core/           # IR: types, parts, graph
-│   ├── frontend/       # YAML parser
+│   ├── frontend/       # YAML parser (spec → IR)
 │   ├── passes/         # Compiler passes + pipeline
 │   ├── backends/       # GenBank export (+ future SBOL3, protocols)
 │   ├── vendors/        # Twist, IDT plugin stubs
 │   ├── data/           # Curated parts DB, codon tables, overhang sets
 │   └── plugins/        # Plugin system (future)
+├── frontend/           # React web UI (single-page app)
+│   └── index.html
 ├── examples/           # Example YAML specs and runner scripts
 ├── pyproject.toml
 └── README.md
