@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools>=68.0", "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "construct-compiler"
+version = "0.1.0"
+description = "A genetic construct design compiler — declarative YAML specs to annotated DNA sequences, assembly plans, and cost estimates."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Charlie"},
+]
+keywords = [
+    "synthetic-biology",
+    "genetic-engineering",
+    "dna-design",
+    "golden-gate",
+    "cloning",
+    "plasmid",
+    "codon-optimization",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "biopython>=1.83",
+    "dnachisel>=3.2",
+    "primer3-py>=2.0",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "ruff",
+    "mypy",
+]
+vendors = [
+    # No extra deps needed currently — vendor plugins use requests (core dep).
+    # Future: add vendor-specific SDKs here if they publish them.
+]
+sbol = [
+    "sbol3>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/charlie/construct-compiler"
+Repository = "https://github.com/charlie/construct-compiler"
+Issues = "https://github.com/charlie/construct-compiler/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
