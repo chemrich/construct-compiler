@@ -334,3 +334,455 @@ HIGH_FIDELITY_OVERHANGS_BSAI = [
     "AGTC", "CCAG", "TTAG", "GCTG", "CAGA",
     "ATCC", "TCGC", "CTGA", "GCAA", "TAGA",
 ]
+
+
+# ---------------------------------------------------------------------------
+# Twist Bioscience catalog (stock) vectors
+# ---------------------------------------------------------------------------
+# These are pre-made vectors available from Twist for clonal gene synthesis.
+# When a catalog vector is selected, the user only needs to specify the insert
+# (gene/ORF); the vector already provides promoter, RBS, tags, resistance, etc.
+#
+# "provides" lists the element types that the vector already contains and
+# should NOT be duplicated in the synthesized insert.
+# "cloning_method" describes how the insert is cloned into the vector.
+
+TWIST_CATALOG_VECTORS = {
+    # --- pET expression vectors (T7 system, for BL21(DE3)) ---
+    "pET-21a(+)": {
+        "description": "T7lac expression vector, optional C-terminal His-tag",
+        "promoter": "T7lac",
+        "resistance": "ampicillin",
+        "ori": "pBR322",
+        "host": "e_coli_bl21",
+        "n_tags": [],
+        "c_tags": ["6xHis"],   # optional, via reading frame
+        "cleavage_sites": [],
+        "cloning_sites": ["NdeI", "BamHI", "XhoI"],
+        "provides": ["promoter", "rbs", "terminator"],
+        "notes": "No N-terminal tag. C-terminal His optional (read through stop codon).",
+        "size_bp": 5443,
+    },
+    "pET-28a(+)": {
+        "description": "T7lac expression vector, N-terminal His-Tag + thrombin site",
+        "promoter": "T7lac",
+        "resistance": "kanamycin",
+        "ori": "pBR322",
+        "host": "e_coli_bl21",
+        "n_tags": ["6xHis"],
+        "c_tags": ["6xHis"],    # optional C-terminal His
+        "cleavage_sites": ["Thrombin"],
+        "cloning_sites": ["NcoI", "NdeI", "BamHI", "XhoI", "NotI"],
+        "provides": ["promoter", "rbs", "n_tag", "cleavage", "terminator"],
+        "notes": "N-terminal His + thrombin cleavage. Clone at NdeI/XhoI for N-His only.",
+        "size_bp": 5369,
+    },
+    "pET-28b(+)": {
+        "description": "T7lac expression vector, N-terminal His-Tag + thrombin site (alternate MCS)",
+        "promoter": "T7lac",
+        "resistance": "kanamycin",
+        "ori": "pBR322",
+        "host": "e_coli_bl21",
+        "n_tags": ["6xHis"],
+        "c_tags": ["6xHis"],
+        "cleavage_sites": ["Thrombin"],
+        "cloning_sites": ["NcoI", "NdeI", "BamHI", "XhoI"],
+        "provides": ["promoter", "rbs", "n_tag", "cleavage", "terminator"],
+        "notes": "Same as pET-28a with shifted MCS reading frame.",
+        "size_bp": 5368,
+    },
+    "pET-32a(+)": {
+        "description": "T7lac expression vector, Trx-His-S-tag-enterokinase fusion",
+        "promoter": "T7lac",
+        "resistance": "ampicillin",
+        "ori": "pBR322",
+        "host": "e_coli_bl21",
+        "n_tags": ["6xHis"],
+        "c_tags": [],
+        "cleavage_sites": ["Enterokinase", "Thrombin"],
+        "cloning_sites": ["NcoI", "BamHI", "XhoI", "NotI"],
+        "provides": ["promoter", "rbs", "n_tag", "solubility_tag", "cleavage", "terminator"],
+        "notes": "N-terminal Trx + His + S-tag + enterokinase site. Best for insoluble proteins.",
+        "size_bp": 5900,
+    },
+
+    # --- pRSET vectors (T7, high copy) ---
+    "pRSET-A": {
+        "description": "T7 expression vector, N-terminal His-tag, high copy (pUC ori)",
+        "promoter": "T7",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "e_coli_bl21",
+        "n_tags": ["6xHis"],
+        "c_tags": [],
+        "cleavage_sites": ["Enterokinase"],
+        "cloning_sites": ["BamHI", "EcoRI", "PstI", "HindIII"],
+        "provides": ["promoter", "rbs", "n_tag", "cleavage", "terminator"],
+        "notes": "High copy number. Good for screening and small-scale expression.",
+        "size_bp": 2897,
+    },
+    "pRSET-B": {
+        "description": "T7 expression vector, N-terminal His-tag (alternate reading frame)",
+        "promoter": "T7",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "e_coli_bl21",
+        "n_tags": ["6xHis"],
+        "c_tags": [],
+        "cleavage_sites": ["Enterokinase"],
+        "cloning_sites": ["BamHI", "EcoRI", "PstI", "HindIII"],
+        "provides": ["promoter", "rbs", "n_tag", "cleavage", "terminator"],
+        "notes": "Same as pRSET-A, different reading frame for insert.",
+        "size_bp": 2898,
+    },
+    "pRSET-C": {
+        "description": "T7 expression vector, N-terminal His-tag (third reading frame)",
+        "promoter": "T7",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "e_coli_bl21",
+        "n_tags": ["6xHis"],
+        "c_tags": [],
+        "cleavage_sites": ["Enterokinase"],
+        "cloning_sites": ["BamHI", "EcoRI", "PstI", "HindIII"],
+        "provides": ["promoter", "rbs", "n_tag", "cleavage", "terminator"],
+        "notes": "Same as pRSET-A, third reading frame.",
+        "size_bp": 2899,
+    },
+
+    # --- Cloning vectors ---
+    "pUC19": {
+        "description": "High-copy cloning vector with lacZ MCS",
+        "promoter": "lac",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "e_coli",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": ["EcoRI", "SacI", "KpnI", "XmaI", "SmaI", "BamHI",
+                          "XbaI", "AccI", "HincII", "SalI", "SbfI", "PstI",
+                          "SphI", "HindIII"],
+        "provides": [],
+        "notes": "General purpose cloning vector. Blue/white screening. No expression elements.",
+        "size_bp": 2686,
+    },
+
+    # ===================================================================
+    # Twist cloning vectors (no expression elements)
+    # ===================================================================
+
+    "pTwist Amp": {
+        "description": "Twist high-copy cloning vector, Ampicillin",
+        "category": "cloning",
+        "promoter": "",
+        "resistance": "ampicillin",
+        "ori": "pMB1",
+        "host": "e_coli",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "provides": [],
+        "notes": "Minimal cloning vector. No expression elements. M13 fwd/rev priming sites flank insert.",
+        "size_bp": 2221,
+    },
+    "pTwist Kan": {
+        "description": "Twist medium-copy cloning vector, Kanamycin",
+        "category": "cloning",
+        "promoter": "",
+        "resistance": "kanamycin",
+        "ori": "pMB1",
+        "host": "e_coli",
+        "copy_number": "medium",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "provides": [],
+        "notes": "Minimal cloning vector (Kan). M13 fwd/rev priming sites.",
+        "size_bp": 2365,
+    },
+
+    # ===================================================================
+    # Twist Gateway cloning vectors (ENTR)
+    # ===================================================================
+
+    "pTwist ENTR": {
+        "description": "Gateway entry vector for shuttling into destination vectors",
+        "category": "gateway",
+        "promoter": "",
+        "resistance": "kanamycin",
+        "ori": "pMB1",
+        "host": "e_coli",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": ["attL1", "attL2"],
+        "provides": [],
+        "notes": "Gateway entry clone. attL1/attL2 flanked insert. Use LR Clonase to shuttle into destination vectors. No start/stop codon provided.",
+        "size_bp": 2365,
+    },
+    "pTwist ENTR Kozak": {
+        "description": "Gateway entry vector with Kozak consensus for mammalian expression",
+        "category": "gateway",
+        "promoter": "",
+        "resistance": "kanamycin",
+        "ori": "pMB1",
+        "host": "e_coli",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": ["attL1", "attL2"],
+        "provides": ["kozak"],
+        "notes": "Gateway entry clone with Kozak sequence (GCCACC) upstream of insert start. Optimized for mammalian expression destination vectors.",
+        "size_bp": 2421,
+    },
+
+    # ===================================================================
+    # Twist mammalian expression vectors — CMV promoter series
+    # ===================================================================
+
+    "pTwist CMV": {
+        "description": "CMV-driven mammalian transient expression vector",
+        "category": "mammalian_expression",
+        "promoter": "CMV",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "",
+        "provides": ["promoter", "terminator"],
+        "notes": "CMV immediate-early promoter for high-level transient expression in mammalian cells. SV40 polyA signal. No mammalian selection marker.",
+        "size_bp": 4831,
+    },
+    "pTwist CMV BetaGlobin": {
+        "description": "CMV + beta-globin intron for enhanced mammalian expression",
+        "category": "mammalian_expression",
+        "promoter": "CMV",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "",
+        "enhancers": ["beta-globin intron"],
+        "provides": ["promoter", "terminator"],
+        "notes": "CMV promoter + human beta-globin 5'UTR/intron enhances expression. hBG 3'UTR + bGH polyA downstream. No mammalian selection marker.",
+        "size_bp": 4893,
+    },
+    "pTwist CMV BetaGlobin WPRE Neo": {
+        "description": "CMV + beta-globin + WPRE, Neomycin/G418 mammalian selection",
+        "category": "mammalian_expression",
+        "promoter": "CMV",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "extremely_high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "neomycin",
+        "enhancers": ["beta-globin intron", "WPRE"],
+        "provides": ["promoter", "terminator"],
+        "notes": "CMV + beta-globin intron + WPRE for maximal expression. SV40-driven Neomycin resistance for G418 selection of stable mammalian clones.",
+        "size_bp": 6737,
+    },
+    "pTwist CMV Hygro": {
+        "description": "CMV-driven mammalian expression, Hygromycin selection",
+        "category": "mammalian_expression",
+        "promoter": "CMV",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "extremely_high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "hygromycin",
+        "provides": ["promoter", "terminator"],
+        "notes": "CMV promoter + Hygromycin B resistance for stable mammalian clone selection. bGH polyA signal.",
+        "size_bp": 6694,
+    },
+    "pTwist CMV Puro": {
+        "description": "CMV-driven mammalian expression, Puromycin selection",
+        "category": "mammalian_expression",
+        "promoter": "CMV",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "puromycin",
+        "provides": ["promoter", "terminator"],
+        "notes": "CMV promoter with UbC-driven Puromycin resistance for rapid stable clone selection in mammalian cells.",
+        "size_bp": 6633,
+    },
+    "pTwist CMV OriP": {
+        "description": "CMV + OriP for episomal replication in EBV-positive cells",
+        "category": "mammalian_expression",
+        "promoter": "CMV",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "",
+        "enhancers": ["OriP"],
+        "provides": ["promoter", "terminator"],
+        "notes": "CMV promoter + EBV OriP for episomal maintenance in cells expressing EBNA1 (e.g., HEK293E). Sustained expression without integration.",
+        "size_bp": 4893,
+    },
+
+    # ===================================================================
+    # Twist mammalian expression vectors — EF1-alpha promoter series
+    # ===================================================================
+
+    "pTwist EF1 Alpha": {
+        "description": "EF1-alpha driven mammalian expression, medium-level",
+        "category": "mammalian_expression",
+        "promoter": "EF1a",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "medium",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "",
+        "provides": ["promoter", "terminator"],
+        "notes": "Human EF1-alpha promoter for moderate, sustained expression. Less prone to silencing than CMV in some cell types. bGH polyA signal.",
+        "size_bp": 6633,
+    },
+    "pTwist EF1 Alpha Puro": {
+        "description": "EF1-alpha driven mammalian expression, Puromycin selection",
+        "category": "mammalian_expression",
+        "promoter": "EF1a",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "medium",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "puromycin",
+        "provides": ["promoter", "terminator"],
+        "notes": "EF1-alpha promoter + Puromycin selection for stable mammalian clones. Preferred over CMV for long-term expression in primary cells.",
+        "size_bp": 7200,
+    },
+
+    # ===================================================================
+    # Twist lentiviral transfer vectors
+    # ===================================================================
+
+    "pTwist Lenti SFFV": {
+        "description": "Lentiviral transfer vector, SFFV promoter",
+        "category": "lentiviral",
+        "promoter": "SFFV",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "",
+        "lentiviral_elements": ["5' LTR", "3' SIN-LTR", "Psi", "RRE", "cPPT", "WPRE"],
+        "provides": ["promoter", "terminator"],
+        "notes": "3rd-generation lentiviral transfer vector. SFFV promoter for strong expression in hematopoietic cells. Self-inactivating LTR. Requires packaging plasmids for virus production.",
+        "size_bp": 5683,
+    },
+    "pTwist Lenti SFFV Puro": {
+        "description": "Lentiviral transfer vector, SFFV promoter, Puromycin selection",
+        "category": "lentiviral",
+        "promoter": "SFFV",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "puromycin",
+        "lentiviral_elements": ["5' LTR", "3' SIN-LTR", "Psi", "RRE", "cPPT", "WPRE"],
+        "provides": ["promoter", "terminator"],
+        "notes": "3rd-gen lentiviral transfer vector with SFFV + Puromycin selection cassette. SIN-LTR design.",
+        "size_bp": 7100,
+    },
+    "pTwist Lenti EF1 Alpha": {
+        "description": "Lentiviral transfer vector, EF1-alpha promoter",
+        "category": "lentiviral",
+        "promoter": "EF1a",
+        "resistance": "ampicillin",
+        "ori": "pUC",
+        "host": "mammalian",
+        "copy_number": "high",
+        "n_tags": [],
+        "c_tags": [],
+        "cleavage_sites": [],
+        "cloning_sites": [],
+        "mammalian_selection": "",
+        "lentiviral_elements": ["5' LTR", "3' SIN-LTR", "Psi", "RRE", "cPPT", "WPRE"],
+        "provides": ["promoter", "terminator"],
+        "notes": "3rd-gen lentiviral transfer vector. EF1-alpha for broad mammalian expression with reduced silencing risk.",
+        "size_bp": 6800,
+    },
+}
+
+# ---------------------------------------------------------------------------
+# Convenience filters
+# ---------------------------------------------------------------------------
+
+# E. coli expression vectors (T7, tac, etc.)
+TWIST_ECOLI_EXPRESSION_VECTORS = {
+    k: v for k, v in TWIST_CATALOG_VECTORS.items()
+    if v.get("host", "").startswith("e_coli") and v.get("promoter")
+}
+
+# Mammalian expression vectors (CMV, EF1a, etc.)
+TWIST_MAMMALIAN_VECTORS = {
+    k: v for k, v in TWIST_CATALOG_VECTORS.items()
+    if v.get("host") == "mammalian" and v.get("category") == "mammalian_expression"
+}
+
+# Lentiviral transfer vectors
+TWIST_LENTIVIRAL_VECTORS = {
+    k: v for k, v in TWIST_CATALOG_VECTORS.items()
+    if v.get("category") == "lentiviral"
+}
+
+# Cloning-only vectors (no expression elements)
+TWIST_CLONING_VECTORS = {
+    k: v for k, v in TWIST_CATALOG_VECTORS.items()
+    if v.get("category") in ("cloning", "gateway")
+}
+
+# All vectors grouped by category for UI
+TWIST_VECTOR_CATEGORIES = {
+    "E. coli Expression": TWIST_ECOLI_EXPRESSION_VECTORS,
+    "Mammalian Expression": TWIST_MAMMALIAN_VECTORS,
+    "Lentiviral": TWIST_LENTIVIRAL_VECTORS,
+    "Cloning / Gateway": TWIST_CLONING_VECTORS,
+}

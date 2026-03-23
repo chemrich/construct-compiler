@@ -22,7 +22,7 @@ from ..core.parts import (
     CleavageSite, StopCodon, Linker, Terminator, Spacer,
     RegulationType, RBSDesignMethod, TagPosition, Origin,
 )
-from ..data.parts_db import PROMOTERS, RBS_TIER_DEFAULTS
+from ..data.parts_db import PROMOTERS, RBS_TIER_DEFAULTS, TWIST_CATALOG_VECTORS
 
 
 def parse_spec(spec: dict | str | Path) -> ConstructGraph:
@@ -50,8 +50,13 @@ def parse_spec(spec: dict | str | Path) -> ConstructGraph:
 
     # -- Backbone --
     bb_spec = root.get("backbone", {})
+    backbone = None
     if bb_spec:
-        graph.add_part(_parse_backbone(bb_spec))
+        backbone = _parse_backbone(bb_spec)
+        graph.add_part(backbone)
+
+    # Track what the catalog vector provides (to skip duplicate elements)
+    vector_provides = set(backbone.provides) if backbone else set()
 
     # -- Cassette (expression cassette elements in order) --
     cassette = root.get("cassette", [])
@@ -69,12 +74,18 @@ def parse_spec(spec: dict | str | Path) -> ConstructGraph:
 
         for key, value in element.items():
             if key == "promoter":
+                if "promoter" in vector_provides:
+                    # Catalog vector already has a promoter — skip
+                    continue
                 graph.add_part(_parse_promoter(value, _next_id("prom")))
 
             elif key == "cistron":
-                _parse_cistron(value, graph, _next_id)
+                _parse_cistron(value, graph, _next_id, vector_provides)
 
             elif key == "terminator":
+                if "terminator" in vector_provides:
+                    # Catalog vector already has a terminator — skip
+                    continue
                 graph.add_part(_parse_terminator(value, _next_id("term")))
 
             elif key == "spacer":
@@ -105,7 +116,15 @@ def parse_spec(spec: dict | str | Path) -> ConstructGraph:
 
 def _parse_backbone(spec: dict | str) -> Backbone:
     if isinstance(spec, str):
+        # Check if it's a catalog vector name
+        if spec in TWIST_CATALOG_VECTORS:
+            return _backbone_from_catalog(spec)
         return Backbone(id="backbone", name=spec, source=spec)
+
+    # Check for catalog vector
+    catalog_id = spec.get("catalog_vector") or spec.get("catalog_id")
+    if catalog_id and catalog_id in TWIST_CATALOG_VECTORS:
+        return _backbone_from_catalog(catalog_id)
 
     origin_str = spec.get("ori", "pBR322")
     try:
@@ -120,6 +139,32 @@ def _parse_backbone(spec: dict | str) -> Backbone:
         resistance=spec.get("resistance", "kanamycin"),
         source=spec.get("source", ""),
         addgene_id=spec.get("addgene_id"),
+    )
+
+
+def _backbone_from_catalog(catalog_id: str) -> Backbone:
+    """Create a Backbone from a Twist catalog vector entry."""
+    entry = TWIST_CATALOG_VECTORS[catalog_id]
+    origin_str = entry.get("ori", "pBR322")
+    try:
+        origin = Origin(origin_str)
+    except ValueError:
+        origin = Origin.CUSTOM
+
+    return Backbone(
+        id="backbone",
+        name=catalog_id,
+        origin=origin,
+        resistance=entry.get("resistance", ""),
+        source="twist_catalog",
+        catalog_id=catalog_id,
+        catalog_vendor="twist",
+        provides=list(entry.get("provides", [])),
+        metadata={
+            "catalog_entry": entry,
+            "size_bp": entry.get("size_bp", 0),
+            "cloning_sites": entry.get("cloning_sites", []),
+        },
     )
 
 
@@ -149,7 +194,8 @@ def _parse_terminator(spec: str | dict, part_id: str) -> Terminator:
     return Terminator(id=part_id, name=spec.get("name", part_id))
 
 
-def _parse_cistron(spec: dict, graph: ConstructGraph, next_id) -> None:
+def _parse_cistron(spec: dict, graph: ConstructGraph, next_id,
+                   vector_provides: set | None = None) -> None:
     """
     Parse a cistron block, which may include:
     - rbs / expression level
@@ -157,57 +203,76 @@ def _parse_cistron(spec: dict, graph: ConstructGraph, next_id) -> None:
     - gene (the main CDS)
     - C-terminal tags
     - fused: true/false (whether this is fused to the previous cistron)
+
+    vector_provides: set of element types the catalog vector already has
+                     (e.g. {"promoter", "rbs", "n_tag", "cleavage", "terminator"}).
+                     These elements are skipped for the first cistron.
     """
+    if vector_provides is None:
+        vector_provides = set()
+
     label = spec.get("label", "cistron")
     fused = spec.get("fused", True)  # default: fused within cistron
 
     # -- RBS --
+    # Skip RBS only for the first cistron if the vector provides it
+    skip_rbs = "rbs" in vector_provides
     expression = spec.get("expression", "high")
     rbs_spec = spec.get("rbs")
 
-    if rbs_spec and isinstance(rbs_spec, dict):
-        method = rbs_spec.get("method", "lookup")
-        rbs = RBS(
-            id=next_id("rbs"),
-            name=f"rbs_{label}",
-            design_method=RBSDesignMethod[method.upper()],
-            target_expression=str(rbs_spec.get("target_rate", expression)),
-            part_name=rbs_spec.get("name", ""),
-        )
-    elif rbs_spec and isinstance(rbs_spec, str):
-        rbs = RBS(
-            id=next_id("rbs"),
-            name=f"rbs_{label}",
-            design_method=RBSDesignMethod.LOOKUP,
-            part_name=rbs_spec,
-            target_expression=expression,
-        )
-    else:
-        # Resolve from expression tier
-        default_rbs = RBS_TIER_DEFAULTS.get(expression, "BCD2")
-        rbs = RBS(
-            id=next_id("rbs"),
-            name=f"rbs_{label}",
-            design_method=RBSDesignMethod.BCD if "BCD" in default_rbs else RBSDesignMethod.LOOKUP,
-            part_name=default_rbs,
-            target_expression=expression,
-        )
+    if not skip_rbs:
+        if rbs_spec and isinstance(rbs_spec, dict):
+            method = rbs_spec.get("method", "lookup")
+            rbs = RBS(
+                id=next_id("rbs"),
+                name=f"rbs_{label}",
+                design_method=RBSDesignMethod[method.upper()],
+                target_expression=str(rbs_spec.get("target_rate", expression)),
+                part_name=rbs_spec.get("name", ""),
+            )
+        elif rbs_spec and isinstance(rbs_spec, str):
+            rbs = RBS(
+                id=next_id("rbs"),
+                name=f"rbs_{label}",
+                design_method=RBSDesignMethod.LOOKUP,
+                part_name=rbs_spec,
+                target_expression=expression,
+            )
+        else:
+            # Resolve from expression tier
+            default_rbs = RBS_TIER_DEFAULTS.get(expression, "BCD2")
+            rbs = RBS(
+                id=next_id("rbs"),
+                name=f"rbs_{label}",
+                design_method=RBSDesignMethod.BCD if "BCD" in default_rbs else RBSDesignMethod.LOOKUP,
+                part_name=default_rbs,
+                target_expression=expression,
+            )
 
-    graph.add_part(rbs)
+        graph.add_part(rbs)
 
     # -- Chain: N-terminal elements --
     chain = spec.get("chain", [])
     gene_spec = spec.get("gene")
 
-    # If chain is used, process it in order
+    # When the user explicitly specifies a chain, always include all elements —
+    # the user's insert parts are distinct from the vector's built-in features.
+    # The vector's native tags/cleavage sites appear as backbone annotations.
+    # Only skip auto-generated elements in the flat format (no explicit chain).
     if chain:
         for item in chain:
             for item_key, item_val in (item.items() if isinstance(item, dict) else [(item, {})]):
                 _parse_chain_element(item_key, item_val, graph, next_id, label)
     else:
         # Flat format: n_tag, gene, c_tag
+        # Here we DO skip elements the vector provides, since the user didn't
+        # explicitly request them — they'd duplicate the vector's built-in features.
+        skip_n_tag = "n_tag" in vector_provides
+        skip_cleavage = "cleavage" in vector_provides
+        skip_solubility = "solubility_tag" in vector_provides
+
         n_tag = spec.get("n_tag")
-        if n_tag:
+        if n_tag and not skip_n_tag:
             _parse_tag_shorthand(n_tag, graph, next_id, label, TagPosition.N_TERM)
 
         if gene_spec:
@@ -219,6 +284,14 @@ def _parse_cistron(spec: dict, graph: ConstructGraph, next_id) -> None:
 
     # -- Stop codon (if this is a non-fused, independently translated cistron) --
     # The CDS's has_stop flag determines this; parser sets it based on context.
+
+    # After the first cistron, remove per-ORF elements from vector_provides
+    # so subsequent cistrons add their own RBS/tags. Keep promoter/terminator
+    # since those are shared across the whole cassette.
+    vector_provides.discard("rbs")
+    vector_provides.discard("n_tag")
+    vector_provides.discard("cleavage")
+    vector_provides.discard("solubility_tag")
 
 
 def _parse_chain_element(key: str, value: Any, graph: ConstructGraph,

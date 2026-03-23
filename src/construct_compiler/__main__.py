@@ -44,10 +44,19 @@ def cli():
               help="Researcher hourly rate in $/hr (default: $150).")
 @click.option("--overhead", type=float, default=1.5,
               help="Overhead multiplier on consumables (default: 1.5x).")
+@click.option("--twist-gene-bp", type=float, default=None, help="Twist gene fragment $/bp.")
+@click.option("--twist-clonal-bp", type=float, default=None, help="Twist clonal gene $/bp.")
+@click.option("--idt-gblock-bp", type=float, default=None, help="IDT gBlock $/bp.")
+@click.option("--bsai-cost", type=float, default=None, help="BsaI $/reaction.")
+@click.option("--competent-cells-cost", type=float, default=None, help="Competent cells $/transformation.")
+@click.option("--sequencing-cost", type=float, default=None, help="Plasmidsaurus sequencing $/reaction.")
 @click.option("--quiet", "-q", is_flag=True, help="Suppress progress output.")
 @click.option("--skip-constraints", is_flag=True,
               help="Skip constraint resolution (faster, uses unoptimized codons).")
-def compile(spec, output, cost_only, fmt, researcher_rate, overhead, quiet, skip_constraints):
+def compile(spec, output, cost_only, fmt, researcher_rate, overhead,
+            twist_gene_bp, twist_clonal_bp, idt_gblock_bp,
+            bsai_cost, competent_cells_cost, sequencing_cost,
+            quiet, skip_constraints):
     """Compile a construct spec into DNA sequences and an assembly plan."""
     # Configure logging
     if quiet:
@@ -62,10 +71,25 @@ def compile(spec, output, cost_only, fmt, researcher_rate, overhead, quiet, skip
     if quiet:
         os.environ["DNACHISEL_QUIET"] = "1"
 
-    cost_params = CostParams(
+    cost_kwargs = dict(
         researcher_hourly_rate=researcher_rate,
         overhead_multiplier=overhead,
     )
+    # Apply optional overrides from CLI flags
+    if twist_gene_bp is not None:
+        cost_kwargs["twist_gene_per_bp"] = twist_gene_bp
+    if twist_clonal_bp is not None:
+        cost_kwargs["twist_clonal_per_bp"] = twist_clonal_bp
+    if idt_gblock_bp is not None:
+        cost_kwargs["idt_gblock_per_bp"] = idt_gblock_bp
+    if bsai_cost is not None:
+        cost_kwargs["bsai_per_reaction"] = bsai_cost
+    if competent_cells_cost is not None:
+        cost_kwargs["competent_cells_per_transformation"] = competent_cells_cost
+    if sequencing_cost is not None:
+        cost_kwargs["plasmidsaurus_sequencing"] = sequencing_cost
+
+    cost_params = CostParams(**cost_kwargs)
 
     try:
         graph, plan = compile_construct(

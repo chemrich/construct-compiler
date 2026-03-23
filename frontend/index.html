@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+    <script src="https://unpkg.com/seqviz"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e1e4e8; }
@@ -36,79 +37,176 @@ const PART_LABELS = {
     SolubilityTag: 'Sol', CleavageSite: '/', Linker: '~', Terminator: 'T', Spacer: '...',
 };
 
-// --- Circular plasmid map (SVG) ---
-function PlasmidMap({ parts, constructName, insertLength }) {
-    const size = 400, cx = size / 2, cy = size / 2, r = 140;
-    const totalLen = parts.reduce((s, p) => s + (p.length_bp || 50), 0);
-    if (totalLen === 0) return null;
+// --- Plasmid map using seqviz ---
+function PlasmidMap({ plasmidMap, onAnnotationClick }) {
+    const containerRef = useRef(null);
+    const viewerRef = useRef(null);
+    const [selectedAnnotation, setSelectedAnnotation] = useState(null);
+    const [viewMode, setViewMode] = useState('both'); // 'circular', 'linear', 'both'
 
-    let cumulative = 0;
-    const arcs = parts.map((part, i) => {
-        const len = part.length_bp || 50;
-        const startAngle = (cumulative / totalLen) * 2 * Math.PI - Math.PI / 2;
-        cumulative += len;
-        const endAngle = (cumulative / totalLen) * 2 * Math.PI - Math.PI / 2;
-        const midAngle = (startAngle + endAngle) / 2;
+    useEffect(() => {
+        if (!containerRef.current || !plasmidMap || !plasmidMap.total_length_bp) return;
 
-        const x1 = cx + r * Math.cos(startAngle);
-        const y1 = cy + r * Math.sin(startAngle);
-        const x2 = cx + r * Math.cos(endAngle);
-        const y2 = cy + r * Math.sin(endAngle);
-        const largeArc = (endAngle - startAngle) > Math.PI ? 1 : 0;
+        // Use real sequence from server (insert + N-filled backbone)
+        const seq = plasmidMap.sequence || 'N'.repeat(plasmidMap.total_length_bp);
 
-        const labelR = r + 28;
-        const lx = cx + labelR * Math.cos(midAngle);
-        const ly = cy + labelR * Math.sin(midAngle);
+        // Build seqviz annotations
+        const annotations = (plasmidMap.annotations || []).map(a => ({
+            name: a.name,
+            start: a.start,
+            end: a.end,
+            direction: a.direction || 1,
+            color: a.color || '#666',
+        }));
 
-        const tickR1 = r + 2, tickR2 = r + 10;
-        const tx1 = cx + tickR1 * Math.cos(midAngle);
-        const ty1 = cy + tickR1 * Math.sin(midAngle);
-        const tx2 = cx + tickR2 * Math.cos(midAngle);
-        const ty2 = cy + tickR2 * Math.sin(midAngle);
+        // Build translation ranges (CDS regions → show amino acid track)
+        const translations = (plasmidMap.translations || []).map(t => ({
+            start: t.start,
+            end: t.end,
+            direction: t.direction || 1,
+        }));
 
-        return { part, x1, y1, x2, y2, largeArc, lx, ly, tx1, ty1, tx2, ty2, midAngle, startAngle, endAngle };
-    });
+        // Clear previous viewer
+        containerRef.current.innerHTML = '';
+
+        try {
+            const viewerOpts = {
+                name: plasmidMap.name || 'Construct',
+                seq: seq,
+                annotations: annotations,
+                translations: translations,
+                viewer: viewMode,
+                showIndex: true,
+                style: { height: '100%', width: '100%' },
+                onSelection: (sel) => {
+                    if (sel) setSelectedAnnotation(sel);
+                },
+            };
+
+            // Add enzyme cut sites if available
+            if (plasmidMap.enzymes && plasmidMap.enzymes.length > 0) {
+                viewerOpts.enzymes = plasmidMap.enzymes;
+            }
+
+            viewerRef.current = window.seqviz.Viewer(containerRef.current, viewerOpts);
+            viewerRef.current.render();
+        } catch (e) {
+            console.error('seqviz render error:', e);
+            containerRef.current.innerHTML = '<div style="color:#f85149;padding:20px">Failed to render plasmid map: ' + e.message + '</div>';
+        }
+
+        return () => {
+            if (containerRef.current) containerRef.current.innerHTML = '';
+        };
+    }, [plasmidMap, viewMode]);
+
+    if (!plasmidMap || !plasmidMap.total_length_bp) return null;
+
+    const insertParts = (plasmidMap.annotations || []).filter(a => a.type === 'insert_part');
+    const bbFeatures = (plasmidMap.annotations || []).filter(a => a.type === 'backbone_feature');
 
     return (
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display: 'block', margin: '0 auto' }}>
-            {/* Background circle */}
-            <circle cx={cx} cy={cy} r={r} fill="none" stroke="#30363d" strokeWidth="2" />
+        <div>
+            {/* Plasmid info header */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10, marginBottom: 16 }}>
+                <div style={{ background: '#161b22', borderRadius: 8, padding: 12, border: '1px solid #30363d' }}>
+                    <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Total size</div>
+                    <div style={{ fontSize: 20, fontWeight: 700 }}>{plasmidMap.total_length_bp.toLocaleString()} bp</div>
+                </div>
+                <div style={{ background: '#161b22', borderRadius: 8, padding: 12, border: '1px solid #30363d' }}>
+                    <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Insert</div>
+                    <div style={{ fontSize: 20, fontWeight: 700, color: '#3fb950' }}>{plasmidMap.insert_length_bp.toLocaleString()} bp</div>
+                </div>
+                <div style={{ background: '#161b22', borderRadius: 8, padding: 12, border: '1px solid #30363d' }}>
+                    <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Backbone</div>
+                    <div style={{ fontSize: 20, fontWeight: 700, color: '#58a6ff' }}>{plasmidMap.backbone_length_bp.toLocaleString()} bp</div>
+                </div>
+                <div style={{ background: '#161b22', borderRadius: 8, padding: 12, border: '1px solid #30363d' }}>
+                    <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Vector</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#58a6ff' }}>
+                        {plasmidMap.backbone_catalog_id || plasmidMap.backbone_name || 'Custom'}
+                    </div>
+                </div>
+            </div>
 
-            {/* Part arcs */}
-            {arcs.map((a, i) => (
-                <g key={i}>
-                    <path
-                        d={`M ${a.x1} ${a.y1} A ${r} ${r} 0 ${a.largeArc} 1 ${a.x2} ${a.y2}`}
-                        fill="none" stroke={a.part.color || PART_COLORS[a.part.type] || '#666'}
-                        strokeWidth="14" strokeLinecap="butt"
-                        style={{ cursor: 'pointer' }}
-                    >
-                        <title>{`${a.part.name} (${a.part.type}, ${a.part.length_bp || '?'} bp)`}</title>
-                    </path>
-                    {/* Tick marks */}
-                    <line x1={a.tx1} y1={a.ty1} x2={a.tx2} y2={a.ty2}
-                          stroke="#484f58" strokeWidth="1" />
-                    {/* Labels for bigger parts */}
-                    {(a.part.length_bp || 0) > totalLen * 0.04 && (
-                        <text x={a.lx} y={a.ly} textAnchor="middle" dominantBaseline="central"
-                              fill="#e1e4e8" fontSize="10" fontWeight="500">
-                            {a.part.name.length > 10 ? a.part.name.slice(0, 9) + '..' : a.part.name}
-                        </text>
+            {/* View mode toggle */}
+            <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
+                {[['circular', 'Circular'], ['linear', 'Linear'], ['both', 'Both']].map(([mode, label]) => (
+                    <button key={mode} onClick={() => setViewMode(mode)}
+                            style={{ ...btnStyle, flex: 1, fontSize: 11, padding: '5px 8px',
+                                     background: viewMode === mode ? '#238636' : '#21262d',
+                                     color: viewMode === mode ? '#fff' : '#8b949e' }}>
+                        {label}
+                    </button>
+                ))}
+            </div>
+
+            {/* Seqviz viewer */}
+            <div ref={containerRef}
+                 style={{ height: viewMode === 'both' ? 550 : viewMode === 'linear' ? 400 : 450,
+                          background: '#fff', borderRadius: 8, overflow: 'hidden',
+                          border: '1px solid #30363d' }} />
+
+            {/* Selection detail */}
+            {selectedAnnotation && selectedAnnotation.name && (
+                <div style={{ marginTop: 8, padding: 10, background: '#161b22', border: '1px solid #58a6ff',
+                              borderRadius: 6, fontSize: 12 }}>
+                    <span style={{ color: '#58a6ff', fontWeight: 600 }}>Selected: </span>
+                    <span style={{ color: '#e1e4e8' }}>{selectedAnnotation.name}</span>
+                    {selectedAnnotation.start !== undefined && (
+                        <span style={{ color: '#8b949e', marginLeft: 8, fontFamily: 'monospace' }}>
+                            {selectedAnnotation.start}..{selectedAnnotation.end} ({selectedAnnotation.end - selectedAnnotation.start} bp)
+                        </span>
                     )}
-                </g>
-            ))}
+                </div>
+            )}
 
-            {/* Center text */}
-            <text x={cx} y={cy - 14} textAnchor="middle" fill="#e1e4e8" fontSize="13" fontWeight="600">
-                {constructName ? (constructName.length > 22 ? constructName.slice(0, 20) + '..' : constructName) : 'Construct'}
-            </text>
-            <text x={cx} y={cy + 6} textAnchor="middle" fill="#8b949e" fontSize="11">
-                {insertLength ? `${insertLength.toLocaleString()} bp` : ''}
-            </text>
-            <text x={cx} y={cy + 22} textAnchor="middle" fill="#484f58" fontSize="10">
-                {parts.length} parts
-            </text>
-        </svg>
+            {/* Feature legend */}
+            <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                {/* Insert features */}
+                <div style={{ background: '#161b22', borderRadius: 8, padding: 12, border: '1px solid #30363d' }}>
+                    <div style={{ fontSize: 11, color: '#3fb950', fontWeight: 600, textTransform: 'uppercase', marginBottom: 8 }}>
+                        Insert features ({insertParts.length})
+                    </div>
+                    {insertParts.map((a, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, fontSize: 12 }}>
+                            <div style={{ width: 10, height: 10, borderRadius: 2, background: a.color, flexShrink: 0 }} />
+                            <span style={{ color: '#e1e4e8', fontWeight: 500 }}>{a.name}</span>
+                            <span style={{ color: '#8b949e', marginLeft: 'auto', fontFamily: 'monospace', fontSize: 11 }}>
+                                {(a.end - a.start).toLocaleString()} bp
+                            </span>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Backbone features */}
+                <div style={{ background: '#161b22', borderRadius: 8, padding: 12, border: '1px solid #30363d' }}>
+                    <div style={{ fontSize: 11, color: '#58a6ff', fontWeight: 600, textTransform: 'uppercase', marginBottom: 8 }}>
+                        Backbone features ({bbFeatures.length})
+                        {plasmidMap.backbone_catalog_id && (
+                            <span style={{ color: '#8b949e', fontWeight: 400, textTransform: 'none' }}>
+                                {' — '}{plasmidMap.backbone_catalog_id}
+                            </span>
+                        )}
+                    </div>
+                    {bbFeatures.map((a, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, fontSize: 12 }}>
+                            <div style={{ width: 10, height: 10, borderRadius: 2, background: a.color, flexShrink: 0 }} />
+                            <span style={{ color: '#e1e4e8', fontWeight: 500 }}>{a.name}</span>
+                            <span style={{ color: '#8b949e', marginLeft: 'auto', fontFamily: 'monospace', fontSize: 11 }}>
+                                {(a.end - a.start).toLocaleString()} bp
+                            </span>
+                        </div>
+                    ))}
+                    {plasmidMap.backbone_resistance && (
+                        <div style={{ marginTop: 8, fontSize: 11, color: '#8b949e' }}>
+                            Resistance: <span style={{ color: '#e74c3c' }}>{plasmidMap.backbone_resistance}</span>
+                            {' | Ori: '}<span style={{ color: '#3498db' }}>{plasmidMap.backbone_ori}</span>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
     );
 }
 
@@ -261,6 +359,44 @@ const btnStyle = {
     fontSize: 13, fontWeight: 600, transition: 'all .15s',
 };
 
+// --- Twist catalog vectors (inline for immediate UI, also fetched from API) ---
+const CATALOG_VECTORS = {
+    // --- E. coli Expression ---
+    'pET-21a(+)': { category: 'ecoli_expression', description: 'T7lac, optional C-His', promoter: 'T7lac', resistance: 'ampicillin', ori: 'pBR322', host: 'e_coli_bl21', provides: ['promoter', 'rbs', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 5443 },
+    'pET-28a(+)': { category: 'ecoli_expression', description: 'T7lac, N-His + Thrombin', promoter: 'T7lac', resistance: 'kanamycin', ori: 'pBR322', host: 'e_coli_bl21', provides: ['promoter', 'rbs', 'n_tag', 'cleavage', 'terminator'], n_tags: ['6xHis'], cleavage_sites: ['Thrombin'], size_bp: 5369 },
+    'pET-28b(+)': { category: 'ecoli_expression', description: 'T7lac, N-His + Thrombin (alt MCS)', promoter: 'T7lac', resistance: 'kanamycin', ori: 'pBR322', host: 'e_coli_bl21', provides: ['promoter', 'rbs', 'n_tag', 'cleavage', 'terminator'], n_tags: ['6xHis'], cleavage_sites: ['Thrombin'], size_bp: 5368 },
+    'pET-32a(+)': { category: 'ecoli_expression', description: 'T7lac, Trx-His-Enterokinase', promoter: 'T7lac', resistance: 'ampicillin', ori: 'pBR322', host: 'e_coli_bl21', provides: ['promoter', 'rbs', 'n_tag', 'solubility_tag', 'cleavage', 'terminator'], n_tags: ['6xHis'], cleavage_sites: ['Enterokinase', 'Thrombin'], size_bp: 5900 },
+    'pRSET-A': { category: 'ecoli_expression', description: 'T7, N-His (high copy)', promoter: 'T7', resistance: 'ampicillin', ori: 'pUC', host: 'e_coli_bl21', provides: ['promoter', 'rbs', 'n_tag', 'cleavage', 'terminator'], n_tags: ['6xHis'], cleavage_sites: ['Enterokinase'], size_bp: 2897 },
+    'pRSET-B': { category: 'ecoli_expression', description: 'T7, N-His (alt frame)', promoter: 'T7', resistance: 'ampicillin', ori: 'pUC', host: 'e_coli_bl21', provides: ['promoter', 'rbs', 'n_tag', 'cleavage', 'terminator'], n_tags: ['6xHis'], cleavage_sites: ['Enterokinase'], size_bp: 2898 },
+    'pRSET-C': { category: 'ecoli_expression', description: 'T7, N-His (third frame)', promoter: 'T7', resistance: 'ampicillin', ori: 'pUC', host: 'e_coli_bl21', provides: ['promoter', 'rbs', 'n_tag', 'cleavage', 'terminator'], n_tags: ['6xHis'], cleavage_sites: ['Enterokinase'], size_bp: 2899 },
+    'pUC19': { category: 'ecoli_expression', description: 'High-copy cloning vector, lacZ MCS', promoter: 'lac', resistance: 'ampicillin', ori: 'pUC', host: 'e_coli', provides: [], n_tags: [], cleavage_sites: [], size_bp: 2686 },
+    // --- Cloning / Gateway ---
+    'pTwist Amp': { category: 'cloning', description: 'Twist high-copy cloning, Amp', promoter: '', resistance: 'ampicillin', ori: 'pMB1', host: 'e_coli', provides: [], n_tags: [], cleavage_sites: [], size_bp: 2221 },
+    'pTwist Kan': { category: 'cloning', description: 'Twist medium-copy cloning, Kan', promoter: '', resistance: 'kanamycin', ori: 'pMB1', host: 'e_coli', provides: [], n_tags: [], cleavage_sites: [], size_bp: 2365 },
+    'pTwist ENTR': { category: 'gateway', description: 'Gateway entry vector (attL1/attL2)', promoter: '', resistance: 'kanamycin', ori: 'pMB1', host: 'e_coli', provides: [], n_tags: [], cleavage_sites: [], size_bp: 2365 },
+    'pTwist ENTR Kozak': { category: 'gateway', description: 'Gateway entry + Kozak for mammalian', promoter: '', resistance: 'kanamycin', ori: 'pMB1', host: 'e_coli', provides: ['kozak'], n_tags: [], cleavage_sites: [], size_bp: 2421 },
+    // --- Mammalian Expression ---
+    'pTwist CMV': { category: 'mammalian_expression', description: 'CMV transient expression', promoter: 'CMV', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: '', enhancers: [], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 4831 },
+    'pTwist CMV BetaGlobin': { category: 'mammalian_expression', description: 'CMV + beta-globin intron, enhanced', promoter: 'CMV', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: '', enhancers: ['beta-globin intron'], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 4893 },
+    'pTwist CMV BetaGlobin WPRE Neo': { category: 'mammalian_expression', description: 'CMV + BG + WPRE, Neo/G418 selection', promoter: 'CMV', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: 'neomycin', enhancers: ['beta-globin intron', 'WPRE'], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 6737 },
+    'pTwist CMV Hygro': { category: 'mammalian_expression', description: 'CMV + Hygromycin selection', promoter: 'CMV', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: 'hygromycin', enhancers: [], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 6694 },
+    'pTwist CMV Puro': { category: 'mammalian_expression', description: 'CMV + Puromycin selection', promoter: 'CMV', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: 'puromycin', enhancers: [], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 6633 },
+    'pTwist CMV OriP': { category: 'mammalian_expression', description: 'CMV + OriP episomal replication', promoter: 'CMV', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: '', enhancers: ['OriP'], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 4893 },
+    'pTwist EF1 Alpha': { category: 'mammalian_expression', description: 'EF1a sustained mammalian expression', promoter: 'EF1a', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: '', enhancers: [], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 6633 },
+    'pTwist EF1 Alpha Puro': { category: 'mammalian_expression', description: 'EF1a + Puromycin selection', promoter: 'EF1a', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: 'puromycin', enhancers: [], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 7200 },
+    // --- Lentiviral ---
+    'pTwist Lenti SFFV': { category: 'lentiviral', description: 'Lentiviral, SFFV promoter', promoter: 'SFFV', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: '', lentiviral_elements: ['5\' LTR', '3\' SIN-LTR', 'Psi', 'RRE', 'cPPT', 'WPRE'], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 5683 },
+    'pTwist Lenti SFFV Puro': { category: 'lentiviral', description: 'Lentiviral SFFV + Puromycin', promoter: 'SFFV', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: 'puromycin', lentiviral_elements: ['5\' LTR', '3\' SIN-LTR', 'Psi', 'RRE', 'cPPT', 'WPRE'], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 7100 },
+    'pTwist Lenti EF1 Alpha': { category: 'lentiviral', description: 'Lentiviral, EF1a promoter', promoter: 'EF1a', resistance: 'ampicillin', ori: 'pUC', host: 'mammalian', mammalian_selection: '', lentiviral_elements: ['5\' LTR', '3\' SIN-LTR', 'Psi', 'RRE', 'cPPT', 'WPRE'], provides: ['promoter', 'terminator'], n_tags: [], cleavage_sites: [], size_bp: 6800 },
+};
+
+const VECTOR_CATEGORIES = [
+    { label: 'E. coli Expression', filter: v => v.category === 'ecoli_expression' },
+    { label: 'Mammalian Expression', filter: v => v.category === 'mammalian_expression' },
+    { label: 'Lentiviral', filter: v => v.category === 'lentiviral' },
+    { label: 'Cloning / Gateway', filter: v => v.category === 'cloning' || v.category === 'gateway' },
+];
+
 // --- Main App ---
 function App() {
     const [constructName, setConstructName] = useState('My-Construct');
@@ -270,8 +406,55 @@ function App() {
     const [resistance, setResistance] = useState('kanamycin');
     const [ori, setOri] = useState('pBR322');
     const [enzyme, setEnzyme] = useState('BsaI');
-    const [researcherRate, setResearcherRate] = useState(150);
-    const [overhead, setOverhead] = useState(1.5);
+    // Cost parameters (all configurable)
+    const [costParams, setCostParams] = useState({
+        researcher_hourly_rate: 150,
+        overhead_multiplier: 1.5,
+        // Synthesis
+        twist_gene_per_bp: 0.07,
+        twist_clonal_per_bp: 0.09,
+        idt_gblock_per_bp: 0.08,
+        // Reagents
+        bsai_per_reaction: 3.00,
+        t4_ligase_per_reaction: 0.25,
+        competent_cells_per_transformation: 10.00,
+        plates_antibiotics: 2.00,
+        colony_pcr_screening: 5.00,
+        miniprep: 5.00,
+        plasmidsaurus_sequencing: 15.00,
+        // Labor
+        golden_gate_setup_hrs: 1.5,
+        colony_screening_hrs: 0.0,
+        miniprep_sequencing_hrs: 1.0,
+        troubleshooting_hrs: 3.0,
+        // Success rates
+        two_part_success_rate: 0.90,
+        three_part_success_rate: 0.80,
+    });
+    const [showAdvancedCosts, setShowAdvancedCosts] = useState(false);
+    const updateCost = (key, val) => setCostParams(prev => ({ ...prev, [key]: +val }));
+
+    // Catalog vector state
+    const [useCatalog, setUseCatalog] = useState(false);
+    const [catalogVector, setCatalogVector] = useState('');
+
+    const handleCatalogChange = (vectorId) => {
+        setCatalogVector(vectorId);
+        if (vectorId && CATALOG_VECTORS[vectorId]) {
+            const v = CATALOG_VECTORS[vectorId];
+            if (v.promoter) setPromoter(v.promoter);
+            if (v.resistance) setResistance(v.resistance);
+            if (v.ori) setOri(v.ori);
+            // Set host for mammalian/lentiviral vectors
+            if (v.host === 'mammalian') setHost('mammalian');
+            else if (v.host === 'e_coli_bl21') setHost('e_coli_bl21');
+            else if (v.host === 'e_coli') setHost('e_coli_bl21');
+        }
+    };
+
+    const catalogProvides = useCatalog && catalogVector && CATALOG_VECTORS[catalogVector]
+        ? new Set(CATALOG_VECTORS[catalogVector].provides)
+        : new Set();
 
     const [cistrons, setCistrons] = useState([
         { label: 'target', expression: 'high', fused: true, geneId: 'mEGFP', geneSource: 'fpbase',
@@ -324,11 +507,15 @@ function App() {
 
         cassette.push({ terminator });
 
+        const backbone = useCatalog && catalogVector
+            ? { catalog_vector: catalogVector }
+            : { resistance, ori, source: 'addgene' };
+
         return {
             construct: {
                 name: constructName,
                 host,
-                backbone: { resistance, ori, source: 'addgene' },
+                backbone,
                 cassette,
                 constraints: { assembly: 'golden_gate', enzyme, codon_optimization: 'local' },
                 synthesis: { vendor: 'twist' },
@@ -349,8 +536,7 @@ function App() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     spec,
-                    researcher_rate: researcherRate,
-                    overhead_multiplier: overhead,
+                    cost_params: costParams,
                 }),
             });
             const data = await resp.json();
@@ -414,7 +600,7 @@ function App() {
                 <div style={{ borderRight: '1px solid #30363d', padding: 20, overflowY: 'auto', maxHeight: 'calc(100vh - 49px)' }}>
                     <h3 style={{ fontSize: 14, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Construct</h3>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
                         <label style={{ ...labelStyle, gridColumn: '1 / -1' }}>
                             <span style={labelTextStyle}>Name</span>
                             <input style={inputStyle} value={constructName} onChange={e => setConstructName(e.target.value)} />
@@ -422,54 +608,142 @@ function App() {
                         <label style={labelStyle}>
                             <span style={labelTextStyle}>Host</span>
                             <select style={inputStyle} value={host} onChange={e => setHost(e.target.value)}>
-                                <option value="e_coli_bl21">E. coli BL21(DE3)</option>
-                                <option value="e_coli">E. coli K-12</option>
-                                <option value="s_cerevisiae">S. cerevisiae</option>
-                            </select>
-                        </label>
-                        <label style={labelStyle}>
-                            <span style={labelTextStyle}>Promoter</span>
-                            <select style={inputStyle} value={promoter} onChange={e => setPromoter(e.target.value)}>
-                                <option value="T7lac">T7lac (IPTG)</option>
-                                <option value="T7">T7</option>
-                                <option value="tac">tac (IPTG)</option>
-                                <option value="araBAD">araBAD (arabinose)</option>
-                                <option value="lacUV5">lacUV5 (IPTG)</option>
-                                <option value="J23100">J23100 (constitutive, strong)</option>
-                                <option value="J23106">J23106 (constitutive, medium)</option>
+                                <optgroup label="Prokaryotic">
+                                    <option value="e_coli_bl21">E. coli BL21(DE3)</option>
+                                    <option value="e_coli">E. coli K-12</option>
+                                </optgroup>
+                                <optgroup label="Eukaryotic">
+                                    <option value="mammalian">Mammalian (HEK293, CHO, etc.)</option>
+                                    <option value="s_cerevisiae">S. cerevisiae</option>
+                                </optgroup>
                             </select>
                         </label>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 16 }}>
-                        <label style={labelStyle}>
-                            <span style={labelTextStyle}>Resistance</span>
-                            <select style={inputStyle} value={resistance} onChange={e => setResistance(e.target.value)}>
-                                <option value="kanamycin">Kanamycin</option>
-                                <option value="ampicillin">Ampicillin</option>
-                                <option value="chloramphenicol">Chloramphenicol</option>
-                                <option value="spectinomycin">Spectinomycin</option>
-                            </select>
-                        </label>
-                        <label style={labelStyle}>
-                            <span style={labelTextStyle}>Origin</span>
-                            <select style={inputStyle} value={ori} onChange={e => setOri(e.target.value)}>
-                                <option value="pBR322">pBR322</option>
-                                <option value="p15A">p15A</option>
-                                <option value="ColA">ColA</option>
-                                <option value="CloDF13">CloDF13</option>
-                                <option value="SC101">SC101</option>
-                            </select>
-                        </label>
-                        <label style={labelStyle}>
-                            <span style={labelTextStyle}>Terminator</span>
-                            <select style={inputStyle} value={terminator} onChange={e => setTerminator(e.target.value)}>
-                                <option value="rrnB_T1">rrnB T1</option>
-                                <option value="T7term">T7 terminator</option>
-                                <option value="BBa_B0015">BBa_B0015 (double)</option>
-                            </select>
-                        </label>
+                    {/* Backbone mode toggle */}
+                    <div style={{ display: 'flex', gap: 4, marginBottom: 12 }}>
+                        <button onClick={() => { setUseCatalog(false); setCatalogVector(''); }}
+                                style={{ ...btnStyle, flex: 1, background: !useCatalog ? '#238636' : '#21262d',
+                                         color: !useCatalog ? '#fff' : '#8b949e', fontSize: 11, padding: '5px 8px' }}>
+                            Custom Backbone
+                        </button>
+                        <button onClick={() => setUseCatalog(true)}
+                                style={{ ...btnStyle, flex: 1, background: useCatalog ? '#238636' : '#21262d',
+                                         color: useCatalog ? '#fff' : '#8b949e', fontSize: 11, padding: '5px 8px' }}>
+                            Twist Catalog Vector
+                        </button>
                     </div>
+
+                    {useCatalog ? (
+                        <div style={{ marginBottom: 16 }}>
+                            <label style={labelStyle}>
+                                <span style={labelTextStyle}>Catalog Vector</span>
+                                <select style={inputStyle} value={catalogVector} onChange={e => handleCatalogChange(e.target.value)}>
+                                    <option value="">-- Select a vector --</option>
+                                    {VECTOR_CATEGORIES.map(cat => (
+                                        <optgroup key={cat.label} label={cat.label}>
+                                            {Object.entries(CATALOG_VECTORS).filter(([_, v]) => cat.filter(v)).map(([id, v]) => (
+                                                <option key={id} value={id}>{id} — {v.description} ({v.size_bp} bp)</option>
+                                            ))}
+                                        </optgroup>
+                                    ))}
+                                </select>
+                            </label>
+                            {catalogVector && CATALOG_VECTORS[catalogVector] && (() => {
+                                const cv = CATALOG_VECTORS[catalogVector];
+                                const isMammalian = cv.host === 'mammalian';
+                                const isLenti = cv.category === 'lentiviral';
+                                return (
+                                <div style={{ background: '#1c2129', border: '1px solid #30363d', borderRadius: 6, padding: '8px 10px', marginTop: 8, fontSize: 12 }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                                        <span style={{ color: '#58a6ff', fontWeight: 600 }}>{catalogVector}</span>
+                                        <span style={{ color: '#8b949e', fontSize: 11 }}>{cv.size_bp.toLocaleString()} bp</span>
+                                    </div>
+                                    <div style={{ color: '#8b949e', lineHeight: 1.5 }}>
+                                        {cv.promoter && <><span style={{ color: '#3fb950' }}>{cv.promoter}</span>{' | '}</>}
+                                        <span>{cv.resistance}</span>
+                                        {' | '}
+                                        <span>{cv.ori} ori</span>
+                                        {isMammalian && <span style={{ marginLeft: 6, color: '#f778ba', fontSize: 10, background: '#2d1a27', padding: '1px 5px', borderRadius: 3 }}>{isLenti ? 'lentiviral' : 'mammalian'}</span>}
+                                    </div>
+                                    {cv.mammalian_selection && (
+                                        <div style={{ marginTop: 4, color: '#f85149', fontSize: 11 }}>
+                                            Mammalian selection: {cv.mammalian_selection}
+                                        </div>
+                                    )}
+                                    {cv.enhancers && cv.enhancers.length > 0 && (
+                                        <div style={{ marginTop: 2, color: '#d29922', fontSize: 11 }}>
+                                            Enhancers: {cv.enhancers.join(', ')}
+                                        </div>
+                                    )}
+                                    {cv.lentiviral_elements && cv.lentiviral_elements.length > 0 && (
+                                        <div style={{ marginTop: 2, color: '#bc8cff', fontSize: 11 }}>
+                                            Lentiviral: {cv.lentiviral_elements.join(', ')}
+                                        </div>
+                                    )}
+                                    {cv.provides.length > 0 && (
+                                        <div style={{ marginTop: 4, color: '#d29922', fontSize: 11 }}>
+                                            Vector provides: {cv.provides.join(', ')}
+                                        </div>
+                                    )}
+                                    {cv.n_tags.length > 0 && (
+                                        <div style={{ marginTop: 2, color: '#bc8cff', fontSize: 11 }}>
+                                            N-tags: {cv.n_tags.join(', ')}
+                                            {cv.cleavage_sites.length > 0 &&
+                                                ` + ${cv.cleavage_sites.join(', ')} cleavage`}
+                                        </div>
+                                    )}
+                                </div>
+                                );
+                            })()}
+                        </div>
+                    ) : (
+                        <React.Fragment>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 8, marginBottom: 8 }}>
+                                <label style={labelStyle}>
+                                    <span style={labelTextStyle}>Promoter</span>
+                                    <select style={inputStyle} value={promoter} onChange={e => setPromoter(e.target.value)}>
+                                        <option value="T7lac">T7lac (IPTG)</option>
+                                        <option value="T7">T7</option>
+                                        <option value="tac">tac (IPTG)</option>
+                                        <option value="araBAD">araBAD (arabinose)</option>
+                                        <option value="lacUV5">lacUV5 (IPTG)</option>
+                                        <option value="J23100">J23100 (constitutive, strong)</option>
+                                        <option value="J23106">J23106 (constitutive, medium)</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 16 }}>
+                                <label style={labelStyle}>
+                                    <span style={labelTextStyle}>Resistance</span>
+                                    <select style={inputStyle} value={resistance} onChange={e => setResistance(e.target.value)}>
+                                        <option value="kanamycin">Kanamycin</option>
+                                        <option value="ampicillin">Ampicillin</option>
+                                        <option value="chloramphenicol">Chloramphenicol</option>
+                                        <option value="spectinomycin">Spectinomycin</option>
+                                    </select>
+                                </label>
+                                <label style={labelStyle}>
+                                    <span style={labelTextStyle}>Origin</span>
+                                    <select style={inputStyle} value={ori} onChange={e => setOri(e.target.value)}>
+                                        <option value="pBR322">pBR322</option>
+                                        <option value="p15A">p15A</option>
+                                        <option value="ColA">ColA</option>
+                                        <option value="CloDF13">CloDF13</option>
+                                        <option value="SC101">SC101</option>
+                                    </select>
+                                </label>
+                                <label style={labelStyle}>
+                                    <span style={labelTextStyle}>Terminator</span>
+                                    <select style={inputStyle} value={terminator} onChange={e => setTerminator(e.target.value)}>
+                                        <option value="rrnB_T1">rrnB T1</option>
+                                        <option value="T7term">T7 terminator</option>
+                                        <option value="BBa_B0015">BBa_B0015 (double)</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </React.Fragment>
+                    )}
 
                     <h3 style={{ fontSize: 14, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10 }}>Cistrons</h3>
 
@@ -483,14 +757,14 @@ function App() {
                     </button>
 
                     <h3 style={{ fontSize: 14, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10 }}>Cost Parameters</h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 16 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 8 }}>
                         <label style={labelStyle}>
                             <span style={labelTextStyle}>$/hr researcher</span>
-                            <input style={inputStyle} type="number" value={researcherRate} onChange={e => setResearcherRate(+e.target.value)} />
+                            <input style={inputStyle} type="number" value={costParams.researcher_hourly_rate} onChange={e => updateCost('researcher_hourly_rate', e.target.value)} />
                         </label>
                         <label style={labelStyle}>
-                            <span style={labelTextStyle}>Overhead</span>
-                            <input style={inputStyle} type="number" step="0.1" value={overhead} onChange={e => setOverhead(+e.target.value)} />
+                            <span style={labelTextStyle}>Overhead mult.</span>
+                            <input style={inputStyle} type="number" step="0.1" value={costParams.overhead_multiplier} onChange={e => updateCost('overhead_multiplier', e.target.value)} />
                         </label>
                         <label style={labelStyle}>
                             <span style={labelTextStyle}>Enzyme</span>
@@ -501,6 +775,63 @@ function App() {
                             </select>
                         </label>
                     </div>
+
+                    <button onClick={() => setShowAdvancedCosts(!showAdvancedCosts)}
+                            style={{ ...btnStyle, background: 'none', color: '#58a6ff', padding: '4px 0', fontSize: 11, marginBottom: showAdvancedCosts ? 8 : 16, width: '100%', textAlign: 'left' }}>
+                        {showAdvancedCosts ? '▾' : '▸'} Synthesis, Reagent & Labor Pricing
+                    </button>
+
+                    {showAdvancedCosts && (
+                        <div style={{ background: '#1c2129', borderRadius: 8, padding: 12, marginBottom: 16, border: '1px solid #30363d' }}>
+                            <div style={{ fontSize: 11, color: '#d29922', fontWeight: 600, marginBottom: 6, textTransform: 'uppercase' }}>Synthesis ($/bp)</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginBottom: 10 }}>
+                                <label style={labelStyle}><span style={labelTextStyle}>Twist gene</span>
+                                    <input style={inputStyle} type="number" step="0.01" value={costParams.twist_gene_per_bp} onChange={e => updateCost('twist_gene_per_bp', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>Twist clonal</span>
+                                    <input style={inputStyle} type="number" step="0.01" value={costParams.twist_clonal_per_bp} onChange={e => updateCost('twist_clonal_per_bp', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>IDT gBlock</span>
+                                    <input style={inputStyle} type="number" step="0.01" value={costParams.idt_gblock_per_bp} onChange={e => updateCost('idt_gblock_per_bp', e.target.value)} /></label>
+                            </div>
+
+                            <div style={{ fontSize: 11, color: '#bc8cff', fontWeight: 600, marginBottom: 6, textTransform: 'uppercase' }}>Reagents ($)</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 10 }}>
+                                <label style={labelStyle}><span style={labelTextStyle}>BsaI / rxn</span>
+                                    <input style={inputStyle} type="number" step="0.50" value={costParams.bsai_per_reaction} onChange={e => updateCost('bsai_per_reaction', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>T4 ligase / rxn</span>
+                                    <input style={inputStyle} type="number" step="0.05" value={costParams.t4_ligase_per_reaction} onChange={e => updateCost('t4_ligase_per_reaction', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>Competent cells</span>
+                                    <input style={inputStyle} type="number" step="1" value={costParams.competent_cells_per_transformation} onChange={e => updateCost('competent_cells_per_transformation', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>Plates + abx</span>
+                                    <input style={inputStyle} type="number" step="0.50" value={costParams.plates_antibiotics} onChange={e => updateCost('plates_antibiotics', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>Colony PCR (4x)</span>
+                                    <input style={inputStyle} type="number" step="0.50" value={costParams.colony_pcr_screening} onChange={e => updateCost('colony_pcr_screening', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>Miniprep kit</span>
+                                    <input style={inputStyle} type="number" step="0.50" value={costParams.miniprep} onChange={e => updateCost('miniprep', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={{ ...labelTextStyle, gridColumn: '1 / -1' }}>Plasmidsaurus seq</span>
+                                    <input style={inputStyle} type="number" step="1" value={costParams.plasmidsaurus_sequencing} onChange={e => updateCost('plasmidsaurus_sequencing', e.target.value)} /></label>
+                            </div>
+
+                            <div style={{ fontSize: 11, color: '#58a6ff', fontWeight: 600, marginBottom: 6, textTransform: 'uppercase' }}>Labor (hours)</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 10 }}>
+                                <label style={labelStyle}><span style={labelTextStyle}>GG setup</span>
+                                    <input style={inputStyle} type="number" step="0.25" value={costParams.golden_gate_setup_hrs} onChange={e => updateCost('golden_gate_setup_hrs', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>Colony screen</span>
+                                    <input style={inputStyle} type="number" step="0.25" value={costParams.colony_screening_hrs} onChange={e => updateCost('colony_screening_hrs', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>Miniprep + seq</span>
+                                    <input style={inputStyle} type="number" step="0.25" value={costParams.miniprep_sequencing_hrs} onChange={e => updateCost('miniprep_sequencing_hrs', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>Troubleshoot</span>
+                                    <input style={inputStyle} type="number" step="0.5" value={costParams.troubleshooting_hrs} onChange={e => updateCost('troubleshooting_hrs', e.target.value)} /></label>
+                            </div>
+
+                            <div style={{ fontSize: 11, color: '#f85149', fontWeight: 600, marginBottom: 6, textTransform: 'uppercase' }}>Success rates</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+                                <label style={labelStyle}><span style={labelTextStyle}>2-part GG</span>
+                                    <input style={inputStyle} type="number" step="0.05" min="0" max="1" value={costParams.two_part_success_rate} onChange={e => updateCost('two_part_success_rate', e.target.value)} /></label>
+                                <label style={labelStyle}><span style={labelTextStyle}>3-part GG</span>
+                                    <input style={inputStyle} type="number" step="0.05" min="0" max="1" value={costParams.three_part_success_rate} onChange={e => updateCost('three_part_success_rate', e.target.value)} /></label>
+                            </div>
+                        </div>
+                    )}
 
                     <button onClick={handleCompile} disabled={loading}
                             style={{ ...btnStyle, background: loading ? '#21262d' : '#238636', color: '#fff', width: '100%', padding: '12px 16px', fontSize: 15 }}>
@@ -544,29 +875,12 @@ function App() {
                             {/* Map tab */}
                             {activeTab === 'map' && (
                                 <div>
-                                    <PlasmidMap parts={result.parts} constructName={result.construct_name} insertLength={result.insert_length_bp} />
+                                    <PlasmidMap plasmidMap={result.plasmid_map} />
                                     {result.warnings?.length > 0 && (
                                         <div style={{ marginTop: 16, padding: 10, background: '#2d2600', border: '1px solid #d29922', borderRadius: 6, fontSize: 12, color: '#d29922' }}>
                                             {result.warnings.map((w, i) => <div key={i}>{w}</div>)}
                                         </div>
                                     )}
-                                    {/* Summary stats */}
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginTop: 20 }}>
-                                        <div style={{ background: '#161b22', borderRadius: 8, padding: 14, border: '1px solid #30363d' }}>
-                                            <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Insert</div>
-                                            <div style={{ fontSize: 22, fontWeight: 700, color: '#e1e4e8' }}>{result.insert_length_bp?.toLocaleString()} bp</div>
-                                        </div>
-                                        <div style={{ background: '#161b22', borderRadius: 8, padding: 14, border: '1px solid #30363d' }}>
-                                            <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Best cost</div>
-                                            <div style={{ fontSize: 22, fontWeight: 700, color: '#3fb950' }}>
-                                                ${result.strategies.find(s => s.recommended)?.total_cost?.toFixed(0) || '?'}
-                                            </div>
-                                        </div>
-                                        <div style={{ background: '#161b22', borderRadius: 8, padding: 14, border: '1px solid #30363d' }}>
-                                            <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase' }}>Parts</div>
-                                            <div style={{ fontSize: 22, fontWeight: 700, color: '#e1e4e8' }}>{result.parts.length}</div>
-                                        </div>
-                                    </div>
                                 </div>
                             )}
 
@@ -576,30 +890,72 @@ function App() {
                                     <h3 style={{ fontSize: 16, marginBottom: 16, color: '#e1e4e8' }}>Assembly Strategy Comparison</h3>
                                     <CostChart strategies={result.strategies} />
 
-                                    {/* Detailed breakdown for recommended */}
-                                    {(() => {
-                                        const rec = result.strategies.find(s => s.recommended);
-                                        if (!rec) return null;
+                                    {/* Itemized breakdown for each strategy */}
+                                    {result.strategies.map((strat, si) => {
+                                        const isRec = strat.recommended;
+                                        const catColors = { synthesis: '#d29922', reagent: '#bc8cff', labor: '#58a6ff', risk: '#f85149' };
+                                        const catLabels = { synthesis: 'Synthesis', reagent: 'Reagents', labor: 'Labor', risk: 'Risk' };
+                                        const items = strat.line_items || [];
+                                        const categories = ['synthesis', 'reagent', 'labor', 'risk'];
                                         return (
-                                            <div style={{ marginTop: 24, background: '#161b22', borderRadius: 8, padding: 16, border: '1px solid #238636' }}>
-                                                <h4 style={{ color: '#3fb950', marginBottom: 10 }}>Recommended: {rec.name}</h4>
-                                                <table style={{ width: '100%', fontSize: 13, borderCollapse: 'collapse' }}>
-                                                    <tbody>
-                                                        <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Synthesis</td><td style={{ textAlign: 'right' }}>${rec.synthesis_cost.toFixed(2)}</td></tr>
-                                                        <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Reagents (with {overhead}x overhead)</td><td style={{ textAlign: 'right' }}>${rec.reagent_cost.toFixed(2)}</td></tr>
-                                                        <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Researcher ({rec.researcher_hours}h @ ${researcherRate}/hr)</td><td style={{ textAlign: 'right' }}>${rec.researcher_cost.toFixed(2)}</td></tr>
-                                                        <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Failure risk surcharge</td><td style={{ textAlign: 'right' }}>${rec.risk_surcharge.toFixed(2)}</td></tr>
-                                                        <tr style={{ borderTop: '1px solid #30363d' }}><td style={{ padding: '8px 0', fontWeight: 700, color: '#3fb950' }}>Total</td><td style={{ textAlign: 'right', fontWeight: 700, color: '#3fb950' }}>${rec.total_cost.toFixed(2)}</td></tr>
-                                                    </tbody>
-                                                </table>
-                                                <div style={{ marginTop: 8, fontSize: 12, color: '#8b949e' }}>
-                                                    {rec.wall_clock_days[0]}-{rec.wall_clock_days[1]} business days | {rec.num_fragments} fragment(s)
-                                                    {rec.overhangs.length > 0 && ` | Overhangs: ${rec.overhangs.join(' / ')}`}
+                                            <div key={si} style={{ marginTop: 16, background: '#161b22', borderRadius: 8, padding: 16,
+                                                                    border: isRec ? '1px solid #238636' : '1px solid #30363d' }}>
+                                                <h4 style={{ color: isRec ? '#3fb950' : '#e1e4e8', marginBottom: 10, fontSize: 14 }}>
+                                                    {isRec && 'Recommended: '}{strat.name}
+                                                </h4>
+                                                {items.length > 0 ? (
+                                                    <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse' }}>
+                                                        <tbody>
+                                                            {categories.map(cat => {
+                                                                const catItems = items.filter(i => i.category === cat);
+                                                                if (!catItems.length) return null;
+                                                                const catTotal = catItems.reduce((s, i) => s + i.subtotal, 0);
+                                                                return (
+                                                                    <React.Fragment key={cat}>
+                                                                        <tr><td colSpan={2} style={{ padding: '6px 0 2px', fontWeight: 600, fontSize: 11,
+                                                                                                      color: catColors[cat], textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                                                                            {catLabels[cat]} — ${catTotal.toFixed(2)}
+                                                                        </td></tr>
+                                                                        {catItems.map((item, ii) => (
+                                                                            <tr key={ii}>
+                                                                                <td style={{ padding: '2px 0 2px 12px', color: '#8b949e' }}>{item.description}</td>
+                                                                                <td style={{ textAlign: 'right', padding: '2px 0', color: '#e1e4e8', whiteSpace: 'nowrap' }}>
+                                                                                    ${item.subtotal.toFixed(2)}
+                                                                                    {item.multiplier > 1 && <span style={{ color: '#484f58', fontSize: 10 }}> ({item.multiplier}x)</span>}
+                                                                                </td>
+                                                                            </tr>
+                                                                        ))}
+                                                                    </React.Fragment>
+                                                                );
+                                                            })}
+                                                            <tr style={{ borderTop: '1px solid #30363d' }}>
+                                                                <td style={{ padding: '8px 0', fontWeight: 700, color: isRec ? '#3fb950' : '#e1e4e8' }}>Total</td>
+                                                                <td style={{ textAlign: 'right', fontWeight: 700, color: isRec ? '#3fb950' : '#e1e4e8' }}>
+                                                                    ${strat.total_cost.toFixed(2)}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                ) : (
+                                                    <table style={{ width: '100%', fontSize: 13, borderCollapse: 'collapse' }}>
+                                                        <tbody>
+                                                            <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Synthesis</td><td style={{ textAlign: 'right' }}>${strat.synthesis_cost.toFixed(2)}</td></tr>
+                                                            <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Reagents</td><td style={{ textAlign: 'right' }}>${strat.reagent_cost.toFixed(2)}</td></tr>
+                                                            <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Researcher ({strat.researcher_hours}h)</td><td style={{ textAlign: 'right' }}>${strat.researcher_cost.toFixed(2)}</td></tr>
+                                                            <tr><td style={{ padding: '4px 0', color: '#8b949e' }}>Failure risk</td><td style={{ textAlign: 'right' }}>${strat.risk_surcharge.toFixed(2)}</td></tr>
+                                                            <tr style={{ borderTop: '1px solid #30363d' }}><td style={{ padding: '8px 0', fontWeight: 700, color: isRec ? '#3fb950' : '#e1e4e8' }}>Total</td><td style={{ textAlign: 'right', fontWeight: 700, color: isRec ? '#3fb950' : '#e1e4e8' }}>${strat.total_cost.toFixed(2)}</td></tr>
+                                                        </tbody>
+                                                    </table>
+                                                )}
+                                                <div style={{ marginTop: 8, fontSize: 11, color: '#8b949e' }}>
+                                                    {strat.wall_clock_days[0]}-{strat.wall_clock_days[1]} business days | {strat.num_fragments} fragment(s)
+                                                    {strat.researcher_hours > 0 && ` | ${strat.researcher_hours}h hands-on`}
+                                                    {strat.overhangs.length > 0 && ` | Overhangs: ${strat.overhangs.join(' / ')}`}
                                                 </div>
-                                                {rec.notes.map((n, i) => <div key={i} style={{ marginTop: 4, fontSize: 12, color: '#8b949e' }}>{n}</div>)}
+                                                {strat.notes.map((n, i) => <div key={i} style={{ marginTop: 3, fontSize: 11, color: '#8b949e' }}>{n}</div>)}
                                             </div>
                                         );
-                                    })()}
+                                    })}
                                 </div>
                             )}
 

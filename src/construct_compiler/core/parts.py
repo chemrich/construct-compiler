@@ -67,6 +67,7 @@ class Origin(Enum):
     RSF1030 = "RSF1030"
     COLDF = "CloDF13"
     SC101 = "SC101"
+    PUC = "pUC"
     CUSTOM = "custom"
 
 
@@ -78,6 +79,15 @@ class Backbone(GeneticPart):
     source: str = ""          # e.g. "addgene:26094" or "local"
     addgene_id: Optional[int] = None
     linearization_site: str = ""  # enzyme used to linearize for cloning
+
+    # Catalog vector support
+    catalog_id: Optional[str] = None      # e.g. "pET-28a(+)"
+    catalog_vendor: str = ""              # e.g. "twist"
+    provides: list[str] = field(default_factory=list)  # elements on vector: ["promoter", "rbs", "n_tag", ...]
+
+    @property
+    def is_catalog_vector(self) -> bool:
+        return bool(self.catalog_id)
 
     @property
     def ports(self) -> list[Port]:

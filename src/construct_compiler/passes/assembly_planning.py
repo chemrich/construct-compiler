@@ -55,11 +55,11 @@ class CostParams:
     plates_antibiotics: float = 2.00
     colony_pcr_screening: float = 5.00    # 4 colonies
     miniprep: float = 5.00
-    plasmid_sequencing: float = 15.00
+    plasmidsaurus_sequencing: float = 15.00  # whole-plasmid sequencing, overnight
 
     # Time estimates (hours, hands-on)
     golden_gate_setup_hrs: float = 1.5
-    colony_screening_hrs: float = 1.0
+    colony_screening_hrs: float = 0.0     # automated by colony picking robot
     miniprep_sequencing_hrs: float = 1.0
     troubleshooting_hrs: float = 3.0       # if reattempt needed
     receive_verify_hrs: float = 0.5        # receive synthesis, verify
@@ -84,7 +84,7 @@ class CostParams:
             + self.plates_antibiotics
             + self.colony_pcr_screening
             + self.miniprep
-            + self.plasmid_sequencing
+            + self.plasmidsaurus_sequencing
         )
 
     @property
@@ -111,6 +111,22 @@ class SynthesisFragment:
 
 
 @dataclass
+class CostLineItem:
+    """A single line item in an itemized cost breakdown."""
+    category: str           # "synthesis", "reagent", "labor", "risk"
+    description: str        # human-readable, e.g. "Twist clonal gene synthesis (939 bp @ $0.09/bp)"
+    unit_cost: float = 0.0  # cost before any multiplier
+    quantity: float = 1.0
+    multiplier: float = 1.0  # e.g. overhead multiplier
+    subtotal: float = 0.0   # final cost for this item
+    hours: float = 0.0      # only for labor items
+
+    def __post_init__(self):
+        if self.subtotal == 0.0:
+            self.subtotal = self.unit_cost * self.quantity * self.multiplier
+
+
+@dataclass
 class AssemblyStrategy:
     """A complete strategy for building a construct."""
     name: str
@@ -119,7 +135,10 @@ class AssemblyStrategy:
     fragments: list[SynthesisFragment] = field(default_factory=list)
     overhangs: list[str] = field(default_factory=list)
 
-    # Costs
+    # Itemized cost breakdown
+    line_items: list[CostLineItem] = field(default_factory=list)
+
+    # Summary costs (computed from line items)
     synthesis_cost: float = 0.0
     reagent_cost: float = 0.0           # before overhead
     reagent_cost_with_overhead: float = 0.0
@@ -196,6 +215,13 @@ def plan_assembly(graph: ConstructGraph,
     insert_seq = graph.full_insert_sequence()
     insert_len = len(insert_seq) if insert_seq else _estimate_insert_length(graph)
 
+    # Detect catalog vector from backbone
+    catalog_vector = ""
+    for part in graph.parts():
+        if isinstance(part, Backbone) and part.catalog_id:
+            catalog_vector = part.catalog_id
+            break
+
     plan = AssemblyPlan(
         construct_name=graph.name,
         insert_length_bp=insert_len,
@@ -204,7 +230,7 @@ def plan_assembly(graph: ConstructGraph,
     # Strategy 1: Twist clonal gene (delivered in your backbone)
     if insert_len <= cost_params.twist_max_clonal_length:
         plan.strategies.append(
-            _strategy_twist_clonal(insert_len, insert_seq, cost_params)
+            _strategy_twist_clonal(insert_len, insert_seq, cost_params, catalog_vector)
         )
 
     # Strategy 2: Single synthesis fragment + 2-part Golden Gate
@@ -243,28 +269,54 @@ def plan_assembly(graph: ConstructGraph,
 # Strategy builders
 # ---------------------------------------------------------------------------
 
-def _strategy_twist_clonal(insert_len: int, insert_seq, params: CostParams) -> AssemblyStrategy:
-    """Full insert synthesized and cloned by Twist into your backbone."""
+def _strategy_twist_clonal(insert_len: int, insert_seq, params: CostParams,
+                           catalog_vector: str = "") -> AssemblyStrategy:
+    """
+    Full insert synthesized and cloned by Twist into your backbone.
+
+    Twist delivers a sequence-verified (NGS), miniprepped plasmid from a
+    RecA⁻ cloning strain. No re-transformation, miniprep, or re-sequencing
+    is needed. The plasmid is ready to use directly. The only cost is
+    Twist's per-bp synthesis + cloning fee.
+    """
     synth_cost = insert_len * params.twist_clonal_per_bp
 
-    # Researcher just receives tube, transforms to verify, minipreps, sequences
-    researcher_hrs = params.receive_verify_hrs + params.miniprep_sequencing_hrs
-    researcher_cost = researcher_hrs * params.researcher_hourly_rate
+    items: list[CostLineItem] = []
 
-    # Minimal reagents: just transformation + verification
-    reagent = (
-        params.competent_cells_per_transformation
-        + params.plates_antibiotics
-        + params.miniprep
-        + params.plasmid_sequencing
-    )
-    reagent_overhead = reagent * params.overhead_multiplier
+    items.append(CostLineItem(
+        category="synthesis",
+        description=f"Twist clonal gene synthesis + cloning ({insert_len} bp @ ${params.twist_clonal_per_bp}/bp)",
+        unit_cost=params.twist_clonal_per_bp,
+        quantity=insert_len,
+        subtotal=synth_cost,
+    ))
 
-    total = synth_cost + reagent_overhead + researcher_cost
+    # No reagent or labor costs — Twist delivers ready-to-use plasmid:
+    # - NGS sequence-verified (no Sanger needed)
+    # - Miniprepped from RecA⁻ strain (no re-miniprep)
+    # - Ready for direct use in expression experiments
+
+    total = synth_cost
+
+    notes = [
+        "Twist delivers sequence-verified, miniprepped plasmid",
+        "No in-house cloning, verification, or benchwork required",
+        "Zero researcher time — order and receive",
+    ]
+    if catalog_vector:
+        notes.append(f"Uses Twist stock vector: {catalog_vector}")
+        notes.append("No custom vector onboarding — faster turnaround")
+    else:
+        notes.append("Requires providing backbone map to Twist (one-time onboarding)")
+
+    turnaround = params.twist_standard_days
+    if catalog_vector:
+        turnaround = (max(turnaround[0] - 2, 5), max(turnaround[1] - 2, 10))
 
     return AssemblyStrategy(
-        name="Twist Clonal Gene",
-        description="Full insert synthesized and cloned by Twist into your backbone",
+        name="Twist Clonal Gene" + (f" ({catalog_vector})" if catalog_vector else ""),
+        description="Full insert synthesized, cloned, and delivered as ready-to-use plasmid by Twist"
+                    + (f" in stock vector {catalog_vector}" if catalog_vector else ""),
         num_fragments=1,
         fragments=[SynthesisFragment(
             name="full_insert",
@@ -273,33 +325,39 @@ def _strategy_twist_clonal(insert_len: int, insert_seq, params: CostParams) -> A
             vendor="twist_clonal",
             cost=synth_cost,
         )],
+        line_items=items,
         synthesis_cost=synth_cost,
-        reagent_cost=reagent,
-        reagent_cost_with_overhead=reagent_overhead,
-        researcher_time_hrs=researcher_hrs,
-        researcher_cost=researcher_cost,
-        failure_risk_surcharge=0.0,  # Twist guarantees the clone
+        reagent_cost=0.0,
+        reagent_cost_with_overhead=0.0,
+        researcher_time_hrs=0.0,
+        researcher_cost=0.0,
+        failure_risk_surcharge=0.0,
         total_cost=total,
-        synthesis_turnaround_days=params.twist_standard_days,
-        benchwork_days=1,
-        total_wall_clock_days=(
-            params.twist_standard_days[0] + 1,
-            params.twist_standard_days[1] + 2,
-        ),
-        notes=["Twist handles cloning — lowest hands-on effort",
-               "Requires providing backbone map to Twist"],
+        synthesis_turnaround_days=turnaround,
+        benchwork_days=0,
+        total_wall_clock_days=turnaround,
+        notes=notes,
     )
 
 
 def _strategy_synthesis_2part(insert_len: int, insert_seq, params: CostParams) -> AssemblyStrategy:
     """Synthesize insert as one fragment, Golden Gate into backbone."""
     synth_cost = insert_len * params.twist_gene_per_bp
+
+    items = _build_gg_line_items(
+        insert_len=insert_len,
+        per_bp_rate=params.twist_gene_per_bp,
+        vendor_label="Twist gene fragment",
+        num_fragments=1,
+        params=params,
+        success_rate=params.two_part_success_rate,
+    )
+
     reagent = params.reagent_cost_per_assembly
     reagent_overhead = reagent * params.overhead_multiplier
     researcher_hrs = params.hands_on_hours_per_assembly
     researcher_cost = researcher_hrs * params.researcher_hourly_rate
 
-    # Risk-adjusted failure surcharge
     failure_prob = 1.0 - params.two_part_success_rate
     reattempt_cost = (
         params.reagent_cost_per_assembly * params.overhead_multiplier
@@ -308,8 +366,6 @@ def _strategy_synthesis_2part(insert_len: int, insert_seq, params: CostParams) -
     risk_surcharge = failure_prob * reattempt_cost
 
     total = synth_cost + reagent_overhead + researcher_cost + risk_surcharge
-
-    # Assign overhangs for 2-part assembly
     overhangs = _select_overhangs(2)
 
     return AssemblyStrategy(
@@ -324,6 +380,7 @@ def _strategy_synthesis_2part(insert_len: int, insert_seq, params: CostParams) -
             cost=synth_cost,
         )],
         overhangs=overhangs,
+        line_items=items,
         synthesis_cost=synth_cost,
         reagent_cost=reagent,
         reagent_cost_with_overhead=reagent_overhead,
@@ -344,22 +401,27 @@ def _strategy_synthesis_2part(insert_len: int, insert_seq, params: CostParams) -
 def _strategy_synthesis_3part(insert_len: int, insert_seq, graph: ConstructGraph,
                                params: CostParams) -> AssemblyStrategy:
     """Split insert into two fragments, 3-part Golden Gate with backbone."""
-    # Find the best split point (prefer between cistrons/functional units)
     split_point = _find_best_split(insert_len, graph)
-
     frag1_len = split_point
     frag2_len = insert_len - split_point
 
-    synth_cost = (
-        frag1_len * params.twist_gene_per_bp
-        + frag2_len * params.twist_gene_per_bp
+    synth_cost = (frag1_len + frag2_len) * params.twist_gene_per_bp
+
+    items = _build_gg_line_items(
+        insert_len=insert_len,
+        per_bp_rate=params.twist_gene_per_bp,
+        vendor_label="Twist gene fragments",
+        num_fragments=2,
+        params=params,
+        success_rate=params.three_part_success_rate,
+        frag_lengths=[frag1_len, frag2_len],
     )
+
     reagent = params.reagent_cost_per_assembly
     reagent_overhead = reagent * params.overhead_multiplier
     researcher_hrs = params.hands_on_hours_per_assembly
     researcher_cost = researcher_hrs * params.researcher_hourly_rate
 
-    # Higher failure risk for 3-part
     failure_prob = 1.0 - params.three_part_success_rate
     reattempt_cost = (
         params.reagent_cost_per_assembly * params.overhead_multiplier
@@ -368,7 +430,6 @@ def _strategy_synthesis_3part(insert_len: int, insert_seq, graph: ConstructGraph
     risk_surcharge = failure_prob * reattempt_cost
 
     total = synth_cost + reagent_overhead + researcher_cost + risk_surcharge
-
     overhangs = _select_overhangs(3)
 
     return AssemblyStrategy(
@@ -377,22 +438,13 @@ def _strategy_synthesis_3part(insert_len: int, insert_seq, graph: ConstructGraph
                     f"3-part Golden Gate with backbone",
         num_fragments=3,
         fragments=[
-            SynthesisFragment(
-                name="insert_frag1",
-                sequence="",
-                length_bp=frag1_len,
-                vendor="twist",
-                cost=frag1_len * params.twist_gene_per_bp,
-            ),
-            SynthesisFragment(
-                name="insert_frag2",
-                sequence="",
-                length_bp=frag2_len,
-                vendor="twist",
-                cost=frag2_len * params.twist_gene_per_bp,
-            ),
+            SynthesisFragment(name="insert_frag1", sequence="", length_bp=frag1_len,
+                              vendor="twist", cost=frag1_len * params.twist_gene_per_bp),
+            SynthesisFragment(name="insert_frag2", sequence="", length_bp=frag2_len,
+                              vendor="twist", cost=frag2_len * params.twist_gene_per_bp),
         ],
         overhangs=overhangs,
+        line_items=items,
         synthesis_cost=synth_cost,
         reagent_cost=reagent,
         reagent_cost_with_overhead=reagent_overhead,
@@ -416,6 +468,16 @@ def _strategy_synthesis_3part(insert_len: int, insert_seq, graph: ConstructGraph
 def _strategy_idt_gblock_2part(insert_len: int, insert_seq, params: CostParams) -> AssemblyStrategy:
     """Use IDT gBlock for short inserts — faster turnaround."""
     synth_cost = insert_len * params.idt_gblock_per_bp
+
+    items = _build_gg_line_items(
+        insert_len=insert_len,
+        per_bp_rate=params.idt_gblock_per_bp,
+        vendor_label="IDT gBlock",
+        num_fragments=1,
+        params=params,
+        success_rate=params.two_part_success_rate,
+    )
+
     reagent = params.reagent_cost_per_assembly
     reagent_overhead = reagent * params.overhead_multiplier
     researcher_hrs = params.hands_on_hours_per_assembly
@@ -429,7 +491,6 @@ def _strategy_idt_gblock_2part(insert_len: int, insert_seq, params: CostParams) 
     risk_surcharge = failure_prob * reattempt_cost
 
     total = synth_cost + reagent_overhead + researcher_cost + risk_surcharge
-
     overhangs = _select_overhangs(2)
 
     return AssemblyStrategy(
@@ -444,6 +505,7 @@ def _strategy_idt_gblock_2part(insert_len: int, insert_seq, params: CostParams) 
             cost=synth_cost,
         )],
         overhangs=overhangs,
+        line_items=items,
         synthesis_cost=synth_cost,
         reagent_cost=reagent,
         reagent_cost_with_overhead=reagent_overhead,
@@ -467,6 +529,127 @@ def _strategy_idt_gblock_2part(insert_len: int, insert_seq, params: CostParams) 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def _build_gg_line_items(insert_len: int, per_bp_rate: float, vendor_label: str,
+                         num_fragments: int, params: CostParams,
+                         success_rate: float,
+                         frag_lengths: list[int] | None = None) -> list[CostLineItem]:
+    """Build itemized cost breakdown for a Golden Gate assembly strategy."""
+    items: list[CostLineItem] = []
+    synth_cost = insert_len * per_bp_rate
+
+    # Synthesis
+    if frag_lengths and len(frag_lengths) > 1:
+        for i, fl in enumerate(frag_lengths, 1):
+            items.append(CostLineItem(
+                category="synthesis",
+                description=f"{vendor_label} #{i} ({fl} bp @ ${per_bp_rate}/bp)",
+                unit_cost=per_bp_rate,
+                quantity=fl,
+                subtotal=fl * per_bp_rate,
+            ))
+    else:
+        items.append(CostLineItem(
+            category="synthesis",
+            description=f"{vendor_label} ({insert_len} bp @ ${per_bp_rate}/bp)",
+            unit_cost=per_bp_rate,
+            quantity=insert_len,
+            subtotal=synth_cost,
+        ))
+
+    # Assembly reagents
+    items.append(CostLineItem(
+        category="reagent",
+        description=f"BsaI restriction enzyme",
+        unit_cost=params.bsai_per_reaction,
+        multiplier=params.overhead_multiplier,
+        subtotal=params.bsai_per_reaction * params.overhead_multiplier,
+    ))
+    items.append(CostLineItem(
+        category="reagent",
+        description="T4 DNA ligase",
+        unit_cost=params.t4_ligase_per_reaction,
+        multiplier=params.overhead_multiplier,
+        subtotal=params.t4_ligase_per_reaction * params.overhead_multiplier,
+    ))
+    items.append(CostLineItem(
+        category="reagent",
+        description="Competent cells (transformation)",
+        unit_cost=params.competent_cells_per_transformation,
+        multiplier=params.overhead_multiplier,
+        subtotal=params.competent_cells_per_transformation * params.overhead_multiplier,
+    ))
+    items.append(CostLineItem(
+        category="reagent",
+        description="Plates + antibiotics",
+        unit_cost=params.plates_antibiotics,
+        multiplier=params.overhead_multiplier,
+        subtotal=params.plates_antibiotics * params.overhead_multiplier,
+    ))
+    items.append(CostLineItem(
+        category="reagent",
+        description="Colony PCR screening (4 colonies)",
+        unit_cost=params.colony_pcr_screening,
+        multiplier=params.overhead_multiplier,
+        subtotal=params.colony_pcr_screening * params.overhead_multiplier,
+    ))
+    items.append(CostLineItem(
+        category="reagent",
+        description="Miniprep kit",
+        unit_cost=params.miniprep,
+        multiplier=params.overhead_multiplier,
+        subtotal=params.miniprep * params.overhead_multiplier,
+    ))
+    items.append(CostLineItem(
+        category="reagent",
+        description="Plasmidsaurus whole-plasmid sequencing",
+        unit_cost=params.plasmidsaurus_sequencing,
+        multiplier=params.overhead_multiplier,
+        subtotal=params.plasmidsaurus_sequencing * params.overhead_multiplier,
+    ))
+
+    # Labor
+    items.append(CostLineItem(
+        category="labor",
+        description=f"Golden Gate setup + digest/ligate ({params.golden_gate_setup_hrs}h)",
+        unit_cost=params.researcher_hourly_rate,
+        quantity=params.golden_gate_setup_hrs,
+        subtotal=params.golden_gate_setup_hrs * params.researcher_hourly_rate,
+        hours=params.golden_gate_setup_hrs,
+    ))
+    items.append(CostLineItem(
+        category="labor",
+        description=f"Colony screening ({params.colony_screening_hrs}h)",
+        unit_cost=params.researcher_hourly_rate,
+        quantity=params.colony_screening_hrs,
+        subtotal=params.colony_screening_hrs * params.researcher_hourly_rate,
+        hours=params.colony_screening_hrs,
+    ))
+    items.append(CostLineItem(
+        category="labor",
+        description=f"Miniprep + sequencing ({params.miniprep_sequencing_hrs}h)",
+        unit_cost=params.researcher_hourly_rate,
+        quantity=params.miniprep_sequencing_hrs,
+        subtotal=params.miniprep_sequencing_hrs * params.researcher_hourly_rate,
+        hours=params.miniprep_sequencing_hrs,
+    ))
+
+    # Risk
+    failure_prob = 1.0 - success_rate
+    reattempt_cost = (
+        params.reagent_cost_per_assembly * params.overhead_multiplier
+        + params.troubleshooting_hrs * params.researcher_hourly_rate
+    )
+    risk_surcharge = failure_prob * reattempt_cost
+    if risk_surcharge > 0:
+        items.append(CostLineItem(
+            category="risk",
+            description=f"Failure risk ({failure_prob*100:.0f}% chance x ${reattempt_cost:.0f} reattempt)",
+            subtotal=risk_surcharge,
+        ))
+
+    return items
+
 
 def _select_overhangs(num_junctions: int) -> list[str]:
     """
