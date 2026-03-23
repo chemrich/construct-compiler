@@ -39,6 +39,12 @@ The web UI gives you a visual construct builder with:
 - Side-by-side cost comparison of assembly strategies
 - One-click GenBank export and YAML spec download
 
+![Plasmid Map](docs/images/web_ui_plasmid_map.png)
+
+| Cost Analysis | Parts List |
+|:---:|:---:|
+| ![Cost Analysis](docs/images/web_ui_cost_analysis.png) | ![Parts List](docs/images/web_ui_parts_list.png) |
+
 ### 2. CLI
 
 ```bash
