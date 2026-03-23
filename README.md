@@ -4,14 +4,9 @@ A genetic construct design compiler for *in silico* DNA automation. Write a decl
 
 Supports **E. coli**, **mammalian**, and **lentiviral** expression systems with 23 catalog vectors spanning Twist Bioscience's full product line.
 
-```
-                                                ┌──────────────┐
-                  ┌──────────────┐              │   Annotated   │
- YAML spec  ───▶  │   IR graph    │──  passes ──▶│   plasmid map │
- or Web UI       │  (typed DAG)  │              │   + GenBank   │
-                  └──────────────┘              │   + cost plan │
-                                                └──────────────┘
-```
+<p align="center">
+  <img src="docs/images/pipeline.svg" alt="Compilation Pipeline" width="700"/>
+</p>
 
 ---
 
@@ -38,40 +33,11 @@ python -m construct_compiler.server
 
 The web UI gives you a visual construct builder with:
 
-- Drag-and-drop cistron configuration (tags, cleavage sites, solubility tags, gene IDs)
-- Catalog vector selector with **optgroup** categories (E. coli, Mammalian, Lentiviral, Cloning/Gateway)
-- Interactive plasmid map via [seqviz](https://github.com/Lattice-Automation/seqviz) — circular, linear, or split view with annotations, amino acid translations, and enzyme cut sites
-- Fully configurable cost parameters for contract pricing
-- One-click GenBank export
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  Construct Compiler                                    [Compile]    │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌─ Backbone ──────────┐    ┌─ Plasmid Map ──────────────────────┐ │
-│  │ ● Catalog Vector     │    │                                    │ │
-│  │   [pET-28b(+)    ▼] │    │          ╭──── T7lac ────╮         │ │
-│  │   Kan | pBR322 ori   │    │       RBS ─╮         ╭─ lacI      │ │
-│  │   T7lac | N-His₆     │    │     His₆ ──┤         ├── Kan(r)   │ │
-│  │                      │    │   Thrombin ─┤         ├── f1 ori   │ │
-│  ├─ Cistron 1 ─────────┤    │    ╭── INSERT ──╮  ╭─ pBR322 ori  │ │
-│  │ 6xHis → TEV → MBP   │    │    │ His│TEV│MBP│  │              │ │
-│  │ Gene: mEGFP (FPbase) │    │    │   mEGFP   │  │              │ │
-│  │ Expression: high      │    │    ╰───────────╯  │              │ │
-│  ├─ Cistron 2 ─────────┤    │       T7 term ─────╯              │ │
-│  │ Gene: mScarlet        │    │                                    │ │
-│  │ Expression: low       │    └────────────────────────────────────┘ │
-│  └──────────────────────┘                                           │
-│                                                                     │
-│  ┌─ Cost Comparison ────────────────────────────────────────────┐  │
-│  │ Strategy              Synthesis  Reagents  Labor     Total    │  │
-│  │ Twist Clonal ★        $271.35   $0.00     $0.00     $271.35  │  │
-│  │ 2-Part Golden Gate    $211.05   $37.88    $375.00   $623.93  │  │
-│  │ IDT gBlock + 2-Part   $241.20   $37.88    $375.00   $654.08  │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────┘
-```
+- Catalog vector selector with categorized dropdown (E. coli, Mammalian, Lentiviral, Cloning/Gateway)
+- Per-cistron configuration: expression level, gene source (FPbase/UniProt), N-term tags, cleavage sites, solubility tags
+- Interactive plasmid map via [seqviz](https://github.com/Lattice-Automation/seqviz) — circular, linear, or split view with color-coded annotations
+- Side-by-side cost comparison of assembly strategies
+- One-click GenBank export and YAML spec download
 
 ### 2. CLI
 
@@ -123,35 +89,21 @@ graph, plan = compile_construct("spec.yaml", cost_params=params)
 
 The compiler lowers a high-level construct description through four passes into concrete, annotated DNA with a costed build plan:
 
-```
- ┌────────────────────────────────────────────────────────────────────┐
- │                        COMPILATION PIPELINE                        │
- │                                                                    │
- │   YAML / Web UI                                                    │
- │        │                                                           │
- │        ▼                                                           │
- │   ┌─────────────┐   Protein seqs from UniProt, FPbase;            │
- │   │ 1. Part      │   regulatory elements from curated local DB     │
- │   │    resolve   │   (promoters, RBSs, terminators, tags)          │
- │   └──────┬──────┘                                                  │
- │          ▼                                                         │
- │   ┌─────────────┐   AA → DNA using host codon tables              │
- │   │ 2. Reverse   │   (E. coli, yeast, mammalian)                   │
- │   │    translate │                                                  │
- │   └──────┬──────┘                                                  │
- │          ▼                                                         │
- │   ┌─────────────┐   DNA Chisel: codon-optimize while enforcing    │
- │   │ 3. Constraint│   no internal BsaI/BpiI sites, GC 35-65%,      │
- │   │    resolve   │   no homopolymer >6, vendor compatibility       │
- │   └──────┬──────┘                                                  │
- │          ▼                                                         │
- │   ┌─────────────┐   Compare strategies (Twist clonal, 2-part GG,  │
- │   │ 4. Assembly  │   3-part GG, IDT gBlock) with fully-loaded     │
- │   │    planning  │   cost model including labor at $/hr            │
- │   └──────┬──────┘                                                  │
- │          ▼                                                         │
- │   GenBank + plasmid map + cost breakdown + assembly instructions   │
- └────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["YAML Spec / Web UI / Python API"] --> B
+    B["1. Part Resolution\nProtein seqs from UniProt, FPbase\nRegulatory parts from curated local DB"] --> C
+    C["2. Reverse Translation\nAA → DNA using host codon tables\n(E. coli, yeast, mammalian)"] --> D
+    D["3. Constraint Resolution\nDNA Chisel: codon-optimize while enforcing\nno BsaI sites, GC 35–65%, no homopolymer >6"] --> E
+    E["4. Assembly Planning\nCompare strategies with fully-loaded cost model\n(Twist Clonal, 2-Part GG, IDT gBlock)"] --> F
+    F["GenBank + Plasmid Map + Cost Breakdown"]
+
+    style A fill:#e8eaf6,stroke:#5c6bc0,color:#283593
+    style B fill:#e3f2fd,stroke:#1976d2,color:#0d47a1
+    style C fill:#e0f7fa,stroke:#00838f,color:#004d40
+    style D fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
+    style E fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
+    style F fill:#fff3e0,stroke:#e65100,color:#bf360c
 ```
 
 ---
@@ -177,36 +129,29 @@ backbone:
 
 ### Catalog vectors (23 vectors, 4 categories)
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│ CATEGORY              │ VECTORS                             │ KEY FEATURES       │
-├───────────────────────┼─────────────────────────────────────┼────────────────────┤
-│                       │ pET-21a(+)   5443 bp  Amp           │ T7lac, optional    │
-│                       │ pET-28a(+)   5369 bp  Kan           │ C-His or N-His +   │
-│ E. coli Expression    │ pET-28b(+)   5368 bp  Kan           │ Thrombin           │
-│                       │ pET-32a(+)   5900 bp  Amp           │ Trx-His-S-Ek      │
-│                       │ pRSET A/B/C  ~2900 bp Amp  (pUC)   │ High copy, N-His   │
-│                       │ pUC19        2686 bp  Amp  (pUC)   │ Cloning only       │
-├───────────────────────┼─────────────────────────────────────┼────────────────────┤
-│                       │ pTwist CMV           4831 bp        │ Transient          │
-│                       │ pTwist CMV BetaGlobin 4893 bp       │ + β-globin intron  │
-│ Mammalian Expression  │ pTwist CMV BG WPRE Neo  6737 bp    │ + WPRE + Neo/G418  │
-│                       │ pTwist CMV Hygro     6694 bp        │ Hygromycin select  │
-│                       │ pTwist CMV Puro      6633 bp        │ Puromycin select   │
-│                       │ pTwist CMV OriP      4893 bp        │ Episomal (EBV)     │
-│                       │ pTwist EF1 Alpha     6633 bp        │ Sustained expr     │
-│                       │ pTwist EF1 Alpha Puro 7200 bp       │ + Puromycin        │
-├───────────────────────┼─────────────────────────────────────┼────────────────────┤
-│                       │ pTwist Lenti SFFV        5683 bp    │ 3rd-gen SIN-LTR    │
-│ Lentiviral            │ pTwist Lenti SFFV Puro   7100 bp    │ + Puromycin        │
-│                       │ pTwist Lenti EF1 Alpha   6800 bp    │ Broad expression   │
-├───────────────────────┼─────────────────────────────────────┼────────────────────┤
-│                       │ pTwist Amp           2221 bp        │ Minimal cloning    │
-│ Cloning / Gateway     │ pTwist Kan           2365 bp        │ M13 priming sites  │
-│                       │ pTwist ENTR          2365 bp        │ attL1/attL2        │
-│                       │ pTwist ENTR Kozak    2421 bp        │ + Kozak for mamm.  │
-└───────────────────────┴─────────────────────────────────────┴────────────────────┘
-```
+| Category | Vector | Size | Resistance | Key features |
+|----------|--------|-----:|------------|--------------|
+| **E. coli Expression** | pET-21a(+) | 5,443 bp | Amp | T7lac, optional C-His |
+| | pET-28a(+) | 5,369 bp | Kan | N-His + Thrombin |
+| | pET-28b(+) | 5,368 bp | Kan | N-His + Thrombin (alt MCS) |
+| | pET-32a(+) | 5,900 bp | Amp | Trx-His-S-Enterokinase |
+| | pRSET A/B/C | ~2,900 bp | Amp | High copy (pUC), N-His |
+| | pUC19 | 2,686 bp | Amp | Cloning only (pUC ori) |
+| **Mammalian Expression** | pTwist CMV | 4,831 bp | — | Transient expression |
+| | pTwist CMV BetaGlobin | 4,893 bp | — | + β-globin intron |
+| | pTwist CMV BG WPRE Neo | 6,737 bp | Neo/G418 | + WPRE element |
+| | pTwist CMV Hygro | 6,694 bp | Hygromycin | Stable selection |
+| | pTwist CMV Puro | 6,633 bp | Puromycin | Stable selection |
+| | pTwist CMV OriP | 4,893 bp | — | Episomal (EBV OriP) |
+| | pTwist EF1 Alpha | 6,633 bp | — | Sustained expression |
+| | pTwist EF1 Alpha Puro | 7,200 bp | Puromycin | + selection |
+| **Lentiviral** | pTwist Lenti SFFV | 5,683 bp | — | 3rd-gen SIN-LTR |
+| | pTwist Lenti SFFV Puro | 7,100 bp | Puromycin | + selection |
+| | pTwist Lenti EF1 Alpha | 6,800 bp | — | Broad expression |
+| **Cloning / Gateway** | pTwist Amp | 2,221 bp | Amp | Minimal cloning |
+| | pTwist Kan | 2,365 bp | Kan | M13 priming sites |
+| | pTwist ENTR | 2,365 bp | Kan | attL1/attL2 |
+| | pTwist ENTR Kozak | 2,421 bp | Kan | + Kozak for mammalian |
 
 ### Promoters
 
@@ -299,32 +244,11 @@ constraints:
 
 The compiler generates a fully annotated plasmid map with correct circular topology. Every element — insert parts, backbone features, and vector-provided cassette elements — is individually annotated and color-coded.
 
-For a polycistronic construct in **pET-28b(+)** (His → TEV → MBP → mEGFP + mScarlet reporter), the map reads clockwise:
+<p align="center">
+  <img src="docs/images/plasmid_topology.svg" alt="pET-28b Plasmid Topology" width="500"/>
+</p>
 
-```
-                        T7lac promoter
-                        RBS ─────────╮
-                     N-His₆ (vector) │
-                  Thrombin (vector) ─╯
-                          │
-    ╭─────── INSERT ──────┤
-    │                     │
-    │  6xHis  ──────────╮ │          Reading the circular map
-    │  TEV    ──────────┤ │          clockwise from the insert:
-    │  MBP    ──────────┤ │
-    │  mEGFP  ──────────┤ │          INSERT → T7 term → f1 ori(←)
-    │  spacer ──────────┤ │            → Kan(←) → lacI(←)
-    │  RBS    ──────────┤ │            → pBR322 ori
-    │  mScarlet ────────╯ │            → T7lac → RBS
-    │                     │            → His₆ → Thrombin
-    ╰─────────────────────┤            → INSERT
-                          │
-              T7 terminator
-              f1 ori ◀──────  (reverse)
-              Kan resistance ◀  (reverse)
-              lacI repressor ◀  (reverse)
-              pBR322 ori ────╯
-```
+For a polycistronic construct in pET-28b(+), the map reads clockwise from the insert: T7lac → RBS → N-His₆ → Thrombin → **INSERT** → T7 term → f1 ori(←) → Kan(R)(←) → lacI(←) → pBR322 ori → back to T7lac.
 
 Features are placed with biologically accurate directions: on pBR322-based vectors, the resistance cassette and lacI run counterclockwise (←), matching standard pET map notation.
 
@@ -334,35 +258,27 @@ Features are placed with biologically accurate directions: on pBR322-based vecto
 
 The assembly planner compares strategies using a fully-loaded cost model. All 17 parameters are configurable via the web UI, CLI flags, or Python API:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ COST MODEL PARAMETERS                          Default          │
-├─────────────────────────────────────────────────────────────────┤
-│ Researcher hourly rate                         $150/hr          │
-│ Overhead multiplier                            1.5×             │
-├─────────────────────────────────────────────────────────────────┤
-│ Twist gene synthesis                           $0.07/bp         │
-│ Twist clonal gene                              $0.09/bp         │
-│ IDT gBlock                                     $0.08/bp         │
-├─────────────────────────────────────────────────────────────────┤
-│ BsaI restriction enzyme                        $3.00/rxn        │
-│ T4 DNA ligase                                  $0.25/rxn        │
-│ Competent cells                                $10.00/rxn       │
-│ Plates + antibiotics                           $2.00/rxn        │
-│ Colony PCR screening                           $5.00/rxn        │
-│ Miniprep kit                                   $5.00/rxn        │
-│ Plasmidsaurus whole-plasmid sequencing         $15.00/rxn       │
-├─────────────────────────────────────────────────────────────────┤
-│ Golden Gate setup labor                        1.5 hrs          │
-│ Colony screening labor                         0.0 hrs *        │
-│ Miniprep + sequencing labor                    1.0 hrs          │
-│ Troubleshooting (per retry)                    3.0 hrs          │
-├─────────────────────────────────────────────────────────────────┤
-│ 2-part GG success rate                         90%              │
-│ 3-part GG success rate                         80%              │
-└─────────────────────────────────────────────────────────────────┘
- * Colony screening labor is zero — automated by colony picking robots.
-```
+| Parameter | Default |
+|-----------|--------:|
+| Researcher hourly rate | $150/hr |
+| Overhead multiplier | 1.5x |
+| Twist gene synthesis | $0.07/bp |
+| Twist clonal gene | $0.09/bp |
+| IDT gBlock | $0.08/bp |
+| BsaI restriction enzyme | $3.00/rxn |
+| T4 DNA ligase | $0.25/rxn |
+| Competent cells | $10.00/rxn |
+| Plates + antibiotics | $2.00/rxn |
+| Colony PCR screening | $5.00/rxn |
+| Miniprep kit | $5.00/rxn |
+| Plasmidsaurus sequencing | $15.00/rxn |
+| Golden Gate setup labor | 1.5 hrs |
+| Colony screening labor | 0.0 hrs * |
+| Miniprep + sequencing labor | 1.0 hrs |
+| Troubleshooting (per retry) | 3.0 hrs |
+| 2-part / 3-part GG success rate | 90% / 80% |
+
+\* Colony screening labor is zero — automated by colony picking robots.
 
 ### Example output: His-TEV-MBP-mEGFP (~3 kb insert)
 
@@ -388,31 +304,49 @@ Strategy: Synthesis + 2-Part Golden Gate
 
 ## Architecture
 
-```
-┌────────────────────────────────────────────────────────────────────────────┐
-│                                                                            │
-│   ┌──────────┐     ┌─────────────────┐     ┌──────────────────────────┐   │
-│   │  YAML    │     │                 │     │  OUTPUTS                 │   │
-│   │  spec    │────▶│   IR: Typed     │────▶│  • GenBank (.gb)         │   │
-│   │          │     │   DAG of parts  │     │  • Plasmid map (seqviz)  │   │
-│   └──────────┘     │                 │     │  • Cost comparison       │   │
-│   ┌──────────┐     │  Port types:    │     │  • Assembly instructions │   │
-│   │  Web UI  │────▶│  TRANSCRIPTION  │     └──────────────────────────┘   │
-│   │  (React) │     │  TRANSLATION    │                                    │
-│   └──────────┘     │  PEPTIDE_CHAIN  │     ┌──────────────────────────┐   │
-│   ┌──────────┐     │  DNA_CONTEXT    │     │  API ENDPOINTS           │   │
-│   │  CLI     │────▶│                 │     │  POST /api/compile       │   │
-│   │  (Click) │     └────────┬────────┘     │  GET  /api/vectors/...   │   │
-│   └──────────┘              │              │  GET  /api/parts/...     │   │
-│                    ┌────────┴─────────┐    └──────────────────────────┘   │
-│                    │  Compiler passes  │                                   │
-│                    │  1. Part resolve  │    External DBs:                  │
-│                    │  2. Rev translate │    • FPbase (fluorescent          │
-│                    │  3. Constraints   │      proteins)                    │
-│                    │  4. Assembly plan │    • UniProt (any protein)        │
-│                    └──────────────────┘    • Built-in fallback cache      │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph LR
+    subgraph Inputs
+        Y["YAML Spec"]
+        W["Web UI (React)"]
+        C["CLI (Click)"]
+    end
+
+    subgraph "IR: Typed DAG"
+        G["ConstructGraph\nPart nodes with typed ports\nTRANSCRIPTION · TRANSLATION\nPEPTIDE_CHAIN · DNA_CONTEXT"]
+    end
+
+    subgraph "Compiler Passes"
+        P1["1. Part resolve"]
+        P2["2. Rev translate"]
+        P3["3. Constraints"]
+        P4["4. Assembly plan"]
+    end
+
+    subgraph Outputs
+        GB["GenBank (.gb)"]
+        PM["Plasmid map (seqviz)"]
+        CC["Cost comparison"]
+        AI["Assembly instructions"]
+    end
+
+    subgraph "External DBs"
+        FP["FPbase"]
+        UP["UniProt"]
+        LC["Local cache"]
+    end
+
+    Y --> G
+    W --> G
+    C --> G
+    G --> P1 --> P2 --> P3 --> P4
+    P4 --> GB
+    P4 --> PM
+    P4 --> CC
+    P4 --> AI
+    P1 -.-> FP
+    P1 -.-> UP
+    P1 -.-> LC
 ```
 
 The IR is a directed graph where nodes are genetic parts with typed ports. Port types (TRANSCRIPTION, TRANSLATION_INIT, PEPTIDE_CHAIN, DNA_CONTEXT) enforce biological validity at composition time — putting a terminator after a promoter with no coding sequence in between is a type error.
