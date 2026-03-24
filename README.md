@@ -452,6 +452,20 @@ Without credentials, the plugins run in mock mode with heuristic feasibility che
 
 ---
 
+## Acknowledgments
+
+This project builds on excellent work from the synthetic biology and open-source communities:
+
+- **[Biopython](https://biopython.org/)** — sequence manipulation, GenBank export, and restriction enzyme analysis
+- **[DNA Chisel](https://edinburgh-genome-foundry.github.io/DnaChisel/)** — codon optimization and constraint resolution engine
+- **[iGEM Registry of Standard Biological Parts](http://parts.igem.org/)** — RBS and terminator sequences (BBa_B0034, BBa_B0032, BBa_B0015, and others)
+- **[Mutalik et al. (2013)](https://doi.org/10.1038/nmeth.2404)** — bicistronic design (BCD) elements for context-insensitive translation initiation
+- **[Potapov et al. (2018)](https://doi.org/10.1021/acssynbio.8b00242)** — high-fidelity Golden Gate overhang sets
+- **[Twist Bioscience](https://www.twistbioscience.com/)** — catalog vector specifications and synthesis parameters
+- **[FPbase](https://www.fpbase.org/)** — fluorescent protein sequences and spectral data
+
+---
+
 ## License
 
 MIT
