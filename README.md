@@ -71,7 +71,38 @@ construct-compiler parts --list tags
 construct-compiler parts --list promoters
 ```
 
-### 3. Python API
+### 3. Claude Code / MCP (agent-driven design)
+
+The compiler ships an MCP (Model Context Protocol) server that lets Claude Code compile, validate, and explore constructs conversationally. Describe what you want in natural language — Claude drafts a YAML spec, compiles it, checks it, and iterates until it passes.
+
+```bash
+# Install with MCP extras
+pip install -e ".[mcp]"
+```
+
+Add to your project's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "construct-compiler": {
+      "command": "construct-compiler-mcp"
+    }
+  }
+}
+```
+
+Three tools are exposed:
+
+| Tool | Description |
+|------|-------------|
+| `compile_spec` | Full pipeline compilation → parts list, assembly strategies with costs, optional GenBank |
+| `check_spec` | 4 validity checks (reading frame, start codons, translation fidelity, internal stops) → pass/fail + score |
+| `evaluate_variants` | Combinatorial design space exploration (up to 50 variants) → ranked results |
+
+Validated specs are auto-saved to `examples/agent_generated/` and become permanent regression tests.
+
+### 4. Python API
 
 ```python
 from construct_compiler import compile_construct, export_genbank
@@ -164,11 +195,14 @@ python scripts/design_evaluate.py spec.yaml --fast --json
 ### Test suite
 
 ```bash
-# Run all 39 tests (validators, harness, variant generator, integration)
+# Run all 63 tests (validators, harness, variants, MCP server, regression)
 pytest tests/ -v
+
+# Fast mode — skip codon optimization tests
+pytest tests/ -v -m "not slow"
 ```
 
-The test suite validates at every pipeline stage — after parsing, after part resolution, after reverse translation, and after constraint resolution — to catch exactly where issues are introduced.
+The test suite validates at every pipeline stage — after parsing, after part resolution, after reverse translation, and after constraint resolution — to catch exactly where issues are introduced. The regression suite auto-discovers example specs (including agent-generated ones), so the test corpus grows as you design constructs through Claude Code.
 
 ---
 
@@ -447,6 +481,7 @@ construct_compiler/
 ├── src/construct_compiler/
 │   ├── __main__.py          # CLI entry point (compile, check, validate, parts)
 │   ├── server.py            # FastAPI server + REST API
+│   ├── mcp_server.py        # MCP server for Claude Code (stdio transport)
 │   ├── core/                # IR: types, parts, graph, port system
 │   ├── frontend/            # YAML parser (spec → IR graph)
 │   ├── passes/              # Compiler passes + assembly cost model
@@ -464,16 +499,20 @@ construct_compiler/
 │   ├── data/                # Curated parts DB (23 vectors, codon
 │   │   └── parts_db.py      #   tables, overhang sets)
 │   └── plugins/             # Plugin system (future)
-├── tests/                   # pytest suite (39 tests)
+├── tests/                   # pytest suite (63 tests)
 │   ├── conftest.py          # Fixtures at each pipeline stage
 │   ├── test_construct_validity.py  # Validator unit + integration tests
-│   └── test_harness.py      # Harness + variant generator tests
+│   ├── test_harness.py      # Harness + variant generator tests
+│   ├── test_harness_regression.py  # Auto-discovered regression tests
+│   ├── test_harness_variants.py    # Variant evaluation smoke tests
+│   └── test_mcp_server.py   # MCP tool handler tests
 ├── scripts/
 │   └── design_evaluate.py   # Standalone design-evaluate runner
 ├── frontend/
 │   └── index.html           # React SPA + seqviz plasmid viewer
 ├── examples/
 │   ├── his_tev_mbp_egfp.yaml
+│   ├── agent_generated/     # Auto-saved specs from Claude Code sessions
 │   └── run_example.py
 ├── pyproject.toml
 └── README.md
@@ -530,6 +569,8 @@ Without credentials, the plugins run in mock mode with heuristic feasibility che
 
 - [x] Variant library fan-out (compile N constructs from parameterized specs) — `vary_spec()` + `evaluate_batch()` + `design_evaluate.py` runner
 - [x] Construct validation harness (reading frame, start codons, translation fidelity, internal stops)
+- [x] MCP server for Claude Code — agent-driven design with `compile_spec`, `check_spec`, `evaluate_variants` tools
+- [x] Automated regression testing — auto-discovered specs, CI-ready with fast/slow markers
 - [ ] Live Twist/IDT API integration (screening + vendor codon optimization)
 - [ ] Protocol generation backend (human-readable step-by-step assembly instructions)
 - [ ] Primer design backend (primer3-py for Golden Gate primers with overhangs)

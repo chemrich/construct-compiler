@@ -42,6 +42,7 @@ dependencies = [
 
 [project.scripts]
 construct-compiler = "construct_compiler.__main__:main"
+construct-compiler-mcp = "construct_compiler.mcp_server:main"
 
 [project.optional-dependencies]
 dev = [
@@ -57,6 +58,9 @@ web = [
 vendors = [
     # No extra deps needed currently — vendor plugins use requests (core dep).
     # Future: add vendor-specific SDKs here if they publish them.
+]
+mcp = [
+    "mcp>=1.0",
 ]
 sbol = [
     "sbol3>=1.0",
@@ -79,6 +83,9 @@ select = ["E", "F", "I", "N", "W", "UP"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "slow: tests that run codon optimization (deselect with -m 'not slow')",
+]
 
 [tool.mypy]
 python_version = "3.10"
