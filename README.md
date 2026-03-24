@@ -1,5 +1,7 @@
 # construct-compiler
 
+> **Note:** This project is under active development and APIs, file formats, and behavior may change significantly between commits. Not yet recommended for production use.
+
 A genetic construct design compiler for *in silico* DNA automation. Write a declarative YAML spec — or use the visual web UI — describing what you want to express, and the compiler produces annotated DNA sequences, assembly plans, plasmid maps, vendor cost estimates, and GenBank files.
 
 Supports **E. coli**, **mammalian**, and **lentiviral** expression systems with 23 catalog vectors spanning Twist Bioscience's full product line.

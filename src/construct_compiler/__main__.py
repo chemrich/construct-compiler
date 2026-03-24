@@ -214,6 +214,73 @@ def parts(list_type):
         click.echo(f"  {', '.join(HIGH_FIDELITY_OVERHANGS_BSAI)}")
 
 
+@cli.command()
+@click.argument("specs", nargs=-1, required=True, type=click.Path(exists=True))
+@click.option("--json", "as_json", is_flag=True, help="Output results as JSON.")
+@click.option("--skip-constraints", is_flag=True,
+              help="Skip codon optimization (faster).")
+@click.option("--intermediate/--no-intermediate", default=False,
+              help="Also validate intermediate pipeline stages.")
+@click.option("--verbose", "-v", is_flag=True, help="Show per-check details.")
+def check(specs, as_json, skip_constraints, intermediate, verbose):
+    """Run validity checks on one or more construct specs.
+
+    Compiles each spec through the full pipeline and validates:
+    reading frame continuity, start codon placement, translation
+    fidelity, and internal stop codons.
+
+    \b
+    Examples:
+        construct-compiler check spec.yaml
+        construct-compiler check variants/*.yaml --json
+        construct-compiler check spec.yaml --intermediate -v
+    """
+    from .validation.harness import evaluate_spec, evaluate_batch, batch_summary
+
+    # Suppress noisy logs during validation
+    logging.basicConfig(level=logging.WARNING, format="%(message)s")
+    import os
+    os.environ["DNACHISEL_QUIET"] = "1"
+
+    spec_list = list(specs)
+
+    if len(spec_list) == 1:
+        result = evaluate_spec(
+            spec_list[0],
+            skip_constraints=skip_constraints,
+            validate_intermediate=intermediate,
+        )
+        if as_json:
+            click.echo(result.to_json())
+        else:
+            click.echo(result.summary())
+            if verbose and result.stages:
+                click.echo("\nIntermediate stages:")
+                for s in result.stages:
+                    click.echo(f"  {s.stage}: {s.errors} errors, {s.warnings} warnings, {s.passed} passed")
+
+        sys.exit(0 if result.passed else 1)
+
+    else:
+        results = evaluate_batch(
+            spec_list,
+            skip_constraints=skip_constraints,
+            validate_intermediate=intermediate,
+        )
+        if as_json:
+            click.echo(json.dumps([r.to_dict() for r in results], indent=2, default=str))
+        else:
+            click.echo(batch_summary(results))
+            if verbose:
+                click.echo()
+                for r in results:
+                    click.echo(r.summary())
+                    click.echo()
+
+        all_passed = all(r.passed for r in results)
+        sys.exit(0 if all_passed else 1)
+
+
 def _build_json_result(graph, plan) -> dict:
     """Build a JSON-serializable result dict."""
     parts_list = []

@@ -30,6 +30,12 @@ def reverse_translate(graph: ConstructGraph) -> ConstructGraph:
     Reverse-translate all RESOLVED protein-coding parts to DNA.
     Uses E. coli preferred codons as the initial codon selection.
     """
+    # Identify which parts are the first coding element in each cistron.
+    # These need a start codon (ATG) regardless of part type — a His-tag
+    # that leads a fusion chain needs ATG just as much as a CDS does.
+    coding_types = (CDS, PurificationTag, SolubilityTag, CleavageSite, Linker)
+    cistron_leaders = _find_cistron_leaders(graph, coding_types)
+
     for part in graph.parts():
         if part.resolution == ResolutionState.CONCRETE:
             continue
@@ -42,13 +48,25 @@ def reverse_translate(graph: ConstructGraph) -> ConstructGraph:
 
         dna = _protein_to_dna(protein_seq, graph.host_organism)
 
-        # Add start codon if this is a CDS or the first coding element after an RBS
-        if isinstance(part, CDS):
-            if not dna.startswith("ATG"):
-                dna = "ATG" + dna[3:] if len(dna) >= 3 else "ATG" + dna
-            # Add stop codon if needed
-            if part.has_stop and not _ends_with_stop(dna):
-                dna += "TAA"  # TAA preferred in E. coli
+        # Add start codon only if this part initiates translation in its
+        # cistron — i.e., it's the first coding element after the RBS.
+        # Mid-chain parts (tags, CDS in a fusion) must NOT get ATG forced
+        # onto them; their first codon encodes part of the fusion protein.
+        needs_start = part.id in cistron_leaders
+        if needs_start and not dna.startswith("ATG"):
+            # PREPEND ATG rather than replacing the first codon.
+            # For CDS parts whose protein starts with Met, the DNA already
+            # starts with ATG so this branch is skipped. For tags/other parts
+            # whose protein doesn't include the initiator Met (e.g., 6xHis =
+            # "HHHHHH"), we prepend ATG so the expressed protein is
+            # Met + tag_protein. The initiator Met may be removed in vivo
+            # by methionine aminopeptidase (MAP) depending on the second
+            # residue, but the DNA must include it for translation initiation.
+            dna = "ATG" + dna
+
+        # Add stop codon to terminal CDS
+        if isinstance(part, CDS) and part.has_stop and not _ends_with_stop(dna):
+            dna += "TAA"  # TAA preferred in E. coli
 
         part.sequence = Seq(dna)
         part.resolution = ResolutionState.CONCRETE
@@ -58,6 +76,23 @@ def reverse_translate(graph: ConstructGraph) -> ConstructGraph:
         )
 
     return graph
+
+
+def _find_cistron_leaders(graph: ConstructGraph, coding_types: tuple) -> set[str]:
+    """
+    Walk each cistron and return the part IDs of the first coding element
+    in each one. These parts need a start codon prepended.
+
+    A "cistron leader" is the first part after the RBS that will actually
+    be translated — typically a PurificationTag, SolubilityTag, or CDS.
+    """
+    leaders: set[str] = set()
+    for cistron in graph.cistrons():
+        for part in cistron:
+            if isinstance(part, coding_types):
+                leaders.add(part.id)
+                break  # only the first one per cistron
+    return leaders
 
 
 def _get_protein_sequence(part) -> str | None:
