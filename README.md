@@ -62,6 +62,10 @@ construct-compiler compile spec.yaml --sequencing-cost 15.0 --competent-cells-co
 # Validate without compiling
 construct-compiler validate spec.yaml
 
+# Run validity checks (reading frame, start codons, translation fidelity, internal stops)
+construct-compiler check spec.yaml
+construct-compiler check spec.yaml --json
+
 # List available parts in the database
 construct-compiler parts --list tags
 construct-compiler parts --list promoters
@@ -90,6 +94,81 @@ params = CostParams(
 )
 graph, plan = compile_construct("spec.yaml", cost_params=params)
 ```
+
+---
+
+## Validation & automated testing
+
+The compiler includes a validation harness that checks every compiled construct for biological correctness. Use it to gate designs before synthesis, or to sweep a design space and rank variants automatically.
+
+### What gets checked
+
+1. **Reading frame continuity** — every coding part's DNA is codon-aligned (length divisible by 3), no frame drift across fusion chains
+2. **Start codon placement** — the first coding element in each cistron starts with ATG, including when it's a tag rather than a CDS
+3. **Translation fidelity** — translating the final DNA back to protein matches the expected sequence, even after codon optimization
+4. **Internal stop codons** — no premature stops within coding regions or at part junctions in fusion chains
+
+### CLI
+
+```bash
+# Check a single spec (exit code 0 = pass, 1 = fail)
+construct-compiler check examples/his_tev_mbp_egfp.yaml
+
+# JSON output for machine consumption
+construct-compiler check spec.yaml --json
+
+# Batch mode
+construct-compiler check variants/*.yaml
+
+# With intermediate pipeline stage diagnostics
+construct-compiler check spec.yaml --intermediate -v
+```
+
+### Python API
+
+```python
+from construct_compiler.validation import evaluate_spec, evaluate_batch
+from construct_compiler.validation.variants import DesignAxis, vary_spec_dicts
+
+# Single spec
+result = evaluate_spec("spec.yaml")
+assert result.passed, result.summary()
+print(result.score)           # 0.0–1.0
+print(result.insert_length_bp)
+print(result.cistron_count)
+
+# Sweep a design space: 3 expression levels × 4 spacer lengths = 12 variants
+axes = [
+    DesignAxis("expression", "cassette.1.cistron.expression", ["high", "medium", "low"]),
+    DesignAxis("spacer", "cassette.2.spacer", [20, 30, 50, 100]),
+]
+specs = vary_spec_dicts("spec.yaml", axes)
+results = evaluate_batch(specs, skip_constraints=True)
+best = results[0]  # sorted by score descending
+```
+
+### Runner script
+
+```bash
+# Evaluate a single spec
+python scripts/design_evaluate.py examples/his_tev_mbp_egfp.yaml
+
+# Sweep expression level and spacer length
+python scripts/design_evaluate.py examples/his_tev_mbp_egfp.yaml \
+    --axes "expression=high,medium,low" "spacer=20,30,50"
+
+# Fast mode (skip codon optimization) with JSON output
+python scripts/design_evaluate.py spec.yaml --fast --json
+```
+
+### Test suite
+
+```bash
+# Run all 39 tests (validators, harness, variant generator, integration)
+pytest tests/ -v
+```
+
+The test suite validates at every pipeline stage — after parsing, after part resolution, after reverse translation, and after constraint resolution — to catch exactly where issues are introduced.
 
 ---
 
@@ -366,7 +445,7 @@ The IR is a directed graph where nodes are genetic parts with typed ports. Port 
 ```
 construct_compiler/
 ├── src/construct_compiler/
-│   ├── __main__.py          # CLI entry point (Click)
+│   ├── __main__.py          # CLI entry point (compile, check, validate, parts)
 │   ├── server.py            # FastAPI server + REST API
 │   ├── core/                # IR: types, parts, graph, port system
 │   ├── frontend/            # YAML parser (spec → IR graph)
@@ -376,11 +455,21 @@ construct_compiler/
 │   │   ├── constraint_resolution.py
 │   │   ├── assembly_planning.py
 │   │   └── pipeline.py
+│   ├── validation/          # In silico construct validation
+│   │   ├── construct_checks.py  # 4 validators (frame, start, fidelity, stops)
+│   │   ├── harness.py           # Evaluation engine (evaluate_spec, evaluate_batch)
+│   │   └── variants.py          # Parametric design space generator
 │   ├── backends/            # GenBank export (+ future SBOL3)
 │   ├── vendors/             # Twist, IDT API stubs
 │   ├── data/                # Curated parts DB (23 vectors, codon
 │   │   └── parts_db.py      #   tables, overhang sets)
 │   └── plugins/             # Plugin system (future)
+├── tests/                   # pytest suite (39 tests)
+│   ├── conftest.py          # Fixtures at each pipeline stage
+│   ├── test_construct_validity.py  # Validator unit + integration tests
+│   └── test_harness.py      # Harness + variant generator tests
+├── scripts/
+│   └── design_evaluate.py   # Standalone design-evaluate runner
 ├── frontend/
 │   └── index.html           # React SPA + seqviz plasmid viewer
 ├── examples/
@@ -439,7 +528,8 @@ Without credentials, the plugins run in mock mode with heuristic feasibility che
 
 ## Roadmap
 
-- [ ] Variant library fan-out (compile N constructs from parameterized specs)
+- [x] Variant library fan-out (compile N constructs from parameterized specs) — `vary_spec()` + `evaluate_batch()` + `design_evaluate.py` runner
+- [x] Construct validation harness (reading frame, start codons, translation fidelity, internal stops)
 - [ ] Live Twist/IDT API integration (screening + vendor codon optimization)
 - [ ] Protocol generation backend (human-readable step-by-step assembly instructions)
 - [ ] Primer design backend (primer3-py for Golden Gate primers with overhangs)
