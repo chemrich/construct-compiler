@@ -1,0 +1,284 @@
+# Eval prompt corpus for construct_compiler
+#
+# Each entry is a test case: a natural language prompt paired with
+# expected properties of the resulting construct. The eval runner
+# sends each prompt to the LLM, which generates a YAML spec, then
+# the harness validates the spec and checks expected properties.
+#
+# Categories:
+#   basic        — straightforward single-cistron constructs
+#   polycistronic — multi-cistron designs with spacers
+#   tags         — purification/solubility tag combinations
+#   edge_cases   — ambiguous, underspecified, or tricky prompts
+#   hosts        — non-E.coli host organisms
+#   constraints  — specific assembly/synthesis requirements
+#   realistic    — prompts that mimic how real users would ask
+
+prompts:
+
+  # ===== BASIC (single gene, minimal complexity) =====
+
+  - id: basic_gfp
+    category: basic
+    difficulty: easy
+    prompt: "Express GFP in E. coli with a His tag for purification."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      max_cistrons: 1
+      must_have_parts: [PurificationTag, CDS]
+      must_pass: true
+
+  - id: basic_lysozyme
+    category: basic
+    difficulty: easy
+    prompt: "I need a construct for producing human lysozyme in BL21 cells. Use a T7 promoter and kanamycin resistance."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [CDS]
+      must_pass: true
+
+  - id: basic_minimal
+    category: basic
+    difficulty: easy
+    prompt: "Simple mCherry expression vector for E. coli."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_pass: true
+
+  - id: basic_inducible
+    category: basic
+    difficulty: easy
+    prompt: "Arabinose-inducible expression of sfGFP in E. coli."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_pass: true
+
+  # ===== TAGS (various tag/cleavage combinations) =====
+
+  - id: tags_his_tev
+    category: tags
+    difficulty: easy
+    prompt: "Express mEGFP with an N-terminal 6xHis tag and TEV cleavage site in E. coli."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [PurificationTag, CleavageSite, CDS]
+      must_pass: true
+
+  - id: tags_mbp_fusion
+    category: tags
+    difficulty: medium
+    prompt: "I need a His-TEV-MBP-GFP fusion construct for soluble expression in E. coli. Use Golden Gate assembly."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [PurificationTag, CleavageSite, SolubilityTag, CDS]
+      must_pass: true
+
+  - id: tags_gst_3c
+    category: tags
+    difficulty: medium
+    prompt: "GST fusion protein with 3C protease cleavage site followed by my target protein (UniProt P12345). High expression, T7lac promoter."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [SolubilityTag, CleavageSite, CDS]
+      must_pass: true
+
+  - id: tags_dual_affinity
+    category: tags
+    difficulty: hard
+    prompt: "I want a dual-affinity purification construct: N-terminal 6xHis, then TEV site, then Strep-II tag, then my protein mNeonGreen. E. coli, high expression."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [PurificationTag, CleavageSite, CDS]
+      must_pass: true
+
+  - id: tags_c_terminal
+    category: tags
+    difficulty: medium
+    prompt: "Express mScarlet with a C-terminal FLAG tag. No N-terminal tags. E. coli, medium expression."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [CDS, PurificationTag]
+      must_pass: true
+
+  # ===== POLYCISTRONIC (multiple genes under one promoter) =====
+
+  - id: poly_two_cistron
+    category: polycistronic
+    difficulty: medium
+    prompt: "Polycistronic construct with two genes: mEGFP (high expression) and mScarlet (low expression) as a reporter. Use a T7lac promoter with a 30bp spacer between cistrons."
+    expect:
+      host: e_coli
+      min_cistrons: 2
+      must_pass: true
+
+  - id: poly_target_reporter
+    category: polycistronic
+    difficulty: medium
+    prompt: "I need a bicistronic vector where the first cistron has His-tagged human insulin (high expression) and the second has mCherry as a co-expression reporter (low expression). E. coli, Golden Gate assembly."
+    expect:
+      host: e_coli
+      min_cistrons: 2
+      must_have_parts: [PurificationTag, CDS]
+      must_pass: true
+
+  - id: poly_three_genes
+    category: polycistronic
+    difficulty: hard
+    prompt: "Three genes in one operon: first is His-TEV-MBP-mEGFP fusion at high expression, second is mScarlet at medium expression, third is mTagBFP2 at low expression. 50bp spacers between each. T7lac promoter, rrnB terminator."
+    expect:
+      host: e_coli
+      min_cistrons: 3
+      must_pass: true
+
+  - id: poly_unfused_reporter
+    category: polycistronic
+    difficulty: medium
+    prompt: "A polycistronic construct where cistron 1 is my target protein (mNeonGreen) with a His tag, and cistron 2 is an unfused mScarlet reporter. The reporter should have its own RBS and not be fused to the first protein."
+    expect:
+      host: e_coli
+      min_cistrons: 2
+      must_pass: true
+
+  # ===== EDGE CASES (ambiguous, underspecified, tricky) =====
+
+  - id: edge_no_host
+    category: edge_cases
+    difficulty: medium
+    prompt: "Make a GFP expression vector with a His tag."
+    expect:
+      # Should default to E. coli
+      min_cistrons: 1
+      must_pass: true
+    notes: "No host specified — should default to E. coli"
+
+  - id: edge_vague_gene
+    category: edge_cases
+    difficulty: hard
+    prompt: "I want to express a fluorescent protein."
+    expect:
+      min_cistrons: 1
+    notes: "Very vague — LLM must pick a specific FP and reasonable defaults"
+
+  - id: edge_wrong_terminology
+    category: edge_cases
+    difficulty: medium
+    prompt: "Put a His-tag on green fluorescent protein and stick it in a plasmid for bacteria."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [PurificationTag, CDS]
+      must_pass: true
+    notes: "Informal language — 'stick it in a plasmid', 'bacteria' instead of E. coli"
+
+  - id: edge_contradictory
+    category: edge_cases
+    difficulty: hard
+    prompt: "Express GFP in E. coli using a CMV promoter."
+    expect:
+      min_cistrons: 1
+    notes: "CMV is a mammalian promoter — should the LLM flag this or substitute a bacterial promoter?"
+
+  - id: edge_no_tags
+    category: edge_cases
+    difficulty: easy
+    prompt: "Just express mEGFP in E. coli, no tags, no fusions, keep it simple."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_pass: true
+    notes: "Explicitly no tags — LLM should not add His/MBP/etc"
+
+  - id: edge_protein_sequence
+    category: edge_cases
+    difficulty: hard
+    prompt: "Express this protein in E. coli with a His tag: MVSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGK"
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [PurificationTag, CDS]
+    notes: "Raw protein sequence provided — LLM needs to put it in the spec correctly"
+
+  # ===== CONSTRAINTS (specific assembly/synthesis requirements) =====
+
+  - id: constraint_budget
+    category: constraints
+    difficulty: medium
+    prompt: "Express mEGFP in E. coli with a His tag. I have a budget of $200 per gene and need it within 2 weeks."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_pass: true
+    notes: "Budget and timeline constraints — should appear in synthesis section"
+
+  - id: constraint_enzyme
+    category: constraints
+    difficulty: medium
+    prompt: "His-tagged GFP in E. coli. Use BpiI for Golden Gate instead of BsaI."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_pass: true
+    notes: "Non-default enzyme choice"
+
+  - id: constraint_vector
+    category: constraints
+    difficulty: medium
+    prompt: "Express mScarlet using pET-28b(+) from the Twist catalog. High expression with the vector's built-in His tag."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_pass: true
+    notes: "Specific catalog vector — should use catalog_vector field"
+
+  # ===== REALISTIC (how real users actually talk) =====
+
+  - id: real_grad_student
+    category: realistic
+    difficulty: medium
+    prompt: "I'm trying to purify a GFP variant for in vitro assays. I need it expressed at high levels in BL21 with a cleavable His tag so I can remove it after purification. What's the cheapest way to build this?"
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [PurificationTag, CleavageSite, CDS]
+      must_pass: true
+
+  - id: real_troubleshooting
+    category: realistic
+    difficulty: hard
+    prompt: "My protein keeps forming inclusion bodies. Can you design a construct with an MBP solubility tag and a low-expression RBS to slow things down? The protein is human IL-6 (UniProt P05231)."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [SolubilityTag, CDS]
+      must_pass: true
+    notes: "Mentions a real biological problem — LLM should use low expression and MBP"
+
+  - id: real_screening
+    category: realistic
+    difficulty: hard
+    prompt: "I need to screen 3 expression levels for my protein. Can you set up a construct with mEGFP that I can test at high, medium, and low expression? Also add a His tag."
+    expect:
+      host: e_coli
+      min_cistrons: 1
+      must_have_parts: [PurificationTag, CDS]
+      must_pass: true
+    notes: "Implies variant generation — the LLM should create a base spec suitable for evaluate_variants"
+
+  - id: real_coexpression
+    category: realistic
+    difficulty: hard
+    prompt: "I need to co-express a light chain and heavy chain of an antibody fragment. Both should have moderate expression. The light chain is scFv-A (from our lab, sequence MVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS) and the heavy chain is just mEGFP as a placeholder for now."
+    expect:
+      host: e_coli
+      min_cistrons: 2
+      must_pass: true
+    notes: "Real use case — polycistronic co-expression with provided sequence"

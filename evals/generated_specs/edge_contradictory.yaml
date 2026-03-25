@@ -1,0 +1,26 @@
+construct:
+  name: "GFP_CMV_ecoli"
+  host: e_coli
+
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+
+  cassette:
+    # CMV is a mammalian promoter — this should still work since the
+    # parser accepts unknown promoter names, but it's biologically wrong
+    - promoter: CMV
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
