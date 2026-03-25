@@ -84,6 +84,7 @@ class Backbone(GeneticPart):
     catalog_id: Optional[str] = None      # e.g. "pET-28a(+)"
     catalog_vendor: str = ""              # e.g. "twist"
     provides: list[str] = field(default_factory=list)  # elements on vector: ["promoter", "rbs", "n_tag", ...]
+    cloning_pair: Optional[tuple[str, str]] = None  # e.g. ("NdeI", "XhoI") — restriction sites defining insert window
 
     @property
     def is_catalog_vector(self) -> bool:

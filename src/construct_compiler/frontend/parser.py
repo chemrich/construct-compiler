@@ -124,7 +124,12 @@ def _parse_backbone(spec: dict | str) -> Backbone:
     # Check for catalog vector
     catalog_id = spec.get("catalog_vector") or spec.get("catalog_id")
     if catalog_id and catalog_id in TWIST_CATALOG_VECTORS:
-        return _backbone_from_catalog(catalog_id)
+        bb = _backbone_from_catalog(catalog_id)
+        # Allow explicit cloning pair override from spec
+        cp = spec.get("cloning_pair")
+        if cp and isinstance(cp, list) and len(cp) == 2:
+            bb.cloning_pair = (cp[0], cp[1])
+        return bb
 
     origin_str = spec.get("ori", "pBR322")
     try:

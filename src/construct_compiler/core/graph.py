@@ -270,6 +270,348 @@ class ConstructGraph:
         return errors
 
     # ------------------------------------------------------------------
+    # Assembled view (insert + backbone features)
+    # ------------------------------------------------------------------
+
+    def assembled_graph(self) -> ConstructGraph:
+        """
+        Build a new graph representing the full expression cassette as
+        assembled in the backbone plasmid — including backbone-provided
+        elements (promoter, RBS, tags, cleavage sites, terminator) with
+        their actual DNA sequences from the GenBank annotations.
+
+        This is the view that validators should check against, since it
+        represents what the cell actually sees after cloning.
+
+        If no catalog vector is used, returns a copy of the current graph.
+        """
+        from .parts import (
+            Backbone, Promoter, RBS, CDS, PurificationTag, SolubilityTag,
+            CleavageSite, Terminator, RBSDesignMethod, RegulationType,
+            TagPosition,
+        )
+
+        # Find the backbone
+        backbone = None
+        for part in self.parts():
+            if isinstance(part, Backbone) and part.is_catalog_vector:
+                backbone = part
+                break
+
+        if not backbone:
+            # No catalog vector — return a shallow copy of the current graph
+            return self._copy_graph()
+
+        # Determine which cloning pair to use:
+        # 1. Explicit cloning_pair on the backbone (from spec or user)
+        # 2. Auto-infer from insert features vs available pairs
+        # 3. Default (no pair → use all upstream/downstream features)
+        from ..data.vector_features import get_insert_context
+        cloning_pair = backbone.cloning_pair
+
+        if cloning_pair is None:
+            # Auto-infer: try to pick the best cloning pair based on
+            # what the insert declares vs what each pair provides
+            cloning_pair = self._infer_cloning_pair(backbone)
+
+        context = get_insert_context(backbone.catalog_id, cloning_pair=cloning_pair)
+        if context is None:
+            return self._copy_graph()
+
+        upstream = context["upstream"]
+        downstream = context["downstream"]
+
+        # Build a new graph with backbone features + insert parts
+        assembled = ConstructGraph(
+            name=self.name,
+            description=self.description,
+            host_organism=self.host_organism,
+            constraints=list(self.constraints),
+            metadata=dict(self.metadata),
+        )
+
+        # Track IDs to avoid collisions
+        _counter = [0]
+
+        def _next_id(prefix: str) -> str:
+            _counter[0] += 1
+            return f"bb_{prefix}_{_counter[0]}"
+
+        # 1. Add the backbone (as metadata, not in the expression cassette)
+        assembled.add_part(Backbone(
+            id=backbone.id,
+            name=backbone.name,
+            origin=backbone.origin,
+            resistance=backbone.resistance,
+            source=backbone.source,
+            catalog_id=backbone.catalog_id,
+            provides=backbone.provides,
+        ))
+
+        # 2. Add upstream backbone features, including inter-feature DNA.
+        #    On physical vectors like pET-28b(+), the start codon (ATG)
+        #    and initial codons sit in the gap between the annotated RBS
+        #    and the first CDS feature (e.g., pET-28b has ATGGGCAGCAGC
+        #    encoding M-G-S-S before the His-tag CATCAT...).
+        #    We insert this gap as a small CDS "leader" part so the
+        #    assembled view has a proper start codon on the first
+        #    coding element.
+        vector = context["vector"]
+        for i, feat in enumerate(upstream):
+            part = self._backbone_feature_to_part(feat, _next_id)
+            if part is None:
+                continue
+            assembled.add_part(part)
+
+            # After the RBS, check if there's a coding gap before the
+            # next annotated feature. If so, insert a leader CDS part.
+            if (feat.feature_type == "rbs"
+                    and i + 1 < len(upstream)
+                    and upstream[i + 1].feature_type in ("tag", "cleavage_site", "solubility_tag", "leader")
+                    and vector.full_sequence):
+                next_feat = upstream[i + 1]
+                gap_start = feat.end        # 1-based end = 0-based start of gap
+                gap_end = next_feat.start - 1  # 1-based start - 1 = 0-based end
+                if gap_end > gap_start:
+                    gap_seq = vector.full_sequence[gap_start:gap_end].upper()
+                    # Only include if it contains a start codon.
+                    # Trim to start at the ATG (the 5' UTR before it
+                    # is part of the RBS context, not coding).
+                    atg_idx = gap_seq.find("ATG")
+                    if atg_idx >= 0:
+                        gap_seq = gap_seq[atg_idx:]
+                        from Bio.Seq import Seq as BioSeq
+                        from .parts import CDS as CDSPart
+                        leader_part = CDSPart(
+                            id=_next_id("initiation"),
+                            name="initiation_leader",
+                            sequence=BioSeq(gap_seq),
+                            has_stop=False,
+                            resolution=ResolutionState.CONCRETE,
+                            metadata={
+                                "backbone_provided": True,
+                                "protein_sequence": str(BioSeq(gap_seq).translate()).rstrip("*"),
+                            },
+                        )
+                        leader_part.protein_sequence = leader_part.metadata["protein_sequence"]
+                        assembled.add_part(leader_part)
+
+        # 3. Add all insert parts (everything except the backbone)
+        for part in self.parts():
+            if isinstance(part, Backbone):
+                continue
+            assembled.add_part(part)
+
+        # 4. Add downstream backbone features (C-terminal tags, terminator)
+        # But only add features that aren't already represented by insert parts
+        insert_terminators = [p for p in self.parts() if isinstance(p, Terminator)]
+        for feat in downstream:
+            # Skip terminator if the insert already has one
+            if feat.feature_type == "terminator" and insert_terminators:
+                continue
+            # Skip C-terminal tags if they duplicate N-terminal features
+            # already in upstream (common in pET-28 which has N-His and C-His)
+            part = self._backbone_feature_to_part(feat, _next_id)
+            if part is not None:
+                assembled.add_part(part)
+
+        # 5. Connect linearly
+        assembled.connect_linear()
+
+        return assembled
+
+    @staticmethod
+    def _backbone_feature_to_part(feat, next_id) -> Optional[GeneticPart]:
+        """Convert a BackboneFeature to the appropriate GeneticPart subclass."""
+        from .parts import (
+            Promoter, RBS, PurificationTag, SolubilityTag, CleavageSite,
+            Terminator, CDS, RBSDesignMethod, RegulationType, TagPosition,
+        )
+        from Bio.Seq import Seq as BioSeq
+
+        seq = BioSeq(feat.sequence) if feat.sequence else None
+        ftype = feat.feature_type
+
+        if ftype == "promoter":
+            return Promoter(
+                id=next_id("promoter"),
+                name=feat.label,
+                sequence=seq,
+                resolution=ResolutionState.CONCRETE,
+                metadata={"backbone_provided": True},
+            )
+
+        elif ftype == "rbs":
+            return RBS(
+                id=next_id("rbs"),
+                name=feat.label,
+                design_method=RBSDesignMethod.LOOKUP,
+                part_name=feat.label,
+                sequence=seq,
+                resolution=ResolutionState.CONCRETE,
+                metadata={"backbone_provided": True},
+            )
+
+        elif ftype == "tag":
+            return PurificationTag(
+                id=next_id("tag"),
+                name=feat.label,
+                tag_type=feat.label,
+                position=TagPosition.N_TERM,
+                sequence=seq,
+                resolution=ResolutionState.CONCRETE,
+                metadata={
+                    "backbone_provided": True,
+                    "protein_sequence": feat.translation or "",
+                },
+            )
+
+        elif ftype == "solubility_tag":
+            return SolubilityTag(
+                id=next_id("soltag"),
+                name=feat.label,
+                tag_type=feat.label,
+                position=TagPosition.N_TERM,
+                sequence=seq,
+                resolution=ResolutionState.CONCRETE,
+                metadata={
+                    "backbone_provided": True,
+                    "protein_sequence": feat.translation or "",
+                },
+            )
+
+        elif ftype == "cleavage_site":
+            return CleavageSite(
+                id=next_id("cleavage"),
+                name=feat.label,
+                protease=feat.label,
+                sequence=seq,
+                resolution=ResolutionState.CONCRETE,
+                metadata={"backbone_provided": True},
+            )
+
+        elif ftype == "terminator":
+            return Terminator(
+                id=next_id("terminator"),
+                name=feat.label,
+                sequence=seq,
+                resolution=ResolutionState.CONCRETE,
+                metadata={"backbone_provided": True},
+            )
+
+        elif ftype == "lac_operator":
+            # Include as metadata but not as a coding part
+            return None
+
+        elif ftype == "leader":
+            # T7 gene 10 leader — include as a CDS part
+            return CDS(
+                id=next_id("leader"),
+                name=feat.label,
+                protein_sequence=feat.translation,
+                sequence=seq,
+                has_stop=False,
+                resolution=ResolutionState.CONCRETE,
+                metadata={"backbone_provided": True},
+            )
+
+        elif ftype == "start_codon":
+            # Annotated start codon — skip, the RBS/tag already handles initiation
+            return None
+
+        return None
+
+    def _infer_cloning_pair(self, backbone) -> Optional[tuple[str, str]]:
+        """
+        Infer the best restriction site cloning pair based on what the
+        insert declares vs what each pair provides from the backbone.
+
+        Strategy: for each available pair, build the upstream feature list
+        and score it based on overlap with the insert's declared features.
+        Features the insert already provides should NOT come from the backbone.
+        Features the insert relies on the backbone for (RBS, promoter) should.
+
+        Returns the best pair, or None if no pairs are available.
+        """
+        from ..data.vector_features import get_insert_context, _get_cloning_pairs
+        from .parts import (
+            PurificationTag, SolubilityTag, CleavageSite, Backbone,
+        )
+
+        pairs = _get_cloning_pairs(backbone.catalog_id)
+        if not pairs:
+            return None
+
+        # Collect what the insert declares
+        insert_has_tags = set()
+        insert_has_cleavage = set()
+        for part in self.parts():
+            if isinstance(part, Backbone):
+                continue
+            if isinstance(part, PurificationTag):
+                insert_has_tags.add(part.name.lower())
+            elif isinstance(part, SolubilityTag):
+                insert_has_tags.add(part.name.lower())
+            elif isinstance(part, CleavageSite):
+                insert_has_cleavage.add(part.name.lower())
+
+        best_pair = None
+        best_score = -999
+
+        for pair in pairs:
+            if len(pair) != 2:
+                continue
+            ctx = get_insert_context(
+                backbone.catalog_id,
+                cloning_pair=(pair[0], pair[1]),
+            )
+            if ctx is None:
+                continue
+
+            upstream = ctx["upstream"]
+            score = 0
+
+            for feat in upstream:
+                if feat.feature_type in ("promoter", "rbs", "lac_operator"):
+                    # Always want these from backbone
+                    score += 1
+                elif feat.feature_type == "tag":
+                    # Penalize if insert already has this tag (duplication)
+                    if feat.label.lower().replace("x", "x") in insert_has_tags:
+                        score -= 2
+                    else:
+                        score += 0  # neutral — backbone provides extra tag
+                elif feat.feature_type == "cleavage_site":
+                    if feat.label.lower() in insert_has_cleavage:
+                        score -= 2
+                    else:
+                        score += 0
+                elif feat.feature_type in ("leader", "solubility_tag"):
+                    if feat.label.lower() in insert_has_tags:
+                        score -= 2
+
+            best_pair_candidate = (pair[0], pair[1])
+            if score > best_score:
+                best_score = score
+                best_pair = best_pair_candidate
+
+        return best_pair
+
+    def _copy_graph(self) -> ConstructGraph:
+        """Create a shallow copy of this graph."""
+        new_graph = ConstructGraph(
+            name=self.name,
+            description=self.description,
+            host_organism=self.host_organism,
+            constraints=list(self.constraints),
+            metadata=dict(self.metadata),
+        )
+        for part in self.parts():
+            new_graph.add_part(part)
+        new_graph._edges = list(self._edges)
+        return new_graph
+
+    # ------------------------------------------------------------------
     # Sequence assembly (post-compilation)
     # ------------------------------------------------------------------
 

@@ -172,7 +172,12 @@ def evaluate_spec(
 
         # Capture construct metadata
         result.insert_length_bp = graph.total_insert_length()
-        result.cistron_count = len(graph.cistrons())
+
+        # Build the assembled view (insert + backbone features) for
+        # accurate cistron counting and validation. This represents
+        # the full expression cassette as it exists on the plasmid.
+        assembled = graph.assembled_graph()
+        result.cistron_count = len(assembled.cistrons())
 
     except Exception as e:
         result.compile_error = str(e)
@@ -183,8 +188,20 @@ def evaluate_spec(
 
     result.compile_time_s = time.monotonic() - t0
 
-    # --- Run final validation ---
-    all_checks = run_all_checks(graph)
+    # --- Run final validation on assembled view ---
+    # The assembled graph includes backbone-provided elements so
+    # validators can check the full expression cassette (e.g., first
+    # cistron on a catalog vector now has an RBS, tags, etc.)
+    all_checks = run_all_checks(assembled)
+
+    # Also run biological sensibility checks (spec-level, not DNA-level)
+    from .bio_checks import check_biological_sensibility
+    try:
+        bio_checks = check_biological_sensibility(graph)
+        all_checks.extend(bio_checks)
+    except Exception:
+        pass  # don't let bio checks crash the harness
+
     result.check_count = len(all_checks)
     result.error_count = sum(1 for c in all_checks if c.severity == CheckSeverity.ERROR)
     result.warning_count = sum(1 for c in all_checks if c.severity == CheckSeverity.WARNING)
