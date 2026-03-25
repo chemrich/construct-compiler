@@ -1,12 +1,10 @@
 ```yaml
 construct:
-  name: "His_TEV_MBP_GFP_fusion"
+  name: "cleavable_his_gfp_purification"
   host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
-    source: addgene
 
   cassette:
     - promoter: T7lac
@@ -17,10 +15,6 @@ construct:
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
@@ -35,7 +29,7 @@ construct:
     max_homopolymer: 6
 
   synthesis:
-    vendor: twist
+    vendor: idt
     budget_per_gene: 400
     max_turnaround_days: 21
 ```

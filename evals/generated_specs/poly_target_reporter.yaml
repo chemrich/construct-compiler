@@ -1,29 +1,34 @@
 ```yaml
 construct:
-  name: "His_TEV_MBP_GFP_fusion"
-  host: e_coli_bl21
+  name: "his_insulin_mcherry_bicistronic"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
     source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: insulin
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: P01308
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter
+        expression: low
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
 
     - terminator: rrnB_T1
 

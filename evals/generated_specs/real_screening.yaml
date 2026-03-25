@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: "his_tagged_gfp_expression"
+  name: mEGFP_expression_level_screen
   host: e_coli
 
   backbone:
@@ -10,8 +10,32 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: high_expression
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: medium_expression
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: low_expression
+        expression: low
+        fused: false
         chain:
           - tag: 6xHis
           - gene:

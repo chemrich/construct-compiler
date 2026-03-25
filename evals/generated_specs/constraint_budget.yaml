@@ -1,12 +1,10 @@
 ```yaml
 construct:
-  name: "His_TEV_MBP_GFP_fusion"
-  host: e_coli_bl21
+  name: "mEGFP_6xHis_expression"
+  host: e_coli
 
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
-    source: addgene
 
   cassette:
     - promoter: T7lac
@@ -16,11 +14,6 @@ construct:
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
@@ -36,6 +29,6 @@ construct:
 
   synthesis:
     vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+    budget_per_gene: 200
+    max_turnaround_days: 14
 ```

@@ -1,12 +1,10 @@
 ```yaml
 construct:
-  name: "His_TEV_MBP_GFP_fusion"
-  host: e_coli_bl21
+  name: "GST_3C_P12345_fusion"
+  host: e_coli
 
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
-    source: addgene
 
   cassette:
     - promoter: T7lac
@@ -15,15 +13,11 @@ construct:
         label: target
         expression: high
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: GST
+          - cleavage_site: 3C
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: P12345
+              source: uniprot
 
     - terminator: rrnB_T1
 

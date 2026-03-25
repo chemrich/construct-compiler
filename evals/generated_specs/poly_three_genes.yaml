@@ -1,18 +1,16 @@
 ```yaml
 construct:
-  name: "His_TEV_MBP_GFP_fusion"
-  host: e_coli_bl21
+  name: "tricolor_operon_his_mbp_egfp_scarlet_bfp2"
+  host: e_coli
 
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
-    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: fusion_target
         expression: high
         chain:
           - tag: 6xHis
@@ -24,6 +22,26 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
+
+    - spacer: 50
+
+    - cistron:
+        label: reporter_red
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - spacer: 50
+
+    - cistron:
+        label: reporter_blue
+        expression: low
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
 
     - terminator: rrnB_T1
 

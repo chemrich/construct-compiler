@@ -1,17 +1,26 @@
 ```yaml
 construct:
-  name: "GFP_expression_T7lac"
+  name: "scFv_A_mEGFP_coexpression"
   host: e_coli
 
   backbone:
     catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: T7lac  # CMV is mammalian-specific, using T7lac for E. coli instead
+    - promoter: T7lac
 
     - cistron:
-        label: target
-        expression: high
+        label: light_chain
+        expression: medium
+        gene:
+          protein_sequence: "MVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS"
+
+    - spacer: 30
+
+    - cistron:
+        label: heavy_chain
+        expression: medium
+        fused: false
         gene:
           id: mEGFP
           source: fpbase

@@ -1,15 +1,15 @@
 ```yaml
 construct:
-  name: "His_TEV_MBP_GFP_fusion"
+  name: "human_lysozyme_expression"
   host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: T7lac
+    - promoter: T7
 
     - cistron:
         label: target
@@ -17,13 +17,9 @@ construct:
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: P61626
+              source: uniprot
 
     - terminator: rrnB_T1
 
