@@ -85,13 +85,45 @@ def _find_cistron_leaders(graph: ConstructGraph, coding_types: tuple) -> set[str
 
     A "cistron leader" is the first part after the RBS that will actually
     be translated — typically a PurificationTag, SolubilityTag, or CDS.
+
+    Special case: when a catalog backbone provides the RBS (so no RBS node
+    exists in the insert graph for the first cistron), cistrons() misses it.
+    We detect this and add the first coding element in the cassette as a
+    leader, since the backbone's RBS expects the next ORF to start with ATG.
     """
+    from ..core.parts import Backbone, RBS as RBSPart
+
     leaders: set[str] = set()
+
+    # Standard path: RBS-delimited cistrons
     for cistron in graph.cistrons():
         for part in cistron:
             if isinstance(part, coding_types):
                 leaders.add(part.id)
                 break  # only the first one per cistron
+
+    # Catalog backbone path: backbone provides RBS, so the first cistron
+    # in the insert may not have an RBS node. The first coding element
+    # before any insert-provided RBS is still a cistron leader.
+    backbone_provides_rbs = False
+    for part in graph.parts():
+        if isinstance(part, Backbone) and part.is_catalog_vector:
+            if "rbs" in part.provides:
+                backbone_provides_rbs = True
+                break
+
+    if backbone_provides_rbs:
+        # Find the first coding element that appears before any RBS in the
+        # insert graph. This is the leader of the backbone-provided cistron.
+        for part in graph.parts():
+            if isinstance(part, Backbone):
+                continue
+            if isinstance(part, RBSPart):
+                break  # hit an insert RBS — everything after is already handled
+            if isinstance(part, coding_types):
+                leaders.add(part.id)
+                break  # only the first one
+
     return leaders
 
 

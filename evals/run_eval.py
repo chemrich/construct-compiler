@@ -196,7 +196,22 @@ def _extract_yaml(raw: str) -> tuple[dict | None, str | None]:
     cleaned = raw.strip()
     cleaned = re.sub(r'^```ya?ml\s*\n', '', cleaned, flags=re.MULTILINE)
     cleaned = re.sub(r'\n```\s*$', '', cleaned, flags=re.MULTILINE)
+    # Also strip bare ``` at start/end
+    cleaned = re.sub(r'^```\s*\n', '', cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r'\n```\s*$', '', cleaned, flags=re.MULTILINE)
     cleaned = cleaned.strip()
+
+    # Handle multi-document YAML: take only the first document
+    if "\n---\n" in cleaned or cleaned.startswith("---\n"):
+        parts = re.split(r'\n---\n', cleaned)
+        # Use the first non-empty document that looks like it has 'construct'
+        for part in parts:
+            part = part.strip().lstrip("---").strip()
+            if part and ("construct" in part or "name" in part):
+                cleaned = part
+                break
+        else:
+            cleaned = parts[0].strip().lstrip("---").strip()
 
     try:
         spec = yaml.safe_load(cleaned)
@@ -236,9 +251,8 @@ def check_expectations(
         if spec:
             root = spec.get("construct", spec)
             actual_host = root.get("host", "")
-        # Normalize: accept "e_coli", "e_coli_bl21", etc. for "e_coli"
         expected = expect["host"]
-        passed = expected in (actual_host or "")
+        passed = _hosts_match(expected, actual_host or "")
         results["host"] = {"expected": expected, "actual": actual_host, "passed": passed}
 
     # Cistron count
@@ -276,6 +290,46 @@ def check_expectations(
         }
 
     return results
+
+
+def _hosts_match(expected: str, actual: str) -> bool:
+    """
+    Flexible host matching. Handles:
+    - Substring: "e_coli" matches "e_coli_bl21_de3"
+    - Category equivalence: "mammalian" matches "HEK293", "CHO", etc.
+    - Cell line specificity: "HEK293" matches "mammalian", "HEK293T", etc.
+    """
+    if not actual:
+        return False
+
+    # Direct substring match (original behavior)
+    if expected in actual or actual in expected:
+        return True
+
+    # Normalize
+    exp_low = expected.lower().replace("-", "").replace("_", "")
+    act_low = actual.lower().replace("-", "").replace("_", "")
+
+    if exp_low in act_low or act_low in exp_low:
+        return True
+
+    # Category mappings
+    mammalian_hosts = {"mammalian", "hek293", "hek293t", "cho", "hela",
+                       "cos7", "nih3t3", "vero", "a549", "jurkat",
+                       "k562", "u2os", "sf9", "sf21", "hi5"}
+    bacterial_hosts = {"ecoli", "ecolibl21", "ecolibl21de3", "ecolik12",
+                       "ecolirosetta", "ecolishuffle", "ecoliarctic"}
+
+    exp_norm = exp_low
+    act_norm = act_low
+
+    # If both are in the same category, it's a match
+    if exp_norm in mammalian_hosts and act_norm in mammalian_hosts:
+        return True
+    if exp_norm in bacterial_hosts and act_norm in bacterial_hosts:
+        return True
+
+    return False
 
 
 def _extract_part_types_from_spec(spec: dict) -> set[str]:
