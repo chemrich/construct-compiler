@@ -1,0 +1,39 @@
+```yaml
+construct:
+  name: human_titin_expression
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: titin
+        expression: very_low  # Large protein requires low expression to avoid aggregation
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P07525
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.40, 0.60]  # Tighter GC control for large gene
+    max_homopolymer: 4       # Stricter for large construct
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 15000   # Large gene requires higher budget
+    max_turnaround_days: 45  # Extended time for large construct
+```

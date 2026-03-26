@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: "large_polyprotein_his_tagged"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: polyprotein
+        expression: low  # Low expression for very large protein to avoid inclusion bodies
+        chain:
+          - tag: 6xHis
+          - gene:
+              protein_sequence: "M" # Placeholder - user needs to provide actual 3000-residue sequence
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 2000  # Higher budget for large gene
+    max_turnaround_days: 28  # Longer turnaround for large synthesis
+```

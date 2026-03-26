@@ -1,0 +1,45 @@
+```yaml
+construct:
+  name: "dual_protein_interaction_demo"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: protein_A
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              protein_sequence: "MGSHHHHHHGSENLYFQGM"  # placeholder - replace with your protein A sequence
+              
+    - spacer: 30
+
+    - cistron:
+        label: protein_B
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              protein_sequence: "MWSHPQFEKM"  # placeholder - replace with your protein B sequence
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 14
+```

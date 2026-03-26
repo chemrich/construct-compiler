@@ -1,0 +1,42 @@
+```yaml
+construct:
+  name: "directed_evolution_enzyme_reporter_fusion"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: enzyme_reporter_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "your_enzyme_gene"  # Replace with your enzyme gene ID
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

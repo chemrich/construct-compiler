@@ -1,0 +1,54 @@
+```yaml
+construct:
+  name: "lentiviral_CRISPR_Cas9_puromycin"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: Cas9
+        expression: high
+        gene:
+          id: P0DPD6  # Streptococcus pyogenes Cas9
+          source: uniprot
+
+    - spacer: 30
+
+    - promoter: U6  # RNA Pol III promoter for gRNA
+
+    - cistron:
+        label: gRNA_scaffold
+        expression: high
+        gene:
+          # Generic gRNA scaffold - would need specific target sequence
+          protein_sequence: "GUUUUAGAGCUAGAAAUAGCAAGUUAAAAUAAGGCUAGUCCGUUAUCAACUUGAAAAAGUGGCACCGAGUCGGUGCUUUU"
+
+    - spacer: 30
+
+    - promoter: PGK  # Weaker promoter for selection marker
+
+    - cistron:
+        label: puromycin_resistance
+        expression: medium
+        gene:
+          id: P13249  # Puromycin N-acetyltransferase
+          source: uniprot
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 800
+    max_turnaround_days: 28
+```

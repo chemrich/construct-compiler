@@ -1,0 +1,43 @@
+```yaml
+construct:
+  name: lentiviral_shRNA_mCherry_reporter
+  host: HEK293
+
+  backbone:
+    catalog_vector: pTwist Lenti SFFV Hygro
+    
+  cassette:
+    - promoter: U6  # U6 promoter for shRNA expression
+    
+    - cistron:
+        label: shRNA_cassette
+        expression: high
+        gene:
+          protein_sequence: GATCCGAACACACGGCATCAAGGTGTTCAAGAGACACCT TGATGCCGTGTGTTCTTTTTTGGAAA  # Example shRNA targeting sequence
+          
+    - spacer: 50
+    
+    - promoter: SFFV  # Spleen Focus Forming Virus promoter for reporter
+    
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+          
+    - terminator: SV40_polyA
+    
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+    
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600
+    max_turnaround_days: 28
+```

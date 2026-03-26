@@ -1,24 +1,23 @@
 ```yaml
 construct:
-  name: "tricolor_operon_his_mbp_egfp_scarlet_bfp2"
+  name: tricistronic_fluorescent_operon
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: fusion_target
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
@@ -26,7 +25,7 @@ construct:
     - spacer: 50
 
     - cistron:
-        label: reporter_red
+        label: red_reporter
         expression: medium
         fused: false
         gene:
@@ -36,7 +35,7 @@ construct:
     - spacer: 50
 
     - cistron:
-        label: reporter_blue
+        label: blue_reporter
         expression: low
         fused: false
         gene:

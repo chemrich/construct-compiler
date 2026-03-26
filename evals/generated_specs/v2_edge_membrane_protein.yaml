@@ -1,0 +1,39 @@
+```yaml
+construct:
+  name: "GPCR_expression_vector"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: target
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ADRB2_HUMAN
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600
+    max_turnaround_days: 21
+```

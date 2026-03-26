@@ -1,0 +1,35 @@
+```yaml
+construct:
+  name: "lentiviral_His_mEGFP_hygromycin"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+    # Note: Using standard mammalian vector as base; lentiviral elements would need to be added separately
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

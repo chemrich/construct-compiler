@@ -1,0 +1,45 @@
+```yaml
+construct:
+  name: split_GFP_PPI_assay_HEK293T
+  host: HEK293T
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: bait
+        expression: medium
+        chain:
+          - gene:
+              protein_sequence: "RDHMVLHEYVNAAGIT"  # GFP11 sequence
+          - linker:
+              type: GS_flexible
+              repeats: 3
+
+    - spacer: 50
+
+    - cistron:
+        label: prey
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              protein_sequence: "MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTLTYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK"  # GFP1-10 sequence
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

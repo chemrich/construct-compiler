@@ -1,0 +1,34 @@
+```yaml
+construct:
+  name: FLAG_tagged_receptor_lentiviral
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist Lenti"
+
+  cassette:
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: receptor
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: GPCR_template  # User needs to specify actual receptor
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600
+    max_turnaround_days: 21
+```

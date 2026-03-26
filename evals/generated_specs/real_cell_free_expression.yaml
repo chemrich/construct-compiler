@@ -1,0 +1,34 @@
+```yaml
+construct:
+  name: "His_mEGFP_wheat_germ_CFPS"
+  host: e_coli  # for cloning, expression will be in wheat germ extract
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7  # T7 RNA polymerase for in vitro transcription
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: T7term
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local  # wheat germ prefers plant-like codons but this will be synthesized in E. coli
+    gc_window: [0.40, 0.60]  # slightly tighter for wheat germ compatibility
+    max_homopolymer: 5
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

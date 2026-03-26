@@ -1,0 +1,35 @@
+```yaml
+construct:
+  name: "EF1alpha_mCherry_CHO_puro"
+  host: CHO
+
+  backbone:
+    catalog_vector: "pTwist CMV"  # Using as base, will be modified for EF1alpha and puromycin
+    resistance: puromycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

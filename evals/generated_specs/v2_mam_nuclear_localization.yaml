@@ -1,0 +1,34 @@
+```yaml
+construct:
+  name: "NLS_mCherry_nuclear_localization"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: nuclear_reporter
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

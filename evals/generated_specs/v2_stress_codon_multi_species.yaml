@@ -1,0 +1,31 @@
+construct:
+  name: dual_codon_optimized_gene
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: dual_host  # Optimize for both E. coli and human expression
+    dual_host_targets: [e_coli, human]
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

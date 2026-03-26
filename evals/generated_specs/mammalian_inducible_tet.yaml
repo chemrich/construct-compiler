@@ -1,0 +1,32 @@
+```yaml
+construct:
+  name: "dox_inducible_mEGFP_CHO"
+  host: CHO
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: TRE3G  # Tetracycline Response Element for doxycycline induction
+
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: mammalian
+    gc_window: [0.40, 0.60]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

@@ -1,0 +1,36 @@
+```yaml
+construct:
+  name: "SUMO_target_fusion"
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: SUMO
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: "your_target_gene"
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

@@ -1,0 +1,46 @@
+```yaml
+construct:
+  name: "His_SOD1_ubiquitin_bicistronic"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: SOD1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00441
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: ubiquitin
+        expression: low
+        fused: false
+        gene:
+          id: P0CG48
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

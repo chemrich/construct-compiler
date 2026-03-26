@@ -1,0 +1,64 @@
+```yaml
+construct:
+  name: "metabolic_engineering_four_cistron_graded"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: gene_A
+        expression: high
+        gene:
+          id: "GENE_A"
+          protein_sequence: "PLACEHOLDER_SEQUENCE_A"
+
+    - spacer: 30
+
+    - cistron:
+        label: gene_B
+        expression: medium
+        fused: false
+        gene:
+          id: "GENE_B"
+          protein_sequence: "PLACEHOLDER_SEQUENCE_B"
+
+    - spacer: 30
+
+    - cistron:
+        label: gene_C
+        expression: low
+        fused: false
+        gene:
+          id: "GENE_C"
+          protein_sequence: "PLACEHOLDER_SEQUENCE_C"
+
+    - spacer: 30
+
+    - cistron:
+        label: gene_D
+        expression: low
+        fused: false
+        gene:
+          id: "GENE_D"
+          protein_sequence: "PLACEHOLDER_SEQUENCE_D"
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

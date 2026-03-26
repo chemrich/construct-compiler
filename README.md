@@ -192,10 +192,48 @@ python scripts/design_evaluate.py examples/his_tev_mbp_egfp.yaml \
 python scripts/design_evaluate.py spec.yaml --fast --json
 ```
 
+### LLM eval harness
+
+The eval harness tests the full natural-language → YAML spec → compilation → validation loop. It sends prompts to the Anthropic API, parses the generated specs, compiles them, and checks both harness validity and expectation properties (host, cistron count, required parts).
+
+```bash
+# Run the default 250-prompt eval (requires ANTHROPIC_API_KEY)
+python evals/run_eval.py
+
+# Use a specific corpus
+python evals/run_eval.py --corpus evals/prompt_corpus_v2.yaml
+
+# Run with parallel API calls (recommended: 5 workers)
+python evals/run_eval.py -j 5
+
+# Explicit rate limit (requests per minute)
+python evals/run_eval.py -j 5 --rpm 50
+
+# Run a single prompt or category
+python evals/run_eval.py --id basic_gfp
+python evals/run_eval.py --category polycistronic
+
+# Re-evaluate previously generated specs (no API calls)
+python evals/run_eval.py --reeval
+
+# Name the results file
+python evals/run_eval.py --run-name my_experiment
+```
+
+Three prompt corpora are included (750 prompts total across 10 categories):
+
+| Corpus | File | Description |
+|--------|------|-------------|
+| v1 | `evals/prompt_corpus.yaml` | Original 250 prompts (tuning set) |
+| v2 | `evals/prompt_corpus_v2.yaml` | Fresh 250 prompts (holdout validation) |
+| v3 | `evals/prompt_corpus_v3.yaml` | Fresh 250 prompts (includes split-GFP tags) |
+
+Categories: basic, tags, polycistronic, edge_cases, constraints, realistic, mammalian, lentiviral, stress, robustness. Results are written to `evals/results/` as structured JSON.
+
 ### Test suite
 
 ```bash
-# Run all 63 tests (validators, harness, variants, MCP server, regression)
+# Run all tests (validators, harness, variants, MCP server, regression)
 pytest tests/ -v
 
 # Fast mode — skip codon optimization tests
@@ -499,13 +537,21 @@ construct_compiler/
 │   ├── data/                # Curated parts DB (23 vectors, codon
 │   │   └── parts_db.py      #   tables, overhang sets)
 │   └── plugins/             # Plugin system (future)
-├── tests/                   # pytest suite (63 tests)
+├── tests/                   # pytest suite (49+ tests)
 │   ├── conftest.py          # Fixtures at each pipeline stage
 │   ├── test_construct_validity.py  # Validator unit + integration tests
 │   ├── test_harness.py      # Harness + variant generator tests
 │   ├── test_harness_regression.py  # Auto-discovered regression tests
 │   ├── test_harness_variants.py    # Variant evaluation smoke tests
 │   └── test_mcp_server.py   # MCP tool handler tests
+├── evals/                   # LLM eval harness
+│   ├── run_eval.py          # Eval runner (parallel, rate-limited)
+│   ├── spec_generation_prompt.txt  # System prompt for spec generation
+│   ├── prompt_corpus.yaml   # 250 eval prompts (v1)
+│   ├── prompt_corpus_v2.yaml  # 250 eval prompts (v2, holdout)
+│   ├── prompt_corpus_v3.yaml  # 250 eval prompts (v3, split-GFP)
+│   ├── generated_specs/     # Cached LLM outputs for re-eval
+│   └── results/             # Structured JSON eval results
 ├── scripts/
 │   └── design_evaluate.py   # Standalone design-evaluate runner
 ├── frontend/
@@ -571,6 +617,9 @@ Without credentials, the plugins run in mock mode with heuristic feasibility che
 - [x] Construct validation harness (reading frame, start codons, translation fidelity, internal stops)
 - [x] MCP server for Claude Code — agent-driven design with `compile_spec`, `check_spec`, `evaluate_variants` tools
 - [x] Automated regression testing — auto-discovered specs, CI-ready with fast/slow markers
+- [x] LLM eval harness — 750 prompts across 3 corpora, parallel execution, rate-limited API calls
+- [x] Assembled view — merges insert + backbone features with real DNA sequences from GenBank annotations
+- [x] Restriction site-aware cloning pair inference — auto-selects best RE pair based on insert vs backbone features
 - [ ] Live Twist/IDT API integration (screening + vendor codon optimization)
 - [ ] Protocol generation backend (human-readable step-by-step assembly instructions)
 - [ ] Primer design backend (primer3-py for Golden Gate primers with overhangs)

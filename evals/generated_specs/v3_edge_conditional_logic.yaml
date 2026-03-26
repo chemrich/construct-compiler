@@ -1,0 +1,50 @@
+```yaml
+construct:
+  name: surprise_luciferase_dual_reporter
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-32a(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: enzyme
+        expression: high
+        chain:
+          - tag: Trx
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P14175
+              source: uniprot  # Firefly luciferase
+
+    - spacer: 25
+
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.40, 0.60]
+    max_homopolymer: 5
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 450
+    max_turnaround_days: 14
+```

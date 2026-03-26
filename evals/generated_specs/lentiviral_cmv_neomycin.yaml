@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: "CMV_mEGFP_neo_lentiviral"
+  host: CHO
+
+  backbone:
+    catalog_vector: "pLenti CMV"
+    resistance: neomycin
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: mammalian
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

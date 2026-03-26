@@ -1,0 +1,37 @@
+```yaml
+construct:
+  name: "HA_HaloTag_TEV_ecoli"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: HA
+          - cleavage_site: TEV
+          - gene:
+              id: P9WQB3
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

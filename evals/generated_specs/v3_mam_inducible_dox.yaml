@@ -1,0 +1,34 @@
+```yaml
+construct:
+  name: "dox_inducible_toxic_kinase_HEK293"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: TRE3G  # Tet-responsive element for doxycycline induction
+
+    - cistron:
+        label: toxic_kinase
+        expression: medium  # controlled expression to manage toxicity
+        chain:
+          - tag: FLAG
+          - gene:
+              protein_sequence: "MGSSHHHHHHSSGLVPRGSHMKKKRNKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD"  # placeholder toxic kinase sequence
+              note: "Replace with actual toxic kinase sequence"
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 800  # higher budget for mammalian synthesis
+    max_turnaround_days: 28
+```

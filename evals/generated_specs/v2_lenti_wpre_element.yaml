@@ -1,0 +1,45 @@
+```yaml
+construct:
+  name: lentiviral_mEGFP_WPRE_puro
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV Puro DEST"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - element:
+        type: WPRE
+        description: "Woodchuck hepatitis virus posttranscriptional regulatory element"
+
+    - promoter: SV40
+
+    - cistron:
+        label: selection
+        expression: medium
+        fused: false
+        gene:
+          id: puromycin_resistance
+          source: addgene
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: gateway
+    codon_optimization: human
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600
+    max_turnaround_days: 21
+```

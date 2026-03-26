@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: "lentiviral_synapsin1_GCaMP"
+  host: mammalian
+
+  backbone:
+    catalog_vector: "pLenti backbone"
+    source: addgene
+
+  cassette:
+    - promoter: synapsin1  # neuron-specific promoter
+
+    - cistron:
+        label: calcium_sensor
+        expression: medium
+        gene:
+          id: GCaMP6s
+          source: addgene
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.40, 0.60]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600
+    max_turnaround_days: 21
+```

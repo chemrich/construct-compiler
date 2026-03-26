@@ -1,0 +1,54 @@
+```yaml
+construct:
+  name: "triple_fluorescent_polycistronic"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: egfp
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: scarlet
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: cherry
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

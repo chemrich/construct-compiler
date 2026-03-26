@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: "his_tagged_receptor_hek293"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: receptor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              protein_sequence: "MGHHHHHHLEVLFQGP"  # Placeholder - user must provide actual receptor sequence
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

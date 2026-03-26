@@ -1,0 +1,45 @@
+```yaml
+construct:
+  name: "lentiviral_GFP_puromycin_stable"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV"
+    resistance: ampicillin
+
+  cassette:
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - spacer: 30
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: selection
+        expression: medium
+        fused: false
+        gene:
+          id: P2A_puromycin_resistance
+          source: uniprot
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

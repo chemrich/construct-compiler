@@ -1,0 +1,72 @@
+construct:
+  name: "inclusion_body_protein"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7
+
+    - cistron:
+        label: target
+        expression: high  # High expression promotes inclusion bodies
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P0A6F5"  # E. coli recA as example aggregation-prone protein
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+
+---
+
+construct:
+  name: "soluble_protein_optimized"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac  # lac operator for tighter control
+
+    - cistron:
+        label: target
+        expression: low  # Low expression reduces aggregation
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: GST  # GST promotes soluble expression
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: "P0A6F5"
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

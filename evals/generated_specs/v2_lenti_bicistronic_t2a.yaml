@@ -1,0 +1,42 @@
+```yaml
+construct:
+  name: bicistronic_lentiviral_T2A
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: GOI
+        expression: high
+        gene:
+          id: mEGFP  # placeholder - replace with your gene of interest
+          source: fpbase
+
+    - spacer: 66  # T2A peptide sequence length
+
+    - cistron:
+        label: reporter
+        expression: high
+        fused: true  # T2A creates co-translational cleavage, still one mRNA
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

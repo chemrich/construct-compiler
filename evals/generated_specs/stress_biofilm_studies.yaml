@@ -1,0 +1,84 @@
+```yaml
+construct:
+  name: biofilm_polysaccharide_flagellar_operon
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: exopolysaccharide_synthase
+        expression: high
+        gene:
+          id: P31123  # algD from Pseudomonas aeruginosa
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: polysaccharide_export
+        expression: medium
+        fused: false
+        gene:
+          id: P31127  # algE from Pseudomonas aeruginosa
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: flagellin
+        expression: high
+        fused: false
+        gene:
+          id: P04949  # fliC from E. coli
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: flagellar_motor
+        expression: medium
+        fused: false
+        gene:
+          id: P0ABZ1  # motA from E. coli
+          source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: biofilm_regulator
+        expression: low
+        fused: false
+        gene:
+          id: P76409  # bcsA from E. coli
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: fluorescent_tracker
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

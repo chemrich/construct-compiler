@@ -1,0 +1,40 @@
+```yaml
+construct:
+  name: lentiviral_trafficking_reporter
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist Lenti"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: trafficking_reporter
+        expression: medium
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: HA
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 500
+    max_turnaround_days: 21
+```

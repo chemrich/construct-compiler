@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: "SFFV_mScarlet_hygromycin_lentiviral"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV/TO Puro DEST"  # Will substitute hygromycin for puromycin
+    resistance: hygromycin
+
+  cassette:
+    - promoter: SFFV  # Spleen focus-forming virus promoter
+
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

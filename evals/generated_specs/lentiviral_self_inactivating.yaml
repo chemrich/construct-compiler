@@ -1,0 +1,41 @@
+```yaml
+construct:
+  name: "SIN_lentiviral_vector_3LTR_deletion"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+    
+  cassette:
+    - promoter: CMV
+    
+    - cistron:
+        label: transgene_placeholder
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    
+    - terminator: rrnB_T1
+    
+  # Note: This is a simplified representation. True SIN lentiviral vectors require:
+  # - 5' LTR with intact U3 region
+  # - Packaging signal (psi)
+  # - Rev response element (RRE) 
+  # - Central polypurine tract (cPPT)
+  # - 3' LTR with U3 deletion (self-inactivating)
+  # - Woodchuck hepatitis post-transcriptional regulatory element (WPRE)
+  # The actual vector construction requires specialized lentiviral backbone
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.40, 0.60]
+    max_homopolymer: 4
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 800
+    max_turnaround_days: 28
+```

@@ -1,0 +1,46 @@
+```yaml
+construct:
+  name: "his_mbp_kinase_mcherry_bicistronic"
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: kinase_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: P00533
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter
+        expression: low
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

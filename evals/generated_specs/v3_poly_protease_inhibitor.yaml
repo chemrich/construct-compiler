@@ -1,0 +1,50 @@
+```yaml
+construct:
+  name: "TEV_protease_and_substrate_reporter"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: TEV_protease
+        expression: medium
+        gene:
+          id: P04517
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: substrate_reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - cleavage_site: TEV
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

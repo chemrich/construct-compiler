@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: SFFV_mScarlet_lentiviral
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV Puro DEST"  # Using as base, will modify resistance
+    resistance: neomycin
+    source: addgene
+
+  cassette:
+    - promoter: SFFV
+
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: gateway
+    codon_optimization: human
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

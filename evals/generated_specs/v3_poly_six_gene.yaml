@@ -1,0 +1,84 @@
+```yaml
+construct:
+  name: synthetic_metabolic_pathway_polycistronic
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: enzyme1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A6F5
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme2
+        expression: medium
+        fused: false
+        gene:
+          id: P0ABJ9
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme3
+        expression: low
+        fused: false
+        gene:
+          id: P0A9P0
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter1
+        expression: low
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter2
+        expression: low
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter3
+        expression: low
+        fused: false
+        gene:
+          id: mNeonGreen
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

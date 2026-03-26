@@ -1,0 +1,37 @@
+```yaml
+construct:
+  name: lentiviral_kinase_T2A_mScarlet
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: kinase_T2A_reporter
+        expression: high
+        chain:
+          - gene:
+              id: "MAPK1"  # Example kinase - replace with specific kinase if known
+              source: uniprot
+          - cleavage_site: T2A
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

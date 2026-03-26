@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: "toxic_protein_tightly_regulated"
+  host: e_coli_bl21_de3
+
+  backbone:
+    resistance: kanamycin
+    ori: p15A  # low copy origin
+    source: addgene
+
+  cassette:
+    - promoter: T7lac  # tight repression with lacI, IPTG inducible
+
+    - cistron:
+        label: toxic_target
+        expression: very_low  # minimal leaky expression
+        gene:
+          protein_sequence: "MPKKKRKVGIHGVPAA"  # placeholder - replace with actual sequence
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

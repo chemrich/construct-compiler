@@ -1,0 +1,50 @@
+```yaml
+construct:
+  name: "trans_splicing_intein_system"
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: n_intein_half
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "N-intein"
+              source: uniprot
+          - gene:
+              protein_sequence: "PLACEHOLDER_N_HALF_SEQUENCE"
+
+    - spacer: 30
+
+    - cistron:
+        label: c_intein_half
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              protein_sequence: "PLACEHOLDER_C_HALF_SEQUENCE"
+          - gene:
+              id: "C-intein"
+              source: uniprot
+          - tag: 6xHis
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

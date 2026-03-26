@@ -1,0 +1,27 @@
+construct:
+  name: "RNA_aptamer_expression"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7  # T7 promoter for RNA transcription
+
+    - rna_sequence: "GGGAAUGGAUCCACAUCUACGAAUUCGCCCAGA"  # placeholder aptamer sequence - replace with actual aptamer
+
+    - terminator: T7term
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: none  # not applicable for RNA
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

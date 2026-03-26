@@ -1,0 +1,46 @@
+```yaml
+construct:
+  name: "CyclinD1_CDK4_polycistronic"
+  host: e_coli_bl21
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: CyclinD1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - gene:
+              id: P24385
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: CDK4
+        expression: medium
+        fused: false
+        gene:
+          id: P11802
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

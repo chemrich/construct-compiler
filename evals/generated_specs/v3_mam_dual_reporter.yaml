@@ -1,0 +1,45 @@
+```yaml
+construct:
+  name: "dual_reporter_NanoLuc_mScarlet_HEK293"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: nanoluc
+        expression: high
+        gene:
+          id: P0DMV0
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: CMV
+
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

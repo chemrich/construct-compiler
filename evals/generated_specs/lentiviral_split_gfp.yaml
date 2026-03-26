@@ -1,0 +1,44 @@
+construct:
+  name: "lentiviral_bifc_gfp_fragments"
+  host: mammalian
+
+  backbone:
+    catalog_vector: "pLenti-CMV-Puro-DEST"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: gfp_n_terminal
+        expression: medium
+        chain:
+          - gene:
+              protein_sequence: "MVSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFGYGVQCFARYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITLGMDELYK"
+          - tag: FLAG
+
+    - spacer: 30
+
+    - cistron:
+        label: gfp_c_terminal
+        expression: medium
+        fused: false
+        chain:
+          - tag: HA
+          - gene:
+              protein_sequence: "SRGGCDGQVYLDDQNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITLGMDELYKRGGGGSGGGGSGGGGSMVSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFGYGVQCFARYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSKLSKDPNEKRDHMVLLEFVTAAGITLGMDELYK"
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: gibson
+    codon_optimization: mammalian
+    gc_window: [0.40, 0.60]
+    max_homopolymer: 5
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 800
+    max_turnaround_days: 28

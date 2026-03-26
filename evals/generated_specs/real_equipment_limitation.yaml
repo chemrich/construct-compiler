@@ -1,0 +1,39 @@
+```yaml
+construct:
+  name: high_temp_expression_construct
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: target_protein
+        expression: medium  # Lower expression to reduce aggregation at 37°C
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP  # Maltose binding protein for enhanced solubility
+          - linker:
+              type: GS_flexible
+              repeats: 3  # Extra flexible linker for proper folding
+          - gene:
+              id: mEGFP  # Thermostable fluorescent protein as model
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local  # Optimized codons for better translation efficiency
+    gc_window: [0.40, 0.60]  # Tighter GC control for stability
+    max_homopolymer: 5
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

@@ -1,0 +1,55 @@
+```yaml
+construct:
+  name: "kinase_mutant_comparison_his_tagged"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: kinase_mutant_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              protein_sequence: "REPLACE_WITH_MUTANT_1_SEQUENCE"
+
+    - spacer: 30
+
+    - cistron:
+        label: kinase_mutant_2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              protein_sequence: "REPLACE_WITH_MUTANT_2_SEQUENCE"
+
+    - spacer: 30
+
+    - cistron:
+        label: kinase_mutant_3
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              protein_sequence: "REPLACE_WITH_MUTANT_3_SEQUENCE"
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

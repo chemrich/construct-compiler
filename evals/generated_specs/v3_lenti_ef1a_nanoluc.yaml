@@ -1,0 +1,32 @@
+```yaml
+construct:
+  name: "EF1alpha_NanoLuc_lentiviral_puro"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV Puro DEST"  # lentiviral backbone with puromycin resistance
+    
+  cassette:
+    - promoter: EF1_alpha
+    
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: NanoLuc
+          source: uniprot
+          
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

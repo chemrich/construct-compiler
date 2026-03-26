@@ -1,0 +1,34 @@
+```yaml
+construct:
+  name: "His_GFP_pET28a_control"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28a(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: control_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: T7term
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

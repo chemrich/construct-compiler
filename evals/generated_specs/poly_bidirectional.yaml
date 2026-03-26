@@ -1,0 +1,45 @@
+```yaml
+construct:
+  name: "bidirectional_dual_promoter_expression"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: gene1
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD
+
+    - cistron:
+        label: gene2
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

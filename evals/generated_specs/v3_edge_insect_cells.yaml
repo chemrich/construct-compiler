@@ -1,0 +1,36 @@
+```yaml
+construct:
+  name: his_tagged_kinase_sf9
+  host: Sf9
+
+  backbone:
+    catalog_vector: "pFastBac1"
+    resistance: ampicillin
+    ori: pUC
+
+  cassette:
+    - promoter: polyhedrin
+
+    - cistron:
+        label: target_kinase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: your_kinase_gene  # Replace with actual gene ID/name
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

@@ -1,0 +1,35 @@
+```yaml
+construct:
+  name: "ER_targeted_mScarlet_CHO"
+  host: CHO
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: ER_mScarlet
+        expression: high
+        chain:
+          - signal_peptide: calreticulin
+          - gene:
+              id: mScarlet
+              source: fpbase
+          - retention_signal: KDEL
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

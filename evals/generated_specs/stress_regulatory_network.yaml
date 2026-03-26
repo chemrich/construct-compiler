@@ -1,0 +1,57 @@
+```yaml
+construct:
+  name: "mEGFP_repressor_mScarlet_sRNA_feedback_network"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: repressor
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 30
+
+    - promoter: tac  # repressible promoter for regulatory control
+
+    - cistron:
+        label: target
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - spacer: 25
+
+    - promoter: J23106  # constitutive for sRNA expression
+
+    - gene:
+        label: regulatory_sRNA
+        id: "ATGAAACGCATTAGCACCACCATTACCACCACCATCACCATTACCACAGGTAACGGTGCGGGCTGACGCGTACAGGAAACACAGAAAAAAGCCCGCACCTGACAGTGCGGGCTTTTTTTTTCGACCAAAGGTAACGATATGACCAAAATCCCTTAACGTGAGTTTTCGTTCCACTGAGCGTCAGACCCCGTAGAAA"
+        source: synthetic
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

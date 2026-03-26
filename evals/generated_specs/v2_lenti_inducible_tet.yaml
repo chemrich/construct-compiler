@@ -1,0 +1,37 @@
+```yaml
+construct:
+  name: "tet_on_kinase_lentiviral"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+    # Lentiviral backbone with CMV promoter modified for Tet-On system
+
+  cassette:
+    - promoter: TRE3G  # Tet-responsive element for tight control
+      # Note: Requires rtTA3 transactivator (separate construct or stable line)
+
+    - cistron:
+        label: target_kinase
+        expression: medium  # Inducible expression should be moderate when induced
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P31749  # Example kinase - replace with specific kinase UniProt ID
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600  # Higher budget for complex lentiviral construct
+    max_turnaround_days: 28
+```

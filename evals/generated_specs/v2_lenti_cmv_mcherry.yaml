@@ -1,0 +1,35 @@
+```yaml
+construct:
+  name: CMV_mCherry_lentiviral_blasticidin
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV Puro"  # Using as base, blasticidin selection will be specified
+    resistance: blasticidin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

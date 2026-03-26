@@ -1,0 +1,38 @@
+```yaml
+construct:
+  name: "aggregation_prone_enzyme_GFP11_solubility_reporter"
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: target_enzyme
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              protein_sequence: "MVKIFVGGTPVCAAIIEKARKFGADVTVIGHLNDHALTLAKRAAEKYGVEVTVDGAAGVKMLKSDAINELRNKYLEFYNNVNNAIDEFLKRIAAEHGVDVAIIKGIAETGAKFIPVTLKMILKAELRPDFVVFDGAFAVALKECFIQEGNYSVDGDNSLRMFRELVVDRYEKAIAATMAHYREQPEDVDYVGLLVGGGSTSGAPKR"
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: GFP11
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

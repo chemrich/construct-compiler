@@ -1,0 +1,88 @@
+```yaml
+construct:
+  name: His_mEGFP_promoter_variants
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7  # Variant 1: Strong inducible (IPTG)
+    - cistron:
+        label: His_mEGFP_T7
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: T7lac  # Variant 2: Moderate inducible (IPTG)
+    - cistron:
+        label: His_mEGFP_T7lac
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: tac  # Variant 3: Strong inducible (IPTG)
+    - cistron:
+        label: His_mEGFP_tac
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: araBAD  # Variant 4: Tightly controlled inducible (arabinose)
+    - cistron:
+        label: His_mEGFP_araBAD
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: J23100  # Variant 5: Strong constitutive
+    - cistron:
+        label: His_mEGFP_J23100
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

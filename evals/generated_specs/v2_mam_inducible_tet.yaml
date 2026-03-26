@@ -1,0 +1,32 @@
+```yaml
+construct:
+  name: "tet_inducible_toxic_kinase_HEK293"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV_TetO  # CMV promoter with TetO operator for tetracycline induction
+
+    - cistron:
+        label: toxic_kinase
+        expression: medium  # medium expression to balance inducibility with toxicity
+        gene:
+          id: "CHEK1_HUMAN"  # Example toxic kinase - checkpoint kinase 1
+          source: uniprot
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

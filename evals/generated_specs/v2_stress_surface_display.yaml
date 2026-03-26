@@ -1,0 +1,40 @@
+```yaml
+construct:
+  name: "nanobody_surface_display_autotransporter"
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: surface_display
+        expression: medium
+        chain:
+          - signal_peptide: pelB
+          - gene:
+              id: "VHH"  # placeholder nanobody - user should specify actual sequence
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - autotransporter:
+              type: AIDA_I_beta_barrel
+              source: addgene
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600
+    max_turnaround_days: 21
+```

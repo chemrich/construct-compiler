@@ -1,0 +1,45 @@
+```yaml
+construct:
+  name: "FLAG_tagged_lentiviral_puro"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist Lenti"
+    resistance: ampicillin
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              protein_sequence: "PLACEHOLDER"  # User must provide target protein sequence
+
+    - spacer: 30
+
+    - cistron:
+        label: selection
+        expression: medium
+        fused: false
+        promoter: SV40  # Internal promoter for selection marker
+        gene:
+          id: puromycin_resistance
+          source: addgene
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 800
+    max_turnaround_days: 21
+```

@@ -89,10 +89,16 @@ def parse_spec(spec: dict | str | Path) -> ConstructGraph:
                 graph.add_part(_parse_terminator(value, _next_id("term")))
 
             elif key == "spacer":
+                if isinstance(value, int):
+                    sp_len = value
+                elif isinstance(value, dict):
+                    sp_len = value.get("length", 30)
+                else:
+                    sp_len = 30
                 sp = Spacer(
                     id=_next_id("spacer"),
-                    name=f"spacer_{value}" if isinstance(value, int) else "spacer",
-                    length_bp=value if isinstance(value, int) else value.get("length", 30),
+                    name=f"spacer_{sp_len}",
+                    length_bp=sp_len,
                 )
                 graph.add_part(sp)
 
@@ -266,6 +272,8 @@ def _parse_cistron(spec: dict, graph: ConstructGraph, next_id,
     # Only skip auto-generated elements in the flat format (no explicit chain).
     if chain:
         for item in chain:
+            if item is None:
+                continue
             for item_key, item_val in (item.items() if isinstance(item, dict) else [(item, {})]):
                 _parse_chain_element(item_key, item_val, graph, next_id, label)
     else:
@@ -329,8 +337,15 @@ def _parse_chain_element(key: str, value: Any, graph: ConstructGraph,
         ))
 
     elif key == "linker":
-        linker_name = value if isinstance(value, str) else value.get("type", "GS_flexible")
-        repeats = value.get("repeats", 3) if isinstance(value, dict) else 3
+        if isinstance(value, str):
+            linker_name = value
+            repeats = 3
+        elif isinstance(value, dict):
+            linker_name = value.get("type", "GS_flexible")
+            repeats = value.get("repeats", 3)
+        else:
+            linker_name = "GS_flexible"
+            repeats = 3
         graph.add_part(Linker(
             id=next_id("linker"),
             name=linker_name,
@@ -339,12 +354,28 @@ def _parse_chain_element(key: str, value: Any, graph: ConstructGraph,
         ))
 
     elif key == "gene":
-        _parse_gene(value, graph, next_id, label, is_last_in_cistron=True)
+        if value is not None:
+            _parse_gene(value, graph, next_id, label, is_last_in_cistron=True)
+
+    elif key == "protein_sequence":
+        # LLM sometimes emits raw protein_sequence instead of gene id/source.
+        # Treat as an unnamed CDS so compilation doesn't crash.
+        if value and isinstance(value, str):
+            graph.add_part(CDS(
+                id=next_id("cds"),
+                name=f"{label}_protein",
+                source_id=f"{label}_protein",
+                protein_sequence=value if value != "PLACEHOLDER_SEQUENCE" else None,
+                has_stop=True,
+            ))
 
 
-def _parse_gene(spec: dict | str | tuple, graph: ConstructGraph,
+def _parse_gene(spec: dict | str | tuple | None, graph: ConstructGraph,
                 next_id, label: str, is_last_in_cistron: bool = True) -> None:
     """Parse a gene/CDS entry."""
+    if spec is None:
+        return
+
     if isinstance(spec, str):
         # Simple: just a name or accession
         graph.add_part(CDS(
@@ -364,6 +395,9 @@ def _parse_gene(spec: dict | str | tuple, graph: ConstructGraph,
             source_db=spec[1] if len(spec) > 1 else "",
             has_stop=is_last_in_cistron,
         ))
+        return
+
+    if not isinstance(spec, dict):
         return
 
     # Dict format

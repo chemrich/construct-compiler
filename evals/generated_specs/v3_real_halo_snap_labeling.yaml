@@ -1,0 +1,41 @@
+```yaml
+construct:
+  name: "HaloTag_kinase_JF549_labeling"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P06493
+              source: uniprot  # HaloTag (Haloalkane dehalogenase)
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P00517
+              source: uniprot  # Human hexokinase 1 (kinase)
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

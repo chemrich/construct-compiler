@@ -1,0 +1,42 @@
+```yaml
+construct:
+  name: SIN_lentiviral_CMV_mClover3_puro
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV Puro DEST"
+    source: addgene
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: fluorescent_reporter
+        expression: high
+        gene:
+          id: mClover3
+          source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        gene:
+          id: puromycin_resistance
+          source: uniprot
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: gateway
+    codon_optimization: mammalian
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 500
+    max_turnaround_days: 28
+```

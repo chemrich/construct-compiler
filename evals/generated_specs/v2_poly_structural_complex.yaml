@@ -1,0 +1,54 @@
+```yaml
+construct:
+  name: "three_subunit_polycistronic_complex"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: alpha_subunit
+        expression: high
+        gene:
+          id: alpha_subunit
+          protein_sequence: "MSTART"  # Replace with actual sequence
+
+    - spacer: 30
+
+    - cistron:
+        label: beta_subunit
+        expression: medium
+        fused: false
+        gene:
+          id: beta_subunit
+          protein_sequence: "MSTART"  # Replace with actual sequence
+
+    - spacer: 30
+
+    - cistron:
+        label: gamma_subunit
+        expression: low
+        fused: false
+        gene:
+          id: gamma_subunit
+          protein_sequence: "MSTART"  # Replace with actual sequence
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

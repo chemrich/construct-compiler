@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: "tet_on_kinase_lentiviral"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV/TO Puro DEST"
+
+  cassette:
+    - promoter: CMV_TetO2  # CMV promoter with TetO2 operators for Tet-On induction
+
+    - cistron:
+        label: kinase
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+            # Generic kinase - user needs to specify which kinase
+            protein_sequence: "PLACEHOLDER_KINASE_SEQUENCE"
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: gateway  # Lentiviral vectors typically use Gateway cloning
+    codon_optimization: human
+    gc_window: [0.40, 0.60]
+    max_homopolymer: 5
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 500
+    max_turnaround_days: 21
+```

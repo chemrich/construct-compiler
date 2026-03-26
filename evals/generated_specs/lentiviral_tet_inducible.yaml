@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: doxycycline_inducible_lentiviral_vector
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV/TO Puro DEST"
+    
+  cassette:
+    - promoter: TetO_CMV  # CMV promoter with TetO operator sequences for dox control
+    
+    - cistron:
+        label: transgene_placeholder
+        expression: high
+        gene:
+          id: mEGFP  # placeholder - replace with actual transgene
+          source: fpbase
+          
+    - terminator: SV40_polyA
+
+  # Requires co-transfection with rtTA expression vector for dox-inducible system
+  
+  constraints:
+    assembly: gateway
+    codon_optimization: human
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600
+    max_turnaround_days: 21
+```

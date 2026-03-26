@@ -1,0 +1,42 @@
+```yaml
+construct:
+  name: "lentiviral_mEGFP_IRES_puromycin"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - spacer: IRES  # Internal Ribosome Entry Site for bicistronic expression
+
+    - cistron:
+        label: selection
+        expression: medium
+        fused: false
+        gene:
+          id: P0AR_ECOLI
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

@@ -1,0 +1,35 @@
+```yaml
+construct:
+  name: PGK_GFP_hygromycin_stable
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"  # Will modify for PGK promoter and hygromycin resistance
+    resistance: hygromycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: PGK
+
+    - cistron:
+        label: reporter
+        expression: medium
+        gene:
+          id: EGFP
+          source: fpbase
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

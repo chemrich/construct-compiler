@@ -1,0 +1,44 @@
+```yaml
+construct:
+  name: lentiviral_cre_self_excisable_selection
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist Lenti"
+
+  cassette:
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: cre_recombinase
+        expression: medium
+        gene:
+          id: P06803
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        chain:
+          - loxP_site: forward
+          - gene:
+              protein_sequence: MAAGAAGAAGAAAAAGAACAAGAAGAAGAACAAGAAGAAGAACAAGAAGAAGAACAAGAAGAAG
+          - loxP_site: reverse
+
+    - terminator: BBa_B0015
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 600
+    max_turnaround_days: 28
+```

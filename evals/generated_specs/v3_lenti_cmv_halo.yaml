@@ -1,0 +1,33 @@
+```yaml
+construct:
+  name: "CMV_HaloTag_lentiviral_blasticidin"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pLenti CMV"  # lentiviral backbone with CMV promoter
+    resistance: blasticidin
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: HaloTag
+          source: uniprot
+
+    - terminator: SV40_polyA
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

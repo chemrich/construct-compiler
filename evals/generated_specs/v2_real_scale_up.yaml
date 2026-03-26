@@ -1,0 +1,39 @@
+```yaml
+construct:
+  name: "therapeutic_enzyme_high_solubility"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: therapeutic_enzyme
+        expression: medium  # reduced from high to prevent inclusion bodies
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP  # maltose binding protein for enhanced solubility
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              # placeholder - user needs to specify the therapeutic enzyme
+              protein_sequence: "PLACEHOLDER_SEQUENCE"
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

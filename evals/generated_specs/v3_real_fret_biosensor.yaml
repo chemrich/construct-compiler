@@ -1,0 +1,46 @@
+```yaml
+construct:
+  name: "mClover3_calmodulin_mRuby3_FRET_sensor"
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: FRET_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mClover3
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P62158
+              source: uniprot  # human calmodulin
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mRuby3
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

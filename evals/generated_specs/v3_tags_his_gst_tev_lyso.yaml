@@ -1,0 +1,36 @@
+```yaml
+construct:
+  name: His_GST_TEV_lysostaphin
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: lysostaphin
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: GST
+          - cleavage_site: TEV
+          - gene:
+              id: P10547
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

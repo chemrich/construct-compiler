@@ -1,0 +1,45 @@
+```yaml
+construct:
+  name: "bicistronic_kinase_substrate"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: kinase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: placeholder_kinase
+              # Replace with actual kinase gene when sequence is available
+
+    - spacer: 30
+
+    - cistron:
+        label: substrate
+        expression: medium
+        fused: false
+        gene:
+          id: placeholder_substrate
+          # Replace with actual substrate gene when sequence is available
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

@@ -30,6 +30,9 @@ Usage:
 
     # Specify number of retries per prompt (LLM generates spec again on failure)
     python evals/run_eval.py --retries 2
+
+    # Run with parallel API calls (default: 1 = sequential)
+    python evals/run_eval.py --concurrency 10
 """
 
 from __future__ import annotations
@@ -40,11 +43,39 @@ import logging
 import os
 import re
 import sys
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
+
+# ---------------------------------------------------------------------------
+# Rate limiter — prevents API throttling when running concurrent workers
+# ---------------------------------------------------------------------------
+
+class _RateLimiter:
+    """Simple token-bucket rate limiter (thread-safe)."""
+
+    def __init__(self, requests_per_minute: float):
+        self._min_interval = 60.0 / requests_per_minute if requests_per_minute > 0 else 0
+        self._lock = threading.Lock()
+        self._last_request = 0.0
+
+    def wait(self):
+        """Block until it's safe to send the next request."""
+        if self._min_interval <= 0:
+            return
+        with self._lock:
+            now = time.monotonic()
+            wait_time = self._last_request + self._min_interval - now
+            if wait_time > 0:
+                time.sleep(wait_time)
+            self._last_request = time.monotonic()
+
+# Global rate limiter — set from CLI via --rpm flag
+_rate_limiter: _RateLimiter | None = None
 
 import yaml
 
@@ -172,18 +203,32 @@ def generate_spec_via_api(
 
     client = anthropic.Anthropic(api_key=api_key)
 
+    # Respect rate limit before firing the request
+    if _rate_limiter:
+        _rate_limiter.wait()
+
     t0 = time.monotonic()
-    try:
-        response = client.messages.create(
-            model=model,
-            max_tokens=4096,
-            system=system_prompt,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = response.content[0].text
-        elapsed = time.monotonic() - t0
-    except Exception as e:
-        return None, "", time.monotonic() - t0, f"API error: {e}"
+    max_api_retries = 5
+    for api_attempt in range(max_api_retries):
+        try:
+            response = client.messages.create(
+                model=model,
+                max_tokens=4096,
+                system=system_prompt,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            raw = response.content[0].text
+            elapsed = time.monotonic() - t0
+            break
+        except Exception as e:
+            err_str = str(e).lower()
+            is_rate_limit = "rate" in err_str or "429" in err_str or "overloaded" in err_str
+            if is_rate_limit and api_attempt < max_api_retries - 1:
+                backoff = 2 ** api_attempt * 5  # 5s, 10s, 20s, 40s
+                logger.warning(f"Rate limited, backing off {backoff}s (attempt {api_attempt + 1})")
+                time.sleep(backoff)
+                continue
+            return None, "", time.monotonic() - t0, f"API error: {e}"
 
     # Parse the YAML from the response
     spec, parse_error = _extract_yaml(raw)
@@ -373,6 +418,129 @@ def _extract_part_types_from_spec(spec: dict) -> set[str]:
 # Core eval loop
 # ---------------------------------------------------------------------------
 
+def _eval_single_case(
+    case: PromptCase,
+    index: int,
+    total: int,
+    model: str,
+    retries: int,
+    reeval: bool,
+    skip_constraints: bool,
+    system_prompt: str,
+    print_lock: threading.Lock | None = None,
+) -> EvalOutcome | None:
+    """
+    Evaluate a single prompt case (thread-safe).
+
+    Generates a spec via the API, validates it, and checks expectations.
+    """
+    def _print(*args, **kwargs):
+        if print_lock:
+            with print_lock:
+                print(*args, **kwargs)
+        else:
+            print(*args, **kwargs)
+
+    _print(f"\n[{index}/{total}] {case.id} ({case.category}/{case.difficulty})")
+    _print(f"  Prompt: {case.prompt[:80]}...")
+
+    spec_path = SPECS_DIR / f"{case.id}.yaml"
+    best_outcome = None
+
+    for attempt in range(1, retries + 1):
+        outcome = EvalOutcome(
+            prompt_id=case.id,
+            category=case.category,
+            difficulty=case.difficulty,
+            prompt=case.prompt,
+            model=model,
+            attempt=attempt,
+            timestamp=datetime.now().isoformat(),
+        )
+
+        # --- Generate spec ---
+        if reeval and spec_path.exists():
+            raw = spec_path.read_text()
+            spec, parse_error = _extract_yaml(raw)
+            outcome.raw_llm_output = raw
+            outcome.generated_spec = spec
+            outcome.generation_error = parse_error
+            _print(f"  [reeval] Loaded saved spec from {spec_path.name}")
+        else:
+            spec, raw, elapsed, gen_error = generate_spec_via_api(
+                case.prompt, model=model, system_prompt=system_prompt,
+            )
+            outcome.raw_llm_output = raw
+            outcome.generated_spec = spec
+            outcome.generation_error = gen_error
+            outcome.generation_time_s = elapsed
+
+            if gen_error:
+                _print(f"  [FAIL] Generation error: {gen_error}")
+            else:
+                _print(f"  Generated spec in {elapsed:.1f}s")
+                spec_path.write_text(raw)
+
+        # --- Validate with harness ---
+        if outcome.generated_spec:
+            try:
+                eval_result = evaluate_spec(
+                    outcome.generated_spec,
+                    skip_constraints=skip_constraints,
+                )
+                outcome.harness_passed = eval_result.passed
+                outcome.harness_score = eval_result.score
+                outcome.harness_error_count = eval_result.error_count
+                outcome.harness_warning_count = eval_result.warning_count
+                outcome.compile_error = eval_result.compile_error
+                outcome.harness_errors = eval_result.errors
+                outcome.harness_summary = eval_result.summary()
+
+                status = "PASS" if eval_result.passed else "FAIL"
+                _print(f"  [{status}] score={eval_result.score:.2f} "
+                       f"errors={eval_result.error_count} "
+                       f"warnings={eval_result.warning_count}")
+                if eval_result.compile_error:
+                    _print(f"  Compile error: {eval_result.compile_error}")
+                for err in eval_result.errors:
+                    _print(f"    ERROR: [{err['check_name']}] {err['message']}")
+            except Exception as e:
+                outcome.compile_error = str(e)
+                _print(f"  [CRASH] Harness exception: {e}")
+
+        # --- Check expectations ---
+        eval_r = None
+        if outcome.harness_passed is not None:
+            eval_r = EvalResult()
+            eval_r.passed = outcome.harness_passed
+            eval_r.cistron_count = 0
+            try:
+                temp = evaluate_spec(outcome.generated_spec, skip_constraints=True)
+                eval_r.cistron_count = temp.cistron_count
+            except Exception:
+                pass
+
+        outcome.expectation_results = check_expectations(
+            case, outcome.generated_spec, eval_r,
+        )
+        outcome.all_expectations_met = all(
+            r["passed"] for r in outcome.expectation_results.values()
+        ) if outcome.expectation_results else (outcome.harness_passed or False)
+
+        for check_name, check_result in outcome.expectation_results.items():
+            status = "OK" if check_result["passed"] else "MISS"
+            _print(f"    [{status}] {check_name}: "
+                   f"expected={check_result['expected']} "
+                   f"actual={check_result['actual']}")
+
+        best_outcome = outcome
+
+        if outcome.harness_passed and outcome.all_expectations_met:
+            break
+
+    return best_outcome
+
+
 def run_eval(
     cases: list[PromptCase],
     model: str = "claude-sonnet-4-20250514",
@@ -380,6 +548,7 @@ def run_eval(
     reeval: bool = False,
     dry_run: bool = False,
     skip_constraints: bool = True,
+    concurrency: int = 1,
 ) -> list[EvalOutcome]:
     """
     Run the eval for a list of prompt cases.
@@ -391,122 +560,66 @@ def run_eval(
         reeval: if True, use previously saved specs instead of calling the API
         dry_run: if True, just print what would be tested
         skip_constraints: skip codon optimization for speed
+        concurrency: number of parallel workers (1 = sequential)
     """
     SPECS_DIR.mkdir(parents=True, exist_ok=True)
 
     system_prompt = SYSTEM_PROMPT_PATH.read_text()
-    outcomes = []
 
-    for i, case in enumerate(cases):
-        print(f"\n[{i+1}/{len(cases)}] {case.id} ({case.category}/{case.difficulty})")
-        print(f"  Prompt: {case.prompt[:80]}...")
-
-        if dry_run:
+    if dry_run:
+        for i, case in enumerate(cases):
+            print(f"\n[{i+1}/{len(cases)}] {case.id} ({case.category}/{case.difficulty})")
+            print(f"  Prompt: {case.prompt[:80]}...")
             print("  [DRY RUN] Would generate spec and validate")
-            continue
+        return []
 
-        spec_path = SPECS_DIR / f"{case.id}.yaml"
-        best_outcome = None
+    total = len(cases)
 
-        for attempt in range(1, retries + 1):
-            outcome = EvalOutcome(
-                prompt_id=case.id,
-                category=case.category,
-                difficulty=case.difficulty,
-                prompt=case.prompt,
-                model=model,
-                attempt=attempt,
-                timestamp=datetime.now().isoformat(),
+    if concurrency <= 1:
+        # Sequential path (original behavior, cleaner output)
+        outcomes = []
+        for i, case in enumerate(cases):
+            outcome = _eval_single_case(
+                case, i + 1, total, model, retries, reeval,
+                skip_constraints, system_prompt,
             )
+            if outcome:
+                outcomes.append(outcome)
+        return outcomes
 
-            # --- Generate spec ---
-            if reeval and spec_path.exists():
-                # Re-use previously generated spec
-                raw = spec_path.read_text()
-                spec, parse_error = _extract_yaml(raw)
-                outcome.raw_llm_output = raw
-                outcome.generated_spec = spec
-                outcome.generation_error = parse_error
-                print(f"  [reeval] Loaded saved spec from {spec_path.name}")
-            else:
-                # Call the API
-                spec, raw, elapsed, gen_error = generate_spec_via_api(
-                    case.prompt, model=model, system_prompt=system_prompt,
-                )
-                outcome.raw_llm_output = raw
-                outcome.generated_spec = spec
-                outcome.generation_error = gen_error
-                outcome.generation_time_s = elapsed
+    # Parallel path
+    print(f"Running with {concurrency} parallel workers")
+    print_lock = threading.Lock()
+    outcomes: list[EvalOutcome] = []
+    completed = 0
 
-                if gen_error:
-                    print(f"  [FAIL] Generation error: {gen_error}")
-                else:
-                    print(f"  Generated spec in {elapsed:.1f}s")
-                    # Save the raw output for re-eval
-                    spec_path.write_text(raw)
+    def _worker(args):
+        nonlocal completed
+        i, case = args
+        result = _eval_single_case(
+            case, i + 1, total, model, retries, reeval,
+            skip_constraints, system_prompt, print_lock,
+        )
+        with print_lock:
+            completed += 1
+            pct = completed / total * 100
+            passed_so_far = sum(1 for o in outcomes if o.harness_passed) + (1 if result and result.harness_passed else 0)
+            print(f"\n  >>> Progress: {completed}/{total} ({pct:.0f}%) — {passed_so_far} passed so far")
+        return result
 
-            # --- Validate with harness ---
-            if outcome.generated_spec:
-                try:
-                    eval_result = evaluate_spec(
-                        outcome.generated_spec,
-                        skip_constraints=skip_constraints,
-                    )
-                    outcome.harness_passed = eval_result.passed
-                    outcome.harness_score = eval_result.score
-                    outcome.harness_error_count = eval_result.error_count
-                    outcome.harness_warning_count = eval_result.warning_count
-                    outcome.compile_error = eval_result.compile_error
-                    outcome.harness_errors = eval_result.errors
-                    outcome.harness_summary = eval_result.summary()
+    with ThreadPoolExecutor(max_workers=concurrency) as executor:
+        futures = {
+            executor.submit(_worker, (i, case)): i
+            for i, case in enumerate(cases)
+        }
+        for future in as_completed(futures):
+            result = future.result()
+            if result:
+                outcomes.append(result)
 
-                    status = "PASS" if eval_result.passed else "FAIL"
-                    print(f"  [{status}] score={eval_result.score:.2f} "
-                          f"errors={eval_result.error_count} "
-                          f"warnings={eval_result.warning_count}")
-                    if eval_result.compile_error:
-                        print(f"  Compile error: {eval_result.compile_error}")
-                    for err in eval_result.errors:
-                        print(f"    ERROR: [{err['check_name']}] {err['message']}")
-                except Exception as e:
-                    outcome.compile_error = str(e)
-                    print(f"  [CRASH] Harness exception: {e}")
-
-            # --- Check expectations ---
-            eval_r = None
-            if outcome.harness_passed is not None:
-                # Build a minimal EvalResult for expectation checking
-                eval_r = EvalResult()
-                eval_r.passed = outcome.harness_passed
-                eval_r.cistron_count = 0
-                # Try to get cistron count from harness
-                try:
-                    temp = evaluate_spec(outcome.generated_spec, skip_constraints=True)
-                    eval_r.cistron_count = temp.cistron_count
-                except Exception:
-                    pass
-
-            outcome.expectation_results = check_expectations(
-                case, outcome.generated_spec, eval_r,
-            )
-            outcome.all_expectations_met = all(
-                r["passed"] for r in outcome.expectation_results.values()
-            ) if outcome.expectation_results else (outcome.harness_passed or False)
-
-            for check_name, check_result in outcome.expectation_results.items():
-                status = "OK" if check_result["passed"] else "MISS"
-                print(f"    [{status}] {check_name}: "
-                      f"expected={check_result['expected']} "
-                      f"actual={check_result['actual']}")
-
-            best_outcome = outcome
-
-            # If passed and all expectations met, no need to retry
-            if outcome.harness_passed and outcome.all_expectations_met:
-                break
-
-        if best_outcome:
-            outcomes.append(best_outcome)
+    # Sort outcomes back to original corpus order
+    case_order = {case.id: i for i, case in enumerate(cases)}
+    outcomes.sort(key=lambda o: case_order.get(o.prompt_id, 0))
 
     return outcomes
 
@@ -671,12 +784,30 @@ def main():
                         help="Skip codon optimization (default: True)")
     parser.add_argument("--full", action="store_true",
                         help="Run with codon optimization (slow)")
+    parser.add_argument("--corpus", help="Path to prompt corpus YAML (default: prompt_corpus.yaml)")
+    parser.add_argument("--concurrency", "-j", type=int, default=1,
+                        help="Number of parallel workers (default: 1 = sequential)")
+    parser.add_argument("--rpm", type=int, default=0,
+                        help="Max API requests per minute (0 = unlimited). "
+                             "Recommended: 40-50 for most tiers.")
     parser.add_argument("--run-name", help="Name for the results file")
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.WARNING)
+    logging.basicConfig(level=logging.INFO if args.concurrency > 1 else logging.WARNING)
 
-    cases = load_corpus(filter_id=args.id, filter_category=args.category)
+    # Set up rate limiting
+    global _rate_limiter
+    if args.rpm > 0:
+        _rate_limiter = _RateLimiter(args.rpm)
+        print(f"Rate limited to {args.rpm} requests/minute")
+    elif args.concurrency > 1:
+        # Auto-set a safe default when running concurrent
+        auto_rpm = max(30, args.concurrency * 8)
+        _rate_limiter = _RateLimiter(auto_rpm)
+        print(f"Auto rate limit: {auto_rpm} requests/minute (use --rpm to override)")
+
+    corpus_path = Path(args.corpus) if args.corpus else CORPUS_PATH
+    cases = load_corpus(corpus_path=corpus_path, filter_id=args.id, filter_category=args.category)
     if not cases:
         print("No matching prompt cases found.")
         sys.exit(1)
@@ -691,6 +822,7 @@ def main():
         reeval=args.reeval,
         dry_run=args.dry_run,
         skip_constraints=skip,
+        concurrency=args.concurrency,
     )
 
     if not args.dry_run and outcomes:

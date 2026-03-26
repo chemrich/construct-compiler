@@ -1,0 +1,39 @@
+```yaml
+construct:
+  name: "high_expression_low_toxicity"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac  # T7lac allows tighter control than T7 alone
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP  # Helps with folding and reduces aggregation
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local  # Avoids rare codons that slow translation
+    gc_window: [0.4, 0.6]  # Balanced GC content
+    max_homopolymer: 4  # Stricter limit to prevent secondary structures
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

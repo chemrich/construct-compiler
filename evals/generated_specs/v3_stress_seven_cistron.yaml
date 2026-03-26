@@ -1,0 +1,116 @@
+```yaml
+construct:
+  name: seven_cistron_GFP1-10_detector_operon
+  host: e_coli
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: GFP1-10_detector
+        expression: high
+        gene:
+          id: sfGFP1-10
+          source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme1_GFP11
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              protein_sequence: MKIIFVQKCAQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIWGEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: GFP11
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme2_GFP11
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              protein_sequence: MKIIFVQKCAQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIWGEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: GFP11
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme3_GFP11
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              protein_sequence: MKIIFVQKCAQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIWGEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: GFP11
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme4_GFP11
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              protein_sequence: MKIIFVQKCAQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIWGEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: GFP11
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme5_GFP11
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              protein_sequence: MKIIFVQKCAQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIWGEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: GFP11
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme6_GFP11
+        expression: very_low
+        fused: false
+        chain:
+          - gene:
+              protein_sequence: MKIIFVQKCAQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIWGEDTLMEYLENPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: GFP11
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

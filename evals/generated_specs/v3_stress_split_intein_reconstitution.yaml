@@ -1,0 +1,49 @@
+```yaml
+construct:
+  name: "trans_splicing_npu_intein_system"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: n_half_intein
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              protein_sequence: "MGHHHHHHCLAEGTRIFDPYTLHKFKGMCVTGKGGCFKDQLVAFCSTVDENGEWFKDFVGALLPFELFKSG"  # Example N-terminal protein half
+          - gene:
+              id: "Npu_N_intein"
+              protein_sequence: "CLSYIELDAPVKFEAAKNYIQKKGKVTIEDGVKFHQMKDTNLVCLRIFDLDDMPKVELSLTVTDIDGLSLKYYKDISFKKVKMSDVKSIKNISSESDKKLHIFDPSEIDLKFLVEAEEKKRKKGKVTIEDGVKFHQMKDTNLVCLRIFDLDDMPKVELSLTVTDIDGLSLK"
+
+    - spacer: 30
+
+    - cistron:
+        label: c_half_intein
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: "Npu_C_intein"
+              protein_sequence: "CFNKIDNTVVVHTEEGRKYCVFGDKVEHIRNSDKAVLTKGLKKVFNNEELVLEQHKFLKSVPKHNGLDSIPEPRDLLTAKYSNLWRFNHQLGNQAVVPTCYGTAKKMIEHLVDKGFKLEKVLNPEFTMREIKKDL"
+          - gene:
+              protein_sequence: "GTLVPRGSHMKDHILQKIKAYENRAKWDHDYNAKAVELRKAEETLYRYQTNKLSKPNRGE"  # Example C-terminal protein half
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

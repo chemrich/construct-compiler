@@ -1,0 +1,51 @@
+```yaml
+construct:
+  name: "cytidine_deaminase_Cas9_UGI_base_editor"
+  host: e_coli
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: base_editor
+        expression: high
+        chain:
+          - gene:
+              id: P0A1B9  # cytidine deaminase from E. coli
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Q99ZW2  # Cas9 from Streptococcus pyogenes
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: UGI_inhibitor
+        expression: medium
+        fused: false
+        gene:
+          id: P11438  # Uracil-DNA glycosylase inhibitor
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```
