@@ -600,9 +600,11 @@ export TWIST_API_SECRET=your_secret
 
 export IDT_CLIENT_ID=your_id
 export IDT_CLIENT_SECRET=your_secret
+export IDT_USERNAME=your_username
+export IDT_PASSWORD=your_password
 ```
 
-Without credentials, the plugins run in mock mode with heuristic feasibility checks and pricing estimates.
+Live IDT API integration is enabled automatically when these 4 variables are set. Tests can be run with `pytest tests/test_idt_live.py`. Without credentials, the plugin runs in mock mode with heuristic feasibility checks.
 
 ---
 
@@ -615,7 +617,8 @@ Without credentials, the plugins run in mock mode with heuristic feasibility che
 - [x] LLM eval harness — 750 prompts across 3 corpora, parallel execution, rate-limited API calls
 - [x] Assembled view — merges insert + backbone features with real DNA sequences from GenBank annotations
 - [x] Restriction site-aware cloning pair inference — auto-selects best RE pair based on insert vs backbone features
-- [ ] Live Twist/IDT API integration (screening + vendor codon optimization)
+- [ ] Live Twist API integration (screening + vendor codon optimization)
+- [x] Live IDT API integration (screening + vendor codon optimization)
 - [ ] Protocol generation backend (human-readable step-by-step assembly instructions)
 - [ ] Primer design backend (primer3-py for Golden Gate primers with overhangs)
 - [ ] SBOL3 export via pySBOL3
