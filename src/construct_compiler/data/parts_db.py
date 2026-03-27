@@ -190,6 +190,48 @@ PURIFICATION_TAGS = {
         "protein_sequence": "WSHPQFEKGGGSGGGSGGSAWSHPQFEK",
         "notes": "Twin Strep-tag. Higher affinity than single Strep-II.",
     },
+    "GFP11": {
+        "protein_sequence": "RDHMVLHEYVNAAGIT",
+        "notes": "GFP11 tag (strand 11 of superfolder GFP). 16 aa. "
+                 "Complements GFP1-10 detector for split-GFP solubility assay "
+                 "(Cabantous et al. 2005). Small tag, minimal perturbation.",
+    },
+    "GFP11x3": {
+        "protein_sequence": (
+            "RDHMVLHEYVNAAGITGGGGSGGGGSRDHMVLHEYVNAAGIT"
+            "GGGGSGGGGSRDHMVLHEYVNAAGIT"
+        ),
+        "notes": "Tandem 3x GFP11 tag. Brighter signal via tripartite complementation. "
+                 "GS linkers between repeats.",
+    },
+    "GFP11x7": {
+        "protein_sequence": (
+            "RDHMVLHEYVNAAGITGGGGSRDHMVLHEYVNAAGITGGGGSRDHMVLHEYVNAAGIT"
+            "GGGGSRDHMVLHEYVNAAGITGGGGSRDHMVLHEYVNAAGITGGGGSRDHMVLHEYVNAAGIT"
+            "GGGGSRDHMVLHEYVNAAGIT"
+        ),
+        "notes": "Tandem 7x GFP11 array. High-sensitivity detection. "
+                 "Tanenbaum / SunTag-inspired amplification.",
+    },
+}
+
+
+# ---------------------------------------------------------------------------
+# Split fluorescent protein detector fragments
+# ---------------------------------------------------------------------------
+
+SPLIT_FP_DETECTORS = {
+    "GFP1-10": {
+        "protein_sequence": (
+            "MSKGEELFTGVVPILVELDGDVNGHKFSVRGEGEGDATNGKLTLKFICTTGKLPVPWPTLV"
+            "TTLTYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTISFKDDGTYKTRAEVKFEGDTLVNRI"
+            "ELKGIDFKEDGNILGHKLEYNFNSHNVYITADKQKNGIKANFKIRHNVEDGSVQLADHYQQN"
+            "TPIGDGPVLLPDNHYLSTQSVLSKDPNEKRDHMVLLEFVTAAGITHGMDELYK"
+        ),
+        "notes": "GFP1-10 detector fragment (strands 1-10 of superfolder GFP). "
+                 "Non-fluorescent alone; becomes fluorescent when complemented with GFP11. "
+                 "Express from a second cistron or co-transform.",
+    },
 }
 
 
@@ -272,20 +314,98 @@ CLEAVAGE_SITES = {
 # ---------------------------------------------------------------------------
 
 LINKERS = {
+    # --- Flexible linkers ---
     "GS_flexible": {
         "unit": "GGGGS",
         "default_repeats": 3,
-        "notes": "(GGGGS)n flexible linker. n=1-6 typical.",
-    },
-    "rigid_EAAAK": {
-        "unit": "EAAAK",
-        "default_repeats": 3,
-        "notes": "(EAAAK)n rigid alpha-helical linker.",
+        "notes": "(GGGGS)n flexible linker. n=1-6 typical. Most widely used.",
     },
     "short_GS": {
         "unit": "GS",
         "default_repeats": 1,
         "notes": "Minimal GS linker.",
+    },
+    "SEG": {
+        "unit": "SGGSGGS",
+        "default_repeats": 2,
+        "notes": "(SGGSGGS)n flexible linker. Longer period than (G4S)n. "
+                 "Preferred for larger fusion proteins.",
+    },
+    # --- Rigid / helical linkers ---
+    "rigid_EAAAK": {
+        "unit": "EAAAK",
+        "default_repeats": 3,
+        "notes": "(EAAAK)n rigid alpha-helical linker.",
+    },
+    "rigid_EAAAK_capped": {
+        "unit": "AEAAAK",
+        "default_repeats": 4,
+        "sequence": "AEAAAKEAAAKEAAAKEAAAKA",  # A(EAAAK)4A
+        "notes": "A(EAAAK)4A capped helical linker. Terminal alanines "
+                 "stabilize helix ends. More rigid than uncapped.",
+    },
+    "proline_rich": {
+        "unit": "AP",
+        "default_repeats": 5,
+        "notes": "(AP)n proline-rich rigid linker. Extended conformation "
+                 "without alpha-helix. Good domain separation.",
+    },
+    # --- Natural / composite linkers ---
+    "FL2x": {
+        "unit": "GSTSGSGKPGSGEGSTKG",
+        "default_repeats": 1,
+        "notes": "Natural flexible linker from multi-domain proteins "
+                 "(immunoglobulin-derived). Common benchmark linker.",
+    },
+    "XTEN_40": {
+        "unit": (
+            "GSPAGSPTSTEEGTSESATPESGPGSEPATS"
+            "SGSETPGTSESA"
+        ),
+        "default_repeats": 1,
+        "notes": "XTEN 40-aa unstructured polypeptide (Schellenberger et al. 2009). "
+                 "Highly soluble, no secondary structure. Used in half-life extension "
+                 "and large-domain separation.",
+    },
+    "XTEN_80": {
+        "unit": (
+            "GSPAGSPTSTEEGTSESATPESGPGSEPATS"
+            "SGSETPGTSESATPESGPGSEPATSGSETPG"
+            "TSESATPESGPGSEPATS"
+        ),
+        "default_repeats": 1,
+        "notes": "XTEN 80-aa unstructured polypeptide. Longer variant for "
+                 "maximum domain separation or PK modulation.",
+    },
+}
+
+
+# ---------------------------------------------------------------------------
+# 2A self-cleaving peptides (ribosomal skipping sequences)
+# ---------------------------------------------------------------------------
+
+SELF_CLEAVING_2A = {
+    "P2A": {
+        "protein_sequence": "GSGATNFSLLKQAGDVEENPGP",
+        "notes": "Porcine teschovirus-1 2A. Highest cleavage efficiency in "
+                 "mammalian cells. Most commonly used 2A peptide. GSG prefix "
+                 "improves cleavage. Leaves ~20 aa C-terminal tag on upstream protein.",
+    },
+    "T2A": {
+        "protein_sequence": "EGRGSLLTCGDVEENPGP",
+        "notes": "Thosea asigna virus 2A. Second most efficient after P2A. "
+                 "Shorter than P2A. Good for constructs where tag size matters.",
+    },
+    "E2A": {
+        "protein_sequence": "QCTNYALLKLAGDVESNPGP",
+        "notes": "Equine rhinitis A virus 2A. Moderate cleavage efficiency. "
+                 "Sometimes used as third 2A when P2A and T2A are already used "
+                 "(to avoid recombination between identical sequences).",
+    },
+    "F2A": {
+        "protein_sequence": "VKQTLNFDLLKLAGDVESNPGP",
+        "notes": "Foot-and-mouth disease virus 2A. Original 2A peptide. "
+                 "Lower cleavage efficiency than P2A/T2A. Longest sequence.",
     },
 }
 

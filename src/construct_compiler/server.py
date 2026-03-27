@@ -73,6 +73,35 @@ class CostParamsRequest(BaseModel):
     three_part_success_rate: float = 0.80
 
 
+class CheckRequest(BaseModel):
+    """A construct spec to validate (compile + run all 4 checks)."""
+    spec: dict
+    skip_constraints: bool = False
+
+
+class CheckResultItem(BaseModel):
+    check_name: str
+    severity: str  # "ERROR", "WARNING", "INFO"
+    part_id: str
+    message: str
+    details: dict = {}
+
+
+class CheckResponse(BaseModel):
+    success: bool
+    passed: bool = False
+    score: float = 0.0
+    error_count: int = 0
+    warning_count: int = 0
+    check_count: int = 0
+    construct_name: str = ""
+    insert_length_bp: int | None = None
+    cistron_count: int = 0
+    compile_time_s: float = 0.0
+    checks: list[CheckResultItem] = []
+    errors: list[str] = []
+
+
 class CompileRequest(BaseModel):
     """A construct spec submitted from the web UI."""
     spec: dict
@@ -735,6 +764,56 @@ async def compile_endpoint(req: CompileRequest):
         )
 
 
+@app.post("/api/check", response_model=CheckResponse)
+async def check_endpoint(req: CheckRequest):
+    """Compile a construct spec and run all 4 validity checks."""
+    from .validation.harness import evaluate_spec
+
+    try:
+        result = evaluate_spec(
+            req.spec,
+            skip_constraints=req.skip_constraints,
+        )
+
+        checks = []
+        for e in result.errors:
+            checks.append(CheckResultItem(
+                check_name=e["check_name"],
+                severity="ERROR",
+                part_id=e["part_id"],
+                message=e["message"],
+                details=e.get("details", {}),
+            ))
+        for w in result.warnings:
+            checks.append(CheckResultItem(
+                check_name=w["check_name"],
+                severity="WARNING",
+                part_id=w["part_id"],
+                message=w["message"],
+                details=w.get("details", {}),
+            ))
+
+        return CheckResponse(
+            success=True,
+            passed=result.passed,
+            score=round(result.score, 4),
+            error_count=result.error_count,
+            warning_count=result.warning_count,
+            check_count=result.check_count,
+            construct_name=result.construct_name,
+            insert_length_bp=result.insert_length_bp,
+            cistron_count=result.cistron_count,
+            compile_time_s=round(result.compile_time_s, 3),
+            checks=checks,
+        )
+
+    except Exception as e:
+        return CheckResponse(
+            success=False,
+            errors=[str(e)],
+        )
+
+
 @app.get("/api/parts/promoters")
 async def get_promoters():
     from .data.parts_db import PROMOTERS
@@ -757,10 +836,11 @@ async def get_terminators():
 
 @app.get("/api/parts/tags")
 async def get_tags():
-    from .data.parts_db import PURIFICATION_TAGS, SOLUBILITY_TAGS
+    from .data.parts_db import PURIFICATION_TAGS, SOLUBILITY_TAGS, SPLIT_FP_DETECTORS
     return {
         "purification": list(PURIFICATION_TAGS.keys()),
         "solubility": list(SOLUBILITY_TAGS.keys()),
+        "split_fp_detectors": list(SPLIT_FP_DETECTORS.keys()),
     }
 
 
@@ -768,6 +848,23 @@ async def get_tags():
 async def get_cleavage():
     from .data.parts_db import CLEAVAGE_SITES
     return {k: {"recognition": v["protein_sequence"]} for k, v in CLEAVAGE_SITES.items()}
+
+
+@app.get("/api/parts/linkers")
+async def get_linkers():
+    from .data.parts_db import LINKERS
+    return {k: {"unit": v["unit"], "default_repeats": v["default_repeats"],
+                "notes": v.get("notes", "")}
+            for k, v in LINKERS.items()}
+
+
+@app.get("/api/parts/2a_peptides")
+async def get_2a_peptides():
+    from .data.parts_db import SELF_CLEAVING_2A
+    return {k: {"sequence": v["protein_sequence"],
+                "length_aa": len(v["protein_sequence"]),
+                "notes": v.get("notes", "")}
+            for k, v in SELF_CLEAVING_2A.items()}
 
 
 def _serialize_vector(v: dict) -> dict:

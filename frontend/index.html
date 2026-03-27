@@ -37,6 +37,225 @@ const PART_LABELS = {
     SolubilityTag: 'Sol', CleavageSite: '/', Linker: '~', Terminator: 'T', Spacer: '...',
 };
 
+// --- Linear construct diagram (SBOL-ish symbology) ---
+function LinearConstructDiagram({ promoter, terminator, cistrons, useCatalog, catalogVector }) {
+    // Build an ordered list of parts from the current UI state
+    const parts = useMemo(() => {
+        const p = [];
+        // Promoter
+        p.push({ type: 'promoter', label: promoter || 'P', color: PART_COLORS.Promoter });
+
+        cistrons.forEach((c, ci) => {
+            // Inter-cistron link
+            if (ci > 0) {
+                const link = c.upstreamLink || 'spacer';
+                if (link === 'spacer') {
+                    p.push({ type: 'spacer', label: '···', color: PART_COLORS.Spacer });
+                    p.push({ type: 'rbs', label: 'RBS', color: PART_COLORS.RBS });
+                } else {
+                    p.push({ type: '2a', label: link, color: '#e06c75' });
+                }
+            } else {
+                // First cistron gets an RBS
+                p.push({ type: 'rbs', label: 'RBS', color: PART_COLORS.RBS });
+            }
+
+            // Chain elements
+            if (c.nTag) p.push({ type: 'tag', label: c.nTag, color: PART_COLORS.PurificationTag });
+            if (c.cleavage) p.push({ type: 'cleavage', label: c.cleavage, color: PART_COLORS.CleavageSite });
+            if (c.solTag) p.push({ type: 'soltag', label: c.solTag, color: PART_COLORS.SolubilityTag });
+            if (c.linker) p.push({ type: 'linker', label: c.linker.replace(/_/g, ' '), color: PART_COLORS.Linker });
+
+            // Gene (CDS)
+            p.push({ type: 'cds', label: c.geneId || c.label, color: PART_COLORS.CDS });
+        });
+
+        // Terminator
+        p.push({ type: 'terminator', label: terminator || 'T', color: PART_COLORS.Terminator });
+        return p;
+    }, [promoter, terminator, cistrons]);
+
+    // Layout constants
+    const pad = 12;
+    const partH = 28;
+    const labelH = 14;
+    const rowH = partH + labelH + 6;
+    const svgW = 380;
+
+    // Size each part proportionally by type
+    const sizeWeight = (t) => {
+        switch (t) {
+            case 'cds': return 3;
+            case 'soltag': return 2;
+            case 'promoter': return 1.5;
+            case 'terminator': return 1.2;
+            case 'tag': return 1.2;
+            case 'cleavage': return 0.8;
+            case 'rbs': return 0.7;
+            case 'linker': return 1;
+            case 'spacer': return 0.6;
+            case '2a': return 1;
+            default: return 1;
+        }
+    };
+
+    const totalWeight = parts.reduce((s, p) => s + sizeWeight(p.type), 0);
+    const gap = 1;
+    const usableW = svgW - 2 * pad - (parts.length - 1) * gap;
+
+    // Compute x positions and widths
+    let cx = pad;
+    const layout = parts.map((p) => {
+        const w = Math.max(12, (sizeWeight(p.type) / totalWeight) * usableW);
+        const item = { ...p, x: cx, w };
+        cx += w + gap;
+        return item;
+    });
+
+    // Wrap into rows if needed
+    const maxRowW = svgW - 2 * pad;
+    const rows = [[]];
+    let rowW = 0;
+    layout.forEach(item => {
+        if (rowW + item.w > maxRowW + 10 && rows[rows.length - 1].length > 0) {
+            rows.push([]);
+            rowW = 0;
+        }
+        rows[rows.length - 1].push({ ...item, x: pad + rowW });
+        rowW += item.w + gap;
+    });
+
+    const svgH = rows.length * rowH + 8;
+
+    // SVG shape renderers
+    const renderPart = (p, y) => {
+        const midY = y + partH / 2;
+        const arrowTip = 5;
+
+        if (p.type === 'promoter') {
+            // Bent arrow (SBOL promoter)
+            return (
+                <g key={`part-${p.x}-${y}`}>
+                    <line x1={p.x + p.w * 0.3} y1={y + partH} x2={p.x + p.w * 0.3} y2={y + 4} stroke={p.color} strokeWidth={2.5} />
+                    <line x1={p.x + p.w * 0.3} y1={y + 4} x2={p.x + p.w - 2} y2={y + 4} stroke={p.color} strokeWidth={2.5} />
+                    <polygon points={`${p.x + p.w},${y + 4} ${p.x + p.w - 6},${y} ${p.x + p.w - 6},${y + 8}`} fill={p.color} />
+                </g>
+            );
+        }
+
+        if (p.type === 'terminator') {
+            // T-bar (SBOL terminator)
+            return (
+                <g key={`part-${p.x}-${y}`}>
+                    <line x1={p.x + p.w / 2} y1={y + partH} x2={p.x + p.w / 2} y2={y + 4} stroke={p.color} strokeWidth={2.5} />
+                    <line x1={p.x + 3} y1={y + 4} x2={p.x + p.w - 3} y2={y + 4} stroke={p.color} strokeWidth={3} />
+                </g>
+            );
+        }
+
+        if (p.type === 'rbs') {
+            // Semicircle (SBOL RBS)
+            const cx = p.x + p.w / 2;
+            const r = Math.min(p.w / 2 - 1, partH / 2 - 2);
+            return (
+                <g key={`part-${p.x}-${y}`}>
+                    <path d={`M ${cx - r} ${y + partH} A ${r} ${r} 0 0 1 ${cx + r} ${y + partH}`}
+                          fill={p.color} opacity={0.85} />
+                </g>
+            );
+        }
+
+        if (p.type === 'cds') {
+            // Pentagon / arrow block (SBOL CDS)
+            const pts = [
+                `${p.x},${y}`,
+                `${p.x + p.w - arrowTip},${y}`,
+                `${p.x + p.w},${midY}`,
+                `${p.x + p.w - arrowTip},${y + partH}`,
+                `${p.x},${y + partH}`,
+            ].join(' ');
+            return <polygon key={`part-${p.x}-${y}`} points={pts} fill={p.color} opacity={0.85} rx={2} />;
+        }
+
+        if (p.type === 'spacer') {
+            // Dashed line
+            return (
+                <line key={`part-${p.x}-${y}`} x1={p.x + 2} y1={midY} x2={p.x + p.w - 2} y2={midY}
+                      stroke={p.color} strokeWidth={2} strokeDasharray="3,3" />
+            );
+        }
+
+        if (p.type === '2a') {
+            // Diamond
+            const cx = p.x + p.w / 2;
+            const pts = [
+                `${cx},${y + 2}`,
+                `${p.x + p.w - 2},${midY}`,
+                `${cx},${y + partH - 2}`,
+                `${p.x + 2},${midY}`,
+            ].join(' ');
+            return <polygon key={`part-${p.x}-${y}`} points={pts} fill={p.color} opacity={0.85} />;
+        }
+
+        if (p.type === 'cleavage') {
+            // Scissors / notch — thin vertical bar with notch
+            const cx = p.x + p.w / 2;
+            return (
+                <g key={`part-${p.x}-${y}`}>
+                    <rect x={p.x} y={y} width={p.w} height={partH} fill={p.color} opacity={0.15} rx={2} />
+                    <line x1={cx} y1={y} x2={cx} y2={y + partH} stroke={p.color} strokeWidth={2} />
+                    <line x1={cx - 4} y1={midY - 3} x2={cx + 4} y2={midY + 3} stroke={p.color} strokeWidth={1.5} />
+                    <line x1={cx - 4} y1={midY + 3} x2={cx + 4} y2={midY - 3} stroke={p.color} strokeWidth={1.5} />
+                </g>
+            );
+        }
+
+        // Default: rounded rectangle (tags, solubility tags, linkers)
+        return (
+            <rect key={`part-${p.x}-${y}`} x={p.x} y={y} width={p.w} height={partH}
+                  fill={p.color} opacity={0.85} rx={3} />
+        );
+    };
+
+    return (
+        <div style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: 8, padding: '10px 4px 4px', marginBottom: 16 }}>
+            <div style={{ fontSize: 10, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4, paddingLeft: 8 }}>
+                Expression cassette
+            </div>
+            <svg width={svgW} height={svgH} viewBox={`0 0 ${svgW} ${svgH}`} style={{ display: 'block', width: '100%' }}>
+                {rows.map((row, ri) => {
+                    const baseY = ri * rowH;
+                    return (
+                        <g key={ri}>
+                            {/* Backbone line */}
+                            {row.length > 0 && (
+                                <line x1={row[0].x} y1={baseY + partH} x2={row[row.length - 1].x + row[row.length - 1].w}
+                                      y2={baseY + partH} stroke="#30363d" strokeWidth={2} />
+                            )}
+                            {/* Parts */}
+                            {row.map(p => renderPart(p, baseY))}
+                            {/* Labels */}
+                            {row.map(p => {
+                                // Truncate label to fit
+                                const maxChars = Math.max(2, Math.floor(p.w / 5.5));
+                                const lbl = p.label.length > maxChars ? p.label.slice(0, maxChars - 1) + '…' : p.label;
+                                return (
+                                    <text key={`lbl-${p.x}-${baseY}`}
+                                          x={p.x + p.w / 2} y={baseY + partH + labelH}
+                                          fontSize={9} fill="#8b949e" textAnchor="middle"
+                                          style={{ fontFamily: '-apple-system, system-ui, sans-serif' }}>
+                                        {lbl}
+                                    </text>
+                                );
+                            })}
+                        </g>
+                    );
+                })}
+            </svg>
+        </div>
+    );
+}
+
 // --- Plasmid map using seqviz ---
 function PlasmidMap({ plasmidMap, onAnnotationClick }) {
     const containerRef = useRef(null);
@@ -265,7 +484,26 @@ function CistronRow({ cistron, index, onChange, onRemove }) {
     const update = (field, value) => onChange(index, { ...cistron, [field]: value });
 
     return (
-        <div style={{ background: '#1c2129', borderRadius: 8, padding: 14, marginBottom: 10, border: '1px solid #30363d' }}>
+        <div style={{ marginBottom: 10 }}>
+            {index > 0 && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, padding: '6px 10px',
+                              background: '#161b22', borderRadius: '8px 8px 0 0', border: '1px solid #30363d', borderBottom: 'none' }}>
+                    <span style={{ fontSize: 10, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 0.5 }}>Link</span>
+                    <select style={{ ...inputStyle, padding: '3px 8px', fontSize: 12, flex: 1 }}
+                            value={cistron.upstreamLink || 'spacer'} onChange={e => update('upstreamLink', e.target.value)}>
+                        <optgroup label="Prokaryotic">
+                            <option value="spacer">Spacer + RBS (default)</option>
+                        </optgroup>
+                        <optgroup label="2A self-cleaving (mammalian)">
+                            <option value="P2A">P2A (highest efficiency)</option>
+                            <option value="T2A">T2A</option>
+                            <option value="E2A">E2A</option>
+                            <option value="F2A">F2A</option>
+                        </optgroup>
+                    </select>
+                </div>
+            )}
+        <div style={{ background: '#1c2129', borderRadius: index > 0 ? '0 0 8px 8px' : 8, padding: 14, border: '1px solid #30363d' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
                 <span style={{ fontSize: 13, fontWeight: 600, color: '#58a6ff' }}>Cistron {index + 1}: {cistron.label || 'unnamed'}</span>
                 <button onClick={() => onRemove(index)}
@@ -315,11 +553,19 @@ function CistronRow({ cistron, index, onChange, onRemove }) {
                     <span style={labelTextStyle}>N-term tag</span>
                     <select style={inputStyle} value={cistron.nTag} onChange={e => update('nTag', e.target.value)}>
                         <option value="">None</option>
-                        <option value="6xHis">6xHis</option>
-                        <option value="8xHis">8xHis</option>
-                        <option value="Strep-II">Strep-II</option>
-                        <option value="Twin-Strep">Twin-Strep</option>
-                        <option value="FLAG">FLAG</option>
+                        <optgroup label="Purification">
+                            <option value="6xHis">6xHis</option>
+                            <option value="8xHis">8xHis</option>
+                            <option value="Strep-II">Strep-II</option>
+                            <option value="Twin-Strep">Twin-Strep</option>
+                            <option value="FLAG">FLAG</option>
+                            <option value="HA">HA</option>
+                        </optgroup>
+                        <optgroup label="Split GFP">
+                            <option value="GFP11">GFP11 (16 aa)</option>
+                            <option value="GFP11x3">GFP11×3 tandem</option>
+                            <option value="GFP11x7">GFP11×7 array</option>
+                        </optgroup>
                     </select>
                 </label>
                 <label style={labelStyle}>
@@ -343,6 +589,44 @@ function CistronRow({ cistron, index, onChange, onRemove }) {
                     </select>
                 </label>
             </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
+                <label style={labelStyle}>
+                    <span style={labelTextStyle}>Linker</span>
+                    <select style={inputStyle} value={cistron.linker || ''} onChange={e => update('linker', e.target.value)}>
+                        <option value="">None</option>
+                        <optgroup label="Flexible">
+                            <option value="GS_flexible">(GGGGS)n flexible</option>
+                            <option value="short_GS">GS minimal</option>
+                            <option value="SEG">(SGGSGGS)n</option>
+                            <option value="FL2x">FL2x (natural)</option>
+                        </optgroup>
+                        <optgroup label="Rigid / helical">
+                            <option value="rigid_EAAAK">(EAAAK)n rigid</option>
+                            <option value="rigid_EAAAK_capped">A(EAAAK)4A capped</option>
+                            <option value="proline_rich">(AP)n proline-rich</option>
+                        </optgroup>
+                        <optgroup label="Unstructured (long)">
+                            <option value="XTEN_40">XTEN-40 (40 aa)</option>
+                            <option value="XTEN_80">XTEN-80 (80 aa)</option>
+                        </optgroup>
+                    </select>
+                </label>
+                {cistron.linker && (
+                    <label style={labelStyle}>
+                        <span style={labelTextStyle}>Linker repeats</span>
+                        <select style={inputStyle} value={cistron.linkerRepeats || 3} onChange={e => update('linkerRepeats', parseInt(e.target.value))}>
+                            <option value="1">1×</option>
+                            <option value="2">2×</option>
+                            <option value="3">3× (default)</option>
+                            <option value="4">4×</option>
+                            <option value="5">5×</option>
+                            <option value="6">6×</option>
+                        </select>
+                    </label>
+                )}
+            </div>
+        </div>
         </div>
     );
 }
@@ -458,18 +742,21 @@ function App() {
 
     const [cistrons, setCistrons] = useState([
         { label: 'target', expression: 'high', fused: true, geneId: 'mEGFP', geneSource: 'fpbase',
-          nTag: '6xHis', cleavage: 'TEV', solTag: 'MBP' },
+          nTag: '6xHis', cleavage: 'TEV', solTag: 'MBP', linker: '', linkerRepeats: 3 },
     ]);
 
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [activeTab, setActiveTab] = useState('map');
+    const [checkResult, setCheckResult] = useState(null);
+    const [checkLoading, setCheckLoading] = useState(false);
 
     const addCistron = () => {
         setCistrons([...cistrons, {
             label: `cistron_${cistrons.length + 1}`, expression: 'low', fused: false,
             geneId: 'mScarlet', geneSource: 'fpbase', nTag: '', cleavage: '', solTag: '',
+            linker: '', linkerRepeats: 3, upstreamLink: 'spacer',
         }]);
     };
 
@@ -487,12 +774,20 @@ function App() {
         const cassette = [{ promoter }];
 
         cistrons.forEach((c, i) => {
-            if (i > 0) cassette.push({ spacer: 30 });
+            if (i > 0) {
+                const link = c.upstreamLink || 'spacer';
+                if (link === 'spacer') {
+                    cassette.push({ spacer: 30 });
+                } else if (['P2A', 'T2A', 'E2A', 'F2A'].includes(link)) {
+                    cassette.push({ self_cleaving_2a: link });
+                }
+            }
 
             const chain = [];
             if (c.nTag) chain.push({ tag: c.nTag });
             if (c.cleavage) chain.push({ cleavage_site: c.cleavage });
             if (c.solTag) chain.push({ solubility_tag: c.solTag });
+            if (c.linker) chain.push({ linker: { type: c.linker, repeats: c.linkerRepeats || 3 } });
             chain.push({ gene: { id: c.geneId, source: c.geneSource } });
 
             cassette.push({
@@ -550,6 +845,26 @@ function App() {
             setError(`Server error: ${e.message}. Is the server running? (python -m construct_compiler.server)`);
         }
         setLoading(false);
+    };
+
+    const handleCheck = async () => {
+        setCheckLoading(true);
+        setCheckResult(null);
+        const spec = buildSpec();
+        try {
+            const resp = await fetch('/api/check', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ spec }),
+            });
+            const data = await resp.json();
+            setCheckResult(data);
+            setActiveTab('validation');
+        } catch (e) {
+            setCheckResult({ success: false, errors: [`Server error: ${e.message}`] });
+            setActiveTab('validation');
+        }
+        setCheckLoading(false);
     };
 
     const downloadGenbank = () => {
@@ -756,6 +1071,14 @@ function App() {
                         + Add Cistron (reporter / additional ORF)
                     </button>
 
+                    <LinearConstructDiagram
+                        promoter={promoter}
+                        terminator={terminator}
+                        cistrons={cistrons}
+                        useCatalog={useCatalog}
+                        catalogVector={catalogVector}
+                    />
+
                     <h3 style={{ fontSize: 14, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10 }}>Cost Parameters</h3>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 8 }}>
                         <label style={labelStyle}>
@@ -833,10 +1156,16 @@ function App() {
                         </div>
                     )}
 
-                    <button onClick={handleCompile} disabled={loading}
-                            style={{ ...btnStyle, background: loading ? '#21262d' : '#238636', color: '#fff', width: '100%', padding: '12px 16px', fontSize: 15 }}>
-                        {loading ? 'Compiling...' : 'Compile Construct'}
-                    </button>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                        <button onClick={handleCompile} disabled={loading}
+                                style={{ ...btnStyle, background: loading ? '#21262d' : '#238636', color: '#fff', padding: '12px 16px', fontSize: 15 }}>
+                            {loading ? 'Compiling...' : 'Compile'}
+                        </button>
+                        <button onClick={handleCheck} disabled={checkLoading}
+                                style={{ ...btnStyle, background: checkLoading ? '#21262d' : '#1f6feb', color: '#fff', padding: '12px 16px', fontSize: 15 }}>
+                            {checkLoading ? 'Checking...' : 'Validate'}
+                        </button>
+                    </div>
 
                     {error && (
                         <div style={{ marginTop: 12, padding: 10, background: '#2d1418', border: '1px solid #f85149', borderRadius: 6, color: '#f85149', fontSize: 12 }}>
@@ -847,11 +1176,11 @@ function App() {
 
                 {/* Right panel: results */}
                 <div style={{ padding: 20, overflowY: 'auto', maxHeight: 'calc(100vh - 49px)' }}>
-                    {!result ? (
+                    {!result && !checkResult ? (
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#484f58' }}>
                             <div style={{ textAlign: 'center' }}>
                                 <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.3 }}>&#x1F9EC;</div>
-                                <div style={{ fontSize: 15 }}>Configure your construct and click Compile</div>
+                                <div style={{ fontSize: 15 }}>Configure your construct and click Compile or Validate</div>
                                 <div style={{ fontSize: 12, marginTop: 6, color: '#30363d' }}>Results will appear here</div>
                             </div>
                         </div>
@@ -859,7 +1188,7 @@ function App() {
                         <div>
                             {/* Tab bar */}
                             <div style={{ display: 'flex', gap: 2, marginBottom: 20, borderBottom: '1px solid #30363d', paddingBottom: 0 }}>
-                                {['map', 'costs', 'parts', 'genbank'].map(tab => (
+                                {['map', 'validation', 'costs', 'parts', 'genbank'].map(tab => (
                                     <button key={tab} onClick={() => setActiveTab(tab)}
                                             style={{
                                                 ...btnStyle, background: 'none', borderRadius: '6px 6px 0 0',
@@ -867,13 +1196,13 @@ function App() {
                                                 borderBottom: activeTab === tab ? '2px solid #58a6ff' : '2px solid transparent',
                                                 padding: '8px 16px',
                                             }}>
-                                        {tab === 'map' ? 'Plasmid Map' : tab === 'costs' ? 'Cost Analysis' : tab === 'parts' ? 'Parts List' : 'GenBank'}
+                                        {tab === 'map' ? 'Plasmid Map' : tab === 'validation' ? `Validation${checkResult ? (checkResult.passed ? ' ✓' : ' ✗') : ''}` : tab === 'costs' ? 'Cost Analysis' : tab === 'parts' ? 'Parts List' : 'GenBank'}
                                     </button>
                                 ))}
                             </div>
 
                             {/* Map tab */}
-                            {activeTab === 'map' && (
+                            {activeTab === 'map' && result && (
                                 <div>
                                     <PlasmidMap plasmidMap={result.plasmid_map} />
                                     {result.warnings?.length > 0 && (
@@ -884,8 +1213,85 @@ function App() {
                                 </div>
                             )}
 
+                            {/* Validation tab */}
+                            {activeTab === 'validation' && (
+                                <div>
+                                    {!checkResult ? (
+                                        <div style={{ textAlign: 'center', padding: 40, color: '#8b949e' }}>
+                                            <div style={{ fontSize: 32, marginBottom: 12 }}>&#x1F50D;</div>
+                                            <div>Click <strong>Validate</strong> to run all 4 checks:</div>
+                                            <div style={{ marginTop: 8, fontSize: 13, textAlign: 'left', display: 'inline-block' }}>
+                                                <div>1. Reading frame continuity</div>
+                                                <div>2. Start codon placement</div>
+                                                <div>3. Translation fidelity</div>
+                                                <div>4. Internal stop codons</div>
+                                            </div>
+                                        </div>
+                                    ) : !checkResult.success ? (
+                                        <div style={{ padding: 16, background: '#2d1418', border: '1px solid #f85149', borderRadius: 8, color: '#f85149' }}>
+                                            {checkResult.errors?.map((e, i) => <div key={i}>{e}</div>)}
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            {/* Score header */}
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20, padding: 16,
+                                                          background: checkResult.passed ? '#0d2818' : '#2d1418',
+                                                          border: `1px solid ${checkResult.passed ? '#238636' : '#f85149'}`,
+                                                          borderRadius: 8 }}>
+                                                <div style={{ fontSize: 36, fontWeight: 700, color: checkResult.passed ? '#3fb950' : '#f85149' }}>
+                                                    {checkResult.passed ? 'PASS' : 'FAIL'}
+                                                </div>
+                                                <div style={{ flex: 1 }}>
+                                                    <div style={{ fontSize: 14, color: '#e1e4e8' }}>
+                                                        Score: <strong>{(checkResult.score * 100).toFixed(1)}%</strong>
+                                                    </div>
+                                                    <div style={{ fontSize: 12, color: '#8b949e', marginTop: 2 }}>
+                                                        {checkResult.error_count} error{checkResult.error_count !== 1 ? 's' : ''} · {checkResult.warning_count} warning{checkResult.warning_count !== 1 ? 's' : ''} · {checkResult.check_count} checks total
+                                                    </div>
+                                                    {checkResult.insert_length_bp && (
+                                                        <div style={{ fontSize: 12, color: '#8b949e', marginTop: 2 }}>
+                                                            {checkResult.construct_name} · {checkResult.insert_length_bp} bp insert · {checkResult.cistron_count} cistron{checkResult.cistron_count !== 1 ? 's' : ''} · {checkResult.compile_time_s}s
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Check details */}
+                                            {checkResult.checks?.length > 0 && (
+                                                <div>
+                                                    {checkResult.checks.filter(c => c.severity === 'ERROR').length > 0 && (
+                                                        <div style={{ marginBottom: 16 }}>
+                                                            <h4 style={{ fontSize: 13, color: '#f85149', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5 }}>Errors</h4>
+                                                            {checkResult.checks.filter(c => c.severity === 'ERROR').map((c, i) => (
+                                                                <div key={i} style={{ padding: 10, marginBottom: 6, background: '#1c1418', border: '1px solid #3d1418', borderRadius: 6, fontSize: 12 }}>
+                                                                    <span style={{ color: '#f85149', fontWeight: 600 }}>[{c.check_name}]</span>
+                                                                    <span style={{ color: '#8b949e' }}> @ {c.part_id}: </span>
+                                                                    <span style={{ color: '#e1e4e8' }}>{c.message}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                    {checkResult.checks.filter(c => c.severity === 'WARNING').length > 0 && (
+                                                        <div>
+                                                            <h4 style={{ fontSize: 13, color: '#d29922', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5 }}>Warnings</h4>
+                                                            {checkResult.checks.filter(c => c.severity === 'WARNING').map((c, i) => (
+                                                                <div key={i} style={{ padding: 10, marginBottom: 6, background: '#1c1b14', border: '1px solid #3d3114', borderRadius: 6, fontSize: 12 }}>
+                                                                    <span style={{ color: '#d29922', fontWeight: 600 }}>[{c.check_name}]</span>
+                                                                    <span style={{ color: '#8b949e' }}> @ {c.part_id}: </span>
+                                                                    <span style={{ color: '#e1e4e8' }}>{c.message}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
                             {/* Costs tab */}
-                            {activeTab === 'costs' && (
+                            {activeTab === 'costs' && result && (
                                 <div>
                                     <h3 style={{ fontSize: 16, marginBottom: 16, color: '#e1e4e8' }}>Assembly Strategy Comparison</h3>
                                     <CostChart strategies={result.strategies} />
@@ -960,7 +1366,7 @@ function App() {
                             )}
 
                             {/* Parts tab */}
-                            {activeTab === 'parts' && (
+                            {activeTab === 'parts' && result && (
                                 <div>
                                     <h3 style={{ fontSize: 16, marginBottom: 16, color: '#e1e4e8' }}>Parts List</h3>
                                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
@@ -989,7 +1395,7 @@ function App() {
                             )}
 
                             {/* GenBank tab */}
-                            {activeTab === 'genbank' && (
+                            {activeTab === 'genbank' && result && (
                                 <div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                                         <h3 style={{ fontSize: 16, color: '#e1e4e8' }}>GenBank Output</h3>

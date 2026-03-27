@@ -2,9 +2,9 @@
 
 > **Note:** This project is under active development and APIs, file formats, and behavior may change significantly between commits. Not yet recommended for production use.
 
-A genetic construct design compiler for *in silico* DNA automation. Write a declarative YAML spec — or use the visual web UI — describing what you want to express, and the compiler produces annotated DNA sequences, assembly plans, plasmid maps, vendor cost estimates, and GenBank files.
+A conversational genetic construct design compiler. Describe what you want to express in plain English — through [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview), [gemini-cli](https://github.com/google-gemini/gemini-cli), or any MCP-compatible agent — and the compiler produces annotated DNA sequences, assembly plans, plasmid maps, vendor cost estimates, and GenBank files. No YAML knowledge required: the LLM drafts the spec, compiles it, validates it, and iterates until every check passes.
 
-Supports **E. coli**, **mammalian**, and **lentiviral** expression systems with 23 catalog vectors spanning Twist Bioscience's full product line.
+Also usable as a traditional CLI tool or through the visual web UI for hands-on design. Supports **E. coli**, **mammalian**, and **lentiviral** expression systems with 23 catalog vectors spanning Twist Bioscience's full product line.
 
 <p align="center">
   <img src="docs/images/pipeline.svg" alt="Compilation Pipeline" width="700"/>
@@ -24,9 +24,49 @@ python -m construct_compiler.server
 
 ---
 
-## Three ways to use it
+## Four ways to use it
 
-### 1. Web UI (recommended for interactive design)
+### 1. Conversational / LLM agent (recommended)
+
+The primary interface. Describe your construct in plain English and let the agent handle everything — YAML generation, compilation, validation, and iteration. Works with any MCP-compatible coding agent:
+
+**Claude Code:**
+
+```bash
+pip install -e ".[mcp]"
+```
+
+Add to your project's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "construct-compiler": {
+      "command": "construct-compiler-mcp"
+    }
+  }
+}
+```
+
+**gemini-cli** and other MCP-compatible agents use the same server configuration.
+
+Example conversation:
+
+> *"I need a polycistronic construct with His-TEV-MBP-EGFP as the main target and mScarlet as a reporter, in BL21(DE3)."*
+
+The agent drafts a YAML spec, compiles it, runs all four validity checks, and presents you with annotated DNA, an assembly plan, and a cost estimate — no manual YAML editing needed.
+
+Three MCP tools are exposed:
+
+| Tool | Description |
+|------|-------------|
+| `compile_spec` | Full pipeline compilation → parts list, assembly strategies with costs, optional GenBank |
+| `check_spec` | 4 validity checks (reading frame, start codons, translation fidelity, internal stops) → pass/fail + score |
+| `evaluate_variants` | Combinatorial design space exploration (up to 50 variants) → ranked results |
+
+Validated specs are auto-saved to `examples/agent_generated/` and become permanent regression tests.
+
+### 2. Web UI (interactive visual design)
 
 ```bash
 python -m construct_compiler.server
@@ -47,7 +87,7 @@ The web UI gives you a visual construct builder with:
 |:---:|:---:|
 | ![Cost Analysis](docs/images/web_ui_cost_analysis.png) | ![Parts List](docs/images/web_ui_parts_list.png) |
 
-### 2. CLI
+### 3. CLI
 
 ```bash
 # Compile a YAML spec — outputs cost comparison + GenBank
@@ -70,37 +110,6 @@ construct-compiler check spec.yaml --json
 construct-compiler parts --list tags
 construct-compiler parts --list promoters
 ```
-
-### 3. Claude Code / MCP (agent-driven design)
-
-The compiler ships an MCP (Model Context Protocol) server that lets Claude Code compile, validate, and explore constructs conversationally. Describe what you want in natural language — Claude drafts a YAML spec, compiles it, checks it, and iterates until it passes.
-
-```bash
-# Install with MCP extras
-pip install -e ".[mcp]"
-```
-
-Add to your project's `.mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "construct-compiler": {
-      "command": "construct-compiler-mcp"
-    }
-  }
-}
-```
-
-Three tools are exposed:
-
-| Tool | Description |
-|------|-------------|
-| `compile_spec` | Full pipeline compilation → parts list, assembly strategies with costs, optional GenBank |
-| `check_spec` | 4 validity checks (reading frame, start codons, translation fidelity, internal stops) → pass/fail + score |
-| `evaluate_variants` | Combinatorial design space exploration (up to 50 variants) → ranked results |
-
-Validated specs are auto-saved to `examples/agent_generated/` and become permanent regression tests.
 
 ### 4. Python API
 
@@ -396,20 +405,6 @@ constraints:
   gc_window: [0.35, 0.65]
   max_homopolymer: 6
 ```
-
----
-
-## Plasmid map annotations
-
-The compiler generates a fully annotated plasmid map with correct circular topology. Every element — insert parts, backbone features, and vector-provided cassette elements — is individually annotated and color-coded.
-
-<p align="center">
-  <img src="docs/images/plasmid_topology.svg" alt="pET-28b Plasmid Topology" width="500"/>
-</p>
-
-For a polycistronic construct in pET-28b(+), the map reads clockwise from the insert: T7lac → RBS → N-His₆ → Thrombin → **INSERT** → T7 term → f1 ori(←) → Kan(R)(←) → lacI(←) → pBR322 ori → back to T7lac.
-
-Features are placed with biologically accurate directions: on pBR322-based vectors, the resistance cassette and lacI run counterclockwise (←), matching standard pET map notation.
 
 ---
 
