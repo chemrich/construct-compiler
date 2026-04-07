@@ -1,23 +1,24 @@
 construct:
-  name: "mCherry_mEGFP_polycistronic_expression"
-  host: e_coli_bl21_de3  # T7lac promoter requires DE3 lysogen for expression
+  name: "polycistronic_mcherry_sfgfp_expression"
+  host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
   cassette:
     - promoter: T7lac
     - cistron:
-        label: mCherry_reporter
-        expression: high
+        label: mcherry_cistron
+        expression: medium
         gene:
           id: mCherry
           source: fpbase
     - spacer: 30
     - cistron:
-        label: mEGFP_reporter
-        expression: high
+        label: sfgfp_cistron
+        expression: medium
         fused: false
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
     - terminator: rrnB_T1
   constraints:

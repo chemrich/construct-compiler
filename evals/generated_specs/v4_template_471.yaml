@@ -1,21 +1,21 @@
 construct:
   name: "lacZ_HA_fusion_yeast"
-  host: s_cerevisiae
+  host: s_cerevisiae  # Specific cell line name as requested
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: GAL1  # Substituted GAL1 as a standard yeast inducible promoter for s_cerevisiae
+    - promoter: ADH1  # ADH1 used as a reasonable substitution for yeast expression as T7/CMV are inappropriate
     - cistron:
-        label: lacZ_HA
+        label: lacZ_fusion
         expression: high
         chain:
           - gene:
-              id: P00722
+              id: lacZ
               source: uniprot
           - tag: HA
-    - terminator: CYC1_term  # Standard yeast transcription terminator
+    - terminator: CYC1_term  # Standard yeast terminator substitution
   constraints:
     assembly: golden_gate
     enzyme: BsaI

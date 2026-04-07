@@ -1,21 +1,22 @@
 construct:
-  name: "HEK293_GST_mScarlet"
+  name: "HEK293_GST_mScarlet_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: gst_rfp
+        label: GST_RFP_fusion
         expression: high
         chain:
           - solubility_tag: GST
           - linker:
-              type: short_GS
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: bGH_pA
+    - terminator: BGH_pA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

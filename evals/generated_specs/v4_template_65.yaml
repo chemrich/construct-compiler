@@ -1,19 +1,19 @@
 construct:
-  name: "sv40_egfp_ha_fusion"
-  host: HEK293
+  name: "sv40_egfp_ha"
+  host: HEK293  # Defaulted to HEK293 to support the requested mammalian SV40 promoter
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # SV40 requested, but substituted with CMV as SV40 is not in the allowed promoter list (T7, T7lac, tac, araBAD, lacUV5, J23100, J23106, CMV, EF1_alpha).
+    - promoter: SV40
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: HA
           - gene:
               id: mEGFP
               source: fpbase
-          - tag: HA
-    - terminator: BBa_B0015
+    - terminator: SV40_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

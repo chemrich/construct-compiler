@@ -1,22 +1,19 @@
 construct:
-  name: "cmv_yfp_gst_fusion"
+  name: "CMV_GST_YFP_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: yfp_gst
+        label: target
         expression: high
         chain:
           - solubility_tag: GST
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: EYFP
+              id: YFP
               source: fpbase
-    - terminator: BBa_B0015 # Rule 10 requires a terminator; BBa_B0015 is used as a placeholder for mammalian polyA.
+    - terminator: rrnB_T1  # Using rrnB_T1 as a placeholder terminator for the mammalian cassette per schema requirements
   constraints:
     assembly: golden_gate
     enzyme: BsaI

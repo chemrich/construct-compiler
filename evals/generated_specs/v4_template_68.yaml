@@ -1,18 +1,21 @@
 construct:
   name: "mScarlet_Strep_fusion"
-  host: e_coli_bl21_de3  # Substituted bl21 with bl21_de3 to support the T7lac promoter
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: mScarlet_fusion
         expression: high
         chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mScarlet
               source: fpbase
-          - tag: Strep-II
     - terminator: T7term
   constraints:
     assembly: golden_gate

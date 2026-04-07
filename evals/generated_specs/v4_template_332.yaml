@@ -1,17 +1,20 @@
 construct:
-  name: "T7_RFP_Myc_fusion"
+  name: "T7_mCherry_Myc"
   host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7
     - cistron:
-        label: target
+        label: rfp_fusion
         expression: high
         chain:
           - gene:
               id: mCherry
               source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 1
           - tag: Myc
     - terminator: T7term
   constraints:

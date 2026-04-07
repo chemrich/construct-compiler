@@ -1,20 +1,19 @@
 construct:
-  name: "flag_luciferase_expression_e_coli"
-  host: e_coli
+  name: "e_coli_flag_luciferase"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: luciferase_target
+        label: target
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: P08659
               source: uniprot
-    - terminator: rrnB_T1
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

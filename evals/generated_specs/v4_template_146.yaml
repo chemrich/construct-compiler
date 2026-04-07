@@ -11,15 +11,15 @@ construct:
         gene:
           id: mEGFP
           source: fpbase
-    - spacer: 40
+    - spacer: 30 # Mammalian polycistronic designs typically require an IRES or 2A peptide for downstream cistron translation; implemented here with spacer and fused:false per spec.
     - cistron:
-        label: ampicillin_resistance
-        expression: medium
-        fused: false  # Allows independent translation in a polycistronic context
+        label: ampr_expression
+        expression: low
+        fused: false
         gene:
           id: P62593
           source: uniprot
-    - terminator: rrnB_T1  # Using a schema-defined terminator; polyA is standard for mammalian mRNA processing.
+    - terminator: bGH_pA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

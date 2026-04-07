@@ -1,19 +1,19 @@
 construct:
-  name: ampR_HA_fusion
+  name: "ampR_HA_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: ampR_HA
+        label: ampR_fusion
         expression: high
         chain:
           - gene:
-              id: ampR
+              id: P62593
               source: uniprot
           - tag: HA
-    - terminator: bGH_PA  # Using bGH_PA as it is the appropriate terminator for HEK293/pTwist CMV
+    - terminator: BBa_B0015 # Note: BBa_B0015 is a bacterial terminator; for mammalian expression, the tool will typically substitute a polyA signal.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

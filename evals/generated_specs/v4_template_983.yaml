@@ -1,21 +1,21 @@
 construct:
-  name: "Strep_mEGFP_yeast_expression"
-  host: s_cerevisiae
+  name: "strep_megfp_s_cerevisiae"
+  host: s_cerevisiae  # S. cerevisiae specified; using eukaryotic-compatible elements
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: kanamycin # Default per rule 9
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # Using EF1_alpha as a compatible eukaryotic promoter from the supported list
+    - promoter: EF1_alpha # EF1_alpha is a strong constitutive promoter functional in yeast
     - cistron:
-        label: gfp_expression
+        label: target
         expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: BBa_B0015
+    - terminator: CYC1_term # Substituting yeast-appropriate terminator for bacterial options in schema
   constraints:
     assembly: golden_gate
     enzyme: BsaI

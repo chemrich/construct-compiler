@@ -1,25 +1,29 @@
 construct:
   name: "ampR_FLAG_fusion_HEK293"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
     - cistron:
-        label: ampR_fusion
+        label: ampR_FLAG
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: P00810
+              id: P62593
               source: uniprot
-    - terminator: bGH_polyA
+    - terminator: BGH_polyA  # Substituted mammalian polyA signal for bacterial terminator options
+
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
+
   synthesis:
     vendor: twist
     budget_per_gene: 400

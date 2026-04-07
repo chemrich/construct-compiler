@@ -1,17 +1,17 @@
 construct:
-  name: "mammalian_egfp_expression_vector"
+  name: "mammalian_egfp_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # Substituted CMV for pBAD because pBAD (araBAD) is a bacterial inducible promoter and not functional in mammalian systems.
+    - promoter: CMV  # Substituting pBAD with CMV because pBAD is an inducible E. coli promoter and is not functional in mammalian hosts.
     - cistron:
-        label: gfp_reporter
+        label: target
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: rrnB_T1
+    - terminator: SV40_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

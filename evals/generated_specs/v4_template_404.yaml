@@ -1,23 +1,19 @@
 construct:
-  name: "ampR_SUMO_fusion"
+  name: "ampR_SUMO_fusion_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: ampR_SUMO
+        label: target_fusion
         expression: high
         chain:
           - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P00810
+              id: P62593
               source: uniprot
-    - terminator: rrnB_T1  # Using rrnB_T1 as a placeholder terminator; the compiler will resolve to a suitable mammalian polyA signal based on host.
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

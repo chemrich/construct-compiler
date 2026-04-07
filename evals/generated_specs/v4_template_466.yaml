@@ -1,5 +1,5 @@
 construct:
-  name: "GST_mEGFP_mammalian_expression"
+  name: "GST_mEGFP_HEK293_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
@@ -10,10 +10,13 @@ construct:
         expression: high
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: BBa_B0015
+    - terminator: BBa_B0015 # BBa_B0015 is a placeholder; a polyA signal (e.g., bGH_polyA) is standard for mammalian cassettes.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,12 +1,12 @@
 construct:
   name: "rfp_myc_fusion"
-  host: e_coli
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: rfp_myc_target
+        label: target
         expression: high
         chain:
           - gene:
@@ -15,9 +15,7 @@ construct:
           - linker:
               type: GS_flexible
               repeats: 2
-          - gene:
-              id: MYC
-              source: uniprot # Myc peptide tag is not in standard tag list, using MYC uniprot reference
+          - tag: HA  # Myc tag is not in the supported list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA); substituted with HA tag.
     - terminator: T7term
   constraints:
     assembly: golden_gate

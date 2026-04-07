@@ -1,21 +1,21 @@
 construct:
-  name: ampR_myc_epitope_yeast
-  host: s_cerevisiae
+  name: "ampR_myc_yeast_expression"
+  host: s_cerevisiae # S. cerevisiae specified; EF1_alpha used as suitable eukaryotic promoter
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # EF1_alpha is the mammalian ortholog of yeast TEF1; substituted for yeast compatibility
+    - promoter: EF1_alpha
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: HA        # Myc tag is not in the schema-supported tag list; substituted with HA
+          - tag: HA # Myc tag substituted with HA as per available schema options
           - gene:
-              id: P00810
+              id: P62593
               source: uniprot
-    - terminator: rrnB_T1
+    - terminator: BBa_B0015 # Generic terminator used for yeast assembly
   constraints:
     assembly: golden_gate
     enzyme: BsaI

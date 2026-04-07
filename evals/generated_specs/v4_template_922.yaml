@@ -1,25 +1,25 @@
 construct:
-  name: "hek293_polycistronic_yfp_egfp"
+  name: "HEK293_polycistronic_YFP_EGFP"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: yfp_cistron
+        label: yfp
         expression: high
         gene:
           id: EYFP
           source: fpbase
     - spacer: 30
     - cistron:
-        label: egfp_cistron
+        label: egfp
         expression: high
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015  # Using synthetic terminator per schema example; ideally a polyA signal for mammalian systems.
+    - terminator: bGH_polyA # Substituted for mammalian compatibility; polycistronic expression via spacer/fused:false assumes IRES or similar recruitment logic
   constraints:
     assembly: golden_gate
     enzyme: BsaI

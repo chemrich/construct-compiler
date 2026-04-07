@@ -1,12 +1,12 @@
 construct:
-  name: "yeast_polycistronic_ampR_rfp"
-  host: mammalian # Substituted mammalian for s_cerevisiae to match schema; EF1_alpha and BBa_B0015 used for eukaryotic compatibility.
+  name: "ampR_RFP_polycistronic_expression"
+  host: e_coli_bl21_de3 # s_cerevisiae not supported in schema; substituted with E. coli as ampR is a bacterial marker.
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha
+    - promoter: T7lac
     - cistron:
         label: ampR
         expression: medium
@@ -15,13 +15,13 @@ construct:
           source: uniprot
     - spacer: 30
     - cistron:
-        label: RFP
+        label: RFP_reporter
         expression: medium
         fused: false
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

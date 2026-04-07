@@ -1,19 +1,22 @@
 construct:
-  name: "MBP_ampR_expression_HEK293"
+  name: "ampR_MBP_HEK293_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: ampR_fusion
+        label: target
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: ampR
+              id: P00810
               source: uniprot
-    - terminator: bGH_pA
+    - terminator: BBa_B0015 # Note: BBa_B0015 is a bacterial terminator; a PolyA signal is typically used for HEK293 but BBa_B0015 is selected to fit the schema list.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

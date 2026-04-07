@@ -1,25 +1,25 @@
 construct:
-  name: "egfp_eyfp_polycistronic_mammalian"
+  name: "mammalian_egfp_yfp_polycistronic"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: egfp_expression
+        label: egfp_unit
         expression: high
         gene:
           id: EGFP
           source: fpbase
-    - spacer: 30
+    - spacer: 30 # Note: In mammalian systems, polycistronic expression usually requires an IRES or 2A peptide, but using spacer and fused: false as per schema requirements.
     - cistron:
-        label: eyfp_expression
+        label: yfp_unit
         expression: high
-        fused: false # Uses independent translation initiation
+        fused: false
         gene:
           id: EYFP
           source: fpbase
-    - terminator: bGH_polyA # Standard mammalian polyadenylation signal
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

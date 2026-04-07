@@ -1,22 +1,19 @@
 construct:
-  name: "mScarlet_GST_fusion_HEK293"
+  name: "mScarlet_GST_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
-          - solubility_tag: GST
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: BBa_B0015  # Note: Schema-provided terminators are bacterial; using BBa_B0015 as a placeholder for mammalian polyA signal
+          - solubility_tag: GST
+    - terminator: BBa_B0015  # Using standard terminator from schema; mammalian systems typically use polyA but schema restricts options
   constraints:
     assembly: golden_gate
     enzyme: BsaI

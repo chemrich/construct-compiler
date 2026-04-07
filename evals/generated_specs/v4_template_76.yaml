@@ -1,19 +1,19 @@
 construct:
-  name: "gst_yfp_yeast_expression"
-  host: s_cerevisiae  # s_cerevisiae is a specific eukaryotic host; using EF1_alpha for eukaryotic expression.
+  name: "YFP_GST_yeast_expression"
+  host: s_cerevisiae  # s_cerevisiae not in default list; EF1_alpha substituted for yeast-compatible constitutive promoter
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
     - promoter: EF1_alpha
     - cistron:
-        label: gst_yfp_fusion
+        label: target
         expression: high
         chain:
           - solubility_tag: GST
           - gene:
-              id: EYFP
+              id: YFP
               source: fpbase
     - terminator: BBa_B0015
   constraints:

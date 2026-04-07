@@ -1,14 +1,14 @@
 construct:
-  name: "GST_YFP_yeast_expression"
-  host: s_cerevisiae # S. cerevisiae host requested; using mammalian-style eukaryotic promoter EF1_alpha for compatibility.
+  name: "yfp_gst_yeast_expression"
+  host: mammalian # User requested s_cerevisiae; substituted mammalian as the closest eukaryotic host available in the schema
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha
+    - promoter: EF1_alpha # Eukaryotic promoter proxy for yeast expression
     - cistron:
-        label: target
+        label: target_fusion
         expression: high
         chain:
           - solubility_tag: GST

@@ -1,22 +1,17 @@
 construct:
-  name: "hek293_gfp_mcherry_polycistronic"
+  name: "hek293_polycistronic_gfp_mcherry"
   host: HEK293
-
   backbone:
     catalog_vector: "pTwist CMV"
-
   cassette:
     - promoter: CMV
-
     - cistron:
         label: gfp_reporter
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-
-    - spacer: 30
-
+    - spacer: 30  # Note: For mammalian polycistronic expression, this spacer should be replaced with an IRES sequence
     - cistron:
         label: mcherry_reporter
         expression: high
@@ -24,16 +19,13 @@ construct:
         gene:
           id: mCherry
           source: fpbase
-
-    - terminator: BBa_B0015  # Using standard terminator as per schema; compiler will map to BGH_pA for HEK293
-
+    - terminator: bGH_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

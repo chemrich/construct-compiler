@@ -1,19 +1,20 @@
 construct:
-  name: "luciferase_sumo_fusion"
+  name: "sumo_luciferase_fusion"
   host: e_coli_bl21_de3
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: sumo_luc_fusion
         expression: high
         chain:
           - solubility_tag: SUMO
           - gene:
               id: P08659
               source: uniprot
-    - terminator: T7term
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

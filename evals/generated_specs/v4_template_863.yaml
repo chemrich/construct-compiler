@@ -1,17 +1,20 @@
 construct:
-  name: "mCherry_MBP_fusion_s_cerevisiae"
+  name: "mCherry_MBP_fusion_yeast"
   host: s_cerevisiae
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
   cassette:
-    - promoter: EF1_alpha # EF1_alpha (TEF1) is a strong constitutive promoter in S. cerevisiae
+    - promoter: EF1_alpha  # Substituted EF1_alpha for yeast expression
     - cistron:
         label: mCherry_MBP_fusion
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mCherry
               source: fpbase

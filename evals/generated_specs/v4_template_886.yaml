@@ -1,17 +1,17 @@
 construct:
-  name: "mammalian_ampR_expression"
+  name: "ampR_mammalian_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV  # Substituted CMV for T7lac as T7lac is a bacterial promoter and will not function in HEK293 without T7 polymerase.
+    - promoter: CMV # Substituted T7lac with CMV; T7lac is a bacterial promoter and will not function in HEK293 cells without T7 RNA polymerase.
     - cistron:
-        label: selection_marker
+        label: ampR
         expression: high
         gene:
           id: P00810
           source: uniprot
-    - terminator: bGH_pA
+    - terminator: SV40_polyA # Substituted bacterial terminator with SV40 polyA signal to ensure proper polyadenylation in mammalian cells.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

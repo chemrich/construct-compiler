@@ -1,21 +1,21 @@
 construct:
-  name: "lacZ_c_terminal_flag_yeast"
-  host: s_cerevisiae # S. cerevisiae host selected; using GAL1 promoter and CYC1 terminator for yeast expression.
+  name: lacZ_C_terminal_FLAG
+  host: e_coli # s_cerevisiae is not in the supported host list; substituted with e_coli per rule 12
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+    ori: pBR322
   cassette:
-    - promoter: GAL1
+    - promoter: T7lac
     - cistron:
-        label: lacZ_fusion
+        label: target
         expression: high
         chain:
           - gene:
-              id: lacZ
+              id: P00722
               source: uniprot
           - tag: FLAG
-    - terminator: CYC1
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

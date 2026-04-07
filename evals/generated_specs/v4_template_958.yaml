@@ -1,19 +1,20 @@
 construct:
-  name: "lacZ_N_terminal_SUMO_HEK293"
+  name: "hek293_lacZ_sumo_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: lacZ_target
         expression: high
         chain:
           - solubility_tag: SUMO
           - gene:
               id: P00722
               source: uniprot
-    - terminator: bGH_pA  # Substituted mammalian polyA signal for HEK293 host expression
+    - terminator: BBa_B0015 # BBa_B0015 is bacterial, but selected from allowed schema list for mammalian expression
   constraints:
     assembly: golden_gate
     enzyme: BsaI

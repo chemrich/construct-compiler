@@ -2,20 +2,20 @@ construct:
   name: "lacZ_HA_yeast_expression"
   host: s_cerevisiae
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # Using EF1_alpha as a eukaryotic promoter compatible with yeast from the available list
+    - promoter: EF1_alpha # Substituted with EF1_alpha for yeast compatibility as it is an available eukaryotic promoter
     - cistron:
-        label: lacZ_target
+        label: target
         expression: high
         chain:
           - tag: HA
           - gene:
               id: P00722
               source: uniprot
-    - terminator: BBa_B0015
+    - terminator: CYC1 # Substituted with CYC1, a standard yeast terminator, for proper mRNA processing
   constraints:
     assembly: golden_gate
     enzyme: BsaI

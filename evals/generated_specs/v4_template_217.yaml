@@ -1,21 +1,24 @@
 construct:
-  name: "mCherry_C_SUMO_yeast"
-  host: s_cerevisiae  # host specified as yeast; using EF1_alpha as a compatible eukaryotic promoter
+  name: mCherry_C_terminal_SUMO_yeast
+  host: s_cerevisiae  # S. cerevisiae requested; utilizing yeast-specific promoter and terminator
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha
+    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
     - cistron:
-        label: target
+        label: mCherry_fusion
         expression: high
         chain:
           - gene:
               id: mCherry
               source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - solubility_tag: SUMO
-    - terminator: BBa_B0015
+    - terminator: CYC1_term  # Common yeast transcription terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

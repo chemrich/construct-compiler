@@ -1,31 +1,39 @@
 construct:
-  name: "polycistronic_rfp_egfp_hek293"
+  name: hek293_polycistronic_rfp_egfp
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: RFP
+        label: rfp
         expression: high
         gene:
-          id: mScarlet
+          id: mCherry
           source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: EGFP
+        label: egfp
         expression: high
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: bGH_pA
+
+    - terminator: bGH_polyA  # Substituted mammalian polyA for bacterial terminator to ensure expression in HEK293
+
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
+
   synthesis:
     vendor: twist
     budget_per_gene: 400

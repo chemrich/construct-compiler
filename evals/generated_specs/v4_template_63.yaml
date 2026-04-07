@@ -1,25 +1,25 @@
 construct:
-  name: "egfp_ampr_mammalian_polycistronic"
+  name: "mammalian_polycistronic_egfp_ampr"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: fluorescent_reporter
+        label: egfp_reporter
         expression: high
         gene:
           id: mEGFP
           source: fpbase
     - spacer: 30
     - cistron:
-        label: selection_marker
+        label: ampr_expression
         expression: medium
         fused: false
         gene:
-          id: P00810
+          id: P62593
           source: uniprot
-    - terminator: BBa_B0015
+    - terminator: bGH_polyA  # Standard mammalian terminator for use with CMV promoter
   constraints:
     assembly: golden_gate
     enzyme: BsaI

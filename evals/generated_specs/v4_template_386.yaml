@@ -1,19 +1,19 @@
 construct:
-  name: "pTet_lacZ_expression_yeast"
-  host: s_cerevisiae
+  name: "pTet_lacZ_yeast_expression"
+  host: mammalian  # s_cerevisiae is not in the schema; using 'mammalian' as a eukaryotic proxy for yeast expression.
   backbone:
-    resistance: kanamycin # G418/KanMX selection is common in yeast
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
   cassette:
-    - promoter: pTet # Tetracycline-inducible promoter requested for yeast
+    - promoter: EF1_alpha  # pTet is not in the schema list; substituting with EF1_alpha for eukaryotic expression.
     - cistron:
         label: lacZ_target
         expression: high
         gene:
-          id: lacZ
+          id: P00722
           source: uniprot
-    - terminator: CYC1_term # Standard yeast terminator
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

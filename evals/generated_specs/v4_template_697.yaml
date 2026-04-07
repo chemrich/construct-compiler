@@ -1,27 +1,27 @@
 construct:
-  name: "rfp_mcherry_yeast_polycistronic"
-  host: mammalian # Substituted s_cerevisiae with mammalian to ensure eukaryotic compatibility with schema
+  name: "yeast_polycistronic_rfp_mcherry"
+  host: s_cerevisiae
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha
+    - promoter: EF1_alpha  # EF1_alpha substituted as a functional eukaryotic equivalent for yeast TEF1
     - cistron:
         label: rfp
-        expression: medium
+        expression: high
         gene:
           id: mRFP1
           source: fpbase
     - spacer: 30
     - cistron:
         label: mcherry
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: mCherry
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: CYC1_term  # Standard yeast terminator substitution for optimal termination in S. cerevisiae
   constraints:
     assembly: golden_gate
     enzyme: BsaI

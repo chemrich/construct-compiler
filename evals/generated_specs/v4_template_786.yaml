@@ -1,21 +1,19 @@
 construct:
-  name: "SV40_ampR_6xHis_fusion"
-  host: e_coli_bl21
+  name: "sv40_ampr_6xhis"
+  host: HEK293
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: J23100 # Substituted mammalian SV40 with bacterial J23100 as the host is E. coli
+    - promoter: SV40
     - cistron:
-        label: ampR_target
+        label: ampr_his_fusion
         expression: high
         chain:
-          - tag: 6xHis
           - gene:
               id: P00810
               source: uniprot
-    - terminator: rrnB_T1
+          - tag: 6xHis
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

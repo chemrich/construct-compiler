@@ -1,22 +1,21 @@
 construct:
-  name: "mCherry_Luciferase_Polycistronic_K12"
+  name: "mCherry_luciferase_polycistronic"
   host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: T7lac  # Defaulting to T7lac per instructions, though K12 may require a T7-expressing strain or a different promoter like tac.
     - cistron:
-        label: mCherry_cistron
+        label: mCherry_reporter
         expression: high
         gene:
           id: mCherry
           source: fpbase
     - spacer: 30
     - cistron:
-        label: Luciferase_cistron
-        expression: medium
+        label: luciferase_target
+        expression: high
         fused: false
         gene:
           id: P08659

@@ -1,30 +1,27 @@
 construct:
-  name: "YFP_HA_S_cerevisiae"
+  name: "YFP_HA_yeast_expression"
   host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
-
   cassette:
-    - promoter: EF1_alpha  # Substituted EF1_alpha as a eukaryotic equivalent for yeast TEF1 promoter
+    - promoter: EF1_alpha  # EF1_alpha (TEF1) is used as it is functional in S. cerevisiae and present in the allowed list
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: YFP
+              id: EYFP
               source: fpbase
           - tag: HA
-    - terminator: BBa_B0015  # Universal terminator used as yeast-specific options are not in schema list
-
+    - terminator: rrnB_T1  # Using rrnB_T1 as a generic terminator; CYC1_term would be preferred for yeast but rrnB_T1 is in the schema list
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

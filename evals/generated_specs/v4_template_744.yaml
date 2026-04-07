@@ -1,17 +1,17 @@
 construct:
-  name: "HEK293_pTet_YFP_expression"
+  name: "HEK293_pTet_mVenus"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # pTet is not in the predefined schema list; CMV substituted for HEK293 expression.
+    - promoter: pTet
     - cistron:
-        label: reporter
+        label: yfp_expression
         expression: high
         gene:
-          id: EYFP
+          id: mVenus
           source: fpbase
-    - terminator: rrnB_T1 # Bacterial terminator used to satisfy schema requirements for mammalian host.
+    - terminator: bGH_pA # Substituted for mammalian host compatibility
   constraints:
     assembly: golden_gate
     enzyme: BsaI

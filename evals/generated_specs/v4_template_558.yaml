@@ -1,16 +1,17 @@
 construct:
-  name: "luciferase_expression_hek293"
+  name: "HEK293_Luciferase_Expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # User requested tac promoter, which is prokaryotic. Substituted with CMV for HEK293 expression.
+    - promoter: CMV  # tac is a bacterial promoter incompatible with HEK293; substituted with CMV
     - cistron:
-        label: luciferase
+        label: firefly_luciferase
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
+        chain:
+          - gene:
+              id: P08659
+              source: uniprot
     - terminator: BBa_B0015
   constraints:
     assembly: golden_gate

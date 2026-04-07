@@ -1,23 +1,19 @@
 construct:
-  name: "HEK293_SUMO_EYFP_fusion"
+  name: "YFP_SUMO_Fusion_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: YFP_fusion
         expression: high
         chain:
           - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: EYFP
+              id: YFP
               source: fpbase
-    - terminator: BGH_pA  # Substituted BGH_pA as a standard mammalian polyA signal
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

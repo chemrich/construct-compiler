@@ -1,14 +1,14 @@
 construct:
-  name: "mScarlet_yeast_expression"
-  host: s_cerevisiae # S. cerevisiae host requested; using CMV promoter and BBa_B0015 as placeholders per schema constraints
+  name: "mScarlet_HA_yeast_expression"
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha  # EF1_alpha used as a constitutive eukaryotic promoter for S. cerevisiae
     - cistron:
-        label: target
+        label: reporter
         expression: high
         chain:
           - tag: HA
@@ -18,7 +18,7 @@ construct:
     - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
-    enzyme: BsaI
+    enzyme: BpiI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6

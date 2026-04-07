@@ -1,19 +1,21 @@
 construct:
-  name: "mCherry_N_terminal_FLAG"
-  host: e_coli
+  name: "mCherry_N_terminal_Flag_expression"
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7lac
     - cistron:
-        label: mCherry_expression
+        label: target
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: T7term
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

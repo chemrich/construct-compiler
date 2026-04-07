@@ -1,27 +1,25 @@
 construct:
-  name: "rfp_bfp_polycistronic_e_coli"
+  name: "rfp_bfp_polycistronic_expression"
   host: e_coli
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: rfp_cistron
-        expression: high
+        label: red_reporter
+        expression: medium
         gene:
-          id: mCherry
+          id: mScarlet
           source: fpbase
     - spacer: 30
     - cistron:
-        label: bfp_cistron
+        label: blue_reporter
         expression: medium
         fused: false
         gene:
           id: mTagBFP2
           source: fpbase
-    - terminator: T7term
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

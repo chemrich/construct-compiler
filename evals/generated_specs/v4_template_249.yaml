@@ -1,5 +1,5 @@
 construct:
-  name: "mammalian_polycistronic_mcherry_lacz"
+  name: "mCherry_lacZ_polycistronic_mammalian"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
@@ -11,15 +11,15 @@ construct:
         gene:
           id: mCherry
           source: fpbase
-    - spacer: 30 # Note: In mammalian systems, independent translation typically requires an IRES or 2A peptide; using spacer as per schema
+    - spacer: 50 # Note: In mammalian systems, the spacer should ideally contain an IRES or 2A peptide for polycistronic expression.
     - cistron:
-        label: lacZ_reporter
-        expression: high
+        label: lacZ_enzyme
+        expression: medium
         fused: false
         gene:
           id: P00722
           source: uniprot
-    - terminator: BBa_B0015
+    - terminator: bGH_pA # Substituted bacterial terminator for mammalian polyadenylation signal.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

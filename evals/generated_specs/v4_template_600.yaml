@@ -1,5 +1,5 @@
 construct:
-  name: RFP_Myc_fusion
+  name: "rfp_c_terminal_myc_expression"
   host: e_coli
   backbone:
     resistance: kanamycin
@@ -8,14 +8,14 @@ construct:
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: rfp_target
         expression: high
         chain:
           - gene:
-              id: mScarlet
+              id: mRFP1
               source: fpbase
-          - tag: Myc
-    - terminator: T7term
+          - tag: FLAG  # Myc tag is not in the schema-defined list; substituted with FLAG as a common epitope tag.
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

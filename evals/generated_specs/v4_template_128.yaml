@@ -1,19 +1,19 @@
 construct:
-  name: "SV40_mEGFP_Strep_fusion"
-  host: HEK293
+  name: "sv40_gfp_strep_fusion"
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: SV40
+    - promoter: T7lac  # SV40 is a mammalian promoter; substituted with T7lac for E. coli host compatibility
     - cistron:
         label: target
-        expression: medium
+        expression: high
         chain:
           - gene:
               id: mEGFP
               source: fpbase
           - tag: Strep-II
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

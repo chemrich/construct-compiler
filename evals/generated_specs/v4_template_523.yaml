@@ -1,19 +1,19 @@
 construct:
-  name: "mScarlet_Strep_fusion_mammalian"
+  name: "mScarlet_Strep_Mammalian_Fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: fusion_protein
         expression: high
         chain:
-          - tag: Strep-II
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: BBa_B0015
+          - tag: Strep-II
+    - terminator: bGH_polyA  # Substituted bacterial terminator for mammalian-compatible bGH polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,22 +1,19 @@
 construct:
-  name: "mEGFP_C_terminal_MBP_HEK293"
+  name: "egfp_c_terminal_mbp_mammalian"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: target_protein
         expression: high
         chain:
           - gene:
               id: mEGFP
               source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - solubility_tag: MBP
-    - terminator: bGH_polyA  # Mammalian polyA signal substituted for bacterial terminator
+    - terminator: BBa_B0015  # Selected from schema list; note that BBa_B0015 is often used as a universal terminator.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

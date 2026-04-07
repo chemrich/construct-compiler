@@ -1,17 +1,17 @@
 construct:
-  name: "egfp_n_myc_bl21"
-  host: e_coli_bl21_de3 # Substituted bl21 with bl21_de3 to support the default T7lac promoter
+  name: "egfp_n_terminal_myc_expression"
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: egfp_target
         expression: high
         chain:
-          - tag: FLAG # Myc tag not in schema-defined enum; substituted with FLAG
+          - tag: Myc
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
     - terminator: T7term
   constraints:

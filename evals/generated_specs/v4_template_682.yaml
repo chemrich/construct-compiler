@@ -1,25 +1,25 @@
 construct:
-  name: "mammalian_polycistronic_lacZ_EGFP"
-  host: HEK293
+  name: "mammalian_polycistronic_lacz_egfp"
+  host: mammalian
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: lacZ_expression
-        expression: medium
+        label: lacZ_primary
+        expression: high
         gene:
-          id: lacZ
+          id: P00722
           source: uniprot
     - spacer: 30
     - cistron:
-        label: reporter
+        label: egfp_secondary
         expression: medium
         fused: false
         gene:
           id: EGFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: bGH_polyA  # Substituted mammalian polyA signal for prokaryotic terminator list
   constraints:
     assembly: golden_gate
     enzyme: BsaI

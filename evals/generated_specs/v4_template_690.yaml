@@ -1,20 +1,20 @@
 construct:
-  name: "plac_gst_mcherry_fusion"
+  name: "pLac_GST_mCherry_fusion"
   host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: lacUV5  # Substituted lacUV5 for pLac as the standard E. coli expression variant
+    - promoter: lacUV5  # lacUV5 is the standard inducible pLac variant for this toolchain
     - cistron:
-        label: gst_mcherry_fusion
+        label: target
         expression: medium
         chain:
           - solubility_tag: GST
           - linker:
-              type: short_GS
-              repeats: 1
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mCherry
               source: fpbase

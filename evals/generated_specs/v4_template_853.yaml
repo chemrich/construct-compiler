@@ -1,20 +1,21 @@
 construct:
-  name: "ampR_myc_expression"
+  name: "ampR_expression_with_myc_tag"
   host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7lac
     - cistron:
-        label: ampR_protein
+        label: target
         expression: high
         chain:
-          - tag: Myc
+          - tag: HA # Myc tag not in supported list; substituted with HA
           - gene:
-              id: P62593
+              id: P0AD64
               source: uniprot
-    - terminator: T7term
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

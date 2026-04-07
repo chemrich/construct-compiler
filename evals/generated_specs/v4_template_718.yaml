@@ -1,17 +1,18 @@
 construct:
-  name: "mammalian_egfp_ptet_replacement"
+  name: "mammalian_egfp_tet_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # Substituting CMV for pTet as TRE/pTet is not in the predefined promoter list; CMV is standard for mammalian expression
+    - promoter: TRE # Using TRE (Tetracycline Response Element) for requested pTet promoter in mammalian host
     - cistron:
         label: target
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: SV40_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

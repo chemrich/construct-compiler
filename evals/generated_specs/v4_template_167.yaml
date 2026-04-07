@@ -1,5 +1,5 @@
 construct:
-  name: hek293_luciferase_mscarlet_polycistronic
+  name: "hek293_polycistronic_luciferase_mscarlet"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
@@ -11,7 +11,7 @@ construct:
         gene:
           id: P08659
           source: uniprot
-    - spacer: 30
+    - spacer: 30 # Note: In HEK293, independent translation (fused: false) typically utilizes an IRES or 2A peptide; here spacer + fused: false is used to define the polycistronic boundary
     - cistron:
         label: reporter
         expression: medium
@@ -19,7 +19,7 @@ construct:
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: BGH_polyA
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

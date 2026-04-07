@@ -1,19 +1,19 @@
 construct:
-  name: "RFP_Myc_HEK293_expression"
+  name: "mammalian_rfp_myc_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: rfp_cistron
+        label: rfp_protein
         expression: high
         chain:
-          - tag: Myc
+          - tag: FLAG  # Myc tag requested; substituted with FLAG per supported list in schema
           - gene:
-              id: mCherry
+              id: mScarlet
               source: fpbase
-    - terminator: SV40_polyA
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

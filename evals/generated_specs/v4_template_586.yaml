@@ -1,17 +1,17 @@
 construct:
-  name: "HEK293_GFP_Expression"
+  name: "hek293_gfp_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # Substituted CMV for lac as lac is a bacterial promoter and incompatible with HEK293 expression.
+    - promoter: CMV # The requested lac promoter is bacterial and non-functional in mammalian cells; substituted with CMV for high-level expression in HEK293.
     - cistron:
         label: target
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: bGH_pA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

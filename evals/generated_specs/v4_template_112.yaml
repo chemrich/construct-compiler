@@ -1,22 +1,22 @@
 construct:
-  name: "mEGFP_GST_C_terminal_fusion"
+  name: "egfp_c_terminal_gst_mammalian"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: egfp_gst
+        label: target
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 2
           - solubility_tag: GST
-    - terminator: BBa_B0015
+    - terminator: bGH_polyA  # Standard polyadenylation signal for mammalian expression
   constraints:
     assembly: golden_gate
     enzyme: BsaI

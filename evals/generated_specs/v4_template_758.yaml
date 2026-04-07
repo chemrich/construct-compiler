@@ -1,17 +1,19 @@
 construct:
-  name: "ampR_expression_HEK293"
+  name: "hek293_sv40_ampr"
   host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: CMV # Substituted SV40 with CMV to align with schema-supported mammalian promoters
+    - promoter: SV40
     - cistron:
-        label: target
+        label: ampR
         expression: high
         gene:
-          id: P0AD64
+          id: P00810
           source: uniprot
-    - terminator: BBa_B0015 # Standard terminator from schema; mammalian polyA signals are typically backbone-resident
+    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal for HEK293
   constraints:
     assembly: golden_gate
     enzyme: BsaI

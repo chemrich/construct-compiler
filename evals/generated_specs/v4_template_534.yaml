@@ -1,5 +1,5 @@
 construct:
-  name: "HEK293_MBP_mCherry_fusion"
+  name: "mCherry_MBP_HEK293_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
@@ -10,10 +10,13 @@ construct:
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: BGH_pA # Substituted bacterial terminator with BGH_pA for polyadenylation in mammalian host
+    - terminator: bGH_polyA  # Mammalian terminator substituted for bacterial examples in schema
   constraints:
     assembly: golden_gate
     enzyme: BsaI

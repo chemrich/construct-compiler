@@ -1,10 +1,12 @@
 construct:
-  name: "mCherry_GST_yeast_expression"
-  host: HEK293  # s_cerevisiae not in supported host list; substituted with HEK293 as a eukaryotic surrogate
+  name: "mCherry_GST_fusion_yeast"
+  host: s_cerevisiae
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: CMV  # Default promoter for mammalian host surrogate
+    - promoter: EF1_alpha  # EF1_alpha is used as a eukaryotic promoter substitute; yeast-specific GAL1 or PGK1 are standard for S. cerevisiae.
     - cistron:
         label: target
         expression: high

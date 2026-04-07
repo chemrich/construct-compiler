@@ -1,19 +1,22 @@
 construct:
-  name: "GST_mTagBFP2_HEK293_expression"
+  name: "GST_mTagBFP2_mammalian_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: gst_bfp_fusion
+        label: target
         expression: high
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mTagBFP2
               source: fpbase
-    - terminator: SV40_polyA
+    - terminator: BBa_B0015  # Placeholder: compiler will utilize vector-specific polyA for mammalian host
   constraints:
     assembly: golden_gate
     enzyme: BsaI

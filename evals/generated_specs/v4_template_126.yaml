@@ -1,17 +1,17 @@
 construct:
-  name: hek293_sv40_egfp_expression
+  name: "HEK293_EGFP_Expression_Plasmid"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: SV40
+    - promoter: CMV # SV40 promoter not in supported list; substituting with CMV for high-level mammalian expression
     - cistron:
         label: target
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: SV40_pA
+    - terminator: BGH_pA # Standard mammalian polyadenylation signal for HEK293 expression
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,20 +1,20 @@
 construct:
-  name: "pTet_mCherry_Strep"
+  name: "ptet_mcherry_strep"
   host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: tac  # User requested pTet; tac substituted as a standard inducible E. coli promoter proxy.
+    - promoter: pTet  # pTet is used as requested for tetracycline-inducible expression
     - cistron:
-        label: target
-        expression: high
+        label: mCherry_fusion
+        expression: medium
         chain:
-          - tag: Strep-II
           - gene:
               id: mCherry
               source: fpbase
+          - tag: Strep-II
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

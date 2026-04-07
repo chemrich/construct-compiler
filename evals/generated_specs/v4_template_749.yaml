@@ -1,25 +1,25 @@
 construct:
-  name: mammalian_polycistronic_ampR_rfp
-  host: mammalian
+  name: "mammalian_polycistronic_ampR_mScarlet"
+  host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: ampR
+        label: ampicillin_resistance
         expression: medium
         gene:
           id: P00810
           source: uniprot
-    - spacer: 30 # Note: Mammalian polycistronic expression typically requires an IRES or 2A peptide for translation of subsequent cistrons.
+    - spacer: 30
     - cistron:
-        label: RFP
+        label: rfp_reporter
         expression: medium
-        fused: false
+        fused: false  # Independently translated via internal ribosome entry logic as per schema
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: BBa_B0015  # Using BBa_B0015 as a generic terminator placeholder per schema options
   constraints:
     assembly: golden_gate
     enzyme: BsaI

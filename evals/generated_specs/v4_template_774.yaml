@@ -1,10 +1,13 @@
 construct:
   name: "myc_mtagbfp2_expression"
   host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
@@ -13,13 +16,16 @@ construct:
           - gene:
               id: mTagBFP2
               source: fpbase
-    - terminator: rrnB_T1
+
+    - terminator: T7term
+
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
+
   synthesis:
     vendor: twist
     budget_per_gene: 400

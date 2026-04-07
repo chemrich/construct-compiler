@@ -1,25 +1,25 @@
 construct:
-  name: "yfp_gfp_polycistronic_expression"
-  host: e_coli_bl21_de3  # s_cerevisiae is not in the supported schema; substituted with e_coli for polycistronic logic compatibility
+  name: "polycistronic_yfp_gfp_yeast"
+  host: mammalian  # s_cerevisiae is not a supported host; substituting with mammalian as a eukaryotic proxy
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: T7lac
+    - promoter: EF1_alpha
     - cistron:
-        label: yfp_reporter
-        expression: medium
+        label: yfp_cistron
+        expression: high
         gene:
-          id: EYFP
+          id: mVenus
           source: fpbase
     - spacer: 30
     - cistron:
-        label: gfp_reporter
-        expression: medium
+        label: gfp_cistron
+        expression: high
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: T7term
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -2,18 +2,16 @@ construct:
   name: "GFP_lac_expression_BL21"
   host: e_coli_bl21
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: lacUV5 # User requested lac; lacUV5 is the standard lac-derived inducible promoter for E. coli
+    - promoter: T7lac  # T7lac is the standard lac-controlled promoter for e_coli_bl21
     - cistron:
-        label: gfp_expression
+        label: target
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: rrnB_T1
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

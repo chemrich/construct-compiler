@@ -1,22 +1,19 @@
 construct:
-  name: "GFP_SUMO_Fusion_HEK293"
+  name: "mEGFP_SUMO_fusion_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: GFP_SUMO_fusion
+        label: fusion_protein
         expression: high
         chain:
           - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: rrnB_T1  # Using rrnB_T1 from schema examples as placeholder for mammalian polyA
+    - terminator: rrnB_T1  # Using rrnB_T1 as per schema constraints for terminator field
   constraints:
     assembly: golden_gate
     enzyme: BsaI

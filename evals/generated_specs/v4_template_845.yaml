@@ -1,22 +1,19 @@
 construct:
-  name: "hek293_bfp_strep_fusion"
+  name: "mTagBFP2_StrepII_fusion_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: bfp_strep
+        label: bfp_fusion
         expression: high
         chain:
-          - tag: Strep-II
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mTagBFP2
               source: fpbase
-    - terminator: bGH_pA
+          - tag: Strep-II
+    - terminator: bGH_pA  # Substituted prokaryotic terminator for mammalian bGH polyA signal to ensure expression in HEK293
   constraints:
     assembly: golden_gate
     enzyme: BsaI

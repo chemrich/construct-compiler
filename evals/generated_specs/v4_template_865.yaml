@@ -1,13 +1,10 @@
 construct:
   name: "yeast_polycistronic_luciferase_gfp"
-  # Note: Host s_cerevisiae substituted with mammalian and EF1_alpha promoter for eukaryotic expression compatibility
-  host: mammalian
+  host: mammalian # Substituted s_cerevisiae with mammalian as it is the closest eukaryotic host available in the schema
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: EF1_alpha
+    - promoter: EF1_alpha # Eukaryotic promoter suitable for yeast substitution
     - cistron:
         label: luciferase
         expression: high
@@ -17,10 +14,10 @@ construct:
     - spacer: 30
     - cistron:
         label: reporter
-        expression: high
+        expression: medium
         fused: false
         gene:
-          id: sfGFP
+          id: mEGFP
           source: fpbase
     - terminator: BBa_B0015
   constraints:

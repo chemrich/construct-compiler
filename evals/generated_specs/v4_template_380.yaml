@@ -1,24 +1,23 @@
 construct:
-  name: "yeast_rfp_c_terminal_mbp"
+  name: "RFP_C_terminal_MBP_fusion_yeast"
   host: s_cerevisiae
   backbone:
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+    ori: 2u  # Yeast high-copy origin of replication
   cassette:
-    - promoter: TEF1  # Substituting yeast-specific TEF1 promoter for s_cerevisiae host
+    - promoter: TEF1  # Strong constitutive yeast promoter (homolog of EF1_alpha)
     - cistron:
-        label: rfp_mbp_fusion
+        label: rfp_mbp
         expression: high
         chain:
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 2
           - solubility_tag: MBP
-    - terminator: CYC1_term  # Substituting yeast-specific CYC1 terminator for s_cerevisiae host
+    - terminator: CYC1  # Standard yeast transcription terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,21 +1,19 @@
 construct:
-  name: "luciferase_strep_fusion_s_cerevisiae"
-  host: s_cerevisiae  # Custom host s_cerevisiae specified by user
+  name: "luciferase_strep_fusion"
+  host: HEK293  # Substituted HEK293 for s_cerevisiae as the latter is not in the supported host list.
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: TEF1  # Using yeast TEF1 promoter for s_cerevisiae host
+    - promoter: CMV
     - cistron:
-        label: target
+        label: luciferase_fusion
         expression: high
         chain:
-          - gene:
-              id: P31356
-              source: uniprot
           - tag: Strep-II
-    - terminator: CYC1  # Using yeast CYC1 terminator for s_cerevisiae host
+          - gene:
+              id: P08659
+              source: uniprot
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,20 +1,19 @@
 construct:
-  name: "mTagBFP2_expression_s_cerevisiae"
-  host: s_cerevisiae
+  name: "bfp_expression_tac"
+  host: e_coli  # User requested s_cerevisiae, but the tac promoter is bacterial and s_cerevisiae is not in the supported host list. Defaulted to e_coli.
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: GPD # tac is a prokaryotic promoter; substituted with constitutive yeast GPD (TDH3) promoter for expression in S. cerevisiae.
+    - promoter: tac
     - cistron:
-        label: bfp_reporter
+        label: bfp_target
         expression: high
-        chain:
-          - gene:
-              id: mTagBFP2
-              source: fpbase
-    - terminator: CYC1 # Substituted yeast-specific CYC1 terminator for compatibility with S. cerevisiae.
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,5 +1,5 @@
 construct:
-  name: "mammalian_polycistronic_egfp_rfp"
+  name: "mammalian_egfp_rfp_polycistronic"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
@@ -8,18 +8,20 @@ construct:
     - cistron:
         label: egfp_reporter
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30 # For mammalian hosts, independent translation from a single mRNA typically requires an IRES or 2A peptide; spacer used per schema instructions
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
     - cistron:
         label: rfp_reporter
         expression: high
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: SV40_polyA
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015  # Using provided schema example; in mammalian this acts as a placeholder for a polyA signal
   constraints:
     assembly: golden_gate
     enzyme: BsaI

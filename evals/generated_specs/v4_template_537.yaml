@@ -1,12 +1,12 @@
 construct:
-  name: "MBP_lacZ_fusion"
-  host: e_coli_bl21  # User requested s_cerevisiae; substituted with e_coli_bl21 as yeast hosts and promoters are not currently supported by the compiler tool.
+  name: "lacZ_MBP_yeast_expression"
+  host: s_cerevisiae  # Specific host line used as per Rule 13
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: 2u
     source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: GAL1  # Substituted for yeast compatibility; standard inducible promoter
     - cistron:
         label: target
         expression: high
@@ -16,9 +16,9 @@ construct:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: P00722
+              id: lacZ
               source: uniprot
-    - terminator: rrnB_T1
+    - terminator: CYC1  # Eukaryotic terminator for s_cerevisiae
   constraints:
     assembly: golden_gate
     enzyme: BsaI

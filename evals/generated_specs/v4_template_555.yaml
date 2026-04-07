@@ -1,25 +1,25 @@
 construct:
-  name: "mcherry_yfp_polycistronic_hek293"
+  name: "mCherry_YFP_HEK293_polycistronic"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: mCherry_expression
+        label: mCherry_reporter
         expression: high
         gene:
           id: mCherry
           source: fpbase
     - spacer: 30
     - cistron:
-        label: YFP_expression
+        label: YFP_reporter
         expression: high
-        fused: false  # Ensures independent translation for polycistronic design
+        fused: false
         gene:
-          id: YFP
+          id: EYFP
           source: fpbase
-    - terminator: BGH_pA  # Substituted bacterial terminator with mammalian BGH polyA signal
+    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal for HEK293 expression
   constraints:
     assembly: golden_gate
     enzyme: BsaI

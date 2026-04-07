@@ -1,19 +1,19 @@
 construct:
-  name: "sv40_egfp_6xhis"
-  host: e_coli_bl21_de3
+  name: "sv40_egfp_6xhis_fusion"
+  host: HEK293
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: T7lac  # Substituted SV40 (mammalian) with T7lac for E. coli host as per Rule 7 and Rule 12
+    - promoter: SV40
     - cistron:
-        label: egfp_fusion
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
-    - terminator: T7term
+    - terminator: bGH_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

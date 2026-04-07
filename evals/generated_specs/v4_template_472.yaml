@@ -1,25 +1,25 @@
 construct:
-  name: "hek293_mscarlet_lacz_polycistronic"
+  name: mScarlet_lacZ_polycistronic_HEK293
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: reporter
+        label: mScarlet
         expression: high
         gene:
           id: mScarlet
           source: fpbase
     - spacer: 30
     - cistron:
-        label: target
-        expression: medium
-        fused: false  # Independent translation for polycistronic expression
+        label: lacZ
+        expression: high
+        fused: false
         gene:
           id: P00722
           source: uniprot
-    - terminator: bGH_pA  # Standard mammalian polyadenylation signal for HEK293
+    - terminator: bGH_polyA  # Substituted bacterial terminator for mammalian-compatible bGH polyA signal
   constraints:
     assembly: golden_gate
     enzyme: BsaI

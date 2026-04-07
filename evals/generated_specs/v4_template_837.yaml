@@ -1,18 +1,18 @@
 construct:
   name: "yfp_myc_fusion"
-  host: e_coli_bl21_de3  # Substituted for T7 RNA polymerase compatibility required by the T7lac promoter
+  host: e_coli_bl21_de3 # Substituted bl21 with bl21_de3 to support T7lac promoter expression
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: yfp_myc
         expression: high
         chain:
           - gene:
               id: EYFP
               source: fpbase
-          - tag: Myc  # Myc tag fused to the C-terminus of EYFP
+          - tag: Myc
     - terminator: T7term
   constraints:
     assembly: golden_gate

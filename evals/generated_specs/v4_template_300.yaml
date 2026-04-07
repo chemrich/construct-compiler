@@ -1,25 +1,26 @@
 construct:
-  name: "HEK293_polycistronic_ampR_YFP"
+  name: "ampR_YFP_HEK293_polycistronic"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: ampicillin_resistance
+        label: selection_marker
         expression: high
         gene:
-          id: P62593
+          id: P00810
           source: uniprot
-    - spacer: 30
+    - spacer: 500  # Increased spacer length to accommodate an IRES for mammalian polycistronic expression
     - cistron:
-        label: yellow_fluorescent_protein
+        label: reporter_yfp
         expression: medium
         fused: false
         gene:
           id: EYFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: BBa_B0015  # Using a universal terminator as placeholder; usually bGH_polyA for mammalian
   constraints:
     assembly: golden_gate
     enzyme: BsaI

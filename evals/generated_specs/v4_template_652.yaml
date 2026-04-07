@@ -1,12 +1,12 @@
 construct:
-  name: "SV40_MBP_mCherry_fusion"
+  name: "sv40_mcherry_mbp_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: SV40  # SV40 promoter as requested for mammalian expression
+    - promoter: SV40  # SV40 is used as requested; substitution for CMV if tool-chain requires
     - cistron:
-        label: target
+        label: mCherry_fusion
         expression: high
         chain:
           - solubility_tag: MBP
@@ -16,7 +16,7 @@ construct:
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: BBa_B0015
+    - terminator: SV40_polyA  # Standard polyA for mammalian expression to match SV40 promoter
   constraints:
     assembly: golden_gate
     enzyme: BsaI

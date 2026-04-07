@@ -1,21 +1,21 @@
 construct:
-  name: "FLAG_mEGFP_yeast_expression"
+  name: "yeast_flag_egfp_expression"
   host: s_cerevisiae
   backbone:
     resistance: kanamycin
-    ori: 2_micron
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: GPD  # Substituted standard yeast GPD (TDH3) promoter for high expression
+    - promoter: TEF1  # Substituted standard yeast promoter for requested host
     - cistron:
-        label: target
+        label: flag_egfp
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: CYC1_term  # Substituted yeast-appropriate CYC1 terminator
+    - terminator: CYC1  # Substituted standard yeast terminator for requested host
   constraints:
     assembly: golden_gate
     enzyme: BsaI

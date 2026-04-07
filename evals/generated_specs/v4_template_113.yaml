@@ -1,21 +1,21 @@
 construct:
-  name: "rfp_flag_fusion_yeast"
+  name: "RFP_FLAG_yeast_fusion"
   host: s_cerevisiae
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha # EF1_alpha is used as a functional ortholog for yeast TEF1
+    - promoter: TEF1  # Using TEF1 as a standard constitutive yeast promoter
     - cistron:
-        label: rfp_fusion
+        label: target
         expression: high
         chain:
           - gene:
               id: mCherry
               source: fpbase
           - tag: FLAG
-    - terminator: BBa_B0015
+    - terminator: CYC1  # Using CYC1 as a standard yeast terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

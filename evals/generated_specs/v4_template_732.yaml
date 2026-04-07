@@ -6,14 +6,17 @@ construct:
   cassette:
     - promoter: CMV
     - cistron:
-        label: rfp_myc_fusion
+        label: target
         expression: high
         chain:
           - gene:
               id: mScarlet
               source: fpbase
-          - tag: HA  # Myc tag was requested; substituted with HA as it is in the supported tag list.
-    - terminator: BBa_B0015
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: Myc
+    - terminator: BBa_B0015 # BBa_B0015 used for schema compliance; polyA is typically vector-resident in mammalian systems
   constraints:
     assembly: golden_gate
     enzyme: BsaI

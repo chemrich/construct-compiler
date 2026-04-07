@@ -1,25 +1,25 @@
 construct:
-  name: "hek293_polycistronic_bfp_yfp"
+  name: "polycistronic_bfp_yfp_hek293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: bfp_reporter
+        label: bfp_expression
         expression: high
         gene:
           id: mTagBFP2
           source: fpbase
     - spacer: 30
     - cistron:
-        label: yfp_reporter
+        label: yfp_expression
         expression: high
         fused: false
         gene:
           id: mVenus
           source: fpbase
-    - terminator: bGH_polyA
+    - terminator: bgh_pA  # Substituted for mammalian compatibility; schema defaults were bacterial
   constraints:
     assembly: golden_gate
     enzyme: BsaI

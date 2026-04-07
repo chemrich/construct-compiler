@@ -1,22 +1,22 @@
 construct:
-  name: "mEGFP_GST_mammalian_fusion"
+  name: "GST_mEGFP_fusion_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: "fusion_protein"
+        label: fusion_protein
         expression: high
         chain:
           - solubility_tag: GST
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: BBa_B0015  # Using BBa_B0015 as a generic terminator; typically bGH_pA would be used in mammalian hosts.
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

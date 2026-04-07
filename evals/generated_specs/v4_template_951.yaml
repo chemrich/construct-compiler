@@ -1,25 +1,26 @@
 construct:
   name: "mCherry_ampR_polycistronic_mammalian"
-  host: mammalian
+  host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: mCherry_expression
+        label: reporter
         expression: high
         gene:
           id: mCherry
           source: fpbase
     - spacer: 30
     - cistron:
-        label: ampR_marker
+        label: selection_marker
         expression: medium
         fused: false
         gene:
           id: P00810
           source: uniprot
-    - terminator: SV40_polyA
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

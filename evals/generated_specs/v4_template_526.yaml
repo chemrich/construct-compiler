@@ -1,27 +1,27 @@
 construct:
-  name: "yeast_polycistronic_mcherry_yfp"
+  name: "polycistronic_mCherry_YFP_yeast"
   host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: TEF1  # Standard constitutive yeast promoter
+    - promoter: EF1_alpha  # Eukaryotic promoter suitable for yeast expression
     - cistron:
-        label: mcherry_reporter
+        label: mcherry_cistron
         expression: medium
         gene:
           id: mCherry
           source: fpbase
     - spacer: 30
     - cistron:
-        label: yfp_reporter
+        label: yfp_cistron
         expression: medium
         fused: false
         gene:
           id: EYFP
           source: fpbase
-    - terminator: CYC1_term  # Standard yeast terminator
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

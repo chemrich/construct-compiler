@@ -1,12 +1,12 @@
 construct:
   name: "yeast_polycistronic_rfp_ampr"
-  host: mammalian  # S. cerevisiae not in schema; mammalian substituted as a eukaryotic proxy
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha
+    - promoter: PGK1  # High-expression constitutive yeast promoter
     - cistron:
         label: rfp
         expression: high
@@ -15,13 +15,13 @@ construct:
           source: fpbase
     - spacer: 30
     - cistron:
-        label: ampr
+        label: ampr_selection
         expression: medium
-        fused: false
+        fused: false  # Independent translation via separate ribosome entry/initiation
         gene:
-          id: P0AD64
+          id: P62593
           source: uniprot
-    - terminator: BBa_B0015
+    - terminator: CYC1_term  # Standard yeast transcriptional terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

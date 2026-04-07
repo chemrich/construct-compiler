@@ -1,16 +1,17 @@
 construct:
-  name: "mammalian_egfp_expression"
-  host: HEK293
+  name: "egfp_mammalian_expression"
+  host: mammalian
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV  # lac promoter is prokaryotic; substituted with CMV for mammalian expression
+    - promoter: CMV # Substituted 'lac' with 'CMV' because the lac promoter is prokaryotic and not functional in mammalian cells.
     - cistron:
         label: target
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: BBa_B0015 # Note: BBa_B0015 is a placeholder; mammalian constructs typically require a polyA signal (e.g., BGH_pA).
   constraints:
     assembly: golden_gate
     enzyme: BsaI

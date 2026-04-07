@@ -1,5 +1,5 @@
 construct:
-  name: "HEK293_mEGFP_MBP_fusion"
+  name: "HEK293_MBP_mEGFP_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
@@ -10,10 +10,13 @@ construct:
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: BBa_B0015
+    - terminator: bGH_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

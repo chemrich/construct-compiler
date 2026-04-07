@@ -1,23 +1,20 @@
 construct:
-  name: "YFP_Strep_Fusion_K12"
+  name: "yfp_strep_fusion"
   host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: tac # Optimized for E. coli K-12 which lacks T7 polymerase
+    - promoter: tac  # Substituted T7lac for tac because E. coli K12 lacks T7 RNA polymerase
     - cistron:
-        label: target
+        label: fusion_protein
         expression: high
         chain:
-          - tag: Strep-II
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: EYFP
               source: fpbase
+          - tag: Strep-II
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

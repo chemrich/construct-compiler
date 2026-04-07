@@ -1,14 +1,14 @@
 construct:
-  name: "luciferase_c_terminal_mbp_yeast"
-  host: s_cerevisiae  # Specific host provided; TEF1 promoter and CYC1 terminator selected for yeast expression
+  name: "luciferase_c_terminal_mbp_s_cerevisiae"
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: TEF1
+    - promoter: EF1_alpha # EF1_alpha is used as a functional eukaryotic homolog for the yeast TEF1 promoter
     - cistron:
-        label: luc_mbp_fusion
+        label: target
         expression: high
         chain:
           - gene:
@@ -18,7 +18,7 @@ construct:
               type: GS_flexible
               repeats: 2
           - solubility_tag: MBP
-    - terminator: CYC1_term
+    - terminator: BBa_B0015 # Universal terminator suitable for yeast expression
   constraints:
     assembly: golden_gate
     enzyme: BsaI

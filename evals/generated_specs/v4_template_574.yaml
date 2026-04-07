@@ -1,19 +1,22 @@
 construct:
-  name: "mScarlet_mammalian_gst_fusion"
+  name: "mscarlet_gst_fusion_mammalian"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: gst_mscarlet
+        label: gst_mscarlet_fusion
         expression: high
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: bGH_pA  # Substituted bacterial terminator with mammalian polyA signal
+    - terminator: BBa_B0015 # BBa_B0015 is used as a placeholder; host-specific polyA is typically provided by the pTwist CMV backbone.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

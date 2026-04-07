@@ -1,14 +1,15 @@
 construct:
-  name: "mCherry_expression_plasmid"
-  host: e_coli  # Substitution: s_cerevisiae is not a supported host in the current schema; e_coli was selected to match the requested lac promoter.
+  name: "mCherry_lac_expression_construct"
+  host: e_coli  # S. cerevisiae is not a supported host in the schema; defaulting to e_coli to support the requested lac promoter.
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: lacUV5
+    - promoter: lacUV5  # lacUV5 is the closest available match to the lac promoter in the schema.
     - cistron:
-        label: reporter
-        expression: medium
+        label: target
+        expression: high
         gene:
           id: mCherry
           source: fpbase

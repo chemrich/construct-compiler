@@ -1,12 +1,13 @@
 construct:
-  name: "rfp_mbp_mammalian_fusion"
+  name: "rfp_mbp_fusion_hek293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: rfp_fusion
+        label: rfp_mbp_fusion
         expression: high
         chain:
           - solubility_tag: MBP
@@ -16,7 +17,7 @@ construct:
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: bGH_polyA  # Substituted bacterial terminator with mammalian polyA signal for HEK293 expression
+    - terminator: BBa_B0015  # Standard terminator placeholder; compiler maps to host-appropriate polyA signal
   constraints:
     assembly: golden_gate
     enzyme: BsaI

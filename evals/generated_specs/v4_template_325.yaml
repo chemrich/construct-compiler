@@ -1,19 +1,22 @@
 construct:
-  name: "pLac_ampR_GST_fusion"
+  name: "plac_ampr_gst_fusion"
   host: e_coli
   backbone:
-    resistance: kanamycin # Using kanamycin for the backbone selection to avoid conflict with the ampR target gene
+    resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: lacUV5
+    - promoter: lacUV5  # lacUV5 is a common choice for pLac expression
     - cistron:
-        label: ampR_fusion
+        label: target_fusion
         expression: medium
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: P62593 # UniProt ID for TEM-1 beta-lactamase (ampR)
+              id: P62593
               source: uniprot
     - terminator: rrnB_T1
   constraints:

@@ -1,21 +1,21 @@
 construct:
-  name: "mScarlet_Myc_yeast_expression"
-  host: s_cerevisiae  # Yeast host requested
+  name: "mScarlet_Myc_yeast"
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # EF1_alpha is used as a eukaryotic-compatible promoter for yeast since specific yeast promoters are not in the schema list
+    - promoter: EF1_alpha  # Substituted for yeast TEF1; EF1_alpha is the homologous promoter in schema
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
-          - tag: Myc  # N-terminal Myc tag requested by user
+          - tag: HA  # Substituted HA for Myc as Myc is not in the provided schema list
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: BBa_B0015  # Using BBa_B0015 as a generic terminator; CYC1_term is standard for yeast but not in the schema list
+    - terminator: BBa_B0015  # Substituted for yeast-specific terminator as none are in schema
   constraints:
     assembly: golden_gate
     enzyme: BsaI

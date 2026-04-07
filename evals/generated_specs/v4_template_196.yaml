@@ -1,17 +1,17 @@
 construct:
-  name: "mammalian_ampR_luciferase_polycistronic"
-  host: mammalian
+  name: "mammalian_polycistronic_ampR_luciferase"
+  host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: beta_lactamase
+        label: ampR
         expression: medium
         gene:
-          id: P0AD64
+          id: P00810
           source: uniprot
-    - spacer: 30  # Note: Standard mammalian polycistronic expression typically requires an IRES or 2A peptide; using spacer as per tool schema.
+    - spacer: 30 # For mammalian polycistronic constructs, an IRES or 2A sequence is typically used; a spacer is provided here as per schema.
     - cistron:
         label: luciferase
         expression: high
@@ -19,7 +19,7 @@ construct:
         gene:
           id: P08659
           source: uniprot
-    - terminator: BBa_B0015
+    - terminator: bGH_polyA # Substituted for mammalian compatibility
   constraints:
     assembly: golden_gate
     enzyme: BsaI

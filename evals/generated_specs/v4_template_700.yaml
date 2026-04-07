@@ -1,19 +1,21 @@
 construct:
-  name: "rfp_c_strep_expression"
-  host: e_coli_bl21_de3 # Using DE3 strain to support T7-based expression
+  name: "rfp_c_terminal_strep_ecoli"
+  host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7lac
     - cistron:
-        label: rfp_target
+        label: rfp_reporter
         expression: high
         chain:
           - gene:
               id: mScarlet
               source: fpbase
           - tag: Strep-II
-    - terminator: T7term
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

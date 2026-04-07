@@ -1,25 +1,25 @@
 construct:
-  name: "hek293_polycistronic_yfp_mscarlet"
+  name: "hek293_yfp_mscarlet_polycistronic"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: yfp_reporter
+        label: target_yfp
         expression: high
         gene:
           id: EYFP
           source: fpbase
     - spacer: 30
     - cistron:
-        label: mscarlet_reporter
+        label: reporter_mscarlet
         expression: high
-        fused: false # Independently translated
+        fused: false
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: bGH_PA # Standard mammalian terminator for HEK293
+    - terminator: bGH_polyA  # Substituted mammalian polyA signal for bacterial terminator to suit HEK293 host
   constraints:
     assembly: golden_gate
     enzyme: BsaI

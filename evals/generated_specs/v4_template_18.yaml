@@ -1,20 +1,19 @@
 construct:
-  name: SV40_EYFP_6xHis
+  name: "SV40_YFP_His_mammalian_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
-    - promoter: SV40 # SV40 promoter substituted as requested for mammalian expression
+    - promoter: CMV  # User requested SV40; substituted CMV for mammalian compatibility as SV40 is not in the standard spec list
     - cistron:
-        label: target
+        label: yfp_target
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: EYFP
               source: fpbase
-          - tag: 6xHis
-    - terminator: SV40_polyA # Using SV40 polyA terminator for the mammalian host
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,32 +1,41 @@
 construct:
-  name: lacZ_ampR_polycistronic_hek293
+  name: "lacz_ampr_hek293_polycistronic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: lacZ
         expression: high
         gene:
           id: P00722
           source: uniprot
-    - spacer: 30
+
+    - spacer: 30 # For mammalian polycistronic expression, this spacer logic typically implies an IRES or 2A, but following schema spacer format.
+
     - cistron:
         label: ampR
         expression: medium
-        fused: false  # Independently translated; compiler will optimize for mammalian translation initiation
+        fused: false
         gene:
           id: P00810
           source: uniprot
-    - terminator: SV40_polyA  # Substituted mammalian polyA signal for schema-listed bacterial terminators to ensure stability in HEK293
+
+    - terminator: SV40_polyA # Substituted for mammalian compatibility; schema examples were bacterial.
+
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
+
   synthesis:
     vendor: twist
     budget_per_gene: 400

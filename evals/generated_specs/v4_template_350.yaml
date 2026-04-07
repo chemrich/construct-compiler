@@ -1,21 +1,21 @@
 construct:
-  name: "gst_ampr_yeast_expression"
-  host: mammalian # s_cerevisiae substituted with mammalian to provide eukaryotic promoter and regulatory support
+  name: "GST_ampR_expression_yeast"
+  host: s_cerevisiae  # User requested yeast; using Saccharomyces cerevisiae
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha
+    - promoter: TEF1  # Yeast-specific promoter substituted for E. coli/mammalian defaults
     - cistron:
         label: target
         expression: high
         chain:
           - solubility_tag: GST
           - gene:
-              id: P00810
+              id: P0AD64
               source: uniprot
-    - terminator: BBa_B0015
+    - terminator: CYC1_term  # Yeast-specific terminator substituted for E. coli defaults
   constraints:
     assembly: golden_gate
     enzyme: BsaI

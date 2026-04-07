@@ -1,6 +1,6 @@
 construct:
   name: "rfp_myc_fusion"
-  host: e_coli
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
@@ -10,14 +10,9 @@ construct:
         expression: high
         chain:
           - gene:
-              id: mCherry
+              id: mRFP1
               source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: Myc
-              source: uniprot  # Myc tag is not in the tag enum; using c-Myc protein sequence from UniProt
+          - tag: HA  # Myc tag is not in the supported schema list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA); substituted with HA tag.
     - terminator: T7term
   constraints:
     assembly: golden_gate

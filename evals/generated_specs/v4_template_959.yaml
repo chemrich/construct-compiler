@@ -1,23 +1,23 @@
 construct:
-  name: "polycistronic_lacZ_mScarlet_ecoli"
+  name: "polycistronic_lacZ_mScarlet_expression"
   host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: T7lac  # Defaulting to T7lac as per rule 8; requires T7 RNA polymerase for expression
     - cistron:
-        label: lacZ
+        label: beta_galactosidase
         expression: high
         gene:
           id: P00722
           source: uniprot
     - spacer: 30
     - cistron:
-        label: reporter
-        expression: medium
-        fused: false
+        label: red_reporter
+        expression: low
+        fused: false  # Independent translation with its own RBS
         gene:
           id: mScarlet
           source: fpbase

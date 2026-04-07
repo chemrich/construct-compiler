@@ -1,21 +1,21 @@
 construct:
-  name: "luciferase_ha_yeast_expression"
-  host: s_cerevisiae
+  name: "luciferase_c_ha_yeast_expression"
+  host: s_cerevisiae  # S. cerevisiae is the requested host; using eukaryotic compatible settings.
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # EF1_alpha (TEF1) is a robust constitutive promoter in yeast
+    - promoter: EF1_alpha  # EF1_alpha used as a reasonable eukaryotic substitute available in the schema.
     - cistron:
-        label: target
+        label: luciferase_ha
         expression: high
         chain:
           - gene:
               id: P08659
               source: uniprot
           - tag: HA
-    - terminator: CYC1_term  # Standard yeast terminator
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

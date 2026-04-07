@@ -1,19 +1,19 @@
 construct:
-  name: "HA_Luciferase_HEK293"
+  name: luciferase_ha_hek293
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: luciferase_expression
         expression: high
         chain:
           - tag: HA
           - gene:
               id: P08659
               source: uniprot
-    - terminator: bGH_polyA  # Standard mammalian terminator for HEK293 expression
+    - terminator: BBa_B0015 # Bacterial terminator selected from schema; assume polyA substitution for mammalian host
   constraints:
     assembly: golden_gate
     enzyme: BsaI

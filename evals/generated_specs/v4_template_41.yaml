@@ -1,12 +1,12 @@
 construct:
   name: "yeast_polycistronic_luciferase_gfp"
-  host: mammalian # s_cerevisiae substituted with mammalian; EF1_alpha used as a proxy for a strong eukaryotic promoter
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: 2_micron
     source: addgene
   cassette:
-    - promoter: EF1_alpha
+    - promoter: TEF1  # TEF1 is a standard strong constitutive promoter for S. cerevisiae
     - cistron:
         label: luciferase
         expression: high
@@ -16,12 +16,12 @@ construct:
     - spacer: 30
     - cistron:
         label: reporter
-        expression: high
+        expression: medium
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: CYC1_term  # CYC1 is a standard terminator for S. cerevisiae
   constraints:
     assembly: golden_gate
     enzyme: BsaI

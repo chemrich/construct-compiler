@@ -1,25 +1,25 @@
 construct:
-  name: "hek293_gfp_yfp_polycistronic"
+  name: hek293_gfp_yfp_polycistronic
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: gfp_cistron
+        label: gfp_target
         expression: high
         gene:
           id: mEGFP
           source: fpbase
     - spacer: 30
     - cistron:
-        label: yfp_cistron
+        label: yfp_reporter
         expression: high
-        fused: false # Induces independent translation via a separate Kozak/RBS
+        fused: false
         gene:
-          id: mEYFP
+          id: mVenus
           source: fpbase
-    - terminator: BBa_B0015 # Using BBa_B0015 as a placeholder; in mammalian systems, a polyA signal is typically used.
+    - terminator: hGH_polyA  # hGH_polyA used as appropriate terminator for mammalian HEK293 host
   constraints:
     assembly: golden_gate
     enzyme: BsaI

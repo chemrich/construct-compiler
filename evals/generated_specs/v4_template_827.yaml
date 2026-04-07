@@ -1,10 +1,8 @@
 construct:
-  name: "GST_Luciferase_Expression_Vector"
+  name: "gst_luciferase_expression"
   host: e_coli
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
@@ -12,10 +10,13 @@ construct:
         expression: high
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: P08659
+              id: P31356
               source: uniprot
-    - terminator: rrnB_T1
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

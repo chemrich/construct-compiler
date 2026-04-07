@@ -1,25 +1,27 @@
 construct:
-  name: "YFP_GFP_polycistronic_yeast"
-  host: e_coli_bl21_de3 # User requested s_cerevisiae; substituted with e_coli_bl21_de3 as yeast is not a supported host and polycistronic operons are natively supported in bacterial systems.
+  name: "yeast_polycistronic_yfp_gfp"
+  host: s_cerevisiae
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: EF1_alpha  # Eukaryotic promoter substituted for yeast-specific TEF1/ADH1
     - cistron:
-        label: YFP
-        expression: high
+        label: yfp_target
+        expression: medium
         gene:
-          id: EYFP
+          id: mVenus
           source: fpbase
-    - spacer: 30
+    - spacer: 30  # Note: True polycistronic expression in yeast requires an IRES or 2A peptide sequence
     - cistron:
-        label: GFP
-        expression: high
+        label: gfp_reporter
+        expression: medium
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: T7term
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

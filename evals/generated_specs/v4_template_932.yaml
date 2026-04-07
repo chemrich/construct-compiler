@@ -3,11 +3,10 @@ construct:
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: target_fusion
         expression: high
         chain:
           - solubility_tag: GST
@@ -17,7 +16,7 @@ construct:
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: BBa_B0015
+    - terminator: bGH_polyA # Substituted for mammalian compatibility as the bacterial terminators in the schema (rrnB_T1, etc.) do not function in HEK293
   constraints:
     assembly: golden_gate
     enzyme: BsaI

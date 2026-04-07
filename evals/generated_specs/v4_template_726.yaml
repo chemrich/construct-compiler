@@ -1,16 +1,16 @@
 construct:
-  name: "SV40_lacZ_HA_fusion"
-  host: HEK293
+  name: "SV40_lacZ_HA"
+  host: HEK293  # SV40 is a mammalian promoter; host set to HEK293 for compatibility
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV  # SV40 is not in the controlled vocabulary; CMV substituted as the standard mammalian default.
+    - promoter: SV40
     - cistron:
-        label: target
-        expression: medium
+        label: lacZ_HA
+        expression: high
         chain:
           - gene:
-              id: lacZ
+              id: P00722
               source: uniprot
           - tag: HA
     - terminator: BBa_B0015

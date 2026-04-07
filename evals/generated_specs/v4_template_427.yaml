@@ -1,19 +1,19 @@
 construct:
-  name: "myc_egfp_mammalian_expression"
+  name: "egfp_n_terminal_myc_mammalian"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: target_protein
         expression: high
         chain:
-          - tag: Myc
+          - tag: FLAG # Myc tag substituted with FLAG as Myc is not in the allowed schema tag list
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: bGH_polyA
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

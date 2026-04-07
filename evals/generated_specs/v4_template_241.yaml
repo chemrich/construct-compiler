@@ -1,5 +1,5 @@
 construct:
-  name: "GST_mScarlet_HEK293_Expression"
+  name: "GST_mScarlet_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
@@ -10,10 +10,13 @@ construct:
         expression: high
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: SV40_polyA # Substituted bacterial terminator with mammalian SV40_polyA signal
+    - terminator: bgh_polya
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,17 +1,17 @@
 construct:
-  name: "HEK293_mEGFP_Expression"
+  name: "hek293_egfp_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV  # Substituted T7 with CMV for HEK293 host to ensure expression without exogenous T7 polymerase
+    - promoter: CMV # substituted T7 with CMV for HEK293 expression as T7 requires a specialized polymerase-expressing cell line
     - cistron:
-        label: target
+        label: egfp_target
         expression: high
         gene:
-          id: mEGFP
+          id: EGFP
           source: fpbase
-    - terminator: bGH_pA
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

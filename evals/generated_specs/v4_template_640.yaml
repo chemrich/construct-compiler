@@ -1,17 +1,17 @@
 construct:
-  name: "yfp_expression_plasmid"
-  host: e_coli_bl21  # Changed from s_cerevisiae because trc is a bacterial promoter and yeast is not in the host enum.
+  name: "YFP_expression_plasmid"
+  host: e_coli  # Substituted e_coli for s_cerevisiae as yeast hosts are not supported; host changed to match the bacterial trc/tac promoter.
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: tac  # Substituted trc with tac as it is the closest compatible promoter in the schema.
+    - promoter: tac  # Substituted tac for trc as it is the closest supported equivalent in the tool schema.
     - cistron:
-        label: yfp_reporter
+        label: YFP_target
         expression: high
         gene:
-          id: YFP
+          id: EYFP
           source: fpbase
     - terminator: rrnB_T1
   constraints:

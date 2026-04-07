@@ -1,21 +1,21 @@
 construct:
-  name: "lacZ_C_terminal_SUMO"
-  host: e_coli  # s_cerevisiae is not in the supported host list; substituted with e_coli
+  name: "lacZ_cterm_SUMO_expression"
+  host: mammalian # User requested s_cerevisiae; substituted with mammalian host/CMV promoter as closest schema-supported eukaryotic match
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: CMV
     - cistron:
-        label: lacZ_fusion
+        label: target
         expression: high
         chain:
           - gene:
-              id: P00722
+              id: lacZ
               source: uniprot
           - solubility_tag: SUMO
-    - terminator: rrnB_T1
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

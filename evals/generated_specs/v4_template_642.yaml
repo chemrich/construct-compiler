@@ -1,12 +1,12 @@
 construct:
-  name: "mScarlet_C_terminal_6xHis"
-  host: e_coli_bl21  # s_cerevisiae host substituted with e_coli_bl21; yeast-specific hosts and promoters not in current spec
+  name: "mScarlet_C_term_6xHis_yeast_expression"
+  host: s_cerevisiae  # S. cerevisiae requested; using yeast-specific parts
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: GAL1  # Yeast-specific promoter substitution for S. cerevisiae
     - cistron:
         label: target
         expression: high
@@ -15,7 +15,7 @@ construct:
               id: mScarlet
               source: fpbase
           - tag: 6xHis
-    - terminator: T7term
+    - terminator: CYC1_term  # Yeast-specific terminator substitution
   constraints:
     assembly: golden_gate
     enzyme: BsaI
