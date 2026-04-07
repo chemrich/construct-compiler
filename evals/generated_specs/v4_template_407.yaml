@@ -1,0 +1,25 @@
+construct:
+  name: "lacZ_mammalian_SV40"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: SV40  # User requested SV40 promoter for mammalian expression
+    - cistron:
+        label: lacZ_target
+        expression: high
+        chain:
+          - gene:
+              id: P06658
+              source: uniprot
+    - terminator: bGH_polyA  # Substituted mammalian polyA signal for schema-listed E. coli terminators
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

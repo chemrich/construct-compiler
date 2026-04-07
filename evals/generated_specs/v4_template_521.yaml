@@ -1,0 +1,28 @@
+construct:
+  name: "mScarlet_MBP_yeast_expression"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Yeast constitutive promoter (homolog of EF1_alpha)
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: CYC1_term  # Yeast terminator
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

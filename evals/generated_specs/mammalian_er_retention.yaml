@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: "mEGFP_KDEL_ER_retention"
+  name: "mEGFP_KDEL_ER_HEK293"
   host: HEK293
 
   backbone:
@@ -8,20 +8,14 @@ construct:
 
   cassette:
     - promoter: CMV
-
     - cistron:
-        label: target
+        label: mEGFP_KDEL
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: mEGFP_KDEL # Represents mEGFP with the C-terminal KDEL sequence
               source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 1
-          - protein_sequence: KDEL
-
-    - terminator: rrnB_T1
+    - terminator: BBa_B0015
 
   constraints:
     assembly: golden_gate

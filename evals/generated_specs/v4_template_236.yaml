@@ -1,0 +1,26 @@
+construct:
+  name: "cmv_sumo_mtagbfp2_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: sumo_bfp_fusion
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - terminator: bGH_polyA  # Standard mammalian terminator for use with CMV promoter
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,25 +1,24 @@
 ```yaml
 construct:
-  name: "GST_p53_DBD_pulldown"
-  host: e_coli_bl21
+  name: "gst_p53_dbd_bait"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: bait_protein
+        label: bait
         expression: medium
         chain:
-          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: P04637
+              id: P04637 # Human p53, assumed to refer to the DNA binding domain
               source: uniprot
-              region: [94, 292]  # DNA binding domain
 
     - terminator: rrnB_T1
 

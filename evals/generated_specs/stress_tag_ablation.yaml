@@ -1,25 +1,20 @@
 ```yaml
 construct:
-  name: mEGFP_tag_comparison_study
-  host: e_coli_bl21_de3
-
+  name: "mEGFP_tag_expression_test"
+  host: e_coli
   backbone:
     catalog_vector: "pET-28b(+)"
-
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: untagged_mEGFP
+        label: mEGFP_untagged
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: his_tagged_mEGFP
+        label: mEGFP_6xHis
         expression: high
         fused: false
         chain:
@@ -27,30 +22,24 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: mbp_his_tagged_mEGFP
+        label: mEGFP_MBP_6xHis
         expression: high
         fused: false
         chain:
           - solubility_tag: MBP
-          - cleavage_site: TEV
           - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-
     - terminator: rrnB_T1
-
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

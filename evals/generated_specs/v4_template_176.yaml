@@ -1,0 +1,26 @@
+construct:
+  name: "yfp_expression_lac"
+  host: e_coli # s_cerevisiae is not supported by the construct_compiler; substituted with e_coli for lac promoter usage.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: lacUV5 # lacUV5 is a robust lac-derived promoter compatible with E. coli.
+    - cistron:
+        label: yfp_reporter
+        expression: high
+        gene:
+          id: EYFP
+          source: fpbase
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

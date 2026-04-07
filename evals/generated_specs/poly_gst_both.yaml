@@ -1,22 +1,21 @@
 ```yaml
 construct:
-  name: "dual_GST_fluorescent_proteins"
+  name: "gst_megfp_gst_mscarlet"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: GST_mEGFP
         expression: high
         chain:
-          - tag: GST
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: GST
           - gene:
               id: mEGFP
               source: fpbase
@@ -24,14 +23,10 @@ construct:
     - spacer: 30
 
     - cistron:
-        label: reporter
+        label: GST_mScarlet
         expression: low
-        fused: false
         chain:
-          - tag: GST
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: GST
           - gene:
               id: mScarlet
               source: fpbase

@@ -1,0 +1,32 @@
+construct:
+  name: "polycistronic_luciferase_lacz_mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: luciferase
+        expression: high
+        gene:
+          id: P08659
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: lacZ
+        expression: medium
+        fused: false
+        gene:
+          id: P00722
+          source: uniprot
+    - terminator: SV40_polyA  # Using mammalian-compatible polyA terminator
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

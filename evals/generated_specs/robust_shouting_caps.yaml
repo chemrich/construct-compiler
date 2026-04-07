@@ -1,18 +1,16 @@
 ```yaml
 construct:
-  name: "his_tev_gfp_high_expression"
+  name: "gfp_his_tev_high_expression_ecoli"
   host: e_coli
 
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
 
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: target
+        label: gfp
         expression: high
         chain:
           - tag: 6xHis
@@ -20,7 +18,6 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
-
     - terminator: rrnB_T1
 
   constraints:
@@ -29,9 +26,4 @@ construct:
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```

@@ -1,0 +1,30 @@
+construct:
+  name: "mammalian_polycistronic_rfp_mscarlet"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: rfp
+        gene:
+          id: mCherry
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: reporter
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: bGH_polyA  # Standard terminator for mammalian pTwist CMV vectors
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

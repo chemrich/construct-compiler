@@ -1,0 +1,23 @@
+construct:
+  name: "mammalian_egfp_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # lac promoter is prokaryotic; substituted with CMV for mammalian expression
+    - cistron:
+        label: target
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

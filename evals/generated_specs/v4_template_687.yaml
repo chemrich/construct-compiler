@@ -1,0 +1,26 @@
+construct:
+  name: "ampR_expression_pTet_substitute"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Substituted tac (inducible) for pTet because pTet is not in the allowed schema list
+    - cistron:
+        label: ampR
+        expression: high
+        gene:
+          id: P62593
+          source: uniprot
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,0 +1,30 @@
+construct:
+  name: "YFP_MBP_HEK293_Expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: EYFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: MBP
+    - terminator: bGH_polyA  # Substituted bacterial terminator for mammalian-appropriate polyA signal
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

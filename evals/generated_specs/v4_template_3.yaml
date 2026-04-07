@@ -1,0 +1,32 @@
+construct:
+  name: "polycistronic_mscarlet_luciferase_expression"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: reporter_1
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: reporter_2
+        expression: high
+        fused: false
+        gene:
+          id: P08659
+          source: uniprot
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

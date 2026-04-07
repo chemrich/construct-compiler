@@ -1,0 +1,28 @@
+construct:
+  name: "HA_mEGFP_yeast_expression"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # EF1_alpha is used as a functional equivalent for yeast expression (TEF1 homolog)
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

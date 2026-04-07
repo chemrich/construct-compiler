@@ -1,0 +1,28 @@
+construct:
+  name: "mScarlet_C_His_yeast"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1 # Substitution: TEF1 is a standard constitutive promoter for S. cerevisiae
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+          - tag: 6xHis
+    - terminator: CYC1_term # Substitution: CYC1_term is a standard terminator for S. cerevisiae
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

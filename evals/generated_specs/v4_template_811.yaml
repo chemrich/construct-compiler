@@ -1,0 +1,27 @@
+construct:
+  name: "SV40_mScarlet_6xHis"
+  host: e_coli_bl21_de3  # Defaulted to E. coli per rule 7
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+  cassette:
+    - promoter: T7lac  # SV40 is a mammalian promoter; substituted for T7lac for E. coli compatibility per rule 12
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

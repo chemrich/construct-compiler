@@ -1,34 +1,22 @@
 ```yaml
 construct:
-  name: "YFP_His_pET11a"
+  name: "yfp_his_e_coli"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-11a"
+    catalog_vector: "pET-11a(+)"
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: yfp
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: EYFP
+              id: YFP
               source: fpbase
 
     - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```

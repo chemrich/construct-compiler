@@ -1,0 +1,28 @@
+construct:
+  name: "6xHis_mEGFP_yeast_expression"
+  host: s_cerevisiae # Yeast host specified by user
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1 # Substituted for Saccharomyces cerevisiae compatibility
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1 # Substituted for Saccharomyces cerevisiae compatibility
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

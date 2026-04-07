@@ -1,0 +1,25 @@
+construct:
+  name: "mScarlet_mammalian_expression"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV  # Substituted T7lac for CMV as T7lac is an E. coli promoter and CMV is standard for mammalian expression.
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

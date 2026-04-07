@@ -1,0 +1,25 @@
+construct:
+  name: "luciferase_ptet_k12_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: pTet # pTet is used as requested for E. coli K12 expression
+    - cistron:
+        label: luciferase
+        expression: high
+        gene:
+          id: P08659
+          source: uniprot
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

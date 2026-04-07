@@ -1,0 +1,32 @@
+construct:
+  name: mammalian_polycistronic_rfp_lacz
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: rfp_expression
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: lacz_expression
+        expression: high
+        fused: false  # Independent translation; in mammalian systems, this typically implies the insertion of an IRES or similar element
+        gene:
+          id: P00722
+          source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

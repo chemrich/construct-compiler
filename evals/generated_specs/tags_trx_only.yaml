@@ -1,26 +1,23 @@
 ```yaml
 construct:
-  name: "thioredoxin_human_lysozyme_fusion"
+  name: "thioredoxin_human_lysozyme"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: human_lysozyme
         expression: high
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
           - solubility_tag: Trx
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P61626
+              id: P61626 # Human lysozyme C
               source: uniprot
 
     - terminator: rrnB_T1

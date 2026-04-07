@@ -1,0 +1,26 @@
+construct:
+  name: "hek293_egfp_c_terminal_his"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: EGFP
+              source: fpbase
+          - tag: 6xHis
+    - terminator: BGH_pA  # Substituted bacterial terminator from schema with mammalian-appropriate BGH polyA signal
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

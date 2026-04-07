@@ -1,0 +1,26 @@
+construct:
+  name: "luciferase_expression_ecoli"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac  # SV40 is a mammalian promoter and will not function in E. coli; substituted with tac for high-level expression.
+    - cistron:
+        label: luciferase
+        expression: high
+        gene:
+          id: P08659
+          source: uniprot
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

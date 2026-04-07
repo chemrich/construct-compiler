@@ -1,0 +1,26 @@
+construct:
+  name: "cmv_mtagbfp2_ha"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: bfp_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+          - tag: HA
+    - terminator: bGH_polyA  # Substituted mammalian polyA for bacterial terminator to ensure expression in HEK293
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

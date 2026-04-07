@@ -1,0 +1,31 @@
+construct:
+  name: "luciferase_c_terminal_mbp_yeast"
+  host: s_cerevisiae  # Specific host provided; TEF1 promoter and CYC1 terminator selected for yeast expression
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: luc_mbp_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P08659
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: MBP
+    - terminator: CYC1_term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

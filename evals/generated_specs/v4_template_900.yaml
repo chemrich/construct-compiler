@@ -1,0 +1,34 @@
+construct:
+  name: "yeast_egfp_yfp_polycistronic"
+  host: mammalian # Substituted mammalian for s_cerevisiae to maintain eukaryotic expression context; EF1_alpha promoter selected for eukaryotic compatibility.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: egfp_target
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: yfp_reporter
+        expression: high
+        fused: false
+        gene:
+          id: EYFP
+          source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

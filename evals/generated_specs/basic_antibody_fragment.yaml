@@ -1,7 +1,7 @@
 ```yaml
 construct:
-  name: "fab_fragment_expression_vector"
-  host: e_coli_bl21_de3
+  name: "fab_fragment_expression"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -10,24 +10,21 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: heavy_chain
+        label: fab_light_chain
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P01857  # Human IgG1 heavy chain constant region (Fab portion)
-              source: uniprot
+              id: fab_light_chain
 
     - spacer: 30
 
     - cistron:
-        label: light_chain
+        label: fab_heavy_chain_fd
         expression: high
         fused: false
         gene:
-          id: P01834  # Human kappa light chain constant region
-          source: uniprot
+          id: fab_heavy_chain_fd
 
     - terminator: rrnB_T1
 

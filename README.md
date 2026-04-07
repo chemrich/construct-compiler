@@ -203,20 +203,37 @@ python scripts/design_evaluate.py spec.yaml --fast --json
 
 ### LLM eval harness
 
-The eval harness tests the full natural-language → YAML spec → compilation → validation loop. It sends prompts to the Anthropic API, parses the generated specs, compiles them, and checks both harness validity and expectation properties (host, cistron count, required parts).
+The eval harness tests the full natural-language → YAML spec → compilation → validation loop. It sends prompts to an LLM (Anthropic or Gemini), parses the generated specs, compiles them, and checks both harness validity and expectation properties (host, cistron count, required parts).
+
+#### Environment Setup
+
+Set your API keys as environment variables or in a `.env` file in the project root:
 
 ```bash
-# Run the default 250-prompt eval (requires ANTHROPIC_API_KEY)
+# For Anthropic (Claude)
+export ANTHROPIC_API_KEY="your_anthropic_key"
+
+# For Gemini
+export GEMINI_API_KEY="your_gemini_key"
+# OR (fallback supported by the script)
+export GOOGLE_API_KEY="your_gemini_key"
+```
+
+#### Running Evaluations
+
+```bash
+# Run all prompts using default Claude model (requires ANTHROPIC_API_KEY)
 python evals/run_eval.py
+
+# Run using Gemini 2.5 Flash
+python evals/run_eval.py --model gemini-2.5-flash
+
+# Run using Gemini 3.0 Preview models
+python evals/run_eval.py --model gemini-3-flash-preview
+python evals/run_eval.py --model gemini-3-pro-preview
 
 # Use a specific corpus
 python evals/run_eval.py --corpus evals/prompt_corpus_v2.yaml
-
-# Run with parallel API calls (recommended: 5 workers)
-python evals/run_eval.py -j 5
-
-# Explicit rate limit (requests per minute)
-python evals/run_eval.py -j 5 --rpm 50
 
 # Run a single prompt or category
 python evals/run_eval.py --id basic_gfp
@@ -229,13 +246,31 @@ python evals/run_eval.py --reeval
 python evals/run_eval.py --run-name my_experiment
 ```
 
-Three prompt corpora are included (750 prompts total across 10 categories):
+#### Parallelization & Limits
+
+The harness supports parallel execution to speed up the process. However, you must be mindful of API rate limits (RPM - Requests Per Minute).
+
+```bash
+# Run with parallel API calls (e.g., 5 workers)
+python evals/run_eval.py -j 5
+
+# Explicit rate limit (requests per minute)
+python evals/run_eval.py -j 5 --rpm 15
+```
+
+**Notes on Limits:**
+*   **Gemini Free Tier:** Typically **15 RPM**. Use `--rpm 15` to avoid rate limit errors.
+*   **Gemini Paid Tier / Internal Projects:** Typically **360 RPM** or higher. You can increase concurrency (e.g., `-j 10`) and RPM accordingly.
+*   If you set concurrency but not RPM, the script auto-calculates a limit of `max(30, concurrency * 8)`.
+
+Four prompt corpora are included (1750 prompts total across 10 categories):
 
 | Corpus | File | Description |
 |--------|------|-------------|
 | v1 | `evals/prompt_corpus.yaml` | Original 250 prompts (tuning set) |
 | v2 | `evals/prompt_corpus_v2.yaml` | Fresh 250 prompts (holdout validation) |
 | v3 | `evals/prompt_corpus_v3.yaml` | Fresh 250 prompts (includes split-GFP tags) |
+| v4 | `evals/prompt_corpus_v4.yaml` | Expanded corpus with 1000 prompts |
 
 Categories: basic, tags, polycistronic, edge_cases, constraints, realistic, mammalian, lentiviral, stress, robustness. Results are written to `evals/results/` as structured JSON.
 
@@ -446,11 +481,11 @@ Strategy: Twist Clonal Gene ★ RECOMMENDED
 
 Strategy: Synthesis + 2-Part Golden Gate
   Twist gene synthesis (3015 bp @ $0.07/bp)                $211.05
-  BsaI + T4 ligase + competent cells + plates (1.5× OH)    $23.63
-  Plasmidsaurus sequencing                                  $22.50
+  Reagents (base)                                           $40.25
+  Overhead (1.5x on reagents)                              $20.13
   Researcher time (2.5 hrs @ $150/hr)                      $375.00
   ─────────────────────────────────────────────────────────────────
-  TOTAL                                                     $632.18
+  TOTAL                                                     $646.43
   Turnaround: ~10 business days
 ```
 

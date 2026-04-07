@@ -1,34 +1,28 @@
 ```yaml
 construct:
-  name: "phage_display_fab_library"
+  name: "phage_display_fab_fragment"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: fab_heavy_chain
-        expression: medium
-        chain:
-          - signal_peptide: pelB
-          - gene:
-              protein_sequence: "EVQLVESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAKVSYLSTASSLDYWGQGTLVTVSSASTKGPSVFPLAPSSKSTSGGTAALGCLVKDYFPEPVTVSWNSGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSSLGTQTYICNVNHKPSNTKVDKKVEPKSCDKTHTCPPCPAPELLGGPSVFLFPPKPKDTLMISRTPEVTCVVVDVSHEDPEVKFNWYVDGVEVHNAKTKPREEQYNSTYRVVSVLTVLHQDWLNGKEYKCKVSNKALPAPIEKTISKAKGQPREPQVYTLPPSRDELTKNQVSLTCLVKGFYPSDIAVEWESNGQPENNYKTTPPVLDSDGSFFLYSKLTVDKSRWQQGNVFSCSVMHEALHNHYTQKSLSLSPGK"
-          - amber_stop: TAG  # for suppressor tRNA control
-          - tag: 6xHis
-
-    - spacer: 25
-
-    - cistron:
-        label: fab_light_chain
-        expression: medium
-        fused: false
-        chain:
-          - signal_peptide: pelB
-          - gene:
-              protein_sequence: "DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTltisslqpedfatyycqqhyttpptfgqgtkveikrtvaapsvfifppsdeqlksgtasvvcllnnfypreakvqwkvdnalqsgnsqesvteqdskdstyslsstltlskadyekhkvyacevthqglsspvtksfnrgec"
+        label: fab_fragment
+        expression: high
+        gene:
+          id: custom_fab_fragment # Assumed to include the leader peptide sequence
+        linker:
+          type: GS_flexible
+          repeats: 2
+        c_tag: 6xHis
+        # The "amber stop codon" is a sequence design feature for conditional display
+        # and is not explicitly represented as a tag or cleavage site within this schema.
+        # It would be incorporated into the `custom_fab_fragment` gene sequence
+        # or as an instruction to the synthesis vendor.
 
     - terminator: rrnB_T1
 
@@ -41,6 +35,6 @@ construct:
 
   synthesis:
     vendor: twist
-    budget_per_gene: 500
+    budget_per_gene: 400
     max_turnaround_days: 21
 ```

@@ -1,23 +1,19 @@
 ```yaml
 construct:
-  name: "protein_tyrosine_kinase_domain_T7"
-  host: e_coli_bl21_de3
+  name: "e_coli_ptk_domain_expression"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: T7
+    - promoter: T7lac
 
     - cistron:
-        label: target
+        label: kinase_domain
         expression: high
-        chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
-          - gene:
-              id: P00519
-              source: uniprot
+        gene:
+          id: PTK_domain
 
     - terminator: rrnB_T1
 

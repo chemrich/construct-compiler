@@ -1,0 +1,30 @@
+construct:
+  name: "hek293_egfp_strep_fusion"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: egfp_strep_fusion
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BBa_B0015
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: "CMV_mEGFP_HEK293"
+  name: mEGFP_expression_HEK293
   host: HEK293
 
   backbone:
@@ -10,23 +10,12 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: target
-        expression: high
+        label: mEGFP
         gene:
           id: mEGFP
           source: fpbase
 
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+    # Note: BBa_B0015 is a bacterial terminator. For mammalian expression, a polyadenylation signal (e.g., SV40 polyA, BGH polyA) is typically used.
+    # As the schema only provides bacterial options, BBa_B0015 is used as a placeholder. The mammalian catalog vector likely provides an appropriate polyA signal.
+    - terminator: BBa_B0015
 ```

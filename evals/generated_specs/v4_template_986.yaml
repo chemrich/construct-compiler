@@ -1,0 +1,31 @@
+construct:
+  name: "lacZ_MBP_fusion_yeast"
+  host: mammalian # Mammalian host used as a eukaryotic proxy for S. cerevisiae; CMV used as default eukaryotic promoter.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: lacZ_MBP_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: lacZ
+              source: uniprot
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,0 +1,28 @@
+construct:
+  name: lacZ_N_terminal_6xHis_yeast
+  host: mammalian # s_cerevisiae is not in the supported host list; using mammalian as a eukaryotic proxy for compatible promoters and codon optimization.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Strong eukaryotic promoter compatible with yeast systems (equivalent to TEF1).
+    - cistron:
+        label: his_lacZ_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00722
+              source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

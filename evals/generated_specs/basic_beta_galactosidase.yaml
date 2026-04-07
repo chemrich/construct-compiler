@@ -1,30 +1,24 @@
 ```yaml
 construct:
   name: "beta_galactosidase_expression"
-  host: e_coli
-
+  host: e_coli_bl21 # Default for T7 promoter
   backbone:
     catalog_vector: "pET-28b(+)"
-
   cassette:
     - promoter: T7
-
     - cistron:
-        label: target
+        label: beta_galactosidase
         expression: high
         gene:
-          id: P00722
+          id: P00722 # UniProt ID for E. coli Beta-galactosidase (LacZ)
           source: uniprot
-
     - terminator: rrnB_T1
-
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

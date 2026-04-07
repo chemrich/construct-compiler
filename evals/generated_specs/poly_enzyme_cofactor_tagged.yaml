@@ -1,34 +1,33 @@
 ```yaml
 construct:
-  name: "CyclinD1_CDK4_polycistronic"
-  host: e_coli_bl21
+  name: "his_tev_mbp_cyclind1_cdk4"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: CyclinD1
+        label: cyclin_d1
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - solubility_tag: MBP
           - gene:
-              id: P24385
-              source: uniprot
+              id: CyclinD1
 
     - spacer: 30
 
     - cistron:
-        label: CDK4
+        label: cdk4
         expression: medium
         fused: false
         gene:
-          id: P11802
-          source: uniprot
+          id: CDK4
 
     - terminator: rrnB_T1
 

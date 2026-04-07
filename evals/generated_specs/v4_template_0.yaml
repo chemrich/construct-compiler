@@ -1,0 +1,26 @@
+construct:
+  name: "pTet_lacZ_yeast_expression"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: pTet  # Tetracycline-inducible promoter for yeast expression
+    - cistron:
+        label: lacZ_target
+        expression: high
+        gene:
+          id: P00722
+          source: uniprot
+    - terminator: CYC1_term  # Yeast-specific terminator
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

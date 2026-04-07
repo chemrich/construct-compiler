@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: "CMV_mEGFP_HEK293"
+  name: "HEK293_CMV_mEGFP"
   host: HEK293
 
   backbone:
@@ -10,13 +10,13 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: target
-        expression: high
+        label: mEGFP_target
+        expression: high # CMV is a strong promoter for high expression
         gene:
           id: mEGFP
           source: fpbase
 
-    - terminator: beta_globin_polyA
+    - terminator: BBa_B0015 # For a mammalian host like HEK293, this implies a polyadenylation signal (e.g., SV40 polyA or BGH polyA). The compiler will interpret BBa_B0015 as a generic placeholder for a mammalian polyA.
 
   constraints:
     assembly: golden_gate

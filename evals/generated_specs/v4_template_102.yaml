@@ -1,0 +1,28 @@
+construct:
+  name: "yeast_strep_egfp_expression"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD # Substitution: GPD is a standard strong constitutive promoter for S. cerevisiae.
+    - cistron:
+        label: strep_egfp
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: EGFP
+              source: fpbase
+    - terminator: CYC1 # Substitution: CYC1 is a standard terminator for S. cerevisiae.
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

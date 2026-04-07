@@ -1,16 +1,17 @@
 ```yaml
 construct:
-  name: "bicistronic_His_mEGFP_Strep_mScarlet"
+  name: "Bicistronic_His_TEV_mEGFP_Strep_TEV_mScarlet"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: mEGFP_expression
         expression: high
         chain:
           - tag: 6xHis
@@ -22,7 +23,7 @@ construct:
     - spacer: 30
 
     - cistron:
-        label: reporter
+        label: mScarlet_expression
         expression: medium
         fused: false
         chain:

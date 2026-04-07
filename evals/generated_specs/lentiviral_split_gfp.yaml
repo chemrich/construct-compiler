@@ -1,44 +1,34 @@
+```yaml
 construct:
-  name: "lentiviral_bifc_gfp_fragments"
+  name: "lentiviral_gfp_bifc"
   host: mammalian
-
   backbone:
-    catalog_vector: "pLenti-CMV-Puro-DEST"
-    resistance: ampicillin
-    ori: pBR322
-    source: addgene
-
+    catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
-
     - cistron:
         label: gfp_n_terminal
         expression: medium
-        chain:
-          - gene:
-              protein_sequence: "MVSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFGYGVQCFARYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITLGMDELYK"
-          - tag: FLAG
-
+        gene:
+          id: gfp_N_fragment # Placeholder for N-terminal GFP fragment
+          source: fpbase
     - spacer: 30
-
     - cistron:
         label: gfp_c_terminal
         expression: medium
-        fused: false
-        chain:
-          - tag: HA
-          - gene:
-              protein_sequence: "SRGGCDGQVYLDDQNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITLGMDELYKRGGGGSGGGGSGGGGSMVSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFGYGVQCFARYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSKLSKDPNEKRDHMVLLEFVTAAGITLGMDELYK"
-
-    - terminator: SV40_polyA
-
+        fused: false # For independent translation in BiFC assays
+        gene:
+          id: gfp_C_fragment # Placeholder for C-terminal GFP fragment
+          source: fpbase
+    - terminator: rrnB_T1
   constraints:
-    assembly: gibson
-    codon_optimization: mammalian
-    gc_window: [0.40, 0.60]
-    max_homopolymer: 5
-
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
   synthesis:
     vendor: twist
-    budget_per_gene: 800
-    max_turnaround_days: 28
+    budget_per_gene: 400
+    max_turnaround_days: 21
+```

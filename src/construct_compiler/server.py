@@ -134,6 +134,7 @@ class StrategyInfo(BaseModel):
     total_cost: float
     synthesis_cost: float
     reagent_cost: float
+    overhead_cost: float
     researcher_cost: float
     researcher_hours: float
     risk_surcharge: float
@@ -725,7 +726,8 @@ async def compile_endpoint(req: CompileRequest):
                 recommended=s.recommended,
                 total_cost=round(s.total_cost, 2),
                 synthesis_cost=round(s.synthesis_cost, 2),
-                reagent_cost=round(s.reagent_cost_with_overhead, 2),
+                reagent_cost=round(s.reagent_cost, 2),
+                overhead_cost=round(s.reagent_cost_with_overhead - s.reagent_cost, 2),
                 researcher_cost=round(s.researcher_cost, 2),
                 researcher_hours=s.researcher_time_hrs,
                 risk_surcharge=round(s.failure_risk_surcharge, 2),

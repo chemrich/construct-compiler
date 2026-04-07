@@ -1,0 +1,26 @@
+construct:
+  name: "Luciferase_GST_Fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # SV40 requested; substituted with CMV as the standard mammalian promoter in the supported schema
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: P08659
+              source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

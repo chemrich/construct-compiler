@@ -1,0 +1,26 @@
+construct:
+  name: "Luciferase_FLAG_Fusion"
+  host: e_coli_bl21 # S. cerevisiae host not in supported list; substituted with e_coli_bl21 and T7 expression system.
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: P08659
+              source: uniprot
+          - tag: FLAG
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

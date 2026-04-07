@@ -1,0 +1,31 @@
+construct:
+  name: "YFP_MBP_fusion_yeast"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Substituted EF1_alpha for yeast expression as yeast-specific promoters were not in the provided list
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: EYFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: MBP
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

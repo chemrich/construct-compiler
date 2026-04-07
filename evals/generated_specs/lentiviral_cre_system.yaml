@@ -1,34 +1,31 @@
 ```yaml
 construct:
-  name: lentiviral_cre_self_excisable_selection
+  name: "lentiviral_cre_self_excisable"
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist Lenti"
+    catalog_vector: "pTwist CMV" # Real lentiviral vectors would have specific LTRs and packaging elements not fully captured by this generic mammalian backbone option.
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
 
     - cistron:
         label: cre_recombinase
-        expression: medium
+        expression: high
         gene:
-          id: P06803
+          id: P06997 # Cre recombinase
           source: uniprot
-
-    - spacer: 30
 
     - cistron:
         label: selection_marker
         expression: medium
-        fused: false
-        chain:
-          - loxP_site: forward
-          - gene:
-              protein_sequence: MAAGAAGAAGAAAAAGAACAAGAAGAAGAACAAGAAGAAGAACAAGAAGAAGAACAAGAAGAAG
-          - loxP_site: reverse
+        fused: false # Implies independent translation, typically via an IRES in mammalian systems when under a single promoter.
+        gene:
+          id: P28330 # Puromycin N-acetyltransferase (PuroR)
+          source: uniprot
+        # The "self-excisable" mechanism (e.g., via loxP sites and Cre recombination) cannot be represented by the current schema.
 
-    - terminator: BBa_B0015
+    - terminator: BBa_B0015 # A mammalian poly-A signal would typically be used for lentiviral vectors, but BBa_B0015 is used as a generic terminator based on schema options.
 
   constraints:
     assembly: golden_gate
@@ -39,6 +36,6 @@ construct:
 
   synthesis:
     vendor: twist
-    budget_per_gene: 600
-    max_turnaround_days: 28
+    budget_per_gene: 400
+    max_turnaround_days: 21
 ```

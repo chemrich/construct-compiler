@@ -1,0 +1,28 @@
+construct:
+  name: "mScarlet_Strep_yeast_expression"
+  host: mammalian  # Substituted mammalian for s_cerevisiae as it is the closest eukaryotic host available in the schema.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

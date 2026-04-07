@@ -1,0 +1,31 @@
+construct:
+  name: "luciferase_myc_fusion"
+  host: e_coli_bl21_de3  # Upgraded to DE3 to support T7-based expression from pET backbone
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: luc_myc_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P08659 # Photinus pyralis Luciferase
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01106 # Human c-Myc
+              source: uniprot
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

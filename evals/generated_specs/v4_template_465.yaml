@@ -1,0 +1,28 @@
+construct:
+  name: "ampR_Strep_expression_yeast"
+  host: mammalian # Substituted s_cerevisiae with mammalian as it is the closest eukaryotic host available in the schema.
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: ampR
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P0AD64
+              source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

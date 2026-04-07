@@ -1,0 +1,35 @@
+construct:
+  name: "yeast_polycistronic_luciferase_gfp"
+  # Note: Host s_cerevisiae substituted with mammalian and EF1_alpha promoter for eukaryotic expression compatibility
+  host: mammalian
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: luciferase
+        expression: high
+        gene:
+          id: P08659
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

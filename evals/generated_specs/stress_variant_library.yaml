@@ -1,7 +1,7 @@
 ```yaml
 construct:
-  name: "mNeonGreen_RBS_strength_template"
-  host: e_coli_bl21_de3
+  name: "rbs_optimization_mneongreen_template"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -10,13 +10,19 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target_protein
-        expression: variable  # will be modulated by RBS variants
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: mNeonGreen
-              source: fpbase
+        label: mNeonGreen_expression
+        # To vary RBS strength, change the 'expression' level for each variant.
+        # Options: very_low, low, medium, high
+        # Map requested strengths:
+        # "very weak" -> very_low
+        # "weak" -> low
+        # "medium" -> medium
+        # "strong" -> high
+        # "very strong" -> high (as it's the highest available option)
+        expression: medium # Placeholder; vary for each construct in the optimization series
+        gene:
+          id: mNeonGreen
+          source: fpbase
 
     - terminator: rrnB_T1
 
@@ -26,22 +32,6 @@ construct:
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-    rbs_variants:
-      - strength: very_weak
-        sequence: "AAGGAG"
-        spacing: 8
-      - strength: weak
-        sequence: "AGGAGG"
-        spacing: 7
-      - strength: medium
-        sequence: "AAGGAGG"
-        spacing: 6
-      - strength: strong
-        sequence: "AGGAGGT"
-        spacing: 5
-      - strength: very_strong
-        sequence: "AAGGAGGT"
-        spacing: 5
 
   synthesis:
     vendor: twist

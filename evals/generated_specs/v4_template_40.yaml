@@ -1,0 +1,29 @@
+construct:
+  name: "luciferase_6xhis_fusion"
+  host: e_coli_bl21  # S. cerevisiae is not in the supported host list; substituting with e_coli_bl21 for expression.
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P08659
+              source: uniprot
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

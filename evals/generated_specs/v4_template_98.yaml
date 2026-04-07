@@ -1,0 +1,26 @@
+construct:
+  name: "pTet_mEGFP_Myc_fusion"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Substituted pTet with tac as pTet is not in the schema list
+    - cistron:
+        label: "target"
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: HA  # Substituted Myc with HA as Myc is not in the schema list
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

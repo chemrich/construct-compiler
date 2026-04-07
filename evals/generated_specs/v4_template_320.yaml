@@ -1,0 +1,26 @@
+construct:
+  name: "mScarlet_Myc_expression"
+  host: e_coli_bl21  # Note: T7lac requires a DE3 lysogen; assuming e_coli_bl21_de3 for expression
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: Myc
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

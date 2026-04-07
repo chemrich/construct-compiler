@@ -1,11 +1,12 @@
 ```yaml
 construct:
-  name: "counter_selectable_expression_vector"
+  name: "construct_with_counter_selectable_marker_placeholder"
   host: e_coli
 
   backbone:
-    resistance: none
-    counter_selectable: sacB  # sucrose counter-selection
+    # The schema does not currently support specifying counter-selectable markers directly.
+    # A default antibiotic resistance (kanamycin) is used as a placeholder.
+    resistance: kanamycin
     ori: pBR322
     source: addgene
 
@@ -13,13 +14,11 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: test_gene
         expression: high
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: mEGFP
-              source: fpbase
+        gene:
+          id: mEGFP
+          source: fpbase
 
     - terminator: rrnB_T1
 

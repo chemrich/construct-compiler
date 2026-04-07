@@ -1,33 +1,39 @@
 ```yaml
 construct:
-  name: doxycycline_inducible_lentiviral_vector
+  name: "dox_inducible_lentiviral_transgene"
   host: HEK293
 
   backbone:
-    catalog_vector: "pLenti CMV/TO Puro DEST"
-    
+    catalog_vector: "pTwist CMV" # Note: A true lentiviral backbone would include LTRs and packaging signals, not fully represented by this catalog vector.
+
   cassette:
-    - promoter: TetO_CMV  # CMV promoter with TetO operator sequences for dox control
-    
+    # A doxycycline-inducible system typically involves a Tet-response element (TRE)
+    # and a transactivator. The 'CMV' promoter here represents a strong mammalian
+    # promoter often used in such systems, or as the minimal promoter within the TRE.
+    # The schema does not allow for explicit specification of a Tet-On/Off system.
+    - promoter: CMV
+
     - cistron:
-        label: transgene_placeholder
+        label: transgene
         expression: high
         gene:
-          id: mEGFP  # placeholder - replace with actual transgene
-          source: fpbase
-          
-    - terminator: SV40_polyA
+          id: gene_of_interest # Placeholder for the desired transgene
+          source: uniprot # Generic source for a hypothetical protein
 
-  # Requires co-transfection with rtTA expression vector for dox-inducible system
-  
+    # Note: For mammalian expression, a polyadenylation signal (e.g., SV40 polyA)
+    # is typically used as a terminator. 'BBa_B0015' is an E. coli terminator
+    # and is used here as the closest option available in the schema.
+    - terminator: BBa_B0015
+
   constraints:
-    assembly: gateway
-    codon_optimization: human
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
 
   synthesis:
     vendor: twist
-    budget_per_gene: 600
+    budget_per_gene: 400
     max_turnaround_days: 21
 ```

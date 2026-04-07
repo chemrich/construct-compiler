@@ -1,0 +1,27 @@
+construct:
+  name: SV40_EYFP_6xHis
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: SV40 # SV40 promoter substituted as requested for mammalian expression
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: EYFP
+              source: fpbase
+          - tag: 6xHis
+    - terminator: SV40_polyA # Using SV40 polyA terminator for the mammalian host
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

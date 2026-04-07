@@ -1,0 +1,32 @@
+construct:
+  name: "yeast_polycistronic_rfp_luciferase"
+  host: mammalian  # s_cerevisiae not in schema list; mammalian used as eukaryotic proxy
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: rfp
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: luciferase
+        expression: medium
+        fused: false  # independent translation
+        gene:
+          id: P08659
+          source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

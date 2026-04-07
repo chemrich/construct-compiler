@@ -1,0 +1,31 @@
+construct:
+  name: "ampR_cterm_flag_s_cerevisiae"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Substituted EF1_alpha as a eukaryotic promoter suitable for s_cerevisiae expression
+    - cistron:
+        label: ampR_flag_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P00810
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: FLAG
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,0 +1,26 @@
+construct:
+  name: "mScarlet_SV40_HEK293_expression"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: twist
+  cassette:
+    - promoter: SV40
+    - cistron:
+        label: target
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: SV40_polyA
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

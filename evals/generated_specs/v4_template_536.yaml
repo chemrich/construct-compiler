@@ -1,0 +1,26 @@
+construct:
+  name: "mScarlet_MBP_mammalian_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+          - solubility_tag: MBP
+    - terminator: BBa_B0015  # Note: Standard mammalian constructs typically use polyA signals; BBa_B0015 used as placeholder from allowed schema options.
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

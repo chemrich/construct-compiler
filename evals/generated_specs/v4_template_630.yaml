@@ -1,0 +1,29 @@
+construct:
+  name: "CMV_Luciferase_Strep_Fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: luc_strep
+        expression: high
+        chain:
+          - gene:
+              id: P08659
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: Strep-II
+    - terminator: bGH_polyA
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,0 +1,26 @@
+construct:
+  name: "mammalian_yfp_flag_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: yfp_protein
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: YFP
+              source: fpbase
+    - terminator: BBa_B0015 # Note: BBa_B0015 is a standard terminator; in practice mammalian vectors use pA signals, but this follows the schema list.
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

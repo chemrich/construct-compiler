@@ -1,7 +1,7 @@
 ```yaml
 construct:
-  name: "lentiviral_RRE_packaging"
-  host: HEK293
+  name: "lentiviral_rre_construct"
+  host: mammalian
 
   backbone:
     catalog_vector: "pTwist CMV"
@@ -10,19 +10,13 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: target
+        label: target_protein
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
+          id: placeholder_gene
+          source: uniprot
 
-    - spacer: 200
-
-    - element:
-        type: RRE
-        description: "Rev-responsive element for enhanced lentiviral packaging and nuclear export"
-
-    - terminator: SV40_polyA
+    - terminator: BBa_B0015
 
   constraints:
     assembly: golden_gate
