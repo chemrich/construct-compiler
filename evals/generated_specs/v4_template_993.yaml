@@ -1,19 +1,21 @@
 construct:
-  name: "lacZ_HA_fusion"
-  host: mammalian # s_cerevisiae requested; mammalian used as a schema-compliant eukaryotic surrogate
+  name: "lacZ_HA_fusion_yeast"
+  host: s_cerevisiae  # s_cerevisiae substituted for mammalian; using EF1_alpha promoter for eukaryotic expression
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: EF1_alpha # EF1_alpha (TEF1) is functional in yeast and mammalian systems
+    - promoter: EF1_alpha
     - cistron:
-        label: target
+        label: lacZ_HA
         expression: high
         chain:
           - gene:
               id: lacZ
               source: uniprot
           - tag: HA
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,19 +1,19 @@
 construct:
   name: "cmv_ampr_6xhis"
-  host: HEK293  # Substituted e_coli for HEK293 because CMV is a mammalian promoter
+  host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: ampr_fusion
+        label: ampR_fusion
         expression: high
         chain:
-          - tag: 6xHis
           - gene:
-              id: P00810
+              id: P0AD64
               source: uniprot
-    - terminator: BBa_B0015
+          - tag: 6xHis
+    - terminator: bgh_pa # Substituted mammalian BGH polyA for bacterial terminators as host is HEK293
   constraints:
     assembly: golden_gate
     enzyme: BsaI

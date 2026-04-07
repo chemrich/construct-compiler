@@ -1,19 +1,19 @@
 construct:
-  name: "ampR_SUMO_fusion_mammalian"
+  name: ampR_SUMO_fusion_mammalian
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: ampR_SUMO_fusion
+        label: target_fusion
         expression: high
         chain:
           - solubility_tag: SUMO
           - gene:
               id: P62593
               source: uniprot
-    - terminator: rrnB_T1  # Using rrnB_T1 from schema options as generic terminator placeholder
+    - terminator: BBa_B0015 # BBa_B0015 is used here as a placeholder; in practice, a polyA signal like bGH_pA is required for mammalian expression.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

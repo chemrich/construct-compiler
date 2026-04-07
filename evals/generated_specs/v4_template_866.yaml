@@ -1,22 +1,23 @@
 construct:
   name: "rfp_myc_fusion"
-  host: e_coli_bl21
+  host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: rfp_myc_fusion
         expression: high
         chain:
-          - tag: FLAG # Myc tag is not in the allowed list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA); substituted with FLAG.
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: T7term
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: HA # Myc tag is not in the schema-supported list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA); substituted with HA as a comparable epitope tag.
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

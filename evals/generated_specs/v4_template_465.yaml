@@ -1,21 +1,21 @@
 construct:
-  name: "ampR_Strep_expression_yeast"
-  host: mammalian # Substituted s_cerevisiae with mammalian as it is the closest eukaryotic host available in the schema.
+  name: "ampR_strep_expression_yeast"
+  host: s_cerevisiae
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: CMV
+    - promoter: TEF1  # Substituted for yeast expression compatibility
     - cistron:
-        label: ampR
+        label: ampR_target
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: P0AD64
+              id: ampR
               source: uniprot
-    - terminator: BBa_B0015
+    - terminator: CYC1_term  # Substituted for yeast expression compatibility
   constraints:
     assembly: golden_gate
     enzyme: BsaI

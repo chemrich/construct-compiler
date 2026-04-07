@@ -2,17 +2,19 @@ construct:
   name: "T7_ampR_Myc_fusion"
   host: e_coli_bl21_de3
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: T7
     - cistron:
-        label: target
+        label: ampR_fusion
         expression: high
         chain:
           - gene:
               id: P62593
               source: uniprot
-          - tag: FLAG # Myc tag not in allowed schema list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA), substituted with FLAG
+          - tag: HA  # Myc requested; HA substituted as Myc is not in the permitted schema list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA)
     - terminator: T7term
   constraints:
     assembly: golden_gate

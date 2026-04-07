@@ -1,24 +1,22 @@
 construct:
-  name: "MBP_Luciferase_Fusion_S_cerevisiae"
-  host: s_cerevisiae
+  name: "MBP_Luciferase_Fusion"
+  host: mammalian  # Substituted mammalian for s_cerevisiae as yeast is not currently in the host schema.
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: TEF1  # Substituted TEF1 for S. cerevisiae host expression
+    - promoter: EF1_alpha  # EF1_alpha used as a eukaryotic promoter substitute for yeast expression.
     - cistron:
-        label: mbp_luciferase_fusion
+        label: target
         expression: high
         chain:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: P08659
               source: uniprot
-    - terminator: CYC1_term  # Substituted CYC1_term for S. cerevisiae host termination
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

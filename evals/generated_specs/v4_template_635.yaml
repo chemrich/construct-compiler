@@ -1,15 +1,17 @@
 construct:
   name: "ampR_T7_expression_plasmid"
-  host: e_coli_bl21_de3  # Substituted e_coli_k12 for e_coli_bl21_de3 to provide T7 RNA polymerase required for the T7 promoter.
+  host: e_coli_bl21_de3  # Substituted e_coli_bl21_de3 for e_coli_k12 to provide T7 RNA polymerase for the T7 promoter
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7
     - cistron:
-        label: ampR
+        label: ampicillin_resistance
         expression: high
         gene:
-          id: P62593
+          id: P00810
           source: uniprot
     - terminator: T7term
   constraints:

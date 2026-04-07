@@ -1,5 +1,5 @@
 construct:
-  name: "pBAD_ampR_Myc_fusion"
+  name: "pBAD_ampR_Myc"
   host: e_coli
   backbone:
     resistance: kanamycin
@@ -9,12 +9,12 @@ construct:
     - promoter: araBAD
     - cistron:
         label: target
-        expression: medium
+        expression: high
         chain:
+          - tag: HA  # Myc tag substituted with HA to conform to schema tag options
           - gene:
-              id: P62593
+              id: ampR
               source: uniprot
-          - tag: HA  # Myc tag substituted with HA as Myc is not in the explicitly allowed list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA)
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

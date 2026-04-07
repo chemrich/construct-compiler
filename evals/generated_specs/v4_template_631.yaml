@@ -1,19 +1,22 @@
 construct:
-  name: "lacZ_MBP_mammalian_expression"
+  name: "mammalian_MBP_lacZ_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: lacZ_fusion
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: P00722
               source: uniprot
-    - terminator: bGH_polyA  # Added standard mammalian polyA terminator for HEK293 expression
+    - terminator: bGH_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

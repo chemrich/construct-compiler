@@ -2,19 +2,17 @@ construct:
   name: "ptet_gfp_myc_fusion"
   host: e_coli
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: araBAD  # Substituted pTet with araBAD (inducible) as pTet is not in the allowed schema list
+    - promoter: araBAD  # User requested pTet; substituted with araBAD as a standard inducible bacterial promoter.
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: HA  # User requested Myc tag; substituted with HA as it is a supported epitope tag in the schema.
           - gene:
               id: mEGFP
               source: fpbase
-          - tag: FLAG  # Substituted Myc tag with FLAG as Myc is not in the allowed schema list
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

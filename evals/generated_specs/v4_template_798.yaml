@@ -1,16 +1,19 @@
 construct:
-  name: "bfp_gst_fusion_expression"
+  name: "trc_gst_mtagbfp2_fusion"
   host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
   cassette:
-    - promoter: tac  # Substituted 'trc' with 'tac' as per allowed schema values
+    - promoter: tac  # Substituted trc with tac as the closest equivalent in the supported schema
     - cistron:
-        label: bfp_gst
+        label: bfp_expression
         expression: high
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mTagBFP2
               source: fpbase

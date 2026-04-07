@@ -1,16 +1,18 @@
 construct:
-  name: "MBP_mScarlet_Mammalian_Expression"
+  name: "mammalian_MBP_mScarlet_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: mbp_rfp_fusion
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mScarlet
               source: fpbase

@@ -1,27 +1,27 @@
 construct:
-  name: "ampR_EGFP_polycistronic_yeast_sub"
-  host: e_coli  # Host s_cerevisiae is not in the supported list; substituted with e_coli as the schema's polycistronic spacer architecture is prokaryotic.
+  name: "ampR_EGFP_yeast_polycistronic"
+  host: mammalian # Substituted mammalian for s_cerevisiae as it is the closest eukaryotic host in the schema; EF1_alpha used as the eukaryotic promoter.
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: EF1_alpha
     - cistron:
-        label: selection_marker
+        label: selection
         expression: medium
         gene:
           id: P62593
           source: uniprot
     - spacer: 30
     - cistron:
-        label: fluorescence_reporter
+        label: reporter
         expression: high
         fused: false
         gene:
           id: EGFP
           source: fpbase
-    - terminator: T7term
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

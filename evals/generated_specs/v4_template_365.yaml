@@ -1,21 +1,21 @@
 construct:
-  name: "rfp_ha_fusion_yeast"
-  host: s_cerevisiae  # User requested yeast; using s_cerevisiae host with eukaryotic-compatible parts
+  name: "rfp_ha_yeast_expression"
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha
+    - promoter: EF1_alpha  # Substitution: EF1_alpha used as a standard eukaryotic promoter for yeast
     - cistron:
-        label: rfp_ha_target
+        label: rfp_ha
         expression: high
         chain:
           - gene:
               id: mScarlet
               source: fpbase
           - tag: HA
-    - terminator: BBa_B0015  # Using standard terminator from available list
+    - terminator: CYC1_term  # Substitution: Standard yeast CYC1 terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

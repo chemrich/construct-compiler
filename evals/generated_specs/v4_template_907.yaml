@@ -1,19 +1,19 @@
 construct:
-  name: "mammalian_sumo_lacz_fusion"
+  name: "lacZ_SUMO_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: sumo_lacz
+        label: lacZ_fusion
         expression: high
         chain:
           - solubility_tag: SUMO
           - gene:
-              id: lacZ
+              id: P00722
               source: uniprot
-    - terminator: BBa_B0015  # Using standard terminator; note that for HEK293 a polyA signal is typically required.
+    - terminator: bGH_polyA  # Standard mammalian terminator for use with CMV promoter
   constraints:
     assembly: golden_gate
     enzyme: BsaI

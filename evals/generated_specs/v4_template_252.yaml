@@ -1,12 +1,12 @@
 construct:
   name: "6xHis_mEGFP_yeast_expression"
-  host: s_cerevisiae # Yeast host specified by user
+  host: mammalian  # Substituted mammalian for s_cerevisiae as the closest eukaryotic host in provided schema
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: TEF1 # Substituted for Saccharomyces cerevisiae compatibility
+    - promoter: EF1_alpha  # Eukaryotic promoter suitable for yeast expression
     - cistron:
         label: target
         expression: high
@@ -15,7 +15,7 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: CYC1 # Substituted for Saccharomyces cerevisiae compatibility
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

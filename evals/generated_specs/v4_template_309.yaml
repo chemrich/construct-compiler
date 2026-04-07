@@ -1,20 +1,20 @@
 construct:
   name: "ampR_6xHis_fusion"
-  host: e_coli  # e_coli_k12 requested, mapped to e_coli
+  host: e_coli  # Substitution: e_coli_k12 not in list, using standard e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: T7lac  # Default for e_coli per rule 8
+    - promoter: T7lac
     - cistron:
         label: ampR_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: P62593
               source: uniprot
-          - tag: 6xHis
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

@@ -1,15 +1,13 @@
 construct:
-  name: "lac_gst_megfp_fusion"
-  host: e_coli
+  name: "lac_gst_egfp_fusion"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: lacUV5
+    - promoter: T7lac
     - cistron:
-        label: gst_gfp_fusion
-        expression: medium
+        label: gst_egfp
+        expression: high
         chain:
           - solubility_tag: GST
           - linker:
@@ -18,7 +16,7 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: rrnB_T1
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

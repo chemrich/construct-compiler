@@ -1,19 +1,22 @@
 construct:
-  name: "SV40_mEGFP_StrepII"
+  name: "SV40_mEGFP_Strep"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: SV40
+    - promoter: SV40  # SV40 used as requested; common mammalian constitutive promoter
     - cistron:
-        label: target
+        label: egfp_strep
         expression: high
         chain:
           - gene:
               id: mEGFP
               source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - tag: Strep-II
-    - terminator: SV40_pA
+    - terminator: SV40_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

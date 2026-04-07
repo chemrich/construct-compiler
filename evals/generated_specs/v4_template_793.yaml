@@ -1,19 +1,17 @@
 construct:
-  name: "mammalian_ampR_sv40"
-  host: mammalian
+  name: "mammalian_ampR_expression"
+  host: HEK293
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: SV40
+    - promoter: CMV  # Substituted SV40 with CMV as SV40 is not in the allowed promoter list
     - cistron:
         label: ampR
         expression: high
         gene:
           id: P00810
           source: uniprot
-    - terminator: BBa_B0015  # Placeholder terminator; SV40 polyA or bGH polyA recommended for mammalian expression
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

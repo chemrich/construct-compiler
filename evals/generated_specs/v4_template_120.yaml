@@ -1,25 +1,25 @@
 construct:
-  name: "HEK293_EGFP_mCherry_polycistronic"
+  name: "egfp_mcherry_polycistronic_hek293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: green_fluorescence
+        label: egfp_expression
         expression: high
         gene:
           id: EGFP
           source: fpbase
-    - spacer: 30
+    - spacer: 30 # For mammalian polycistronic expression, this spacer should ideally contain an IRES element
     - cistron:
-        label: red_fluorescence
-        expression: high
+        label: mcherry_expression
+        expression: medium
         fused: false
         gene:
           id: mCherry
           source: fpbase
-    - terminator: bGH_pA
+    - terminator: bGH_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

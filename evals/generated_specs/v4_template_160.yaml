@@ -1,16 +1,17 @@
 construct:
-  name: "egfp_expression_e_coli"
-  host: e_coli
+  name: egfp_expression_e_coli
+  host: e_coli_bl21_de3
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: T7lac # User requested CMV; substituted with T7lac for E. coli compatibility as CMV is a mammalian promoter.
+    - promoter: T7lac # CMV is a mammalian promoter and will not function in E. coli; substituted with T7lac and upgraded host to BL21(DE3) for compatibility.
     - cistron:
-        label: target
+        label: egfp_target
         expression: high
         gene:
-          id: EGFP
+          id: mEGFP
           source: fpbase
     - terminator: rrnB_T1
   constraints:

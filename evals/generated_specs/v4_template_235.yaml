@@ -1,17 +1,17 @@
 construct:
-  name: "hek293_eyfp_expression"
+  name: "HEK293_SV40_YFP_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV  # Substituted requested SV40 with CMV as SV40 is not in the explicitly supported promoter list.
+    - promoter: CMV # Requested SV40 promoter; substituted with CMV to align with suggested mammalian promoter options.
     - cistron:
         label: yfp_reporter
         expression: high
         gene:
           id: EYFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: SV40_polyA # Substituted bacterial terminator with mammalian polyA signal for HEK293 host.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

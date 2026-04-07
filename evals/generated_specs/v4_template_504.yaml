@@ -1,17 +1,19 @@
 construct:
-  name: "mammalian_ampR_expression"
+  name: "mammalian_ampR_SV40_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: SV40
     - cistron:
         label: ampR
         expression: high
-        gene:
-          id: P0AD64
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: P62593
+              source: uniprot
+    - terminator: bGH_polyA  # Added bGH_polyA as a standard mammalian terminator/polyA signal
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,25 +1,25 @@
 construct:
-  name: "mammalian_lacz_yfp_polycistronic"
+  name: "lacZ_EYFP_polycistronic_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: lacZ
+        label: lacZ_primary
         expression: high
         gene:
           id: P00722
           source: uniprot
     - spacer: 30
     - cistron:
-        label: YFP
-        expression: medium
+        label: YFP_reporter
+        expression: high
         fused: false
         gene:
-          id: mVenus
+          id: EYFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: bGH_pA  # Substituted bacterial terminator for mammalian-appropriate bGH_pA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

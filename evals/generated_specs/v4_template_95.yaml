@@ -1,22 +1,19 @@
 construct:
-  name: "RFP_C_terminal_GST_fusion"
-  host: mammalian
+  name: "rfp_c_terminal_gst_mammalian"
+  host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: rfp_fusion
         expression: high
         chain:
           - gene:
-              id: mCherry
+              id: mScarlet
               source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - solubility_tag: GST
-    - terminator: BBa_B0015  # Defaulting to a standard terminator; in practice, a polyA signal is used for mammalian expression
+    - terminator: BBa_B0015  # Using BBa_B0015 as a placeholder terminator from the schema; in practice, a polyA signal is used for HEK293.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

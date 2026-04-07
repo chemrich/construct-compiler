@@ -1,20 +1,19 @@
 construct:
-  name: "mScarlet_Strep_HEK293"
+  name: "mScarlet_Strep_HEK293_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: mScarlet_fusion
+        label: target
         expression: high
         chain:
-          - tag: Strep-II
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: rrnB_T1  # Standard terminator included per Rule 10
+          - tag: Strep-II
+    - terminator: SV40_polyA  # Substituted bacterial terminator for mammalian SV40 polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,20 +1,19 @@
 construct:
-  name: "lacZ_FLAG_fusion_HEK293"
+  name: "lacZ_FLAG_HEK293_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target_fusion
+        label: lacZ_protein
         expression: high
         chain:
-          - tag: FLAG
           - gene:
               id: P00722
               source: uniprot
-    - terminator: BGH_pA
+          - tag: FLAG
+    - terminator: bGH_PA  # Added mammalian polyA signal for HEK293 termination
   constraints:
     assembly: golden_gate
     enzyme: BsaI

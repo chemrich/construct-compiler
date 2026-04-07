@@ -1,19 +1,17 @@
 construct:
-  name: "lacZ_expression_in_e_coli"
+  name: "lacZ_expression_e_coli"
   host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
   cassette:
-    - promoter: tac  # Substituted CMV with tac for E. coli compatibility as CMV is a mammalian promoter
+    - promoter: tac  # User requested CMV (mammalian) for E. coli host. Substituted with tac promoter for functional bacterial expression.
     - cistron:
-        label: lacZ_target
+        label: target
         expression: high
-        chain:
-          - gene:
-              id: P00722
-              source: uniprot
+        gene:
+          id: lacZ
+          source: uniprot
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

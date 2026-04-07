@@ -1,22 +1,22 @@
 construct:
-  name: "CMV_MBP_Luciferase_fusion"
-  host: HEK293
+  name: "cmv_mbp_luciferase_fusion"
+  host: HEK293  # Host set to HEK293 because a CMV promoter was requested.
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
-        expression: high
+        label: "target_fusion"
+        expression: "high"
         chain:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: P08659
-              source: uniprot
-    - terminator: BBa_B0015  # Placeholder for mammalian polyA signal as per available schema options
+              id: "P08659"
+              source: "uniprot"
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

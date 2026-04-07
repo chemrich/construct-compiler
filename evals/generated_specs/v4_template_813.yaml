@@ -1,19 +1,17 @@
 construct:
-  name: "gfp_expression_k12_t7lac"
-  host: e_coli # User requested e_coli_k12; mapped to e_coli. Note: T7lac requires T7 polymerase expression (e.g., DE3 lysogen).
+  name: "pET28_sfGFP_expression_plasmid"
+  host: e_coli_bl21_de3 # Substituted e_coli_bl21_de3 for K-12 to provide T7 RNA polymerase required for the T7lac promoter.
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: gfp_target
+        label: target
         expression: high
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
-    - terminator: rrnB_T1
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

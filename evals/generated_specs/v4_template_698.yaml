@@ -1,19 +1,19 @@
 construct:
-  name: "yeast_rfp_expression"
-  host: s_cerevisiae
+  name: "rfp_expression_yeast_substitution"
+  host: e_coli  # User requested s_cerevisiae, but yeast is not supported in the current schema and trc is an E. coli promoter; substituted with e_coli.
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
   cassette:
-    - promoter: TEF1  # trc is a bacterial promoter and will not function in yeast; substituting with TEF1 for high-level yeast expression.
+    - promoter: tac  # trc promoter not in schema; tac used as the closest functional equivalent for bacterial expression.
     - cistron:
         label: rfp_reporter
         expression: high
         gene:
-          id: mCherry
+          id: mScarlet
           source: fpbase
-    - terminator: CYC1_term
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

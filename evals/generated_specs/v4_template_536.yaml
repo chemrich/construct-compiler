@@ -1,19 +1,22 @@
 construct:
-  name: "mScarlet_MBP_mammalian_expression"
+  name: "mScarlet_C_terminal_MBP_mammalian"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
           - gene:
               id: mScarlet
               source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - solubility_tag: MBP
-    - terminator: BBa_B0015  # Note: Standard mammalian constructs typically use polyA signals; BBa_B0015 used as placeholder from allowed schema options.
+    - terminator: SV40_polyA  # Substituted bacterial terminator with mammalian SV40 polyA signal
   constraints:
     assembly: golden_gate
     enzyme: BsaI

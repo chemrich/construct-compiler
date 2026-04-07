@@ -1,19 +1,18 @@
 construct:
-  name: "BFP_expression_E_coli"
-  host: e_coli  # User requested s_cerevisiae with lac promoter; host switched to e_coli because lac is prokaryotic and yeast promoters are not in the supported promoter list.
+  name: "mTagBFP2_lac_expression_plasmid"
+  host: e_coli  # S. cerevisiae is not in the supported host list and the lac promoter is bacterial; substituted with e_coli.
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
     - promoter: lacUV5
     - cistron:
-        label: target
+        label: bfp_reporter
         expression: high
-        chain:
-          - gene:
-              id: mTagBFP2
-              source: fpbase
+        gene:
+          id: mTagBFP2
+          source: fpbase
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

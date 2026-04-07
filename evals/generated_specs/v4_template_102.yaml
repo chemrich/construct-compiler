@@ -1,21 +1,21 @@
 construct:
-  name: "yeast_strep_egfp_expression"
+  name: "Strep_mEGFP_yeast_expression"
   host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: GPD # Substitution: GPD is a standard strong constitutive promoter for S. cerevisiae.
+    - promoter: TEF1  # Substituted TEF1 promoter for yeast-specific expression
     - cistron:
-        label: strep_egfp
+        label: target
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: EGFP
+              id: mEGFP
               source: fpbase
-    - terminator: CYC1 # Substitution: CYC1 is a standard terminator for S. cerevisiae.
+    - terminator: CYC1_term  # Substituted CYC1_term for yeast-specific expression
   constraints:
     assembly: golden_gate
     enzyme: BsaI

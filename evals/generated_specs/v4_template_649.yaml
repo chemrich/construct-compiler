@@ -1,19 +1,20 @@
 construct:
-  name: "MBP_lacZ_HEK293_expression"
+  name: "lacZ_MBP_mammalian_expression"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: target_lacZ
         expression: high
         chain:
           - solubility_tag: MBP
           - gene:
-              id: P00722
+              id: lacZ
               source: uniprot
-    - terminator: bgh_polyA  # Substituted for mammalian host compatibility as rrnB_T1 is prokaryotic
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,18 +1,20 @@
 construct:
-  name: "pTet_mEGFP_Myc_fusion"
+  name: "ptet_egfp_myc_fusion"
   host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: tac  # Substituted pTet with tac as pTet is not in the schema list
+    - promoter: araBAD  # pTet is not in the schema list; substituting with araBAD as an inducible E. coli promoter.
     - cistron:
-        label: "target"
+        label: target
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
-          - tag: HA  # Substituted Myc with HA as Myc is not in the schema list
+          - tag: FLAG  # Myc tag is not in the schema list; substituting with FLAG.
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

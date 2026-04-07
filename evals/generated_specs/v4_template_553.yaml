@@ -1,19 +1,21 @@
 construct:
-  name: "lacZ_C_terminal_Myc_S_cerevisiae"
-  host: e_coli # s_cerevisiae host not supported in schema; substituted with e_coli microbial host
+  name: "lacZ_C_Myc_S_cerevisiae"
+  host: s_cerevisiae
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: EF1_alpha  # Substituted for yeast-compatible eukaryotic promoter
     - cistron:
-        label: lacZ_fusion
+        label: target
         expression: high
         chain:
           - gene:
               id: lacZ
               source: uniprot
-          - tag: HA # Myc tag not in schema tag list; substituted with HA for C-terminal labeling
-    - terminator: rrnB_T1
+          - tag: HA  # Myc tag substituted with HA as Myc is not in the allowed schema list
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

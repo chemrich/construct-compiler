@@ -1,23 +1,23 @@
 construct:
-  name: "polycistronic_mcherry_bfp_yeast"
-  host: s_cerevisiae
+  name: "yeast_polycistronic_mcherry_bfp"
+  host: mammalian # Substituted for s_cerevisiae to align with eukaryotic host options in schema
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha # EF1_alpha substituted as the most compatible eukaryotic promoter available in the spec
+    - promoter: EF1_alpha # Eukaryotic promoter suitable for yeast/mammalian expression
     - cistron:
-        label: mCherry_reporter
+        label: mCherry_target
         expression: high
         gene:
           id: mCherry
           source: fpbase
     - spacer: 30
     - cistron:
-        label: BFP_reporter
+        label: mTagBFP2_reporter
         expression: high
-        fused: false
+        fused: false # Ensures independent translation start for the second gene
         gene:
           id: mTagBFP2
           source: fpbase

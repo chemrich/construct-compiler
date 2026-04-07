@@ -1,17 +1,18 @@
 construct:
-  name: "HEK293_YFP_Expression"
+  name: "HEK293_YFP_expression_vector"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
-    - promoter: CMV # Replaced trc promoter with CMV; trc is a prokaryotic promoter and will not function in HEK293 cells.
+    - promoter: CMV  # trc is a bacterial promoter; substituted with CMV for mammalian host compatibility.
     - cistron:
-        label: YFP_reporter
+        label: target
         expression: high
         gene:
           id: EYFP
           source: fpbase
-    - terminator: bGH_pA
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

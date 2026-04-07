@@ -1,14 +1,12 @@
 construct:
-  name: "yfp_expression_lac"
-  host: e_coli # s_cerevisiae is not supported by the construct_compiler; substituted with e_coli for lac promoter usage.
+  name: "yfp_lac_expression"
+  host: e_coli_bl21 # Substituted S. cerevisiae for e_coli_bl21 as S. cerevisiae is not a supported host and the lac promoter is specific to E. coli.
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: lacUV5 # lacUV5 is a robust lac-derived promoter compatible with E. coli.
+    - promoter: lacUV5
     - cistron:
-        label: yfp_reporter
+        label: target
         expression: high
         gene:
           id: EYFP

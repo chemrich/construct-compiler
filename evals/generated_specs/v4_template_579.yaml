@@ -1,19 +1,21 @@
 construct:
-  name: "YFP_FLAG_fusion_yeast"
+  name: "YFP_FLAG_fusion_s_cerevisiae"
   host: s_cerevisiae
   backbone:
-    catalog_vector: "pYES2"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: GAL1  # GAL1 used for high-level inducible expression in S. cerevisiae
+    - promoter: EF1_alpha  # EF1_alpha is used as a suitable eukaryotic promoter for yeast expression
     - cistron:
-        label: YFP_FLAG_fusion
+        label: target
         expression: high
         chain:
+          - tag: FLAG
           - gene:
               id: EYFP
               source: fpbase
-          - tag: FLAG
-    - terminator: CYC1_term  # CYC1_term used for yeast-specific termination
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

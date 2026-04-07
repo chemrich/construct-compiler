@@ -1,19 +1,21 @@
 construct:
-  name: "lacZ_C_HA_expression"
-  host: e_coli_bl21_de3 # Substituted for e_coli to support the default T7lac promoter
+  name: "lacZ_C_terminal_HA"
+  host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7lac
     - cistron:
-        label: lacZ_target
+        label: lacZ_HA
         expression: high
         chain:
           - gene:
               id: P00722
               source: uniprot
           - tag: HA
-    - terminator: T7term
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

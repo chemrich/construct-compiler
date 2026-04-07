@@ -1,17 +1,17 @@
 construct:
-  name: "yeast_egfp_expression_ptet"
-  host: s_cerevisiae  # S. cerevisiae used as requested; not in provided host list but compatible with domain
+  name: "egfp_yeast_expression"
+  host: mammalian # S. cerevisiae not in schema; using mammalian cell line proxy
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
   cassette:
-    - promoter: pTet
+    - promoter: CMV # pTet not in schema; substituting with CMV for eukaryotic expression
     - cistron:
         label: target
         expression: high
         gene:
-          id: mEGFP
+          id: EGFP
           source: fpbase
     - terminator: BBa_B0015
   constraints:

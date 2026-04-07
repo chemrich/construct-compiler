@@ -1,21 +1,21 @@
 construct:
-  name: "RFP_HA_expression_yeast"
-  host: s_cerevisiae
+  name: "ha_rfp_yeast_expression"
+  host: s_cerevisiae  # S. cerevisiae requested; utilizing yeast-appropriate promoter (TEF1) and terminator (CYC1_term).
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # Used EF1_alpha as a functional equivalent to the yeast TEF1 promoter
+    - promoter: TEF1
     - cistron:
-        label: HA_RFP
+        label: ha_rfp
         expression: high
         chain:
           - tag: HA
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
-    - terminator: BBa_B0015
+    - terminator: CYC1_term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

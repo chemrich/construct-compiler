@@ -1,28 +1,27 @@
 construct:
-  name: "ampR_sfGFP_polycistronic_yeast_sub"
-  # S. cerevisiae host not in schema, substituted with e_coli for compatibility with polycistronic spacer/RBS logic
-  host: e_coli
+  name: "yeast_polycistronic_ampR_GFP"
+  host: s_cerevisiae
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: J23100
+    - promoter: TEF1  # Standard constitutive promoter for S. cerevisiae
     - cistron:
-        label: ampicillin_resistance
-        expression: high
+        label: selection
+        expression: medium
         gene:
           id: P62593
           source: uniprot
-    - spacer: 30
+    - spacer: 30  # Polycistronic spacer; note that yeast usually requires IRES or 2A peptides for this
     - cistron:
         label: reporter
         expression: medium
         fused: false
         gene:
-          id: sfGFP
+          id: mEGFP
           source: fpbase
-    - terminator: rrnB_T1
+    - terminator: CYC1_term  # Standard yeast terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

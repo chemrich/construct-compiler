@@ -1,25 +1,27 @@
 construct:
-  name: "ampR_EGFP_polycistronic_expression"
-  host: e_coli_bl21_de3 # s_cerevisiae host is not in the supported schema; defaulting to e_coli_bl21_de3 for T7-based polycistronic expression
+  name: "polycistronic_ampR_EGFP_yeast"
+  host: s_cerevisiae  # Specified host: s_cerevisiae
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: TEF1  # Substituted TEF1 for yeast host compatibility
     - cistron:
-        label: ampR
+        label: ampR_selection
         expression: high
         gene:
           id: P0AD64
           source: uniprot
     - spacer: 30
     - cistron:
-        label: reporter
+        label: EGFP_reporter
         expression: high
-        fused: false # separate RBS for independent translation in polycistronic context
+        fused: false
         gene:
           id: EGFP
           source: fpbase
-    - terminator: T7term
+    - terminator: CYC1_term  # Substituted yeast-specific terminator for yeast host compatibility
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,19 +1,21 @@
 construct:
   name: "luciferase_6xhis_fusion"
-  host: e_coli_bl21  # s_cerevisiae not supported in schema; substituted with e_coli_bl21
+  host: s_cerevisiae  # User requested yeast host; using yeast-specific parts.
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: 2micron
+    source: addgene
   cassette:
-    - promoter: T7lac  # Standard for e_coli_bl21 expression
+    - promoter: GPD  # Reasonable substitution for S. cerevisiae as no promoter was specified.
     - cistron:
-        label: "luciferase_fusion"
+        label: luciferase_target
         expression: high
         chain:
           - gene:
-              id: P08659  # Firefly luciferase (Photinus pyralis)
+              id: P08659
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+    - terminator: CYC1_term  # Standard yeast terminator.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

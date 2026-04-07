@@ -1,17 +1,17 @@
 construct:
-  name: mammalian_rfp_expression_ptet
+  name: "mammalian_ptet_rfp"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # User requested pTet; substituted with CMV as pTet/TRE is not in the supported schema list.
+    - promoter: TRE # Substituted pTet with TRE (Tet-Response Element) which is the standard mammalian inducible promoter
     - cistron:
         label: rfp_reporter
         expression: high
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: bGH_pA # Substituted for mammalian compatibility as listed examples were prokaryotic
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,21 +1,21 @@
 construct:
-  name: "YFP_N_terminal_Flag_S_cerevisiae"
+  name: "YFP_FLAG_s_cerevisiae"
   host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: TEF1 # S. cerevisiae constitutive promoter
+    - promoter: TEF1  # Substituted TEF1 for yeast compatibility as it is a common constitutive promoter in S. cerevisiae
     - cistron:
-        label: target
+        label: YFP_expression
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: YFP
               source: fpbase
-    - terminator: CYC1_term # S. cerevisiae terminator
+    - terminator: CYC1_term  # Substituted CYC1_term for yeast compatibility as it is a standard terminator for S. cerevisiae
   constraints:
     assembly: golden_gate
     enzyme: BsaI

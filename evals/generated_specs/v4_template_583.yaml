@@ -1,23 +1,19 @@
 construct:
-  name: ampR_mammalian_SUMO
-  host: HEK293
+  name: "mammalian_sumo_ampr"
+  host: mammalian
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: sumo_ampr
         expression: high
         chain:
           - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P00810
+              id: P62593
               source: uniprot
-    - terminator: bgh_polyA  # Using mammalian polyA signal instead of bacterial terminator
+    - terminator: bGH_polyA # Substituted bGH_polyA for mammalian expression compatibility as prompt examples were bacterial
   constraints:
     assembly: golden_gate
     enzyme: BsaI

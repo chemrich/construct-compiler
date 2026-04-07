@@ -1,25 +1,25 @@
 construct:
-  name: mammalian_polycistronic_rfp_lacz
+  name: "polycistronic_rfp_lacz_mammalian"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: rfp_expression
+        label: rfp_reporter
         expression: high
         gene:
-          id: mCherry
+          id: mScarlet
           source: fpbase
     - spacer: 30
     - cistron:
-        label: lacz_expression
-        expression: high
-        fused: false  # Independent translation; in mammalian systems, this typically implies the insertion of an IRES or similar element
+        label: lacz_reporter
+        expression: medium
+        fused: false # Ensures independent translation initiation (e.g., via IRES or internal start)
         gene:
           id: P00722
           source: uniprot
-    - terminator: BBa_B0015
+    - terminator: bGH_polyA # Substituted for mammalian polyadenylation signal
   constraints:
     assembly: golden_gate
     enzyme: BsaI

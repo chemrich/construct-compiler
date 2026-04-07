@@ -1,39 +1,31 @@
 construct:
-  name: "HEK293_YFP_lacZ_polycistronic"
+  name: "Polycistronic_YFP_lacZ_HEK293"
   host: HEK293
-
   backbone:
     catalog_vector: "pTwist CMV"
-
   cassette:
     - promoter: CMV
-
     - cistron:
-        label: reporter_yfp
+        label: yfp_reporter
         expression: high
         gene:
           id: EYFP
           source: fpbase
-
-    - spacer: 30
-
+    - spacer: 30  # Note: For mammalian polycistronic expression, this spacer would typically represent an IRES or 2A sequence
     - cistron:
-        label: enzyme_lacz
-        expression: medium
-        fused: false  # Independent translation; compiler will insert IRES or 2A for mammalian host
+        label: lacz_enzyme
+        expression: high
+        fused: false
         gene:
           id: P00722
           source: uniprot
-
-    - terminator: BBa_B0015  # Substitution: Using BBa_B0015 as a generic terminator; in practice, a polyA signal is used for mammalian expression.
-
+    - terminator: BGH_polyA # Substituted for mammalian compatibility; standard for pTwist CMV
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

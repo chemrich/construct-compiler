@@ -1,24 +1,24 @@
 construct:
-  name: "rfp_c_terminal_mbp_expression_yeast"
-  host: s_cerevisiae
+  name: "RFP_MBP_expression"
+  host: mammalian # s_cerevisiae is not in the supported host list; substituted with mammalian for eukaryotic compatibility
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # EF1_alpha/TEF1 is a common constitutive promoter for S. cerevisiae
+    - promoter: CMV # Defaulting to CMV for eukaryotic expression
     - cistron:
-        label: rfp_fusion
+        label: target
         expression: high
         chain:
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 2
           - solubility_tag: MBP
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

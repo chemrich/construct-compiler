@@ -1,20 +1,19 @@
 construct:
-  name: "ampR_C_terminal_Myc_expression"
-  host: e_coli  # e_coli_k12 mapped to e_coli
+  name: "ampR_c_terminal_flag_expression"
+  host: e_coli # e_coli_k12 substituted with e_coli to match allowed host list
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
   cassette:
-    - promoter: tac  # Substituted T7lac with tac for E. coli K12 host compatibility
+    - promoter: T7lac
     - cistron:
-        label: ampR_target
+        label: target
         expression: high
         chain:
           - gene:
-              id: P00810
+              id: P62593
               source: uniprot
-          - tag: FLAG  # Myc tag substituted with FLAG as per available schema options
+          - tag: FLAG # Myc tag not in schema; substituted with FLAG as a reasonable alternative
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

@@ -1,22 +1,22 @@
 construct:
-  name: "mEGFP_MBP_fusion_mammalian"
+  name: "MBP_mEGFP_fusion_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: "target_fusion"
+        label: fusion_target
         expression: high
         chain:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: bGH_pA  # Standard polyadenylation signal for mammalian expression
+    - terminator: bGH_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

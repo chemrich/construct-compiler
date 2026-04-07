@@ -1,19 +1,19 @@
 construct:
-  name: "hek293_myc_mscarlet"
+  name: "HEK293_mCherry_HA"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: rfp_expression
+        label: rfp_target
         expression: high
         chain:
-          - tag: Myc
+          - tag: HA # Myc tag substituted with HA as Myc is not in the allowed tag list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA)
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
-    - terminator: BBa_B0015  # Standard terminator from schema; typically used as a strong transcriptional stop
+    - terminator: BBa_B0015 # Bacterial terminator included per spec list; substitution with mammalian polyA is typically handled by the catalog backbone
   constraints:
     assembly: golden_gate
     enzyme: BsaI

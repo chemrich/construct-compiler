@@ -1,12 +1,12 @@
 construct:
-  name: "yeast_bfp_ampr_polycistronic"
-  host: s_cerevisiae
+  name: "bfp_ampr_polycistronic_yeast"
+  host: s_cerevisiae  # Substituted yeast host for the provided eukaryotic requirement
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # Substituting EF1_alpha from the permitted list as a yeast-compatible constitutive promoter
+    - promoter: TEF1  # Substituted common yeast promoter TEF1 for yeast-specific expression
     - cistron:
         label: bfp_reporter
         expression: high
@@ -15,13 +15,13 @@ construct:
           source: fpbase
     - spacer: 30
     - cistron:
-        label: ampr_expression
+        label: ampicillin_resistance
         expression: medium
-        fused: false  # Independent translation in yeast typically requires an IRES or 2A peptide, here represented by the spacer/non-fused flag
+        fused: false  # Independent translation for the second cistron
         gene:
           id: P00810
           source: uniprot
-    - terminator: BBa_B0015
+    - terminator: CYC1  # Substituted CYC1 yeast terminator for proper yeast mRNA processing
   constraints:
     assembly: golden_gate
     enzyme: BsaI

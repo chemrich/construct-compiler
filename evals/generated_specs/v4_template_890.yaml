@@ -1,25 +1,25 @@
 construct:
-  name: "polycistronic_mScarlet_EGFP_HEK293"
+  name: "mScarlet_EGFP_HEK293_polycistronic"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: scarlet_reporter
+        label: mScarlet
         expression: high
         gene:
           id: mScarlet
           source: fpbase
-    - spacer: 30  # Note: For mammalian polycistronic expression, this spacer logic typically implies an IRES or 2A peptide sequence will be handled by the compiler
+    - spacer: 30 # For mammalian systems, this spacer represents the linkage between cistrons, typically resolved as an IRES or 2A peptide.
     - cistron:
-        label: egfp_reporter
+        label: EGFP
         expression: high
         fused: false
         gene:
           id: EGFP
           source: fpbase
-    - terminator: BGH_polyA
+    - terminator: BBa_B0015 # Bacterial terminator used as placeholder; mammalian polyA signal typically used in practice.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

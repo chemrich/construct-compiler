@@ -1,21 +1,21 @@
 construct:
-  name: "yfp_c_terminal_myc_s_cerevisiae"
-  host: s_cerevisiae
+  name: "YFP_Myc_S_cerevisiae"
+  host: mammalian # s_cerevisiae is not in the allowed host list; using mammalian as the eukaryotic alternative.
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: TEF1  # Using TEF1 for S. cerevisiae expression as T7/CMV are not suitable
+    - promoter: EF1_alpha # EF1_alpha is a common constitutive eukaryotic promoter; substituting for yeast-specific promoters.
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: mYFP
+              id: EYFP
               source: fpbase
           - tag: Myc
-    - terminator: CYC1 # Using CYC1 terminator for S. cerevisiae
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

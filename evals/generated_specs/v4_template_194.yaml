@@ -1,12 +1,12 @@
 construct:
   name: "rfp_myc_fusion"
-  host: e_coli
+  host: e_coli  # e_coli_k12 is best represented as e_coli in this schema
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: T7lac  # Default for E. coli; requires a DE3 lysogen strain for expression in K-12
     - cistron:
         label: rfp_myc
         expression: high
@@ -14,7 +14,12 @@ construct:
           - gene:
               id: mCherry
               source: fpbase
-          - tag: Myc
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: MYC
+              source: uniprot
     - terminator: rrnB_T1
   constraints:
     assembly: golden_gate

@@ -1,19 +1,18 @@
 construct:
-  name: "ampR_SUMO_expression_system"
-  host: e_coli
+  name: "ampR_sumo_expression"
+  host: e_coli  # Substituted e_coli for e_coli_k12 to match allowed schema values
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: T7lac  # Defaulting to T7lac per instructions; note that K-12 requires a T7 polymerase source
     - cistron:
-        label: target
+        label: sumo_ampR
         expression: high
         chain:
           - solubility_tag: SUMO
           - gene:
-              id: P00810
+              id: ampR
               source: uniprot
     - terminator: rrnB_T1
   constraints:

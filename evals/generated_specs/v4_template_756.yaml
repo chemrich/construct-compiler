@@ -1,20 +1,22 @@
 construct:
-  name: "mTagBFP2_GST_Fusion_Mammalian"
+  name: "BFP_C_terminal_GST_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: bfp_fusion
         expression: high
         chain:
           - gene:
               id: mTagBFP2
               source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - solubility_tag: GST
-    - terminator: BBa_B0015
+    - terminator: BBa_B0015 # Using BBa_B0015 as a placeholder; catalog mammalian vectors typically provide bGH_polyA.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

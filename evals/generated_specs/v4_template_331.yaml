@@ -1,37 +1,33 @@
 construct:
-  name: "polycistronic_gfp_egfp_expression"
-  host: e_coli_bl21_de3  # User requested s_cerevisiae; substituted with e_coli_bl21_de3 as s_cerevisiae is not in the supported host list and T7lac requires DE3 lysogen.
-
+  name: yeast_gfp_egfp_polycistronic
+  host: s_cerevisiae # Note: Host s_cerevisiae used; polycistronic expression in yeast typically requires 2A peptides or IRES, spacer/fused:false used as requested.
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
-
   cassette:
-    - promoter: T7lac
+    - promoter: EF1_alpha # Note: EF1_alpha substituted as a functional eukaryotic promoter for S. cerevisiae.
     - cistron:
         label: gfp_cistron
-        expression: medium
+        expression: high
         gene:
-          id: avGFP
+          id: GFP
           source: fpbase
     - spacer: 30
     - cistron:
         label: egfp_cistron
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: mEGFP
+          id: EGFP
           source: fpbase
-    - terminator: rrnB_T1
-
+    - terminator: BBa_B0015 # Note: Standard terminator included per requirements.
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

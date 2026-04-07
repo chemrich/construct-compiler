@@ -1,17 +1,19 @@
 construct:
-  name: "RFP_SUMO_fusion"
-  host: mammalian # Substitution: s_cerevisiae not in host list; using mammalian for eukaryotic codon optimization.
+  name: "SUMO_mCherry_fusion_yeast"
+  host: s_cerevisiae  # User specified yeast; using EF1_alpha as a eukaryotic promoter compatible with yeast
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
     - cistron:
-        label: target
-        expression: high
+        label: sumo_rfp_fusion
+        expression: medium
         chain:
           - solubility_tag: SUMO
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
     - terminator: BBa_B0015
   constraints:

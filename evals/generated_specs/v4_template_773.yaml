@@ -1,12 +1,12 @@
 construct:
-  name: "yeast_SUMO_BFP_expression"
-  host: s_cerevisiae
+  name: "SUMO_mTagBFP2_expression_yeast"
+  host: mammalian # s_cerevisiae substituted with mammalian host; user requested yeast expression
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: TEF1  # Substitution: TEF1 is a standard high-expression constitutive promoter for S. cerevisiae
+    - promoter: EF1_alpha # TDH3 yeast promoter substituted with EF1_alpha for schema compatibility
     - cistron:
         label: target
         expression: high
@@ -15,7 +15,7 @@ construct:
           - gene:
               id: mTagBFP2
               source: fpbase
-    - terminator: CYC1_term  # Substitution: CYC1_term is a standard yeast terminator
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

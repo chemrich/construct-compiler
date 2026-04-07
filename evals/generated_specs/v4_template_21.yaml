@@ -1,12 +1,15 @@
 construct:
-  name: "rfp_c_terminal_mbp_mammalian"
-  host: HEK293
+  name: "rfp_c_terminal_mbp_mammalian_expression"
+  host: mammalian
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: rfp_mbp_fusion
+        label: rfp_fusion
         expression: high
         chain:
           - gene:
@@ -16,13 +19,16 @@ construct:
               type: GS_flexible
               repeats: 2
           - solubility_tag: MBP
-    - terminator: bGH_polyA # Substituted bGH_polyA for mammalian compatibility as per rule 12
+
+    - terminator: BBa_B0015 # BBa_B0015 used as a placeholder for mammalian polyA signal per available schema options
+
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
+
   synthesis:
     vendor: twist
     budget_per_gene: 400

@@ -3,23 +3,22 @@ construct:
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
         label: reporter
-        expression: high
         gene:
           id: mScarlet
           source: fpbase
-    - spacer: 30
+    - spacer: 30  # Note: Mammalian polycistronic expression typically requires an IRES or 2A peptide; using spacer as per schema
     - cistron:
-        label: selection
-        expression: medium
+        label: selection_marker
         fused: false
         gene:
-          id: P0AD64 # UniProt ID for Beta-lactamase (ampR)
+          id: P00810
           source: uniprot
-    - terminator: bGH_polyA # Standard mammalian terminator for pTwist CMV vectors
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

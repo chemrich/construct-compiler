@@ -1,22 +1,21 @@
 construct:
-  name: "MBP_ampR_expression"
-  host: e_coli_bl21  # s_cerevisiae is not supported in the current schema; substituted with e_coli_bl21 for protein expression
+  name: "MBP_ampR_yeast_expression"
+  host: s_cerevisiae
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: EF1_alpha # Selected from allowed options as a suitable eukaryotic promoter for s_cerevisiae
     - cistron:
-        label: MBP_ampR_fusion
+        label: target
         expression: high
         chain:
           - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: P00810
               source: uniprot
-    - terminator: T7term
+    - terminator: BBa_B0015 # BBa_B0015 used as a generic terminator from the allowed list
   constraints:
     assembly: golden_gate
     enzyme: BsaI

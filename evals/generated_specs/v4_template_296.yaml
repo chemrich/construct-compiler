@@ -1,21 +1,21 @@
 construct:
-  name: "lacZ_C_term_HA_S_cerevisiae"
-  host: s_cerevisiae  # Specified specific yeast host as per cell-line rule
+  name: "lacZ_cterm_myc_s_cerevisiae"
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # Reasonable eukaryotic substitution for yeast expression
+    - promoter: TEF1  # Substitution: Using standard yeast TEF1 promoter for S. cerevisiae host
     - cistron:
-        label: lacZ_expression
+        label: lacZ_myc_fusion
         expression: high
         chain:
           - gene:
-              id: P00722
+              id: lacZ
               source: uniprot
-          - tag: HA  # Myc tag not in supported list; substituted with HA as a common eukaryotic alternative
-    - terminator: BBa_B0015  # Default terminator from available list
+          - tag: Myc
+    - terminator: CYC1  # Substitution: Using standard yeast CYC1 terminator for S. cerevisiae host
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,22 +1,19 @@
 construct:
-  name: "CMV_Luciferase_Strep_Fusion"
+  name: "cmv_luciferase_strep"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: luc_strep
+        label: luciferase_fusion
         expression: high
         chain:
           - gene:
               id: P08659
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: Strep-II
-    - terminator: bGH_polyA
+    - terminator: bGH_PA # Substituted for mammalian polyadenylation; schema examples were bacterial
   constraints:
     assembly: golden_gate
     enzyme: BsaI

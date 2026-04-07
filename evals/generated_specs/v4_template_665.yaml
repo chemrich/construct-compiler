@@ -1,24 +1,19 @@
 construct:
-  name: "GFP_SUMO_fusion"
-  host: e_coli_bl21  # s_cerevisiae host not supported; substituting with e_coli_bl21
+  name: "SUMO_mEGFP_fusion"
+  host: e_coli_bl21_de3  # s_cerevisiae not supported in schema; substituted with E. coli DE3 for T7-based expression
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: gfp_sumo_fusion
+        label: target
         expression: high
         chain:
           - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: rrnB_T1
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

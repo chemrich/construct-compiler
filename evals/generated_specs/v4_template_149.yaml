@@ -1,12 +1,12 @@
 construct:
-  name: "GST_EYFP_yeast_expression"
-  host: s_cerevisiae  # S. cerevisiae requested; using yeast-compatible promoter and terminator
+  name: "yfp_gst_yeast_expression"
+  host: s_cerevisiae # Specified yeast host; using yeast-compatible substitutions for elements
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: kanamycin # Default per Rule 9
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: GAL1  # GAL1 substituted for yeast-specific expression
+    - promoter: EF1_alpha # Substituting TEF1 with schema-supported EF1_alpha (yeast homolog)
     - cistron:
         label: target
         expression: high
@@ -18,7 +18,7 @@ construct:
           - gene:
               id: EYFP
               source: fpbase
-    - terminator: CYC1  # CYC1 substituted for yeast-specific termination
+    - terminator: BBa_B0015 # Universal terminator substitution for yeast compatibility
   constraints:
     assembly: golden_gate
     enzyme: BsaI

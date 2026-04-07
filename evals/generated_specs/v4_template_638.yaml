@@ -1,25 +1,25 @@
 construct:
-  name: hek293_egfp_bfp_polycistronic
+  name: "hek293_polycistronic_egfp_bfp"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: egfp_cistron
+        label: egfp_expression
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - spacer: 30  # Note: Standard mammalian polycistronic expression usually requires an IRES or 2A peptide; using a spacer here per schema.
+    - spacer: 30  # Note: Mammalian polycistronic systems typically require an IRES or 2A peptide; using a spacer per schema constraints.
     - cistron:
-        label: bfp_cistron
+        label: bfp_expression
         expression: high
         fused: false
         gene:
           id: mTagBFP2
           source: fpbase
-    - terminator: bGH_polyA
+    - terminator: SV40_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

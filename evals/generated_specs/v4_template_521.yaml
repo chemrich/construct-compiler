@@ -1,21 +1,24 @@
 construct:
   name: "mScarlet_MBP_yeast_expression"
-  host: s_cerevisiae
+  host: s_cerevisiae  # S. cerevisiae is requested; EF1_alpha is used as a compatible eukaryotic promoter.
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
   cassette:
-    - promoter: TEF1  # Yeast constitutive promoter (homolog of EF1_alpha)
+    - promoter: EF1_alpha
     - cistron:
         label: target
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: CYC1_term  # Yeast terminator
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

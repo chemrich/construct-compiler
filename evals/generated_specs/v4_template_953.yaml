@@ -1,22 +1,19 @@
 construct:
-  name: "ampR_cterm_flag_s_cerevisiae"
-  host: s_cerevisiae
+  name: "ampR_yeast_expression_cterm_flag"
+  host: s_cerevisiae  # host set to s_cerevisiae per user request; EF1_alpha promoter used for eukaryotic expression
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha # Substituted EF1_alpha as a eukaryotic promoter suitable for s_cerevisiae expression
+    - promoter: EF1_alpha
     - cistron:
-        label: ampR_flag_fusion
+        label: ampR_c_flag
         expression: high
         chain:
           - gene:
               id: P00810
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: FLAG
     - terminator: BBa_B0015
   constraints:

@@ -1,17 +1,17 @@
 construct:
-  name: "ampR_GFP_polycistronic_construct"
-  host: e_coli  # Substituted s_cerevisiae for e_coli as yeast does not natively support polycistronic translation and host is not in supported list.
+  name: "polycistronic_ampR_mEGFP_yeast"
+  host: s_cerevisiae  # User-requested host
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: tac
+    - promoter: EF1_alpha  # Substituted for yeast-specific TEF1/GAL1 as EF1_alpha is functional in eukaryotes
     - cistron:
         label: selection_marker
         expression: high
         gene:
-          id: P62593
+          id: P0AD64
           source: uniprot
     - spacer: 30
     - cistron:
@@ -21,7 +21,7 @@ construct:
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: rrnB_T1
+    - terminator: rrnB_T1  # Standard terminator used as yeast-specific terminators (e.g., CYC1) not in tool list
   constraints:
     assembly: golden_gate
     enzyme: BsaI

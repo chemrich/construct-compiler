@@ -1,21 +1,21 @@
 construct:
-  name: "pTet_SUMO_mEGFP"
-  host: e_coli
+  name: "ptet_sumo_megfp_fusion"
+  host: e_coli_bl21_de3
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: pTet
+    - promoter: T7lac  # Substitution: pTet is not in the predefined list; T7lac is used for inducible expression in E. coli.
     - cistron:
-        label: target
+        label: target_fusion
         expression: high
         chain:
           - solubility_tag: SUMO
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: rrnB_T1
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,12 +1,12 @@
 construct:
-  name: "s_cerevisiae_polycistronic_rfp_lacz"
-  host: mammalian  # S. cerevisiae is not in the allowed host list; using mammalian as the eukaryotic alternative.
+  name: "rfp_lacz_polycistronic_yeast"
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # Eukaryotic promoter chosen for yeast expression compatibility.
+    - promoter: EF1_alpha  # Using EF1_alpha as a yeast-compatible surrogate for TEF1/GPD
     - cistron:
         label: rfp_reporter
         expression: high
@@ -15,11 +15,11 @@ construct:
           source: fpbase
     - spacer: 30
     - cistron:
-        label: lacz_reporter
+        label: lacz_enzyme
         expression: medium
-        fused: false  # Indicates independent translation for polycistronic design.
+        fused: false  # Indicates independent translation unit
         gene:
-          id: lacZ
+          id: P00722
           source: uniprot
     - terminator: BBa_B0015
   constraints:

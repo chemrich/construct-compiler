@@ -1,19 +1,19 @@
 construct:
-  name: "SV40_mCherry_GST_fusion"
+  name: "SV40_GST_mCherry_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: SV40
+    - promoter: SV40  # SV40 promoter requested for mammalian expression
     - cistron:
         label: target
-        expression: medium
+        expression: high
         chain:
           - solubility_tag: GST
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: bGH_polyA  # Standard mammalian terminator; substituting bacterial examples in schema for mammalian compatibility
+    - terminator: SV40_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

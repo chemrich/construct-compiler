@@ -1,22 +1,17 @@
 construct:
   name: "mammalian_luciferase_egfp_polycistronic"
   host: HEK293
-
   backbone:
     catalog_vector: "pTwist CMV"
-
   cassette:
     - promoter: CMV
-
     - cistron:
         label: luciferase
         expression: high
         gene:
           id: P08659
           source: uniprot
-
     - spacer: 30
-
     - cistron:
         label: reporter
         expression: medium
@@ -24,16 +19,13 @@ construct:
         gene:
           id: mEGFP
           source: fpbase
-
-    - terminator: BGH_pA  # Substituted bacterial terminator with mammalian BGH polyA signal
-
+    - terminator: bGH_polyA  # Substituted mammalian polyA signal for the prokaryotic examples provided
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

@@ -1,12 +1,12 @@
 construct:
-  name: "HEK293_EYFP_MYC_Fusion"
+  name: "YFP_Myc_fusion_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
           - gene:
@@ -15,10 +15,8 @@ construct:
           - linker:
               type: GS_flexible
               repeats: 2
-          - gene:
-              id: MYC
-              source: uniprot
-    - terminator: BGH_pA # Using mammalian BGH polyA signal as the provided examples were bacterial
+          - tag: HA # Myc tag not in provided controlled vocabulary; substituted with HA tag
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

@@ -1,27 +1,27 @@
 construct:
-  name: "rfp_mcherry_polycistronic_yeast"
-  host: s_cerevisiae  # Using s_cerevisiae as specified; codon optimization will be adjusted accordingly
+  name: "yeast_polycistronic_rfp_mcherry"
+  host: s_cerevisiae
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # Eukaryotic promoter suitable for yeast expression
+    - promoter: TEF1  # Using TEF1 promoter as a standard high-expression yeast promoter
     - cistron:
-        label: rfp
-        expression: medium
+        label: rfp_reporter
+        expression: high
         gene:
           id: mRFP1
           source: fpbase
     - spacer: 30
     - cistron:
-        label: mcherry
-        expression: medium
-        fused: false  # Indicates independent translation (e.g., via IRES or internal start)
+        label: mcherry_reporter
+        expression: high
+        fused: false
         gene:
           id: mCherry
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: CYC1_term  # Standard yeast terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

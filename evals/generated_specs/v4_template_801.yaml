@@ -1,24 +1,21 @@
 construct:
   name: "mCherry_SUMO_fusion_yeast"
-  host: mammalian  # s_cerevisiae not in host enum; substituting with mammalian as eukaryotic proxy
+  host: s_cerevisiae  # S. cerevisiae requested; yeast-specific components used
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha  # s_cerevisiae promoters (e.g. GAL1, TEF1) not in enum; using EF1_alpha
+    - promoter: TEF1  # Using TEF1 constitutive yeast promoter
     - cistron:
-        label: target
+        label: fusion_construct
         expression: high
         chain:
           - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: BBa_B0015
+    - terminator: CYC1  # Using CYC1 yeast terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

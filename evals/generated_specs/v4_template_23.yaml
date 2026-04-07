@@ -1,19 +1,18 @@
 construct:
-  name: "T7lac_mTagBFP2_Myc"
-  host: e_coli_bl21
+  name: "T7lac_BFP_Myc_fusion"
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: bfp_myc
         expression: high
         chain:
           - gene:
               id: mTagBFP2
               source: fpbase
-          - tag: FLAG # Substituted Myc with FLAG as Myc was not in the explicitly allowed tag list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA)
+          - tag: Myc
     - terminator: T7term
   constraints:
     assembly: golden_gate

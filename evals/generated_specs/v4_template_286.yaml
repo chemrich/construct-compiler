@@ -1,27 +1,27 @@
 construct:
-  name: "yeast_polycistronic_rfp_luciferase"
-  host: s_cerevisiae  # Polycistronic expression in yeast typically requires 2A peptides or IRES; schema uses independent translation spacers.
+  name: "s_cerevisiae_rfp_luciferase_polycistronic"
+  host: s_cerevisiae
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: TEF1  # Using TEF1 promoter for S. cerevisiae expression
+    - promoter: GPD  # GPD (TDH3) promoter substituted for yeast expression; provided list only contains bacterial/mammalian promoters.
     - cistron:
-        label: rfp_reporter
-        expression: high
+        label: RFP
+        expression: medium
         gene:
           id: mScarlet
           source: fpbase
     - spacer: 30
     - cistron:
-        label: luciferase_target
+        label: Luciferase
         expression: medium
-        fused: false
+        fused: false  # Independently translated via internal ribosome entry or similar mechanism
         gene:
           id: P08659
           source: uniprot
-    - terminator: CYC1_term  # Standard yeast terminator
+    - terminator: CYC1_term  # CYC1 terminator substituted for yeast compatibility; provided list contains bacterial terminators.
   constraints:
     assembly: golden_gate
     enzyme: BsaI

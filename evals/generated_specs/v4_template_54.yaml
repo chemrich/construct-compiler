@@ -1,20 +1,19 @@
 construct:
-  name: "mscarlet_myc_expression"
-  host: e_coli_bl21_de3 # Substituted e_coli with e_coli_bl21_de3 to support T7lac promoter
+  name: "mscarlet_myc_expression_ecoli"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: Myc
+          - tag: FLAG  # Myc tag requested but not in schema list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA); substituted with FLAG per Rule 12
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: rrnB_T1
+    - terminator: T7term
   constraints:
     assembly: golden_gate
     enzyme: BsaI

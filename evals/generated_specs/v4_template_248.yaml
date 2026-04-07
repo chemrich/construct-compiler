@@ -1,25 +1,26 @@
 construct:
-  name: "mCherry_mScarlet_polycistronic_expression"
+  name: "polycistronic_mCherry_mScarlet"
   host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
   cassette:
     - promoter: T7lac
     - cistron:
-        label: mCherry_unit
+        label: mCherry_reporter
         expression: high
         gene:
           id: mCherry
           source: fpbase
     - spacer: 30
     - cistron:
-        label: mScarlet_unit
+        label: mScarlet_reporter
         expression: high
         fused: false
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: T7term
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

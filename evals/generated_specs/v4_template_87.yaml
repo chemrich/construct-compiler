@@ -1,22 +1,19 @@
 construct:
-  name: "sv40_mcherry_mbp_fusion"
+  name: "SV40_mCherry_MBP_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # SV40 promoter is not in the supported list; substituted with CMV for mammalian expression.
+    - promoter: CMV # SV40 not in supported list; substituted with CMV for mammalian host
     - cistron:
-        label: target
+        label: target_fusion
         expression: high
         chain:
           - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1
   constraints:
     assembly: golden_gate
     enzyme: BsaI

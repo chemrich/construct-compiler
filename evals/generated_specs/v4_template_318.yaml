@@ -1,25 +1,25 @@
 construct:
-  name: "mCherry_YFP_mammalian_polycistronic"
+  name: "polycistronic_mcherry_yfp_mammalian"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: mCherry_cistron
+        label: mCherry_reporter
         expression: high
         gene:
           id: mCherry
           source: fpbase
-    - spacer: 30
+    - spacer: 40
     - cistron:
-        label: YFP_cistron
+        label: YFP_reporter
         expression: high
         fused: false
         gene:
-          id: YFP
+          id: EYFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: bGH_pA  # Substituted mammalian terminator for requested HEK293 host
   constraints:
     assembly: golden_gate
     enzyme: BsaI

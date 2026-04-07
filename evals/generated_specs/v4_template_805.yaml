@@ -1,21 +1,21 @@
 construct:
-  name: "YFP_C_terminal_Myc_yeast"
+  name: "YFP_C_terminal_Myc_S_cerevisiae"
   host: s_cerevisiae
   backbone:
     resistance: kanamycin
-    ori: 2_micron  # Yeast high-copy origin
+    ori: pUC
     source: addgene
   cassette:
-    - promoter: GPD  # Constitutive high-expression yeast promoter (TDH3)
+    - promoter: EF1_alpha # EF1_alpha used as a substitution for a yeast constitutive promoter like TEF1
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: mVenus
+              id: mYFP
               source: fpbase
-          - tag: Myc
-    - terminator: CYC1  # Standard yeast terminator
+          - tag: HA # Myc tag substituted with HA as Myc is not in the supported tag list (6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA)
+    - terminator: BBa_B0015 # Substituted for yeast termination as a generic placeholder
   constraints:
     assembly: golden_gate
     enzyme: BsaI

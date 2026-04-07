@@ -2,20 +2,20 @@ construct:
   name: "luciferase_myc_yeast_expression"
   host: s_cerevisiae
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin  # Defaulting to kanamycin per instructions
     ori: pUC
     source: addgene
   cassette:
-    - promoter: EF1_alpha # EF1_alpha used as a general eukaryotic promoter for S. cerevisiae
+    - promoter: GAL1  # Substituted GAL1 as a standard S. cerevisiae inducible promoter
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: Myc
+          - tag: Myc  # Specifically requested tag
           - gene:
               id: P08659
               source: uniprot
-    - terminator: BBa_B0015
+    - terminator: CYC1  # Substituted CYC1 as a standard S. cerevisiae terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

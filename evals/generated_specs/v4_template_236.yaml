@@ -1,19 +1,19 @@
 construct:
-  name: "cmv_sumo_mtagbfp2_expression"
-  host: HEK293
+  name: "CMV_mTagBFP2_SUMO"
+  host: HEK293 # Substituted HEK293 as a reasonable mammalian host for CMV promoter
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: sumo_bfp_fusion
+        label: target
         expression: high
         chain:
-          - solubility_tag: SUMO
           - gene:
               id: mTagBFP2
               source: fpbase
-    - terminator: bGH_polyA  # Standard mammalian terminator for use with CMV promoter
+          - solubility_tag: SUMO
+    - terminator: bGH_polyA # Substituted for mammalian termination signal
   constraints:
     assembly: golden_gate
     enzyme: BsaI

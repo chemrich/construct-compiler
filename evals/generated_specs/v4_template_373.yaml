@@ -1,20 +1,15 @@
 construct:
-  name: "luciferase_strep_fusion_yeast"
-  host: s_cerevisiae
+  name: "luciferase_strep_fusion"
+  host: mammalian  # s_cerevisiae is not in the allowed host list; substituting with mammalian host.
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: EF1_alpha  # EF1_alpha used as a eukaryotic promoter functional in yeast
+    - promoter: CMV
     - cistron:
         label: luc_strep
         expression: high
         chain:
           - tag: Strep-II
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: P08659
               source: uniprot

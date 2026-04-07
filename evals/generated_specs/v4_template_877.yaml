@@ -1,23 +1,25 @@
 construct:
-  name: "yfp_ampr_polycistronic"
+  name: "polycistronic_yfp_ampr_expression"
   host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7lac
     - cistron:
-        label: yfp_protein
+        label: yfp_reporter
         expression: high
         gene:
-          id: EYFP
+          id: mVenus
           source: fpbase
     - spacer: 30
     - cistron:
-        label: ampr_protein
+        label: ampr_marker
         expression: medium
         fused: false
         gene:
-          id: P00810
+          id: P62593
           source: uniprot
     - terminator: T7term
   constraints:

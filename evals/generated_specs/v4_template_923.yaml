@@ -1,15 +1,15 @@
 construct:
-  name: "lacZ_expression_plasmid"
-  host: e_coli_bl21_de3
+  name: "lacZ_expression_in_e_coli"
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: T7lac # Substituted T7lac for requested CMV as host is e_coli_bl21 (DE3) and CMV is a mammalian promoter.
+    - promoter: T7lac  # User requested CMV, but CMV is a mammalian promoter. Substituted with T7lac for E. coli expression.
     - cistron:
-        label: lacZ_expression
+        label: lacZ_target
         expression: high
         gene:
-          id: P00722
+          id: lacZ
           source: uniprot
     - terminator: T7term
   constraints:

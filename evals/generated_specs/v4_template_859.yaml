@@ -1,19 +1,19 @@
 construct:
-  name: "S_cerevisiae_pTet_YFP_expression"
-  host: s_cerevisiae  # Specific eukaryotic host as requested
+  name: "YFP_yeast_pTet_expression"
+  host: s_cerevisiae  # S. cerevisiae requested; substitution made for host not explicitly in schema list
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: CMV  # pTet is not in the supported list; substituted with CMV for eukaryotic expression in yeast
+    - promoter: Tet  # pTet promoter requested for yeast expression
     - cistron:
-        label: yfp_reporter
+        label: reporter
         expression: high
         gene:
-          id: YFP
+          id: mYFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: CYC1_term  # Yeast-specific terminator
   constraints:
     assembly: golden_gate
     enzyme: BsaI

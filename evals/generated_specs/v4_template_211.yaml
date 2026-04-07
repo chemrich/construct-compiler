@@ -1,25 +1,25 @@
 construct:
-  name: "polycistronic_lacz_ampr_expression"
-  host: e_coli  # Defaulting to e_coli as e_coli_k12 is a subset
+  name: "lacZ_ampR_polycistronic"
+  host: e_coli  # Substituted e_coli_k12 with e_coli to match supported schema values
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: T7lac  # Default for e_coli per rule 8; requires T7 polymerase expression in host
+    - promoter: T7lac
     - cistron:
-        label: lacZ
-        expression: medium
+        label: lacZ_primary
+        expression: high
         gene:
-          id: P00722
+          id: lacZ
           source: uniprot
     - spacer: 30
     - cistron:
-        label: ampR
+        label: ampR_secondary
         expression: medium
         fused: false
         gene:
-          id: P00810
+          id: ampR
           source: uniprot
     - terminator: rrnB_T1
   constraints:

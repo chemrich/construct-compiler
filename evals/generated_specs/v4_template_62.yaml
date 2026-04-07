@@ -1,12 +1,12 @@
 construct:
-  name: "RFP_GST_fusion_HEK293"
+  name: "hek293_gst_mcherry_fusion"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: fusion_protein
+        label: gst_rfp_fusion
         expression: high
         chain:
           - solubility_tag: GST
@@ -16,15 +16,13 @@ construct:
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: bGH_pA  # Substituted mammalian polyA signal for schema-listed bacterial terminators
-
+    - terminator: BGH_polyA  # Substituted bacterial terminator for mammalian polyA signal
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

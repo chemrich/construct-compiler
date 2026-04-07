@@ -1,20 +1,21 @@
 construct:
-  name: "polycistronic_luciferase_mcherry"
+  name: "luciferase_mcherry_polycistronic_k12"
   host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: tac  # Substituted T7lac with tac for E. coli K12 compatibility as T7 requires DE3 lysogen
     - cistron:
-        label: luciferase
-        expression: medium
+        label: luciferase_target
+        expression: high
         gene:
           id: P08659
           source: uniprot
     - spacer: 30
     - cistron:
-        label: reporter
+        label: mcherry_reporter
         expression: medium
         fused: false
         gene:

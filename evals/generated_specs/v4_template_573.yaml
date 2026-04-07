@@ -3,6 +3,7 @@ construct:
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
@@ -15,11 +16,11 @@ construct:
     - cistron:
         label: yfp_reporter
         expression: high
-        fused: false
+        fused: false  # In mammalian context, the compiler is expected to handle polycistronic translation (e.g., via IRES insertion)
         gene:
           id: mVenus
           source: fpbase
-    - terminator: bGH_polyA
+    - terminator: BBa_B0015
   constraints:
     assembly: golden_gate
     enzyme: BsaI

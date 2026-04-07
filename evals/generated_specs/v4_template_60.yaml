@@ -1,19 +1,19 @@
 construct:
-  name: "myc_lacz_mammalian_expression"
+  name: "lacZ_Myc_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: lacZ_target
+        label: lacZ_expression
         expression: high
         chain:
-          - tag: Myc  # Added Myc tag as requested; standard for mammalian detection
+          - tag: Myc
           - gene:
-              id: P00722
+              id: lacZ
               source: uniprot
-    - terminator: bGH_polyA  # Using mammalian polyA terminator for pTwist CMV vector
+    - terminator: bGH_polyA  # Standard polyadenylation signal for mammalian catalog vectors
   constraints:
     assembly: golden_gate
     enzyme: BsaI

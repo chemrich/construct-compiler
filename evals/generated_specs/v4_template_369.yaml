@@ -1,17 +1,18 @@
 construct:
   name: "mScarlet_mammalian_expression"
-  host: HEK293
+  host: mammalian
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
-    - promoter: CMV # Substitution: pLac is a bacterial promoter and not functional in mammalian cells; CMV is used for expression in HEK293.
+    - promoter: CMV # Substituted CMV for pLac because pLac is a bacterial promoter and will not function in a mammalian host
     - cistron:
         label: reporter
         expression: high
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: bGH_polyA
   constraints:
     assembly: golden_gate
     enzyme: BsaI

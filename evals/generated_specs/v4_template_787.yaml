@@ -1,19 +1,20 @@
 construct:
-  name: "YFP_Flag_fusion_HEK293"
+  name: "YFP_FLAG_fusion_HEK293"
   host: HEK293
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
     - promoter: CMV
     - cistron:
-        label: target
+        label: yfp_flag
         expression: high
         chain:
           - gene:
               id: EYFP
               source: fpbase
           - tag: FLAG
-    - terminator: bGH_pA
+    - terminator: BBa_B0015 # Note: Using schema-provided terminator; a polyA signal is typically used for HEK293.
   constraints:
     assembly: golden_gate
     enzyme: BsaI
