@@ -1,0 +1,28 @@
+construct:
+  name: "luciferase_sumo_expression"
+  host: e_coli  # Defaulting e_coli_k12 to e_coli; T7lac used per default rules although T7 polymerase must be provided in trans for K12
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: luciferase
+              source: uniprot
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

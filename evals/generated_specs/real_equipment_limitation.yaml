@@ -1,7 +1,7 @@
 ```yaml
 construct:
-  name: high_temp_expression_construct
-  host: e_coli_bl21_de3
+  name: "37C_soluble_expression_construct"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -11,16 +11,16 @@ construct:
 
     - cistron:
         label: target_protein
-        expression: medium  # Lower expression to reduce aggregation at 37°C
+        expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - solubility_tag: MBP  # Maltose binding protein for enhanced solubility
+          - solubility_tag: MBP # Maltose-binding protein (MBP) is used to promote solubility and prevent aggregation at 37°C
           - linker:
               type: GS_flexible
-              repeats: 3  # Extra flexible linker for proper folding
+              repeats: 2
           - gene:
-              id: mEGFP  # Thermostable fluorescent protein as model
+              id: mEGFP # Using mEGFP as a generic example gene to demonstrate the construct design
               source: fpbase
 
     - terminator: rrnB_T1
@@ -28,9 +28,9 @@ construct:
   constraints:
     assembly: golden_gate
     enzyme: BsaI
-    codon_optimization: local  # Optimized codons for better translation efficiency
-    gc_window: [0.40, 0.60]  # Tighter GC control for stability
-    max_homopolymer: 5
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
 
   synthesis:
     vendor: twist

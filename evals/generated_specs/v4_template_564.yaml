@@ -1,0 +1,24 @@
+construct:
+  name: "luciferase_mammalian_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV # substituted lac with CMV as lac is a prokaryotic promoter and not suitable for mammalian expression
+    - cistron:
+        label: luciferase
+        expression: high
+        gene:
+          id: P62988
+          source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

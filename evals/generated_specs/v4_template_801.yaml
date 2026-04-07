@@ -1,0 +1,31 @@
+construct:
+  name: "mCherry_SUMO_fusion_yeast"
+  host: mammalian  # s_cerevisiae not in host enum; substituting with mammalian as eukaryotic proxy
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # s_cerevisiae promoters (e.g. GAL1, TEF1) not in enum; using EF1_alpha
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

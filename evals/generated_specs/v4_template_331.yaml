@@ -1,0 +1,38 @@
+construct:
+  name: "polycistronic_gfp_egfp_expression"
+  host: e_coli_bl21_de3  # User requested s_cerevisiae; substituted with e_coli_bl21_de3 as s_cerevisiae is not in the supported host list and T7lac requires DE3 lysogen.
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: gfp_cistron
+        expression: medium
+        gene:
+          id: avGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: egfp_cistron
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,72 +1,73 @@
 ```yaml
 construct:
-  name: biofilm_polysaccharide_flagellar_operon
+  name: "Biofilm_Operon_ExoPoly_Flag_mEGFP"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: exopolysaccharide_synthase
+        label: epsA
         expression: high
-        gene:
-          id: P31123  # algD from Pseudomonas aeruginosa
-          source: uniprot
-
-    - spacer: 25
-
-    - cistron:
-        label: polysaccharide_export
-        expression: medium
         fused: false
         gene:
-          id: P31127  # algE from Pseudomonas aeruginosa
+          id: Q8G664 # Example ExoPolysaccharide synthesis gene (B. subtilis)
           source: uniprot
 
     - spacer: 30
 
     - cistron:
-        label: flagellin
+        label: epsB
         expression: high
         fused: false
         gene:
-          id: P04949  # fliC from E. coli
+          id: Q8G665 # Example ExoPolysaccharide synthesis gene (B. subtilis)
           source: uniprot
 
-    - spacer: 25
+    - spacer: 30
 
     - cistron:
-        label: flagellar_motor
+        label: epsC
+        expression: high
+        fused: false
+        gene:
+          id: Q8G666 # Example ExoPolysaccharide synthesis gene (B. subtilis)
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: fliC
         expression: medium
         fused: false
         gene:
-          id: P0ABZ1  # motA from E. coli
+          id: P02942 # Example flagellar protein (E. coli flagellin)
           source: uniprot
 
-    - spacer: 20
+    - spacer: 30
 
     - cistron:
-        label: biofilm_regulator
+        label: motA
+        expression: medium
+        fused: false
+        gene:
+          id: P0A878 # Example flagellar protein (E. coli flagellar motor protein)
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: mEGFP
         expression: low
         fused: false
         gene:
-          id: P76409  # bcsA from E. coli
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: fluorescent_tracker
-        expression: medium
-        fused: false
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: mEGFP
-              source: fpbase
+          id: mEGFP
+          source: fpbase
 
     - terminator: rrnB_T1
 

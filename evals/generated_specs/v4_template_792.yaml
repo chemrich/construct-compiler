@@ -1,0 +1,25 @@
+construct:
+  name: "mScarlet_Ecoli_K12_Expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tac  # SV40 is a mammalian promoter; substituted with tac for E. coli K12 expression
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

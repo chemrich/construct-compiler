@@ -1,6 +1,7 @@
+```yaml
 construct:
   name: "p53_expression_system"
-  host: e_coli_bl21_de3
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -9,13 +10,12 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: p53
+        label: p53_target
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P04637
+              id: P04637 # Human P53 (TP53) UniProt ID
               source: uniprot
 
     - terminator: rrnB_T1
@@ -31,3 +31,4 @@ construct:
     vendor: twist
     budget_per_gene: 400
     max_turnaround_days: 21
+```

@@ -1,0 +1,31 @@
+construct:
+  name: "GFP_C_terminal_SUMO_yeast_expression"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # EF1_alpha substituted for yeast TEF1 promoter
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: SUMO
+    - terminator: BBa_B0015  # General purpose terminator
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

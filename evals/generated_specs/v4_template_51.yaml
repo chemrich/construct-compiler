@@ -1,0 +1,28 @@
+construct:
+  name: "T7_ampR_GST_fusion"
+  host: e_coli_bl21_de3 # T7 promoter requires a DE3 lysogen host for T7 RNA polymerase expression
+  backbone:
+    resistance: kanamycin # Backbone resistance set to kanamycin to allow selection for the ampR (TEM-1) cassette
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: ampR_fusion
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: P0AD64
+              source: uniprot
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

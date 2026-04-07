@@ -1,0 +1,29 @@
+construct:
+  name: "RFP_C_terminal_GST_fusion"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: GST
+    - terminator: BBa_B0015  # Defaulting to a standard terminator; in practice, a polyA signal is used for mammalian expression
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

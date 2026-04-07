@@ -42,6 +42,7 @@ import json
 import logging
 import os
 import re
+import requests
 import sys
 import threading
 import time
@@ -185,50 +186,77 @@ def generate_spec_via_api(
     system_prompt: str | None = None,
 ) -> tuple[dict | None, str, float, str | None]:
     """
-    Call the Anthropic API to generate a YAML spec from a natural language prompt.
+    Call the API (Anthropic or Gemini) to generate a YAML spec from a natural language prompt.
 
     Returns: (parsed_spec_dict, raw_output, time_seconds, error_or_none)
     """
-    try:
-        import anthropic
-    except ImportError:
-        return None, "", 0.0, "anthropic package not installed. Run: pip install anthropic"
-
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        return None, "", 0.0, "ANTHROPIC_API_KEY environment variable not set"
-
     if system_prompt is None:
         system_prompt = SYSTEM_PROMPT_PATH.read_text()
 
-    client = anthropic.Anthropic(api_key=api_key)
-
-    # Respect rate limit before firing the request
-    if _rate_limiter:
-        _rate_limiter.wait()
-
-    t0 = time.monotonic()
-    max_api_retries = 5
-    for api_attempt in range(max_api_retries):
+    if "gemini" in model.lower():
+        api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+        if not api_key:
+            return None, "", 0.0, "Neither GEMINI_API_KEY nor GOOGLE_API_KEY environment variable set"
+            
+        from google import genai
+        client = genai.Client(api_key=api_key)
+        
+        full_prompt = f"{system_prompt}\n\n{prompt}"
+        
+        t0 = time.monotonic()
         try:
-            response = client.messages.create(
+            # Respect rate limit
+            if _rate_limiter:
+                _rate_limiter.wait()
+                
+            response = client.models.generate_content(
                 model=model,
-                max_tokens=4096,
-                system=system_prompt,
-                messages=[{"role": "user", "content": prompt}],
+                contents=full_prompt,
             )
-            raw = response.content[0].text
+            raw = response.text
             elapsed = time.monotonic() - t0
-            break
         except Exception as e:
-            err_str = str(e).lower()
-            is_rate_limit = "rate" in err_str or "429" in err_str or "overloaded" in err_str
-            if is_rate_limit and api_attempt < max_api_retries - 1:
-                backoff = 2 ** api_attempt * 5  # 5s, 10s, 20s, 40s
-                logger.warning(f"Rate limited, backing off {backoff}s (attempt {api_attempt + 1})")
-                time.sleep(backoff)
-                continue
-            return None, "", time.monotonic() - t0, f"API error: {e}"
+            return None, "", time.monotonic() - t0, f"Gemini API error: {e}"
+            
+    else:
+        # Default to Claude
+        try:
+            import anthropic
+        except ImportError:
+            return None, "", 0.0, "anthropic package not installed. Run: pip install anthropic"
+
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            return None, "", 0.0, "ANTHROPIC_API_KEY environment variable not set"
+
+        client = anthropic.Anthropic(api_key=api_key)
+
+        # Respect rate limit before firing the request
+        if _rate_limiter:
+            _rate_limiter.wait()
+
+        t0 = time.monotonic()
+        max_api_retries = 5
+        for api_attempt in range(max_api_retries):
+            try:
+                response = client.messages.create(
+                    model=model,
+                    max_tokens=4096,
+                    system=system_prompt,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+                raw = response.content[0].text
+                elapsed = time.monotonic() - t0
+                break
+            except Exception as e:
+                err_str = str(e).lower()
+                is_rate_limit = "rate" in err_str or "429" in err_str or "overloaded" in err_str
+                if is_rate_limit and api_attempt < max_api_retries - 1:
+                    backoff = 2 ** api_attempt * 5  # 5s, 10s, 20s, 40s
+                    logger.warning(f"Rate limited, backing off {backoff}s (attempt {api_attempt + 1})")
+                    time.sleep(backoff)
+                    continue
+                return None, "", time.monotonic() - t0, f"API error: {e}"
 
     # Parse the YAML from the response
     spec, parse_error = _extract_yaml(raw)
@@ -405,6 +433,9 @@ def _extract_part_types_from_spec(spec: dict) -> set[str]:
                                 types.add("PurificationTag")
                             elif k == "solubility_tag":
                                 types.add("SolubilityTag")
+                                # Recognize known dual-purpose tags as satisfying PurificationTag
+                                if item[k] in ["MBP", "SUMO", "GST", "Trx"]:
+                                    types.add("PurificationTag")
                             elif k == "cleavage_site":
                                 types.add("CleavageSite")
                             elif k == "linker":
@@ -412,6 +443,17 @@ def _extract_part_types_from_spec(spec: dict) -> set[str]:
                             elif k == "gene":
                                 types.add("CDS")
     return types
+
+
+def _count_cistrons_in_spec(spec: dict) -> int:
+    """Count cistron blocks in the spec directly as a fallback."""
+    count = 0
+    root = spec.get("construct", spec)
+    cassette = root.get("cassette", [])
+    for element in cassette:
+        if isinstance(element, dict) and "cistron" in element:
+            count += 1
+    return count
 
 
 # ---------------------------------------------------------------------------
@@ -513,12 +555,7 @@ def _eval_single_case(
         if outcome.harness_passed is not None:
             eval_r = EvalResult()
             eval_r.passed = outcome.harness_passed
-            eval_r.cistron_count = 0
-            try:
-                temp = evaluate_spec(outcome.generated_spec, skip_constraints=True)
-                eval_r.cistron_count = temp.cistron_count
-            except Exception:
-                pass
+            eval_r.cistron_count = _count_cistrons_in_spec(outcome.generated_spec)
 
         outcome.expectation_results = check_expectations(
             case, outcome.generated_spec, eval_r,

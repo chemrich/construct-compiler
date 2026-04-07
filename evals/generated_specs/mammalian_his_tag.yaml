@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: "his_tagged_insulin_CHO"
+  name: "his_insulin_cho"
   host: CHO
 
   backbone:
@@ -11,24 +11,12 @@ construct:
 
     - cistron:
         label: insulin
-        expression: high
+        expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: P01308
+              id: insulin
               source: uniprot
 
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+    - terminator: BBa_B0015 # Note: For mammalian expression, a polyadenylation signal is typically used instead of bacterial terminators. BBa_B0015 is used as a placeholder from the provided list.
 ```

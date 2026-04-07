@@ -1,7 +1,7 @@
 ```yaml
 construct:
-  name: "HA_mScarlet_mammalian"
-  host: HEK293
+  name: "HA_mScarlet_mammalian_expression"
+  host: HEK293 # A specific mammalian host for general "mammalian cells"
 
   backbone:
     catalog_vector: "pTwist CMV"
@@ -10,7 +10,7 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: target
+        label: HA_mScarlet
         expression: high
         chain:
           - tag: HA
@@ -18,7 +18,7 @@ construct:
               id: mScarlet
               source: fpbase
 
-    - terminator: rrnB_T1
+    - terminator: BBa_B0015 # Bacterial terminator; for mammalian expression, a polyadenylation signal (usually from the vector) is used.
 
   constraints:
     assembly: golden_gate

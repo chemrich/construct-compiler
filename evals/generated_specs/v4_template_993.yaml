@@ -1,0 +1,26 @@
+construct:
+  name: "lacZ_HA_fusion"
+  host: mammalian # s_cerevisiae requested; mammalian used as a schema-compliant eukaryotic surrogate
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha # EF1_alpha (TEF1) is functional in yeast and mammalian systems
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: lacZ
+              source: uniprot
+          - tag: HA
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

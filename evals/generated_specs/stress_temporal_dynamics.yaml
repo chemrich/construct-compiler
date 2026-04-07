@@ -1,43 +1,45 @@
 ```yaml
 construct:
-  name: temporal_protein_dynamics_operon
-  host: e_coli_bl21_de3
+  name: "protein_degradation_comparison_operon"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: base_untagged
+        label: untagged_variant
         expression: medium
+        fused: false # Independent translation for this variant
         gene:
-          id: P0A7B8  # example protein, replace with target
+          id: user_protein_variant_1 # Placeholder: User must specify the actual gene ID (e.g., "my_gene")
           source: uniprot
 
     - spacer: 30
 
     - cistron:
-        label: ssrA_tagged
+        label: ssrA_variant
         expression: medium
-        fused: false
-        chain:
-          - gene:
-              id: P0A7B8
-              source: uniprot
-          - tag: ssrA  # rapid degradation tag
+        fused: false # Independent translation for this variant
+        gene:
+          id: user_protein_ssrA_variant_2 # Placeholder: User must specify the actual gene ID (e.g., "my_gene_ssrA")
+          source: uniprot
+          # The ssrA degradation tag is typically C-terminal. Please ensure 'user_protein_ssrA_variant_2'
+          # includes the ssrA sequence at its C-terminus, as the schema does not support explicit C-terminal tags.
 
     - spacer: 30
 
     - cistron:
-        label: his_tagged_stable
+        label: His_tagged_variant
         expression: medium
-        fused: false
+        fused: false # Independent translation for this variant
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A7B8
+              id: user_protein_variant_3 # Placeholder: User must specify the actual gene ID (e.g., "my_gene")
               source: uniprot
 
     - terminator: rrnB_T1

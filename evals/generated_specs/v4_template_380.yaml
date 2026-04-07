@@ -1,0 +1,31 @@
+construct:
+  name: "yeast_rfp_c_terminal_mbp"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Substituting yeast-specific TEF1 promoter for s_cerevisiae host
+    - cistron:
+        label: rfp_mbp_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: MBP
+    - terminator: CYC1_term  # Substituting yeast-specific CYC1 terminator for s_cerevisiae host
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

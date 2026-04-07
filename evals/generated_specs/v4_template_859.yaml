@@ -1,0 +1,26 @@
+construct:
+  name: "S_cerevisiae_pTet_YFP_expression"
+  host: s_cerevisiae  # Specific eukaryotic host as requested
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV  # pTet is not in the supported list; substituted with CMV for eukaryotic expression in yeast
+    - cistron:
+        label: yfp_reporter
+        expression: high
+        gene:
+          id: YFP
+          source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

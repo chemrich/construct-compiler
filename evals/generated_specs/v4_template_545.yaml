@@ -1,0 +1,33 @@
+construct:
+  name: "mammalian_polycistronic_luciferase_egfp"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: luciferase
+        expression: high
+        gene:
+          id: P08659
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: EGFP
+          source: fpbase
+    - terminator: bGH_polyA
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

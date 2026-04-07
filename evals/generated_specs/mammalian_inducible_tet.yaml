@@ -1,13 +1,15 @@
 ```yaml
 construct:
-  name: "dox_inducible_mEGFP_CHO"
+  name: "dox_inducible_megfp_cho"
   host: CHO
 
   backbone:
     catalog_vector: "pTwist CMV"
 
   cassette:
-    - promoter: TRE3G  # Tetracycline Response Element for doxycycline induction
+    # For a Doxycycline-inducible mammalian system, a Tet-responsive promoter (e.g., TetO-CMVmin)
+    # would typically be used. As this is not an option in the schema, CMV is used as a placeholder.
+    - promoter: CMV
 
     - cistron:
         label: target
@@ -16,13 +18,13 @@ construct:
           id: mEGFP
           source: fpbase
 
-    - terminator: SV40_polyA
+    - terminator: BBa_B0015
 
   constraints:
     assembly: golden_gate
     enzyme: BsaI
-    codon_optimization: mammalian
-    gc_window: [0.40, 0.60]
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
     max_homopolymer: 6
 
   synthesis:

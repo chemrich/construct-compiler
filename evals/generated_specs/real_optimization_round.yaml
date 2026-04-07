@@ -1,6 +1,7 @@
+```yaml
 construct:
-  name: "his_tev_trx_target_optimization_round2"
-  host: e_coli_bl21_de3
+  name: "egfp_expression_optimized"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -14,15 +15,12 @@ construct:
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - solubility_tag: Trx
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: Trx # Changed from MBP
           - gene:
-              id: target_protein
-              source: uniprot
+              id: mEGFP
+              source: fpbase
 
-    - terminator: T7term
+    - terminator: BBa_B0015 # Changed from rrnB_T1
 
   constraints:
     assembly: golden_gate
@@ -35,3 +33,4 @@ construct:
     vendor: twist
     budget_per_gene: 400
     max_turnaround_days: 21
+```

@@ -1,0 +1,34 @@
+construct:
+  name: "polycistronic_mcherry_bfp_yeast"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # EF1_alpha substituted as the most compatible eukaryotic promoter available in the spec
+    - cistron:
+        label: mCherry_reporter
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: BFP_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

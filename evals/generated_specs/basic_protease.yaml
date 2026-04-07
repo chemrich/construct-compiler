@@ -1,10 +1,11 @@
 ```yaml
 construct:
-  name: serine_protease_expression
+  name: "serine_protease_expression"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: T7lac
@@ -12,12 +13,9 @@ construct:
     - cistron:
         label: serine_protease
         expression: medium
-        chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
-          - gene:
-              id: P00766  # Trypsin
-              source: uniprot
+        gene:
+          id: P00760  # Human Trypsin-1, a common serine protease example
+          source: uniprot
 
     - terminator: rrnB_T1
 

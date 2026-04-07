@@ -1,0 +1,32 @@
+construct:
+  name: "mammalian_polycistronic_lacZ_YFP"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: beta_galactosidase
+        expression: high
+        gene:
+          id: P00722
+          source: uniprot
+    - spacer: 500  # Spacer provides room for an IRES element for mammalian polycistronic translation
+    - cistron:
+        label: yellow_fluorescent_protein
+        expression: medium
+        fused: false
+        gene:
+          id: EYFP
+          source: fpbase
+    - terminator: bGH_polyA
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

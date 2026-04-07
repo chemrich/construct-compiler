@@ -1,40 +1,40 @@
 ```yaml
 construct:
-  name: lentiviral_trafficking_reporter
-  host: HEK293
+  name: "lentiviral_trafficking_reporter"
+  host: HEK293 # Lentiviral constructs are typically used in mammalian cells like HEK293 for packaging and subsequent stable line generation.
 
   backbone:
-    catalog_vector: "pTwist Lenti"
-    resistance: ampicillin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV" # Best available mammalian catalog vector in the schema. In a true lentiviral vector, this expression cassette would be cloned into a lentiviral backbone (e.g., containing LTRs, packaging signal).
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV # Strong constitutive promoter commonly used for mammalian expression.
 
     - cistron:
-        label: trafficking_reporter
-        expression: medium
+        label: target_protein_mEGFP_fusion
+        expression: high # High expression desired for robust trafficking visualization.
         chain:
+          - tag: FLAG # N-terminal FLAG tag for immunological detection or purification.
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: KIF5B # Example of a trafficking protein (Kinesin family member 5B).
+              source: uniprot # UniProt ID for natural proteins.
           - linker:
-              type: GS_flexible
-              repeats: 3
-          - tag: HA
+              type: GS_flexible # Flexible linker to separate the two protein domains.
+              repeats: 2
+          - gene:
+              id: mEGFP # Green fluorescent protein for tracking.
+              source: fpbase # Fluorescent proteins are sourced from fpbase.
 
-    - terminator: SV40_polyA
+    - terminator: BBa_B0015 # The schema provides bacterial terminators. In mammalian constructs, a polyadenylation signal (e.g., SV40 or bGH polyA) would typically be used for proper mRNA processing and stability. This choice is based on available schema options.
 
   constraints:
     assembly: golden_gate
     enzyme: BsaI
-    codon_optimization: local
+    codon_optimization: local # Codon optimization for expression in the HEK293 host.
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
 
   synthesis:
     vendor: twist
-    budget_per_gene: 500
+    budget_per_gene: 400
     max_turnaround_days: 21
 ```

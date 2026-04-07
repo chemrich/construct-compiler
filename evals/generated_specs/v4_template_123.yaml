@@ -1,0 +1,26 @@
+construct:
+  name: "sfGFP_C_terminal_FLAG_Expression"
+  host: e_coli_bl21  # Note: BL21(DE3) is required for the T7lac promoter; if using standard BL21, a tac or trc promoter would be required.
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: sfGFP_FLAG
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - tag: FLAG
+    - terminator: T7term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,0 +1,28 @@
+construct:
+  name: "YFP_C_terminal_Myc_yeast"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron  # Yeast high-copy origin
+    source: addgene
+  cassette:
+    - promoter: GPD  # Constitutive high-expression yeast promoter (TDH3)
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mVenus
+              source: fpbase
+          - tag: Myc
+    - terminator: CYC1  # Standard yeast terminator
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

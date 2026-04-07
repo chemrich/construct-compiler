@@ -1,27 +1,22 @@
 ```yaml
 construct:
-  name: "low_expression_protease"
-  host: e_coli_bl21
+  name: "low_expression_toxic_protease"
+  host: e_coli
 
   backbone:
     catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: araBAD
+    # A weak constitutive promoter chosen for low expression,
+    # deviating from the default T7lac promoter which is high-expression.
+    - promoter: J23106
 
     - cistron:
-        label: protease
-        expression: very_low
-        chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: P0A9X9
-              source: uniprot
+        label: toxic_protease
+        expression: low
+        gene:
+          id: "protease_gene" # Placeholder for the specific protease gene, e.g., TEV protease, specific endopeptidase
+          source: uniprot # Assuming a natural protease with a UniProt ID
 
     - terminator: rrnB_T1
 

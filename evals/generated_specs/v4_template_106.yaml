@@ -1,0 +1,34 @@
+construct:
+  name: "yeast_bfp_ampr_polycistronic"
+  host: s_cerevisiae
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # Substituting EF1_alpha from the permitted list as a yeast-compatible constitutive promoter
+    - cistron:
+        label: bfp_reporter
+        expression: high
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: ampr_expression
+        expression: medium
+        fused: false  # Independent translation in yeast typically requires an IRES or 2A peptide, here represented by the spacer/non-fused flag
+        gene:
+          id: P00810
+          source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

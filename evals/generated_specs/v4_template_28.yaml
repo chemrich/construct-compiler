@@ -1,0 +1,28 @@
+construct:
+  name: "RFP_HA_expression_yeast"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # Used EF1_alpha as a functional equivalent to the yeast TEF1 promoter
+    - cistron:
+        label: HA_RFP
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

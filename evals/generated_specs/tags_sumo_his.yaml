@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: "His_SUMO_hSOD1_high_expression"
+  name: "HisSUMO_hSOD1"
   host: e_coli
 
   backbone:
@@ -10,14 +10,14 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: hSOD1
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: SUMO
-          - cleavage_site: SUMO_protease
+          - cleavage_site: TEV # SUMO protease cleavage site (Ulp1) is not explicitly listed in the schema; TEV is used as a common alternative.
           - gene:
-              id: P00441
+              id: SOD1_HUMAN
               source: uniprot
 
     - terminator: rrnB_T1

@@ -1,0 +1,31 @@
+construct:
+  name: "GST_EYFP_yeast_expression"
+  host: s_cerevisiae  # S. cerevisiae requested; using yeast-compatible promoter and terminator
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAL1  # GAL1 substituted for yeast-specific expression
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: EYFP
+              source: fpbase
+    - terminator: CYC1  # CYC1 substituted for yeast-specific termination
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

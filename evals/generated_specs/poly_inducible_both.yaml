@@ -1,10 +1,11 @@
 ```yaml
 construct:
-  name: dual_inducible_fluorescent_reporter
+  name: "dual_inducible_egfp_scarlet"
   host: e_coli
 
   backbone:
-    catalog_vector: pET-28b(+)
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: araBAD
@@ -14,20 +15,15 @@ construct:
         gene:
           id: mEGFP
           source: fpbase
-
     - terminator: rrnB_T1
-
-    - spacer: 30
 
     - promoter: T7lac
     - cistron:
         label: scarlet
         expression: high
-        fused: false
         gene:
           id: mScarlet
           source: fpbase
-
     - terminator: rrnB_T1
 
   constraints:

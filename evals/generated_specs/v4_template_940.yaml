@@ -1,0 +1,28 @@
+construct:
+  name: "his_bfp_k12_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac  # Substituted T7lac for tac as host e_coli_k12 lacks T7 polymerase
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

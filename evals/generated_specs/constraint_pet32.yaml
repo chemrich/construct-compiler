@@ -1,7 +1,7 @@
 ```yaml
 construct:
-  name: "pET32a_Trx_fusion"
-  host: e_coli_bl21_de3
+  name: "pET_32a_Trx_fusion_construct"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-32a(+)"
@@ -10,18 +10,13 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: target_gene
         expression: high
         chain:
-          - tag: 6xHis
           - solubility_tag: Trx
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: target_gene
-              source: uniprot
+              id: mEGFP # Placeholder gene, replace with your gene of interest
+              source: fpbase
 
     - terminator: rrnB_T1
 

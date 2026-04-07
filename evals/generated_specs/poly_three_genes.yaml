@@ -1,18 +1,17 @@
 ```yaml
 construct:
-  name: tricistronic_fluorescent_operon
+  name: "three_gene_operon_hismbpefg_mscarlet_mtagbfp2"
   host: e_coli
 
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: his_tev_mbp_megfp
         expression: high
         chain:
           - tag: 6xHis
@@ -25,7 +24,7 @@ construct:
     - spacer: 50
 
     - cistron:
-        label: red_reporter
+        label: mscarlet_reporter
         expression: medium
         fused: false
         gene:
@@ -35,7 +34,7 @@ construct:
     - spacer: 50
 
     - cistron:
-        label: blue_reporter
+        label: mtagbfp2_reporter
         expression: low
         fused: false
         gene:
@@ -43,16 +42,4 @@ construct:
           source: fpbase
 
     - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```

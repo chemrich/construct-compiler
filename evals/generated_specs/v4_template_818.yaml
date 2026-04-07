@@ -1,0 +1,34 @@
+construct:
+  name: "ampR_GFP_polycistronic_construct"
+  host: e_coli  # Substituted s_cerevisiae for e_coli as yeast does not natively support polycistronic translation and host is not in supported list.
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: selection_marker
+        expression: high
+        gene:
+          id: P62593
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

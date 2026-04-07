@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: "mEGFP_secreted_HEK293"
+  name: "mEGFP_secretion_HEK293"
   host: HEK293
 
   backbone:
@@ -10,15 +10,13 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: secreted_egfp
+        label: secreted_mEGFP
         expression: high
-        chain:
-          - signal_peptide: human_IgG_kappa  # For secretion from mammalian cells
-          - gene:
-              id: mEGFP
-              source: fpbase
+        gene:
+          id: mEGFP
+          source: fpbase
 
-    - terminator: rrnB_T1
+    - terminator: BBa_B0015 # Note: For mammalian expression, a PolyA signal (e.g., SV40 PolyA, BGH PolyA) is typically required, but not available in the provided terminator options. BBa_B0015 is used as a placeholder.
 
   constraints:
     assembly: golden_gate

@@ -1,0 +1,32 @@
+construct:
+  name: "mCherry_YFP_mammalian_polycistronic"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: mCherry_cistron
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: YFP_cistron
+        expression: high
+        fused: false
+        gene:
+          id: YFP
+          source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

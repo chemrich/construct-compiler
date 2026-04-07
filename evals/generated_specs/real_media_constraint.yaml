@@ -1,17 +1,17 @@
 ```yaml
 construct:
-  name: His_mEGFP_LB_optimized
-  host: e_coli_bl21_de3
+  name: "his_mEGFP_lb_expression"
+  host: e_coli
 
   backbone:
     catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: T7lac  # T7lac for tight control and IPTG induction in LB
+    - promoter: T7lac
 
     - cistron:
-        label: target
-        expression: medium  # medium expression to avoid inclusion bodies in LB
+        label: his_mEGFP
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
@@ -29,6 +29,4 @@ construct:
 
   synthesis:
     vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```

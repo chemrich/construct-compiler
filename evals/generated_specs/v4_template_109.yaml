@@ -1,0 +1,34 @@
+construct:
+  name: "yeast_polycistronic_mcherry_sfgfp"
+  host: s_cerevisiae  # S. cerevisiae requested. Note: Polycistronic expression in yeast is non-standard; typically requires 2A peptides or IRES, but here implemented with a spacer per schema.
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Common constitutive yeast promoter. Substituted as a compatible yeast alternative to the schema examples.
+    - cistron:
+        label: red_fluorescence
+        expression: medium
+        gene:
+          id: mCherry
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: green_fluorescence
+        expression: medium
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: CYC1_term  # Standard yeast terminator.
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

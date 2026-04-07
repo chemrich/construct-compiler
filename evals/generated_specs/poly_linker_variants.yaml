@@ -1,22 +1,24 @@
 ```yaml
 construct:
-  name: dual_fluorescent_reporter_system
-  host: e_coli_bl21
+  name: his_gs_mbp_megfp_and_his_rigid_mscarlet
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: his_gs_mbp_megfp
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 1
+              repeats: 2
           - solubility_tag: MBP
           - gene:
               id: mEGFP
@@ -25,14 +27,12 @@ construct:
     - spacer: 30
 
     - cistron:
-        label: reporter
-        expression: medium
-        fused: false
+        label: his_rigid_mscarlet
+        expression: medium # Defaulting to medium for second cistron as no explicit expression level was given
         chain:
           - tag: 6xHis
           - linker:
               type: rigid_EAAAK
-              repeats: 1
           - gene:
               id: mScarlet
               source: fpbase

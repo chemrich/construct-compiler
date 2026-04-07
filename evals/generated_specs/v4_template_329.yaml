@@ -1,0 +1,32 @@
+construct:
+  name: "mScarlet_mEGFP_polycistronic_mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: reporter_1
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: reporter_2
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BGH_polyA  # Substituted bacterial terminator with mammalian polyA signal
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

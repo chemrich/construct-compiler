@@ -1,16 +1,18 @@
 ```yaml
 construct:
-  name: "His_mEGFP_urgent"
-  host: e_coli_bl21_de3
+  name: "his_mEGFP_quick_synthesis"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: his_mEGFP
         expression: high
         chain:
           - tag: 6xHis
@@ -28,7 +30,7 @@ construct:
     max_homopolymer: 6
 
   synthesis:
-    vendor: idt
+    vendor: twist
     budget_per_gene: 400
     max_turnaround_days: 5
 ```

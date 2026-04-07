@@ -1,18 +1,17 @@
 ```yaml
 construct:
-  name: His_TEV_MBP_mEGFP_mScarlet_StrepII_mNeonGreen_tricistronic
+  name: "his_tev_mbp_megfp_mscarlet_strep_mneongreen"
   host: e_coli
 
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: target_protein
         expression: high
         chain:
           - tag: 6xHis
@@ -25,8 +24,8 @@ construct:
     - spacer: 30
 
     - cistron:
-        label: reporter1
-        expression: medium
+        label: independent_reporter
+        expression: low
         fused: false
         gene:
           id: mScarlet
@@ -35,9 +34,8 @@ construct:
     - spacer: 30
 
     - cistron:
-        label: reporter2
-        expression: low
-        fused: false
+        label: strep_fusion
+        expression: medium # Expression level for this cistron was not specified, defaulting to medium
         chain:
           - tag: Strep-II
           - gene:

@@ -1,0 +1,25 @@
+construct:
+  name: "mCherry_expression_plasmid"
+  host: e_coli  # Substitution: s_cerevisiae is not a supported host in the current schema; e_coli was selected to match the requested lac promoter.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: lacUV5
+    - cistron:
+        label: reporter
+        expression: medium
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

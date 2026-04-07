@@ -5,15 +5,14 @@ construct:
 
   backbone:
     resistance: kanamycin
-    ori: p15A  # medium-copy origin for balanced expression
-    source: addgene
+    ori: p15A
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: mEGFP
-        expression: medium
+        label: mEGFP_tag
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
@@ -21,24 +20,12 @@ construct:
     - spacer: 30
 
     - cistron:
-        label: mScarlet
-        expression: medium
+        label: mScarlet_tag
+        expression: high
         fused: false
         gene:
           id: mScarlet
           source: fpbase
 
     - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```

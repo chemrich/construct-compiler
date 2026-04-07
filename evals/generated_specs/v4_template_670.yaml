@@ -1,0 +1,26 @@
+construct:
+  name: "mCherry_GST_yeast_expression"
+  host: HEK293  # s_cerevisiae not in supported host list; substituted with HEK293 as a eukaryotic surrogate
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Default promoter for mammalian host surrogate
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

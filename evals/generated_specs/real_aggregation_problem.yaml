@@ -1,26 +1,23 @@
 ```yaml
 construct:
-  name: "Ras_GTPase_GST_fusion_low_expression"
-  host: e_coli_bl21_de3
+  name: "Ras_GST_low_exp"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: Ras_GTPase_fusion
         expression: low
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
           - solubility_tag: GST
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P01112
+              id: P01116 # Human KRAS (Ras GTPase)
               source: uniprot
 
     - terminator: rrnB_T1

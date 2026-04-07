@@ -1,0 +1,26 @@
+construct:
+  name: "mscarlet_strep_fusion_hek293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015 # Note: BBa_B0015 used as a placeholder from the schema list; mammalian vectors typically require a polyA signal.
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

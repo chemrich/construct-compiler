@@ -1,0 +1,26 @@
+construct:
+  name: "mammalian_sumo_rfp"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: sumo_rfp_target
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: bGH_pA  # Using bGH_pA as the standard mammalian terminator instead of bacterial options
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

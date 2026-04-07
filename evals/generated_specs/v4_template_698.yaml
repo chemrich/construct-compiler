@@ -1,0 +1,26 @@
+construct:
+  name: "yeast_rfp_expression"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # trc is a bacterial promoter and will not function in yeast; substituting with TEF1 for high-level yeast expression.
+    - cistron:
+        label: rfp_reporter
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: CYC1_term
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

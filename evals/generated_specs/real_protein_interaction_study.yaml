@@ -1,7 +1,7 @@
 ```yaml
 construct:
-  name: "kinase_mEGFP_bait_coexpression"
-  host: e_coli_bl21_de3
+  name: kinase_egfp_bait_coexpression
+  host: e_coli
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -10,17 +10,16 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: kinase_fusion
+        label: kinase_egfp_fusion
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P06493
+              id: generic_kinase # Placeholder: please provide UniProt ID for specific kinase
               source: uniprot
           - linker:
-              type: GS_flexible
-              repeats: 2
+              type: short_GS
+              repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
@@ -32,7 +31,7 @@ construct:
         expression: medium
         fused: false
         gene:
-          id: P02768
+          id: generic_bait_protein # Placeholder: please provide UniProt ID for specific bait protein
           source: uniprot
 
     - terminator: rrnB_T1
@@ -43,9 +42,4 @@ construct:
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```

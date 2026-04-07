@@ -1,22 +1,22 @@
 ```yaml
 construct:
-  name: "bacterial_alpha_amylase_expression"
+  name: "bacterial_alpha_amylase_e_coli"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: alpha_amylase
         expression: high
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: P06278
-              source: uniprot
+        gene:
+          id: P00690 # Bacillus licheniformis alpha-amylase
+          source: uniprot
 
     - terminator: rrnB_T1
 

@@ -1,5 +1,6 @@
+```yaml
 construct:
-  name: "his_tagged_and_untagged_comparison"
+  name: "his_tag_example"
   host: e_coli
 
   backbone:
@@ -8,24 +9,15 @@ construct:
   cassette:
     - promoter: T7lac
 
-    - cistron:
-        label: his_tagged_target
+    - cistron: # User requested "His tag AND no tags". This example shows a His tag.
+               # To specify a protein with "no tags", simply omit the 'tag' field from the 'chain'.
+        label: target_protein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-
-    - spacer: 30
-
-    - cistron:
-        label: untagged_target
-        expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
 
     - terminator: rrnB_T1
 
@@ -40,3 +32,4 @@ construct:
     vendor: twist
     budget_per_gene: 400
     max_turnaround_days: 21
+```

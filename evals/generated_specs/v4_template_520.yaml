@@ -1,0 +1,26 @@
+construct:
+  name: "lacZ_c_sumo_mammalian"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: P06670
+              source: uniprot
+          - solubility_tag: SUMO
+    - terminator: BGH_pA  # Substituted bacterial terminator with mammalian polyA signal for host compatibility
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

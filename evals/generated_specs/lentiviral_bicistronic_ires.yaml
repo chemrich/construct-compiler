@@ -1,32 +1,34 @@
 ```yaml
 construct:
-  name: "lentiviral_mEGFP_IRES_puromycin"
-  host: HEK293
+  name: "lentiviral_bicistronic_mEGFP_puroR"
+  host: HEK293 # Lentiviral constructs are typically expressed in mammalian cells; HEK293 is a common host.
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTwist CMV" # A common mammalian expression vector, often used in lentiviral systems.
 
   cassette:
-    - promoter: CMV
+    - promoter: CMV # Common strong promoter for mammalian expression.
 
     - cistron:
-        label: reporter
+        label: mEGFP_gene
         expression: high
         gene:
           id: mEGFP
           source: fpbase
 
-    - spacer: IRES  # Internal Ribosome Entry Site for bicistronic expression
+    - spacer: 30 # A spacer between cistrons for bicistronic expression.
+                 # The 'fused: false' on the next cistron signifies independent translation
+                 # via an IRES element as described in the prompt.
 
     - cistron:
-        label: selection
-        expression: medium
-        fused: false
+        label: puroR
+        expression: medium # Puromycin resistance typically needs medium expression for selection.
+        fused: false # Indicates independent translation from the same transcript, mediated by an IRES.
         gene:
-          id: P0AR_ECOLI
-          source: uniprot
+          id: PAC # Puromycin N-acetyltransferase gene
+          source: uniprot # UniProt ID for PAC is P00494.
 
-    - terminator: rrnB_T1
+    - terminator: BBa_B0015 # A common strong terminator.
 
   constraints:
     assembly: golden_gate

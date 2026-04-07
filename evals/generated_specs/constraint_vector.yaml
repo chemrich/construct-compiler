@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: "mScarlet_His_pET28b"
+  name: "mScarlet_pET28b_expression"
   host: e_coli_bl21_de3
 
   backbone:
@@ -10,11 +10,13 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: mScarlet_target
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
 
     - terminator: rrnB_T1
 
@@ -27,6 +29,4 @@ construct:
 
   synthesis:
     vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```

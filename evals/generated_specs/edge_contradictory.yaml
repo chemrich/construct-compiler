@@ -1,19 +1,20 @@
 ```yaml
 construct:
-  name: "GFP_expression_ecoli"
+  name: "gfp_expression_e_coli"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
-    - promoter: T7lac  # CMV promoter is mammalian-specific, using T7lac for E. coli instead
+    - promoter: T7lac # CMV promoter is for mammalian hosts, T7lac is a common E. coli promoter.
 
     - cistron:
-        label: target
+        label: gfp
         expression: high
         gene:
-          id: mEGFP
+          id: GFP
           source: fpbase
 
     - terminator: rrnB_T1

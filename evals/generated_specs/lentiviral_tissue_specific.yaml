@@ -1,26 +1,20 @@
 ```yaml
 construct:
-  name: lentiviral_neuron_specific_expression
+  name: "lentiviral_neuron_target"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
-    # Using CMV backbone but will replace with neuron-specific promoter
 
   cassette:
-    - promoter: CMV  # Placeholder - would need custom neuron-specific promoter like Synapsin-1
-      # Note: True neuron-specific promoters like Synapsin-1 or CaMKII would require custom synthesis
-
+    - promoter: CMV # Neuron-specific promoter not in the defined list, using common mammalian CMV as a placeholder.
     - cistron:
-        label: target
-        expression: medium
-        chain:
-          - tag: FLAG
-          - gene:
-              id: mEGFP
-              source: fpbase
-
-    - terminator: rrnB_T1
+        label: target_gene
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015 # A mammalian polyadenylation signal (e.g., SV40 PolyA, bGH PolyA) would be typical for a lentiviral construct, but is not in the schema's terminator list.
 
   constraints:
     assembly: golden_gate
@@ -31,6 +25,6 @@ construct:
 
   synthesis:
     vendor: twist
-    budget_per_gene: 600
-    max_turnaround_days: 28
+    budget_per_gene: 400
+    max_turnaround_days: 21
 ```

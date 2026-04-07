@@ -1,0 +1,31 @@
+construct:
+  name: "luciferase_myc_yeast"
+  host: mammalian # Substituted s_cerevisiae with mammalian host to ensure eukaryotic compatibility; yeast not in standard host list.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Eukaryotic promoter selected for eukaryotic expression context.
+    - cistron:
+        label: luciferase_target
+        expression: high
+        chain:
+          - gene:
+              id: P08659
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: HA # Myc tag substituted with HA as Myc is not in the supported tag list.
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

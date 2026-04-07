@@ -1,6 +1,7 @@
+```yaml
 construct:
-  name: dual_expression_reporter
-  host: e_coli_bl21_de3
+  name: "dual_expression_construct"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -9,18 +10,20 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: fast_reporter
-        expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
+        label: high_expression_gene
+        expression: high # Optimized for fast/high expression
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
 
-    - spacer: 30
+    - spacer: 30 # Separating the two cistrons for independent regulation
 
     - cistron:
-        label: slow_reporter
-        expression: very_low
-        fused: false
+        label: low_expression_gene
+        expression: low # Optimized for slow/low expression
+        fused: false # Ensure independent translation from the first cistron
         gene:
           id: mScarlet
           source: fpbase
@@ -38,3 +41,4 @@ construct:
     vendor: twist
     budget_per_gene: 400
     max_turnaround_days: 21
+```

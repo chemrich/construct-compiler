@@ -1,0 +1,28 @@
+construct:
+  name: "luciferase_strep_fusion_s_cerevisiae"
+  host: s_cerevisiae  # Custom host s_cerevisiae specified by user
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Using yeast TEF1 promoter for s_cerevisiae host
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: P31356
+              source: uniprot
+          - tag: Strep-II
+    - terminator: CYC1  # Using yeast CYC1 terminator for s_cerevisiae host
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

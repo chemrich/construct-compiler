@@ -1,42 +1,19 @@
 ```yaml
 construct:
-  name: lentiviral_mEGFP_puromycin_reporter
-  host: HEK293
+  name: "lentiviral_mEGFP_reporter_jurkat"
+  host: mammalian # Designed for Jurkat T cells, using 'mammalian' as the closest general host type in the schema.
 
   backbone:
-    catalog_vector: pTwist CMV
+    catalog_vector: "pTwist CMV" # A mammalian expression vector. Assumes puromycin selection is part of the lentiviral backbone elements not explicitly specified here.
 
   cassette:
     - promoter: EF1_alpha
 
     - cistron:
         label: reporter
-        expression: high
         gene:
           id: mEGFP
           source: fpbase
 
-    - spacer: 30
-
-    - cistron:
-        label: selection
-        expression: medium
-        fused: false
-        gene:
-          id: P0A7M6
-          source: uniprot
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+    - terminator: BBa_B0015 # In a mammalian context, a polyA signal (e.g., BGH polyA, SV40 polyA) would typically be used here.
 ```

@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_egfp_ptet_replacement"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV # Substituting CMV for pTet as TRE/pTet is not in the predefined promoter list; CMV is standard for mammalian expression
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_pA
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

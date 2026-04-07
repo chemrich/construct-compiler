@@ -1,0 +1,34 @@
+construct:
+  name: "s_cerevisiae_polycistronic_rfp_lacz"
+  host: mammalian  # S. cerevisiae is not in the allowed host list; using mammalian as the eukaryotic alternative.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # Eukaryotic promoter chosen for yeast expression compatibility.
+    - cistron:
+        label: rfp_reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: lacz_reporter
+        expression: medium
+        fused: false  # Indicates independent translation for polycistronic design.
+        gene:
+          id: lacZ
+          source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

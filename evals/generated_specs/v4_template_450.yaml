@@ -1,0 +1,35 @@
+construct:
+  name: "ampR_sfGFP_polycistronic_yeast_sub"
+  # S. cerevisiae host not in schema, substituted with e_coli for compatibility with polycistronic spacer/RBS logic
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: ampicillin_resistance
+        expression: high
+        gene:
+          id: P62593
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

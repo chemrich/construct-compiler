@@ -1,34 +1,16 @@
 ```yaml
 construct:
-  name: lentiviral_with_WPRE
-  host: HEK293
-
+  name: "mammalian_high_expression_construct"
+  host: HEK293 # Lentiviral vectors are typically used in mammalian cells.
   backbone:
-    catalog_vector: "pTwist Lenti"
-
+    catalog_vector: "pTwist CMV" # A common mammalian expression vector.
   cassette:
-    - promoter: CMV
-
+    - promoter: CMV # Default mammalian promoter, strong expression.
     - cistron:
-        label: target
-        expression: high
+        label: target_gene
+        expression: high # Aims for high expression, similar to WPRE's function.
         gene:
-          id: mEGFP
+          id: mEGFP # A common reporter gene for demonstration.
           source: fpbase
-
-    - regulatory_element: WPRE  # Woodchuck Posttranscriptional Regulatory Element for enhanced expression
-
-    - terminator: SV40_polyA
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+    - terminator: BBa_B0015 # Note: Woodchuck Posttranscriptional Regulatory Element (WPRE) is a post-transcriptional element not directly supported by a field in this schema. This construct is designed for high expression in mammalian cells, aiming to achieve the goal of "better expression."
 ```

@@ -1,0 +1,26 @@
+construct:
+  name: "CMV_lacZ_Flag_fusion"
+  host: HEK293 # Defaulted to HEK293 cell line as a CMV promoter was specified for mammalian expression
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: lacZ_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P00722
+              source: uniprot
+          - tag: FLAG
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

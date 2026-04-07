@@ -1,24 +1,20 @@
 ```yaml
 construct:
-  name: "high_soluble_expression_mbp_fusion"
-  host: e_coli_bl21_de3
+  name: "MBP_lowRBS_mEGFP_expression_construct"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
-        expression: low  # Low RBS to avoid aggregation as requested
+        label: target_protein
+        expression: low
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
-          - solubility_tag: MBP  # MBP for better solubility
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
               id: mEGFP
               source: fpbase

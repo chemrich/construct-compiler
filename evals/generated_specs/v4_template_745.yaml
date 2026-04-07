@@ -1,0 +1,28 @@
+construct:
+  name: "yfp_c_terminal_myc_s_cerevisiae"
+  host: s_cerevisiae
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Using TEF1 for S. cerevisiae expression as T7/CMV are not suitable
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mYFP
+              source: fpbase
+          - tag: Myc
+    - terminator: CYC1 # Using CYC1 terminator for S. cerevisiae
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

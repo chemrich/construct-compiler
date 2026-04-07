@@ -1,0 +1,24 @@
+construct:
+  name: "hek293_eyfp_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Substituted requested SV40 with CMV as SV40 is not in the explicitly supported promoter list.
+    - cistron:
+        label: yfp_reporter
+        expression: high
+        gene:
+          id: EYFP
+          source: fpbase
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

@@ -1,23 +1,19 @@
 ```yaml
 construct:
-  name: kinase_substrate_bicistronic
-  host: e_coli_bl21_de3
-
+  name: "kinase_substrate_assay"
+  host: e_coli
   backbone:
     catalog_vector: "pET-28b(+)"
-
   cassette:
     - promoter: T7lac
-
     - cistron:
         label: kinase
         expression: high
-        gene:
-          id: your_kinase_gene  # replace with actual kinase gene ID
-          source: uniprot
-
+        chain:
+          - gene:
+              id: YOUR_KINASE_ID_HERE # Specify UniProt ID or internal ID for your kinase
+              source: uniprot # Or omit if internal ID
     - spacer: 30
-
     - cistron:
         label: substrate
         expression: low
@@ -25,18 +21,15 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: your_substrate_gene  # replace with actual substrate gene ID
-              source: uniprot
-
+              id: YOUR_SUBSTRATE_ID_HERE # Specify UniProt ID or internal ID for your substrate
+              source: uniprot # Or omit if internal ID
     - terminator: rrnB_T1
-
   constraints:
     assembly: golden_gate
     enzyme: BsaI
     codon_optimization: local
     gc_window: [0.35, 0.65]
     max_homopolymer: 6
-
   synthesis:
     vendor: twist
     budget_per_gene: 400

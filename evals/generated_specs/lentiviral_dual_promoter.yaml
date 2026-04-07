@@ -1,31 +1,28 @@
 ```yaml
 construct:
-  name: "dual_promoter_lentiviral_mEGFP_mScarlet"
-  host: HEK293
+  name: "lentiviral_CMV_EF1a_dual_expression"
+  host: mammalian
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTwist CMV" # This is a mammalian expression vector, typically used for transient/stable expression, not explicitly a full lentiviral backbone in the context of packaging.
 
   cassette:
     - promoter: CMV
-
     - cistron:
-        label: egfp_reporter
+        label: mEGFP
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-
+    - terminator: BBa_B0015 # For mammalian expression, a polyadenylation signal (e.g., SV40_polyA or bGH_polyA) is typically required here, but not available in the current schema.
     - promoter: EF1_alpha
-
     - cistron:
-        label: scarlet_reporter
-        expression: medium
+        label: mScarlet
+        expression: high
         gene:
           id: mScarlet
           source: fpbase
-
-    - terminator: rrnB_T1
+    - terminator: BBa_B0015 # For mammalian expression, a polyadenylation signal (e.g., SV40_polyA or bGH_polyA) is typically required here, but not available in the current schema.
 
   constraints:
     assembly: golden_gate

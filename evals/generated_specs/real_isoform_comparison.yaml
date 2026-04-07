@@ -1,32 +1,33 @@
 ```yaml
 construct:
-  name: "bicistronic_protein_isoform_comparison"
-  host: e_coli_bl21_de3
+  name: "bicistronic_isoform_comparison_6xhis"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: isoform_1
-        expression: medium
+        label: isoform1
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              protein_sequence: "PLACEHOLDER_ISOFORM_1_SEQUENCE"
+              id: protein_isoform1
 
     - spacer: 30
 
     - cistron:
-        label: isoform_2
-        expression: medium
+        label: isoform2
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              protein_sequence: "PLACEHOLDER_ISOFORM_2_SEQUENCE"
+              id: protein_isoform2
 
     - terminator: rrnB_T1
 

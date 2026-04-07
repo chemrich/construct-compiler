@@ -1,6 +1,6 @@
 ```yaml
 construct:
-  name: scFv_A_mEGFP_coexpression
+  name: "scFv_light_heavy_coexpression"
   host: e_coli
 
   backbone:
@@ -12,15 +12,16 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: light_chain
+        label: scFv_A_light_chain
         expression: medium
+        fused: false
         gene:
-          protein_sequence: MVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS
+          id: scFv-A # Custom gene; sequence assumed to be provided to compiler externally, as direct sequence inclusion is not supported.
 
     - spacer: 30
 
     - cistron:
-        label: heavy_chain
+        label: mEGFP_heavy_chain_placeholder
         expression: medium
         fused: false
         gene:
@@ -28,16 +29,4 @@ construct:
           source: fpbase
 
     - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```

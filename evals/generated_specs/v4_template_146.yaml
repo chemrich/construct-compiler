@@ -1,0 +1,32 @@
+construct:
+  name: "mammalian_polycistronic_gfp_ampr"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gfp_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 40
+    - cistron:
+        label: ampicillin_resistance
+        expression: medium
+        fused: false  # Allows independent translation in a polycistronic context
+        gene:
+          id: P62593
+          source: uniprot
+    - terminator: rrnB_T1  # Using a schema-defined terminator; polyA is standard for mammalian mRNA processing.
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

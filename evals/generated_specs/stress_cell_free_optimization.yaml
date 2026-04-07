@@ -1,35 +1,25 @@
 ```yaml
 construct:
   name: "cfps_wheat_germ_optimized"
-  host: e_coli  # for template prep, actual expression in wheat germ CFPS
+  host: e_coli # Chosen as a proxy for a bacterial-style expression system often used in CFPS, given the T7 promoter/terminator.
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
 
   cassette:
-    - promoter: T7
+    - promoter: T7lac
 
     - cistron:
         label: target
-        expression: high
+        expression: high # Corresponds to "strong RBS (BBa_B0034)"
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: gene_of_interest # Placeholder: Please replace with your target gene ID and source.
 
     - terminator: T7term
 
   constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local  # avoids problematic codons for wheat germ
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-    target_length: 1500  # keeps construct <2kb
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+    codon_optimization: local # Corresponds to "avoid problematic codons"
 ```

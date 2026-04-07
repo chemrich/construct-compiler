@@ -1,0 +1,24 @@
+construct:
+  name: "GFP_E_coli_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac  # User requested CMV; substituted with T7lac as CMV is a mammalian promoter and will not function in E. coli.
+    - cistron:
+        label: target
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

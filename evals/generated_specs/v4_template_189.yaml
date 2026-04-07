@@ -1,0 +1,27 @@
+construct:
+  name: "e_coli_YFP_C_term_6xHis"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: YFP_cistron
+        expression: high
+        chain:
+          - gene:
+              id: YFP
+              source: fpbase
+          - tag: 6xHis
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

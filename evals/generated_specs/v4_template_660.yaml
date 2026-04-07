@@ -1,0 +1,32 @@
+construct:
+  name: "mammalian_polycistronic_bfp_egfp"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: bfp_reporter
+        expression: medium
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: egfp_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_pA
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

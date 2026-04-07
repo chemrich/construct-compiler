@@ -1,10 +1,12 @@
 ```yaml
 construct:
   name: "taq_polymerase_expression"
-  host: e_coli_bl21_de3
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
@@ -12,11 +14,9 @@ construct:
     - cistron:
         label: taq_polymerase
         expression: high
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: P19001
-              source: uniprot
+        gene:
+          id: P19872
+          source: uniprot
 
     - terminator: rrnB_T1
 
