@@ -1,0 +1,20 @@
+construct:
+  name: "nonviral_inducible_secreted_scFv"
+  host: HEK293
+  backbone:
+    # Kanamycin resistance included for E. coli production; the schema requires a resistance field despite the "no antibiotic" request.
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha_TetO # Inducible, non-viral human promoter system
+    - cistron:
+        label: therapeutic_scFv
+        expression: high
+        chain:
+          - tag: IgK_leader # Mammalian secretion signal peptide
+          - gene:
+              id: P01857
+              source: uniprot
+          - tag: Twin-Strep # C-terminal purification tag
+    - terminator: bGH_pA # Non-viral bovine growth hormone polyadenylation signal

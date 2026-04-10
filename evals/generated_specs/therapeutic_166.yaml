@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_high_secretion_GLA"
+  host: yeast
+  backbone:
+    resistance: URA3 # Used URA3 auxotrophic marker to satisfy the requirement for no antibiotic resistance genes
+    ori: 2_micron # High-copy yeast origin for high-level expression
+    source: addgene
+  cassette:
+    - promoter: GPD # High-level constitutive yeast promoter (TDH3)
+    - cistron:
+        label: alpha_galactosidase_a
+        expression: high
+        chain:
+          - tag: alpha_mating_factor # Yeast secretion signal for the secretory pathway
+          - gene:
+              id: P06280
+              source: uniprot
+    - terminator: CYC1 # Standard yeast transcriptional terminator

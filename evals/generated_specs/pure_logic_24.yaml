@@ -1,0 +1,42 @@
+construct:
+  name: "mammalian_bistable_toggle_switch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G
+    - cistron:
+        label: state_1_repressor
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P03023
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: state_1_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_pA
+    - promoter: CMV_lacO
+    - cistron:
+        label: state_2_repressor
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P04483
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: state_2_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: bGH_pA

@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_secreted_therapeutic_polyprotein"
+  host: yeast
+  backbone:
+    resistance: ura3  # User requested no antibiotics; using yeast auxotrophic marker URA3
+    ori: 2micron
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor_leader  # Standard yeast secretion signal
+          - gene:
+              id: P01308
+              source: uniprot
+          - cleavage_site: Kex2        # Native yeast endoprotease for polyprotein processing
+          - gene:
+              id: P01275
+              source: uniprot
+    - terminator: CYC1_term

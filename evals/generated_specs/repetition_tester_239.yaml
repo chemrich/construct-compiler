@@ -1,0 +1,23 @@
+construct:
+  name: "dual_utr_reporter_independence_study"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: "firefly_luciferase_UTR_set_1"
+        expression: high
+        gene:
+          id: P08659
+          source: uniprot
+    - terminator: BGH_polyA
+    - spacer: 100 # Physical separation to prevent transcriptional interference
+    - promoter: EF1_alpha # Non-identical promoter to ensure independence
+    - cistron:
+        label: "firefly_luciferase_UTR_set_2"
+        expression: high
+        gene:
+          id: P08659
+          source: uniprot
+    - terminator: SV40_polyA # Non-identical polyA signal to ensure independence

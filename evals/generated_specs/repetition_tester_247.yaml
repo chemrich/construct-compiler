@@ -1,0 +1,28 @@
+construct:
+  name: "divergent_inducible_expression_system"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 40
+    - promoter: J23106
+    - cistron:
+        label: lac_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: lacI
+          source: uniprot
+    - terminator: T7term

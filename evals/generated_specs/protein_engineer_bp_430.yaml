@@ -1,0 +1,24 @@
+construct:
+  name: "pichia_secretion_hsa_peptide_fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: hsa_fusion_peptide
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: P02768
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01275
+              source: uniprot
+    - terminator: AOX1_term

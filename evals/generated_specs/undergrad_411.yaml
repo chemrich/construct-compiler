@@ -1,0 +1,18 @@
+construct:
+  name: "chloroplast_targeted_plant_protein"
+  host: algae  # Substituted 'algae' as the closest available photosynthetic host to 'plant'
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CaMV35S  # Strong constitutive promoter for plant-like expression
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: ctP  # Chloroplast transit peptide required for organelle targeting
+          - gene:
+              id: PlantProtein
+              source: uniprot
+    - terminator: NOS_term  # Standard eukaryotic/plant terminator

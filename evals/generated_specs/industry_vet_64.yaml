@@ -1,0 +1,18 @@
+construct:
+  name: yeast_high_yield_his_tagged_construct
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD # GPD (TDH3) is the robust yeast constitutive promoter equivalent to mammalian CMV
+    - cistron:
+        label: target_protein
+        expression: high # High expression setting optimizes for strong translation initiation in yeast
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1

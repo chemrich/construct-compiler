@@ -1,0 +1,30 @@
+construct:
+  name: "dCas9_KRAB_epigenetic_modulator"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: dCas9_effector_fusion
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Q99ZW2 # UniProt ID for Cas9 (dCas9 mutations D10A/H840A assumed for silencing)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P21506 # UniProt ID for ZNF10 (contains the KRAB silencing domain)
+              source: uniprot
+          - tag: NLS
+    - spacer: 40
+    - promoter: U6
+    - cistron:
+        label: sgRNA
+        gene:
+          id: sgRNA_scaffold
+    - terminator: BBa_B0015

@@ -1,0 +1,18 @@
+construct:
+  name: "fibroblast_cytoplasmic_metabolic_rescue"
+  host: mammalian
+  backbone:
+    # Kanamycin selected as the safest standard resistance for initial cloning; 
+    # non-viral pUC origin used for high-yield plasmid production.
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # Human EF1-alpha promoter chosen for persistent expression and non-viral origin
+    - cistron:
+        label: enzyme_target
+        expression: high
+        gene:
+          id: P00338  # Human Lactate Dehydrogenase A (LDHA), a cytoplasmic metabolic enzyme
+          source: uniprot
+    - terminator: bGH_pA  # Bovine growth hormone polyadenylation signal for stable mRNA termination

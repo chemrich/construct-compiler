@@ -1,0 +1,29 @@
+construct:
+  name: "AAV2_VP1_VP2_VP3_Stoichiometric_Sf9"
+  host: Sf9  # Specific insect cell line used for AAV capsid production
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: OpIE2  # Strong constitutive promoter for expression in insect cells
+    - cistron:
+        label: "VP_polyprotein"
+        expression: high
+        chain:
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: "P03135"
+              source: "uniprot"
+          - linker:
+              type: P2A
+          - gene:
+              id: "P03135"
+              source: "uniprot"
+          - linker:
+              type: P2A
+          - gene:
+              id: "P03135"
+              source: "uniprot"
+    - terminator: SV40_polyA

@@ -1,0 +1,29 @@
+construct:
+  name: "yeast_inducible_biosensor_fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: biosensor_fusion
+        expression: high
+        chain:
+          - gene:
+              id: SensorDomainA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: TransducerDomainB
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          - gene:
+              id: ReporterDomainC
+              source: uniprot
+    - terminator: CYC1

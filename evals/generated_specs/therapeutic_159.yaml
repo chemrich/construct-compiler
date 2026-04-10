@@ -1,0 +1,18 @@
+construct:
+  name: "safe_mammalian_secreted_vaccine_antigen"
+  host: HEK293
+  backbone:
+    resistance: none # Note: User requested no antibiotic resistance; metabolic selection or alternative safety profile is implied.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Substituted human EF1-alpha for CMV to ensure construct is devoid of viral sequences.
+    - cistron:
+        label: secreted_antigen
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal peptide mandatory for extracellular localization.
+          - gene:
+              id: P0DTC2
+              source: uniprot
+    - terminator: hGH_polyA # Substituted human growth hormone polyadenylation signal for viral terminators (like SV40).

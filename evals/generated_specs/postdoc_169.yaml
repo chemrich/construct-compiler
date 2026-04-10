@@ -1,0 +1,38 @@
+construct:
+  name: "yeast_two_hybrid_p53_mdm2_system"
+  host: yeast
+  backbone:
+    resistance: neomycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: bait_fusion
+        expression: high
+        chain:
+          - gene:
+              id: GAL4_BD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: TP53
+              source: uniprot
+    - terminator: SV40
+    - promoter: ADH1
+    - cistron:
+        label: prey_fusion
+        expression: high
+        chain:
+          - gene:
+              id: GAL4_AD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: MDM2
+              source: uniprot
+    - terminator: SV40

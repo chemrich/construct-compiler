@@ -1,0 +1,26 @@
+construct:
+  name: "not_gate_arabinose_inducible_lacI_sfgfp"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Input: Arabinose induces expression of the LacI repressor
+    - cistron:
+        label: repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lacUV5 # Output: This promoter is repressed by LacI; active only when input is low
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: BBa_B0015

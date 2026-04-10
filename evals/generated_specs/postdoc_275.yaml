@@ -1,0 +1,29 @@
+construct:
+  name: yeast_secretion_of_mammalian_domains
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: secreted_domain_a
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: MAMMALIAN_DOMAIN_A
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: secreted_domain_b
+        expression: high
+        fused: false
+        chain:
+          - tag: IgK_leader
+          - tag: FLAG
+          - gene:
+              id: MAMMALIAN_DOMAIN_B
+              source: uniprot
+    - terminator: CYC1_term

@@ -1,0 +1,19 @@
+construct:
+  name: "secreted_growth_factor_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: J23100  # Constitutive promoter used for steady-state expression in E. coli
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: pelB  # Substituted native mammalian signal peptide with pelB; mammalian signal peptides are not recognized by E. coli and would prevent secretion.
+          - tag: 6xHis
+          - gene:
+              id: GrowthFactor
+              source: uniprot
+    - terminator: rrnB_T1

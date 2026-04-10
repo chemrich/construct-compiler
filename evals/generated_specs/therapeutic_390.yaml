@@ -1,0 +1,32 @@
+construct:
+  name: "human_egfr_surface_fusion_stable"
+  host: HEK293
+  backbone:
+    resistance: thyA # Substituted for antibiotic resistance to satisfy the "no antibiotics at any stage" requirement
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: receptor_fusion
+        expression: high
+        chain:
+          - tag: FLAG # N-terminal extracellular epitope tag
+          - gene:
+              id: EGFR
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP # C-terminal cytoplasmic reporter fusion
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: marker
+        expression: low
+        fused: false # Independently translated for metabolic selection
+        gene:
+          id: DHFR # Dihydrofolate reductase for non-antibiotic stable selection
+          source: uniprot
+    - terminator: BGH_polyA # Non-viral mammalian polyadenylation signal

@@ -1,0 +1,25 @@
+construct:
+  name: yeast_sequential_logic_state_machine
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1 # Input S1: Drives expression of the transactivator
+    - cistron:
+        label: s1_transactivator
+        expression: medium
+        gene:
+          id: LexA_VP16
+          source: uniprot
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: CUP1_LexA_hybrid # Input S2: Requires both Copper (S2) and LexA (S1) to activate
+    - cistron:
+        label: o_final
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: ADH1_term

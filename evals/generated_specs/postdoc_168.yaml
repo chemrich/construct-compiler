@@ -1,0 +1,19 @@
+construct:
+  name: "strep_tagged_peptide_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac # Selected for IPTG-inducible expression in E. coli
+    - cistron:
+        label: target_peptide
+        expression: high
+        # Note: Human alpha-globin 5' UTR requested; however, in E. coli, translation 
+        # is driven by the Shine-Dalgarno sequence/RBS. The compiler will prioritize 
+        # a high-efficiency bacterial RBS for this host.
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: custom_50aa_peptide
+    - terminator: rrnB_T1

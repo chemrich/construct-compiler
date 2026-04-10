@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_secreted_enzyme_Y"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: enzyme_Y_secretion
+        expression: high
+        chain:
+          - tag: HSA_signal_peptide  # Human serum albumin signal peptide as requested
+          - tag: Myc
+          - gene:
+              id: Y
+              source: uniprot
+    - terminator: CYC1_term

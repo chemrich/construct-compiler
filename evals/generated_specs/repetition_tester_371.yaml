@@ -1,0 +1,27 @@
+construct:
+  name: "dual_timer_target_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: timer_fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: dTomato
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P04637
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: tdTomato
+              source: fpbase
+    - terminator: T7term

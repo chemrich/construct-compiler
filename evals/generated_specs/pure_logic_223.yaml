@@ -1,0 +1,31 @@
+construct:
+  name: "bistable_toggle_switch"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: tac  # Repressed by LacI; Induced by IPTG (Input_S)
+    - cistron:
+        label: tetR_repressor
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: Output_Q
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: J23100  # Substitution: J23100 used to represent TetR-repressed promoter (Input_R induces via aTc)
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: BBa_B0015

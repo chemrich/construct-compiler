@@ -1,35 +1,16 @@
-```yaml
 construct:
-  name: "hek293_mammalian_expression"
+  name: "HEK293_blasticidin_expression_vector"
   host: HEK293
-
   backbone:
-    # User requested blasticidin S resistance, which is a mammalian selection marker.
-    # The 'resistance' field in this schema is for bacterial plasmid maintenance markers.
-    # pTwist CMV vectors often include mammalian selection markers like blasticidin S or puromycin.
-    catalog_vector: "pTwist CMV"
-
+    resistance: blasticidin
+    ori: pUC
+    source: addgene
   cassette:
     - promoter: CMV
-
     - cistron:
-        label: gene_of_interest
+        label: expression_target
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-
-    - terminator: BBa_B0015 # All listed terminators are bacterial. This is a placeholder for a mammalian polyadenylation signal.
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: bGH_pA

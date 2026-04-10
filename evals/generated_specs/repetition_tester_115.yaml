@@ -1,0 +1,25 @@
+construct:
+  name: "dual_ires_mammalian_expression_construct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - spacer: 585  # Placeholder for EMCV IRES sequence (non-homologous to IRES2)
+    - cistron:
+        label: enzyme_1_firefly_luciferase
+        expression: high
+        fused: false
+        gene:
+          id: P08659
+          source: uniprot
+    - spacer: 612  # Placeholder for CrPV IRES or similar distinct sequence
+    - cistron:
+        label: enzyme_2_renilla_luciferase
+        expression: high
+        fused: false
+        gene:
+          id: P27652
+          source: uniprot
+    - terminator: bGH_polyA
+    - terminator: SV40_polyA  # Requested second distinct polyA signal

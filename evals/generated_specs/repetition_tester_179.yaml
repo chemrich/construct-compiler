@@ -1,0 +1,24 @@
+construct:
+  name: "FusionProteinB_Yeast_Expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: fusion_protein_b
+        expression: high
+        chain:
+          - tag: ActivatorDomain
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - tag: BindingDomain
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          - gene:
+              id: TaggingDomain
+    - terminator: CYC1

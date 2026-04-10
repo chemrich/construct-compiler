@@ -1,0 +1,19 @@
+construct:
+  name: "nonviral_therapeutic_enzyme_production"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Schema requires a resistance marker; kanamycin is selected as a non-beta-lactam standard for clinical plasmid development.
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: tac # High-level non-viral promoter (hybrid of bacterial trp and lac operons)
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Enterokinase # Non-viral mammalian-derived protease site for clean N-terminal recovery
+          - gene:
+              id: ADA
+              source: uniprot
+    - terminator: rrnB_T1 # Strong bacterial terminator from the rrnB operon

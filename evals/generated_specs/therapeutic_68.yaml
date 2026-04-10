@@ -1,0 +1,19 @@
+construct:
+  name: "toxic_therapeutic_solubility_express"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Note: Included to satisfy tool requirements; actual production would utilize an auxotrophic selection system to avoid antibiotic resistance genes.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Tight inducible control (non-viral) to prevent leaky expression of toxic product during growth phase.
+    - cistron:
+        label: therapeutic_payload
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: Factor_Xa # Non-viral protease site used to satisfy 'no viral elements' constraint.
+          - gene:
+              id: P55957 # Human Bcl-2-like protein 11 (Bim), a pro-apoptotic therapeutic protein highly toxic to expression hosts.
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,19 @@
+construct:
+  name: "Protein_R_C_terminal_Strep_Tight_Expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein_r
+        expression: high
+        chain:
+          - gene:
+              id: Protein_R
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: Strep-II
+    - terminator: T7term

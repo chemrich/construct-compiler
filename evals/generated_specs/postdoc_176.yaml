@@ -1,0 +1,16 @@
+construct:
+  name: "yeast_gal_inducible_his_tagged_expression"
+  host: yeast
+  backbone:
+    catalog_vector: "pYES2"
+  cassette:
+    - promoter: GAL1  # Strong galactose-inducible promoter in yeast
+    - cistron:
+        label: target
+        expression: high  # High expression setting triggers optimized Kozak-like sequence for yeast
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP # Defaulting to mEGFP as no protein was specified
+              source: fpbase
+    - terminator: CYC1_term

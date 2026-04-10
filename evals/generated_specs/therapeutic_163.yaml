@@ -1,0 +1,20 @@
+construct:
+  name: "Non_Viral_CAR_T_Expression_Construct"
+  host: mammalian
+  backbone:
+    resistance: none  # Antibiotic resistance genes excluded per user request for non-viral therapeutic safety
+    ori: pUC          # High-copy origin for plasmid production prior to LNP formulation
+    source: custom
+
+  cassette:
+    - promoter: EF1_alpha  # Robust human-derived promoter, non-viral alternative to CMV
+
+    - cistron:
+        label: anti_CD19_CAR
+        expression: high
+        chain:
+          - gene:
+              id: CD19_CAR_FMC63
+              source: uniprot  # Synthetic chimeric antigen receptor sequence
+
+    - terminator: hGH_PA    # Human growth hormone polyadenylation signal; non-viral mammalian terminator

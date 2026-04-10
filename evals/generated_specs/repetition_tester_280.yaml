@@ -1,0 +1,25 @@
+construct:
+  name: "AlphaComponent_High_Efficiency_Expression"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: AlphaComponent
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - tag: Strep-II
+    - terminator: rrnB_T1

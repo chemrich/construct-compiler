@@ -1,0 +1,26 @@
+construct:
+  name: bacillus_protease_prsA_operon
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: target_protease
+        expression: high
+        chain:
+          - secretion_signal: AprE
+          - gene:
+              id: protease
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: chaperone_prsA
+        expression: medium
+        fused: false
+        gene:
+          id: PrsA
+          source: uniprot
+    - terminator: rrnB_T1

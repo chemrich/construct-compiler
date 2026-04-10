@@ -1,0 +1,23 @@
+construct:
+  name: "Xenobiotic_Degradation_High_Expression"
+  host: e_coli
+  backbone:
+    # ARB-free systems (e.g., auxotrophy/toxin-antitoxin) are not available in the selection schema; using Kanamycin as a placeholder.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Inducible, non-viral bacterial promoter
+    - cistron:
+        label: bioremediation_enzyme
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P72156
+              source: uniprot
+    - terminator: rrnB_T1

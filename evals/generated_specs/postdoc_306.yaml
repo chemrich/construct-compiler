@@ -1,0 +1,18 @@
+construct:
+  name: "human_antibody_fragment_yeast_expression"
+  host: yeast # Note: Standard yeast (S. cerevisiae) produces hyper-mannosylated glycans; human-like glycosylation requires glycoengineered strains (e.g., GlycoSwitch).
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP # Constitutive high-expression promoter in yeast
+    - cistron:
+        label: antibody_fragment
+        expression: high
+        chain:
+          - gene:
+              id: P01857
+              source: uniprot
+          - tag: 6xHis
+    - terminator: CYC1_term

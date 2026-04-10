@@ -1,0 +1,48 @@
+construct:
+  name: "mammalian_triple_fp_independent_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gfp_unit
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_pA
+    - spacer: 40
+    - promoter: EF1_alpha
+    - cistron:
+        label: mcherry_unit
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: SV40_pA
+    - spacer: 40
+    - promoter: UbC
+    - cistron:
+        label: bfp_unit
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - terminator: hGH_pA

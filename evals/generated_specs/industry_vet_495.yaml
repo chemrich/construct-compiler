@@ -1,0 +1,19 @@
+construct:
+  name: "EnzymeP_purification_yeast"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: EnzymeP
+              source: uniprot
+    - terminator: CYC1_term

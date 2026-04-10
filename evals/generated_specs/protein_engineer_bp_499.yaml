@@ -1,0 +1,32 @@
+construct:
+  name: "pichia_bidirectional_antibody_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: antibody_heavy_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: 6xHis
+          - gene:
+              id: P01857
+              source: uniprot
+    - terminator: AOX1_term
+
+    - promoter: DAS1
+    - cistron:
+        label: antibody_light_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: 6xHis
+          - gene:
+              id: P01834
+              source: uniprot
+    - terminator: DAS1_term

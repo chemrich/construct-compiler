@@ -1,0 +1,34 @@
+construct:
+  name: "and_gate_chemical_secreted_luminescence"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD  # First input: L-arabinose
+    - cistron:
+        label: t7_rnap_fragment_n
+        expression: medium
+        gene:
+          id: P00573
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lacUV5  # Second input: IPTG
+    - cistron:
+        label: t7_rnap_fragment_c
+        expression: medium
+        gene:
+          id: P00573
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: T7  # Logic gate: Active only if T7 RNAP fragments reconstitute
+    - cistron:
+        label: secreted_luminescent_output
+        expression: high
+        chain:
+          - tag: PelB  # Secretion signal for E. coli periplasmic/extracellular export
+          - gene:
+              id: NanoLuc
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,27 @@
+construct:
+  name: "therapeutic_bispecific_antibody_non_viral_vector"
+  host: HEK293
+  backbone:
+    resistance: none # Antibiotic resistance excluded to meet therapeutic safety requirements
+    ori: pBR322      # Standard bacterial origin for propagation; non-viral
+    source: custom
+
+  cassette:
+    - promoter: EF1_alpha # Human promoter used instead of CMV to avoid viral sequences
+
+    - cistron:
+        label: antibody_expression_unit
+        expression: high
+        chain:
+          - tag: IgK_leader # Signal peptide for heavy chain secretion
+          - gene:
+              id: heavy_chain
+              source: uniprot
+          - linker:
+              type: P2A # Self-cleaving peptide for stoichiometric production from a single transcript
+          - tag: IgK_leader # Signal peptide for light chain secretion
+          - gene:
+              id: light_chain
+              source: uniprot
+
+    - terminator: hGH_polyA # Human growth hormone polyadenylation signal; non-viral

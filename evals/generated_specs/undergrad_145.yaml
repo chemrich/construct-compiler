@@ -1,0 +1,23 @@
+construct:
+  name: "ProteinA_ProteinB_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: ProteinA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProteinB
+              source: uniprot
+    - terminator: rrnB_T1

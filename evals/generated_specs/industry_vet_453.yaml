@@ -1,0 +1,21 @@
+construct:
+  name: "AAV2_VP1_Solubility_Enhanced"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: AAV2_VP1_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P19839
+              source: uniprot
+    - terminator: T7term

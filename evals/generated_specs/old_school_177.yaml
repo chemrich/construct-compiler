@@ -1,0 +1,25 @@
+construct:
+  name: "muscle_specific_gene_therapy"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: Desmin  # Muscle-specific promoter for tissue-specific expression
+    - cistron:
+        label: therapeutic_gene
+        expression: high
+        gene:
+          id: target_gene
+          source: uniprot
+    - spacer: 60
+    - promoter: SV40  # Constitutive promoter for the selection marker
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        gene:
+          id: NeoR  # Gene conferring resistance to G418/Neomycin
+          source: uniprot
+    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal

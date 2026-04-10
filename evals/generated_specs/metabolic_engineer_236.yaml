@@ -1,0 +1,43 @@
+construct:
+  name: "four_enzyme_pathway_klmn"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: EnzK
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: EnzK
+              source: uniprot
+          - tag: FLAG
+    - spacer: 30
+    - cistron:
+        label: EnzL
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - gene:
+              id: EnzL
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: EnzM
+        expression: medium
+        fused: false
+        gene:
+          id: EnzM
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: EnzN
+        expression: medium
+        fused: false
+        gene:
+          id: EnzN
+          source: uniprot
+    - terminator: T7term

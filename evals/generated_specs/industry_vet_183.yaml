@@ -1,0 +1,20 @@
+construct:
+  name: yeast_secreted_his_tev_megfp
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # TDH3 is the standard strong GAPDH promoter in S. cerevisiae
+    - cistron:
+        label: secreted_protein
+        expression: high
+        chain:
+          - tag: Alpha_Factor  # N-terminal yeast secretion signal
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1  # Standard yeast terminator

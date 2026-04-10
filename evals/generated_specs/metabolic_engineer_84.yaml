@@ -1,0 +1,40 @@
+construct:
+  name: "p_putida_four_gene_metabolic_operon"
+  host: p_putida # Specific host as per rule 13
+  backbone:
+    resistance: kanamycin
+    ori: pBR322 # Standard E. coli ori used as a placeholder; in practice, a broad-host-range ori like pBBR1 would be used for P. putida.
+    source: addgene
+  cassette:
+    - promoter: tac # IPTG-inducible promoter suitable for P. putida
+    - cistron:
+        label: E1_E2_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: E1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - cleavage_site: TEV
+          - gene:
+              id: E2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E3
+        expression: medium
+        fused: false # Independent translation for E3
+        gene:
+          id: E3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E4
+        expression: medium
+        fused: false # Independent translation for E4
+        gene:
+          id: E4
+          source: uniprot
+    - terminator: rrnB_T1

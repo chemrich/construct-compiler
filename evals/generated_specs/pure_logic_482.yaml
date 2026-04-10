@@ -1,0 +1,21 @@
+construct:
+  name: "mammalian_toxin_repressible_detox_gate"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Designed with tetO operators to be repressed by a toxin-responsive rTetR system
+    - cistron:
+        label: detox_reporter_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CYP3A4  # Human Cytochrome P450 for detoxification
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mScarlet  # Reporter for quantification
+              source: fpbase
+    - terminator: bGH_PA

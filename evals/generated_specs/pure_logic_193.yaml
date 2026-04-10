@@ -1,0 +1,24 @@
+construct:
+  name: "temporal_delay_circuit"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: relay_activator
+        expression: medium
+        gene:
+          id: T7pol
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: T7
+    - cistron:
+        label: output_enzyme
+        expression: high
+        gene:
+          id: lacZ
+          source: uniprot
+    - terminator: T7term

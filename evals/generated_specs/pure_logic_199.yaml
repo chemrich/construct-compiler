@@ -1,0 +1,28 @@
+construct:
+  name: "integrase_identity_lock_module"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Inducible input signal for transient integrase expression
+    - cistron:
+        label: input_integrase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0CK48
+              source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 50  # Insulation spacer between cassettes
+    - promoter: J23100  # Constitutive promoter for the lock state reporter
+    - cistron:
+        label: reporter_state_x
+        expression: medium
+        fused: false
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: BBa_B0015

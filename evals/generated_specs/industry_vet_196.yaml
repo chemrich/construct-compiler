@@ -1,0 +1,22 @@
+construct:
+  name: "HEK293_GOI_mEGFP_His_Fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: GOI
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: 6xHis
+    - terminator: bGH_polyA

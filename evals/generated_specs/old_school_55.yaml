@@ -1,0 +1,17 @@
+construct:
+  name: "yeast_shuttle_ADH1_target_vector"
+  host: yeast
+  backbone:
+    resistance: ampicillin  # E. coli selection; vector also contains TRP1 for yeast selection
+    ori: pBR322            # E. coli origin; vector also contains 2-micron origin for yeast
+    source: custom
+
+  cassette:
+    - promoter: ADH1       # Yeast constitutive promoter
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: mEGFP        # Representing the user's target cistron with mEGFP
+          source: fpbase
+    - terminator: CYC1     # Standard yeast terminator

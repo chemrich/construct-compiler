@@ -1,0 +1,24 @@
+construct:
+  name: "SuperProteinA_FluorTagGreen_Fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: P02976
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 5
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: 8xHis
+    - terminator: rrnB_T1

@@ -1,0 +1,24 @@
+construct:
+  name: metabolic_pathway_bicistron
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: metabolic_enzyme_1
+        expression: high
+        gene:
+          id: P0A6F5
+          source: uniprot
+    - spacer: 30 # Bacterial IRES equivalent: spacer + RBS for independent translation
+    - cistron:
+        label: metabolic_enzyme_2
+        expression: high
+        fused: false
+        gene:
+          id: P00892
+          source: uniprot
+    - terminator: rrnB_T1

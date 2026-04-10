@@ -1,0 +1,18 @@
+construct:
+  name: "secreted_therapeutic_peptide_non_viral"
+  host: mammalian
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Substituted viral CMV with mammalian EF1_alpha to satisfy non-viral requirement.
+    - cistron:
+        label: therapeutic_peptide
+        expression: high
+        chain:
+          - tag: IL2_signal
+          - gene:
+              id: P01275
+              source: uniprot
+    - terminator: BGH_pA # Bovine growth hormone polyadenylation signal used as a non-viral mammalian terminator.

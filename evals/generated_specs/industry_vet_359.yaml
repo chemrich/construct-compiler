@@ -1,0 +1,20 @@
+construct:
+  name: "therapeutic_strep_furin_fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "therapeutic_precursor"
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P01133
+              source: uniprot
+          - cleavage_site: Furin
+          - gene:
+              id: P01308
+              source: uniprot
+    - terminator: T7term

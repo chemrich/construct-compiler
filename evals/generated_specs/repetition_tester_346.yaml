@@ -1,0 +1,30 @@
+construct:
+  name: "mammalian_tricistronic_ires_therapeutic"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        gene:
+          id: P01588
+          source: uniprot
+    - spacer: 588 # Internal Ribosome Entry Site (EMCV IRES) optimized for HEK293
+    - cistron:
+        label: fluorescent_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - spacer: 615 # Distinct Internal Ribosome Entry Site (EV71 IRES) to avoid homology
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        gene:
+          id: P13249
+          source: uniprot
+    - terminator: BGH_pA

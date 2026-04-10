@@ -1,28 +1,20 @@
-```yaml
 construct:
-  name: "human_IL6_MBP_low_expression"
-  host: e_coli
+  name: "human_IL6_solubility_optimized"
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: IL6
+        label: IL6_target
         expression: low
         chain:
           - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: P05231
               source: uniprot
-    - terminator: rrnB_T1
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

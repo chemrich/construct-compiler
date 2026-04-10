@@ -1,0 +1,22 @@
+construct:
+  name: "therapeutic_hgh_cho_production"
+  host: CHO
+  backbone:
+    # Antibiotic-free selection (e.g., GS or DHFR) is required for clinical applications
+    resistance: none
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Non-viral, high-level constitutive expression in CHO cells
+    - cistron:
+        label: human_growth_factor
+        expression: high
+        chain:
+          - gene:
+              id: P01241 # Human Somatotropin (Growth Hormone 1), includes native signal peptide for secretion
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Twin-Strep # High-affinity purification tag for pharmaceutical-grade isolation
+    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal for high stability in mammalian hosts

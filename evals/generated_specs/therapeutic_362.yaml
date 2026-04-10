@@ -1,0 +1,19 @@
+construct:
+  name: "yeast_metabolic_human_GAPDH_constitutive"
+  host: yeast
+  backbone:
+    # Note: ampicillin is used for E. coli propagation of the shuttle vector; 
+    # selection in yeast is assumed to be via auxotrophic markers (e.g., URA3, HIS3) 
+    # to avoid antibiotic resistance in the final host as requested.
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3 # Strong constitutive yeast promoter (GPD)
+    - cistron:
+        label: enzyme_gapdh
+        expression: high
+        gene:
+          id: P04406 # Human Glyceraldehyde-3-phosphate dehydrogenase (GAPDH)
+          source: uniprot
+    - terminator: CYC1 # Standard yeast transcriptional terminator

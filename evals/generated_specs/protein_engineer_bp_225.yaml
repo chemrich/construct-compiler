@@ -1,0 +1,26 @@
+construct:
+  name: "bacillus_spore_display_cotG_dehydrogenase"
+  host: bacillus
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: pCotG
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: cotG
+              source: uniprot
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: ADH
+              source: uniprot
+    - terminator: rrnB_T1

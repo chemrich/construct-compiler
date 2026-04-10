@@ -1,0 +1,28 @@
+construct:
+  name: "yeast_coexpression_therapeutic_A_B"
+  host: yeast
+  backbone:
+    resistance: none # Auxotrophic marker (URA3) used to comply with no-antibiotic requirement
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: protein_A
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: Protein_A
+              source: uniprot
+    - terminator: CYC1
+    - promoter: PGK1
+    - cistron:
+        label: protein_B
+        expression: high
+        chain:
+          - gene:
+              id: Protein_B
+              source: uniprot
+          - tag: Myc
+    - terminator: ADH1

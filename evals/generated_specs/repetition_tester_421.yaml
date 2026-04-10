@@ -1,0 +1,29 @@
+construct:
+  name: "tandem_synonymous_peptide_repeats"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: peptide_pentamer
+        expression: high
+        chain:
+          # Five synonymous copies of Magainin-2 (P05441)
+          # Requirement: Each coding sequence must possess <70% nucleotide identity to neighbors
+          - gene:
+              id: P05441
+              source: uniprot
+          - gene:
+              id: P05441
+              source: uniprot
+          - gene:
+              id: P05441
+              source: uniprot
+          - gene:
+              id: P05441
+              source: uniprot
+          - gene:
+              id: P05441
+              source: uniprot
+    - terminator: T7term

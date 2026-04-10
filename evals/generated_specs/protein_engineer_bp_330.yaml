@@ -1,0 +1,19 @@
+construct:
+  name: "p_pastoris_er_retention_study"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: glycoprotein_target
+        expression: high
+        chain:
+          - tag: Ost1 # N-terminal Ost1 signal peptide for ER translocation
+          - gene:
+              id: SUC2 # Yeast invertase used as a model glycoprotein for folding studies
+              source: uniprot
+          - tag: HDEL # C-terminal ER retention signal
+    - terminator: AOX1_term

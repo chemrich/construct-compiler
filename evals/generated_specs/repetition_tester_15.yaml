@@ -1,0 +1,15 @@
+construct:
+  name: "divergent_rna_aptamer_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "aptamer_expression_unit"
+        expression: high
+        # Note: Constant regions and internal elements must be synthesized with maximal sequence divergence
+        # to ensure RNA integrity and minimize recombination.
+        gene:
+          id: "RNA_Aptamer_Divergent_Scaffold"
+    - terminator: T7term

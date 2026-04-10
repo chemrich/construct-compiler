@@ -1,0 +1,17 @@
+construct:
+  name: "ProteinY_Secretion_S_cerevisiae"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: secreted_protein_y
+        expression: high
+        chain:
+          - tag: alpha_factor  # Standard yeast secretion signal
+          - gene:
+              id: ProteinY
+              source: uniprot
+    - terminator: CYC1_term  # Standard yeast terminator
+# Note: Codon optimization should be performed by the compiler to maximize synonymous divergence and avoid sequence repeats.

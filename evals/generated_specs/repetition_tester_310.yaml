@@ -1,0 +1,27 @@
+construct:
+  name: "yeast_dual_stress_reporter_system"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: HSP104  # Stress-inducible promoter with unique UAS
+    - cistron:
+        label: stress_reporter
+        expression: medium
+        gene:
+          id: LacZ
+          source: uniprot
+    - terminator: CYC1
+    - promoter: TDH3    # Strong constitutive promoter, distinct from HSP104
+    - cistron:
+        label: reference_control
+        expression: high
+        fused: false
+        gene:
+          id: Firefly_Luciferase
+          source: uniprot
+    - terminator: ADH1
+    # Note: Reporterless control should be a separate construct; 
+    # schema requires a gene for every cistron.

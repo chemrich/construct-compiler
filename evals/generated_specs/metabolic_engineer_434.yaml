@@ -1,0 +1,42 @@
+construct:
+  name: "degradase_pathway_sRNA_repression"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: deg1
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: Degradase_1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: deg2_sRNA_target
+        expression: medium
+        fused: false
+        gene:
+          id: Degradase_2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: deg3
+        expression: medium
+        fused: false
+        gene:
+          id: Degradase_3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: deg4
+        expression: medium
+        fused: false
+        gene:
+          id: Degradase_4
+          source: uniprot
+    - terminator: rrnB_T1

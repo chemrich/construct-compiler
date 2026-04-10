@@ -1,0 +1,28 @@
+construct:
+  name: "nand_gate_sfGFP"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23106
+    - cistron:
+        label: Input_A_sensor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - promoter: J23106
+    - cistron:
+        label: Input_B_sensor
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - promoter: J23100  # Represents the NAND logic promoter (repressed by both inputs)
+    - cistron:
+        label: Output_Z
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

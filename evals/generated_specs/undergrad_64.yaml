@@ -1,0 +1,26 @@
+construct:
+  name: yeast_constitutive_bicistronic_A_B
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for yeast
+    - cistron:
+        label: gene_a
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: GeneA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gene_b
+        expression: high
+        fused: false  # Ensures independent translation with its own RBS/start
+        gene:
+          id: GeneB
+          source: uniprot
+    - terminator: CYC1_term

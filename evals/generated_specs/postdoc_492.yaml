@@ -1,0 +1,18 @@
+construct:
+  name: "ChapX_yeast_stress_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: HSP12 # Stress-inducible promoter appropriate for yeast host
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ChapX
+              source: uniprot
+    - terminator: CYC1_term

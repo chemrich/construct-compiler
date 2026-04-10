@@ -1,42 +1,28 @@
-```yaml
 construct:
-  name: "synthetic_regulatory_network_mEGFP_mScarlet"
-  host: e_coli
+  name: "egfp_repressor_mscarlet_regulatory_network"
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)" # Common E. coli vector for high expression, contains Kanamycin resistance and pBR322 origin.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: T7lac # Default for E. coli when not specified, suitable for high expression.
-
+    - promoter: T7lac
     - cistron:
-        label: mEGFP_repressor
+        label: repressor
         expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: mEGFP
               source: fpbase
-
-    - spacer: 30 # Required between independently translated cistrons.
-
+    - spacer: 30
     - cistron:
-        label: mScarlet_target
+        label: target
         expression: medium
-        fused: false # Implies independent translation, consistent with "mEGFP repressor targets mScarlet expression".
+        fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: mScarlet
               source: fpbase
-
-    - terminator: rrnB_T1 # Default E. coli terminator.
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: rrnB_T1

@@ -1,0 +1,20 @@
+construct:
+  name: "aav_peptide_display_purification"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: peptide_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP # Small peptides (20-30 AA) are typically fused to MBP to prevent proteolytic degradation in E. coli
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: aav_display_peptide
+    - terminator: T7term

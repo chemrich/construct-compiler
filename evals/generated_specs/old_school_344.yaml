@@ -1,0 +1,25 @@
+construct:
+  name: "toxic_protein_tight_control_system"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac  # T7lac provides tight, inducible control suitable for toxic proteins in DE3 strains
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: ToxicProtein
+          source: uniprot
+    - terminator: T7term
+    - promoter: J23106  # Constitutive promoter used to drive lacIq expression for constant repression
+    - cistron:
+        label: lacIq_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P03023  # UniProt ID for LacI repressor
+          source: uniprot
+    - terminator: rrnB_T1

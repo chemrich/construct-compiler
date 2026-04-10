@@ -1,0 +1,16 @@
+construct:
+  name: Gateway_Recombination_Resistant_Entry_Vector
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Synonymous codon version of kanR to be used to prevent recombination with common lab strains
+    ori: pUC # Synonymous variant of pUC origin to prevent multi-copy recombination events
+    source: custom
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: selection_cassette
+        expression: medium
+        gene:
+          id: ccdB # Standard Gateway negative selection gene
+          source: uniprot
+    - terminator: rrnB_T1 # Standard E. coli terminator to prevent read-through into the backbone origin

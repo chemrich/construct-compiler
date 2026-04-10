@@ -1,0 +1,16 @@
+construct:
+  name: "Non_Viral_Human_CD19_CAR_T_Cell"
+  host: mammalian
+  backbone:
+    resistance: kanamycin # Rule 9: Defaulting to kanamycin. User requested no antibiotic marker; in clinical settings, minicircle or auxotrophic selection would be employed.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human promoter selected to comply with the prohibition of viral components (like CMV).
+    - cistron:
+        label: CD19_CAR_FMC63
+        expression: high
+        gene:
+          id: CD19_CAR_FMC63_CD8_CD28_CD3z
+          source: uniprot # Sequence contains leader signal peptide and signaling domains.
+    - terminator: hGH_polyA # Human growth hormone polyadenylation signal used to avoid viral terminators.

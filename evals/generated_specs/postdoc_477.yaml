@@ -1,0 +1,22 @@
+construct:
+  name: "GPCR_X_yeast_localization"
+  host: yeast
+  backbone:
+    catalog_vector: "pESC-URA"
+    source: addgene
+  cassette:
+    - promoter: GPD
+    - cistron:
+        label: GPCR_X_GFP_fusion
+        expression: high
+        chain:
+          - gene:
+              id: GPCR_X
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1

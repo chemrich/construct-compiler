@@ -1,0 +1,24 @@
+construct:
+  name: "plant_dual_pathway_monitor"
+  host: arabidopsis_thaliana
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: CaMV_35S
+    - cistron:
+        label: pathway_1_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: NOS_term
+    - promoter: UBQ10  # Different plant promoter to avoid homology
+    - cistron:
+        label: pathway_2_reporter
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rbcS_E9_term  # Unique terminator to ensure no shared sequence motifs

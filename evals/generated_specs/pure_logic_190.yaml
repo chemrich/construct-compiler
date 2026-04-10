@@ -1,0 +1,32 @@
+construct:
+  name: "morphogen_driven_adhesion_gradient"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23106
+    - cistron:
+        label: "morphogen_sensor_LuxR"
+        expression: medium
+        gene:
+          id: P12746
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: luxRI
+    - cistron:
+        label: "Cell_Adhesion_Factor"
+        expression: high
+        gene:
+          id: P39180
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "spatial_reporter"
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1

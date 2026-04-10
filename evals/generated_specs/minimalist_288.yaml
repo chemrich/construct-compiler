@@ -1,0 +1,25 @@
+construct:
+  name: "dCas9_gRNA_coexpression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: dCas9_effector
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: dCas9
+              source: uniprot
+    - terminator: T7term
+    - spacer: 40
+    - promoter: J23100
+    - cistron:
+        label: guide_RNA
+        expression: medium
+        gene:
+          id: sgRNA_target_G
+    - terminator: BBa_B0015

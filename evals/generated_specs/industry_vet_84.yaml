@@ -1,0 +1,26 @@
+construct:
+  name: "polycistronic_his_tagged_interactors"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P04637
+              source: uniprot
+    - spacer: 30 # P2A is replaced by a ribosomal spacer; P2A ribosomal skipping does not function in E. coli.
+    - cistron:
+        label: protein_2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P19174
+              source: uniprot
+    - terminator: T7term

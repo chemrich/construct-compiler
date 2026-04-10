@@ -1,0 +1,27 @@
+construct:
+  name: "complex_fusion_geneg_geneh"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: multi_domain_fusion
+        expression: high
+        chain:
+          - gene:
+              id: GeneG
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - cleavage_site: TEV
+          - gene:
+              id: GeneH
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - cleavage_site: 3C
+          - tag: Twin-Strep  # Using Twin-Strep as a high-affinity purification tag per 'novel' requirement
+    - terminator: T7term

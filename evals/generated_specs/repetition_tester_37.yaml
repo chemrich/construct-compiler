@@ -1,0 +1,25 @@
+construct:
+  name: "orthogonal_dual_signaling_reporters"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: NFKB_minimal  # Signaling pathway reporter 1 (NF-kB)
+    - cistron:
+        label: signaling_reporter_1
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: SV40_polyA
+    - spacer: 100
+    - promoter: CRE_minimal   # Signaling pathway reporter 2 (cAMP/CREB)
+    - cistron:
+        label: signaling_reporter_2
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_polyA  # Use a different polyA signal to avoid recombination motifs

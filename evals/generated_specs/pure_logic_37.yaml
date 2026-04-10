@@ -1,0 +1,48 @@
+construct:
+  name: "mammalian_blue_red_and_gate"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: blue_sensor_component
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: CRY2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P00573
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: red_sensor_component
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: PIF6
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P00573
+              source: uniprot
+    - terminator: bgh_pa
+    - promoter: T7
+    - cistron:
+        label: target_output
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: NES
+    - terminator: sv40_pa

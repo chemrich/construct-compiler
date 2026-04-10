@@ -1,0 +1,26 @@
+construct:
+  name: "not_gate_arabinose_off_green"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Activated by Arabinose (Ligand A)
+    - cistron:
+        label: tetR_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: Ptet  # Constitutively ON, repressed by TetR
+    - cistron:
+        label: output_protein_x
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

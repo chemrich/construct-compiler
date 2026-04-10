@@ -1,0 +1,18 @@
+construct:
+  name: "plant_apoplast_secretion_hsa"
+  host: nicotiana_benthamiana
+  backbone:
+    resistance: kanamycin # Necessary for E. coli propagation; assumed removed or excluded for non-GMO plant delivery
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: AtUbi10 # Arabidopsis thaliana Ubiquitin-10 constitutive promoter (non-viral)
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: SP_PR1 # Signal peptide from N. tabacum Pathogenesis-Related Protein 1 for apoplast secretion
+          - gene:
+              id: P02768 # Human Serum Albumin (HSA)
+              source: uniprot
+    - terminator: AtHSP18.2 # Arabidopsis thaliana Heat Shock Protein 18.2 terminator (non-viral)

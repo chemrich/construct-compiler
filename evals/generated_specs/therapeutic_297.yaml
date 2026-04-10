@@ -1,0 +1,25 @@
+construct:
+  name: "therapeutic_multi_domain_fusion"
+  host: e_coli
+  backbone:
+    resistance: none # User requested no antibiotic resistance genes
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: J23100 # Strong constitutive bacterial promoter
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01584 # IL2_HUMAN
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01574 # IFNG_HUMAN
+              source: uniprot
+    - terminator: rrnB_T1

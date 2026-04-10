@@ -1,0 +1,22 @@
+construct:
+  name: "Engineered_Soluble_Scaffold_Intracellular"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Substitution: Kanamycin included for cloning; therapeutic production requires transition to auxotrophic or toxin-antitoxin selection.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Non-viral bacterial hybrid promoter for high-level expression.
+    - cistron:
+        label: therapeutic_scaffold
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P02751
+              source: uniprot
+          - tag: 6xHis # C-terminal position in chain ensures non-cleavable purification tag.
+    - terminator: rrnB_T1 # Bacterial terminator to ensure no viral sequences are used.

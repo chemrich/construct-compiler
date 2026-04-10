@@ -1,0 +1,24 @@
+construct:
+  name: "therapeutic_secreted_fc_fusion_minimalist"
+  host: HEK293
+  backbone:
+    resistance: none  # Strictly antibiotic-free as requested; implies use of metabolic or RNA-based selection
+    ori: pUC          # Bacterial origin for cloning, free of viral SV40 ori
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Human promoter selected to ensure the construct is free of viral components (like CMV)
+    - cistron:
+        label: fc_fusion_protein
+        expression: high
+        chain:
+          - tag: IL2_signal  # Human signal peptide for therapeutic secretion into supernatant
+          - gene:
+              id: TNFRSF1B  # Representative human fusion partner (TNFR2)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01857  # Human IgG1 Fc region
+              source: uniprot
+    - terminator: hGH_pA  # Human growth hormone polyadenylation signal; non-viral terminator

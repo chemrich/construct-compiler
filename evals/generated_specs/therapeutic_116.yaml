@@ -1,0 +1,23 @@
+construct:
+  name: "non_viral_dual_expression_2A"
+  host: HEK293
+  backbone:
+    resistance: none # Avoids antibiotic resistance genes as requested by user
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human promoter used as a non-viral alternative to CMV
+    - cistron:
+        label: therapeutic_polyprotein
+        expression: high
+        chain:
+          - gene:
+              id: Protein_X
+              source: uniprot
+          - linker:
+              type: P2A # 2A self-cleaving peptide used per specific user request despite viral origin
+              repeats: 1
+          - gene:
+              id: Protein_Y
+              source: uniprot
+    - terminator: hGH_pA # Human Growth Hormone polyA signal used as non-viral terminator

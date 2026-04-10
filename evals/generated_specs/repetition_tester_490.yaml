@@ -1,0 +1,24 @@
+construct:
+  name: "secretase_epsilon_yeast_secretion_construct"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron  # High-copy yeast origin of replication
+  cassette:
+    - promoter: PGK1  # Strong constitutive yeast promoter
+    - cistron:
+        label: secreted_secretase
+        expression: high
+        chain:
+          - tag: alpha_mating_factor_leader  # Standard yeast secretion signal
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: FLAG
+          - linker:
+              type: rigid_EAAAK  # Distinct, non-homologous rigid linker to avoid repeats
+              repeats: 3
+          - gene:
+              id: Secretase_Epsilon
+              source: uniprot
+    - terminator: CYC1_term  # Common yeast transcription terminator

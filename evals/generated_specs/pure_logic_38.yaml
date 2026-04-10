@@ -1,0 +1,36 @@
+construct:
+  name: "E_coli_Sender_Receiver_System"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+  cassette:
+    - promoter: araBAD  # Senses input Y (arabinose) to trigger the Sender
+    - cistron:
+        label: sender_signal
+        expression: medium
+        chain:
+          - tag: PelB  # N-terminal secretion signal for export to periplasm/extracellular space
+          - cleavage_site: TEV  # Makes the signal molecule cleavable as requested
+          - gene:
+              id: mCherry
+              source: fpbase  # Using a fluorescent protein as a proxy for the secreted signal molecule
+    - terminator: rrnB_T1
+
+    - promoter: J23100  # Constitutive promoter for the receiver's sensor protein
+    - cistron:
+        label: sensor_regulator
+        expression: medium
+        gene:
+          id: luxR
+          source: uniprot  # Regulator that senses the signal molecule
+    - terminator: BBa_B0015
+
+    - promoter: pLuxR  # Sensing promoter activated by the signal-receptor complex
+    - cistron:
+        label: receiver_output
+        expression: high
+        gene:
+          id: lacZ
+          source: uniprot  # Highly active enzyme output (Beta-galactosidase, P00722)
+    - terminator: T7term

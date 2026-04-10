@@ -1,0 +1,24 @@
+construct:
+  name: "graded_mammalian_inducible_switch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Substituted for CMV to enable inducible graded response via Tet-On/Off system
+    - cistron:
+        label: target_P
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30  # Represents internal ribosome entry site or 2A peptide for polycistronic mammalian expression
+    - cistron:
+        label: feedback_regulator
+        expression: low
+        fused: false
+        gene:
+          id: TetR
+          source: uniprot
+    - terminator: SV40_polyA

@@ -1,0 +1,19 @@
+construct:
+  name: "MitochondrialEnzyme_Yeast_Expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: MTS # Mitochondrial Targeting Sequence
+          - tag: Strep-II
+          - gene:
+              id: MitochondrialEnzyme
+              source: uniprot
+    - terminator: CYC1

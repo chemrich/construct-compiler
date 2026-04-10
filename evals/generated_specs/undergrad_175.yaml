@@ -1,0 +1,16 @@
+construct:
+  name: "TetOn_ToxicProtein_HEK293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Tet-On inducible promoter (Doxycycline dependent)
+    - cistron:
+        label: toxic_target
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: ToxicProtein
+              source: uniprot
+    - terminator: bGH_pA

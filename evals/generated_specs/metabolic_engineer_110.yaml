@@ -1,0 +1,40 @@
+construct:
+  name: "yeast_stress_response_operon"
+  host: yeast
+  backbone:
+    resistance: ampicillin  # For E. coli propagation of the shuttle vector
+    ori: 2_micron            # High-copy yeast origin for high expression levels
+    source: addgene
+  cassette:
+    - promoter: HSP104       # Strong stress-inducible yeast promoter
+    - cistron:
+        label: HSP104
+        expression: high
+        gene:
+          id: P31539
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: SOD1
+        expression: high
+        fused: false          # Polycistronic/operon-like translation
+        gene:
+          id: P00445
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: SOD2
+        expression: high
+        fused: false
+        gene:
+          id: P04179
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CTT1
+        expression: high
+        fused: false
+        gene:
+          id: P00813
+          source: uniprot
+    - terminator: CYC1_term   # Standard yeast transcriptional terminator

@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_nucleoprotein_localization_study"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Standard inducible yeast promoter
+    - cistron:
+        label: target
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: NucleoProtein
+              source: uniprot
+          - tag: NLS
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1_term  # Standard yeast terminator

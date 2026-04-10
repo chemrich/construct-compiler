@@ -1,0 +1,45 @@
+construct:
+  name: "five_enzyme_fusion_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enz1_enz2_fusion
+        expression: high
+        chain:
+          - gene:
+              id: Enz1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Enz2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enz3
+        expression: high
+        fused: false
+        gene:
+          id: Enz3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enz4
+        expression: high
+        fused: false
+        gene:
+          id: Enz4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enz5
+        expression: high
+        fused: false
+        gene:
+          id: Enz5
+          source: uniprot
+    - terminator: T7term

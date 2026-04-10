@@ -1,0 +1,17 @@
+construct:
+  name: HEK293_high_yield_production
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal for HEK293 to produce "supernatant"
+          - gene:
+              id: P01133
+              source: uniprot
+          - tag: Strep-II
+    - terminator: bGH_polyA

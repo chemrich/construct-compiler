@@ -1,0 +1,19 @@
+construct:
+  name: "bacillus_subtilis_amyE_subtilisin_secretion"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    source: addgene
+    # Designed for integration into the amyE locus
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: secreted_subtilisin
+        expression: high
+        chain:
+          - secretion_signal: AprE
+          - gene:
+              id: P00782
+              source: uniprot
+          - tag: FLAG
+    - terminator: rrnB_T1

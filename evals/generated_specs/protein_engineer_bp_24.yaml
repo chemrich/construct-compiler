@@ -1,0 +1,19 @@
+construct:
+  name: "tandem_Pveg_Pgrac_subtilisin_production"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: custom
+  cassette:
+    - promoter: Pveg_Pgrac  # Tandem promoter architecture for maximum expression in Bacillus
+    - cistron:
+        label: subtilisin_variant
+        expression: high
+        chain:
+          - tag: AprE  # N-terminal secretion signal for export to media
+          - gene:
+              id: P00782
+              source: uniprot
+          - tag: Strep-II  # C-terminal tag for high-purity affinity capture
+    - terminator: BBa_B0015

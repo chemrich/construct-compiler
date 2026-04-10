@@ -1,0 +1,22 @@
+construct:
+  name: "positive_feedback_signal_amplification_loop"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Responds to input 'C1' (Arabinose) to trigger initial synthesis of Protein_Y
+    - cistron:
+        label: Protein_Y_trigger
+        expression: low
+        gene:
+          id: LuxR
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: pLux    # Strong positive feedback promoter activated by the presence of Protein_Y (LuxR)
+    - cistron:
+        label: Protein_Y_autoactivation
+        expression: high
+        gene:
+          id: LuxR
+          source: uniprot
+    - terminator: T7term

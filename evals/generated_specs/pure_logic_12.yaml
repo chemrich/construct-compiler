@@ -1,0 +1,21 @@
+construct:
+  name: "and_not_gate_sfgfp_logic"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Inducible by Input A (Arabinose); logic assumes a repressor for Input B is present
+    - cistron:
+        label: logic_output
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1

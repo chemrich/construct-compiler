@@ -1,0 +1,16 @@
+construct:
+  name: "metabolite_m_toxin_t_comparator"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Responds to metabolite M (modeled as L-arabinose) to trigger expression
+    - cistron:
+        label: toxin_degrader
+        expression: high
+        gene:
+          id: P62593  # TEM-1 Beta-lactamase, representative enzyme for degrading toxin T (beta-lactams)
+          source: uniprot
+    - terminator: rrnB_T1

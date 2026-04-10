@@ -1,0 +1,23 @@
+construct:
+  name: "dual_yeast_mammalian_diagnostic_shuttle"
+  host: HEK293 # HEK293 selected as primary host; construct contains independent cassettes for yeast and mammalian expression.
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: yeast_goi1
+        gene:
+          id: GOI1
+          source: uniprot
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: CMV
+    - cistron:
+        label: mammalian_goi2
+        gene:
+          id: GOI2
+          source: uniprot
+    - terminator: bGH_polyA

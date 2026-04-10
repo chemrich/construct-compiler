@@ -1,0 +1,18 @@
+construct:
+  name: "secreted_antibody_fragment_production"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_scFv
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Trastuzumab_scFv
+              source: uniprot
+    - terminator: BGH_pA

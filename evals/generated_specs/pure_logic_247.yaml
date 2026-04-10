@@ -1,0 +1,21 @@
+construct:
+  name: "threshold_detector_G"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Used as a threshold detector where input H is the inducer (e.g., L-arabinose)
+    - cistron:
+        label: output_G
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P19909  # UniProt ID for Protein G
+              source: uniprot
+    - terminator: rrnB_T1

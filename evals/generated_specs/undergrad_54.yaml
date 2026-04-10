@@ -1,0 +1,20 @@
+construct:
+  name: "Protein_P_GST_Solubility_Fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_p_target
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Protein_P
+    - terminator: T7term

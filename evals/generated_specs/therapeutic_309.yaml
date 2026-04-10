@@ -1,0 +1,30 @@
+construct:
+  name: "tri_cistronic_therapeutic_insect"
+  host: Sf9  # Specific insect cell line used as a reasonable substitution for "insect cells" per rule 13
+  backbone:
+    catalog_vector: "pFastBac1"
+  cassette:
+    - promoter: PolH  # Standard high-level baculovirus promoter for insect cells
+    - cistron:
+        label: therapeutic_subunit_1
+        expression: high
+        gene:
+          id: P29459
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: therapeutic_subunit_2
+        expression: high
+        fused: false  # Independent translation for polycistronic efficiency
+        gene:
+          id: P29460
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: therapeutic_subunit_3
+        expression: high
+        fused: false
+        gene:
+          id: Q9NPF7
+          source: uniprot
+    - terminator: SV40_polyA  # Common terminator for insect cell expression systems

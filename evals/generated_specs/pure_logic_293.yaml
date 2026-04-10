@@ -1,0 +1,34 @@
+construct:
+  name: "irreversible_single_event_counter"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: trigger_sensor
+        expression: medium
+        fused: false
+        gene:
+          id: P00573
+          source: uniprot
+    - spacer: 40
+    - promoter: T7
+    - cistron:
+        label: latch_feedback
+        expression: high
+        fused: false
+        gene:
+          id: P00573
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: count_one_output
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: T7term

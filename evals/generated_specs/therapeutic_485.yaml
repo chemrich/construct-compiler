@@ -1,0 +1,22 @@
+construct:
+  name: "high_yield_secreted_therapeutic_cpp"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)" # Defaulting to kanamycin; ARB-free selection is not supported in the current schema
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: secreted_therapeutic
+        expression: high
+        chain:
+          - tag: OmpA # Signal peptide for periplasmic secretion to reduce bacterial contaminants
+          - tag: 6xHis # Purification tag
+          - cleavage_site: Enterokinase # Non-viral protease cleavage site
+          - tag: Penetratin # Non-viral cell-penetrating peptide motif
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01270 # PTH (Parathyroid hormone) therapeutic peptide
+              source: uniprot
+    - terminator: T7term

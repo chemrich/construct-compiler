@@ -1,0 +1,29 @@
+construct:
+  name: "three_input_majority_gate_logic"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7  # Logic: Responds to MAJ(A,B,C) activation
+    - cistron:
+        label: output_P
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: T7term
+    - spacer: 50
+    - promoter: tac  # Logic: Negation gate; active when majority logic is low
+    - cistron:
+        label: output_Q
+        expression: medium
+        fused: false
+        chain:
+          - tag: Twin-Strep
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: rrnB_T1

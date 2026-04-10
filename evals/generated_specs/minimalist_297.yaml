@@ -1,0 +1,19 @@
+construct:
+  name: "protein_L_degradation_system"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_L_target
+        expression: high
+        chain:
+          - gene:
+              id: P06830
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: ssrA
+    - terminator: T7term

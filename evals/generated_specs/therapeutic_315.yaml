@@ -1,0 +1,20 @@
+construct:
+  name: "mitochondrial_micropeptide_expression_construct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: mitochondrial_target
+        expression: high
+        chain:
+          - tag: MTS  # Mitochondrial Targeting Sequence for subcellular localization
+          - tag: HA
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P0DPI4
+              source: uniprot
+    - terminator: BGH_pA

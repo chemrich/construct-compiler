@@ -1,0 +1,29 @@
+construct:
+  name: "LinkerProt_Multidomain_Fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: LinkerProt
+        expression: high
+        chain:
+          - gene:
+              id: DomainC
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: DomainD
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 4
+          - gene:
+              id: DomainE
+              source: uniprot
+    - terminator: T7term

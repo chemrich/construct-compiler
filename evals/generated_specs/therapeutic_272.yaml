@@ -1,0 +1,19 @@
+construct:
+  name: "therapeutic_self_cleaving_fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Comment: Substituted for 'none' to maintain schema validity; suggest using auxotrophic complementation (e.g., dapD) for antibiotic-free production.
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: araBAD # Comment: araBAD is a strong inducible bacterial promoter (non-viral).
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: P2A # Comment: 2A peptides are eukaryotic; Intein-mediated splicing (e.g., Ssp DnaB) is recommended for true in-vivo self-cleavage in E. coli.
+          - gene:
+              id: P01308
+              source: uniprot
+    - terminator: rrnB_T1

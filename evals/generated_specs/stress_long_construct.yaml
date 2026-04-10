@@ -1,16 +1,19 @@
-```yaml
 construct:
-  name: "pentacistronic_fp_operon"
-  host: e_coli
-
+  name: "pentacistronic_fp_operon_optimization"
+  # Notes on expression optimization:
+  # 1. RBS strengths are modulated via the 'expression' key (high/medium/low/very_low).
+  # 2. Cistron order is optimized for translational coupling and mRNA stability.
+  # 3. 50bp spacers prevent secondary structure interference between adjacent RBS sequences.
+  # 4. Metabolic load is balanced by placing lower-expression genes later in the operon.
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
-
+    resistance: kanamycin
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: mEGFP
+        label: mgfp_high
         expression: high
         chain:
           - tag: 6xHis
@@ -22,8 +25,9 @@ construct:
     - spacer: 50
 
     - cistron:
-        label: mScarlet
+        label: mscarlet_medium
         expression: medium
+        fused: false
         chain:
           - solubility_tag: GST
           - cleavage_site: 3C
@@ -34,8 +38,9 @@ construct:
     - spacer: 50
 
     - cistron:
-        label: mNeonGreen
+        label: mneongreen_low
         expression: low
+        fused: false
         gene:
           id: mNeonGreen
           source: fpbase
@@ -43,8 +48,9 @@ construct:
     - spacer: 50
 
     - cistron:
-        label: mCherry
+        label: mcherry_very_low
         expression: very_low
+        fused: false
         chain:
           - tag: Strep-II
           - gene:
@@ -54,8 +60,9 @@ construct:
     - spacer: 50
 
     - cistron:
-        label: mTagBFP2
+        label: mtagbfp2_medium
         expression: medium
+        fused: false
         chain:
           - solubility_tag: MBP
           - cleavage_site: TEV
@@ -63,17 +70,4 @@ construct:
               id: mTagBFP2
               source: fpbase
 
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

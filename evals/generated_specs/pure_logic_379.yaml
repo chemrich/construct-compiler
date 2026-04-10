@@ -1,0 +1,32 @@
+construct:
+  name: "spatial_patterning_logic_circuit"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: luxR_receiver
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P12746
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: neighbor_signal_N
+        expression: medium
+        fused: false
+        gene:
+          id: P12990
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: boundary_reporter_B
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

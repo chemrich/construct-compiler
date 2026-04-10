@@ -1,0 +1,36 @@
+construct:
+  name: "dual_peptide_carrier_fusion_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: fusion_x
+        expression: high
+        chain:
+          - gene:
+              id: CarrierProtein_Z
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Peptide_X
+              source: uniprot
+    - spacer: 35
+    - cistron:
+        label: fusion_y
+        expression: high
+        fused: false  # Ensures independent translation with separate RBS/start codon
+        chain:
+          - gene:
+              id: CarrierProtein_Z # Compiler: apply maximal synonymous codon divergence from cistron 1
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK # Unique, non-homologous linker compared to GS_flexible
+              repeats: 3
+          - gene:
+              id: Peptide_Y
+              source: uniprot
+    - terminator: T7term

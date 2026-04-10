@@ -1,0 +1,17 @@
+construct:
+  name: "yeast_metabolic_flux_switch_ERG10"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS406"  # Integrative yeast vector for stable genomic expression
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Galactose-inducible switch for metabolic control
+    - cistron:
+        label: metabolic_enzyme
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P07146  # Saccharomyces cerevisiae ERG10 (Acetoacetyl-CoA thiolase)
+              source: uniprot
+    - terminator: CYC1_term

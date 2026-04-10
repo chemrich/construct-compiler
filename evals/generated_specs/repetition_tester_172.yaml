@@ -1,0 +1,26 @@
+construct:
+  name: "immunogen_peptide_tandem_repeat_library_yeast"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: tandem_immunogen
+        expression: high
+        chain:
+          - gene:
+              id: ImmunogenPeptide
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: ImmunogenPeptide
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: ImmunogenPeptide
+    - terminator: CYC1

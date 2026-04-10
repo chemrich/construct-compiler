@@ -1,0 +1,28 @@
+construct:
+  name: "toxic_human_protein_tight_control"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # araBAD is used for the tightest possible transcriptional control; loxP-mediated logic is not supported in this linear YAML schema.
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P55957
+              source: uniprot
+          - tag: HA
+    - spacer: 40
+    - promoter: J23106
+    - cistron:
+        label: recombinase
+        expression: low
+        fused: false
+        gene:
+          id: P06956
+          source: uniprot
+    - terminator: rrnB_T1

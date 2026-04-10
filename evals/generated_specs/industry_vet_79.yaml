@@ -1,0 +1,16 @@
+construct:
+  name: "muscle_protein_coli_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac # Substituted T7lac for muscle-specific promoter; E. coli cannot recognize eukaryotic tissue-specific promoters.
+    - cistron:
+        label: muscle_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P68133
+              source: uniprot
+    - terminator: T7term

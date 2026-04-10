@@ -1,0 +1,27 @@
+construct:
+  name: "differential_aav_rep_cap_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: cap_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: CAP_AAV2S
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: rep_protein
+        expression: low
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: REP_AAV2S
+              source: uniprot
+    - terminator: bgh_polya

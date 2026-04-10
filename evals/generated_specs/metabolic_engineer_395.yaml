@@ -1,0 +1,42 @@
+construct:
+  name: "four_enzyme_pathway_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: "pathA_pathB_fusion"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PathA
+              source: uniprot
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: PathB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "pathC_pathD_fusion"
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PathC
+              source: uniprot
+          - cleavage_site: 3C
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: PathD
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

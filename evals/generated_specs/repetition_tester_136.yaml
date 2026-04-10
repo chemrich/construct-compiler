@@ -1,0 +1,15 @@
+construct:
+  name: "reporter_gene_red_unique_optimization"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: red_reporter
+        expression: high  # This setting ensures maximal synonymous codon diversity and avoids repetitive sequences
+        gene:
+          id: mScarlet
+          source: fpbase
+    # Note: The construct_compiler defaults to ATG start codons; exploring GTG/TTG starts requires manual sequence overrides not supported in the standard YAML spec.
+    - terminator: T7term

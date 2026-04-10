@@ -1,0 +1,30 @@
+construct:
+  name: "genetic_2to1_mux_secretion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100 # S=LOW: Constitutive promoter active in absence of Signal S (repressor)
+    - cistron:
+        label: input_A
+        expression: high
+        chain:
+          - tag: pelB # Secretion signal peptide for E. coli
+          - tag: 6xHis # Purification tag
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1
+    - promoter: araBAD # S=HIGH: Inducible promoter active in presence of Signal S (Arabinose)
+    - cistron:
+        label: input_B
+        expression: high
+        chain:
+          - tag: pelB
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: T7term

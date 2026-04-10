@@ -1,0 +1,19 @@
+construct:
+  name: "yeastbuddy_high_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD # Substituted GPD for requested CMV as CMV is not a standard strong promoter for S. cerevisiae.
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: YeastBuddy
+              source: uniprot
+    - terminator: CYC1_term

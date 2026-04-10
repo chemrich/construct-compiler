@@ -1,0 +1,18 @@
+construct:
+  name: "mammalian_protein_n_cterm_strep"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_n
+        expression: high
+        chain:
+          - gene:
+              id: P0DTC9  # SARS-CoV-2 Nucleocapsid protein (Protein N)
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: Strep-II
+    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal/terminator

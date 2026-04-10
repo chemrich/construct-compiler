@@ -1,0 +1,26 @@
+construct:
+  name: "bacillus_enzyme_coexpression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: enzyme_a
+        expression: medium
+        gene:
+          id: enzyme_a
+          source: uniprot
+    - spacer: 50
+    - promoter: Pxyl
+    - cistron:
+        label: enzyme_b
+        expression: medium
+        chain:
+          - gene:
+              id: enzyme_b
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

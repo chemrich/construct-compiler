@@ -1,0 +1,15 @@
+construct:
+  name: "xnor_equality_detector"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+  cassette:
+    - promoter: "P_xnor_I1_I2" # Synthetic XNOR promoter: ON if (I1 AND I2) OR (NOT I1 AND NOT I2)
+    - cistron:
+        label: "output_protein_R"
+        expression: high
+        gene:
+          id: mScarlet # mScarlet serves as the reporter for protein R
+          source: fpbase
+    - terminator: rrnB_T1

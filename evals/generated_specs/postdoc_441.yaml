@@ -1,0 +1,23 @@
+construct:
+  name: yeast_kinase_expression_adh1
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: kinase_target
+        expression: high
+        chain:
+          - gene:
+              id: CDC28
+              source: uniprot
+          # Note: Intron-mediated expression enhancement is handled by the 'expression: high' setting as the current schema doesn't support internal intron positioning.
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+    - terminator: CYC1

@@ -1,0 +1,22 @@
+construct:
+  name: "HEK293_mCherry_IRES_sfGFP"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: mCherry_constitutive
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - spacer: 585  # Encephalomyocarditis virus (EMCV) IRES for independent translation
+    - cistron:
+        label: sfGFP_ires_driven
+        expression: medium
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: bGH_polyA

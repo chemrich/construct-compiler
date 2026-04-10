@@ -1,0 +1,34 @@
+construct:
+  name: yeast_tricistronic_synthase_operon
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: synthase_a
+        expression: high
+        gene:
+          id: SynthaseA
+          source: uniprot
+    - spacer: 42  # Unique spacer length to ensure sequence divergence
+    - cistron:
+        label: synthase_b
+        expression: high
+        fused: false
+        chain:
+          - tag: alpha_factor  # Yeast secretion signal
+          - gene:
+              id: SynthaseB
+              source: uniprot
+    - spacer: 57  # Distinct spacer length to ensure sequence divergence
+    - cistron:
+        label: synthase_c
+        expression: high
+        fused: false
+        gene:
+          id: SynthaseC
+          source: uniprot
+    - terminator: ADH1

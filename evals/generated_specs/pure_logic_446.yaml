@@ -1,0 +1,45 @@
+construct:
+  name: "repressilator_oscillator_system"
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: SC101
+    source: addgene
+  cassette:
+    - promoter: PL_lambda
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: pLacUV5
+    - cistron:
+        label: tetR_repressor
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: pTet
+    - cistron:
+        label: cI_repressor
+        expression: medium
+        gene:
+          id: P03034
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: pTet
+    - cistron:
+        label: ReporterR
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015

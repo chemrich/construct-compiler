@@ -1,0 +1,49 @@
+construct:
+  name: "ProdX_Biosynthetic_Operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: prodX_A_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: ProdX_A
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: prodX_B
+        expression: high
+        fused: false
+        gene:
+          id: ProdX_B
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: prodX_C
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: ProdX_C
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: prodX_D
+        expression: low
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: ProdX_D
+              source: uniprot
+    - terminator: T7term

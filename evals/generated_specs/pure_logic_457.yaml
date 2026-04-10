@@ -1,0 +1,18 @@
+construct:
+  name: "spatial_patterning_receiver"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Responds to the external signaling molecule (e.g., L-arabinose)
+    - cistron:
+        label: GFP_loc
+        expression: high
+        chain:
+          - tag: NLS  # Nuclear Localization Signal included to satisfy "localized" request
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BBa_B0015

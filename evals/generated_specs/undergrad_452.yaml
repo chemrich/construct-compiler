@@ -1,0 +1,23 @@
+construct:
+  name: "protein_iota_kappa_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: iota_kappa_fusion
+        expression: high
+        chain:
+          - gene:
+              id: Protein_Iota
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Protein_Kappa
+              source: uniprot
+    - terminator: T7term

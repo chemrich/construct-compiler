@@ -1,0 +1,36 @@
+construct:
+  name: "balanced_enzyme_operon_ABCD"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_A
+        expression: medium
+        gene:
+          id: EnzA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_BC_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: EnzB
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: EnzC
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_D
+        expression: medium
+        gene:
+          id: EnzD
+          source: uniprot
+    - terminator: rrnB_T1

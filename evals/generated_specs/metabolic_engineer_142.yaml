@@ -1,0 +1,61 @@
+construct:
+  name: "six_enzyme_fatty_acid_synthesis_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: E1_synthase
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: syn1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E2_hydrolase
+        expression: high
+        fused: false
+        gene:
+          id: hyd1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E3_isomerase
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: iso1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E4_kinase
+        expression: high
+        fused: false
+        gene:
+          id: kin1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E5_reductase
+        expression: high
+        fused: false
+        gene:
+          id: red1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E6_ligase
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: lig1
+              source: uniprot
+          - tag: FLAG
+    - terminator: rrnB_T1

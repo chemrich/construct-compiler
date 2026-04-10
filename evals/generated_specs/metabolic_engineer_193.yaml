@@ -1,0 +1,57 @@
+construct:
+  name: "bioplastic_production_pathway"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: MonomerSynthaseA
+        expression: high
+        chain:
+          - gene:
+              id: MonomerSynthaseA
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: MonomerSynthaseB
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: MonomerSynthaseB
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: MonomerSynthaseC
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: MonomerSynthaseC
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1
+    - promoter: J23100
+    - cistron:
+        label: PolymeraseD
+        expression: high
+        chain:
+          - gene:
+              id: PolymeraseD
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1
+    - promoter: J23100
+    - cistron:
+        label: PolymeraseE
+        expression: high
+        chain:
+          - gene:
+              id: PolymeraseE
+              source: uniprot
+          - tag: Strep-II
+    - terminator: BBa_B0015

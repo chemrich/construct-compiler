@@ -1,0 +1,43 @@
+construct:
+  name: "yeast_tricistronic_orthogonal_expression"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    # First expression unit
+    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - cistron:
+        label: cistron_1
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: CYC1_term  # Distinct terminator 1
+
+    - spacer: 30
+
+    # Second expression unit
+    - promoter: TEF1  # Strong constitutive yeast promoter (distinct from TDH3)
+    - cistron:
+        label: cistron_2
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: ADH1_term  # Distinct terminator 2
+
+    - spacer: 30
+
+    # Third expression unit
+    - promoter: PGK1  # Strong constitutive yeast promoter (distinct from others)
+    - cistron:
+        label: cistron_3
+        expression: high
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: ENO2_term  # Distinct terminator 3

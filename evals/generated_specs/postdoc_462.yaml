@@ -1,0 +1,25 @@
+construct:
+  name: "ComplexX_Polycistronic_Expression"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: subunit_a
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: SubunitA
+              source: uniprot
+    - spacer: 30 # Replaced eukaryotic IRES with a spacer for prokaryotic polycistronic expression
+    - cistron:
+        label: subunit_b
+        expression: high
+        fused: false
+        gene:
+          id: SubunitB
+          source: uniprot
+    - terminator: rrnB_T1

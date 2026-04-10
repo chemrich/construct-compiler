@@ -1,0 +1,23 @@
+construct:
+  name: "mammalian_fluorescent_timer"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: timer_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet-I
+              source: fpbase
+          - linker:
+              # Using a high repeat count and rigid type to ensure DNA sequence uniqueness as requested
+              type: rigid_EAAAK
+              repeats: 5
+          - gene:
+              id: EGFP
+              source: fpbase
+        # Note: Each gene in the chain must be codon-optimized independently for mammalian expression to maximize DNA sequence dissimilarity.
+    - terminator: BGH_pA

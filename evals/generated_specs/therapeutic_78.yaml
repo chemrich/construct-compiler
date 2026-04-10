@@ -1,0 +1,28 @@
+construct:
+  name: "secreted_bispecific_scfv_p2a_nonviral"
+  host: HEK293
+  backbone:
+    resistance: none  # Mandatory requirement: no antibiotic resistance genes
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral human promoter for mammalian expression
+    - cistron:
+        label: "scfv_unit_1"
+        expression: high
+        chain:
+          - tag: IgK_leader  # Signal peptide for secretion
+          - gene:
+              id: "scFv_target_A"
+              source: uniprot
+    - spacer: 66  # 66 bp spacer representing a P2A self-cleaving peptide strategy
+    - cistron:
+        label: "scfv_unit_2"
+        expression: high
+        fused: false  # Indicates independent translation unit after the 2A cleavage site
+        chain:
+          - tag: IgK_leader  # Required for the second protein to enter the secretory pathway
+          - gene:
+              id: "scFv_target_B"
+              source: uniprot
+    - terminator: bGH_polyA  # Non-viral bovine growth hormone polyadenylation signal

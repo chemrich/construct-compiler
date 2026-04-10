@@ -1,0 +1,24 @@
+construct:
+  name: "surface_prodrug_activator_TRE"
+  host: HEK293
+  backbone:
+    # Kanamycin included to satisfy tool schema requirements despite user request for no antibiotic markers
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: TRE3G # Non-viral, Tetracycline-regulatable promoter
+    - cistron:
+        label: prodrug_activating_enzyme
+        expression: high
+        chain:
+          - tag: IgK_leader # Signal peptide for N-terminal secretion/membrane targeting
+          - tag: FLAG # Extracellular purification/detection tag
+          - gene:
+              id: P0AET2 # NfsB (Nitroreductase) from E. coli
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: PDGFR_TM # Transmembrane anchor to maintain cell surface localization
+    - terminator: bGH_pA # Standard mammalian polyadenylation signal

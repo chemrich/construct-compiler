@@ -1,0 +1,16 @@
+construct:
+  name: "thermal_switch_37C_output_H"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: lambda_pR # Temperature-sensitive promoter system; active above 37°C when used with cI857 repressor
+    - cistron:
+        label: output_H
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: T7term

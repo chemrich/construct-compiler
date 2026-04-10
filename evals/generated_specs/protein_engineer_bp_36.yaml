@@ -1,0 +1,34 @@
+construct:
+  name: "bacillus_protease_chaperone_operon"
+  host: bacillus
+  backbone:
+    resistance: chloramphenicol
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pxyl
+    - cistron:
+        label: groES
+        expression: medium
+        gene:
+          id: P19104
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: groEL
+        expression: medium
+        fused: false
+        gene:
+          id: P19105
+          source: uniprot
+    - spacer: 40
+    - promoter: Pxyl
+    - cistron:
+        label: target_protease
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00782
+              source: uniprot
+    - terminator: rrnB_T1

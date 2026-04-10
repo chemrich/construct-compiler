@@ -1,0 +1,29 @@
+construct:
+  name: "pichia_pastoris_heterodimer_secretion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: heavy_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: P01857
+              source: uniprot
+    - terminator: AOX1_TT
+    - promoter: DAS1
+    - cistron:
+        label: light_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: P01834
+              source: uniprot
+          - tag: FLAG
+    - terminator: CYC1_TT

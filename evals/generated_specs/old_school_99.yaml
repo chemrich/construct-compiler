@@ -1,0 +1,17 @@
+construct:
+  name: "araBAD_mEGFP_internal_FLAG_variant"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: gfp_variant
+        expression: high
+        chain:
+          - tag: FLAG  # Note: Tool schema places tags at the terminus; internal insertion is represented here as an N-terminal tag.
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1  # Standard Rho-independent terminator

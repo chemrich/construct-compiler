@@ -1,0 +1,19 @@
+construct:
+  name: "SuperBinder_GST_Purification"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - cleavage_site: TEV
+          - gene:
+              id: SuperBinder
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term

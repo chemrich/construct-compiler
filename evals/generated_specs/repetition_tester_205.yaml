@@ -1,0 +1,24 @@
+construct:
+  name: "Bicistronic_GeneX_GeneY_Diverse_Mammalian"
+  host: mammalian
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Strong mammalian promoter, alternative to standard CMV
+    - cistron:
+        label: GeneX
+        expression: high
+        gene:
+          id: GeneX
+          source: uniprot
+    - spacer: 585  # Dedicated interval for novel IRES variant
+    - cistron:
+        label: GeneY
+        expression: high
+        fused: false  # Triggers independent translation initiation (IRES-mediated in mammalian)
+        gene:
+          id: GeneY
+          source: uniprot
+    - terminator: hGH_polyA  # Human growth hormone polyadenylation signal for high stability

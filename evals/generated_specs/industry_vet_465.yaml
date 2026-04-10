@@ -1,0 +1,22 @@
+construct:
+  name: "TargetProtein_mEGFP_Fusion_HEK293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: TargetProtein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: 6xHis
+    - terminator: BGH_pA # Using mammalian-specific polyadenylation signal for HEK293 expression

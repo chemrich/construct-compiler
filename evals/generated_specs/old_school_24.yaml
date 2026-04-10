@@ -1,0 +1,26 @@
+construct:
+  name: "bicistronic_enzymex_laci_system"
+  host: e_coli
+  backbone:
+    resistance: tetracycline
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: enzymex_fusion
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: EnzymeX
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: laci_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: lacI
+          source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,15 @@
+construct:
+  name: "metabolite_M_responsive_proportional_controller"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: araBAD  # Acts as a proportional sensor for metabolite M (e.g., L-arabinose)
+    - cistron:
+        label: degradation_enzyme_E
+        expression: high
+        gene:
+          id: P0A944  # AraA (L-arabinose isomerase), a representative enzyme E that degrades metabolite M
+          source: uniprot
+    - terminator: rrnB_T1

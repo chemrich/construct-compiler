@@ -1,0 +1,19 @@
+construct:
+  name: "yeast_er_targeted_enzyme"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: enzyme
+        expression: high
+        chain:
+          - tag: Kar2_SP  # Added N-terminal signal peptide to target the cytosolic enzyme to the ER
+          - gene:
+              id: enzyme_of_interest
+              source: uniprot
+          - tag: HDEL  # Substituted KDEL for HDEL as it is the canonical ER retention signal in S. cerevisiae
+    - terminator: CYC1_term

@@ -1,0 +1,39 @@
+construct:
+  name: "yeast_surface_display_trivalent_vaccine"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: surface_display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: AGA2_signal
+              source: uniprot
+          - gene:
+              id: AGA2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Epitope_Alpha
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: Epitope_Beta
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: Epitope_Gamma
+              source: uniprot
+          - tag: FLAG
+    - terminator: CYC1_term

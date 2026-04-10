@@ -1,0 +1,47 @@
+construct:
+  name: "four_enzyme_solubility_tagged_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: ComplexPart1
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: ComplexPart1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ComplexPart2
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: ComplexPart2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ComplexPart3
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: ComplexPart3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ComplexPart4
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: ComplexPart4
+              source: uniprot
+          - tag: Myc
+    - terminator: T7term

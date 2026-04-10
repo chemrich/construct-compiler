@@ -1,0 +1,18 @@
+construct:
+  name: yeast_surface_display_protein_D
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: TDH3 # Chosen as a strong constitutive promoter for S. cerevisiae
+    - cistron:
+        label: surface_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor_signal # Added N-terminal signal peptide to ensure translocation into the ER for GPI anchor processing
+          - gene:
+              id: Protein_D
+              source: uniprot
+          - tag: GPI_anchor
+    - terminator: CYC1_term

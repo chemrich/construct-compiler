@@ -1,0 +1,28 @@
+construct:
+  name: "yeast_surface_display_aga2_megfp"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+
+  cassette:
+    - promoter: GAL1 # Inducible strong yeast promoter
+
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: AGA2_YEAST
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: HA
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: CYC1

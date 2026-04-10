@@ -1,0 +1,32 @@
+construct:
+  name: "mammalian_nonviral_gene_switch_system"
+  host: HEK293
+  backbone:
+    resistance: kanamycin  # User requested no antibiotic resistance; kanamycin included for E. coli propagation per tool requirements.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: transcriptional_activator
+        expression: high
+        chain:
+          - gene:
+              id: P04483  # TetR
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P06492  # VP16 Activation Domain
+              source: uniprot
+    - terminator: bGH_polyA
+    - spacer: 100
+    - promoter: TRE
+    - cistron:
+        label: luciferase_reporter
+        expression: medium
+        gene:
+          id: P08659  # Firefly Luciferase
+          source: uniprot
+    - terminator: SV40_polyA

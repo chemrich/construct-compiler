@@ -1,25 +1,17 @@
-```yaml
 construct:
-  name: "cfps_wheat_germ_optimized"
-  host: e_coli # Chosen as a proxy for a bacterial-style expression system often used in CFPS, given the T7 promoter/terminator.
-
+  name: "wheat_germ_ivt_optimized"
+  host: in_vitro
   backbone:
     resistance: kanamycin
-    ori: pBR322
-
+    ori: pUC
   cassette:
-    - promoter: T7lac
-
+    - promoter: T7
     - cistron:
         label: target
-        expression: high # Corresponds to "strong RBS (BBa_B0034)"
+        expression: high # strong RBS/leader for high CFPS yield
         chain:
           - tag: 6xHis
           - gene:
-              id: gene_of_interest # Placeholder: Please replace with your target gene ID and source.
-
-    - terminator: T7term
-
-  constraints:
-    codon_optimization: local # Corresponds to "avoid problematic codons"
-```
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term # t7 terminator for runoff control and efficient termination

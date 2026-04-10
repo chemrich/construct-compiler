@@ -1,0 +1,31 @@
+construct:
+  name: "multivalent_dbd1_tandem_diversified"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: tandem_dbd_fusion
+        expression: high
+        chain:
+          - gene:
+              id: DBD1
+              source: uniprot
+          - linker:
+              # First linker: Flexible GS type to break sequence identity
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: DBD1
+              source: uniprot
+          - linker:
+              # Second linker: Rigid EAAAK type to maximize DNA sequence divergence and structural spacing
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: DBD1
+              source: uniprot
+    - terminator: T7term # The compiler will automatically apply synonymous codon diversification for the repeated DBD1 gene entries to prevent recombination.

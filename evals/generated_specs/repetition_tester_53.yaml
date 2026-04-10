@@ -1,0 +1,27 @@
+construct:
+  name: "phage_display_diversity_vector"
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: pIII_display_fusion
+        expression: medium
+        chain:
+          - tag: PelB # N-terminal secretion signal for periplasmic translocation
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P02976 # Protein A immunoglobulin-binding domain as target
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK # Use rigid linker here for sequence diversity vs GS linker
+              repeats: 4
+          - gene:
+              id: P03661 # M13 phage coat protein III (g3p)
+              source: uniprot
+    - terminator: rrnB_T1

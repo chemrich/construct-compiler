@@ -1,0 +1,27 @@
+construct:
+  name: "Pichia_GAP_mCherry_Zeo_Secretion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: secreted_mCherry
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: 8xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: AOX1
+    - promoter: TEF1
+    - cistron:
+        label: zeocin_selection
+        expression: medium
+        gene:
+          id: BleoR
+          source: uniprot
+    - terminator: CYC1

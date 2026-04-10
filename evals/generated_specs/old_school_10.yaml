@@ -1,0 +1,16 @@
+construct:
+  name: yeast_inducible_toxic_protein_x
+  host: yeast
+  backbone:
+    resistance: URA3  # Using URA3 auxotrophic marker for yeast selection
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: toxic_protein
+        expression: high
+        chain:
+          - gene:
+              id: toxic_protein_x
+          - tag: HA  # C-terminal HA-tag placed after the gene in the chain
+    - terminator: CYC1

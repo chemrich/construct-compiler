@@ -1,0 +1,34 @@
+construct:
+  name: "essential_enzyme_redundant_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac  # Primary pathway (Pathway 1)
+    - cistron:
+        label: pathway_1_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00722
+              source: uniprot
+    - terminator: T7term
+    - promoter: araBAD  # Secondary backup pathway (Pathway 2), inducible/upregulatable
+    - cistron:
+        label: pathway_2_enzyme
+        expression: high
+        chain:
+          - tag: 8xHis
+          - gene:
+              id: P00722
+              source: uniprot
+    - terminator: BBa_B0015
+    - promoter: J23106  # Constitutive promoter for error detection sensor
+    - cistron:
+        label: failure_sensor
+        expression: low
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

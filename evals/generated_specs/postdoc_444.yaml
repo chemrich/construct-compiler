@@ -1,0 +1,38 @@
+construct:
+  name: "yeast_metabolic_polycistron"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: enzyme_a
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_b
+        expression: medium
+        fused: false # Independent translation (compiler provides yeast-appropriate translation initiation)
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_c
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeC
+              source: uniprot
+    - terminator: CYC1

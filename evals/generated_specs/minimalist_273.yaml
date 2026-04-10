@@ -1,0 +1,22 @@
+construct:
+  name: mammalian_dual_expression_system
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gene_a
+        expression: medium
+        gene:
+          id: P00533
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gene_b
+        expression: medium
+        fused: false # Ensures independent translation of the second protein
+        gene:
+          id: P04637
+          source: uniprot
+    - terminator: bGH_pA # Standard mammalian polyadenylation signal/terminator

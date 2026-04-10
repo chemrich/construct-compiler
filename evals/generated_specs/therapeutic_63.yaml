@@ -1,0 +1,21 @@
+construct:
+  name: "clinical_periplasmic_insulin_production"
+  host: e_coli
+  backbone:
+    # Kanamycin is included to satisfy schema requirements; clinical constructs would typically use antibiotic-free selection.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac  # Non-viral promoter suitable for clinical-grade production in E. coli.
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: PelB  # Periplasmic secretion signal for disulfide bond formation in the periplasm.
+          - tag: 6xHis  # Single-step affinity purification tag.
+          - cleavage_site: TEV  # Allows for removal of all N-terminal tags for a tag-free final product.
+          - gene:
+              id: P01308  # Human Insulin (disulfide-rich therapeutic protein).
+              source: uniprot
+    - terminator: rrnB_T1  # Strong bacterial terminator, free from viral sequences.

@@ -1,0 +1,51 @@
+construct:
+  name: "five_enzyme_balanced_pathway"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100 # Strong constitutive promoter for balanced expression in E. coli
+    - cistron:
+        label: enzyme_A
+        expression: medium
+        chain:
+          - gene:
+              id: EnzA
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: enzyme_B
+        expression: medium
+        fused: false
+        gene:
+          id: EnzB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_C
+        expression: medium
+        fused: false
+        gene:
+          id: EnzC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_D
+        expression: medium
+        fused: false
+        gene:
+          id: EnzD
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: EnzE
+              source: uniprot
+    - terminator: BBa_B0015

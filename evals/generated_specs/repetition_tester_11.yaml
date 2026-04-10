@@ -1,0 +1,18 @@
+construct:
+  name: "EnzymeE_chloroplast_targeting"
+  host: plant  # Using plant as requested host (Rule 15)
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: 35S  # Standard constitutive plant promoter
+    - cistron:
+        label: EnzymeE_cTP
+        expression: high
+        chain:
+          - tag: cTP  # Chloroplast transit peptide; requires codon diversity and repeat filtering per prompt
+          - gene:
+              id: EnzymeE
+              source: uniprot
+    - terminator: NOS_term  # Standard plant terminator (T-nos)

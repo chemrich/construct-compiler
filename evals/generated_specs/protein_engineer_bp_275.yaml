@@ -1,0 +1,26 @@
+construct:
+  name: bacillus_bicistronic_repressor_target
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: repressor
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: target
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: target_protein
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

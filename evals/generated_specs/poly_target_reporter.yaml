@@ -1,44 +1,26 @@
-```yaml
 construct:
-  name: "bicistronic_His_insulin_mCherry"
-  host: e_coli
-
+  name: "insulin_mcherry_bicistronic_expression"
+  host: e_coli_bl21_de3
   backbone:
-    catalog_vector: "pET-28b(+)" # Common E. coli expression vector with T7 promoter and Kanamycin resistance
-
+    resistance: kanamycin
+    ori: pUC
+    source: custom
   cassette:
-    - promoter: T7lac # Default promoter for E. coli expression with pET-28b(+)
-
+    - promoter: T7lac
     - cistron:
-        label: human_insulin
+        label: insulin
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P01308 # UniProt ID for Human Insulin
+              id: INS
               source: uniprot
-
-    - spacer: 30 # Minimum 20 bp for bicistronic expression
-
+    - spacer: 30
     - cistron:
-        label: mCherry_reporter
+        label: reporter
         expression: low
-        fused: false # Independent translation for co-expression reporter
+        fused: false
         gene:
           id: mCherry
           source: fpbase
-
-    - terminator: rrnB_T1 # Default E. coli terminator
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

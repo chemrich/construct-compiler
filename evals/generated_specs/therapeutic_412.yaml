@@ -1,0 +1,16 @@
+construct:
+  name: "CAR_T_mammalian_expression_construct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: CAR_receptor
+        expression: high
+        chain:
+          - tag: FLAG  # Purification and detection tag for quality control
+          - gene:
+              id: P01732 # Human CD8 alpha, providing the signal peptide and transmembrane domain
+              source: uniprot
+    - terminator: bGH_polyA

@@ -1,0 +1,20 @@
+construct:
+  name: "MBP_solubility_fusion_Tac_expression"
+  host: e_coli_bl21
+  backbone:
+    resistance: chloramphenicol
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: target_protein
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

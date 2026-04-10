@@ -1,0 +1,21 @@
+construct:
+  name: "mammalian_optogenetic_actuator"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: sensor_effector_fusion
+        expression: high
+        chain:
+          - gene:
+              id: LightSensor
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: EffectorDomain
+              source: uniprot
+    - terminator: bGH_polyA

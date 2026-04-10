@@ -1,0 +1,22 @@
+construct:
+  name: "bicistronic_ires_mammalian_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: alpha_subunit
+        expression: high
+        gene:
+          id: ProteinAlpha
+          source: uniprot
+    - spacer: 574  # Typical length for an IRES (Internal Ribosome Entry Site) element
+    - cistron:
+        label: beta_subunit
+        expression: high
+        fused: false  # Required for independent translation via IRES
+        gene:
+          id: ProteinBeta
+          source: uniprot
+    - terminator: BGH_pA  # Standard mammalian polyadenylation signal/terminator

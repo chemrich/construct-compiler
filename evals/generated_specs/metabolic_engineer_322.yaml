@@ -1,0 +1,62 @@
+construct:
+  name: "bacillus_secondary_metabolite_operon"
+  host: e_coli_bl21_de3 # Substituted for Bacillus subtilis to support T7-based expression control; host B. subtilis not in schema
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_E1
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: E1_enzyme
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E2
+        expression: medium
+        fused: false
+        gene:
+          id: E2_enzyme
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E3
+        expression: medium
+        fused: false
+        gene:
+          id: E3_enzyme
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E4
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: GST
+          - cleavage_site: TEV
+          - gene:
+              id: E4_enzyme
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E5
+        expression: medium
+        fused: false
+        gene:
+          id: E5_enzyme
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E6
+        expression: medium
+        fused: false
+        gene:
+          id: E6_enzyme
+          source: uniprot
+    - terminator: T7term

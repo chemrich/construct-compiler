@@ -1,0 +1,22 @@
+construct:
+  name: "TargetProt_GFP_localization_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: TargetProt
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term

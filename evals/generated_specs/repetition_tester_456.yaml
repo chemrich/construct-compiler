@@ -1,0 +1,37 @@
+construct:
+  name: "lentiviral_recombination_resistant_dual_expression"
+  host: HEK293
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: transgene_primary
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: SV40_polyA
+    - spacer: 60
+    - promoter: CMV
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        chain:
+          - tag: FLAG
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: P13249
+              source: uniprot
+    - terminator: bGH_polyA

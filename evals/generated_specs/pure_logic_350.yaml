@@ -1,0 +1,28 @@
+construct:
+  name: "nand_growth_failsafe_construct"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100  # Constitutive promoter acting as NAND gate output; inhibited only when high_temperature and nutrient_stress signals are both present
+    - cistron:
+        label: growth_factor
+        expression: high
+        chain:
+          - tag: pelB
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P01133
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gate_status_reporter
+        expression: low
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

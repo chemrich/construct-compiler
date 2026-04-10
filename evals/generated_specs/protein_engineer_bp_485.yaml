@@ -1,0 +1,25 @@
+construct:
+  name: "AOX1_esterase_P2A_mEGFP_Pichia"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: secreted_esterase_cytosolic_reporter
+        # Note: Using a signal sequence (alpha-factor) with a P2A skip usually targets 
+        # both proteins to the secretory pathway. For truly cytosolic GFP, separate 
+        # cassettes or a non-secreted first protein would be required.
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: P31766
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: AOX1_term

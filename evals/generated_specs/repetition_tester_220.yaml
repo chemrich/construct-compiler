@@ -1,0 +1,18 @@
+construct:
+  name: "non_repetitive_dual_cleavage_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: Strep-II  # Single-copy tag chosen to avoid the internal repeats found in 6xHis or Twin-Strep
+          - cleavage_site: TEV  # Distinct cleavage site 1
+          - cleavage_site: 3C   # Distinct cleavage site 2 for ultimate flexibility
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term

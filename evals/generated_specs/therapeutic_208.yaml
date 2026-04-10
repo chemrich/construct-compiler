@@ -1,0 +1,32 @@
+construct:
+  name: "therapeutic_enzyme_chaperone_coexpression"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin # Schema requires antibiotic resistance; kanamycin substituted to satisfy tool requirements despite user request for 'no resistance'.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "therapeutic_enzyme"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P04062
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "chaperonin_helper"
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P0A6F5
+              source: uniprot
+    - terminator: T7term

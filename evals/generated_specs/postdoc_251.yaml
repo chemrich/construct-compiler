@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_crispr_cas9_sgrna_system"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: cas9_expression
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Q99ZW2
+              source: uniprot
+    - spacer: 30
+    - promoter: U6
+    - cistron:
+        label: sgrna_expression
+        fused: false
+        gene:
+          id: sgRNA
+    - terminator: CYC1_term

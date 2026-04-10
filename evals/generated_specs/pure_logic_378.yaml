@@ -1,0 +1,22 @@
+construct:
+  name: "stabilizer_controlled_therap_z"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: stabilized_therap_z
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00374 # DHFR degron stabilized by small molecule Stabilizer_S
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Therap_Z
+              source: uniprot
+    - terminator: T7term

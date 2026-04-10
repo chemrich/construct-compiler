@@ -1,0 +1,48 @@
+construct:
+  name: "anaerobic_lactic_acid_pathway_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: nirB  # Anaerobic-inducible promoter
+    - cistron:
+        label: pflB
+        expression: high
+        chain:
+          - gene:
+              id: pflB
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: aceE
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: aceE
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: ldhA
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: ldhA
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: adhE
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: adhE
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

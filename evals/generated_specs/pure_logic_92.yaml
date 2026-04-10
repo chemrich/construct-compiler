@@ -1,0 +1,22 @@
+construct:
+  name: mammalian_homeostatic_negative_feedback_system
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV # Note: Assumed to be a TetR-repressible variant (e.g., CMV-TetO2) for homeostasis
+    - cistron:
+        label: target_protein_p
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: feedback_repressor
+        expression: low
+        fused: false # Separately translated via IRES or 2A peptide to provide negative feedback
+        gene:
+          id: P04483 # TetR repressor from E. coli Tn10
+          source: uniprot
+    - terminator: bGH_polyA

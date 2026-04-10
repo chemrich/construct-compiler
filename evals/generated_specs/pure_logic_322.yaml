@@ -1,0 +1,25 @@
+construct:
+  name: "genetic_or_gate_E_or_F"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Responds to input signal E (e.g., L-arabinose)
+    - cistron:
+        label: output_D_primary
+        expression: medium
+        gene:
+          id: protein_D
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: tac     # Responds to input signal F (e.g., IPTG)
+    - cistron:
+        label: output_D_secondary
+        expression: medium
+        gene:
+          id: protein_D
+          source: uniprot
+    - terminator: BBa_B0015

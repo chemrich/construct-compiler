@@ -1,0 +1,26 @@
+construct:
+  name: "enzyme_substrate_coexpression_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00330
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: substrate
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P42212
+              source: uniprot
+    - terminator: T7term

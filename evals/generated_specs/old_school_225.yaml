@@ -1,0 +1,18 @@
+construct:
+  name: "MBP_FactorXa_Solubility_Fusion"
+  host: e_coli
+  backbone:
+    resistance: tetracycline # Specified by TetR gene
+    ori: pBR322 # ColE1 origin family member
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: target_protein
+              source: uniprot
+    - terminator: rrnB_T1

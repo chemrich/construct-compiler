@@ -1,0 +1,30 @@
+construct:
+  name: "rapid_and_gate_hrp"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Induced by Input A (L-Arabinose)
+    - cistron:
+        label: input_a_activator
+        expression: high
+        gene:
+          id: P0A6U3  # HrpR activator
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac     # Induced by Input B (IPTG)
+    - cistron:
+        label: input_b_activator
+        expression: high
+        gene:
+          id: P0A6U5  # HrpS activator
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: PhrpL   # Sigma-54 dependent promoter, requires HrpR + HrpS complex for activation
+    - cistron:
+        label: output_z
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

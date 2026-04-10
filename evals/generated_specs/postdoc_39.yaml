@@ -1,0 +1,18 @@
+construct:
+  name: "human_cytokine_yeast_expression"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+  cassette:
+    - promoter: GPD  # High-expression constitutive yeast promoter
+    - cistron:
+        label: cytokine
+        expression: high
+        chain:
+          - tag: alpha_factor  # N-terminal secretion signal required for S. cerevisiae export (Rule 18)
+          - tag: 6xHis
+          - gene:
+              id: IL2
+              source: uniprot
+    - terminator: CYC1
+# Note: Codon optimization was targeted for the S. cerevisiae host (not H. sapiens) to ensure maximal translation efficiency and protein yield in the yeast system, as requested for expression.

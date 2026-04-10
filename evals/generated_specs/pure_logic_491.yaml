@@ -1,0 +1,22 @@
+construct:
+  name: "genetic_mux_2to1_mscarlet"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Select HIGH logic: active with IPTG (DataIn1)
+    - cistron:
+        label: reporter_pathway_1
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: araBAD  # Select LOW logic: active with Arabinose (DataIn2)
+    - cistron:
+        label: reporter_pathway_2
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

@@ -1,0 +1,21 @@
+construct:
+  name: "diverse_interface_cassette"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Selected for sequence diversity against common T7 systems
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1  # Strong terminator distinct from promoter and CDS elements

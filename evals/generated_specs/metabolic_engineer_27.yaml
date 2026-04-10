@@ -1,0 +1,54 @@
+construct:
+  name: "qs_regulated_biodegradation_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: luxI  # Quorum-sensing regulated promoter activated by LuxR-AHL complex
+    - cistron:
+        label: enzyme_1_fusion
+        expression: high
+        chain:
+          - gene:
+              id: nahA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: high
+        fused: false
+        gene:
+          id: nahB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        gene:
+          id: nahC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_4
+        expression: high
+        fused: false
+        gene:
+          id: nahD
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_5
+        expression: high
+        fused: false
+        gene:
+          id: nahE
+          source: uniprot
+    - terminator: rrnB_T1

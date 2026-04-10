@@ -1,34 +1,17 @@
-```yaml
 construct:
-  name: cho_expression_construct
+  name: "pET28a_adapted_for_CHO"
   host: CHO
-
   backbone:
-    # pET-28a(+) is a prokaryotic expression vector.
-    # For mammalian CHO cell expression, a mammalian catalog vector like pTwist CMV is more appropriate.
-    catalog_vector: "pTwist CMV"
-
+    catalog_vector: "pET-28a(+)"
   cassette:
-    - promoter: CMV
-
+    - promoter: CMV # Substitution: CMV promoter used for CHO expression as T7 is prokaryotic.
     - cistron:
-        label: target_gene
+        label: target
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-
-    - terminator: BBa_B0015 # Note: This is a bacterial terminator. Mammalian systems typically use poly-A signals (e.g., SV40 polyA), which are not listed in the provided schema.
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Thrombin
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BGH_pA # Substitution: BGH polyadenylation signal used for mammalian host compatibility.

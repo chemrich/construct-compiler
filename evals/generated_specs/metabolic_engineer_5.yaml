@@ -1,0 +1,42 @@
+construct:
+  name: "corynebacterium_lysine_biosynthesis_p2a"
+  host: bacillus  # Substitution: C. glutamicum is not in the schema; bacillus used as a Gram-positive bacterial proxy.
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100  # Strong constitutive promoter compatible with Gram-positive bacteria.
+    - cistron:
+        label: "aspartokinase_lysC"
+        expression: high
+        gene:
+          id: "P0C1E7"
+          source: uniprot
+    - cistron:
+        label: "asd_dehydrogenase"
+        expression: high
+        fused: true  # fused: true creates a single ORF for P2A-mediated cleavage.
+        chain:
+          - cleavage_site: P2A  # User requested P2A; note that 2A-mediated skipping typically requires a eukaryotic host.
+          - gene:
+              id: "P09126"
+              source: uniprot
+    - cistron:
+        label: "dapA_synthase"
+        expression: high
+        fused: true
+        chain:
+          - cleavage_site: P2A
+          - gene:
+              id: "P0A4B5"
+              source: uniprot
+    - cistron:
+        label: "dapB_reductase"
+        expression: high
+        fused: true
+        chain:
+          - cleavage_site: P2A
+          - gene:
+              id: "P0A4C2"
+              source: uniprot
+    - terminator: rrnB_T1

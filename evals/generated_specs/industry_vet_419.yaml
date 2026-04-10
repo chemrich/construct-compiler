@@ -1,0 +1,22 @@
+construct:
+  name: "stable_mammalian_expression_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha  # EF1-alpha is preferred for stable expression as CMV is prone to silencing
+    - cistron:
+        label: target_protein
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false  # Independently translated for selection efficiency
+        gene:
+          id: PAC
+          source: uniprot  # Puromycin N-acetyltransferase for stable integration selection
+    - terminator: bGH_polyA

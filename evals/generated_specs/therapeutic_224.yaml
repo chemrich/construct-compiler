@@ -1,0 +1,24 @@
+construct:
+  name: "therapeutic_ires_dual_t_cell"
+  host: human_t_cell
+  backbone:
+    resistance: kanamycin # Substitution: Placeholder for cloning; user requested antibiotic-free for clinical use
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human non-viral promoter optimal for sustained expression in T-cells
+    - cistron:
+        label: protein_a
+        expression: high
+        gene:
+          id: PROTEIN_A
+          source: uniprot
+    - spacer: 585 # Length allocated for a cellular IRES to facilitate non-viral internal translation initiation
+    - cistron:
+        label: protein_b
+        expression: high
+        fused: false # Indicates independent translation via the IRES element in the spacer
+        gene:
+          id: PROTEIN_B
+          source: uniprot
+    - terminator: bGH_polyA # Standard mammalian polyadenylation signal for transcript stability

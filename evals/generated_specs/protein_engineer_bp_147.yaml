@@ -1,0 +1,28 @@
+construct:
+  name: "bacillus_toxin_secretion_operon"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: toxin_a
+        expression: high
+        chain:
+          - tag: AmyE_signal_peptide
+          - gene:
+              id: ToxinA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: toxin_b
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyQ_signal_peptide
+          - gene:
+              id: ToxinB
+              source: uniprot
+    - terminator: rrnB_T1

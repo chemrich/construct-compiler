@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_therapeutic_mbp_fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Trastuzumab_scFv
+              source: uniprot
+          - tag: 6xHis
+    - terminator: CYC1

@@ -1,0 +1,22 @@
+construct:
+  name: "polycistronic_egfp_mscarlet_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: gfp_target
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: scarlet_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

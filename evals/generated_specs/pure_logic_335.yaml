@@ -1,0 +1,26 @@
+construct:
+  name: "chemical_g_analog_to_digital_switch"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: receptor_g
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+    - spacer: 50
+    - promoter: araBAD
+    - cistron:
+        label: output_h
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

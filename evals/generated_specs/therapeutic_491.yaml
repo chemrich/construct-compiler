@@ -1,0 +1,21 @@
+construct:
+  name: "Exosome_Targeted_hIL2_Fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha  # EF1_alpha is used as a robust non-viral mammalian promoter
+    - cistron:
+        label: "lamp2b_il2_fusion"
+        expression: high
+        chain:
+          - gene:
+              id: P13473  # LAMP2 (Lamp2b isoform) for exosome membrane targeting
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P60568  # Human Interleukin-2 (hIL2) therapeutic cargo
+              source: uniprot
+    - terminator: bGH_polyA

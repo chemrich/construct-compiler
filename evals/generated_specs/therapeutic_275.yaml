@@ -1,0 +1,21 @@
+construct:
+  name: therapeutic_cpp_nonviral
+  host: mammalian
+  backbone:
+    resistance: none # User requested a construct free of antibiotic resistance genes
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: therapeutic_effector
+        expression: high
+        chain:
+          - tag: 9xArg # Synthetic non-viral cell-penetrating peptide
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P04637
+              source: uniprot
+    - terminator: bGH_polyA

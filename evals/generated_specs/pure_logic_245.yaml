@@ -1,0 +1,42 @@
+construct:
+  name: "genetic_oscillator_repressilator_60_90min"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+  cassette:
+    - promoter: lacUV5
+    - cistron:
+        label: tetR_node
+        expression: high
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: P_tet
+    - cistron:
+        label: lambda_cI_node
+        expression: high
+        gene:
+          id: P03034
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: P_lambda
+    - cistron:
+        label: lacI_node
+        expression: high
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: P_lambda
+    - cistron:
+        label: protein_O
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015

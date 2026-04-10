@@ -1,17 +1,12 @@
-```yaml
 construct:
-  name: "his_enterokinase_meyfp"
-  host: e_coli
-
+  name: "His_Enterokinase_mEYFP"
+  host: e_coli_bl21
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: his_ek_meyfp_fusion
+        label: target
         expression: high
         chain:
           - tag: 6xHis
@@ -19,18 +14,4 @@ construct:
           - gene:
               id: mEYFP
               source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

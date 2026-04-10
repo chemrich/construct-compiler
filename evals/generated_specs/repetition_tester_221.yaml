@@ -1,0 +1,32 @@
+construct:
+  name: "diverse_enzyme_operon_E123"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Using a strong constitutive promoter to meet the "non-standard" request
+    - cistron:
+        label: E1_subunit
+        expression: high
+        gene:
+          id: P0AFG8
+          source: uniprot
+    - spacer: 30  # Distinct spacer to facilitate unique RBS generation
+    - cistron:
+        label: E2_subunit
+        expression: high
+        fused: false  # Ensures independent translation with a unique RBS
+        gene:
+          id: P0AFG3
+          source: uniprot
+    - spacer: 35  # Distinct spacer to minimize homology/recombination risk
+    - cistron:
+        label: E3_subunit
+        expression: high
+        fused: false
+        gene:
+          id: P0A9P0
+          source: uniprot
+    - terminator: BBa_B0015  # Unique non-T7 terminator for diversity

@@ -1,0 +1,21 @@
+construct:
+  name: "exosome_targeted_il10_therapeutic"
+  host: HEK293
+  backbone:
+    resistance: none # Specified as free of antibiotic resistance genes for therapeutic safety
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Constitutive human promoter, selected for non-viral origin and stability
+    - cistron:
+        label: therapeutic_cargo
+        expression: high
+        chain:
+          - tag: CD63 # Standard exosome-targeting scaffold protein
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: IL10
+              source: uniprot
+    - terminator: bGH_pA # Standard mammalian polyadenylation signal and terminator

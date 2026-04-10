@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_scfv_surface_display"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GPD
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor_leader
+          - gene:
+              id: scFv
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: Aga2p
+    - terminator: ADH1

@@ -1,0 +1,18 @@
+construct:
+  name: "sticky_protein_solubility_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: sticky_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: StickyProtein
+              source: uniprot
+    - terminator: T7term

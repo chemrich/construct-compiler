@@ -1,0 +1,24 @@
+construct:
+  name: "genetic_timer_pulse_generator"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: delayed_off_switch
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: rrnB_T1

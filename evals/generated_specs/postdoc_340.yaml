@@ -1,0 +1,18 @@
+construct:
+  name: "secreted_human_GPCR_ADRB2"
+  host: yeast
+  backbone:
+    catalog_vector: "pYES2"
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: alpha_factor_signal  # Required for secretion in yeast
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ADRB2_HUMAN
+              source: uniprot
+    - terminator: CYC1  # Standard yeast transcription terminator

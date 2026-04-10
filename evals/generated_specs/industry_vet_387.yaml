@@ -1,0 +1,20 @@
+construct:
+  name: "regulated_viral_capsid_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: capsid_fragment
+        expression: low
+        chain:
+          - gene:
+              id: P03305
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+    - terminator: T7term

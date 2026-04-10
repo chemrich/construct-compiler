@@ -1,0 +1,26 @@
+construct:
+  name: "bicistronic_expression_X_Y"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_x
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_X
+              source: uniprot
+    - spacer: 30 # IRES is not functional in E. coli; substituted with a 30bp spacer for bicistronic expression
+    - cistron:
+        label: protein_y
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: protein_Y
+              source: uniprot
+          - tag: Strep-II
+    - terminator: T7term

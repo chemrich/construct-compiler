@@ -1,0 +1,25 @@
+construct:
+  name: "co_ip_protein_e_f"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_e
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PROTEIN_E
+              source: uniprot
+    - spacer: 30 # IRES is for mammalian systems; substituted with spacer + independent translation (fused: false) for E. coli polycistronic expression
+    - cistron:
+        label: protein_f
+        expression: medium
+        fused: false
+        gene:
+          id: PROTEIN_F
+          source: uniprot
+    - terminator: rrnB_T1

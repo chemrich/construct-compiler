@@ -1,0 +1,49 @@
+construct:
+  name: "QS_Bistable_Biofilm_Controller"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23106
+    - cistron:
+        label: luxr_sensor
+        gene:
+          id: P12746
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac  # Proxy for LuxR-inducible promoter (P_lux)
+    - cistron:
+        label: biofilm_dispersion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q8G9V3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: toggle_repressor_tetr
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: T7term
+    - promoter: lacUV5  # Proxy for TetR-repressible promoter (P_tet) to facilitate hysteresis
+    - cistron:
+        label: biofilm_formation
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P0ACR4
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: toggle_repressor_laci
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: BBa_B0015

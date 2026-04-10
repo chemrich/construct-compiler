@@ -1,0 +1,28 @@
+construct:
+  name: "genetic_binary_counter_divide_by_2"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tac  # Inhibited by LacI; IPTG pulse acts as InputSignal to flip state
+    - cistron:
+        label: repressor_tetr
+        gene:
+          id: "P04483"
+          source: uniprot
+    - spacer: 40
+    - promoter: pTet # Inhibited by TetR; Standard promoter for toggle switch logic
+    - cistron:
+        label: repressor_laci
+        gene:
+          id: "P03023"
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: output_g
+        fused: false  # Independent translation via separate RBS
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

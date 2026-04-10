@@ -1,0 +1,22 @@
+construct:
+  name: "e_coli_tetr_gfp_coexpression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: tet_repressor
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gfp_reporter
+        expression: high
+        fused: false
+        gene:
+          id: GFP
+          source: fpbase
+    - terminator: T7term

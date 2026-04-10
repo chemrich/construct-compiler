@@ -1,0 +1,40 @@
+construct:
+  name: "AldABCD_metabolic_channeling_operon"
+  host: e_coli_bl21_de3  # Bacillus subtilis substituted with e_coli_bl21_de3 for high-level expression compatibility.
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac  # T7lac used for high-level inducible expression in BL21(DE3) host.
+    - cistron:
+        label: AldA
+        expression: high
+        gene:
+          id: AldA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: AldB
+        expression: high
+        fused: false  # Ensures independent translation with its own high-strength RBS.
+        gene:
+          id: AldB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: AldC
+        expression: high
+        fused: false  # Matched high expression to efficiently channel toxic intermediate from AldB.
+        gene:
+          id: AldC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: AldD
+        expression: high
+        fused: false
+        gene:
+          id: AldD
+          source: uniprot
+    - terminator: T7term

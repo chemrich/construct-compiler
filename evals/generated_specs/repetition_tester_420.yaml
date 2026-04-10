@@ -1,0 +1,31 @@
+construct:
+  name: fusion_ABC_non_repetitive_linkers
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: Protein_A
+              source: uniprot
+          - linker:
+              # Using GS_flexible for the first junction
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Protein_B
+              source: uniprot
+          - linker:
+              # Using rigid_EAAAK for the second junction to ensure genetic distinction from the first GS linker
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: Protein_C
+              source: uniprot
+    - terminator: rrnB_T1

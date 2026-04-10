@@ -1,0 +1,37 @@
+construct:
+  name: "yeast_p450_pathway_adh1_2A"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: p450_cluster
+        expression: high
+        chain:
+          - gene:
+              id: CYP1
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: OR1
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: ADH2
+              source: uniprot
+          - linker:
+              type: E2A
+          - gene:
+              id: REDX
+              source: uniprot
+          - linker:
+              type: F2A
+          - gene:
+              id: MTR
+              source: uniprot
+    - terminator: CYC1

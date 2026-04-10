@@ -1,0 +1,26 @@
+construct:
+  name: "Yeast_Secretory_Glycoprotein_Production"
+  host: yeast
+
+  backbone:
+    # Using auxotrophic selection (e.g., URA3 or HIS3) to avoid antibiotic resistance genes
+    resistance: none
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: GPD # Strong constitutive yeast promoter for high-yield expression
+
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        chain:
+          - tag: alpha_factor # N-terminal secretion signal for yeast
+          - gene:
+              id: P10253 # Human Acid Alpha-Glucosidase (GAA), a therapeutic glycosylated enzyme
+              source: uniprot
+          - linker:
+              type: short_GS
+          - tag: 6xHis # C-terminal affinity tag for purification
+
+    - terminator: CYC1 # Standard yeast transcriptional terminator

@@ -1,0 +1,22 @@
+construct:
+  name: "positive_feedback_amplifier"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: Plux  # This promoter is activated by the LuxR protein in the presence of AHL (the 'WEAK_INPUT' signal).
+    - cistron:
+        label: AMPLIFIED_OUT
+        expression: medium  # Medium expression level chosen to prevent uncontrolled metabolic runaway and maintain stability.
+        gene:
+          id: LuxR
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: T7term

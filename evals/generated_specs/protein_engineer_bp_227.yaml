@@ -1,0 +1,20 @@
+construct:
+  name: "max_yield_cellulase_bacillus"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+
+  cassette:
+    - promoter: "Pveg_Pgrac" # Tandem promoter approach for high-level expression
+      cistron:
+        label: cellulase_secretion
+        expression: high # Triggering RBS optimization for Bacillus
+        chain:
+          - tag: AprE # Bacillus-specific N-terminal secretion signal
+          - gene:
+              id: P06210 # Endoglucanase CelA (Bacillus subtilis)
+              source: uniprot
+          - tag: 8xHis # C-terminal purification tag
+      terminator: rrnB_T1

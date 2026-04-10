@@ -1,0 +1,55 @@
+construct:
+  name: mammalian_four_gene_fret_pathway
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: enzyme_1_cfp
+        expression: high
+        chain:
+          - gene:
+              id: enzyme_1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mTurquoise2
+              source: fpbase
+    - terminator: bGH_polyA
+    - spacer: 50
+    - promoter: EF1_alpha
+    - cistron:
+        label: enzyme_2_yfp
+        expression: high
+        chain:
+          - gene:
+              id: enzyme_2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mVenus
+              source: fpbase
+    - terminator: bGH_polyA
+    - spacer: 50
+    - promoter: CMV
+    - cistron:
+        label: enzyme_3
+        expression: high
+        gene:
+          id: enzyme_3
+          source: uniprot
+    - terminator: bGH_polyA
+    - spacer: 50
+    - promoter: EF1_alpha
+    - cistron:
+        label: enzyme_4
+        expression: high
+        gene:
+          id: enzyme_4
+          source: uniprot
+    - terminator: bGH_polyA

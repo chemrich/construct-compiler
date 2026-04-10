@@ -1,0 +1,27 @@
+construct:
+  name: "yeast_high_gain_cascade"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CYC1  # Weak basal promoter representing the sensitive InputSignal stage
+    - cistron:
+        label: activator
+        expression: low
+        gene:
+          id: GAL4
+          source: uniprot
+    - terminator: CYC1_term
+    - promoter: GAL1  # Strong inducible promoter for stage 2 high-gain amplification
+    - cistron:
+        label: output_stage
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: OutputEnzymeZ
+              source: uniprot
+    - terminator: ADH1_term

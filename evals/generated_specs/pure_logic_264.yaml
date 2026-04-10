@@ -1,0 +1,30 @@
+construct:
+  name: "mammalian_bistable_toggle_switch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE_CMV # Repressed by TetR; Pulse of Dox (Ligand H) de-represses this to SET state 1
+    - cistron:
+        label: state_1_repressor
+        expression: high
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 30 # Spacer for IRES-mediated translation in mammalian host
+    - cistron:
+        label: protein_p_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015
+    - promoter: CMV_LacO # Repressed by LacI; Pulse of IPTG (Ligand I) de-represses this to RESET state 0
+    - cistron:
+        label: state_0_repressor
+        expression: high
+        gene:
+          id: TetR
+          source: uniprot
+    - terminator: BBa_B0015

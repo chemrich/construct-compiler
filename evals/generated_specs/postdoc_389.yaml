@@ -1,0 +1,16 @@
+construct:
+  name: "soluble_receptor_secretion_glycosylated"
+  host: HEK293 # Substituted E. coli with HEK293 because E. coli cannot perform the requested human N-linked glycosylation or properly process native human signal peptides.
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_receptor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: SolubleR
+              source: uniprot
+    - terminator: bGH_polyA

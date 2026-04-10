@@ -1,0 +1,62 @@
+construct:
+  name: "constitutive_scaffold_pathway_4_enzymes"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: ScaA_protein
+        expression: medium
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: ScaA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ScaB_protein
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: ScaB
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: ScaC_protein
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: ScaC
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ScaD_protein
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: ScaD
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: FLAG
+    - terminator: rrnB_T1

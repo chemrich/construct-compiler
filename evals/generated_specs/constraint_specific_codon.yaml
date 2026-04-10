@@ -1,28 +1,16 @@
-```yaml
 construct:
-  name: "sfGFP_expression_k12"
-  host: e_coli # Chosen for E. coli K-12 specific codon optimization, as BL21 is explicitly excluded.
-
+  name: "sfGFP_E_coli_K12_expression"
+  host: e_coli
   backbone:
     resistance: kanamycin
     ori: pBR322
-
+    source: addgene
   cassette:
-    - promoter: T7lac
-
+    - promoter: tac  # Substituted T7lac with tac because host is E. coli K-12 (which lacks T7 polymerase)
     - cistron:
-        label: sfGFP
+        label: target
         expression: high
         gene:
           id: sfGFP
           source: fpbase
-
     - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BbsI # Chosen to respect the request of "No BsaI or BpiI sites" as an assembly enzyme.
-    codon_optimization: local # For E. coli K-12 specific optimization.
-    gc_window: [0.40, 0.60]
-    max_homopolymer: 6
-```

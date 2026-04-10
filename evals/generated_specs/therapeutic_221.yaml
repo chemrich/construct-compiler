@@ -1,0 +1,18 @@
+construct:
+  name: "HEK293_hGH_ClinicallyCompliant_Secretion"
+  host: HEK293
+  backbone:
+    resistance: none # Clinical compliance: no antibiotic resistance genes as requested
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human-derived promoter for constitutive, non-viral expression
+    - cistron:
+        label: secreted_hGH
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal peptide for efficient extracellular transport
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: bGH_polyA # Standard mammalian terminator for transcript stability

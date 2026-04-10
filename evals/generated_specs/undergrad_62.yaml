@@ -1,0 +1,31 @@
+construct:
+  name: "mammalian_spcas9_sgrna_mcherry_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: cas9_nls
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Q99ZW2
+              source: uniprot
+    - terminator: bGH_polyA
+    - promoter: U6
+    - cistron:
+        label: sgrna_scaffold
+        expression: high
+        gene:
+          id: sgRNA
+    - terminator: poly_T
+    - promoter: EF1_alpha
+    - cistron:
+        label: red_reporter
+        expression: medium
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: SV40_polyA

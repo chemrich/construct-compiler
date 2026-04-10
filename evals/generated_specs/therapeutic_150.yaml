@@ -1,0 +1,18 @@
+construct:
+  name: "non_viral_nuclear_enzyme_vector"
+  host: mammalian
+  backbone:
+    resistance: none  # No antibiotic resistance for clinical translation
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Human promoter used to avoid viral CMV promoter
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P04062  # Human Glucocerebrosidase (GBA1) as a representative therapeutic enzyme
+              source: uniprot
+    - terminator: hGH_pA  # Human growth hormone polyadenylation signal (non-viral)

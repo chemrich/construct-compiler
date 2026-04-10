@@ -1,0 +1,51 @@
+construct:
+  name: "iptg_inducible_toxin_mitigation_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: input_enzyme
+        expression: medium
+        chain:
+          - gene:
+              id: InputE
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: tox_reduc_1
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: ToxE1
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: tox_reduc_2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: ToxE2
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: prod_enzyme_1
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: ProdE1
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: prod_enzyme_2
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: ProdE2
+          - tag: 6xHis
+    - terminator: T7term

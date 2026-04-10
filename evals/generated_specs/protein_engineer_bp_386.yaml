@@ -1,0 +1,20 @@
+construct:
+  name: "bacillus_intracellular_amyE_pulldown"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: target_amylase
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - cleavage_site: TEV
+          - gene:
+              id: amyE
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

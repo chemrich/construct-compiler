@@ -1,0 +1,45 @@
+construct:
+  name: "bacterial_two_hybrid_fusion_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_a_activator_fusion
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: P04637
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: P0A7Z4
+              source: uniprot
+    - spacer: 35
+    - cistron:
+        label: protein_b_dbd_fusion
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P03070
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P03034
+              source: uniprot
+    - terminator: T7term

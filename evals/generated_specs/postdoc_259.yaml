@@ -1,0 +1,18 @@
+construct:
+  name: yeast_fab_high_secretion
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP # Strong constitutive promoter for yeast
+    - cistron:
+        label: fab_fragment
+        expression: high
+        chain:
+          - gene:
+              id: Fab_fragment
+              source: uniprot # Assumes the mammalian secretion signal is included in the protein sequence
+          - tag: Myc # C-terminal detection tag
+    - terminator: CYC1

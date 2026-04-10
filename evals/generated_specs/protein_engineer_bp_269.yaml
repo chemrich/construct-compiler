@@ -1,0 +1,19 @@
+construct:
+  name: "bacillus_pmtla_toxic_protease_secretion"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: PmtlA  # Mannitol-inducible promoter for Bacillus subtilis
+    - cistron:
+        label: protease_cistron
+        expression: high  # Implies optimized Shine-Dalgarno sequence for high translation initiation
+        chain:
+          - tag: NprE_signal  # Bacillus NprE secretion signal peptide
+          - tag: 6xHis
+          - gene:
+              id: P00782  # Subtilisin E (representative Bacillus protease)
+              source: uniprot
+    - terminator: BBa_B0015

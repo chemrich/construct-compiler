@@ -1,0 +1,30 @@
+construct:
+  name: "triple_stage_inverter_chain"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Input stage: Arabinose induces expression of the first repressor
+    - cistron:
+        label: stage_1_lacI
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lacUV5  # Gate 1: Repressed by LacI (NOT gate 1)
+    - cistron:
+        label: stage_2_tetR
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: T7term
+    - promoter: Ptet    # Gate 2: Repressed by TetR (NOT gate 2). Logic: Ara+ -> LacI+ -> TetR- -> mEGFP+
+    - cistron:
+        label: stage_3_mEGFP
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

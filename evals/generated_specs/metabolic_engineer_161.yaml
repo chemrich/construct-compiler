@@ -1,0 +1,55 @@
+construct:
+  name: "tunable_operon_E5_E9_araBAD"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: E5
+        expression: high
+        gene:
+          id: E5
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E6
+        expression: medium
+        fused: false
+        gene:
+          id: E6
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E7
+        expression: medium
+        fused: false
+        gene:
+          id: E7
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E8
+        expression: low
+        fused: false
+        gene:
+          id: E8
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E9_reporter
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: E9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

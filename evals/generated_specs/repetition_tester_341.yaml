@@ -1,0 +1,26 @@
+construct:
+  name: "diversity_mammalian_goi_p2a_mcherry_nls_pest"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: goi_cistron
+        gene:
+          id: P04406
+          source: uniprot
+    - cistron:
+        label: reporter_cistron
+        # Default fused: true ensures this is a continuous ORF with the preceding cistron
+        chain:
+          - linker:
+              type: P2A
+          - gene:
+              id: mCherry
+              source: fpbase
+          - tag: NLS
+          - tag: PEST
+    - terminator: bGH_pA
+# Note: Every element in this construct (promoter, GOI, linker, gene, tags, and terminator) 
+# must be generated with maximum synonymous sequence diversity to prevent recombination.

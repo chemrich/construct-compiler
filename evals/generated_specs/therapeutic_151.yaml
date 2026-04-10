@@ -1,0 +1,23 @@
+construct:
+  name: "Bacterial_Outer_Membrane_Display_Vaccine"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Defaulted to kanamycin per rule 9; schema does not support antibiotic-free selection systems like auxotrophy.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P0A910 # E. coli OmpA for outer membrane targeting and display
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P9WQP9 # M. tuberculosis Ag85B (immunogenic bacterial antigen)
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,48 @@
+construct:
+  name: "yeast_repressilator_oscillator"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene  # Standard shuttle vector (e.g., pRS series)
+  cassette:
+    - promoter: pTetR  # Repressed by TetR
+    - cistron:
+        label: lacI_repressor
+        expression: medium  # Frequency can be tuned by adjusting expression levels
+        chain:
+          - gene:
+              id: P03023
+              source: uniprot
+          - tag: PEST  # Degradation tag for rapid turnover, essential for oscillation
+    - terminator: CYC1_term
+    - spacer: 60
+    - promoter: pLacI  # Repressed by LacI
+    - cistron:
+        label: lambda_cI_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: P03034
+              source: uniprot
+          - tag: PEST
+    - terminator: ADH1_term
+    - spacer: 60
+    - promoter: pCI  # Repressed by lambda-cI
+    - cistron:
+        label: tetR_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: P04483
+              source: uniprot
+          - tag: PEST
+    - terminator: TEF1_term
+    - spacer: 60
+    - promoter: pTetR  # Output Q follows the phase of the TetR-regulated node
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: Output_Q
+    - terminator: PGK1_term

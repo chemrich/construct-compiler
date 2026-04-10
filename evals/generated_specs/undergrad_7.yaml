@@ -1,0 +1,22 @@
+construct:
+  name: "mammalian_bicistronic_ires_expression"
+  host: HEK293 # Defaulting to HEK293 for mammalian host request
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_alpha
+        expression: high
+        gene:
+          id: protein_alpha
+          source: uniprot
+    - spacer: 574 # Represents standard EMCV IRES sequence (approx 574 bp) for internal ribosome entry
+    - cistron:
+        label: protein_beta
+        expression: high
+        fused: false # Ensures independent translation from the IRES
+        gene:
+          id: protein_beta
+          source: uniprot
+    - terminator: SV40_pA # Standard mammalian polyadenylation signal/terminator

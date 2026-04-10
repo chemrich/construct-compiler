@@ -1,0 +1,25 @@
+construct:
+  name: "not_gate_therapeutic_hgh_secretion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Input signal S = Arabinose
+    - cistron:
+        label: lacI_repressor
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 50
+    - promoter: tac  # Output X; tac is strongly repressed by LacI
+    - cistron:
+        label: therapeutic_protein_x
+        expression: high
+        chain:
+          - tag: PelB  # Periplasmic secretion signal for E. coli
+          - tag: 6xHis
+          - gene:
+              id: P01241  # Human Growth Hormone (hGH) as therapeutic protein X
+              source: uniprot
+    - terminator: BBa_B0015

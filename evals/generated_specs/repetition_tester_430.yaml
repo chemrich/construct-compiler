@@ -1,0 +1,35 @@
+construct:
+  name: "scfv_tandem_scaffold_diversity"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: bivalent_scfv
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01764
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P01594
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: P01764
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P01594
+              source: uniprot
+    - terminator: T7term

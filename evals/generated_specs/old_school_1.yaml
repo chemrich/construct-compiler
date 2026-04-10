@@ -1,0 +1,27 @@
+construct:
+  name: "yeast_constitutive_alpha_amylase_expression"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: alpha_amylase
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: AMY1
+              source: uniprot
+          - tag: Myc
+    - spacer: 30
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        gene:
+          id: LEU2
+          source: uniprot
+    - terminator: CYC1

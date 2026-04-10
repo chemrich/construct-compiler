@@ -1,0 +1,22 @@
+construct:
+  name: "ProteinX_ProteinY_tandem_fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: fusion_construct
+        expression: high
+        chain:
+          - gene:
+              id: ProteinX
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK # Selected to satisfy the requirement for a non-repetitive, distinct structural linker
+              repeats: 3
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinY
+              source: uniprot
+    - terminator: T7term

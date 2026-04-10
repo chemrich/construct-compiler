@@ -1,0 +1,19 @@
+construct:
+  name: "xor_logic_gate_coli"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: P_xor  # Synthetic promoter implementing (InputA OR InputB) AND NOT (InputA AND InputB)
+    - cistron:
+        label: output_protein_E
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1

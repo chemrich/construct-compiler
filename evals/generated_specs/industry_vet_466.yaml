@@ -1,0 +1,17 @@
+construct:
+  name: "Inducible_Protein_Y_Purification"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: TRE3G  # Inducible Tet-On promoter for mammalian cells
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: Protein_Y
+              source: uniprot
+    - terminator: bGH_PA  # Standard mammalian polyadenylation signal and terminator

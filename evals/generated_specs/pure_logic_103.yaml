@@ -1,0 +1,14 @@
+construct:
+  name: "genetic_nor_gate"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Modified with tetO operators; repressed by LacI (InputX) OR TetR (InputY) to function as a NOR gate
+    - cistron:
+        label: "OutputProduct"
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: T7term

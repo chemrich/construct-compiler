@@ -1,0 +1,46 @@
+construct:
+  name: "five_enzyme_operon_prf_m3_regulation"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23106
+    - cistron:
+        label: M1
+        expression: medium
+        gene:
+          id: M1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: M2_M3_prf_unit
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: M2
+              source: uniprot
+          - linker:
+              type: ribosomal_frameshift_minus_1
+              repeats: 1
+          - gene:
+              id: M3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: M4
+        expression: medium
+        fused: false
+        gene:
+          id: M4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: M5
+        expression: medium
+        fused: false
+        gene:
+          id: M5
+          source: uniprot
+    - terminator: rrnB_T1

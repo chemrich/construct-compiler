@@ -1,0 +1,22 @@
+construct:
+  name: blue_light_inducible_switch
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: activator
+        expression: medium
+        gene:
+          id: EL222
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: pEL222  # EL222-responsive promoter, activated by blue light
+    - cistron:
+        label: blue_gfp_reporter
+        expression: high
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: rrnB_T1

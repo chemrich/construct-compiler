@@ -1,0 +1,20 @@
+construct:
+  name: yeast_FabF_secretion_production
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: FabF_target
+        expression: high
+        chain:
+          - tag: Alpha_factor  # Yeast secretion signal for export to media
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: FabF
+              source: uniprot
+    - terminator: CYC1_term

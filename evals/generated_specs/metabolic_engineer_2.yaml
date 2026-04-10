@@ -1,0 +1,65 @@
+construct:
+  name: "Bacillus_Biofuel_Pathway_IPTG"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322 # Standard E. coli origin for shuttle vector; Bacillus replication assumed via pUB110/pAMB1
+    source: addgene
+  cassette:
+    - promoter: tac # IPTG-inducible promoter for tight control in Bacillus subtilis
+    - cistron:
+        label: dxs_enzyme
+        expression: high
+        gene:
+          id: P71015
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: dxr_enzyme
+        expression: medium
+        fused: false
+        gene:
+          id: P54518
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: yisB_enzyme
+        expression: medium
+        fused: false
+        gene:
+          id: O31613
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ispE_enzyme
+        expression: low
+        fused: false
+        gene:
+          id: P54497
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ispF_enzyme
+        expression: low
+        fused: false
+        gene:
+          id: P54498
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ispG_enzyme
+        expression: low
+        fused: false
+        gene:
+          id: P54571
+          source: uniprot
+    - spacer: 40 # Upstream spacer contains flanking BsaI site for reporter excision
+    - cistron:
+        label: gfp_reporter
+        expression: low
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 25 # Downstream spacer contains flanking BsaI site for reporter excision
+    - terminator: rrnB_T1

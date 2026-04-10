@@ -1,0 +1,25 @@
+construct:
+  name: "therapeutic_fusion_protein_production"
+  host: e_coli_bl21
+  backbone:
+    # Note: No ARGs were requested, but schema requires selection. Kanamycin is the most common default.
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    # tac promoter used instead of T7lac to avoid viral-derived elements as requested.
+    - promoter: tac
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - cleavage_site: TEV
+          - gene:
+              id: P01308
+              source: uniprot
+    # rrnB_T1 used instead of T7term to avoid viral-derived elements.
+    - terminator: rrnB_T1

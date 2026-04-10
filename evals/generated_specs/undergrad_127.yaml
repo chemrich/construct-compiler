@@ -1,0 +1,19 @@
+construct:
+  name: protein_d_sumo_solubility_fusion
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: P06120
+              source: uniprot
+    - terminator: T7term

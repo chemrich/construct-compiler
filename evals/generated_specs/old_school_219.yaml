@@ -1,0 +1,32 @@
+construct:
+  name: "ccdB_toxin_ccdA_antitoxin_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: J23100  # Strong constitutive promoter
+    - cistron:
+        label: ccdA_antitoxin
+        expression: high
+        fused: false
+        gene:
+          id: ccdA
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: J23106  # Weak constitutive promoter
+    - cistron:
+        label: ccdB_toxin
+        expression: low
+        fused: false
+        gene:
+          id: ccdB
+          source: uniprot
+
+    - terminator: BBa_B0015

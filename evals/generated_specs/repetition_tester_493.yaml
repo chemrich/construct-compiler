@@ -1,0 +1,27 @@
+construct:
+  name: "Hydrophobe_P_solubility_optimization_fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Hydrophobe_P
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - solubility_tag: SUMO
+    - terminator: T7term

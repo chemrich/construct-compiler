@@ -1,0 +1,24 @@
+construct:
+  name: "coexpression_protein_x_y"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_x
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: Protein_X
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_y
+        expression: medium
+        fused: false
+        gene:
+          id: Protein_Y
+          source: uniprot
+    - terminator: T7term

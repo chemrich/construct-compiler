@@ -1,0 +1,21 @@
+construct:
+  name: "toxin_t_responsive_bioremediation_loop"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Responsive promoter acting as the Toxin_T sensor; induction ceases upon toxin degradation
+      cistron:
+        label: enzyme_effector
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: DegradingEnzyme_E
+              source: uniprot
+      terminator: rrnB_T1

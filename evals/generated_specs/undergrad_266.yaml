@@ -1,0 +1,17 @@
+construct:
+  name: "short_lived_protein_lva_degradation"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A  # Low-copy origin to minimize toxicity
+  cassette:
+    - promoter: J23106  # Weak constitutive promoter for low expression of toxic protein
+    - cistron:
+        label: target
+        expression: low
+        chain:
+          - gene:
+              id: ShortLivedProtein
+              source: uniprot
+          - tag: LVA  # C-terminal degradation tag
+    - terminator: rrnB_T1

@@ -1,0 +1,23 @@
+construct:
+  name: "AAV2_VP1_VP2_Coexpression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: VP1
+        expression: high
+        gene:
+          id: P03135
+          source: uniprot
+    - spacer: 500  # Spacer provides sufficient room for IRES-mediated independent translation in mammalian systems
+    - cistron:
+        label: VP2
+        expression: high
+        fused: false  # Triggers independent translation (IRES/RBS-equivalent)
+        gene:
+          # VP2 is an isoform of the AAV2 capsid protein P03135; the compiler handles N-terminal truncation if specifically defined or uses the provided ID
+          id: P03135
+          source: uniprot
+    - terminator: bGH_polyA

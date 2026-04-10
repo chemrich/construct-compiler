@@ -1,0 +1,68 @@
+construct:
+  name: "proof_of_concept_metabolic_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: fusion_E1_E2
+        expression: medium
+        chain:
+          - gene:
+              id: ProofE1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProofE2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E3
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProofE3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E4
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProofE4
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_E5
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: ProofE5
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: enzyme_E6_reporter
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: ProofE6
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

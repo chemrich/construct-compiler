@@ -1,0 +1,32 @@
+construct:
+  name: "lentiviral_coexpression_factorx_helpery"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: factor_x
+        expression: high
+        gene:
+          id: FactorX
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: helper_y
+        expression: medium
+        fused: false
+        gene:
+          id: HelperY
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: selection
+        expression: low
+        fused: false
+        gene:
+          id: PuroR
+          source: uniprot
+    - terminator: bGH_polyA

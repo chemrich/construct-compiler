@@ -1,0 +1,19 @@
+construct:
+  name: protein_U_rapid_degradation
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_u
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: U
+              source: uniprot
+          - tag: PEST
+          - tag: Strep-II
+          - cleavage_site: TEV
+    - terminator: T7term

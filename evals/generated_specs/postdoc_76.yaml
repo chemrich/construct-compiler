@@ -1,0 +1,27 @@
+construct:
+  name: "GFP_ProteinX_ProteinY_Fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: GFP_ProteinX_ProteinY
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProteinX
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProteinY
+              source: uniprot
+    - terminator: bGH_polyA # Standard mammalian terminator for pTwist CMV vectors

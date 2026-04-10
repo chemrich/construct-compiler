@@ -1,0 +1,26 @@
+construct:
+  name: "frequency_divider_P2Q"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac # Input P (IPTG-inducible)
+    - cistron:
+        label: input_processor_P
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P06956 # Cre recombinase for mediated logic
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_output_Q
+        expression: medium
+        fused: false # Independent translation to act as reporter
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: T7term

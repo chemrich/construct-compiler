@@ -1,0 +1,19 @@
+construct:
+  name: "constitutive_therapeutic_enzyme_expression"
+  host: e_coli
+  backbone:
+    resistance: none  # Antibiotic resistance excluded per user request; requires metabolic selection (e.g., thyA or dapB)
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01009
+              source: uniprot
+    - terminator: rrnB_T1

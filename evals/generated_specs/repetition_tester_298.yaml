@@ -1,0 +1,37 @@
+construct:
+  name: "mammalian_split_gfp_ppi_k_l"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: proteink_fusion
+        expression: high
+        chain:
+          - gene:
+              id: ProteinK
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: sfGFP1-10
+              source: fpbase
+    - terminator: SV40_polyA
+    - spacer: 60
+    - promoter: EF1_alpha
+    - cistron:
+        label: proteinl_fusion
+        expression: high
+        chain:
+          - gene:
+              id: ProteinL
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          - gene:
+              id: sfGFP11
+              source: fpbase
+    - terminator: bGH_polyA

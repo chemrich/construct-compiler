@@ -1,0 +1,27 @@
+construct:
+  name: cre_lox_conditional_knockout_hek293
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: nls_cre_recombinase
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: P06956
+              source: uniprot
+    - terminator: bGH_polyA
+    - promoter: CMV
+    - cistron:
+        label: floxed_mscarlet_reporter
+        # Note: Functional loxP and loxN sites are typically placed flanking this cistron 
+        # at the DNA level during synthesis to facilitate recombination.
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: SV40_polyA

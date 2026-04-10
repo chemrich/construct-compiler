@@ -1,0 +1,16 @@
+construct:
+  name: "antibody_heavy_chain_secreted_HEK293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Standard mammalian promoter; minimal variant assumed if used in this context
+    - cistron:
+        label: heavy_chain
+        expression: high
+        chain:
+          - tag: IgK_leader  # N-terminal secretion signal for mammalian cell secretion
+          - gene:
+              id: P01857
+              source: uniprot
+    - terminator: bGH_polyA

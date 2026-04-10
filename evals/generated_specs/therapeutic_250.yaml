@@ -1,0 +1,18 @@
+construct:
+  name: "TherapeuticProteinR_PEST_Expression_Vector"
+  host: HEK293
+  backbone:
+    resistance: none  # User requested no antibiotic markers for transient use
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: NFkB  # Conditional non-viral promoter responding to cellular signaling
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: TherapeuticProteinR
+              source: uniprot
+          - tag: PEST  # C-terminal mammalian degradation tag
+    - terminator: bGH_pA

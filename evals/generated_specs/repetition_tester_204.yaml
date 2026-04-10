@@ -1,0 +1,35 @@
+construct:
+  name: "multi_inducible_diverse_reporters"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Arabinose-inducible promoter, distinct from IPTG systems
+    - cistron:
+        label: reporter_1_ara
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: T7lac  # IPTG-inducible promoter, requires DE3 host for T7 RNAP
+    - cistron:
+        label: reporter_2_iptg
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: T7term
+    - promoter: J23100  # Synthetic constitutive promoter, non-homologous to inducible variants
+    - cistron:
+        label: reporter_3_const
+        expression: low
+        fused: false
+        gene:
+          id: LacZ
+          source: uniprot
+    - terminator: BBa_B0015

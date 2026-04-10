@@ -1,0 +1,22 @@
+construct:
+  name: "sensor_effector_polycistronic_system"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: sensor
+        expression: medium
+        gene:
+          id: SensorProtein
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: effector
+        expression: high
+        fused: false # Independent translation via separate RBS to allow sensor-mediated control logic
+        gene:
+          id: EffectorProtein
+          source: uniprot
+    - terminator: T7term # Standard T7 terminator for E. coli vectors

@@ -1,0 +1,26 @@
+construct:
+  name: "quorum_sensing_amplification_circuit"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: pLuxR  # Inducible by AutoInducer_X/LuxR complex
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: amplifier
+        expression: high
+        fused: false
+        chain:
+          - tag: pelB  # Secretion signal for export of SignalingProtein_Y to periplasm/media
+          - gene:
+              id: SignalingProtein_Y
+              source: uniprot
+    - terminator: rrnB_T1

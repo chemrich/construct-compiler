@@ -1,31 +1,42 @@
-```yaml
 construct:
-  name: "megfp_high_expression"
-  host: e_coli
+  name: "mEGFP_expression_level_screen"
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: mEGFP
-        # Only one of the requested expression levels (high) is provided as per the single YAML output constraint.
-        # To test medium and low expression, generate separate constructs by changing this 'expression' field
-        # or by using different promoters like tac (medium) or J23106 (low).
+        label: mEGFP_high
         expression: high
         chain:
           - tag: 6xHis
+          - linker:
+              type: short_GS
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: rrnB_T1
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - spacer: 30
+    - cistron:
+        label: mEGFP_medium
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: mEGFP_low
+        expression: low
+        fused: false
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term

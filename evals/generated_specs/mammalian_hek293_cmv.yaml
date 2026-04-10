@@ -1,21 +1,14 @@
-```yaml
 construct:
-  name: mEGFP_expression_HEK293
+  name: "HEK293_mEGFP_expression"
   host: HEK293
-
   backbone:
     catalog_vector: "pTwist CMV"
-
   cassette:
     - promoter: CMV
-
     - cistron:
-        label: mEGFP
+        label: target
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-
-    # Note: BBa_B0015 is a bacterial terminator. For mammalian expression, a polyadenylation signal (e.g., SV40 polyA, BGH polyA) is typically used.
-    # As the schema only provides bacterial options, BBa_B0015 is used as a placeholder. The mammalian catalog vector likely provides an appropriate polyA signal.
-    - terminator: BBa_B0015
-```
+    - terminator: bGH_polyA

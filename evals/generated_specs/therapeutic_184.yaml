@@ -1,0 +1,22 @@
+construct:
+  name: "therapeutic_scfv_yeast_secretion"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: scfv_production
+        expression: high
+        chain:
+          - tag: alpha_mating_factor  # Yeast secretion signal peptide
+          - gene:
+              id: P01730  # Representative UniProt ID for antibody variable domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+    - terminator: CYC1

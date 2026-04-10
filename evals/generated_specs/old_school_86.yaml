@@ -1,0 +1,22 @@
+construct:
+  name: "SV40_bicistronic_IRES_X_Y"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: SV40
+    - cistron:
+        label: gene_x
+        expression: high
+        gene:
+          id: "Gene_X"
+          source: uniprot
+    - spacer: 588  # EMCV IRES element for internal ribosome entry
+    - cistron:
+        label: gene_y
+        expression: high
+        fused: false  # Independently translated via IRES
+        gene:
+          id: "Gene_Y"
+          source: uniprot
+    - terminator: SV40_polyA

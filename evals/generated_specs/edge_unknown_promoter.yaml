@@ -1,27 +1,14 @@
-```yaml
 construct:
-  name: "mEGFP_expression"
-  host: e_coli
+  name: "mEGFP_super_strong_beta_expression"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: T7lac # Interpreted "super-strong beta promoter" as a strong E. coli promoter
+    - promoter: T7lac # Interpreted 'super-strong beta' as T7lac (strongest inducible promoter) for maximal expression in the default E. coli host
     - cistron:
-        label: mEGFP
+        label: target
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: rrnB_T1
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

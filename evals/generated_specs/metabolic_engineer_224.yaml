@@ -1,0 +1,42 @@
+construct:
+  name: "Mandelate_Pathway_Optimization_Operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: mandelate_racemase
+        expression: high
+        gene:
+          id: MandelateRacemase
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hydroxylase_reductase_fusion
+        expression: high
+        chain:
+          - gene:
+              id: Hydroxylase
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: Reductase
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: isomerase
+        expression: high
+        gene:
+          id: Isomerase
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: synthase
+        expression: high
+        gene:
+          id: Synthase
+          source: uniprot
+    - terminator: T7term

@@ -1,0 +1,20 @@
+construct:
+  name: "nor_gate_cytotoxic_ccdB"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Functioning as a NOR gate output; promoter is repressed if Input A or Input B is present
+    - cistron:
+        label: toxin
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P0AD98
+              source: uniprot
+    - terminator: rrnB_T1

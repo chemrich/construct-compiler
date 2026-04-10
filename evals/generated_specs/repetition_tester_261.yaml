@@ -1,0 +1,29 @@
+construct:
+  name: "diversified_amp_x_trimer"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: amp_x_tandem_repeat
+        expression: high
+        chain:
+          - gene:
+              id: "AMP-X"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: "AMP-X"
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: "AMP-X"
+              source: uniprot
+        # Note: Optimization must maximize synonymous codon divergence (DNA identity < 75%) 
+        # between the three AMP-X segments to prevent homologous recombination.
+    - terminator: T7term

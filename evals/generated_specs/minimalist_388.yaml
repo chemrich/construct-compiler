@@ -1,0 +1,22 @@
+construct:
+  name: mammalian_bicistronic_X_Y
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_X
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 40
+    - cistron:
+        label: protein_Y
+        expression: high
+        fused: false # This creates an independent translation unit (e.g., via IRES or 2A) within the same transcript
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: bGH_polyA # Standard mammalian terminator for stable polyadenylation

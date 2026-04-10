@@ -1,0 +1,21 @@
+construct:
+  name: "AAV_Accessory_Factor_TetOn"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE3G  # Tetracycline Response Element for Doxycycline-inducible (Tet-On) expression
+    - cistron:
+        label: AAV_accessory_factor
+        expression: high
+        chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: AAP
+              source: uniprot
+    - terminator: SV40_polyA  # Standard mammalian termination/polyadenylation signal

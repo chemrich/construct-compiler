@@ -1,0 +1,23 @@
+construct:
+  name: "Humanized_mAb_HEK293_P2A_Secreted"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Kanamycin included for bacterial propagation; to be removed for therapeutic application per user request for no antibiotic resistance.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Non-viral mammalian promoter to avoid viral elements
+    - cistron:
+        label: mAb_production
+        expression: high
+        chain:
+          - tag: IL2_signal_peptide # Signal peptide for secretion
+          - gene:
+              id: trastuzumab_light_chain
+              source: uniprot
+          - cleavage_site: P2A # Self-cleaving peptide for equimolar production from a single transcript
+          - tag: IL2_signal_peptide # Signal peptide for the second chain
+          - gene:
+              id: trastuzumab_heavy_chain
+              source: uniprot
+    - terminator: hGH_PA # Non-viral polyadenylation signal for efficient mRNA processing

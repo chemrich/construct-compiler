@@ -1,0 +1,22 @@
+construct:
+  name: "mammalian_bicistronic_IRES_proteinD_proteinE"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_d
+        expression: high
+        gene:
+          id: ProteinD
+          source: uniprot
+    - spacer: 585  # Standard length for EMCV IRES to allow bicistronic expression
+    - cistron:
+        label: protein_e
+        expression: high
+        fused: false  # Allows independent translation from the IRES element
+        gene:
+          id: ProteinE
+          source: uniprot
+    - terminator: SV40_pA

@@ -1,0 +1,45 @@
+construct:
+  name: "orthogonal_binary_logic_decoder"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100  # Logic 00: Constitutive output (always on, baseline)
+    - cistron:
+        label: output_00
+        expression: low
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: araBAD  # Logic 10: Input X (Arabinose)
+    - cistron:
+        label: output_10
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BBa_B0015
+    - promoter: lacUV5  # Logic 01: Input Y (IPTG)
+    - cistron:
+        label: output_01
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: tac     # Logic 11: High-level output (conceptual substitution for AND logic)
+    - cistron:
+        label: output_11
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

@@ -1,0 +1,30 @@
+construct:
+  name: "yeast_therapeutic_heterodimer_secretion"
+  host: yeast
+  backbone:
+    resistance: ura3 # Selection via auxotrophy to comply with 'no ARGs' requirement
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GAPDH # Strong constitutive yeast promoter
+    - cistron:
+        label: subunit_alpha
+        expression: high
+        chain:
+          - tag: alpha_factor # N-terminal secretion signal
+          - gene:
+              id: P01127 # PDGF subunit A
+              source: uniprot
+          - tag: 6xHis # C-terminal purification tag 1
+    - spacer: 50
+    - cistron:
+        label: subunit_beta
+        expression: high
+        fused: false # Independent translation unit
+        chain:
+          - tag: alpha_factor # N-terminal secretion signal
+          - gene:
+              id: P01128 # PDGF subunit B
+              source: uniprot
+          - tag: Twin-Strep # C-terminal purification tag 2
+    - terminator: CYC1

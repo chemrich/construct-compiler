@@ -1,0 +1,22 @@
+construct:
+  name: "pichia_hsa_stabilized_enzyme"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: target_enzyme_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: HSA
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: lipase_A
+              source: uniprot
+    - terminator: AOX1_TT

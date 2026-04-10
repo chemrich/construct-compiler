@@ -1,0 +1,19 @@
+construct:
+  name: "bacillus_protease_secretion_system"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: aprE
+    - cistron:
+        label: protease_production
+        expression: high
+        chain:
+          - secretion_signal: aprE
+          - gene:
+              id: subtilisin_E
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

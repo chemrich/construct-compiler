@@ -1,0 +1,17 @@
+construct:
+  name: "dual_stress_response_or_gate"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: dnaK # Heat-shock inducible promoter
+    - promoter: soxS # Oxidative stress (OxyR/SoxRS) inducible promoter
+    - cistron:
+        label: stress_protein
+        expression: high
+        gene:
+          id: P0A6Y8 # DnaK chaperone (UniProt), standard stress response protein
+          source: uniprot
+    - terminator: rrnB_T1

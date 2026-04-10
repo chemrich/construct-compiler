@@ -1,0 +1,64 @@
+construct:
+  name: "algae_lipid_pathway_ecoli_proxy"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Constitutive promoter for E. coli
+    - cistron:
+        label: ACP
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: MBP # Simulated chloroplast targeting/solubility tag
+          - gene:
+              id: P12711
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: KAS
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - gene:
+              id: Q42557
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: KAR
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - gene:
+              id: Q42553
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: DH
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - gene:
+              id: Q9ZP20
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: ER
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - gene:
+              id: Q42550
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

@@ -1,0 +1,83 @@
+construct:
+  name: "yeast_pharmaceutical_precursor_pathway"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene # Genomic integration via integrative plasmid backbone
+
+  cassette:
+    # Codon optimization for S. cerevisiae is applied automatically based on the host field.
+    # Each enzyme is driven by a unique, strong constitutive yeast promoter for high and balanced expression.
+
+    - promoter: TDH3
+    - cistron:
+        label: enzyme_1
+        expression: high
+        fused: false
+        gene:
+          id: Enz1
+          source: uniprot
+
+    - terminator: CYC1_term
+    - spacer: 40
+
+    - promoter: PGK1
+    - cistron:
+        label: enzyme_2
+        expression: high
+        fused: false
+        gene:
+          id: Enz2
+          source: uniprot
+
+    - terminator: ADH1_term
+    - spacer: 40
+
+    - promoter: TEF1
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        gene:
+          id: Enz3
+          source: uniprot
+
+    - terminator: ENO2_term
+    - spacer: 40
+
+    - promoter: TEF2
+    - cistron:
+        label: enzyme_4
+        expression: high
+        fused: false
+        gene:
+          id: Enz4
+          source: uniprot
+
+    - terminator: PGK1_term
+    - spacer: 40
+
+    - promoter: ENO2
+    - cistron:
+        label: enzyme_5
+        expression: high
+        fused: false
+        gene:
+          id: Enz5
+          source: uniprot
+
+    - terminator: TDH3_term
+    - spacer: 40
+
+    - promoter: CCW12
+    - cistron:
+        label: enzyme_6
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Enz6
+              source: uniprot
+          - tag: HA # C-terminal HA-tag for detection
+    - terminator: ACT1_term

@@ -1,0 +1,24 @@
+construct:
+  name: "majority_logic_2_of_3_system"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Proxy for logic gate output; activates above threshold
+    - cistron:
+        label: Above_Threshold_Reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term
+    - spacer: 50  # Insulation between transcription units
+    - promoter: J23106  # Constitutive promoter; active below threshold/otherwise
+    - cistron:
+        label: Below_Threshold_Reporter
+        expression: low
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

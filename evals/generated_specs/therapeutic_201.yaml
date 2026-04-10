@@ -1,0 +1,23 @@
+construct:
+  name: "secreted_therapeutic_antibody_fragment"
+  host: HEK293
+  backbone:
+    resistance: none  # User requested strict absence of antibiotic resistance; note this prevents standard E. coli selection.
+    ori: pBR322       # Using a bacterial origin to avoid viral origins of replication.
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Efficient mammalian promoter.
+    - cistron:
+        label: therapeutic_fragment
+        expression: high
+        chain:
+          - tag: IgK_leader  # Signal peptide to ensure secretion from mammalian cells.
+          - solubility_tag: MBP  # Included to enhance protein folding and stability.
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01857  # Human Ig gamma-1 constant region (IGHG1) as an antibody fragment proxy.
+              source: uniprot
+          - tag: 6xHis  # C-terminal tag for purification.
+    - terminator: BGH_pA  # Standard mammalian polyadenylation signal (non-viral).

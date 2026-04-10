@@ -1,0 +1,18 @@
+construct:
+  name: "periplasmic_peptide_secretion"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: secreted_peptide
+        expression: high
+        chain:
+          - tag: PelB # Mammalian prolactin signal peptide substituted with PelB for bacterial periplasmic secretion
+          - gene:
+              id: target_peptide
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

@@ -1,0 +1,21 @@
+construct:
+  name: "constitutive_cpp_therapeutic_fusion"
+  host: HEK293
+  backbone:
+    resistance: none # User requested no antibiotic resistance; typically requires alternative selection (e.g., metabolic) for cloning
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Constitutive human promoter, non-viral
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: TAT # Cell-penetrating peptide (CPP)
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01270 # PTH (Parathyroid hormone) used as a model therapeutic peptide
+              source: uniprot
+    - terminator: hGH_polyA # Human growth hormone polyadenylation signal, non-viral

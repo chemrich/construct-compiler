@@ -1,0 +1,52 @@
+construct:
+  name: "yeast_surface_display_multi_peptide"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: aga2p_display_A
+        expression: high
+        chain:
+          - gene:
+              id: P32911
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: PeptideA
+    - terminator: CYC1
+    - spacer: 50
+    - promoter: TEF1
+    - cistron:
+        label: aga2p_display_B
+        expression: high
+        chain:
+          - gene:
+              id: P32911
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: PeptideB
+    - terminator: ADH1
+    - spacer: 50
+    - promoter: TDH3
+    - cistron:
+        label: aga2p_display_C
+        expression: high
+        chain:
+          - gene:
+              id: P32911
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 5
+          - gene:
+              id: PeptideC
+    - terminator: PGK1

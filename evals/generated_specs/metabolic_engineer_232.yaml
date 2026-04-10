@@ -1,0 +1,40 @@
+construct:
+  name: "four_enzyme_metabolic_operon"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: EnzX
+        expression: medium
+        gene:
+          id: EnzX
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: EnzY
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: EnzY
+              source: uniprot
+          - tag: LVA
+    - spacer: 30
+    - cistron:
+        label: EnzZ
+        expression: low # Tuned for lower expression via RBS strength to meet requirements within the inducible T7lac operon context
+        fused: false
+        gene:
+          id: EnzZ
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: EnzW
+        expression: medium
+        fused: false
+        gene:
+          id: EnzW
+          source: uniprot
+    - terminator: T7term

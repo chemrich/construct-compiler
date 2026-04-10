@@ -1,0 +1,17 @@
+construct:
+  name: "V5_tagged_expression_unit"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - tag: V5
+    - terminator: rrnB_T1  # Note: Polyadenylation in E. coli promotes mRNA degradation rather than stability; a strong transcriptional terminator (rrnB_T1) is substituted to ensure mRNA stability.

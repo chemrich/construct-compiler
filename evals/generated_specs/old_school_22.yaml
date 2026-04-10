@@ -1,0 +1,18 @@
+construct:
+  name: "GrowthFactorZ_Mammalian_Expression"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC # ColE1-derived origin for E. coli subcloning; SV40 origin included for episomal replication
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: IgK_leader # N-terminal secretion signal for GrowthFactorZ secretion
+          - gene:
+              id: GrowthFactorZ
+              source: uniprot
+    - terminator: SV40_polyA

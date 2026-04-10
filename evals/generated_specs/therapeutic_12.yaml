@@ -1,0 +1,23 @@
+construct:
+  name: "CPP_TAT_IL2_Fusion_Production"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P04608
+              source: uniprot
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P60568
+              source: uniprot
+    - terminator: T7term

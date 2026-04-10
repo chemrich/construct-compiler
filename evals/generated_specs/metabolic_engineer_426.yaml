@@ -1,0 +1,57 @@
+construct:
+  name: "polycistronic_five_enzyme_translational_coupling"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: enzyme_alpha
+        expression: high
+        chain:
+          - gene:
+              id: alpha
+              source: uniprot
+          - tag: FLAG
+    - spacer: 20 # Minimum spacer allowed by schema used to approximate translational coupling
+    - cistron:
+        label: enzyme_beta
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: beta
+              source: uniprot
+          - tag: FLAG
+    - spacer: 20
+    - cistron:
+        label: enzyme_gamma
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: gamma
+              source: uniprot
+          - tag: FLAG
+    - spacer: 20
+    - cistron:
+        label: enzyme_delta
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: delta
+              source: uniprot
+          - tag: FLAG
+    - spacer: 20
+    - cistron:
+        label: enzyme_epsilon
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: epsilon
+              source: uniprot
+          - tag: FLAG
+    - terminator: rrnB_T1

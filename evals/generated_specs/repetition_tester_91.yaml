@@ -1,0 +1,29 @@
+construct:
+  name: yeast_dual_selection_divergent
+  host: yeast
+  backbone:
+    resistance: ampicillin  # For E. coli propagation
+    ori: pUC                # High-copy E. coli origin
+    source: addgene         # Generic source for yeast shuttle backbone components
+
+  cassette:
+    # First selectable marker: Auxotrophic (Pyrimidine biosynthesis)
+    - promoter: TDH3        # Strong constitutive yeast promoter
+    - cistron:
+        label: marker_ura3
+        expression: medium
+        gene:
+          id: P03315        # Saccharomyces cerevisiae URA3 (OMP decarboxylase)
+          source: uniprot
+    - terminator: ADH1      # Standard yeast terminator
+
+    # Second selectable marker: Antibiotic Resistance (Aminoglycoside kinase)
+    # Divergent origin (Bacteria vs Yeast) and distinct mechanism
+    - promoter: TEF1        # Strong constitutive yeast promoter (divergent from TDH3)
+    - cistron:
+        label: marker_hph
+        expression: medium
+        gene:
+          id: P00557        # Escherichia coli HPH (Hygromycin-B phosphotransferase)
+          source: uniprot
+    - terminator: CYC1      # Standard yeast terminator (divergent from ADH1)

@@ -1,0 +1,45 @@
+construct:
+  name: "aromatic_biosynthesis_operon_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_fusion_assembly
+        expression: high
+        chain:
+          - gene:
+              id: Ea
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Eb
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: Ec
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: Ed
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: Ee
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: Ef
+              source: uniprot
+    - terminator: T7term

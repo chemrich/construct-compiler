@@ -1,0 +1,24 @@
+construct:
+  name: "yeast_surface_display_vaccine_antigen"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P32323
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P0DTC2
+              source: uniprot
+          - tag: 6xHis
+    - terminator: CYC1

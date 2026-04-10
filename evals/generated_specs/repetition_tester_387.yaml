@@ -1,0 +1,39 @@
+construct:
+  name: yeast_constitutive_multi_gene_expression
+  host: yeast
+  # Yeast uses 5' UTRs instead of RBS; using unique promoters and 'fused: false' provides unique translation initiation regions for each gene.
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: gene_i_unit
+        expression: high
+        fused: false
+        gene:
+          id: GeneI
+          source: uniprot
+    - terminator: CYC1
+
+    - promoter: TDH3
+    - cistron:
+        label: gene_j_unit
+        expression: high
+        fused: false
+        gene:
+          id: GeneJ
+          source: uniprot
+    - terminator: ADH1
+
+    - promoter: PGK1
+    - cistron:
+        label: gene_k_unit
+        expression: high
+        fused: false
+        gene:
+          id: GeneK
+          source: uniprot
+    - terminator: ENO2

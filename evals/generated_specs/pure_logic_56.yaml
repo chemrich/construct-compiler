@@ -1,0 +1,18 @@
+construct:
+  name: "qs_logic_and_biofilm_integrator"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: "pLux_pLas_AND" # Logical AND-gate promoter requiring both Q1 (AHL) and Q2 (3-oxo-C12-HSL) inputs
+    - cistron:
+        label: biofilm_effector
+        expression: high
+        chain:
+          - tag: "OmpA" # N-terminal membrane localization signal peptide
+          - gene:
+              id: "bolA"
+              source: uniprot
+    - terminator: "rrnB_T1"

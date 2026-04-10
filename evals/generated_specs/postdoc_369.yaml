@@ -1,0 +1,15 @@
+construct:
+  name: "tet_inducible_toxic_expression_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A  # Low-copy origin selected to enhance tight control of toxic protein expression
+  cassette:
+    - promoter: tetA  # Mammalian Tet-On adapted to bacterial tetA promoter for E. coli compatibility; inducible by aTc
+    - cistron:
+        label: toxic_payload
+        expression: medium
+        gene:
+          id: P04135
+          source: uniprot
+    - terminator: rrnB_T1

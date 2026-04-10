@@ -1,0 +1,21 @@
+construct:
+  name: "genex_recombination_resistant_expression"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: genex_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: GeneX
+              source: uniprot
+    - terminator: T7term

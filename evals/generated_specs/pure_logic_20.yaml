@@ -1,0 +1,27 @@
+construct:
+  name: "e_coli_genetic_not_gate_lacI"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: repressor_lacI
+        expression: high
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: lacUV5
+    - cistron:
+        label: output_reporter
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term

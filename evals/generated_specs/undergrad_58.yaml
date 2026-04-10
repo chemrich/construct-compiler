@@ -1,0 +1,21 @@
+construct:
+  name: "cpp_drug_cargo_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: TAT
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: T7term

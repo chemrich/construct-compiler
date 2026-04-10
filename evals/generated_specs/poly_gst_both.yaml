@@ -1,47 +1,33 @@
-```yaml
 construct:
-  name: "gst_megfp_gst_mscarlet"
+  name: "GST_mEGFP_GST_mScarlet_coexpression"
   host: e_coli
-
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
-
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: GST_mEGFP
+        label: target
         expression: high
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: GST_mScarlet
+        label: reporter
         expression: low
+        fused: false
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mScarlet
               source: fpbase
-
     - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```

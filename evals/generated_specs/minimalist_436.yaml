@@ -1,0 +1,17 @@
+construct:
+  name: "inducible_degradation_protein_P"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - gene:
+              id: P
+              source: uniprot
+          - tag: AID # Auxin-inducible degron; assumed host machinery (e.g., TIR1) is present
+    - terminator: T7term

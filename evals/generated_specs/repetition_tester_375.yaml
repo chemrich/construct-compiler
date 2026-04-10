@@ -1,0 +1,23 @@
+construct:
+  name: peptide_r_dual_purification_fusion
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: PeptideR
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - tag: Strep-II
+    - terminator: hGH_PA

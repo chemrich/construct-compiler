@@ -1,0 +1,35 @@
+construct:
+  name: "three_stage_genetic_cascade"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: luxR_activator
+        expression: medium
+        gene:
+          id: P12746
+          source: uniprot
+    - spacer: 45
+    - promoter: pLux
+    - cistron:
+        label: t7_polymerase
+        expression: medium
+        fused: false
+        gene:
+          id: P00573
+          source: uniprot
+    - spacer: 45
+    - promoter: T7
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P00639
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,25 @@
+construct:
+  name: "blue_light_ANDNOT_G_logic_gate"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100  # Constitutive promoter to express the blue-light sensor EL222
+    - cistron:
+        label: blue_light_sensor
+        expression: medium
+        gene:
+          id: Q02V75
+          source: uniprot  # EL222 light-oxygen-voltage (LOV) transcription factor
+    - spacer: 40
+    - promoter: araBAD  # Substitution: Custom hybrid promoter activated by EL222 and repressed by Input G (e.g., via a TetO/LacO operator site)
+    - cistron:
+        label: output_F
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: T7term

@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_dual_expression_divergent_introns"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV # Includes CMV Intron A for expression enhancement
+    - cistron:
+        label: eGFP_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_PA
+    - spacer: 60 # Physical separation between independent expression units
+    - promoter: EF1_alpha # Uses divergent EF1a Intron 1 to prevent genetic instability from repetitive elements
+    - cistron:
+        label: mCherry_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: SV40_polyA

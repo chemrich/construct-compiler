@@ -1,0 +1,21 @@
+construct:
+  name: "mammalian_secreted_scfv_nonviral"
+  host: HEK293
+  backbone:
+    # A standard bacterial resistance gene is included for cloning purposes; 
+    # bacterial resistance is required for construct propagation in E. coli.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Human promoter used to avoid sequences of viral origin (like CMV)
+    - cistron:
+        label: antibody_fragment
+        expression: high
+        chain:
+          - tag: Ig_kappa_leader # Signal peptide for efficient mammalian secretion
+          - gene:
+              id: "trastuzumab_scFv"
+              source: uniprot
+          - tag: 8xHis
+    - terminator: hGH_polyA # Human-derived terminator to avoid viral sequences (like SV40 or BGH pA)

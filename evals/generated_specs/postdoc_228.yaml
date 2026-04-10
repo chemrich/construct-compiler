@@ -1,0 +1,24 @@
+construct:
+  name: "dual_peptide_polycistronic_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: peptide_1_strep
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: peptide_1
+    - spacer: 30 # P2A ribosomal skipping does not function in E. coli; substituted with polycistronic spacer and independent RBS for stoichiometry.
+    - cistron:
+        label: peptide_2_his
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: peptide_2
+          - tag: 6xHis
+    - terminator: T7term

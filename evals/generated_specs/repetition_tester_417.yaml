@@ -1,0 +1,36 @@
+construct:
+  name: "tandem_bispecific_scfv_unique_linkers"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: bispecific_fusion
+        expression: high
+        chain:
+          # First scFv: VH - Linker 1 - VL
+          - gene:
+              id: "VH_antigen_1"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3 # First unique flexible linker
+          - gene:
+              id: "VL_antigen_1"
+              source: uniprot
+          # Junction Linker between scFv units
+          - linker:
+              type: short_GS
+              repeats: 4 # Second unique flexible linker (different sequence type)
+          # Second scFv: VH - Linker 2 - VL
+          - gene:
+              id: "VH_antigen_2"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 5 # Third unique flexible linker (different length to minimize homology)
+          - gene:
+              id: "VL_antigen_2"
+              source: uniprot
+    - terminator: bGH_polyA

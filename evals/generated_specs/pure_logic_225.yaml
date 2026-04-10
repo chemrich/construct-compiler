@@ -1,0 +1,24 @@
+construct:
+  name: "pulse_generator_edge_detector"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac  # Input A trigger (e.g., IPTG)
+    - cistron:
+        label: delay_element
+        expression: high
+        gene:
+          id: TetR
+          source: uniprot
+    - spacer: 40  # Spacer designed to include a TetO operator site for feed-forward repression
+    - cistron:
+        label: pulse_output
+        expression: medium
+        fused: false  # Independent translation for the reporter protein
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: LVA  # C-terminal degradation tag to ensure transient pulse dynamics
+    - terminator: T7term

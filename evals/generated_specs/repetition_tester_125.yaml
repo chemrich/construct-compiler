@@ -1,0 +1,21 @@
+construct:
+  name: "domain_a_b_fusion"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: DomainA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3 # Optimized for unique synonymous codon usage
+          - gene:
+              id: DomainB
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,27 @@
+construct:
+  name: "non_viral_ultra_pure_therapeutic_enzyme"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Kanamycin included for maintenance; antibiotic-free selection requires specific host strains not defined in schema.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD # Selected to avoid viral elements (T7) while maintaining high inducibility.
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P00750 # Tissue-type plasminogen activator (tPA) as a representative therapeutic enzyme.
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - cleavage_site: TEV
+          - tag: Strep-II
+    - terminator: rrnB_T1 # Bacterial terminator used to comply with 'no viral elements' request.

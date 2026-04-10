@@ -1,0 +1,23 @@
+construct:
+  name: tet_on_gfp_inducible_system
+  host: HEK293
+  backbone:
+    resistance: puromycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: transactivator
+        gene:
+          id: rtTA # Substituted tTA with rtTA to enable Tet-On (inducible) functionality as requested
+          source: uniprot
+    - terminator: bGH_pA
+    - spacer: 100
+    - promoter: TRE
+    - cistron:
+        label: reporter
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: SV40_pA

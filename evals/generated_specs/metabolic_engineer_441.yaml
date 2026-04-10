@@ -1,0 +1,52 @@
+construct:
+  name: "inducible_metabolic_operon_FGHI"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_F
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_F
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_G
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_G
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_H
+        expression: low
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_H
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_I
+        expression: very_low
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_I
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,35 @@
+construct:
+  name: "analog_logic_multiplier_secreted_output"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: transactivator_dbd
+        expression: medium
+        gene:
+          id: P04386
+          source: uniprot
+    - spacer: 40
+    - promoter: EF1_alpha
+    - cistron:
+        label: transactivator_ad
+        expression: medium
+        fused: false
+        gene:
+          id: P06492
+          source: uniprot
+    - spacer: 40
+    - promoter: CMV
+      # CMV used here as a placeholder for a synthetic logic-responsive promoter (e.g., UAS)
+    - cistron:
+        label: secreted_signaling_output
+        expression: high
+        fused: false
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: bGH_PA

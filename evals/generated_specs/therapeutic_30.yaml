@@ -1,0 +1,23 @@
+construct:
+  name: "therapeutic_SAP_delivery_construct"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Substitution: Schema requires antibiotic; recommend auxotrophic selection for antibiotic-free production.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac # Non-viral bacterial promoter for high-level expression.
+    - cistron:
+        label: sap_delivery
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: Enterokinase # Non-viral protease selection.
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P17544
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator.

@@ -1,0 +1,25 @@
+construct:
+  name: "gfp_relaxation_oscillator"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: lacUV5
+    - cistron:
+        label: repressor
+        expression: high
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

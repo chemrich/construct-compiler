@@ -1,0 +1,18 @@
+construct:
+  name: yeast_pH_inducible_secreted_therapeutic
+  host: yeast
+  backbone:
+    resistance: none # User requested no antibiotic markers; auxotrophic selection (e.g., URA3) used for yeast bioprocessing
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: PDR12 # Yeast promoter robustly induced by acidic pH and weak organic acids
+    - cistron:
+        label: secreted_therapeutic
+        expression: high
+        chain:
+          - tag: alpha_factor # N-terminal secretion signal for S. cerevisiae
+          - gene:
+              id: IDUA # Alpha-L-iduronidase enzyme as a therapeutic example
+              source: uniprot
+    - terminator: CYC1_term

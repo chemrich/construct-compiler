@@ -1,0 +1,18 @@
+construct:
+  name: "antibody_comparator_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Acts as a biochemical comparator: output is activated when Input A (IPTG/inducer) concentration overcomes the repression of Input B (LacI repressor)
+    - cistron:
+        label: "antibody_output"
+        expression: high
+        chain:
+          - tag: "PelB"  # Secretion signal for periplasmic export in E. coli
+          - gene:
+              id: "P04259"
+              source: "uniprot"
+          - cleavage_site: "TEV"
+          - tag: "6xHis"
+    - terminator: "T7term"

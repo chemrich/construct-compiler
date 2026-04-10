@@ -1,0 +1,23 @@
+construct:
+  name: "crispr_repression_system_ecoli"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: dCas9_repressor
+        expression: medium
+        gene:
+          id: dCas9
+          source: uniprot
+    - terminator: T7term
+    - spacer: 50
+    - promoter: J23100  # U6 is a mammalian Pol III promoter; substituted with J23100 for E. coli host
+    - cistron:
+        label: gRNA_expression
+        gene:
+          id: sgRNA
+    - terminator: rrnB_T1

@@ -1,0 +1,23 @@
+construct:
+  name: yeast_gene_v_knockout_gfp
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: U6
+    - cistron:
+        label: guide_rna
+        gene:
+          id: sgRNA_target_V
+    - terminator: BBa_B0015
+    - spacer: 30
+    - promoter: GPD # Using yeast GPD promoter for high-level expression of the repair template reporter
+    - cistron:
+        label: gfp_repair_template
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

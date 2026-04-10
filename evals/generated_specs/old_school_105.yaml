@@ -1,0 +1,19 @@
+construct:
+  name: "GST_TEV_fusion_purification"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: purification_target
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term

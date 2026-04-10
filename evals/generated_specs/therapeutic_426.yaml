@@ -1,0 +1,27 @@
+construct:
+  name: "ABE8e_NonViral_BaseEditor"
+  host: mammalian
+  backbone:
+    resistance: none # User requested no antibiotic resistance genes for non-viral somatic delivery
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # High-expression non-viral mammalian promoter
+    - cistron:
+        label: base_editor
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: ABE8e
+              source: addgene
+          - tag: NLS
+    - spacer: 30
+    - promoter: U6 # Pol III promoter for gRNA transcription
+    - cistron:
+        label: guide_RNA
+        fused: false
+        gene:
+          id: sgRNA_scaffold
+          source: addgene
+    - terminator: bGH_polyA # Bovine growth hormone polyadenylation signal (non-viral)

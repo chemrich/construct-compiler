@@ -1,0 +1,20 @@
+construct:
+  name: "secreted_self_activating_proenzyme"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: "pro_enzyme"
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - tag: 8xHis
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: PRSS1
+              source: uniprot
+    - terminator: bGH_PA # Mammalian polyadenylation signal for HEK293 host

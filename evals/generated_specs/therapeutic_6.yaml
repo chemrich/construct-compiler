@@ -1,0 +1,18 @@
+construct:
+  name: "bacterial_metabolite_biosensor"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Metabolite-responsive promoter induced by L-arabinose
+    - cistron:
+        label: reporter
+        expression: medium
+        chain:
+          - tag: PelB  # Signal peptide for periplasmic secretion in E. coli
+          - gene:
+              id: P05630  # beta-glucuronidase (GusA) enzymatic reporter
+              source: uniprot
+    - terminator: rrnB_T1

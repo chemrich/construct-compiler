@@ -1,0 +1,20 @@
+construct:
+  name: "pichia_kinase_stability_tester"
+  host: pichia_pastoris
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: ubiquitin_fusion_kinase
+        expression: high
+        chain:
+          - tag: Ubiquitin
+          - cleavage_site: DUB
+          - gene:
+              id: AURKA
+              source: uniprot
+          - tag: HA
+    - terminator: AOX1_term

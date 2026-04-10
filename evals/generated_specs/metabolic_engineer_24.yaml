@@ -1,0 +1,50 @@
+construct:
+  name: "lysine_biosynthesis_operon_low_burden"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+  cassette:
+    - promoter: araBAD  # araBAD selected to allow tunable control and minimize metabolic burden as a substitute for specific feedback promoters
+    - cistron:
+        label: lysC
+        expression: low
+        fused: false
+        gene:
+          id: P0A725
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: dapA
+        expression: low
+        fused: false
+        chain:
+          - cleavage_site: TEV
+          - gene:
+              id: P0A6L2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: asd
+        expression: low
+        fused: false
+        gene:
+          id: P00564
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: dapB
+        expression: low
+        fused: false
+        gene:
+          id: P0CB45
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: dapD
+        expression: low
+        fused: false
+        gene:
+          id: P0AFG8
+          source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,18 @@
+construct:
+  name: "Yeast_Therapeutic_Payload_Expression"
+  host: yeast
+  backbone:
+    catalog_vector: "pYES2"
+  cassette:
+    - promoter: GAL1  # High-level galactose-inducible promoter for S. cerevisiae
+    - cistron:
+        label: therapeutic_payload
+        expression: high
+        chain:
+          - tag: alpha_factor  # Secretion signal for yeast to facilitate purification from media
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: IL2  # Representative therapeutic payload (Interleukin-2)
+              source: uniprot
+    - terminator: CYC1  # Standard yeast transcription terminator

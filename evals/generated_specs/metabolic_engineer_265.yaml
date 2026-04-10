@@ -1,0 +1,60 @@
+construct:
+  name: "nrps_antibiotic_precursor_operon"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: rhaBAD
+    - cistron:
+        label: loading_module
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: nrps_loading_module
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: elongation_module_1
+        expression: high
+        fused: false
+        gene:
+          id: nrps_elongation_module_1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: elongation_module_2
+        expression: high
+        fused: false
+        gene:
+          id: nrps_elongation_module_2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: elongation_module_3
+        expression: high
+        fused: false
+        gene:
+          id: nrps_elongation_module_3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: elongation_module_4
+        expression: high
+        fused: false
+        gene:
+          id: nrps_elongation_module_4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: release_module
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: nrps_thioesterase_module
+              source: uniprot
+    - terminator: rrnB_T1

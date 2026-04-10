@@ -1,0 +1,48 @@
+construct:
+  name: "crispri_tuned_multienzyme_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Constitutive promoter; CRISPRi guide RNA target sites typically overlap or follow the promoter sequence
+    - cistron:
+        label: CRISPR_TargetA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CRISPR_TargetA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: EnzymeB
+        fused: false
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: EnzymeC
+        fused: false
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeC
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: EnzymeD
+        fused: false
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeD
+              source: uniprot
+    - terminator: rrnB_T1

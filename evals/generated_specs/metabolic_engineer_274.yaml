@@ -1,0 +1,48 @@
+construct:
+  name: "PHA_production_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: phaA_thiolase
+        expression: high
+        gene:
+          id: P14611
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: phaB_reductase
+        expression: high
+        fused: false
+        gene:
+          id: P14697
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: phaC_synthase
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P11762
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: phaJ_hydratase
+        expression: high
+        fused: false
+        gene:
+          id: Q51373
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: bktB_thiolase
+        expression: high
+        fused: false
+        gene:
+          id: P14612
+          source: uniprot
+    - terminator: T7term

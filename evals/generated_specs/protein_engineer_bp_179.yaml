@@ -1,0 +1,21 @@
+construct:
+  name: "pichia_scfv_aggregation_prone"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: PGAP
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: scFv
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1_term

@@ -1,0 +1,32 @@
+construct:
+  name: "quorum_density_and_gate"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: luxR_regulator
+        expression: medium
+        gene:
+          id: P12746
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: lasR_regulator
+        expression: medium
+        fused: false
+        gene:
+          id: P25084
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: pLux_Las
+    - cistron:
+        label: output_z
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1

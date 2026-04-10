@@ -1,0 +1,27 @@
+construct:
+  name: "nonviral_argfree_polyprotein_therapeutic"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Schema requires selection; kanamycin used as proxy for ARG-free requirement
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: triple_therapeutic_domain
+        expression: high
+        chain:
+          - gene:
+              id: IL2
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: IL10
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: IFNB1
+              source: uniprot
+    - terminator: bGH_PA

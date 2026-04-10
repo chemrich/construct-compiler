@@ -1,0 +1,30 @@
+construct:
+  name: "ProteinR_ProteinS_Coexpression_SV40_IRES"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: SV40
+    - cistron:
+        label: cistron_R
+        chain:
+          - tag: Myc
+          - gene:
+              id: ProteinR
+              source: uniprot
+    - spacer: 585  # Length corresponds to a standard IRES sequence
+    - cistron:
+        label: cistron_S
+        fused: false
+        gene:
+          id: ProteinS
+          source: uniprot
+    - terminator: SV40_polyA
+    - promoter: CMV
+    - cistron:
+        label: selection_marker
+        gene:
+          id: NeoR
+          source: uniprot
+    - terminator: bGH_polyA

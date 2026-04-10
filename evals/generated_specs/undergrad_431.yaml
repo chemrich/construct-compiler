@@ -1,0 +1,18 @@
+construct:
+  name: "MyProtein_His_TEV_Purification"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100  # Constitutive expression as requested
+    - cistron:
+        label: purification_target
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: MyProtein
+              source: uniprot
+    - terminator: rrnB_T1

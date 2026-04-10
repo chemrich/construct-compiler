@@ -1,0 +1,25 @@
+construct:
+  name: "GeneQ_C_terminal_dual_tag_fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: GeneQ_target
+        expression: high
+        chain:
+          - gene:
+              id: GeneQ
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - tag: Strep-II
+    - terminator: rrnB_T1

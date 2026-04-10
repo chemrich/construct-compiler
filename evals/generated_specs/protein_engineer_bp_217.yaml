@@ -1,0 +1,26 @@
+construct:
+  name: "Pichia_ER_stress_mitigation_mAb_PDI"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: antibody_fragment
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: mAb_Fab_HeavyChain
+              source: uniprot
+    - terminator: CYC1_terminator
+    - promoter: GAP
+    - cistron:
+        label: PDI_chaperone
+        expression: medium
+        gene:
+          id: PDI1
+          source: uniprot
+    - terminator: BBa_B0015

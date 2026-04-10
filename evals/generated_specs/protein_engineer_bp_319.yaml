@@ -1,0 +1,20 @@
+construct:
+  name: viral_glycoprotein_secretion_pichia
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: glycoprotein_target
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: glycoprotein
+              source: uniprot
+          - cleavage_site: 3C
+          - tag: 8xHis
+    - terminator: CYC1

@@ -1,0 +1,43 @@
+construct:
+  name: "mammalian_toggle_switch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE  # Repressed by TetR-NLS
+    - cistron:
+        label: laci_repressor
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: "P03023"
+              source: uniprot
+    - spacer: 30  # Represents IRES for independent translation of reporter
+    - cistron:
+        label: state_a_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: SV40_polyA
+
+    - promoter: CMV_LacO  # Repressed by LacI-NLS
+    - cistron:
+        label: tetr_repressor
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: "P03006"
+              source: uniprot
+    - spacer: 30  # Represents IRES for independent translation of reporter
+    - cistron:
+        label: state_b_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: bGH_polyA

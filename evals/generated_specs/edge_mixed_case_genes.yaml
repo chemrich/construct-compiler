@@ -1,53 +1,30 @@
-```yaml
 construct:
-  name: "gfp_scarlet_neongreen_expression"
-  host: e_coli
-
+  name: "triple_fluorescent_protein_reporter"
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
-
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: mEGFP
+        label: gfp_expression
         expression: high
-        fused: false
         gene:
           id: mEGFP
           source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: mScarlet
+        label: scarlet_expression
         expression: high
         fused: false
         gene:
           id: mScarlet
           source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: mNeonGreen
+        label: neongreen_expression
         expression: high
         fused: false
         gene:
           id: mNeonGreen
           source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

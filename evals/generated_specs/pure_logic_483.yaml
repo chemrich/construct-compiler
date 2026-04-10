@@ -1,0 +1,23 @@
+construct:
+  name: "genetic_xor_gate_mscarlet"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Branch 1: Activated by Input P (Arabinose). For XOR logic, this branch requires repression by Input Q.
+    - cistron:
+        label: branch_p
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: T7lac   # Branch 2: Activated by Input Q (IPTG). For XOR logic, this branch requires repression by Input P.
+    - cistron:
+        label: branch_q
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

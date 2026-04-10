@@ -1,0 +1,29 @@
+construct:
+  name: "yeast_constitutive_pathway"
+  host: yeast
+  backbone:
+    resistance: URA3 # Used URA3 auxotrophic marker to satisfy "no antibiotic resistance" constraint
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: TDH3 # Strong constitutive yeast promoter
+    - cistron:
+        label: enzyme_1_hmgr
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P12683
+              source: uniprot
+    - terminator: CYC1
+    - spacer: 40
+    - promoter: TEF1 # Constitutive yeast promoter
+    - cistron:
+        label: enzyme_2_erg20
+        expression: high
+        chain:
+          - tag: Twin-Strep
+          - gene:
+              id: P08524
+              source: uniprot
+    - terminator: ADH1

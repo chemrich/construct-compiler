@@ -1,0 +1,30 @@
+construct:
+  name: "polycistronic_XYZ_T7_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: protein_x
+        expression: high
+        gene:
+          id: ProteinX
+          source: uniprot
+    - spacer: 30 # F2A sites are for eukaryotes; using intergenic spacers with fused:false for E. coli polycistronic translation
+    - cistron:
+        label: protein_y
+        expression: high
+        fused: false
+        gene:
+          id: ProteinY
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_z
+        expression: high
+        fused: false
+        gene:
+          id: ProteinZ
+          source: uniprot
+    - terminator: T7term

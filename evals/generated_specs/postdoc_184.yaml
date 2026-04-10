@@ -1,0 +1,17 @@
+construct:
+  name: SecretedFactor_Ecoli_Expression
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: PelB # Mammalian secretion signals are incompatible with E. coli; substituted PelB leader peptide for bacterial secretion.
+          - gene:
+              id: SecretedFactor
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term

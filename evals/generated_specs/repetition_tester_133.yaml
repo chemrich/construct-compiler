@@ -1,0 +1,24 @@
+construct:
+  name: "non_repetitive_multi_domain_fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_fusion
+        expression: high
+        chain:
+          - gene:
+              id: Domain1
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: Domain2
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: Domain3
+    - terminator: T7term

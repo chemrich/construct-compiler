@@ -1,0 +1,53 @@
+construct:
+  name: "biotin_synthesis_operon_ecoli"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: bioA
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P12974
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: bioB
+        expression: very_low
+        fused: false
+        gene:
+          id: P0A6M0
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: bioC
+        expression: low
+        fused: false
+        gene:
+          id: P0A6N0
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: bioD
+        expression: medium
+        fused: false
+        gene:
+          id: P0A6N4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: bioF
+        expression: high
+        fused: false
+        gene:
+          id: P0A6N2
+          source: uniprot
+    - terminator: BBa_B0015

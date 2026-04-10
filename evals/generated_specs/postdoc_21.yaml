@@ -1,0 +1,19 @@
+construct:
+  name: "yeast_secreted_his_antibody"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3 # Substituted strong constitutive yeast promoter TDH3 for the requested mammalian CMV promoter.
+    - cistron:
+        label: antibody_fragment
+        expression: high
+        chain:
+          - tag: alpha_factor # Yeast secretion signal
+          - gene:
+              id: P01764
+              source: uniprot
+          - tag: 6xHis
+    - terminator: CYC1_term

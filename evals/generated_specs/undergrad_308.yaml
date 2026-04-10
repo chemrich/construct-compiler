@@ -1,0 +1,19 @@
+construct:
+  name: "gfp_ssrA_degron_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: SsrA # Substitution: PEST is eukaryotic; SsrA is the standard C-terminal degron for E. coli
+    - terminator: T7term

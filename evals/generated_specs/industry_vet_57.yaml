@@ -1,0 +1,19 @@
+construct:
+  name: "pichia_pastoris_secreted_payload"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1  # Methanol-inducible promoter for high-level expression in Pichia
+      cistron:
+        label: payload_secretion
+        expression: high
+        chain:
+          - tag: alpha_factor # Secretion signal peptide for yeast
+          - tag: 6xHis
+          - gene:
+              id: payload
+              source: uniprot
+      terminator: AOX1_TT

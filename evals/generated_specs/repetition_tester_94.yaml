@@ -1,0 +1,34 @@
+construct:
+  name: "synonymous_dual_peptide_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: glucagon_variant_1
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: P01275
+              source: uniprot
+          - tag: HA
+    - spacer: 40
+    - cistron:
+        label: glucagon_variant_2
+        expression: high
+        fused: false
+        chain:
+          - tag: alpha_factor  # To satisfy DNA diversity, the compiler must use a synonymous DNA sequence for this repeat
+          - gene:
+              id: P01275
+              source: uniprot
+          - tag: V5
+    - terminator: CYC1_term  # Standard yeast terminator to ensure proper mRNA processing
+
+# Note: The 'fused: false' property and 'spacer' are used here to define a polycistronic-style mRNA common in multi-gene yeast vectors. 
+# To meet the "no identical stretches of DNA" requirement, the compiler should perform synonymous codon optimization 
+# for the repeated glucagon gene and alpha-factor secretion signal.

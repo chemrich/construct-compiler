@@ -1,0 +1,17 @@
+construct:
+  name: "nand_gate_output_r"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Inducible promoter often used in E. coli logic circuits
+    - cistron:
+        label: target_R
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: T7term

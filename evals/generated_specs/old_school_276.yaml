@@ -1,0 +1,24 @@
+construct:
+  name: "e_coli_stress_response_dual_reporter"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: HeatShockPromoter  # Sigma-32 responsive promoter (e.g., pHtpG)
+    - cistron:
+        label: heat_shock_reporter
+        fused: false  # Ensures an independent Shine-Dalgarno/RBS sequence
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: OsmoticStressPromoter  # Osmotic stress responsive promoter (e.g., pProU)
+    - cistron:
+        label: osmotic_stress_reporter
+        fused: false  # Ensures an independent Shine-Dalgarno/RBS sequence
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

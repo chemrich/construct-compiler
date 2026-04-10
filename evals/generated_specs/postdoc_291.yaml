@@ -1,0 +1,18 @@
+construct:
+  name: "protein_m_his_tagged_ecoli"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        # Note: Kozak sequences are specific to eukaryotes; substituted with a strong Shine-Dalgarno (RBS) for E. coli expression.
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0DTC5
+              source: uniprot
+    # Note: Poly-A tails are for mammalian transcript stability; substituted with a T7 terminator for E. coli.
+    - terminator: T7term

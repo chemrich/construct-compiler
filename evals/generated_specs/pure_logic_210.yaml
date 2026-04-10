@@ -1,0 +1,61 @@
+construct:
+  name: "three_node_repressilator_oscillator"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pSC101  # Low-copy origin is essential for circuit stability and reducing stochastic noise
+    source: addgene
+  cassette:
+    # Node A: Repressor LacI and BFP reporter (Inhibited by cI)
+    - promoter: pL_lambda  # Repressed by cI
+    - cistron:
+        label: repressor_A_LacI
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_A_BFP
+        expression: medium
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: rrnB_T1
+
+    # Node B: Repressor TetR and Cherry reporter (Inhibited by LacI)
+    - promoter: lacUV5     # Repressed by LacI
+    - cistron:
+        label: repressor_B_TetR
+        expression: medium
+        gene:
+          id: TetR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_B_Cherry
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1
+
+    # Node C: Repressor cI and GFP reporter (Inhibited by TetR)
+    - promoter: P_tet      # Repressed by TetR
+    - cistron:
+        label: repressor_C_cI
+        expression: medium
+        gene:
+          id: cI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_C_GFP
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

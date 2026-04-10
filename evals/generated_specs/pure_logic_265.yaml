@@ -1,0 +1,16 @@
+construct:
+  name: yeast_negative_feedback_protein_Q
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: pTEF1  # Standard yeast promoter, typically modified with operator sites for autoregulation
+    - cistron:
+        label: protein_Q
+        expression: low
+        gene:
+          id: tetR # Using TetR as a functional representative for an autorepressive "Protein Q"
+          source: uniprot
+    - terminator: CYC1_term

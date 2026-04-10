@@ -1,0 +1,24 @@
+construct:
+  name: "bicistronic_alpha_rfp_mammalian_expression"
+  host: mammalian
+  backbone:
+    resistance: puromycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: alpha_protein
+        expression: high
+        gene:
+          id: protein_alpha
+          source: uniprot
+    - spacer: 500 # IRES element for bicistronic translation
+    - cistron:
+        label: reporter_rfp
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: bGH_PA

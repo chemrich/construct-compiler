@@ -1,0 +1,57 @@
+construct:
+  name: "cytotoxic_intermediate_biosynthetic_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: araBAD  # Tightly regulated by L-arabinose/AraC to prevent leaky expression
+    - cistron:
+        label: enzyme_t1
+        expression: high
+        chain:
+          - gene:
+              id: Enzyme_T1
+              source: uniprot
+          - tag: LVA  # C-terminal degradation tag
+    - spacer: 30
+    - cistron:
+        label: enzyme_t2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Enzyme_T2
+              source: uniprot
+          - tag: LVA
+    - spacer: 30
+    - cistron:
+        label: enzyme_t3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Enzyme_T3
+              source: uniprot
+          - tag: LVA
+    - spacer: 30
+    - cistron:
+        label: enzyme_t4
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Enzyme_T4
+              source: uniprot
+          - tag: LVA
+    - spacer: 30
+    - cistron:
+        label: enzyme_t5
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Enzyme_T5
+              source: uniprot
+          - tag: LVA
+    - terminator: rrnB_T1

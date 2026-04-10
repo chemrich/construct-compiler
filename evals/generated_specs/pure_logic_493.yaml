@@ -1,0 +1,27 @@
+construct:
+  name: mammalian_time_delay_switch
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: activator_stage_1
+        expression: medium
+        gene:
+          id: rtTA3
+          source: uniprot
+    - terminator: BBa_B0015
+    - spacer: 60
+    - promoter: TRE3G  # Inducible promoter activated by rtTA3; the accumulation of rtTA3 provides the 8-12h transcriptional delay logic
+    - cistron:
+        label: therapeutic_factor
+        expression: high
+        chain:
+          - tag: IgK_leader  # Secretion signal for mammalian export
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01127
+              source: uniprot
+    - terminator: BBa_B0015

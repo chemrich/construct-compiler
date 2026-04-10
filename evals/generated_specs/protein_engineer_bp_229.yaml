@@ -1,0 +1,18 @@
+construct:
+  name: "cutinase_secretion_optimization"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110  # Standard Bacillus plasmid origin
+  cassette:
+    - promoter: P43
+    - cistron:
+        label: cutinase_secretion
+        expression: high
+        chain:
+          - tag: WapA  # Bacillus subtilis secretion signal
+          - gene:
+              id: P0C0L0
+              source: uniprot
+          - tag: Myc
+    - terminator: BBa_B0015  # Structured stem-loop terminator (double terminator)

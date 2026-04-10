@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_secretion_system_optimized"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: secreted_poi
+        expression: high
+        chain:
+          - gene:
+              id: P01834  # Ig kappa chain V-III region signal peptide
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: short_GS
+          - tag: Twin-Strep
+    - terminator: bGH_pA # Standard mammalian polyadenylation signal for mRNA stability and termination

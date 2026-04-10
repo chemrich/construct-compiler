@@ -1,0 +1,45 @@
+construct:
+  name: "anaerobic_nif_operon_ecoli"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: Pfnr  # Oxygen-sensitive promoter regulated by FNR for anaerobic expression
+    - cistron:
+        label: nifH
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P05342
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nifD
+        fused: false
+        gene:
+          id: P07328
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nifK
+        fused: false
+        gene:
+          id: P07329
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nifB
+        fused: false
+        gene:
+          id: P09823
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nifV
+        fused: false
+        gene:
+          id: P09117
+          source: uniprot
+    - terminator: rrnB_T1

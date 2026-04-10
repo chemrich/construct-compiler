@@ -1,0 +1,39 @@
+construct:
+  name: "yeast_non_homologous_alpha_heterodimer"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: alpha_dim1
+        expression: high
+        chain:
+          - gene:
+              id: alpha_subunit_gene
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01100 # human c-Fos dimerization domain
+              source: uniprot
+    - terminator: ADH1_term
+    - spacer: 50 # Inter-cassette spacer to prevent transcriptional interference
+    - promoter: TEF1
+    - cistron:
+        label: alpha_dim2
+        expression: high
+        chain:
+          - gene:
+              id: alpha_subunit_gene
+              source: uniprot # Note: User requested non-homologous DNA; compiler should apply alternative codon optimization for this second copy.
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: P05412 # human c-Jun dimerization domain (non-homologous to Fos)
+              source: uniprot
+    - terminator: CYC1_term

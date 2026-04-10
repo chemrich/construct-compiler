@@ -1,0 +1,44 @@
+construct:
+  name: "repressilator_oscillator_circuit"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: SC101
+    source: addgene
+  cassette:
+    - promoter: pLac
+    - cistron:
+        label: tetR_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 40
+    - promoter: pTet
+    - cistron:
+        label: cI_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P03034
+          source: uniprot
+    - spacer: 40
+    - promoter: pL_lambda
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P00939
+          source: uniprot
+    - spacer: 40
+    - promoter: pL_lambda
+    - cistron:
+        label: oscillator_output
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

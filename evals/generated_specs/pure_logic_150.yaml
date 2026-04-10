@@ -1,0 +1,30 @@
+construct:
+  name: "genetic_toggle_latch_memory"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: lacUV5  # Repressed by LacI; relief by IPTG acts as 'SET'
+    - cistron:
+        label: tet_repressor
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: latch_output
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015
+    - promoter: P_tet  # Repressed by TetR; relief by aTc acts as 'RESET'
+    - cistron:
+        label: lac_repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1

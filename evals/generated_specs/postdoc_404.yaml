@@ -1,0 +1,18 @@
+construct:
+  name: "oncogene_MYC_expression_yeast"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: yeast_shuttle
+  cassette:
+    - promoter: TEF1  # CMV is a mammalian promoter and will not function in yeast; substituted with the strong constitutive yeast promoter TEF1.
+    - cistron:
+        label: oncogene
+        expression: high
+        chain:
+          - gene:
+              id: P01106
+              source: uniprot
+          - tag: HA
+    - terminator: CYC1_term

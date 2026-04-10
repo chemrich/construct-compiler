@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_egf_oscillator"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: "growth_factor_payload"
+        expression: high
+        chain:
+          - tag: "IgK_leader" # Secretion signal for mammalian export
+          - gene:
+              id: "P01133" # Human Epidermal Growth Factor (EGF)
+              source: uniprot
+    - spacer: 30 # Space for IRES-mediated translation initiation
+    - cistron:
+        label: "oscillator_driver"
+        expression: medium
+        fused: false # Independent translation via internal ribosome entry
+        gene:
+          id: "Q14469" # Human HES1 (canonical mammalian oscillatory protein)
+          source: uniprot
+    - terminator: BGH_polyA

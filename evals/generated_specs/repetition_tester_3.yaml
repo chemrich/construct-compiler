@@ -1,0 +1,30 @@
+construct:
+  name: "GeneY_yeast_expression_with_scrambled_marker"
+  host: yeast
+
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter in S. cerevisiae
+
+    - cistron:
+        label: target_gene
+        expression: high
+        gene:
+          id: GeneY
+          source: uniprot
+
+    - spacer: 40
+
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false  # Independently translated to act as a selection marker
+        gene:
+          id: URA3  # Codon-scrambled during synthesis to minimize recombination with genome
+          source: uniprot
+
+    - terminator: SYNTHETIC_TERM_1  # A unique synthetic terminator designed to avoid homology with common yeast genomic sequences

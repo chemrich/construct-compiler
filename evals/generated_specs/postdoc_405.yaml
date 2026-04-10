@@ -1,0 +1,17 @@
+construct:
+  name: "periplasmic_lys_tagged_antibody"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: antibody_fragment
+        expression: high
+        chain:
+          - tag: PelB  # Substituted mammalian signal peptide with PelB for E. coli periplasmic secretion as mammalian signals are generally non-functional in prokaryotes
+          - tag: 6xLys
+          - gene:
+              id: scFv
+              source: uniprot
+    - terminator: T7term

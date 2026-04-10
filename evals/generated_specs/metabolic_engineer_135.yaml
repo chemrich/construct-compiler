@@ -1,0 +1,31 @@
+construct:
+  name: "HEK293_four_enzyme_2A_construct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: multi_enzyme_polyprotein
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: HEK1
+              source: uniprot
+          - cleavage_site: P2A
+          - gene:
+              id: HEK2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: HEK3
+              source: uniprot
+          - tag: FLAG
+          - cleavage_site: T2A
+          - gene:
+              id: HEK4
+              source: uniprot
+    - terminator: bGH_pA

@@ -1,0 +1,17 @@
+construct:
+  name: "dual_nls_nuclear_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: nuclear_fusion_protein
+        expression: high
+        chain:
+          - tag: NLS
+          - tag: NLS # DNA sequences are codon-diversified to ensure they are entirely distinct and prevent recombination
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_pA

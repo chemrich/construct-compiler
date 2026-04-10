@@ -1,0 +1,27 @@
+construct:
+  name: "bacillus_target_secretion_coexpression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pveg
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: AmyE
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: chaperone
+        expression: medium
+        fused: false
+        gene:
+          id: PrsA
+          source: uniprot
+    - terminator: rrnB_T1

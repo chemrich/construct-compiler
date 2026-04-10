@@ -1,0 +1,48 @@
+construct:
+  name: "spatial_scaffold_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: cistron_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ScaffoldE1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ScaffoldE2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: cistron_2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ScaffoldE3
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 5
+          - gene:
+              id: ScaffoldE4
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: cistron_3
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ScaffoldE5
+              source: uniprot
+    - terminator: rrnB_T1

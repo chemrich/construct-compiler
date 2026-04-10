@@ -1,0 +1,44 @@
+construct:
+  name: "bistable_toggle_switch"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pSC101
+    source: addgene
+
+  cassette:
+    - promoter: Ptet  # Repressed by TetR; activated by 'Set' pulse (aTc)
+    - cistron:
+        label: state_1_repressor
+        expression: medium
+        gene:
+          id: P03023  # LacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: state_1_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5  # Repressed by LacI; activated by 'Reset' pulse (IPTG)
+    - cistron:
+        label: state_2_repressor
+        expression: medium
+        gene:
+          id: P04483  # TetR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: state_2_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: BBa_B0015

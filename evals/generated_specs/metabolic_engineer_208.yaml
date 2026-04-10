@@ -1,0 +1,45 @@
+construct:
+  name: "yeast_metabolon_fusion_metA_E"
+  host: yeast
+
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter
+
+    - cistron:
+        label: metabolon
+        expression: high
+        chain:
+          - gene:
+              id: MetA
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: MetB
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: MetC
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: MetD
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: MetE
+              source: uniprot
+
+    - terminator: CYC1_term

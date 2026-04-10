@@ -1,0 +1,17 @@
+construct:
+  name: "human_membrane_protein_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        # Note: Construct will be codon-optimized for the E. coli host rather than human expression to ensure functional translation and maximize yields in a bacterial system.
+        chain:
+          - gene:
+              id: P11166
+              source: uniprot
+          - tag: FLAG
+    - terminator: T7term

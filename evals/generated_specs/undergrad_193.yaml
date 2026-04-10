@@ -1,0 +1,24 @@
+construct:
+  name: tet_tunable_proteiny_expression
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Constitutive promoter to drive the TetR repressor
+    - cistron:
+        label: tet_repressor
+        expression: medium
+        gene:
+          id: TetR
+          source: uniprot
+    - spacer: 50
+    - promoter: Ptet    # Tet-inducible promoter (tunable via aTc/Tetracycline)
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: ProteinY
+          source: uniprot
+    - terminator: rrnB_T1

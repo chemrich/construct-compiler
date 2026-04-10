@@ -1,0 +1,30 @@
+construct:
+  name: "sequential_logic_secretion_antibody"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    # Input A Cassette: Expresses Cre recombinase to enable the logic gate
+    - promoter: CMV
+    - cistron:
+        label: logic_gate_recombinase
+        expression: medium
+        gene:
+          id: P06023
+          source: uniprot
+    - terminator: BBa_B0015
+    # Input B Cassette: Expresses the therapeutic antibody fragment
+    # In a physical implementation, this promoter is separated from the gene by a floxed-STOP cassette
+    # that is removed only after Input A (Cre) is active.
+    - promoter: EF1_alpha
+    - cistron:
+        label: therapeutic_antibody_fragment
+        expression: high
+        fused: false
+        chain:
+          - tag: Igk_leader  # Secretion signal for HEK293 host
+          - gene:
+              id: P0DOX5
+              source: uniprot
+          - tag: 6xHis
+    - terminator: BBa_B0015  # Using standard terminator as SV40/bGH is not in specified list

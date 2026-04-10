@@ -1,0 +1,18 @@
+construct:
+  name: "mammalian_secreted_ligand_construct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: secreted_ligand
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: ligand
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: FLAG
+    - terminator: bGH_pA

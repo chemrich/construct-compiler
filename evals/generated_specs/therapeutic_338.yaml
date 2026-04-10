@@ -1,0 +1,17 @@
+construct:
+  name: "commensal_amp_secretion"
+  host: e_coli # Lactobacillus not in schema; defaulting to e_coli as bacterial proxy for gut commensal.
+  backbone:
+    resistance: kanamycin
+    ori: p15A # Selected for stability during colonization
+  cassette:
+    - promoter: J23100 # High-strength constitutive promoter for continuous AMP production
+    - cistron:
+        label: antimicrobial_peptide
+        expression: high
+        chain:
+          - tag: PelB # N-terminal secretion signal for extracellular export
+          - gene:
+              id: P35520 # Human Cathelicidin (LL-37) antimicrobial peptide
+              source: uniprot
+    - terminator: rrnB_T1

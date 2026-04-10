@@ -1,0 +1,20 @@
+construct:
+  name: "scfv_pichia_aox1_secretion_construct"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: scfv_target
+        expression: high
+        chain:
+          - tag: synthetic_secretion_signal
+          - cleavage_site: Kex2
+          - gene:
+              id: scFv
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1_TT

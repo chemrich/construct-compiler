@@ -1,0 +1,30 @@
+construct:
+  name: "pichia_heterodimer_secretion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: subunit_a
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: 6xHis
+          - gene:
+              id: subunit_A
+              source: uniprot
+    - terminator: AOX1_TT
+    - promoter: AOX1
+    - cistron:
+        label: subunit_b
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: Strep-II
+          - gene:
+              id: subunit_B
+              source: uniprot
+    - terminator: AOX1_TT

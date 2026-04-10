@@ -1,0 +1,33 @@
+construct:
+  name: "genetic_and_gate_hrpRS_system"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac # Input signal A (IPTG)
+    - cistron:
+        label: input_activator_hrpR
+        expression: medium
+        gene:
+          id: Q4L2G0
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: araBAD # Input signal B (L-Arabinose)
+    - cistron:
+        label: input_activator_hrpS
+        expression: medium
+        gene:
+          id: Q4L2G1
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: J23100 # Substitution for pHrpL promoter, which is activated only when HrpR and HrpS are both present
+    - cistron:
+        label: output_protein_oz
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

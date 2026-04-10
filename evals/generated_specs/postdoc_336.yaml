@@ -1,0 +1,27 @@
+construct:
+  name: "Myc_Alpha_IRES_Beta_HA_HeLa"
+  host: HeLa
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_alpha
+        expression: high
+        chain:
+          - tag: Myc
+          - gene:
+              id: Protein_Alpha
+              source: uniprot
+    - spacer: 580  # IRES sequence (EMCV) for polycistronic expression in mammalian cells
+    - cistron:
+        label: protein_beta
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Protein_Beta
+              source: uniprot
+          - tag: HA
+    - terminator: BGH_pA

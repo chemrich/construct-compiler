@@ -1,0 +1,22 @@
+construct:
+  name: "peptide_stability_ssrA_test"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: degradation_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01275
+              source: uniprot
+          - linker:
+              type: short_GS
+          - tag: SsrA  # Standard E. coli C-terminal degradation tag (AANDENYALAA)
+    - terminator: T7term

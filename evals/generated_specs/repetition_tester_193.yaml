@@ -1,0 +1,29 @@
+construct:
+  name: "yeast_multitag_recombination_resistant"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: divergent_triple_tag
+        expression: high
+        chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Myc
+          - linker:
+              type: short_GS
+              repeats: 3
+          - tag: HA
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: CYC1

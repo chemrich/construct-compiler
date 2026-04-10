@@ -1,0 +1,19 @@
+construct:
+  name: "TAT_p53_Intracellular_Delivery"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: "therapeutic_fusion"
+        expression: high
+        chain:
+          - gene:
+              id: TAT
+              source: uniprot
+          - cleavage_site: Furin  # Endogenous mammalian protease site for post-translational processing
+          - gene:
+              id: P04637 # p53 tumor suppressor protein
+              source: uniprot
+    - terminator: bGH_PA

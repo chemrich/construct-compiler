@@ -1,0 +1,24 @@
+construct:
+  name: "yeast_p2a_strep_coexpression"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: p2a_polycistronic_fusion
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: YeastProtein1
+              source: uniprot
+          - linker:
+              type: P2A
+              repeats: 1
+          - gene:
+              id: YeastProtein2
+              source: uniprot
+    - terminator: CYC1

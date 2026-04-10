@@ -1,0 +1,26 @@
+construct:
+  name: "dual_his_tagged_protein_inducible_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_alpha
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinAlpha
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_beta
+        expression: high
+        fused: false
+        chain:
+          - tag: 10xHis
+          - gene:
+              id: ProteinBeta
+              source: uniprot
+    - terminator: T7term

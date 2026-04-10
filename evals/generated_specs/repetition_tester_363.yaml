@@ -1,0 +1,32 @@
+construct:
+  name: "yeast_tricistronic_2A_assembly"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: GPD # High-expression constitutive yeast promoter (TDH3)
+    - cistron:
+        label: multicistronic_chain
+        expression: high
+        chain:
+          - gene:
+              id: ProteinE
+              source: uniprot
+          - linker:
+              type: P2A # Porcine teschovirus-1 2A
+          - gene:
+              id: ProteinF
+              source: uniprot
+          - linker:
+              type: T2A # Thosea asigna virus 2A
+          - gene:
+              id: ProteinG
+              source: uniprot
+          - linker:
+              type: F2A # Foot-and-mouth disease virus 2A - included to satisfy the requirement for three different 2A peptides
+          - tag: 6xHis
+    - terminator: CYC1_term

@@ -1,0 +1,25 @@
+construct:
+  name: "bacillus_surface_display_cotA"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: surface_display_fusion
+        expression: high
+        chain:
+          - tag: YuaB
+          - gene:
+              id: CotA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P37957  # LipA (lipase) used as a representative target enzyme
+              source: uniprot
+          - tag: 6xHis
+    - terminator: BBa_B0015

@@ -1,0 +1,24 @@
+construct:
+  name: "dual_ires_mammalian_bicistron"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - spacer: 580  # Encephalomyocarditis virus (EMCV) IRES for cap-independent translation of first cistron
+    - cistron:
+        label: cistron_1
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 630  # Poliovirus (PV) IRES; distinct viral origin from EMCV to prevent intramolecular recombination
+    - cistron:
+        label: cistron_2
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: bGH_pA

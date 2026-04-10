@@ -1,0 +1,26 @@
+construct:
+  name: "dual_reporter_mammalian_nuclear_cyto"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: nuclear_gfp
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bgh_pa
+    - promoter: EF1_alpha
+    - cistron:
+        label: cytoplasmic_mcherry
+        expression: high
+        chain:
+          - tag: NES
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: sv40_pa

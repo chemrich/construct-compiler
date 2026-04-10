@@ -1,0 +1,23 @@
+construct:
+  name: "Mammalian_Hysteretic_Comparator_hGH"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G # rtTA-dependent promoter; positive feedback with rtTA3 creates hysteretic switching (Schmitt trigger logic)
+    - cistron:
+        label: feedback_activator
+        expression: medium
+        gene:
+          id: rtTA3
+    - spacer: 40
+    - cistron:
+        label: therapeutic_output
+        expression: high
+        fused: false # Independent translation via IRES/2A (simulated by spacer)
+        chain:
+          - tag: IgK_leader # Secretion signal for HEK293 export
+          - gene:
+              id: P01241 # Human Growth Hormone (hGH)
+              source: uniprot
+    - terminator: bGH_PA

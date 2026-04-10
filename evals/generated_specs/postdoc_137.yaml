@@ -1,0 +1,17 @@
+construct:
+  name: "protease_cleavage_reporter"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: cleavage_substrate
+        expression: high
+        chain:
+          - solubility_tag: MBP # ProteinX placeholder for solubility and detectable mass shift
+          - cleavage_site: TEV
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: T7term

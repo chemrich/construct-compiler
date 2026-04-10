@@ -1,0 +1,33 @@
+construct:
+  name: "subunit_a_b_mammalian_coexpression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: subunit_a
+        expression: high
+        chain:
+          - gene:
+              id: SUBUNIT_A
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: FLAG
+    - spacer: 50
+    - promoter: CMV
+    - cistron:
+        label: subunit_b
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: SUBUNIT_B
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: HA
+    - terminator: bGH_polyA

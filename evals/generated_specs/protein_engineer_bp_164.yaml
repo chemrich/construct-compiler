@@ -1,0 +1,35 @@
+construct:
+  name: "bacillus_metabolic_operon"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pxyl
+    - cistron:
+        label: enzyme_1
+        expression: medium
+        fused: false
+        gene:
+          id: aroG
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: medium
+        fused: false
+        gene:
+          id: aroF
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_3
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: aroH
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

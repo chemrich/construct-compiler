@@ -1,0 +1,30 @@
+construct:
+  name: "pichia_pastoris_co_secretion_system"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: PAOX1
+    - cistron:
+        label: enzyme_cistron
+        expression: high
+        chain:
+          - secretion_signal: alpha_factor
+          - gene:
+              id: enzyme
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1_term
+    - promoter: PGAP
+    - cistron:
+        label: chaperone_cistron
+        expression: medium
+        chain:
+          - secretion_signal: alpha_factor
+          - gene:
+              id: chaperone
+              source: uniprot
+          - tag: FLAG
+    - terminator: CYC1_term

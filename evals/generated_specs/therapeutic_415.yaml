@@ -1,0 +1,23 @@
+construct:
+  name: "mammalian_therapeutic_hsa_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: FLAG
+          - tag: IgK_leader
+          - gene:
+              id: P02768
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: bgh_polyA

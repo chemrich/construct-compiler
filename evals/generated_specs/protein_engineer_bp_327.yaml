@@ -1,0 +1,21 @@
+construct:
+  name: "bacillus_spore_display_vaccine"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110  # Standard replication origin for Bacillus subtilis vectors
+    source: addgene
+  cassette:
+    - promoter: PcotA  # Sporulation-specific promoter for CotA-mediated spore coat assembly
+    - cistron:
+        label: vaccine_display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CotA
+              source: uniprot
+          - gene:
+              id: viral_antigen
+              source: uniprot
+          - tag: 6xHis  # C-terminal tag for surface display verification
+    - terminator: rrnB_T1

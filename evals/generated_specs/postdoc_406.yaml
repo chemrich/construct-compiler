@@ -1,0 +1,17 @@
+construct:
+  name: "high_level_constitutive_peptide_library"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100  # Using strong constitutive promoter J23100 to eliminate induction steps as requested.
+    - cistron:
+        label: target_peptide
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: peptide_library
+              source: uniprot
+    - terminator: rrnB_T1

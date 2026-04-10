@@ -1,0 +1,17 @@
+construct:
+  name: "synthetic_divergent_recombination_resistant_construct"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100  # Strong constitutive promoter for E. coli
+    - cistron:
+        label: divergent_target
+        expression: high
+        # Note: The following gene should be codon-optimized for maximal divergence from native host sequences to prevent recombination
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1  # Robust terminator to ensure efficient transcriptional termination

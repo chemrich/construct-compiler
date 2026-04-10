@@ -1,0 +1,19 @@
+construct:
+  name: "tightly_regulated_toxic_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Selected for its tight regulation and catabolite repression to minimize basal expression of toxic genes
+    - cistron:
+        label: toxic_goi
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P0A8F4
+              source: uniprot
+    - terminator: rrnB_T1

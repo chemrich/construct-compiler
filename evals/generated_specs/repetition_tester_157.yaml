@@ -1,0 +1,22 @@
+construct:
+  name: "dual_locus_diverse_sgRNA_HEK293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: U6
+    - cistron:
+        label: locus1_sgRNA
+        expression: high
+        gene:
+          id: sgRNA_Locus1_Scaffold_V1
+    - terminator: BBa_B0015
+    - spacer: 50
+    - promoter: H1 # H1 used instead of a second U6 to provide promoter diversity and avoid repetitive sequences
+    - cistron:
+        label: locus2_sgRNA
+        expression: high
+        fused: false
+        gene:
+          id: sgRNA_Locus2_Scaffold_V2 # Sequence-diverse scaffold variant to prevent DNA recombination
+    - terminator: BBa_B0015

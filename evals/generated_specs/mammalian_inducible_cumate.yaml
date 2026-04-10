@@ -1,32 +1,26 @@
-```yaml
 construct:
-  name: cumate_inducible_mammalian_expression
+  name: "mammalian_cumate_inducible_system"
   host: HEK293
-
   backbone:
-    catalog_vector: "pTwist CMV"
-
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: CMV_CuO  # CMV promoter with cumate operator sequences
-      
+    - promoter: EF1_alpha
     - cistron:
-        label: target_protein
+        label: cymR_repressor
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: P54981
+              source: uniprot
+    - terminator: SV40_polyA
+    - promoter: CMV  # Modified with CuO operator sites for cumate-inducible control
+    - cistron:
+        label: reporter
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-
-    - terminator: SV40_polyA
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: BGH_polyA

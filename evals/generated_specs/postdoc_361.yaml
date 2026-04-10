@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_mammalian_like_glycoprotein_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: GPD # High-strength constitutive yeast promoter
+    - cistron:
+        label: glycoprotein_target
+        expression: high
+        chain:
+          - gene:
+              id: P01588 # Human Erythropoietin (EPO), a protein requiring specific N-linked glycosylation
+              source: uniprot
+    - terminator: CYC1 # Standard yeast terminator for transcription cessation; note: mammalian-like glycosylation patterns in S. cerevisiae typically require the use of glyco-engineered strains (e.g., GlycoSwitch) as wild-type yeast perform hypermannosylation.

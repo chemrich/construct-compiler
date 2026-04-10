@@ -1,0 +1,17 @@
+construct:
+  name: "precursor_protein_cterm_processing"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: precursor_target
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - terminator: T7term

@@ -1,0 +1,19 @@
+construct:
+  name: yeast_secreted_capsid_fragment_x
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Strong constitutive promoter for yeast
+    - cistron:
+        label: capsid_target
+        expression: high
+        chain:
+          - tag: alpha_factor  # Yeast alpha-mating factor secretion signal
+          - tag: 6xHis
+          - gene:
+              id: CapsidFragmentX
+              source: uniprot
+    - terminator: CYC1  # Standard yeast transcription terminator

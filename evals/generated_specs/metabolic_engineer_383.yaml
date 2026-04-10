@@ -1,0 +1,51 @@
+construct:
+  name: "pks_operon_solubility_enhanced"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: pks_mod1
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: PKS_Mod1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pks_mod2
+        expression: high
+        fused: false
+        gene:
+          id: PKS_Mod2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pks_mod3
+        expression: high
+        fused: false
+        gene:
+          id: PKS_Mod3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pks_mod4
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PKS_Mod4
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1

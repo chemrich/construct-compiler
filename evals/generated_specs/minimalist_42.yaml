@@ -1,0 +1,24 @@
+construct:
+  name: yeast_compact_coexpression
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: ADH1  # Standard constitutive yeast promoter
+    - cistron:
+        label: protein_A
+        expression: medium
+        gene:
+          id: P00533  # Representative UniProt ID for Protein A (EGFR)
+          source: uniprot
+    - spacer: 30  # Minimum spacer for polycistronic mRNA; yeast may require a 2A peptide or IRES for translation of the second cistron
+    - cistron:
+        label: protein_B
+        expression: medium
+        fused: false
+        gene:
+          id: P04406  # Representative UniProt ID for Protein B (GAPDH)
+          source: uniprot
+    - terminator: CYC1  # Standard yeast terminator

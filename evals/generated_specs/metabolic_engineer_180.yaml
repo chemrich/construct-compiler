@@ -1,0 +1,48 @@
+construct:
+  name: "terpene_synthesis_operon"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: gpps
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GPPS
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: fpps
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FDPS
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: sqs
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FDFT1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: sqe
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: SQLE
+              source: uniprot
+    - terminator: rrnB_T1

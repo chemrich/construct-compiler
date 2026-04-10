@@ -1,0 +1,28 @@
+construct:
+  name: "yeast_ecoli_shuttle_protein_z"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: ColE1 # 2-micron origin for yeast and ColE1 for E. coli propagation
+    source: custom
+
+  cassette:
+    - promoter: TEF2 # Constitutive yeast promoter
+
+    - cistron:
+        label: target
+        expression: medium
+        gene:
+          id: Protein_Z
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: yeast_selection
+        fused: false # Independent translation for URA3 marker
+        gene:
+          id: URA3
+          source: uniprot
+
+    - terminator: CYC1 # Standard yeast terminator

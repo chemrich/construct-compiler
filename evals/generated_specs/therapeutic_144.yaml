@@ -1,0 +1,28 @@
+construct:
+  name: clinical_therapeutic_secreted_dimer
+  host: HEK293
+  backbone:
+    resistance: none # Required for human clinical use to avoid antibiotic resistance markers
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human-derived promoter used to avoid viral sequences like CMV
+    - cistron:
+        label: alpha_subunit
+        expression: high
+        chain:
+          - tag: IgK_leader # Human-compatible signal peptide for secretion
+          - gene:
+              id: therapeutic_subunit_alpha
+              source: uniprot
+    - spacer: 50
+    - cistron:
+        label: beta_subunit
+        expression: high
+        fused: false # Ensures independent translation of the second subunit
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: therapeutic_subunit_beta
+              source: uniprot
+    - terminator: hGH_pA # Human growth hormone polyadenylation signal; non-viral human-compatible terminator

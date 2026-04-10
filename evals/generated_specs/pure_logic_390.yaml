@@ -1,0 +1,40 @@
+construct:
+  name: "logic_4to2_encoder"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: bit0_signal1
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: araBAD
+    - cistron:
+        label: bit1_signal2
+        expression: medium
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: T7term
+    - promoter: T7
+    - cistron:
+        label: bit0_signal3
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: bit1_signal3
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: BBa_B0015

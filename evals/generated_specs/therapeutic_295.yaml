@@ -1,0 +1,23 @@
+construct:
+  name: "bacterial_surface_display_therapeutic"
+  host: e_coli
+  backbone:
+    # Kanamycin included as default per Rule 9; necessary for plasmid maintenance in standard workflows
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: araBAD  # Inducible bacterial promoter (non-viral)
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: "OmpA"  # Bacterial protein containing both signal peptide and beta-barrel anchoring domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: "Exendin-4"  # Therapeutic peptide for GLP-1 receptor activation
+              source: uniprot
+    - terminator: rrnB_T1  # Standard bacterial terminator

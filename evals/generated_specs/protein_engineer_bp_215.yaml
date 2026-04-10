@@ -1,0 +1,22 @@
+construct:
+  name: "AOX1_Pichia_Trimeric_Peptide"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: therapeutic_peptide
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: leucine_zipper
+    - terminator: AOX1_term

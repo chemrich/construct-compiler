@@ -1,0 +1,47 @@
+construct:
+  name: "mammalian_2to4_decoder"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: "p_NOR_AB" # Logical gate: Active when Input A=0 and Input B=0
+    - cistron:
+        label: "Output_00"
+        expression: medium
+        gene:
+          id: "mTagBFP2"
+          source: fpbase
+    - terminator: "SV40_polyA"
+
+    - spacer: 50
+
+    - promoter: "p_B_NOT_A" # Logical gate: Active when Input A=0 and Input B=1
+    - cistron:
+        label: "Output_01"
+        expression: medium
+        gene:
+          id: "mEGFP"
+          source: fpbase
+    - terminator: "hGH_polyA"
+
+    - spacer: 50
+
+    - promoter: "p_A_NOT_B" # Logical gate: Active when Input A=1 and Input B=0
+    - cistron:
+        label: "Output_10"
+        expression: medium
+        gene:
+          id: "mScarlet"
+          source: fpbase
+    - terminator: "BGH_polyA"
+
+    - spacer: 50
+
+    - promoter: "p_AND_AB" # Logical gate: Active when Input A=1 and Input B=1
+    - cistron:
+        label: "Output_11"
+        expression: medium
+        gene:
+          id: "mNeonGreen"
+          source: fpbase
+    - terminator: "rbGlo_polyA"

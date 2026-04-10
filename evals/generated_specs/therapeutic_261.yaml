@@ -1,0 +1,18 @@
+construct:
+  name: "scFv_CHO_secretion_EF1a"
+  host: CHO
+  backbone:
+    resistance: kanamycin # Kanamycin included for bacterial propagation; non-antibiotic selection (e.g., GS/DHFR) is typically used for CHO.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Strong constitutive mammalian promoter (non-viral).
+    - cistron:
+        label: therapeutic_scFv
+        expression: high
+        chain:
+          - tag: IgK_leader # N-terminal mammalian secretion signal.
+          - gene:
+              id: scFv_therapeutic
+              source: uniprot
+    - terminator: bGH_pA # Strong mammalian polyadenylation signal.

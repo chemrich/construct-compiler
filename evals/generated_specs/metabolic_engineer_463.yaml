@@ -1,0 +1,40 @@
+construct:
+  name: "E_coli_B_subtilis_shuttle_E1_E2_E3_E4"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100 # Strong constitutive promoter often used for broad-host-range expression
+    - cistron:
+        label: E1_E2_fusion
+        expression: high
+        chain:
+          - gene:
+              id: E1
+              source: uniprot
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: E2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E3_cistron
+        expression: medium
+        fused: false # Ensures independent translation with its own RBS
+        gene:
+          id: E3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E4_cistron
+        expression: medium
+        fused: false
+        gene:
+          id: E4
+          source: uniprot
+    - terminator: rrnB_T1

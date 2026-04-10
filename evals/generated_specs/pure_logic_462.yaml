@@ -1,0 +1,39 @@
+construct:
+  name: yeast_bistable_toggle_latch
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: J23100  # Synthetic promoter repressed by LacI (State B repressor)
+    - cistron:
+        label: state_A_unit
+        expression: high
+        chain:
+          - gene:
+              id: TetR
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BBa_B0015
+    - spacer: 50
+    - promoter: J23106  # Synthetic promoter repressed by TetR (State A repressor)
+    - cistron:
+        label: state_B_unit
+        expression: high
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015

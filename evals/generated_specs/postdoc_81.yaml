@@ -1,0 +1,19 @@
+construct:
+  name: "Fab_Z_secretion_yeast"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GPD # Strong constitutive yeast promoter
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: alpha_factor # Substituted mammalian signal peptide with yeast alpha-factor for reliable secretion per instruction 18
+          - gene:
+              id: Fab-Z
+              source: uniprot
+          - tag: c-Myc
+    - terminator: ADH1

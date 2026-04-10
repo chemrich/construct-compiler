@@ -1,0 +1,24 @@
+construct:
+  name: "positive_feedback_switch_T7"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Signal X trigger (Arabinose)
+    - cistron:
+        label: trigger_unit
+        expression: medium
+        gene:
+          id: P00573
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: T7      # Product U (T7 Polymerase) auto-activator
+    - cistron:
+        label: auto_feedback_unit
+        expression: high
+        gene:
+          id: P00573
+          source: uniprot
+    - terminator: T7term

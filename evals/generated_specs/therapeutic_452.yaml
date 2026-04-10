@@ -1,0 +1,18 @@
+construct:
+  name: "nuclear_therapeutic_nonviral_minimal"
+  host: HEK293
+  backbone:
+    resistance: none  # User requested no antibiotic resistance
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral, high-expression human promoter
+    - cistron:
+        label: therapeutic_payload
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P04637  # Human TP53 (Tumor protein p53)
+              source: uniprot
+    - terminator: bGH_pA  # Standard mammalian polyadenylation signal/terminator

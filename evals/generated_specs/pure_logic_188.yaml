@@ -1,0 +1,28 @@
+construct:
+  name: "negative_feedback_stabilized_IL2_production"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lacUV5  # lacUV5 is sensitive to LacI repression, enabling the negative feedback loop
+    - cistron:
+        label: feedback_repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: P60568
+              source: uniprot
+    - terminator: rrnB_T1

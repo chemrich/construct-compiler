@@ -1,0 +1,28 @@
+construct:
+  name: yeast_coexpression_human_A_B
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Using standard yeast constitutive promoter TEF1
+    - cistron:
+        label: Protein_A
+        expression: high
+        chain:
+          - gene:
+              id: Protein_A
+              source: uniprot
+          - tag: HA
+    - spacer: 30  # IRES functional spacer
+    - cistron:
+        label: Protein_B
+        expression: high
+        fused: false  # Indicates independent translation via IRES
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: Protein_B
+              source: uniprot
+    - terminator: BBa_B0015

@@ -1,0 +1,22 @@
+construct:
+  name: "Bacillus_IndustrialEnzyme_Secretion"
+  host: bacillus_subtilis
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: P_grac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: AmyE_signal
+          - gene:
+              id: IndustrialEnzyme
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: 6xHis
+    - terminator: BBa_B0015

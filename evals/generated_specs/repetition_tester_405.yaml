@@ -1,0 +1,23 @@
+construct:
+  name: "Arabidopsis_Enzyme_P_Divergent_Tandem_Fusion"
+  host: Arabidopsis_thaliana # Arabidopsis specified for plant expression
+  backbone:
+    resistance: kanamycin # Standard selection marker for plant transformation (e.g., in pCAMBIA)
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: CaMV35S # Constitutive promoter for high-level expression in dicots
+    - cistron:
+        label: tandem_enzyme_p
+        expression: high
+        chain:
+          - gene:
+              id: Enzyme_P
+              source: uniprot
+          - linker:
+              type: GS_flexible # Unique GS linker used to separate the two domains
+              repeats: 2
+          - gene:
+              id: Enzyme_P # Note: Backend compiler must apply maximal synonymous sequence divergence for this second instance to prevent recombination
+              source: uniprot
+    - terminator: NOS_term # Nopaline synthase terminator for stable expression in plants

@@ -1,0 +1,22 @@
+construct:
+  name: "dual_sgRNA_low_homology_mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: U6
+    - cistron:
+        label: sgRNA_target_1
+        expression: high
+        gene:
+          id: "sgRNA_scaffold_variant_F"
+          # Standard scaffold sequence optimized for stability
+    - spacer: 60  # Sufficient distance to prevent transcriptional interference
+    - promoter: 7SK  # Different Pol III promoter to minimize internal repeats and recombination
+    - cistron:
+        label: sgRNA_target_2
+        expression: high
+        gene:
+          id: "sgRNA_scaffold_variant_E"
+          # Variant E scaffold used to minimize homology with variant F
+    - terminator: poly_T  # Standard Pol III termination signal (6+ Thymidines)

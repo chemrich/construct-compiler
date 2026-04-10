@@ -1,0 +1,25 @@
+construct:
+  name: "bicistronic_chaperonin_coexpression_system"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: chaperonin_groEL
+        expression: high
+        gene:
+          id: P0A6F5
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: target_protein_ifnb1
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01574
+              source: uniprot
+    - terminator: T7term

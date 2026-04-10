@@ -1,0 +1,22 @@
+construct:
+  name: phage_display_gIII_vector
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: gIII_display_fusion
+        expression: medium
+        chain:
+          - tag: PelB
+          - tag: FLAG  # Placeholder for the screening peptide sequence
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P69168
+              source: uniprot
+    - terminator: BBa_B0015

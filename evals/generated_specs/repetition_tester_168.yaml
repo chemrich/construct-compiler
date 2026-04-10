@@ -1,0 +1,48 @@
+construct:
+  name: "protein_scaffold_effector_operon"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac  # Single strong promoter for the operon structure requested
+
+    - cistron:
+        label: scaffold
+        expression: high
+        gene:
+          id: scaffold_protein_3bs
+          source: uniprot
+
+    - spacer: 30  # Spacer for polycistronic translation
+
+    - cistron:
+        label: effector_a
+        expression: high
+        fused: false  # Separate RBS for independent translation
+        gene:
+          id: EffectorA
+          source: uniprot
+
+    - spacer: 35
+
+    - cistron:
+        label: effector_b
+        expression: medium  # Unique expression level to ensure unique RBS selection
+        fused: false
+        gene:
+          id: EffectorB
+          source: uniprot
+
+    - spacer: 40
+
+    - cistron:
+        label: effector_c
+        expression: low
+        fused: false
+        gene:
+          id: EffectorC
+          source: uniprot
+
+    - terminator: T7term  # Efficient terminator for T7 polymerase RNA transcripts

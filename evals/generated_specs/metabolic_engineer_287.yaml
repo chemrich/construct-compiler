@@ -1,0 +1,59 @@
+construct:
+  name: "synechocystis_carbon_fixation_light_inducible"
+  host: algae  # Synechocystis sp. PCC 6803 is a cyanobacterium, 'algae' is the closest host type for photosynthetic systems
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: psbA2  # Light-inducible promoter native to Synechocystis sp. PCC 6803
+    - cistron:
+        label: rubisco_large
+        expression: high
+        fused: false
+        chain:
+          - tag: chloroplast_transit_peptide  # Added per user request despite host being a prokaryote
+          - gene:
+              id: rbcL
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: rubisco_small
+        expression: high
+        fused: false
+        chain:
+          - tag: chloroplast_transit_peptide
+          - gene:
+              id: rbcS
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: prkA
+        expression: medium
+        fused: false
+        chain:
+          - tag: chloroplast_transit_peptide
+          - gene:
+              id: prkA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pgi
+        expression: medium
+        fused: false
+        chain:
+          - tag: chloroplast_transit_peptide
+          - gene:
+              id: pgi
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: fba
+        expression: medium
+        fused: false
+        chain:
+          - tag: chloroplast_transit_peptide
+          - gene:
+              id: fba
+              source: uniprot
+    - terminator: BBa_B0015

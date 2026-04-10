@@ -1,0 +1,16 @@
+construct:
+  name: "yeast_lacz_reporter"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter chosen to drive high expression
+    - cistron:
+        label: reporter
+        expression: high  # High expression setting automatically handles the strong translation initiation (yeast Kozak-like sequence)
+        gene:
+          id: P00722
+          source: uniprot
+    - terminator: CYC1  # Standard yeast terminator

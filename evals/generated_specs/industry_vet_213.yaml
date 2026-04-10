@@ -1,0 +1,17 @@
+construct:
+  name: "antigenic_peptide_expression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_peptide
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01106 # Myc proto-oncogene protein used as a representative antigenic peptide sequence
+              source: uniprot
+    - terminator: T7term

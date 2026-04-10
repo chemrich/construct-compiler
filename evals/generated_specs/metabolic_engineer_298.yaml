@@ -1,0 +1,59 @@
+construct:
+  name: "Bacillus_subtilis_bacteriocin_production_operon"
+  host: b_subtilis
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: custom
+
+  cassette:
+    - promoter: Pspo1_strong  # Strong constitutive promoter from B. subtilis phage SPO1
+
+    - spacer: 45  # RNA leader sequence to enhance mRNA stability and translation initiation
+
+    - cistron:
+        label: bacA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: bacA
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: bacB
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: bacB
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: bacC
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: bacC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: bacD
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: bacD
+              source: uniprot
+
+    - terminator: BBa_B0015

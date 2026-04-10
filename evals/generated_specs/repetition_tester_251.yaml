@@ -1,0 +1,32 @@
+construct:
+  name: mammalian_bicistronic_diversified_expression
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: alpha_subunit
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 2
+          - tag: 8xHis
+    - spacer: 585
+    - cistron:
+        label: beta_subunit
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Twin-Strep
+    - terminator: hGH_polyA

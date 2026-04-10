@@ -1,0 +1,20 @@
+construct:
+  name: "therapeutic_carrier_fusion_stability"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP  # Using MBP as a stable carrier protein for E. coli expression
+          - cleavage_site: TEV
+          - gene:
+              id: GH1
+              source: uniprot
+          - tag: Strep-II
+    - terminator: T7term

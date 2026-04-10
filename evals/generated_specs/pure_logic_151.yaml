@@ -1,0 +1,25 @@
+construct:
+  name: "metabolic_load_balancer_P_Q"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: PgadA  # Senses metabolic stress/acid load from pathway P
+    - cistron:
+        label: resource_repressor
+        expression: high
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 40
+    - promoter: lacUV5  # Regulated by LacI; active only when load from P is low
+    - cistron:
+        label: pathway_Q
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

@@ -1,0 +1,20 @@
+construct:
+  name: "non_viral_purifiable_therapeutic_production"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Substitution: Tool requires antibiotic marker; recommend auxotrophic selection for final implementation to meet 'no antibiotic resistance' requirement.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Substitution: Non-viral promoter used to satisfy 'no viral elements' requirement (T7 is phage-derived).
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: P01241 # Human Growth Hormone (hGH) as a representative therapeutic protein.
+              source: uniprot
+    - terminator: rrnB_T1

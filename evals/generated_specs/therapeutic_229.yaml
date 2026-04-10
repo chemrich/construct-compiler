@@ -1,0 +1,24 @@
+construct:
+  name: "dox_inducible_cytotoxic_therapeutic"
+  host: mammalian
+  backbone:
+    resistance: none # Antibiotic resistance markers excluded for therapeutic safety
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: TRE3G
+    - cistron:
+        label: cytotoxic_effector
+        expression: high
+        gene:
+          id: P00588
+          source: uniprot
+    - terminator: bGH_PA
+    - spacer: 60 # Physical separation to prevent transcriptional interference
+    - promoter: EF1_alpha
+    - cistron:
+        label: tet_on_transactivator
+        expression: medium
+        gene:
+          id: rtTA3
+    - terminator: hGH_PA

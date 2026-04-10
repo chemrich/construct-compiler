@@ -1,0 +1,25 @@
+construct:
+  name: "dual_mRNA_therapy_and_uptake_system"
+  host: in_vitro  # Per Rule 16 for in vitro transcription (IVT) mRNA production
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: T7  # Bacteriophage promoter required for high-yield IVT; no mammalian viral components used
+    - cistron:
+        label: therapeutic_epo
+        expression: high
+        gene:
+          id: P01588
+          source: uniprot
+    - terminator: T7term
+    - spacer: 100
+    - promoter: T7
+    - cistron:
+        label: uptake_enhancer_apoe
+        expression: high
+        gene:
+          id: P02649
+          source: uniprot
+    - terminator: T7term

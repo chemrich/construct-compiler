@@ -1,0 +1,63 @@
+construct:
+  name: "solubility_enhanced_five_enzyme_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: kinase_unit
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: Kinase
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: phosphatase_unit
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: 3C
+          - gene:
+              id: Phosphatase
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: transferase_unit
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: GST
+          - cleavage_site: Thrombin
+          - gene:
+              id: Transferase
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: oxidase_unit
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: Trx
+          - cleavage_site: Enterokinase
+          - gene:
+              id: Oxidase
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: reductase_unit
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: Reductase
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,26 @@
+construct:
+  name: "bacillus_enzyme_chaperone_coexpression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pxyl
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - gene:
+              id: metabolic_enzyme
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: chaperone_system
+        expression: high
+        fused: false
+        gene:
+          id: groS_groL
+          source: uniprot
+    - terminator: BBa_B0015

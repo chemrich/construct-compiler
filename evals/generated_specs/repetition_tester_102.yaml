@@ -1,0 +1,21 @@
+construct:
+  name: "mammalian_goi_luciferase_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Strong viral promoter; tool assumes standard repeat-minimized version
+    - cistron:
+        label: reporter_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P08659
+              source: uniprot
+    - terminator: BGH_pA_SV40_pA  # Tandem non-overlapping polyA signals to prevent read-through

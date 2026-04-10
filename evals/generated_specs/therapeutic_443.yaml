@@ -1,0 +1,23 @@
+construct:
+  name: safe_inducible_reporter_human_fibroblast
+  host: human_fibroblast
+  backbone:
+    resistance: none # ARG-free (e.g., pFAR or ORT) to comply with "No ARGs" clinical safety requirement
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human promoter used to avoid viral CMV sequences
+    - cistron:
+        label: transactivator
+        expression: medium
+        gene:
+          id: rtTA3 # Tet-On 3G transactivator
+    - terminator: hGH_pA # Human Growth Hormone polyA, non-viral
+    - promoter: TRE3G # Inducible Tet-responsive promoter (Tet-On system)
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: hGH_pA # Final human polyA terminator

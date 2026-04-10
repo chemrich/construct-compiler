@@ -1,34 +1,16 @@
-```yaml
 construct:
-  name: "mEGFP_NLS_nuclear_target"
-  host: HEK293
-
+  name: "nls_megfp_mammalian_nuclear"
+  host: mammalian
   backbone:
     catalog_vector: "pTwist CMV"
-
   cassette:
     - promoter: CMV
-
     - cistron:
-        label: mEGFP_NLS
+        label: nls_egfp
         expression: high
         chain:
           - tag: NLS
           - gene:
               id: mEGFP
               source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: SV40_polyA

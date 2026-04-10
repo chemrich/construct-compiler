@@ -1,0 +1,49 @@
+construct:
+  name: "Bacillus_subtilis_secreted_therapeutic_pathway"
+  host: bacillus_subtilis
+  backbone:
+    resistance: chloramphenicol  # Standard for B. subtilis integration vectors
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: PxylA  # Strong xylose-inducible promoter for B. subtilis
+    - cistron:
+        label: enzyme_p1
+        expression: high
+        chain:
+          - tag: AmyE_signal  # N-terminal signal peptide for secretion in B. subtilis
+          - gene:
+              id: P1
+              source: uniprot
+    - spacer: 35  # Optimized intergenic region for efficient translation
+    - cistron:
+        label: enzyme_p2
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE_signal
+          - gene:
+              id: P2
+              source: uniprot
+    - spacer: 35
+    - cistron:
+        label: enzyme_p3
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE_signal
+          - gene:
+              id: P3
+              source: uniprot
+    - spacer: 35
+    - cistron:
+        label: enzyme_p4
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE_signal
+          - gene:
+              id: P4
+              source: uniprot
+          - tag: FLAG  # C-terminal FLAG-tag as requested
+    - terminator: rrnB_T1  # Strong bacterial terminator

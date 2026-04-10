@@ -1,0 +1,21 @@
+construct:
+  name: "SUMO_Enzyme_FLAG_Fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_placeholder
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: FLAG
+    - terminator: T7term

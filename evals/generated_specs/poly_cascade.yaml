@@ -1,44 +1,38 @@
-```yaml
 construct:
-  name: "kinase_cascade"
-  host: e_coli
+  name: kinase_signaling_cascade_expression
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)" # Common E. coli expression vector
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
         label: kinase
         expression: high
         gene:
-          id: kinase_placeholder # Placeholder as no specific gene ID was provided
+          id: P12931
+          source: uniprot
     - spacer: 30
     - cistron:
         label: substrate
         expression: medium
-        fused: false # Independent translation for polycistronic cascade
+        fused: false
         gene:
-          id: substrate_placeholder
+          id: P40763
+          source: uniprot
     - spacer: 30
     - cistron:
         label: adapter
         expression: low
-        fused: false # Independent translation for polycistronic cascade
+        fused: false
         gene:
-          id: adapter_placeholder
+          id: P62993
+          source: uniprot
     - spacer: 30
     - cistron:
         label: reporter
         expression: very_low
-        fused: false # Independent translation for polycistronic cascade
+        fused: false
         gene:
-          id: reporter_placeholder
-    - terminator: rrnB_T1
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-```
+          id: mNeonGreen
+          source: fpbase
+    - terminator: T7term

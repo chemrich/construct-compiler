@@ -1,0 +1,27 @@
+construct:
+  name: "toxin_a_biosensing_and_degradation_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Used as a placeholder for a toxin-inducible sensing promoter
+    - cistron:
+        label: degradase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: DegradaseA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false  # Independently translated reporter
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

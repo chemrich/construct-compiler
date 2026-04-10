@@ -1,0 +1,21 @@
+construct:
+  name: "yeast_two_hybrid_bait_gal4_fusion"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: bait_fusion
+        expression: medium
+        chain:
+          - tag: Gal4_DBD
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: bait_protein
+              source: uniprot
+    - terminator: ADH1

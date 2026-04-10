@@ -1,0 +1,19 @@
+construct:
+  name: "bacillus_scfv_secretion_construct"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pspac
+    - cistron:
+        label: secreted_scfv
+        expression: high
+        chain:
+          - tag: sacB_signal
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: scFv
+    - terminator: BBa_B0015

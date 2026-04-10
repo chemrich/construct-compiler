@@ -1,0 +1,22 @@
+construct:
+  name: "synonymous_enzyme_operon_anti_recombination"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_copy_a
+        expression: high
+        gene:
+          id: P08515
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: enzyme_copy_b
+        expression: high
+        fused: false  # Ensures independent translation from the same transcript
+        gene:
+          id: P08515  # Identical protein ID to copy_a; synonymous DNA recoding requested to prevent recombination
+          source: uniprot
+    - terminator: T7term

@@ -1,0 +1,24 @@
+construct:
+  name: "Lentiviral_Packaging_GagPol_Rev_Diverse"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gag_pol
+        expression: high
+        gene:
+          id: P03367
+          source: uniprot
+    - terminator: BGH_polyA # Substituted for mammalian cell compatibility
+    - spacer: 60
+    - promoter: EF1_alpha # Diverse promoter to minimize recombination risk with CMV
+    - cistron:
+        label: rev
+        expression: medium
+        fused: false
+        gene:
+          id: P04618
+          source: uniprot
+    - terminator: SV40_polyA # Different terminator to ensure genetic stability within packaging system

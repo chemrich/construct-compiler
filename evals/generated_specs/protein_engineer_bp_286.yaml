@@ -1,0 +1,24 @@
+construct:
+  name: "pichia_mab_p2a_expression_construct"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: "mAb_polyprotein"
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: heavy_chain
+              source: uniprot
+          - cleavage_site: P2A
+          - tag: alpha_factor
+          - gene:
+              id: light_chain
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1_term

@@ -1,0 +1,20 @@
+construct:
+  name: "bacillus_extracellular_amylase_production"
+  host: bacillus
+  backbone:
+    resistance: chloramphenicol
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: target_amylase
+        expression: high
+        chain:
+          - tag: AmyE_signal_peptide
+          - cleavage_site: TEV
+          - tag: FLAG
+          - gene:
+              id: P00694
+              source: uniprot
+    - terminator: rrnB_T1

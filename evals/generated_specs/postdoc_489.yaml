@@ -1,0 +1,21 @@
+construct:
+  name: "yeast_mitochondrial_mitoprot_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for yeast expression
+    - cistron:
+        label: mitoprot_targeted
+        expression: high
+        chain:
+          - gene:
+              id: COX4  # N-terminal mitochondrial targeting sequence (MTS) from yeast Cox4p
+              source: uniprot
+          - tag: 6xHis  # His-tag placed after MTS so it is at the N-terminus of the mature protein after import
+          - gene:
+              id: MitoProt
+              source: uniprot
+    - terminator: CYC1  # Standard yeast terminator

@@ -1,0 +1,32 @@
+construct:
+  name: yeast_synthetic_metabolic_operon
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3 # Strong constitutive yeast promoter
+    - cistron:
+        label: EnzA
+        expression: high
+        gene:
+          id: P00330 # Alcohol dehydrogenase 1 (S. cerevisiae)
+          source: uniprot
+    - spacer: 45 # Unique intergenic spacer to prevent homology-directed recombination
+    - cistron:
+        label: EnzB
+        expression: high
+        fused: false # Independent translation initiation; in yeast, this typically implies internal ribosome entry sites or specific 5' UTRs
+        gene:
+          id: P00549 # Phosphoglycerate kinase 1 (S. cerevisiae)
+          source: uniprot
+    - spacer: 72 # Divergent length and sequence for second intergenic region
+    - cistron:
+        label: EnzC
+        expression: high
+        fused: false
+        gene:
+          id: P04046 # Glyceraldehyde-3-phosphate dehydrogenase 3 (S. cerevisiae)
+          source: uniprot
+    - terminator: CYC1 # Standard yeast terminator to stop transcription of the operon mRNA

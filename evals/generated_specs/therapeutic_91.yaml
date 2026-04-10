@@ -1,0 +1,21 @@
+construct:
+  name: "synthetic_scaffold_solubility_overexpression"
+  host: e_coli_bl21_de3
+  backbone:
+    # Antibiotic resistance is required for plasmid selection and maintenance in E. coli; kanamycin is used as the default.
+    # The pBR322 origin is specified to avoid viral-derived replication sequences like the f1 origin common in pET vectors.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: scaffold_target
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: synthetic_scaffold
+          - tag: 6xHis
+    - terminator: T7term

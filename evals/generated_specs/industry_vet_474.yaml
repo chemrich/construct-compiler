@@ -1,0 +1,23 @@
+construct:
+  name: ProteinC_ProteinD_P2A_HEK293
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_polyprotein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinC
+              source: uniprot
+          - linker:
+              type: P2A
+              repeats: 1
+          - tag: Strep-II
+          - gene:
+              id: ProteinD
+              source: uniprot
+    - terminator: bgh_polyA

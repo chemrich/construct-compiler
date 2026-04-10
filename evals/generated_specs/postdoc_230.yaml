@@ -1,0 +1,20 @@
+construct:
+  name: "yeast_crystallography_MBP_3C_His"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # User requested mammalian EF1alpha for yeast host; EF1_alpha (TEF1) is a standard constitutive promoter in yeast.
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: 3C
+          - gene:
+              id: target_protein
+              source: uniprot
+          - tag: 6xHis
+    - terminator: BBa_B0015

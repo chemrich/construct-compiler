@@ -1,0 +1,34 @@
+construct:
+  name: "tunable_threshold_logic_inverter"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: repressor_lacI
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 30
+    - promoter: lacUV5
+    - cistron:
+        label: Mod_X
+        expression: medium
+        fused: false
+        gene:
+          id: P0ACA3
+          source: uniprot
+    - spacer: 30
+    - promoter: tac
+    - cistron:
+        label: inverter_output
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

@@ -1,0 +1,32 @@
+construct:
+  name: "three_stage_cascading_amplifier"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Stage 1: Triggered by Input A (Arabinose)
+    - cistron:
+        label: activator_1
+        expression: low
+        gene:
+          id: P00573 # T7 RNA Polymerase
+          source: uniprot
+    - terminator: rrnB_T1
+
+    - promoter: T7  # Stage 2: Induced by Activator 1 (T7RNAP)
+    - cistron:
+        label: activator_2
+        expression: medium
+        gene:
+          id: P12746 # LuxR activator
+          source: uniprot
+    - terminator: T7term
+
+    - promoter: J23100  # Stage 3: Proxy for activator-responsive promoter
+    - cistron:
+        label: output
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

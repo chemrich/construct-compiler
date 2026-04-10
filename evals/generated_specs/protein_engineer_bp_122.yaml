@@ -1,0 +1,28 @@
+construct:
+  name: pichia_mab_production_gap
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: heavy_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: mAb_heavy_chain
+              source: uniprot
+    - terminator: AOX1_TT
+    - promoter: GAP
+    - cistron:
+        label: light_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: mAb_light_chain
+              source: uniprot
+    - terminator: AOX1_TT  # Using separate cassettes for HC and LC as it is the standard method for balanced mAb expression in Pichia pastoris.

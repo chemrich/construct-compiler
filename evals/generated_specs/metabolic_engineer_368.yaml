@@ -1,0 +1,47 @@
+construct:
+  name: "anaerobic_co2_fixation_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: P_fnrS  # Anaerobic-inducible promoter (FNR-responsive)
+    - cistron:
+        label: rubisco_large
+        expression: high
+        gene:
+          id: rbcL
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: rubisco_small
+        expression: high
+        fused: false
+        gene:
+          id: rbcS
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: phosphoribulokinase
+        expression: high
+        fused: false
+        gene:
+          id: prk
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: carbonic_anhydrase
+        expression: high
+        fused: false
+        gene:
+          id: can
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gapdh
+        expression: high
+        fused: false
+        gene:
+          id: gapA
+          source: uniprot
+    - terminator: rrnB_T1  # Strong Rho-independent terminator effective under anaerobic conditions

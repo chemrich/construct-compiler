@@ -1,0 +1,41 @@
+construct:
+  name: "yeast_two_hybrid_bait_prey_dual_expression"
+  host: yeast
+  backbone:
+    resistance: ampicillin  # Ampicillin for E. coli selection of the shuttle vector
+    ori: pUC                # Bacterial origin for maintenance in E. coli
+    source: addgene
+  cassette:
+    - promoter: ADH1        # Strong constitutive yeast promoter
+    - cistron:
+        label: bait_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P03306    # UniProt ID for Gal4 (DNA Binding Domain residues 1-147)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P00001    # Placeholder UniProt ID for Protein X
+              source: uniprot
+          - tag: 6xHis      # C-terminal verification tag
+    - terminator: CYC1_term # Standard yeast terminator
+
+    - promoter: ADH1
+    - cistron:
+        label: prey_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P03306    # UniProt ID for Gal4 (Activation Domain residues 768-881)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P00002    # Placeholder UniProt ID for Protein Y
+              source: uniprot
+          - tag: 6xHis      # C-terminal verification tag
+    - terminator: CYC1_term

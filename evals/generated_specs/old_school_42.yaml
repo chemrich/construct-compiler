@@ -1,0 +1,25 @@
+construct:
+  name: "mammalian_stable_expression_sv40_neomycin"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: SV40
+    - cistron:
+        label: target_gene
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_polyA
+    - promoter: SV40
+    - cistron:
+        label: neomycin_selection
+        expression: low
+        fused: false
+        gene:
+          id: P00552
+          source: uniprot
+    - terminator: SV40_polyA

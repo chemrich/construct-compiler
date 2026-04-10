@@ -1,0 +1,42 @@
+construct:
+  name: "chemical_and_gate_growth_control"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    # Growth inhibition: Constitutive production of CcdB toxin
+    - promoter: J23106
+    - cistron:
+        label: constitutive_toxin
+        gene:
+          id: P0A707 # CcdB toxin
+          source: uniprot
+    - terminator: BBa_B0015
+    - spacer: 30
+    # Input C1: Arabinose induces expression of T7 RNA Polymerase
+    - promoter: araBAD
+    - cistron:
+        label: t7_polymerase_inducible
+        gene:
+          id: P00552 # T7 RNA polymerase
+          source: uniprot
+    - terminator: BBa_B0015
+    - spacer: 30
+    # AND Gate Logic: T7lac promoter requires both T7 Polymerase (C1) and IPTG (C2)
+    - promoter: T7lac
+    - cistron:
+        label: rescue_and_growth_factor
+        chain:
+          - tag: PelB # Secretion signal peptide for E. coli
+          - gene:
+              id: P0A704 # CcdA antitoxin (Rescues growth from CcdB)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01241 # Somatotropin (Growth-promoting factor GH1)
+              source: uniprot
+    - terminator: T7term # Ends the cassette and ensures proper transcriptional termination

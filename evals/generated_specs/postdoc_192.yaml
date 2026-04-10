@@ -1,0 +1,16 @@
+construct:
+  name: "e_coli_dummy_polyA_control"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: DummyProtein
+    - terminator: SV40_pA # Mammalian polyadenylation signal included after stop codon to monitor transcript processing in E. coli as requested

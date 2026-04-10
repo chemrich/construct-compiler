@@ -1,0 +1,30 @@
+construct:
+  name: "human_enzyme_pdi_coexpression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P00784  # Human Lysozyme (P00784) used as representative human enzyme requiring disulfides
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: folding_helper
+        expression: medium
+        fused: false
+        gene:
+          id: P07237  # Human Protein Disulfide Isomerase (P4HB)
+          source: uniprot
+    - terminator: T7term

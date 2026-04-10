@@ -1,32 +1,17 @@
-```yaml
 construct:
-  name: "laccase_expression_ecoli"
-  host: e_coli_bl21
-
+  name: "laccase_cotA_expression"
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
-
   cassette:
     - promoter: T7lac
-
     - cistron:
         label: laccase
         expression: high
-        gene:
-          id: laccase # Placeholder, user would specify a UniProt ID or source for a specific laccase
-          # source: uniprot # e.g., P27276 for a specific laccase from Trametes versicolor
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P07788
+              source: uniprot
+    - terminator: T7term

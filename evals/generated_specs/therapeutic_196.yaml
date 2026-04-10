@@ -1,0 +1,16 @@
+construct:
+  name: "inducible_secreted_cytokine_c"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Inducible promoter activated by Doxycycline/Tetracycline ligand
+    - cistron:
+        label: therapeutic_cytokine
+        expression: high
+        chain:
+          - tag: IgK_leader  # Standard mammalian secretion signal
+          - gene:
+              id: CytokineC
+              source: uniprot
+    - terminator: bGH_polyA

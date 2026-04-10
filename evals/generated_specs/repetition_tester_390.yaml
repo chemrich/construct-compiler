@@ -1,0 +1,30 @@
+construct:
+  name: "ribozyme_processed_nop_polycistronic"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: gene_n
+        expression: high
+        gene:
+          id: GeneN
+          source: uniprot
+    - spacer: 55  # Hammerhead ribozyme (sHHR) variant for RNA processing
+    - cistron:
+        label: gene_o
+        expression: high
+        fused: false # Ensures independent translation via a distinct RBS
+        gene:
+          id: GeneO
+          source: uniprot
+    - spacer: 84  # HDV ribozyme variant (non-homologous to HHR) for RNA processing
+    - cistron:
+        label: gene_p
+        expression: high
+        fused: false # Ensures independent translation via a distinct RBS
+        gene:
+          id: GeneP
+          source: uniprot
+    - terminator: rrnB_T1

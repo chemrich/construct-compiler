@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_scaffold_assembly_complex"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: scaffold_target
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P40504
+              source: uniprot
+    - terminator: CYC1

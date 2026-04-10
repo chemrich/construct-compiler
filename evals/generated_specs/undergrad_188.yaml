@@ -1,0 +1,43 @@
+construct:
+  name: "bacterial_two_hybrid_proteinX_proteinY"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: bait_fusion
+        expression: medium
+        chain:
+          - solubility_tag: lambda_cI
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProteinX
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: prey_fusion
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: rpoA
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProteinY
+              source: uniprot
+    - spacer: 40
+    - promoter: lacUV5  # Reporter promoter modified for bait/prey recruitment
+    - cistron:
+        label: reporter
+        expression: low
+        fused: false
+        gene:
+          id: lacZ
+          source: uniprot
+    - terminator: rrnB_T1

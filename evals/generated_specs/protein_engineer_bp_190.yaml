@@ -1,0 +1,33 @@
+construct:
+  name: "lipase_groes_groel_bacillus_coexpression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: P43
+    - cistron:
+        label: secreted_lipase
+        expression: high
+        chain:
+          - tag: AmyE
+          - gene:
+              id: lipase
+              source: uniprot
+    - terminator: rrnB_T1
+    - promoter: Pveg
+    - cistron:
+        label: groES
+        expression: high
+        gene:
+          id: groES
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: groEL
+        expression: high
+        fused: false
+        gene:
+          id: groEL
+          source: uniprot
+    - terminator: rrnB_T1

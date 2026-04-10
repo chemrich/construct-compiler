@@ -1,0 +1,28 @@
+construct:
+  name: "proteinp_multimerization_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: multimer_fusion
+        expression: high
+        chain:
+          - gene:
+              id: ProteinP
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: GCN4
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mCitrine
+              source: fpbase
+    - terminator: rrnB_T1

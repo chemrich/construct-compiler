@@ -1,0 +1,28 @@
+construct:
+  name: "dual_secretory_variant_expression_vector"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: variant_1_igk
+        expression: high
+        chain:
+          - tag: Ig_kappa_leader
+          - gene:
+              id: P01588
+              source: uniprot
+    - terminator: SV40_polyA
+    - promoter: EF1_alpha
+    - cistron:
+        label: variant_2_bm40
+        expression: high
+        chain:
+          - tag: BM40_signal_peptide
+          - gene:
+              id: P01588
+              source: uniprot
+    - terminator: bGH_polyA

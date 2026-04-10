@@ -1,0 +1,30 @@
+construct:
+  name: "nand_logic_gate_circuit"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100  # Constitutive promoter used as a scaffold for dual repression (NAND logic)
+    - cistron:
+        label: "nand_output"
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: "sensor_lacI"
+        expression: medium
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "sensor_tetR"
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: rrnB_T1

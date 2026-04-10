@@ -1,0 +1,18 @@
+construct:
+  name: "pxyl_bacillus_cellulase_secretion"
+  host: bacillus # Bacillus subtilis strain WB800N
+  backbone:
+    resistance: kanamycin
+    source: addgene
+  cassette:
+    - promoter: Pxyl # Xylose-inducible promoter
+    - cistron:
+        label: target_cellulase
+        expression: high # Represents the request for a strong RBS
+        chain:
+          - tag: SacB_signal_peptide
+          - gene:
+              id: cellulase
+              source: uniprot
+          - tag: 6xHis
+    - terminator: BBa_B0015

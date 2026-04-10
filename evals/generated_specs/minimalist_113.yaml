@@ -1,0 +1,24 @@
+construct:
+  name: "EnzymeA_CofactorSynthase_Coexpression"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_a
+        expression: high
+        gene:
+          id: EnzymeA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: cofactor_synthase
+        expression: medium
+        fused: false
+        gene:
+          id: CofactorSynthase
+          source: uniprot
+    - terminator: T7term

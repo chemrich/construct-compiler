@@ -1,0 +1,19 @@
+construct:
+  name: "Bacillus_Tat_Metalloenzyme_Secretion"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110  # Standard origin for Bacillus subtilis plasmids
+    source: addgene
+  cassette:
+    - promoter: Pxyl
+    - cistron:
+        label: "tat_secreted_enzyme"
+        expression: high
+        chain:
+          - secretion_signal: PhoD  # Tat-dependent signal peptide
+          - gene:
+              id: P00811  # Bacillus subtilis neutral protease B (nprE), a representative metalloenzyme
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

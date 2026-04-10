@@ -1,0 +1,21 @@
+construct:
+  name: "inducible_therapeutic_protein_production"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Defaulting to kanamycin; non-antibiotic selection systems are currently not supported in the schema.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD # Chosen for tight metabolic control and absence of viral components (unlike T7).
+    - cistron:
+        label: immunomodulator
+        expression: high
+        chain:
+          - gene:
+              id: IL2_HUMAN
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+    - terminator: rrnB_T1

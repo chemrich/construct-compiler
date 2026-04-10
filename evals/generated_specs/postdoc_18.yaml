@@ -1,0 +1,24 @@
+construct:
+  name: "DrugTargetY_GFP_Myc_yeast_expression"
+  host: yeast
+  backbone:
+    resistance: zeocin
+    ori: 2micron
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: DrugTargetY
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: Myc
+    - terminator: CYC1_term

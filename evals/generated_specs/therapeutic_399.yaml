@@ -1,0 +1,29 @@
+construct:
+  name: therapeutic_peptide_production_non_viral
+  host: e_coli_bl21
+  backbone:
+    # Note: Kanamycin resistance is included to satisfy compiler requirements; clinical-grade systems typically replace this with auxotrophic or toxin-antitoxin selection.
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac  # Inducible non-viral bacterial promoter used instead of T7 to satisfy "no viral elements" requirement.
+    - cistron:
+        label: therapeutic_peptide_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PTH
+              source: uniprot
+    - spacer: 30  # Polycistronic spacer/RBS used as a non-viral alternative to 2A peptides for producing separate proteins in E. coli.
+    - cistron:
+        label: therapeutic_peptide_2
+        expression: high
+        fused: false  # Ensures independent translation to provide separate peptides post-translation.
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: GCG
+              source: uniprot
+    - terminator: rrnB_T1  # Bacterial terminator.

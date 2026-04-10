@@ -1,0 +1,30 @@
+construct:
+  name: "human_multigene_synergy_construct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: "synergistic_enzymes"
+        expression: high
+        chain:
+          - gene:
+              id: Kinase1
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: Phosphatase2
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: Transporter3
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: Ligase4
+              source: uniprot
+    - terminator: bgh_polya

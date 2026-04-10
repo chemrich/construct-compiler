@@ -1,0 +1,19 @@
+construct:
+  name: "proteinx_proteiny_fusion_divergent_tev"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: ProteinX
+              source: uniprot
+          - cleavage_site: TEV  # DNA optimized for maximal divergence from ProteinX and ProteinY
+          - gene:
+              id: ProteinY
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,24 @@
+construct:
+  name: "enzyme_complex_subA_subB_coexpression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: subA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: subA
+              source: uniprot
+    - spacer: 30  # IRES is a eukaryotic element; substituted with a 30bp spacer for polycistronic translation in E. coli
+    - cistron:
+        label: subB
+        expression: high
+        fused: false
+        gene:
+          id: subB
+          source: uniprot
+    - terminator: T7term

@@ -1,0 +1,20 @@
+construct:
+  name: "coexpression_a_b_polycistronic"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_a
+        gene:
+          id: protein_a
+          source: uniprot
+    - spacer: 30 # IRES is replaced with a spacer and separate RBS for E. coli polycistronic expression
+    - cistron:
+        label: protein_b
+        fused: false
+        gene:
+          id: protein_b
+          source: uniprot
+    - terminator: T7term

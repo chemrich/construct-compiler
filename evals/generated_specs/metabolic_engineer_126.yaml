@@ -1,0 +1,55 @@
+construct:
+  name: "aa_synthesis_six_gene_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: aa1_aa2_fusion
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: AA1
+              source: uniprot
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: AA2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: aa3
+        expression: high
+        fused: false
+        gene:
+          id: AA3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: aa4
+        expression: high
+        fused: false
+        gene:
+          id: AA4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: aa5
+        expression: high
+        fused: false
+        gene:
+          id: AA5
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: aa6
+        expression: high
+        fused: false
+        gene:
+          id: AA6
+          source: uniprot
+    - terminator: T7term

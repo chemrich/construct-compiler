@@ -1,0 +1,35 @@
+construct:
+  name: "sender_receiver_circuit"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: luxI_synthase
+        expression: high
+        fused: false
+        gene:
+          id: luxI
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: J23100
+    - cistron:
+        label: luxR_regulator
+        expression: medium
+        fused: false
+        gene:
+          id: luxR
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lux_pL
+    - cistron:
+        label: output_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

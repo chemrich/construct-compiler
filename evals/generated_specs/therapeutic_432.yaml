@@ -1,0 +1,17 @@
+construct:
+  name: "VLP_Vaccine_Sf9_Expression"
+  host: Sf9 # Insect cell line requested for VLP production
+  backbone:
+    resistance: none # User requested no antibiotic resistance; assume auxotrophic or selection-free system
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: Polh # Strong insect promoter (Polyhedrin) for high-level expression
+    - cistron:
+        label: vlp_monomer
+        expression: high
+        chain:
+          - gene:
+              id: P03101 # UniProt ID for Human papillomavirus type 16 L1 protein (self-assembles into VLPs)
+              source: uniprot
+    - terminator: SV40 # Standard eukaryotic terminator compatible with insect expression systems

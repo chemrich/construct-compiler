@@ -1,0 +1,20 @@
+construct:
+  name: "Pichia_GAP_secreted_MBP_enzyme"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: enzyme_production
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - solubility_tag: MBP
+          - cleavage_site: Enterokinase
+          - gene:
+              id: target_enzyme
+              source: uniprot
+    - terminator: AOX1_term

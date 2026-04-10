@@ -1,0 +1,54 @@
+construct:
+  name: "repressilator_oscillator_LVA_optimized"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pSC101
+    source: addgene
+
+  cassette:
+    # Node 1: TetR-repressible promoter driving LacI
+    - promoter: PLtetO_1
+    - cistron:
+        label: node_lacI
+        expression: medium
+        chain:
+          - gene:
+              id: P03023
+              source: uniprot
+          - tag: LVA # SsrA degradation tag (AANDENYALVA) to ensure 60-90 min period
+    - terminator: rrnB_T1
+
+    # Node 2: LacI-repressible promoter driving Lambda cI
+    - promoter: Plac_O1
+    - cistron:
+        label: node_cI
+        expression: medium
+        chain:
+          - gene:
+              id: P03034
+              source: uniprot
+          - tag: LVA
+    - terminator: rrnB_T1
+
+    # Node 3: Lambda cI-repressible promoter driving TetR
+    - promoter: PL_lambda
+    - cistron:
+        label: node_tetR
+        expression: medium
+        chain:
+          - gene:
+              id: P04483
+              source: uniprot
+          - tag: LVA
+    - terminator: rrnB_T1
+
+    # Readout: TetR-repressible promoter driving mEGFP reporter
+    - promoter: PLtetO_1
+    - cistron:
+        label: reporter_mEGFP
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,48 @@
+construct:
+  name: "tightly_regulated_five_gene_pathway"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Inducible by arabinose and repressed by glucose via catabolite repression
+    - cistron:
+        label: sensor_x
+        expression: medium
+        gene:
+          id: SensorX
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: activator_y
+        expression: medium
+        fused: false
+        gene:
+          id: ActivatorY
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: suppressor_z
+        expression: medium
+        fused: false
+        gene:
+          id: SuppressorZ
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gene_p
+        expression: medium
+        fused: false
+        gene:
+          id: GeneP
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gene_q
+        expression: medium
+        fused: false
+        gene:
+          id: GeneQ
+          source: uniprot
+    - terminator: rrnB_T1

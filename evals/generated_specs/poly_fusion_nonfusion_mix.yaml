@@ -1,58 +1,39 @@
-```yaml
 construct:
-  name: "his_tev_mbp_megfp_mscarlet_strep_mneongreen"
-  host: e_coli
-
+  name: "multi_fp_polycistronic_expression"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: target_protein
+        label: megfp_fusion
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: independent_reporter
-        expression: low
+        label: mscarlet_indep
+        expression: medium
         fused: false
         gene:
           id: mScarlet
           source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: strep_fusion
-        expression: medium # Expression level for this cistron was not specified, defaulting to medium
+        label: mneongreen_strep
+        expression: low
+        fused: false
         chain:
           - tag: Strep-II
           - gene:
               id: mNeonGreen
               source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

@@ -1,0 +1,18 @@
+construct:
+  name: human_protein_x_purification_construct
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: HumanProteinX
+              source: uniprot
+    - terminator: T7term

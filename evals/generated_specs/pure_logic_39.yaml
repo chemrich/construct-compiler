@@ -1,0 +1,40 @@
+construct:
+  name: "yeast_3_input_decoder"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: "pLogic_A0B0C1" # Activated when Input A=0, B=0, C=1
+    - cistron:
+        label: "O1_output"
+        expression: medium
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+          - tag: PEST
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: "pLogic_A0B1C1" # Activated when Input A=0, B=1, C=1
+    - cistron:
+        label: "O3_output"
+        expression: medium
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: PEST
+    - terminator: ADH1_term
+    - spacer: 50
+    - promoter: "pLogic_A1B0C1" # Activated when Input A=1, B=0, C=1
+    - cistron:
+        label: "O5_output"
+        expression: medium
+        chain:
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+          - tag: PEST
+    - terminator: TEF1_term

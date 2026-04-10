@@ -1,0 +1,19 @@
+construct:
+  name: "non_viral_scaffold_production_subtilis"
+  host: b_subtilis
+  backbone:
+    resistance: none  # User requested no antibiotic resistance; assuming auxotrophic selection or chromosomal integration
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: P_veg  # Strong constitutive promoter native to Bacillus subtilis, avoiding viral T7 system
+    - cistron:
+        label: scaffold_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Enterokinase  # Non-viral protease site substituted for TEV to meet safety requirements
+          - gene:
+              id: TasA  # Major functional amyloid protein in B. subtilis, a natural self-assembling scaffold
+              source: uniprot
+    - terminator: rrnB_T1  # Strong bacterial terminator (rrnB operon), non-viral alternative to T7term

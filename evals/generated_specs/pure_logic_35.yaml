@@ -1,0 +1,18 @@
+construct:
+  name: "temperature_controlled_switch_v"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: pL_cI857  # Standard temperature-sensitive system: cI857 represses pL at <30C; induction occurs >37C
+    - cistron:
+        label: output_v
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: V
+              source: uniprot
+    - terminator: rrnB_T1

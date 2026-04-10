@@ -1,30 +1,15 @@
-```yaml
 construct:
-  name: "CHO_hygromycin_vector"
+  name: "CHO_hygromycin_stable_selection_vector"
   host: CHO
-
   backbone:
-    catalog_vector: "pTwist CMV" # This vector family typically includes a mammalian selectable marker. Hygromycin B resistance is requested.
-
+    resistance: hygromycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: CMV # Default promoter for mammalian host
+    - promoter: CMV
     - cistron:
-        label: reporter_egfp
-        expression: high
+        label: reporter
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015 # Note: For mammalian expression, a polyadenylation signal (e.g., BGH polyA) would typically be used instead of a bacterial terminator.
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: BGH_pA

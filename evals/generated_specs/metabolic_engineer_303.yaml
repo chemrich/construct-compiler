@@ -1,0 +1,40 @@
+construct:
+  name: "lactic_acid_flux_redirection_operon"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100 # Strong constitutive promoter for high-level flux redirection
+    - cistron:
+        label: ldhA
+        expression: high
+        gene:
+          id: P0A717
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pflB_inactivated
+        expression: medium
+        fused: false
+        gene:
+          id: P09373 # pflB UniProt ID; variant/inactivation would be handled by post-processing or specific allele ID
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pykF
+        expression: medium
+        fused: false
+        gene:
+          id: P0AD61
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pfkA
+        expression: medium
+        fused: false
+        gene:
+          id: P0A796
+          source: uniprot
+    - terminator: BBa_B0015 # Double transcriptional terminator (B0010 + B0012)

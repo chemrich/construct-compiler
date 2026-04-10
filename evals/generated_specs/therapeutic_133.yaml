@@ -1,0 +1,19 @@
+construct:
+  name: "mammalian_e3_ligase_nls_degrader"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    # Note: 'Lacks ARGs' interpreted as exclusion of mammalian selection markers. 
+    # Bacterial resistance is required for construct propagation.
+  cassette:
+    - promoter: EF1_alpha  # Non-viral human promoter to ensure high expression without viral silencing
+    - cistron:
+        label: targeted_e3_ligase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - tag: NLS
+          - gene:
+              id: VHL
+              source: uniprot
+    - terminator: bGH_pA  # Non-viral bovine growth hormone polyadenylation signal systems

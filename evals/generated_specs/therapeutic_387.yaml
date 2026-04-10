@@ -1,0 +1,20 @@
+construct:
+  name: "yeast_constitutive_scFv_secretion_no_antibiotic"
+  host: yeast
+  backbone:
+    # No antibiotic resistance requested; using URA3 auxotrophic marker for selection in yeast
+    resistance: none
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GPD # Strong constitutive yeast promoter (TDH3)
+    - cistron:
+        label: secreted_scFv
+        expression: high
+        chain:
+          - tag: Alpha_factor # S. cerevisiae alpha-mating factor secretion signal
+          - gene:
+              id: scFv
+              source: uniprot
+          - tag: 6xHis # C-terminal tag for supernatant purification
+    - terminator: CYC1 # Standard yeast terminator

@@ -1,0 +1,20 @@
+construct:
+  name: "mammalian_bicistronic_ires_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gene_a
+        gene:
+          id: Gene_A
+          source: uniprot
+    - spacer: 585 # Typical length of an EMCV IRES for bicistronic expression in mammalian cells
+    - cistron:
+        label: gene_b
+        fused: false # Ensures independent translation from the second start codon/IRES
+        gene:
+          id: Gene_B
+          source: uniprot
+    - terminator: bGH_pA

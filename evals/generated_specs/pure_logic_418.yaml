@@ -1,0 +1,32 @@
+construct:
+  name: genetic_toggle_memory_latch
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+  cassette:
+    - promoter: P_LtetO-1  # TetR-repressed promoter; derepressed by SET pulse (aTc)
+    - cistron:
+        label: repressor_lacI
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: state_output
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: lacUV5  # LacI-repressed promoter; derepressed by RESET pulse (IPTG)
+    - cistron:
+        label: repressor_tetR
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: BBa_B0015

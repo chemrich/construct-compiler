@@ -1,0 +1,42 @@
+construct:
+  name: "multienzyme_complex_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_a
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProtA
+              source: uniprot
+    - spacer: 20
+    - cistron:
+        label: enzyme_b
+        expression: high
+        fused: false
+        gene:
+          id: ProtB
+          source: uniprot
+    - spacer: 20
+    - cistron:
+        label: enzyme_c
+        expression: high
+        fused: false
+        gene:
+          id: ProtC
+          source: uniprot
+    - spacer: 20
+    - cistron:
+        label: enzyme_d
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: ProtD
+              source: uniprot
+          - tag: Strep-II
+    - terminator: T7term

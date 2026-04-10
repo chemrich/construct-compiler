@@ -1,0 +1,40 @@
+construct:
+  name: "synonymous_tandem_peptide_repeats"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: repeat_peptide_fusion
+        expression: high
+        # Note: Each gene repeat unit must be synonymously codon-optimized by the compiler to prevent DNA recombination.
+        chain:
+          - gene:
+              id: P01275
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01275
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: P01275
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P01275
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01275
+              source: uniprot
+    - terminator: T7term

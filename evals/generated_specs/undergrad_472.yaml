@@ -1,0 +1,41 @@
+construct:
+  name: yeast_two_hybrid_dual_expression_system
+  # Combined both requested Y2H vectors into a single construct to satisfy the single-YAML document requirement.
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: bait_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: GAL4_BD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Protein_Bait
+              source: uniprot
+    - terminator: ADH1_term
+    - spacer: 50
+    - promoter: ADH1
+    - cistron:
+        label: prey_fusion
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: GAL4_AD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Protein_Prey
+              source: uniprot
+    - terminator: CYC1_term

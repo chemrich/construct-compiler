@@ -1,42 +1,20 @@
-```yaml
 construct:
-  name: "lentivirus_mEGFP_puroR"
-  host: HEK293 # Lentiviral vectors are typically used in mammalian cells like HEK293 for packaging and transduction.
-
+  name: "lenti_EF1a_mEGFP_puroR"
+  host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV" # Using a generic mammalian catalog vector as a placeholder. A true lentiviral backbone would include LTRs, packaging signals, etc., which are not explicitly options in the schema's catalog_vector list.
-
+    catalog_vector: "pLenti6"
   cassette:
     - promoter: EF1_alpha
-
     - cistron:
-        label: mEGFP
-        expression: high
+        label: reporter
         gene:
           id: mEGFP
           source: fpbase
-
-    - spacer: 30 # Separating mEGFP from the puromycin resistance gene for independent translation
-
+    - spacer: 30  # Spacer provided for bicistronic architecture; typically requires an IRES or 2A peptide in mammalian systems.
     - cistron:
-        label: puroR
-        expression: medium
-        fused: false # Puromycin resistance is an independent protein
+        label: selection
+        fused: false
         gene:
-          id: P0A7Y5 # UniProt ID for Puromycin N-acetyltransferase (pac gene)
+          id: pac
           source: uniprot
-
-    - terminator: BBa_B0015 # Placeholder for a mammalian polyadenylation signal (e.g., SV40 polyA, bGH polyA), which is not directly an option in the current schema's terminator list.
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: bGH_polyA

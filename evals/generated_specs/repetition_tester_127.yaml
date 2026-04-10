@@ -1,0 +1,23 @@
+construct:
+  name: "araBAD_mEGFP_Target_Fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P01112
+              source: uniprot
+    - terminator: rrnB_T1

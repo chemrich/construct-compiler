@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_mitochondrial_gfp_fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3 # High-expression constitutive yeast promoter (also known as GPD)
+    - cistron:
+        label: mitochondrial_reporter
+        expression: high
+        chain:
+          - gene:
+              id: P04037 # UniProt ID for S. cerevisiae COX4, which provides the N-terminal mitochondrial targeting sequence (MTS)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1 # Standard yeast terminator for stable mRNA 3' end processing

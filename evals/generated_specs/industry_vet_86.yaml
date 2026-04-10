@@ -1,0 +1,29 @@
+construct:
+  name: "yeast_secreted_antibody_fab"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: light_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: P01834
+              source: uniprot
+    - terminator: CYC1_term
+    - promoter: GAL1
+    - cistron:
+        label: heavy_chain_Fd
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: P01857
+              source: uniprot
+          - tag: 6xHis
+    - terminator: CYC1_term

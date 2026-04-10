@@ -1,0 +1,24 @@
+construct:
+  name: "MySpecialProtein_Strep_GFP_Constitutive_Expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: target_fusion
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: MySpecialProtein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

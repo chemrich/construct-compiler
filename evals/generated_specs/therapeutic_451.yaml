@@ -1,0 +1,23 @@
+construct:
+  name: "therapeutic_cpp_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Included for schema compliance; user requested no antibiotic resistance but a selection marker is required.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Bacterial tac promoter substituted for T7 to avoid viral sequences as requested.
+    - cistron:
+        label: therapy_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P01133
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P0C270
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial rrnB_T1 terminator substituted for T7term to avoid viral sequences.

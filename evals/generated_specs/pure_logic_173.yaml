@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_multiplexer_switch"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Induced by Galactose; represents Input C = ON
+    - cistron:
+        label: output_x
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: MET3  # Repressed by Methionine; used to facilitate C = OFF state logic
+    - cistron:
+        label: output_y
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: ADH1_term

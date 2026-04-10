@@ -1,0 +1,22 @@
+construct:
+  name: "ScaffoldProtein_mCherry_Fusion_URA3"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS406"  # Standard integrative yeast vector with URA3 marker
+    resistance: ampicillin   # For selection in E. coli
+  cassette:
+    - promoter: TEF1  # Common constitutive promoter for yeast
+    - cistron:
+        label: scaffold_fusion
+        expression: high
+        chain:
+          - gene:
+              id: ScaffoldProtein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: CYC1_term  # Standard yeast terminator

@@ -1,0 +1,44 @@
+construct:
+  name: "yeast_pks_inducible_mito_cyto"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: pks_enzyme_1_mito
+        expression: high
+        chain:
+          - tag: MTS
+          - gene:
+              id: Q03131
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pks_enzyme_2_mito
+        expression: high
+        fused: false
+        chain:
+          - tag: MTS
+          - gene:
+              id: Q03132
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pks_enzyme_3_cyto
+        expression: high
+        fused: false
+        gene:
+          id: Q03133
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pks_enzyme_4_cyto
+        expression: high
+        fused: false
+        gene:
+          id: P19049
+          source: uniprot
+    - terminator: ADH1

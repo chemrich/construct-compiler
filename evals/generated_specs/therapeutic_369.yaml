@@ -1,0 +1,18 @@
+construct:
+  name: "baculovirus_free_intracellular_scfv"
+  host: sf9
+  backbone:
+    resistance: kanamycin # Kanamycin included for E. coli cloning; no eukaryotic selection marker included in cassette per request.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: Actin5C # Non-viral cellular promoter chosen to avoid viral elements (e.g., OpIE2/CMV).
+    - cistron:
+        label: intracellular_scfv
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: scFv_anti_GFP
+              source: uniprot
+    - terminator: Hsp70_polyA # Non-viral polyadenylation signal.

@@ -1,0 +1,24 @@
+construct:
+  name: "divergent_therapeutic_peptide_production"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Selected for high-level, inducible control distinct from T7 systems
+    - cistron:
+        label: therapeutic_peptide
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01308 # UniProt ID for Human Insulin
+              source: uniprot
+        # Maximizing DNA divergence is handled by the compiler's E. coli-specific codon optimization algorithm 
+        # which contrasts with mammalian-weighted codon usage bias.
+    - terminator: BBa_B0015 # A reliable, unique bidirectional terminator for high-level expression control

@@ -1,0 +1,19 @@
+construct:
+  name: "NonViral_CD19_CAR_T_Clinical_Vector"
+  host: mammalian
+  backbone:
+    # Kanamycin is used for initial cloning in E. coli; 
+    # for clinical delivery, ARB-free minicircle technology or mRNA is assumed.
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral, human elongation factor 1-alpha promoter for high expression in T-cells
+    - cistron:
+        label: CAR_CD19
+        expression: high
+        chain:
+          - gene:
+              id: CD19_CAR_FMC63_CD8h_41BB_CD3zeta
+              source: uniprot
+    - terminator: BBa_B0015  # Using standard terminator as placeholder for mammalian hGH_polyA

@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_nuclear_tf_expression"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: GAL1  # Standard yeast inducible promoter
+
+    - cistron:
+        label: nls_tf
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: GAL4
+              source: uniprot
+
+    - terminator: CYC1  # Standard yeast terminator

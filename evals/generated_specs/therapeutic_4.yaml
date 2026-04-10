@@ -1,0 +1,29 @@
+construct:
+  name: "dCas9_KRAB_CRISPRi_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: dCas9_KRAB_repressor
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: dCas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: KRAB
+              source: uniprot
+          - tag: NLS
+    - terminator: BGH_pA
+    - promoter: U6
+    - cistron:
+        label: gRNA_scaffold
+        gene:
+          id: sgRNA_scaffold
+    - terminator: polyT

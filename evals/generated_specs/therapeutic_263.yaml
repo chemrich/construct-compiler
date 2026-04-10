@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_surface_display_ag85b_vaccine"
+  host: yeast
+  backbone:
+    resistance: none # Rule 12: Antibiotic resistance genes excluded per request; auxotrophic selection (e.g., URA3) is used for yeast maintenance.
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor_signal
+          - gene:
+              id: P9WQP3 # Mycobacterium tuberculosis Ag85B (Non-viral pathogen epitope)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: Cwp2 # C-terminal cell wall anchoring motif
+    - terminator: CYC1_term

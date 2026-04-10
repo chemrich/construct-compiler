@@ -1,0 +1,29 @@
+construct:
+  name: "dual_secreted_genem_variant_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - spacer: 15  # Custom Kozak sequence 1 and 5'UTR context
+    - cistron:
+        label: "secreted_genem_v1"
+        expression: high
+        chain:
+          - tag: "IgK_leader"
+          - gene:
+              id: "GeneM_v1"
+              source: uniprot
+    - terminator: bGH_polyA
+    - spacer: 500  # Large intergenic spacer to prevent transcriptional interference
+    - promoter: EF1_alpha
+    - spacer: 22  # Custom Kozak sequence 2 and distinct 5'UTR context
+    - cistron:
+        label: "secreted_genem_v2"
+        expression: high
+        chain:
+          - tag: "IL2_signal"
+          - gene:
+              id: "GeneM_v2"
+              source: uniprot
+    - terminator: SV40_polyA

@@ -1,0 +1,25 @@
+construct:
+  name: "TetOn_NonViral_Therapeutic_IL10"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # User requested antibiotic-free; kanamycin is used as a placeholder for bacterial maintenance/cloning.
+    ori: pUC
+    source: custom # Designed as a non-integrating episomal vector (e.g., S/MAR-based or minicircle).
+  cassette:
+    - promoter: EF1_alpha # Human non-viral constitutive promoter
+    - cistron:
+        label: rtTA_regulator
+        expression: medium
+        gene:
+          id: rtTA3
+          source: uniprot
+    - spacer: 150 # Spacer to prevent transcriptional interference between units
+    - promoter: TRE3G # Inducible tetracycline-responsive element with minimal promoter
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        fused: false
+        gene:
+          id: P22301 # Human Interleukin-10
+          source: uniprot
+    - terminator: hGH_pA # Human growth hormone polyadenylation signal (non-viral)

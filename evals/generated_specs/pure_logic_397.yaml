@@ -1,0 +1,32 @@
+construct:
+  name: "unidirectional_integrase_switch"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD # Input signal induces BxB1 integrase expression
+    - cistron:
+        label: integrase_actuator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q8SGC9
+              source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: J23100 # Constitutive promoter for permanent state output
+    - cistron:
+        label: permanent_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015
+# Note: This spec provides the coding components for a recombinase-based switch. 
+# In a physical implementation, the mEGFP cistron would be flanked by attB/attP 
+# recombination sites and initially oriented antisense to the J23100 promoter. 
+# BxB1 integrase mediated inversion provides the irreversible "ON" state.

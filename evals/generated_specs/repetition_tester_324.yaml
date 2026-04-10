@@ -1,0 +1,35 @@
+construct:
+  name: diversified_5x_binding_protein
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          # Each of the 5 repeats of the binding domain (substituted with UniProt: P02976) 
+          # must be codon-optimized distinctly to minimize nucleotide homology.
+          - gene:
+              id: P02976
+              source: uniprot
+          - gene:
+              id: P02976
+              source: uniprot
+          - gene:
+              id: P02976
+              source: uniprot
+          - gene:
+              id: P02976
+              source: uniprot
+          - gene:
+              id: P02976
+              source: uniprot
+    - terminator: T7term

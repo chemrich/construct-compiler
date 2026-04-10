@@ -1,0 +1,24 @@
+construct:
+  name: "comparator_logic_A_AND_NOT_B"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac  # Input B (IPTG) induces expression of the TetR repressor
+    - cistron:
+        label: repressor_module
+        expression: medium
+        gene:
+          id: "P04483"
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: araBAD  # Input A (Arabinose) induces output; logically repressed by TetR binding to tetO sites
+    - cistron:
+        label: output_module
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

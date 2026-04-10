@@ -1,0 +1,19 @@
+construct:
+  name: "single_transcript_tev_separated_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "polyprotein_A_B"
+        expression: high
+        chain:
+          - gene:
+              id: protein_A
+              source: uniprot
+          - cleavage_site: TEV
+          - gene:
+              id: protein_B
+              source: uniprot
+    - terminator: T7term

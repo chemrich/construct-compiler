@@ -1,0 +1,26 @@
+construct:
+  name: "inducible_cell_adhesion_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: tet_transactivator
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: rtTA3
+              source: uniprot
+    - terminator: bgh_pa
+    - spacer: 50
+    - promoter: TRE3G  # Inducible promoter activated by Signal X (Doxycycline) + rtTA3
+    - cistron:
+        label: adhesion_protein
+        expression: high
+        fused: false
+        gene:
+          id: P12830  # UniProt ID for Human E-cadherin (CDH1)
+          source: uniprot
+    - terminator: bgh_pa

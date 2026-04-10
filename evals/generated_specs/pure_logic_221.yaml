@@ -1,0 +1,35 @@
+construct:
+  name: "two_input_and_gate_split_t7"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: input_a_t7_n_terminal
+        expression: medium
+        chain:
+          - gene:
+              id: P00573
+              source: uniprot
+    - terminator: BBa_B0015
+    - promoter: lacUV5
+    - cistron:
+        label: input_b_t7_c_terminal
+        expression: medium
+        chain:
+          - gene:
+              id: P00573
+              source: uniprot
+    - terminator: BBa_B0015
+    - promoter: T7
+    - cistron:
+        label: output_z_reporter
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: rrnB_T1

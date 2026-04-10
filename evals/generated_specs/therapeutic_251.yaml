@@ -1,0 +1,24 @@
+construct:
+  name: "exosome_cargo_s_cd63_fusion"
+  host: HEK293T
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: cargo_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CD63
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ExosomeCargoS
+              source: uniprot
+    - terminator: BGH_polyA

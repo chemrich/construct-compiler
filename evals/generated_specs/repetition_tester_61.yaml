@@ -1,0 +1,29 @@
+construct:
+  name: "mammalian_triple_fusion_X_Y_Z"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: triple_fusion
+        expression: high
+        chain:
+          - tag: 8xHis
+          - gene:
+              id: ProteinX
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProteinY
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          - gene:
+              id: ProteinZ
+              source: uniprot
+          - solubility_tag: MBP
+    - terminator: bGH_pA

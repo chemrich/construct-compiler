@@ -1,0 +1,17 @@
+construct:
+  name: high_yield_structural_purification_system
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: sfGFP
+              source: fpbase # Using sfGFP as a representative high-yield structural biology target
+    - terminator: T7term

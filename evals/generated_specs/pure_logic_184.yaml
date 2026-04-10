@@ -1,0 +1,17 @@
+construct:
+  name: "toxin_triggered_lysis_kill_switch"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Substitution: araBAD used as a proxy for a toxin-responsive sensor promoter
+    - cistron:
+        label: lysis_effector
+        expression: high
+        chain:
+          - gene:
+              id: P03643  # phiX174 lysis protein E
+              source: uniprot
+    - terminator: rrnB_T1

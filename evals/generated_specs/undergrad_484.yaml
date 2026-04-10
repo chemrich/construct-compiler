@@ -1,0 +1,30 @@
+construct:
+  name: "human_polycistronic_protein_AB_reporter"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_A
+        expression: high
+        gene:
+          id: P01133 # Human Epidermal Growth Factor (EGF)
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_B
+        expression: high
+        fused: false
+        gene:
+          id: P04637 # Human Cellular tumor antigen p53
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

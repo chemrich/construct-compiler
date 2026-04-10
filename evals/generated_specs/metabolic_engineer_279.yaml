@@ -1,0 +1,57 @@
+construct:
+  name: "nrps_mini_module_operon"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: adenylation_domain
+        expression: high
+        gene:
+          id: NRPS_A_domain
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: thiolation_domain
+        expression: high
+        fused: false
+        gene:
+          id: NRPS_T_domain
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: condensation_domain
+        expression: high
+        fused: false
+        gene:
+          id: NRPS_C_domain
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: epimerase_domain
+        expression: high
+        fused: false
+        gene:
+          id: NRPS_E_domain
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reductase_domain
+        expression: high
+        fused: false
+        gene:
+          id: NRPS_R_domain
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: thioesterase_domain
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: NRPS_TE_domain
+              source: uniprot
+    - terminator: rrnB_T1

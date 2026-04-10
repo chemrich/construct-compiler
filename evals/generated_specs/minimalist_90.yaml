@@ -1,0 +1,23 @@
+construct:
+  name: "phage_display_pIII_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: display_fusion
+        expression: medium
+        chain:
+          - tag: pelB
+          - gene:
+              id: target_peptide
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P69168
+              source: uniprot
+    - terminator: rrnB_T1

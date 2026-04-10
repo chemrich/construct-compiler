@@ -1,0 +1,21 @@
+construct:
+  name: "HSA_fusion_therapeutic_peptide_Pichia"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - solubility_tag: HSA
+          - cleavage_site: TEV
+          - gene:
+              id: PTH
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1

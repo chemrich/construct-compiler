@@ -1,0 +1,19 @@
+construct:
+  name: "nor_gate_growth_factor"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Engineered with dual operators (e.g., lacO and tetO) to function as a NOR gate repressed by Input_X or Input_Y
+    - cistron:
+        label: growth_promoting_factor
+        expression: high
+        chain:
+          - tag: PelB # N-terminal secretion signal for periplasmic export in E. coli
+          - tag: 6xHis
+          - gene:
+              id: P01133
+              source: uniprot
+    - terminator: rrnB_T1

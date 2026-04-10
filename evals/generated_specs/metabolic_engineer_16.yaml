@@ -1,0 +1,58 @@
+construct:
+  name: clostridium_solvent_production_operon
+  host: clostridium_acetobutylicum
+  backbone:
+    resistance: chloramphenicol  # Commonly used in Clostridium shuttle vectors (catP)
+    ori: pBR322 # Representative Gram-negative ori for cloning; requires a Gram-positive ori like pCB102 for Clostridia
+    source: addgene
+  cassette:
+    - promoter: P_ptb  # Butyrate-inducible promoter from Clostridium acetobutylicum
+    - cistron:
+        label: thlA
+        expression: medium
+        gene:
+          id: P45359
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hbd
+        expression: medium
+        fused: false
+        gene:
+          id: P45362
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: crt
+        expression: medium
+        fused: false
+        gene:
+          id: P45361
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: bcd
+        expression: medium
+        fused: false
+        gene:
+          id: P45360
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: etfB
+        expression: medium
+        fused: false
+        gene:
+          id: P45358
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: etfA
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P45357
+              source: uniprot
+    - terminator: rrnB_T1

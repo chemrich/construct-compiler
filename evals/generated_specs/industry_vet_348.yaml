@@ -1,0 +1,19 @@
+construct:
+  name: yeast_constitutive_target_expression
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - gene:
+              id: target_protein
+              source: uniprot
+          - cleavage_site: 3C
+          - tag: 6xHis
+    - terminator: CYC1

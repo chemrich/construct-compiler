@@ -1,0 +1,19 @@
+construct:
+  name: "therapeutic_protease_zymogen_expression"
+  host: e_coli_bl21
+  backbone:
+    # Antibiotic resistance excluded per user request; assumes auxotrophic or alternative selection.
+    resistance: none
+    ori: pBR322
+  cassette:
+    - promoter: tac  # Bacterial origin, inducible by IPTG; non-viral alternative to T7.
+    - cistron:
+        label: protease_zymogen
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa  # Non-viral (human) site for purification tag removal.
+          - gene:
+              id: P07477  # Human PRSS1 (Trypsinogen), contains a natural auto-activation site.
+              source: uniprot
+    - terminator: rrnB_T1  # Bacterial ribosomal RNA operon terminator.

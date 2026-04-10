@@ -1,0 +1,24 @@
+construct:
+  name: "transient_pulse_generator_iffl"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Input S (Arabinose) activates the repressor
+    - cistron:
+        label: repressor_tetR
+        expression: high
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 30
+    - promoter: araBAD  # Input S also activates the target; this would be a pBad-TetO hybrid in practice
+    - cistron:
+        label: target_protein_p
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

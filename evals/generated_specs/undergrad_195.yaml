@@ -1,0 +1,22 @@
+construct:
+  name: "cpp_therapeutic_protein_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: delivery_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CellPenetratingPeptide
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: TherapeuticProtein
+              source: uniprot
+    - terminator: bGH_PA

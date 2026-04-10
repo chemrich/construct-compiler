@@ -1,0 +1,102 @@
+construct:
+  name: "growth_factor_b_secretion_optimization_library"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: gfB_variant_1
+        expression: high
+        chain:
+          - gene:
+              id: pelB
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: GrowthFactorB_v1
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term
+    - spacer: 45
+    - promoter: tac
+    - cistron:
+        label: gfB_variant_2
+        expression: high
+        chain:
+          - gene:
+              id: ompA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: GrowthFactorB_v2
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1
+    - spacer: 45
+    - promoter: araBAD
+    - cistron:
+        label: gfB_variant_3
+        expression: medium
+        chain:
+          - gene:
+              id: dsbA
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: GrowthFactorB_v3
+              source: uniprot
+          - tag: Twin-Strep
+    - terminator: BBa_B0015
+    - spacer: 45
+    - promoter: lacUV5
+    - cistron:
+        label: gfB_variant_4
+        expression: medium
+        chain:
+          - gene:
+              id: malE
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: GrowthFactorB_v4
+              source: uniprot
+          - tag: FLAG
+    - terminator: T7term
+    - spacer: 45
+    - promoter: J23100
+    - cistron:
+        label: gfB_variant_5
+        expression: low
+        chain:
+          - gene:
+              id: phoA
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: GrowthFactorB_v5
+              source: uniprot
+          - tag: 8xHis
+    - terminator: rrnB_T1
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

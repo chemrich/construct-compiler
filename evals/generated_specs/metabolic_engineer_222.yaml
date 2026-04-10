@@ -1,0 +1,58 @@
+construct:
+  name: "toxic_pollutant_degradation_pathway"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lacUV5  # Chosen for controlled, moderate levels in E. coli
+    - cistron:
+        label: DegA
+        expression: medium
+        chain:
+          - tag: PelB  # N-terminal secretion signal for periplasmic export
+          - gene:
+              id: DegA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegB
+        expression: medium
+        fused: false  # Independent translation within the operon
+        gene:
+          id: DegB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegC
+        expression: medium
+        fused: false
+        gene:
+          id: DegC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegD
+        expression: medium
+        fused: false
+        gene:
+          id: DegD
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegE
+        expression: medium
+        fused: false
+        gene:
+          id: DegE
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegF
+        expression: medium
+        fused: false
+        gene:
+          id: DegF
+          source: uniprot
+    - terminator: rrnB_T1

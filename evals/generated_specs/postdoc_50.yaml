@@ -1,0 +1,21 @@
+construct:
+  name: "yeast_mitochondrial_enzyme_expression"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: MTS  # Mitochondrial Targeting Sequence (e.g., Cox4 leader)
+          - tag: Strep-II
+          - gene:
+              id: new_enzyme
+              source: uniprot
+    - terminator: CYC1_term

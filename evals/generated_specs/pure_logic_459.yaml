@@ -1,0 +1,24 @@
+construct:
+  name: "robust_z_persistence_filter"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: In_Stable
+        expression: medium
+        gene:
+          id: sfGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: Robust_Z
+        expression: high
+        fused: false # Independent translation to allow for separate regulation or stoichiometric control
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1 # Standard rho-independent terminator for E. coli systems

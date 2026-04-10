@@ -1,0 +1,50 @@
+construct:
+  name: "HEK293_Multigene_Metabolic_Pathway_IRES"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: synthase_x
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: SynthaseX
+              source: uniprot
+    - spacer: 500 # Spacer length representing IRES for independent translation
+    - cistron:
+        label: dehydrogenase_y
+        expression: high
+        fused: false
+        gene:
+          id: DehydrogenaseY
+          source: uniprot
+    - spacer: 500 # Spacer length representing IRES for independent translation
+    - cistron:
+        label: isomerase_z
+        expression: high
+        fused: false
+        gene:
+          id: IsomeraseZ
+          source: uniprot
+    - spacer: 500 # Spacer length representing IRES for independent translation
+    - cistron:
+        label: ligase_w
+        expression: high
+        fused: false
+        chain:
+          - tag: NLS
+          - gene:
+              id: LigaseW
+              source: uniprot
+    - spacer: 500 # Spacer length representing IRES for independent translation
+    - cistron:
+        label: phosphatase_v
+        expression: high
+        fused: false
+        gene:
+          id: PhosphataseV
+          source: uniprot
+    - terminator: bGH_PA

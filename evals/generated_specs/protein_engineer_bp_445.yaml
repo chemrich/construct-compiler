@@ -1,0 +1,20 @@
+construct:
+  name: "bacillus_pxyl_lipa_his_ek_cutinase"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pxyl  # Xylose-inducible promoter for Bacillus subtilis
+    - cistron:
+        label: secreted_cutinase
+        expression: high
+        chain:
+          - tag: LipA  # Bacillus subtilis LipA secretion signal peptide
+          - tag: 6xHis
+          - cleavage_site: Enterokinase
+          - gene:
+              id: cutinase
+              source: uniprot
+    - terminator: BBa_B0015

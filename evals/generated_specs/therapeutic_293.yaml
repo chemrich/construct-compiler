@@ -1,0 +1,22 @@
+construct:
+  name: yeast_secreted_therapeutic_enzyme
+  host: yeast
+  backbone:
+    resistance: none # Auxotrophic marker (e.g., URA3) used to avoid antibiotic resistance genes
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        chain:
+          - secretion_signal: alpha_mating_factor
+          - gene:
+              id: P00734
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+    - terminator: CYC1

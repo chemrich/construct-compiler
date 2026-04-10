@@ -1,0 +1,24 @@
+construct:
+  name: proteink_codon_optimization_comparison
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: proteink_optimization_a
+        expression: high
+        gene:
+          id: ProteinK
+          source: uniprot
+    - terminator: T7term
+    - spacer: 50  # Inter-cassette distance to separate transcription units
+    - promoter: tac
+    - cistron:
+        label: proteink_optimization_b
+        expression: high
+        fused: false
+        gene:
+          id: ProteinK
+          source: uniprot
+    - terminator: rrnB_T1

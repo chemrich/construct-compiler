@@ -1,0 +1,18 @@
+construct:
+  name: "Lysosomal_Enzyme_Targeting_V5"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: lysosomal_target
+        expression: high
+        chain:
+          - tag: SignalPeptide  # Required for ER translocation and subsequent lysosomal trafficking
+          - gene:
+              id: LysosomalEnzyme
+              source: uniprot
+          - tag: V5             # C-terminal V5 tag for detection
+    - terminator: bGH_polyA

@@ -1,0 +1,71 @@
+construct:
+  name: "pha_production_pathway_p_pastoris"
+  host: yeast
+  backbone:
+    resistance: zeocin
+    ori: pUC
+    source: custom
+
+  cassette:
+    - promoter: GAPDH  # Strong constitutive yeast promoter
+
+    - cistron:
+        label: phaA_secreted
+        expression: high
+        chain:
+          - tag: Alpha_factor  # Secretion signal for P. pastoris
+          - gene:
+              id: P14611
+              source: uniprot
+
+    - spacer: 30  # Note: Polycistronic expression in yeast typically requires 2A peptides or IRES; compiler will optimize based on host.
+
+    - cistron:
+        label: phaB
+        expression: high
+        fused: false
+        gene:
+          id: P14697
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: phaC
+        expression: high
+        fused: false
+        gene:
+          id: P13397
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: phaJ
+        expression: high
+        fused: false
+        gene:
+          id: Q9LBQ4
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: phaP
+        expression: high
+        fused: false
+        gene:
+          id: P45600
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: phaR
+        expression: high
+        fused: false
+        gene:
+          id: Q05113
+          source: uniprot
+
+    - terminator: CYC1_term

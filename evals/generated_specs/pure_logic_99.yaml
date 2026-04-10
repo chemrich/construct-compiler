@@ -1,0 +1,29 @@
+construct:
+  name: "yeast_dual_stress_and_gate"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+  cassette:
+    - promoter: CTT1  # Inducible by oxidative stress in S. cerevisiae
+    - cistron:
+        label: split_reporter_1_10
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: HXT7  # Inducible by nutrient (glucose) starvation in S. cerevisiae
+    - cistron:
+        label: split_reporter_11
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: ADH1_term  # Logic: split-mNeonGreen fragments reconstitute only when both promoters are active

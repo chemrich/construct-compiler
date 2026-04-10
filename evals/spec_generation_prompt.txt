@@ -7,7 +7,7 @@ The spec must conform to this schema:
 ```yaml
 construct:
   name: "descriptive_name"
-  host: e_coli_bl21  # e_coli, e_coli_bl21, e_coli_bl21_de3, HEK293, CHO, mammalian
+  host: e_coli_bl21  # e_coli, e_coli_bl21, e_coli_bl21_de3, HEK293, CHO, mammalian, yeast, algae, bacillus
 
   backbone:
     # Option A: catalog vector (E. coli)
@@ -20,13 +20,13 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: T7lac  # T7, T7lac, tac, araBAD, lacUV5, J23100, J23106, CMV, EF1_alpha
+    - promoter: T7lac  # T7, T7lac, tac, araBAD, lacUV5, J23100, J23106, CMV, EF1_alpha, U6
 
     - cistron:
         label: target
         expression: high  # high, medium, low, very_low
         chain:
-          - tag: 6xHis          # 6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA
+          - tag: 6xHis          # 6xHis, 8xHis, Strep-II, Twin-Strep, FLAG, HA, NLS
           - cleavage_site: TEV  # TEV, 3C, Factor_Xa, Thrombin, Enterokinase
           - solubility_tag: MBP # MBP, GST, SUMO, Trx
           - linker:
@@ -48,18 +48,6 @@ construct:
           source: fpbase
 
     - terminator: rrnB_T1  # rrnB_T1, T7term, BBa_B0015
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI  # BsaI, BpiI, BbsI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist  # twist, idt
-    budget_per_gene: 400
-    max_turnaround_days: 21
 ```
 
 RULES:
@@ -77,5 +65,9 @@ RULES:
 12. If the user asks for something impossible or contradictory (like a mammalian promoter in E. coli), make a reasonable substitution and add a YAML comment explaining why.
 13. For mammalian hosts, use the specific cell line name when provided (HEK293, CHO, HeLa, etc.) rather than just "mammalian".
 14. Output exactly ONE YAML document. Never use "---" to separate multiple documents. Never output alternative options.
+15. You are not limited to the examples provided in the comments (e.g., for promoters, tags, hosts). You may use other standard biological names (like U6 for a Pol III promoter, or NLS for a nuclear localization signal) if requested by the user or appropriate for the design.
+16. For constructs intended for cell-free or in vitro transcription (IVT), use 'in_vitro' as the host.
+17. For mammalian hosts, polycistronic expression from a single promoter requires an IRES (Internal Ribosome Entry Site) or a 2A self-cleaving peptide. Since the schema only supports simple spacers, prefer using separate cassettes if supported, or represent the IRES/2A as a part in the chain or use a specific label/comment to indicate its presence.
+18. If the prompt implies that a protein needs to be secreted or exported (e.g., growth factors, cytokines, hormones, or specific request for secretion), ensure you include a secretion signal or tag in the cistron chain appropriate for the host (e.g., alpha-factor for yeast, AmyE for Bacillus).
 
 Output ONLY the YAML. No other text.

@@ -1,0 +1,25 @@
+construct:
+  name: "nonviral_therapeutic_rbd_fusion"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Required for E. coli cloning; antibiotic-free selection used for mammalian stable cell line
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human non-viral promoter for stable mammalian expression
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: Igk_leader # N-terminal secretion signal for receptor binding accessibility
+          - gene:
+              id: P0DTC2 # SARS-CoV-2 Spike protein Receptor Binding Domain (RBD)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP # Visualization marker
+              source: fpbase
+          - tag: 6xHis # C-terminal purification tag
+    - terminator: hGH_pA # Human non-viral polyadenylation signal

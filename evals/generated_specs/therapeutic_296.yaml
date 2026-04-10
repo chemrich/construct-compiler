@@ -1,0 +1,19 @@
+construct:
+  name: inducible_therapeutic_nonviral_markerless
+  host: HEK293
+  backbone:
+    resistance: none # Provided as 'none' to meet requirement for no antibiotic resistance markers; implies alternative selection (e.g. pFAR or minicircle)
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: TRE3G # Inducible Tetracycline Response Element (synthetic/non-viral)
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01588
+              source: uniprot
+    - terminator: bGH_polyA # Non-viral polyadenylation signal

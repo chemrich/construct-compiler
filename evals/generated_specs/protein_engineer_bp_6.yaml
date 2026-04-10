@@ -1,0 +1,19 @@
+construct:
+  name: "pichia_aox1_hsa_secretion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: hsa_secretion_cistron
+        expression: high
+        chain:
+          - tag: alpha_factor  # Includes the pre-pro leader and endogenous Kex2 site
+          - cleavage_site: TEV
+          - gene:
+              id: P02768
+              source: uniprot
+    - terminator: AOX1_TT

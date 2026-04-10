@@ -1,0 +1,21 @@
+construct:
+  name: "non_viral_high_solubility_therapeutic_production"
+  host: e_coli_bl21
+  backbone:
+    # Kanamycin is used here as the schema requires an antibiotic resistance marker.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Non-viral bacterial promoter for robust induction and high yield.
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP # Large bacterial tag to ensure soluble expression.
+          - cleavage_site: Enterokinase # Non-viral protease site for precise C-terminal cleavage.
+          - gene:
+              id: PTH
+              source: uniprot
+          - tag: 6xHis # C-terminal purification handle.
+    - terminator: rrnB_T1

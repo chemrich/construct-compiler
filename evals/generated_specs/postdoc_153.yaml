@@ -1,0 +1,22 @@
+construct:
+  name: "mNeonGreen_H_Strep_Fusion_Weak"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: PGK  # Substituted PGK as a standard weak mammalian promoter for stability
+    - cistron:
+        label: H_fusion
+        expression: low
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: H
+              source: uniprot
+          - tag: Strep-II
+    - terminator: SV40_polyA

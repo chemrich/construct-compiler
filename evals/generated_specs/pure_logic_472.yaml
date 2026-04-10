@@ -1,0 +1,22 @@
+construct:
+  name: "repressible_therapeutic_switch"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: trp  # Naturally repressible by molecule X (Tryptophan); ON when X is absent, OFF when X is present
+    - cistron:
+        label: therapeutic_output
+        expression: high
+        chain:
+          - tag: pelB  # Periplasmic secretion signal for E. coli
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P22301  # Human Interleukin-10
+              source: uniprot
+    - terminator: rrnB_T1

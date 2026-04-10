@@ -1,0 +1,74 @@
+construct:
+  name: "pseudomonas_biosurfactant_bsf_operon"
+  host: pseudomonas_aeruginosa  # Specified cell line as per Rule 13
+  backbone:
+    resistance: kanamycin
+    ori: pBBR1  # Standard broad-host-range origin for Pseudomonas
+    source: addgene
+
+  cassette:
+    - promoter: J23100  # Strong constitutive promoter active in P. aeruginosa
+
+    - cistron:
+        label: bsfA_cistron
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: BsfA
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: bsfB_cistron
+        expression: medium
+        fused: false
+        gene:
+          id: BsfB
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: bsfC_cistron
+        expression: medium
+        fused: false
+        gene:
+          id: BsfC
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: bsfD_cistron
+        expression: medium
+        fused: false
+        gene:
+          id: BsfD
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: bsfE_cistron
+        expression: medium
+        fused: false
+        gene:
+          id: BsfE
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: bsfF_cistron
+        expression: medium
+        fused: false
+        gene:
+          id: BsfF
+          source: uniprot
+
+    - terminator: rrnB_T1  # Strong Rho-independent terminator

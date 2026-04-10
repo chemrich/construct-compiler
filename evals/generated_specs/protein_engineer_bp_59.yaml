@@ -1,0 +1,21 @@
+construct:
+  name: "bacillus_high_transcription_cellulase"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: "Pveg_Pgrac" # Tandem promoter configuration for maximal transcription
+    - cistron:
+        label: cellulase_secretion
+        expression: high
+        chain:
+          - tag: AmyE # Bacillus subtilis secretion signal peptide
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: 3C
+          - gene:
+              id: cel5A
+              source: uniprot
+    - terminator: rrnB_T1

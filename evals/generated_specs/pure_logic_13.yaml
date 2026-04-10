@@ -1,0 +1,37 @@
+construct:
+  name: "triple_parallel_nor_gate_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: "NOR_gate_LacI_TetR"  # ON only when both LacI and TetR are absent
+    - cistron:
+        label: gate_1_green
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - spacer: 50
+    - promoter: "NOR_gate_PhlF_SrpR"  # ON only when both PhlF and SrpR are absent
+    - cistron:
+        label: gate_2_red
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term
+    - spacer: 50
+    - promoter: "NOR_gate_CymR_BM3R1"  # ON only when both CymR and BM3R1 are absent
+    - cistron:
+        label: gate_3_blue
+        expression: medium
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: BBa_B0015

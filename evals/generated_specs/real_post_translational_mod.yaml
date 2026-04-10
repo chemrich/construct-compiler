@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: "kinase_substrate_assay"
-  host: e_coli
+  name: "kinase_substrate_phosphorylation_assay"
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
@@ -9,10 +8,9 @@ construct:
     - cistron:
         label: kinase
         expression: high
-        chain:
-          - gene:
-              id: YOUR_KINASE_ID_HERE # Specify UniProt ID or internal ID for your kinase
-              source: uniprot # Or omit if internal ID
+        gene:
+          id: P28482  # MAPK1/ERK2
+          source: uniprot
     - spacer: 30
     - cistron:
         label: substrate
@@ -21,17 +19,6 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: YOUR_SUBSTRATE_ID_HERE # Specify UniProt ID or internal ID for your substrate
-              source: uniprot # Or omit if internal ID
-    - terminator: rrnB_T1
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+              id: P04637  # TP53
+              source: uniprot
+    - terminator: T7term

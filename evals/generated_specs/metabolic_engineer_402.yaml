@@ -1,0 +1,62 @@
+construct:
+  name: "Pseudomonas_putida_Xyl_Pathway_Operon"
+  # Pseudomonas putida not in host list; defaulting to e_coli as a gram-negative proxy
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBBR1 # Broad-host-range origin for Pseudomonas
+    source: addgene
+  cassette:
+    - promoter: tac # Strong inducible promoter for gram-negative hosts
+    - cistron:
+        label: xylA
+        expression: high
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P0A113
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: xylB
+        expression: medium
+        fused: false
+        gene:
+          id: P0A115
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: xylC
+        expression: medium
+        fused: false
+        gene:
+          id: P0A116
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: xylD
+        expression: low
+        fused: false
+        gene:
+          id: P0A118
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: xylE
+        expression: low
+        fused: false
+        gene:
+          id: P06624
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: xylF
+        expression: very_low
+        fused: false
+        gene:
+          id: P19016
+          source: uniprot
+    - terminator: rrnB_T1

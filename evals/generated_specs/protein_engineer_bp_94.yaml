@@ -1,0 +1,27 @@
+construct:
+  name: "Pichia_Lipase_PDI_Coexpression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: target_lipase
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: LIP1
+              source: uniprot
+    - terminator: AOX1_TT
+    - promoter: GAP
+    - cistron:
+        label: PDI_helper
+        expression: medium
+        fused: false
+        gene:
+          id: PDI1
+          source: uniprot
+    - terminator: CYC1_TT

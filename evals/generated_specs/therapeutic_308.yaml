@@ -1,0 +1,26 @@
+construct:
+  name: "yeast_secreted_scfv_production_system"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin # G418/Geneticin selection in yeast
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: GAP # Constitutive high-level expression in yeast
+
+    - cistron:
+        label: secreted_scfv
+        expression: high
+        chain:
+          - tag: Alpha_factor # Secretion signal for yeast (S. cerevisiae alpha-mating factor)
+          - gene:
+              id: scFv_Trastuzumab
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: 6xHis # C-terminal purification tag
+
+    - terminator: CYC1_term # Standard yeast transcription terminator

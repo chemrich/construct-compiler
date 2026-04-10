@@ -1,0 +1,34 @@
+construct:
+  name: "pichia_pastoris_antibody_expression"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: heavy_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: antibody_HC
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1_TT
+
+    - spacer: 50
+
+    - promoter: AOX1
+    - cistron:
+        label: light_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: antibody_LC
+              source: uniprot
+    - terminator: AOX1_TT

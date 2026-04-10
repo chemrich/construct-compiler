@@ -1,0 +1,17 @@
+construct:
+  name: "ProteinX_Fc_Solubility_Fusion"
+  host: HEK293  # Switched host to HEK293 to support requested Fc-tag and mammalian UTRs, which are incompatible with E. coli
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: Fc
+          - cleavage_site: Enterokinase
+          - gene:
+              id: ProteinX
+              source: uniprot
+    - terminator: bGH_polyA

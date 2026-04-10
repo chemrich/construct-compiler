@@ -1,0 +1,17 @@
+construct:
+  name: "inducible_therapeutic_enzyme_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Inducible TRE3G promoter for robust, non-leaky, dose-dependent control
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P00740  # Human Coagulation Factor IX
+              source: uniprot
+    - terminator: bGH_pA

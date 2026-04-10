@@ -1,0 +1,17 @@
+construct:
+  name: "secreted_protein_P_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: IgK_leader  # Substituted OmpA with IgK leader; OmpA is a bacterial signal peptide and will not facilitate secretion in mammalian cells.
+          - tag: 6xHis       # Added 6xHis tag for purification; OmpA is a signal sequence, not a purification tag.
+          - gene:
+              id: P
+              source: uniprot
+    - terminator: bGH_PA # Standard mammalian polyA signal/terminator for pTwist CMV vectors.

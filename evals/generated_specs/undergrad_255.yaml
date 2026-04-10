@@ -1,0 +1,26 @@
+construct:
+  name: "e_coli_chromosomal_integration_TargetGene"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    # Promoter omitted per user request: construct serves as a donor template for chromosomal integration downstream of an endogenous promoter
+    - cistron:
+        label: left_homology_arm
+        gene:
+          id: HA_Left
+    - spacer: 30
+    - cistron:
+        label: target
+        fused: false # Ensures an RBS/start codon is provided for independent translation after integration
+        gene:
+          id: TargetGene
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: right_homology_arm
+        gene:
+          id: HA_Right
+    - terminator: rrnB_T1

@@ -1,0 +1,23 @@
+construct:
+  name: "Q_GFP_cleavable_fusion"
+  host: yeast
+  backbone:
+    catalog_vector: "pYES2"
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: Q
+              source: uniprot
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: HA
+    - terminator: CYC1

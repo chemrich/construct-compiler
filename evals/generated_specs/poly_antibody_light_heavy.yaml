@@ -1,42 +1,22 @@
-```yaml
 construct:
-  name: "scFv_light_heavy_bicistronic"
-  host: e_coli
-
+  name: "scFv_bicistronic_VL_VH_expression"
+  host: e_coli_bl21
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7
-
     - cistron:
-        label: scFv_light_chain
+        label: light_chain_variable
         expression: medium
         gene:
-          id: scFv_light_chain_gene
+          id: scFv_VL
           source: uniprot
-
     - spacer: 30
-
     - cistron:
-        label: scFv_heavy_chain_variable_domain
+        label: heavy_chain_variable
         expression: medium
+        fused: false
         gene:
-          id: scFv_heavy_chain_variable_domain_gene
+          id: scFv_VH
           source: uniprot
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

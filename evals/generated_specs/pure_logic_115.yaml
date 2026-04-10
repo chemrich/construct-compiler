@@ -1,0 +1,16 @@
+construct:
+  name: "temperature_sensitive_switch"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: pL  # pL is a lambda-derived promoter that, in conjunction with cI857, is repressed at 30°C and active above 37°C
+    - cistron:
+        label: HeatShockReporter
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1

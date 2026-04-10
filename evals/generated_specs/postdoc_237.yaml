@@ -1,0 +1,18 @@
+construct:
+  name: "human_kinase_sumo_ub_secretion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: kinase_target
+        expression: high
+        chain:
+          - tag: OmpA # Substituted mammalian signal peptide with OmpA for E. coli secretion compatibility
+          - solubility_tag: SUMO
+          - cleavage_site: Ubiquitin
+          - gene:
+              id: AKT1
+              source: uniprot
+    - terminator: T7term

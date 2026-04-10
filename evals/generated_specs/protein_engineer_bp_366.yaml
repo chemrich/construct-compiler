@@ -1,0 +1,19 @@
+construct:
+  name: "bacillus_protease_secretion_optimization"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: P43
+    - cistron:
+        label: secreted_protease
+        expression: high
+        chain:
+          - tag: SacB_signal_peptide
+          - gene:
+              id: protease
+              source: uniprot
+          - tag: Strep-II
+    - terminator: BBa_B0015

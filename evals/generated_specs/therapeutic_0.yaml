@@ -1,0 +1,20 @@
+construct:
+  name: "therapeutic_antibody_fragment_production"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: none  # User requested no antibiotic resistance; selection via auxotrophy or TA systems
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: antibody_fragment
+        expression: high
+        chain:
+          - tag: pelB  # Secretion signal for periplasmic folding of antibody fragment
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01857
+              source: uniprot
+    - terminator: T7term

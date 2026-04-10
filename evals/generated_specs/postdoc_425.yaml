@@ -1,0 +1,43 @@
+construct:
+  name: "membrane_protein_with_mammalian_chaperones"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_membrane_protein
+        expression: high
+        chain:
+          - gene:
+              id: target_membrane_protein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: BiP
+        fused: false
+        expression: medium
+        gene:
+          id: P11021
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: Calnexin
+        fused: false
+        expression: medium
+        gene:
+          id: P27824
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: Calreticulin
+        fused: false
+        expression: medium
+        gene:
+          id: P27355
+          source: uniprot
+    - terminator: T7term

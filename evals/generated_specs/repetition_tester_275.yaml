@@ -1,0 +1,19 @@
+construct:
+  name: "ProteinX_NonHomologous_Solubility_Fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinX
+              source: uniprot
+          - cleavage_site: Factor_Xa
+          - tag: 6xHis
+    - terminator: T7term

@@ -1,0 +1,15 @@
+construct:
+  name: "therapeutic_miRNA_mimic_ncRNA"
+  host: mammalian
+  backbone:
+    resistance: none # Selection-free backbone requested to avoid antibiotic resistance genes in therapeutic context
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: U6 # RNA Polymerase III promoter for high, constitutive non-coding RNA expression
+    - cistron:
+        label: miRNA_mimic
+        expression: high
+        gene:
+          id: hsa-mir-1-mimic # miRNA mimic includes necessary flanking sequences for Drosha/Dicer processing
+    - terminator: polyT # Standard RNA Polymerase III termination signal (T6 stretch)

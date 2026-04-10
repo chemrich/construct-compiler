@@ -1,0 +1,23 @@
+construct:
+  name: "tet_on_gene_x_inducible_system"
+  host: HEK293
+  backbone:
+    resistance: hygromycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: rtTA_regulator
+        gene:
+          id: rtTA3
+          source: uniprot
+    - terminator: SV40_pA
+    - spacer: 100
+    - promoter: TRE3G # Substituted TRE3G for EF1_alpha to enable doxycycline induction; a TRE-based promoter is required for rtTA-mediated activation.
+    - cistron:
+        label: target_gene_x
+        gene:
+          id: gene_x
+          source: uniprot
+    - terminator: bGH_pA

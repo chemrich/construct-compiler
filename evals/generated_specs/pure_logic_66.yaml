@@ -1,0 +1,44 @@
+construct:
+  name: "mammalian_crispr_xor_gate"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: dCas9_KRAB_repressor
+        expression: high
+        chain:
+          - gene:
+              id: Cas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: KRAB
+              source: uniprot
+    - terminator: SV40_polyA
+    - spacer: 50
+    - promoter: U6
+    - cistron:
+        label: sgRNA_input_A
+        gene:
+          id: sgRNA_A
+    - terminator: BBa_B0015
+    - spacer: 50
+    - promoter: U6
+    - cistron:
+        label: sgRNA_input_B
+        gene:
+          id: sgRNA_B
+    - terminator: BBa_B0015
+    - spacer: 50
+    - promoter: EF1_alpha
+    - cistron:
+        label: output_Z
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: bGH_polyA

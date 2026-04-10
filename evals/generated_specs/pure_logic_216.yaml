@@ -1,0 +1,47 @@
+construct:
+  name: "two_bit_combinatorial_decoder"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23106 # State 00: High in absence of inputs (Assumes default state)
+    - cistron:
+        label: state_00_RFP
+        expression: medium
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: BBa_B0015
+
+    - spacer: 40
+
+    - promoter: lacUV5 # State 01: Inducible by Input B (e.g., IPTG)
+    - cistron:
+        label: state_01_GFP
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015
+
+    - spacer: 40
+
+    - promoter: araBAD # State 10: Inducible by Input A (e.g., L-Arabinose)
+    - cistron:
+        label: state_10_BFP
+        expression: medium
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: BBa_B0015
+
+    - spacer: 40
+
+    - promoter: T7lac # State 11: High only when Inputs A and B are present
+    - cistron:
+        label: state_11_YFP
+        expression: high
+        gene:
+          id: mVenus
+          source: fpbase
+    - terminator: T7term

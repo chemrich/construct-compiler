@@ -1,0 +1,17 @@
+construct:
+  name: "InputA_Proportional_OutputZ"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: araBAD  # araBAD is selected for proportional titration (rheostatic control) via L-arabinose (Input_A)
+    - cistron:
+        label: output_z
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase  # Using sfGFP as a proxy for Output_Z to fulfill the fluorescent protein requirement
+          - tag: 6xHis        # C-terminal His-tag for purification as requested
+    - terminator: rrnB_T1

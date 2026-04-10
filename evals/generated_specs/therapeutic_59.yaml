@@ -1,0 +1,26 @@
+construct:
+  name: "Inducible_Therapeutic_mCherry_PEST_Fusion"
+  host: HEK293
+  backbone:
+    resistance: none  # User requested no antibiotic resistance
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: TRE3G  # Inducible mammalian promoter for precise control
+    - cistron:
+        label: monitoring_therapeutic_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: IL2  # Representative therapeutic protein
+              source: uniprot
+          - linker:
+              type: short_GS
+          - tag: PEST  # C-terminal degradation tag for half-life control
+    - terminator: bGH_pA  # Non-viral mammalian polyadenylation signal

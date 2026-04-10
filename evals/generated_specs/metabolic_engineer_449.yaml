@@ -1,0 +1,43 @@
+construct:
+  name: "S_pathway_expression_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: S_synthase
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: S_synthase
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: S_hydroxylase
+        expression: high
+        fused: false
+        gene:
+          id: S_hydroxylase
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: S_reductase
+        expression: high
+        fused: false
+        gene:
+          id: S_reductase
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: S_ligase
+        expression: high
+        fused: false
+        gene:
+          id: S_ligase
+          source: uniprot
+    - terminator: T7term

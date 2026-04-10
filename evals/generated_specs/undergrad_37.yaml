@@ -1,0 +1,19 @@
+construct:
+  name: "yeast_two_hybrid_bait_H"
+  host: yeast
+  backbone:
+    catalog_vector: "pGBKT7"  # Standard Y2H bait vector providing TRP1 selection and GAL4-DBD fusion
+  cassette:
+    - promoter: ADH1  # Strong constitutive yeast promoter standard for Y2H
+    - cistron:
+        label: bait_fusion
+        expression: high
+        chain:
+          - tag: GAL4_DBD
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: H
+              source: uniprot
+    - terminator: ADH1

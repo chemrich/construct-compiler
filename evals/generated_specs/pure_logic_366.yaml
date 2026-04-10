@@ -1,0 +1,42 @@
+construct:
+  name: "Autonomous_Lux_Oscillator"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Constitutive promoter for LuxR
+    - cistron:
+        label: luxR_activator
+        expression: medium
+        fused: false
+        gene:
+          id: P12746
+          source: uniprot
+    - spacer: 35
+    - promoter: pLuxI   # AHL-inducible promoter (activated by LuxR-AHL)
+    - cistron:
+        label: AHL_synthase
+        expression: high
+        fused: false
+        gene:
+          id: P12747
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: AHL_degrader
+        expression: high
+        fused: false
+        gene:
+          id: Q9L8R8
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: Pulse_Reporter
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

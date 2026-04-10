@@ -1,0 +1,50 @@
+construct:
+  name: "hexameric_amp_tandem_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: amp_tandem_repeat
+        expression: high
+        # Note: Interpreted "polycistronic mRNA" as a single cistron encoding a tandem-repeat 
+        # poly-protein to satisfy the requirement for "inter-peptide linkers" and a 
+        # "tag on the full poly-peptide".
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P11006
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P11006
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: P11006
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: P11006
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P11006
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: P11006
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,21 @@
+construct:
+  name: "constitutive_strep_purified_vaccine_antigen"
+  host: e_coli
+  backbone:
+    resistance: none # ARGs strictly prohibited; user assumes selection via auxotrophy or metabolic complementation
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: J23100 # Strong constitutive promoter from Anderson library
+    - cistron:
+        label: therapeutic_antigen
+        expression: high
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P02840 # UniProt ID for Circumsporozoite protein (Malaria antigen example)
+              source: uniprot
+    - terminator: rrnB_T1

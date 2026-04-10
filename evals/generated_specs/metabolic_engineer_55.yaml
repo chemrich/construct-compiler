@@ -1,0 +1,66 @@
+construct:
+  name: "flavonoid_pathway_yeast_optimization"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter
+    - cistron:
+        label: CHS
+        expression: high
+        chain:
+          - gene:
+              id: P13114
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: GST  # C-terminal GST-tag for pulldown
+    - terminator: CYC1
+
+    - promoter: TEF1  # Balanced high expression using unique strong yeast promoters
+    - cistron:
+        label: CHI
+        expression: high
+        gene:
+          id: P2B7E1
+          source: uniprot
+    - terminator: ADH1
+
+    - promoter: PGK1
+    - cistron:
+        label: F3H
+        expression: high
+        gene:
+          id: Q9S771
+          source: uniprot
+    - terminator: TEF1
+
+    - promoter: ADH1
+    - cistron:
+        label: FLS
+        expression: high
+        gene:
+          id: Q96330
+          source: uniprot
+    - terminator: PGK1
+
+    - promoter: ENO2
+    - cistron:
+        label: DFR
+        expression: high
+        gene:
+          id: P51102
+          source: uniprot
+    - terminator: ENO2
+
+    - promoter: PDC1
+    - cistron:
+        label: ANS
+        expression: high
+        gene:
+          id: Q96323
+          source: uniprot
+    - terminator: PDC1  # Final terminator for the construct

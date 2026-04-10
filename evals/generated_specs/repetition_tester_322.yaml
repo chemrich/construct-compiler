@@ -1,0 +1,22 @@
+construct:
+  name: "secreted_therapeutic_dual_purification"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01588
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Strep-II
+    - terminator: bGH_polyA

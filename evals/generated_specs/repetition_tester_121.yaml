@@ -1,0 +1,27 @@
+construct:
+  name: "non_homologous_dual_expression_ProteinA_ProteinB"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_a_cistron
+        expression: high
+        chain:
+          - gene:
+              id: ProteinA
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 40
+    - promoter: tac # Using a non-homologous promoter to satisfy the recombination constraint
+    - cistron:
+        label: protein_b_cistron
+        expression: high
+        fused: false # Ensures independent translation with its own RBS
+        chain:
+          - tag: FLAG
+          - gene:
+              id: ProteinB
+              source: uniprot
+    - terminator: rrnB_T1

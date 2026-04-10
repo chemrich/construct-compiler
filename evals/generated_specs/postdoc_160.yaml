@@ -1,0 +1,18 @@
+construct:
+  name: "SREBP_1a_E_coli_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        # Note: User requested a Kozak sequence for E. coli. Kozak sequences are eukaryotic; substituted with a strong Shine-Dalgarno/RBS for prokaryotic expression.
+        chain:
+          - tag: FLAG
+          - cleavage_site: TEV
+          - gene:
+              id: P36956
+              source: uniprot
+    - terminator: T7term

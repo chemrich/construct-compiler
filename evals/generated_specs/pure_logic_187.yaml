@@ -1,0 +1,24 @@
+construct:
+  name: "sequential_pulse_logic_circuit"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: product_a_repressor
+        fused: false
+        chain:
+          - gene:
+              id: P04483  # TetR repressor
+              source: uniprot
+          - tag: SsrA   # C-terminal degradation tag for temporal clearing
+    - spacer: 40
+    - promoter: J23106  # Constitutive promoter (TetR-repressible in this context)
+    - cistron:
+        label: product_b_target
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

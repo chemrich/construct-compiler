@@ -1,0 +1,22 @@
+construct:
+  name: "frequency_selective_yellow_filter"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: signal_processor
+        expression: medium
+        gene:
+          id: P04483 # TetR repressor for signal modulation
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_yellow
+        expression: high
+        fused: false
+        gene:
+          id: mVenus
+          source: fpbase
+    - terminator: T7term

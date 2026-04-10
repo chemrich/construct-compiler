@@ -1,0 +1,17 @@
+construct:
+  name: "mammalian_tf_expression_in_yeast"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: GPD # CMV is a mammalian promoter; substituted with the strong constitutive GPD (TDH3) promoter for S. cerevisiae
+    - cistron:
+        label: transcription_factor
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: CREB1
+              source: uniprot
+    - terminator: CYC1_term

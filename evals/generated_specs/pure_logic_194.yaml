@@ -1,0 +1,24 @@
+construct:
+  name: "frequency_discriminator_circuit"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Signal_Y sensor: responds to input pulses of arabinose
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30  # Physical separation for independent translation
+    - cistron:
+        label: discriminator_repressor
+        expression: low  # Low expression/weak RBS creates the temporal delay needed for high-frequency response
+        fused: false     # Independent translation for the repressor protein
+        gene:
+          id: P04483     # TetR repressor (UniProt) to provide incoherent feed-forward inhibition
+          source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,16 @@
+construct:
+  name: "yeast_food_grade_metabolic_engine_IDH1"
+  host: yeast
+  backbone:
+    resistance: kanamycin  # Required for E. coli cloning; final genomic integration is markerless/auxotrophic for food-grade compliance
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter (GPD) for high-level expression
+    - cistron:
+        label: target_enzyme
+        expression: high
+        gene:
+          id: P48735  # Human Isocitrate Dehydrogenase 1 (IDH1)
+          source: uniprot
+    - terminator: CYC1  # Standard yeast transcriptional terminator

@@ -1,0 +1,26 @@
+construct:
+  name: "yeast_negative_feedback_stable_output"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: pGAL1_TetO2 # Activated by Gal4 (Input G) and repressed by TetR (Feedback)
+    - cistron:
+        label: output_F
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30 # Intercistronic region (Note: for yeast, this would contain a P2A peptide for independent translation)
+    - cistron:
+        label: repressor
+        expression: medium
+        fused: false
+        gene:
+          id: TetR
+          source: uniprot
+    - terminator: CYC1_term

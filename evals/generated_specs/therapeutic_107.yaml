@@ -1,0 +1,18 @@
+construct:
+  name: clinical_nonviral_factor_IX_expression_system
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Note: For clinical applications, antibiotic-free selection systems like pFAR or pORT (sucrose/RNA-based) would be substituted for kanamycin.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Safe, non-viral mammalian promoter for stable clinical expression
+    - cistron:
+        label: factor_IX_therapeutic
+        expression: high
+        chain:
+          - tag: IL2_signal_peptide # High-efficiency secretion signal for mammalian systems
+          - gene:
+              id: P00740 # Human Coagulation Factor IX (pro-protein requiring proteolytic maturation)
+              source: uniprot
+    - terminator: bGH_polyA # Non-viral polyadenylation signal for mRNA stability and termination

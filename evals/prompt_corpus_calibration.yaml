@@ -1,0 +1,33 @@
+prompts:
+  - id: calib_must_have
+    category: calibration
+    prompt: "Design a simple expression cassette for GFP in E. coli. It must include a His-tag."
+    expect:
+      host: e_coli
+      must_have_parts:
+        - HisTag
+        - Promoter
+        - Terminator
+  - id: calib_must_not_have
+    category: calibration
+    prompt: "Design a construct for GeneX in E. coli. Do NOT include any antibiotic resistance genes in the cassette."
+    expect:
+      host: e_coli
+      must_not_have_parts:
+        - Resistance
+  - id: calib_logic
+    category: calibration
+    prompt: "Design a NOT gate in E. coli where Input A represses the expression of GFP."
+    expect:
+      host: e_coli
+      must_have_parts:
+        - Promoter
+        - Terminator
+      min_cistrons: 2
+  - id: calib_host_mismatch
+    category: calibration
+    prompt: "Design a construct for ProteinP in mammalian cells."
+    expect:
+      host: mammalian
+      must_have_parts:
+        - Promoter

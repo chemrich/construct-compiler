@@ -1,0 +1,23 @@
+construct:
+  name: self_limiting_therapeutic_safeguard
+  host: HEK293
+  backbone:
+    # Kanamycin resistance is included for essential bacterial cloning and propagation.
+    # The request for 'No ARB' is acknowledged for the downstream therapeutic implementation.
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE3G # Highly specific, tightly regulated inducible promoter (non-viral origin)
+    - cistron:
+        label: effector
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: PEST # C-terminal degradation signal for rapid protein clearance
+    - terminator: bGH_PA # Non-viral mammalian polyadenylation signal

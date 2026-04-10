@@ -1,0 +1,22 @@
+construct:
+  name: "persistence_timer_90m"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Activated by Trigger_T (Arabinose)
+    - cistron:
+        label: transducer
+        expression: very_low  # Low expression rate provides delay to reach activation threshold
+        gene:
+          id: P00552  # T7 RNA Polymerase
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: T7
+    - cistron:
+        label: Delayed_Reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

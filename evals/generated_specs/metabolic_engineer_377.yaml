@@ -1,0 +1,35 @@
+construct:
+  name: "CHO_multienzyme_secretion_pathway"
+  host: CHO
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_pathway
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: E1_enzyme
+              source: uniprot
+          - linker:
+              type: F2A
+              repeats: 1
+          - gene:
+              id: E2_enzyme
+              source: uniprot
+          - linker:
+              type: F2A
+              repeats: 1
+          - gene:
+              id: E3_enzyme
+              source: uniprot
+          - linker:
+              type: F2A
+              repeats: 1
+          - gene:
+              id: E4_enzyme
+              source: uniprot
+          - tag: 8xHis
+    - terminator: bGH_polyA

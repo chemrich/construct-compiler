@@ -1,0 +1,42 @@
+construct:
+  name: "anaerobic_pathway_Q1_Q4_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: PnirB  # Anaerobically inducible FNR-regulated promoter selected for oxygen-limited expression.
+    - cistron:
+        label: enzyme_Q1
+        expression: high
+        gene:
+          id: Q1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_Q2
+        expression: high
+        fused: false
+        gene:
+          id: Q2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_Q3
+        expression: high
+        fused: false
+        gene:
+          id: Q3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_Q4
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q4
+              source: uniprot
+    - terminator: rrnB_T1

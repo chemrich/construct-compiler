@@ -1,32 +1,16 @@
-```yaml
 construct:
-  name: "lentiviral_CMV_mEGFP_CHO"
+  name: "Lentiviral_CMV_mEGFP_Neomycin"
   host: CHO
-
   backbone:
-    catalog_vector: "pTwist CMV"
-
+    resistance: neomycin
+    ori: pUC
+    source: addgene
   cassette:
     - promoter: CMV
-
     - cistron:
-        label: mEGFP
+        label: target
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-
-    - terminator: BBa_B0015
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: SV40_polyA

@@ -1,0 +1,33 @@
+construct:
+  name: "mammalian_bicistronic_ires_puro"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin  # Bacterial selection; PuroR is included in the cassette for mammalian selection
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gene_A
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 574  # Approx length of IRES2 element for bicistronic expression
+    - cistron:
+        label: gene_B_puroR
+        expression: medium
+        fused: false  # IRES-mediated independent translation
+        gene:
+          id: PAC
+          source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

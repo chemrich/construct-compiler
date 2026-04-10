@@ -1,0 +1,30 @@
+construct:
+  name: "hrpRS_synthetic_and_gate"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Input A: Activated by L-arabinose
+    - cistron:
+        label: input_activator_r
+        expression: medium
+        gene:
+          id: P41443
+          source: uniprot
+    - spacer: 40
+    - promoter: lacUV5  # Input B: Activated by IPTG
+    - cistron:
+        label: input_activator_s
+        expression: medium
+        gene:
+          id: P41444
+          source: uniprot
+    - spacer: 40
+    - promoter: hrpL  # AND gate output: Requires both HrpR and HrpS proteins to activate
+    - cistron:
+        label: and_gate_output
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

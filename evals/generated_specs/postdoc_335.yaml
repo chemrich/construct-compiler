@@ -1,0 +1,36 @@
+construct:
+  name: "human_metabolic_reconstitution_yeast"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1 # Inducible yeast promoter selected for metabolic pathway control
+    - cistron:
+        label: E1
+        expression: medium
+        chain:
+          - gene:
+              id: E1
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: E2
+        expression: medium
+        fused: false # Independent translation for polycistronic-like architecture
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: E2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E3
+        expression: medium
+        fused: false
+        gene:
+          id: E3
+          source: uniprot
+    - terminator: CYC1 # Standard yeast terminator for transcript stability

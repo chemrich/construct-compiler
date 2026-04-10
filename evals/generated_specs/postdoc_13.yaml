@@ -1,0 +1,28 @@
+construct:
+  name: "sensor_a_effector_b_dual_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: sensor_a
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: SensorA
+              source: uniprot
+    - terminator: T7term
+    - promoter: T7lac
+    - cistron:
+        label: effector_b
+        expression: high
+        chain:
+          - gene:
+              id: EffectorB
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term

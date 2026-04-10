@@ -1,0 +1,28 @@
+construct:
+  name: "pET28b_MBP_TEV_Insulin_mScarletI"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: insulin_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01308
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: low
+        fused: false
+        gene:
+          id: mScarlet-I
+          source: fpbase
+    - terminator: T7term

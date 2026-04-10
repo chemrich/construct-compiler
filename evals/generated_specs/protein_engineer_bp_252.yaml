@@ -1,0 +1,26 @@
+construct:
+  name: "scFv_PDI_coexpression_Pichia"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: PDI_chaperone
+        expression: high
+        gene:
+          id: PDI1
+          source: uniprot
+    - terminator: AOX1_terminator
+    - promoter: AOX1
+    - cistron:
+        label: scFv_target
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: scFv
+          - tag: 6xHis
+    - terminator: AOX1_terminator

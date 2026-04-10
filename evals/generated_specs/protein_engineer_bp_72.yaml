@@ -1,0 +1,27 @@
+construct:
+  name: "Pichia_PAOX1_HSA_Fusion_Secretion"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: PAOX1
+
+    - cistron:
+        label: secreted_hsa_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - solubility_tag: HSA
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01308
+              source: uniprot
+          - tag: 6xHis
+
+    - terminator: AOX1_term

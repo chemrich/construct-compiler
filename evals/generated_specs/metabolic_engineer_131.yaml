@@ -1,0 +1,42 @@
+construct:
+  name: drug_metabolism_inducible_module
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: TRE
+    - cistron:
+        label: enzyme_1
+        gene:
+          id: DrugMet_1
+          source: uniprot
+    - cistron:
+        label: enzyme_2
+        fused: true
+        chain:
+          - linker:
+              type: P2A
+          - gene:
+              id: DrugMet_2
+              source: uniprot
+    - cistron:
+        label: enzyme_3
+        fused: true
+        chain:
+          - linker:
+              type: T2A
+          - gene:
+              id: DrugMet_3
+              source: uniprot
+    - cistron:
+        label: enzyme_4
+        fused: true
+        chain:
+          - linker:
+              type: E2A
+          - gene:
+              id: DrugMet_4
+              source: uniprot
+    - terminator: bGH_pA

@@ -1,0 +1,20 @@
+construct:
+  name: "therapeutic_enzyme_soluble_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: none # User specified no antibiotic resistance; implies auxotrophic or toxin-antitoxin selection
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: Enterokinase
+          - gene:
+              id: P00805
+              source: uniprot
+    - terminator: T7term

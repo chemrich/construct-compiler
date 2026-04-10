@@ -1,0 +1,26 @@
+construct:
+  name: "scFv_PDI_folding_improvement_Pichia"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: secreted_scFv
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: scFv
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 40
+    - promoter: GAP
+    - cistron:
+        label: PDI_chaperone
+        fused: false
+        gene:
+          id: PDI1
+          source: uniprot
+    - terminator: AOX1_term

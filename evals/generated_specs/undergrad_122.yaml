@@ -1,0 +1,17 @@
+construct:
+  name: "mammalian_secretory_protein_y"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: IgK_leader  # Secretion signal for mammalian host
+          - tag: Strep-II
+          - gene:
+              id: protein_y
+              source: uniprot
+    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal/terminator

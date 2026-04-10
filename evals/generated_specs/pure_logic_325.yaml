@@ -1,0 +1,34 @@
+construct:
+  name: "recombinase_three_pulse_counter"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Signal J is Arabinose
+    - cistron:
+        label: counter_stage_1
+        expression: medium
+        gene:
+          id: P06956 # Cre recombinase
+          source: uniprot
+    - spacer: 30 # Spacers contain the logic-gating recombination sites (lox/FRT)
+    - cistron:
+        label: counter_stage_2
+        expression: medium
+        fused: false
+        gene:
+          id: P03870 # Flp recombinase
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_stage_3
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

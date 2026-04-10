@@ -1,0 +1,35 @@
+construct:
+  name: "yeast_metabolic_pathway_operon"
+  host: yeast
+  backbone:
+    resistance: ampicillin  # Selection marker for E. coli cloning
+    ori: pUC                # High-copy bacterial origin for plasmid propagation
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha   # Constitutive eukaryotic promoter compatible with yeast
+    - cistron:
+        label: enzyme_1
+        expression: medium
+        chain:
+          - gene:
+              id: E1
+              source: uniprot
+    - spacer: 30            # Note: Yeast requires IRES or 2A peptides for polycistronic translation; this spacer represents a bicistronic bridge
+    - cistron:
+        label: enzyme_2
+        expression: medium
+        fused: false        # Independent translation from the same mRNA transcript
+        chain:
+          - gene:
+              id: E2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_3
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: E3
+              source: uniprot
+    - terminator: BBa_B0015 # Standard synthetic terminator to end the polycistronic transcript

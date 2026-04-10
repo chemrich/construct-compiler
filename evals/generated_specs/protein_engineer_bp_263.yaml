@@ -1,0 +1,28 @@
+construct:
+  name: "bacillus_megaterium_synergistic_enzymes"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: Pxyl
+    - cistron:
+        label: enzyme_a_secretion
+        expression: high
+        chain:
+          - tag: AprE
+          - gene:
+              id: enzyme_a
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_b_secretion
+        expression: high
+        fused: false
+        chain:
+          - tag: AprE
+          - gene:
+              id: enzyme_b
+              source: uniprot
+    - terminator: rrnB_T1

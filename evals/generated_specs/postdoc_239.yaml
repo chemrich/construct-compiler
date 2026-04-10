@@ -1,0 +1,18 @@
+construct:
+  name: "hts_peptide_his_spytag"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_peptide
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P01275
+              source: uniprot
+          - tag: SpyTag
+    - terminator: T7term # Substituted BGH polyA with T7term; BGH is a mammalian polyadenylation signal and does not function as a terminator in E. coli.

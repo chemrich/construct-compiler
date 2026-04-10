@@ -1,0 +1,27 @@
+construct:
+  name: "T7_mNeonGreen_mCherry_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: mNeonGreen_expression
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Thrombin
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - spacer: 40
+    - cistron:
+        label: mCherry_reporter
+        expression: low
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: T7term

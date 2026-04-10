@@ -1,0 +1,34 @@
+construct:
+  name: "mammalian_dual_fusion_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_a_fusion
+        chain:
+          - gene:
+              id: ProteinA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: bGH_polyA
+    - promoter: EF1_alpha
+    - cistron:
+        label: protein_b_fusion
+        chain:
+          - gene:
+              id: ProteinB
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: SV40_polyA

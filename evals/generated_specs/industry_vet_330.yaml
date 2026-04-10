@@ -1,0 +1,19 @@
+construct:
+  name: "AAVR_membrane_protein_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_receptor
+        expression: high
+        chain:
+          - gene:
+              id: KIAA0319L
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: FLAG
+    - terminator: bGH_polyA

@@ -1,0 +1,35 @@
+construct:
+  name: "yeast_diversified_multivalent_scaffold"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene # Standard yeast shuttle vector backbone
+  cassette:
+    - promoter: TDH3 # High-expression constitutive yeast promoter (substitution for GPD)
+    - cistron:
+        label: "scaffold_core"
+        expression: high
+        chain:
+          - gene:
+              id: "PDZ_domain_PSD95"
+              source: uniprot
+          - linker:
+              type: GS_flexible # Unique linker 1
+              repeats: 4
+          - gene:
+              id: "PDZ_domain_PSD95" # DNA will be codon-diversified/synonymous to prevent recombination
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK # Unique linker 2
+              repeats: 3
+          - gene:
+              id: "PDZ_domain_PSD95" # DNA will be codon-diversified/synonymous
+              source: uniprot
+          - linker:
+              type: short_GS # Unique linker 3
+              repeats: 2
+          - gene:
+              id: "PDZ_domain_PSD95" # DNA will be codon-diversified/synonymous
+              source: uniprot
+    - terminator: CYC1_term # Standard yeast terminator

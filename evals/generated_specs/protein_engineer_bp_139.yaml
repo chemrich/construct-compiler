@@ -1,0 +1,22 @@
+construct:
+  name: "Bacillus_subtilis_vaccine_antigen_secretion"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pveg
+    - cistron:
+        label: vaccine_antigen
+        expression: high
+        chain:
+          - secretion_signal: VapA
+          - gene:
+              id: P0DTC2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: FLAG
+    - terminator: rrnB_T1 # Utilizing standard rrnB terminator for Bacillus host

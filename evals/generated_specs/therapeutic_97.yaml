@@ -1,0 +1,18 @@
+construct:
+  name: "exosome_loading_cytoplasmic_nonviral"
+  host: HEK293
+  backbone:
+    # Kanamycin used for bacterial propagation; final delivery assumed to be antibiotic-free as requested.
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Moderate, non-viral constitutive promoter
+    - cistron:
+        label: exosome_loader
+        expression: medium
+        chain:
+          - gene:
+              id: SDCBP # Syntenin-1: Cytoplasmic protein facilitating exosome loading/biogenesis
+              source: uniprot
+    - terminator: bGH_polyA # Non-viral polyadenylation signal

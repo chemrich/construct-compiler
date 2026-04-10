@@ -1,0 +1,52 @@
+construct:
+  name: "pseudomonas_putida_5_enzyme_operon"
+  host: pseudomonas_putida
+  backbone:
+    resistance: kanamycin
+    ori: pBBR1
+    source: custom
+  cassette:
+    - promoter: Pm  # Inducible XylS/Pm promoter for Pseudomonas
+    - cistron:
+        label: DegA
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: DegA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegB
+        expression: high
+        fused: false
+        gene:
+          id: DegB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegC
+        expression: high
+        fused: false
+        gene:
+          id: DegC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegD
+        expression: high
+        fused: false
+        gene:
+          id: DegD
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: DegE
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: DegE
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

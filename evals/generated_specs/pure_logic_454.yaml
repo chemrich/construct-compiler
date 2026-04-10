@@ -1,0 +1,32 @@
+construct:
+  name: "sustained_signal_persistence_filter"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Input S (Arabinose sensor)
+    - cistron:
+        label: integrator
+        expression: low  # Low expression creates a longer delay for signal accumulation
+        gene:
+          id: P12747  # LuxI: AHL synthase
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: J23100  # Constitutive promoter
+    - cistron:
+        label: regulator
+        expression: medium
+        gene:
+          id: P12746  # LuxR: Transcription factor responsive to AHL
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: Plux  # Logic gate: Activates ONLY when LuxR + accumulated AHL are present
+    - cistron:
+        label: output_Z
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term # Standard terminator for the final output unit

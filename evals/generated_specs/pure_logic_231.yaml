@@ -1,0 +1,28 @@
+construct:
+  name: "mammalian_self_regulating_feedback_loop"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE_CMV # Synthetic Tet-responsive promoter allows for negative feedback regulation by TetR
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal for optimized export in mammalian cells
+          - gene:
+              id: P01588 # Erythropoietin (EPO), used here as a representative therapeutic protein
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: feedback_regulator
+        expression: medium
+        fused: false # Independent translation via IRES/RBS to produce a separate repressor protein
+        chain:
+          - tag: NLS # Nuclear Localization Signal to ensure the repressor enters the nucleus
+          - gene:
+              id: P04483 # Tet repressor protein (TetR), which binds the TRE_CMV promoter to inhibit further transcription
+              source: uniprot
+    - terminator: bGH_pA # Standard bovine growth hormone polyadenylation signal for mammalian termination

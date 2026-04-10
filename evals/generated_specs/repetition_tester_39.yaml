@@ -1,0 +1,23 @@
+construct:
+  name: "ProteinP_diversified_dual_tag"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: ProteinP_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: ProteinP
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Strep-II
+    - terminator: T7term

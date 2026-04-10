@@ -1,0 +1,32 @@
+construct:
+  name: "metabolite_responsive_operon_switch"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # araBAD is activated by L-arabinose, serving as the metabolic switch for metabolite N
+    - cistron:
+        label: enzyme_m1
+        expression: high
+        gene:
+          id: P0A9B2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_m2
+        expression: high
+        fused: false
+        gene:
+          id: P09052
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_m3
+        expression: high
+        fused: false
+        gene:
+          id: P0AFG8
+          source: uniprot
+    - terminator: rrnB_T1

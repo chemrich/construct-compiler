@@ -1,0 +1,19 @@
+construct:
+  name: "yeast_membrane_protein_gst_tev_fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1 # GAL1 promoter selected for inducible expression in yeast
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - cleavage_site: TEV
+          - gene:
+              id: target_membrane_protein
+              source: uniprot
+    - terminator: CYC1_term # CYC1 terminator selected for yeast compatibility

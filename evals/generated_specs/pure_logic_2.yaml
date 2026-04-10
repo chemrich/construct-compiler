@@ -1,0 +1,37 @@
+construct:
+  name: "mammalian_or_gate_cytokine"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE3G  # Input 1: Doxycycline-inducible promoter
+    - cistron:
+        label: cytokine_branch_1
+        expression: high
+        chain:
+          - gene:
+              id: P60568  # Human Interleukin-2 (IL-2), naturally contains secretion signal
+              source: uniprot
+    - terminator: bgh_polyA
+
+    - promoter: CRE  # Input 2: cAMP-responsive promoter (e.g., Forskolin)
+    - cistron:
+        label: cytokine_branch_2
+        expression: high
+        chain:
+          - gene:
+              id: P60568
+              source: uniprot
+    - terminator: bgh_polyA
+
+    - promoter: GRE  # Input 3: Glucocorticoid-responsive promoter (e.g., Dexamethasone)
+    - cistron:
+        label: cytokine_branch_3
+        expression: high
+        chain:
+          - gene:
+              id: P60568
+              source: uniprot
+    - terminator: bgh_polyA

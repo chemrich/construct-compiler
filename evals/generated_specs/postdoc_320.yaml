@@ -1,0 +1,17 @@
+construct:
+  name: "human_GPCR_cytoplasmic_domain_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P07550  # Human ADRB2 used as representative GPCR
+              source: uniprot
+    - terminator: T7term

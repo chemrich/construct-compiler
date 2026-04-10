@@ -1,0 +1,37 @@
+construct:
+  name: "Soluble_Logic_Logic_Array_A_NOT_B_OR_C"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Logic Input A (Inducer: Arabinose). NOT B is handled by catabolite repression if B=Glucose.
+      cistron:
+        label: output_gate_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+      terminator: rrnB_T1
+
+    - promoter: T7lac  # Logic Input C (Inducer: IPTG). OR gate functionality via independent cassette.
+      cistron:
+        label: output_gate_2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+      terminator: T7term

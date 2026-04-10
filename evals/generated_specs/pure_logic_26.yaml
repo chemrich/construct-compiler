@@ -1,0 +1,35 @@
+construct:
+  name: "positive_feedback_amplification_loop"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: luxI
+    - cistron:
+        label: regulator
+        expression: medium
+        fused: false
+        gene:
+          id: P12746
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: feedback_generator
+        expression: medium
+        fused: false
+        gene:
+          id: P12747
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: amplified_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00512
+              source: uniprot
+    - terminator: BBa_B0015

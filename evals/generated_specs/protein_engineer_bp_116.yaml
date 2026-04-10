@@ -1,0 +1,19 @@
+construct:
+  name: "Bacillus_maltose_inducible_nanobody_secretion"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: custom
+  cassette:
+    - promoter: Pglv # Maltose-inducible promoter for Bacillus subtilis
+    - cistron:
+        label: secreted_nanobody
+        expression: high
+        chain:
+          - tag: AmyE # N-terminal secretion signal for Bacillus
+          - gene:
+              id: nanobody
+              source: uniprot
+          - tag: c-Myc # C-terminal detection tag
+    - terminator: BBa_B0015

@@ -1,0 +1,34 @@
+construct:
+  name: "metabolon_4_enzyme_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_metabolon
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "enzyme_1"
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: "enzyme_2"
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: "enzyme_3"
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: "enzyme_4"
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,27 @@
+construct:
+  name: "mammalian_ires_therapeutic_coexpression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: pd_1_receptor
+        expression: high
+        chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: Q15116
+              source: uniprot
+    - spacer: 574 # Approximate length of EMCV IRES for stoichiometric co-expression
+    - cistron:
+        label: pd_l1_ligand
+        expression: high
+        fused: false # Indicates independent translation via the IRES-containing spacer
+        gene:
+          id: Q9NZQ7
+          source: uniprot
+    - terminator: bGH_PA

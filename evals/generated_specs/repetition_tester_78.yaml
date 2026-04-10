@@ -1,0 +1,47 @@
+construct:
+  name: "optogenetic_cry2_cib1_activation_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: cry2_activator
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P93080
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P04486
+              source: uniprot
+    - terminator: bGH_polyA
+    - promoter: EF1_alpha
+    - cistron:
+        label: cib1_dna_binder
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P03300
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Q9SJB4
+              source: uniprot
+    - terminator: SV40_polyA
+    - promoter: UAS
+    - cistron:
+        label: luciferase_reporter
+        expression: high
+        gene:
+          id: P08659
+          source: uniprot
+    - terminator: hGH_polyA

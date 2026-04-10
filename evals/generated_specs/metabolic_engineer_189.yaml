@@ -1,0 +1,51 @@
+construct:
+  name: "multicistronic_biosensor_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Constitutive promoter for sensor components
+    - cistron:
+        label: sensor_kinase
+        expression: medium
+        gene:
+          id: EnvZ
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: phosphatase
+        expression: medium
+        fused: false
+        gene:
+          id: CheZ
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: response_regulator
+        expression: medium
+        fused: false
+        gene:
+          id: OmpR
+          source: uniprot
+    - promoter: tac  # Substituted tac for a response-regulator regulated promoter as a standard inducible proxy
+    - cistron:
+        label: gfp_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: mcherry_reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: rrnB_T1

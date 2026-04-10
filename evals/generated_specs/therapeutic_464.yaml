@@ -1,0 +1,28 @@
+construct:
+  name: "dCas9_VP64_sgRNA_mammalian_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: dCas9_activator
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Q99ZW2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: VP64
+          - tag: NLS
+    - terminator: BGH_pA
+    - promoter: U6
+    - cistron:
+        label: sgRNA
+        gene:
+          id: sgRNA_scaffold
+    - terminator: PolyT

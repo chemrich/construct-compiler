@@ -1,0 +1,24 @@
+construct:
+  name: yeast_surface_display_domainy
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: yeast_display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: AGA2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - tag: HA
+          - gene:
+              id: DomainY
+              source: uniprot
+    - terminator: CYC1

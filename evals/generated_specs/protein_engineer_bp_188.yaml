@@ -1,0 +1,20 @@
+construct:
+  name: "bacillus_subtilis_cytokine_secretion"
+  host: bacillus
+  backbone:
+    resistance: chloramphenicol
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: secreted_cytokine
+        expression: high
+        chain:
+          - tag: AprE  # Signal peptide for Bacillus secretion
+          - tag: 6xHis
+          - cleavage_site: Enterokinase
+          - gene:
+              id: P60568 # Human Interleukin-2 (representative cytokine)
+              source: uniprot
+    - terminator: rrnB_T1

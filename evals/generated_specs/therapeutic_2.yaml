@@ -1,0 +1,20 @@
+construct:
+  name: "yeast_intracellular_vaccine_antigen"
+  host: yeast
+  backbone:
+    resistance: ura3  # URA3 auxotrophic marker used for non-antibiotic selection in yeast
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Strong constitutive promoter for high-level expression in yeast
+    - cistron:
+        label: vaccine_antigen
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: SUMO  # SUMO tag added to enhance solubility and allow for scarless cleavage
+          - cleavage_site: TEV
+          - gene:
+              id: P0DTC2  # SARS-CoV-2 Spike protein as representative vaccine antigen
+              source: uniprot
+    - terminator: CYC1  # Standard yeast transcriptional terminator

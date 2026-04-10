@@ -1,0 +1,27 @@
+construct:
+  name: "pGAP_HSA_Zeo_rDNA_integration"
+  host: yeast
+  backbone:
+    resistance: zeocin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: hsa_secretion
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: P02768
+              source: uniprot
+    - spacer: 50
+    - promoter: TEF1
+    - cistron:
+        label: zeo_selection
+        expression: medium
+        fused: false
+        gene:
+          id: P17493
+          source: uniprot
+    - terminator: AOX1_TT

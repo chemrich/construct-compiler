@@ -1,0 +1,28 @@
+construct:
+  name: "alpha_beta_dual_expression"
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: alpha
+        expression: high
+        fused: false
+        gene:
+          id: alpha
+          source: uniprot
+    - terminator: T7term
+    - spacer: 40
+    - promoter: Trp
+    - cistron:
+        label: beta
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: beta
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

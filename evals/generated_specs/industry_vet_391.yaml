@@ -1,0 +1,23 @@
+construct:
+  name: "his_tagged_bacterial_protein_sfgfp_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    # Substituted pET-28b(+) for AAV backbone to support high-level E. coli expression and T7-based regulation
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "target_protein" # Replace with your specific bacterial protein UniProt ID
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: T7term

@@ -1,0 +1,22 @@
+construct:
+  name: "divergent_two_enzyme_pathway"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_A
+        expression: high
+        gene:
+          id: P0AD61
+          source: uniprot
+    - spacer: 53  # Prime-length spacer to minimize repetitive motifs and direct repeats
+    - cistron:
+        label: enzyme_B
+        expression: high
+        fused: false  # Ensures independent translation with a unique RBS
+        gene:
+          id: P0A9P0
+          source: uniprot
+    - terminator: T7term

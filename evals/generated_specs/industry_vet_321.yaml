@@ -1,0 +1,18 @@
+construct:
+  name: "secreted_therapeutic_epo_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - tag: IgK_leader  # Signal peptide for efficient secretion
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01588
+              source: uniprot
+    - terminator: bGH_polyA  # Standard mammalian terminator for pTwist CMV backbones

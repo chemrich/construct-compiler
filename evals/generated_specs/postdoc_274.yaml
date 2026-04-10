@@ -1,0 +1,30 @@
+construct:
+  name: "divergent_protein_r_s_tandem_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    # Note: The tool schema does not support explicit reverse orientation for divergent cassettes. 
+    # This design uses two tandem expression cassettes as a functional replacement for a bidirectional setup.
+    - promoter: T7lac
+    - cistron:
+        label: protein_r
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Protein_R
+              source: uniprot
+    - terminator: rrnB_T1
+    - promoter: T7lac
+    - cistron:
+        label: protein_s
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Protein_S
+              source: uniprot
+    - terminator: rrnB_T1

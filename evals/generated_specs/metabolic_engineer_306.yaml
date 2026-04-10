@@ -1,0 +1,42 @@
+construct:
+  name: "tryptophan_derivative_biosynthesis_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: TrpED_fusion
+        expression: high
+        chain:
+          - gene:
+              id: TrpE
+              source: uniprot
+          - cleavage_site: TEV
+          - gene:
+              id: TrpD
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: TrpC
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: TrpC
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: TrpF
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: TrpF
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

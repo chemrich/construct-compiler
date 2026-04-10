@@ -1,0 +1,33 @@
+construct:
+  name: "pichia_split_intein_system"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: n_terminal_fragment
+        expression: high
+        chain:
+          - gene:
+              id: target_domain_a
+              source: uniprot
+          - gene:
+              id: n_intein
+              source: uniprot
+    - terminator: AOX1_TT
+    - spacer: 50
+    - promoter: AOX1
+    - cistron:
+        label: c_terminal_fragment
+        expression: high
+        chain:
+          - gene:
+              id: c_intein
+              source: uniprot
+          - gene:
+              id: target_domain_b
+              source: uniprot
+    - terminator: AOX1_TT

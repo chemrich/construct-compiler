@@ -1,0 +1,25 @@
+construct:
+  name: "t7_operon_gene_a_gene_b"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: gene_a_cistron
+        expression: high
+        chain:
+          - gene:
+              id: Gene_A
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: gene_b_cistron
+        expression: high
+        fused: false
+        gene:
+          id: Gene_B
+          source: uniprot
+    - terminator: T7term

@@ -1,0 +1,20 @@
+construct:
+  name: "bacillus_pxyl_sumo_nanobody_strep"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110  # Standard Bacillus subtilis origin
+    source: addgene
+  cassette:
+    - promoter: Pxyl  # Xylose-inducible promoter for Bacillus
+    - cistron:
+        label: target_nanobody
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: nanobody
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

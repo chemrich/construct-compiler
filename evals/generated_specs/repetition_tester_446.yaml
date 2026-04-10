@@ -1,0 +1,38 @@
+construct:
+  name: "yeast_surface_display_linker_test"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: Aga2_flexible_display
+        expression: high
+        chain:
+          - gene:
+              id: P02829
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1
+    - promoter: TEF1
+    - cistron:
+        label: Aga2_rigid_display
+        expression: high
+        chain:
+          - gene:
+              id: P02829
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: ADH1

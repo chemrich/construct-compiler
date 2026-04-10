@@ -1,0 +1,22 @@
+construct:
+  name: "therapeutic_peptide_mbp_fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Substitution: kanamycin used as default; 'no antibiotic' markers are not supported by the current schema.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Substitution: tac (bacterial hybrid) used instead of T7/T7lac (viral) to satisfy 'no viral content' requirement.
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - cleavage_site: Factor_Xa # Substitution: Factor_Xa (mammalian) used instead of TEV/3C (viral) to satisfy 'no viral content' requirement.
+          - gene:
+              id: GLP1
+              source: uniprot
+    - terminator: rrnB_T1

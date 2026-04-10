@@ -1,0 +1,36 @@
+construct:
+  name: "Bacillus_subtilis_chaperone_pullulanase_coexpression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pveg
+    - cistron:
+        label: chaperone_GroEL
+        expression: medium
+        fused: false
+        gene:
+          id: P19207
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: chaperone_GroES
+        expression: medium
+        fused: false
+        gene:
+          id: P19208
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: secreted_pullulanase
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE
+          - gene:
+              id: P38940
+              source: uniprot
+          - tag: FLAG
+    - terminator: BBa_B0015

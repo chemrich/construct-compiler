@@ -1,0 +1,33 @@
+construct:
+  name: "yeast_xyz_complex_polyprotein"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: xyz_polyprotein
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: protein_X
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: protein_Y
+              source: uniprot
+          - linker:
+              type: F2A
+          - gene:
+              id: protein_Z
+              source: uniprot
+    - terminator: CYC1

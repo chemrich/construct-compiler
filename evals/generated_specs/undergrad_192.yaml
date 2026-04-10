@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_cas9_sgrna_genex_knockout"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: cas9_expression
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Cas9
+              source: uniprot
+    - terminator: SV40_polyA
+    - promoter: U6
+    - cistron:
+        label: sgrna_expression
+        expression: high
+        gene:
+          id: sgRNA_GeneX
+          source: uniprot
+    - terminator: BBa_B0015

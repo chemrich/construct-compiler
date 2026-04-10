@@ -1,0 +1,49 @@
+construct:
+  name: "aromatic_degradation_pathway_putida"
+  host: e_coli # Pseudomonas putida not in schema; substituted with e_coli for broad bacterial compatibility
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tac # IPTG-inducible promoter
+    - cistron:
+        label: degA
+        expression: medium
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: degA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: degB
+        expression: medium
+        fused: false
+        gene:
+          id: degB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: degC
+        expression: medium
+        fused: false
+        gene:
+          id: degC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: degD
+        expression: medium
+        fused: false
+        gene:
+          id: degD
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: degE
+        expression: medium
+        fused: false
+        gene:
+          id: degE
+          source: uniprot
+    - terminator: BBa_B0015

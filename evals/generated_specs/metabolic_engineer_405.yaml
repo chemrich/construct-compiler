@@ -1,0 +1,43 @@
+construct:
+  name: "four_enzyme_operon_s1_s4"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100 # Strong constitutive promoter for non-repressible expression
+    - cistron:
+        label: enzyme_s1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: S1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_s2
+        expression: high
+        fused: false
+        gene:
+          id: S2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_s3
+        expression: high
+        fused: false
+        gene:
+          id: S3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_s4
+        expression: high
+        fused: false
+        gene:
+          id: S4
+          source: uniprot
+    - terminator: rrnB_T1

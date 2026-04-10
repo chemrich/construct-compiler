@@ -1,0 +1,26 @@
+construct:
+  name: "acid_sensing_resistance_circuit"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: asr  # pH-sensitive promoter from E. coli activated at pH < 6.0
+    - cistron:
+        label: acid_chaperone
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: hdeA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1

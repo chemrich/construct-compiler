@@ -1,0 +1,27 @@
+construct:
+  name: gene_x_redundant_orthogonal_constitutive_expression
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Strong constitutive Anderson promoter
+    - cistron:
+        label: gene_x_variant_a
+        expression: high
+        fused: false
+        gene:
+          id: GeneX
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 100  # Physical separation to prevent read-through and recombination
+    - promoter: J23106  # Distinct sequence strong constitutive promoter
+    - cistron:
+        label: gene_x_variant_b
+        expression: high
+        fused: false
+        gene:
+          id: GeneX
+          source: uniprot
+    - terminator: BBa_B0015  # Non-homologous double terminator sequence

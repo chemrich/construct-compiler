@@ -1,0 +1,31 @@
+construct:
+  name: "Pichia_pastoris_dual_antibody_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: heavy_chain_unit
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: heavy_chain
+              source: uniprot
+          - tag: Myc
+    - terminator: AOX1_term
+    - spacer: 30
+    - promoter: AOX1
+    - cistron:
+        label: light_chain_unit
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: light_chain
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1_term

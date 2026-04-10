@@ -1,0 +1,22 @@
+construct:
+  name: "therapeutic_fab_ires_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: light_chain
+        expression: high
+        gene:
+          id: LC_trastuzumab
+          source: uniprot
+    - spacer: 585 # Length of IRES sequence for internal ribosome entry
+    - cistron:
+        label: heavy_chain
+        expression: high
+        fused: false
+        gene:
+          id: HC_trastuzumab
+          source: uniprot
+    - terminator: bGH_polyA

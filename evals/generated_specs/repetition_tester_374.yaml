@@ -1,0 +1,26 @@
+construct:
+  name: "dual_periplasmic_secretion_P_Q"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: ProteinP_secretion
+        expression: high
+        chain:
+          - tag: pelB
+          - gene:
+              id: ProteinP
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ProteinQ_secretion
+        expression: high
+        fused: false
+        chain:
+          - tag: ompA
+          - gene:
+              id: ProteinQ
+              source: uniprot
+    - terminator: T7term

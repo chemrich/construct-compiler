@@ -1,0 +1,23 @@
+construct:
+  name: "pBAD_GFP_expression_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23106  # Constitutive promoter for expression of the AraC regulator
+    - cistron:
+        label: araC_regulator
+        gene:
+          id: P0A9E0
+          source: uniprot
+    - spacer: 40
+    - promoter: araBAD  # The pBAD promoter, regulated by AraC and arabinose
+    - cistron:
+        label: gfp_reporter
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1

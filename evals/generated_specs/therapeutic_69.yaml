@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_surface_display_vaccine_antigen"
+  host: yeast
+  backbone:
+    resistance: ura3_auxotroph  # Substituted antibiotic resistance with auxotrophic marker per user request for antibiotic-free construct
+    ori: 2_micron
+    source: custom
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae
+    - cistron:
+        label: display_antigen
+        expression: high
+        chain:
+          - tag: alpha_factor  # Secretion signal for export to the cell surface
+          - gene:
+              id: P0DTC2  # SARS-CoV-2 Spike protein RBD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: Aga2p  # Yeast surface display anchor protein
+    - terminator: CYC1_term

@@ -1,0 +1,19 @@
+construct:
+  name: "pH_responsive_ON_gate_yeast"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: FIT2 # Natural acid-inducible promoter in S. cerevisiae (active at pH < 6.0)
+    - cistron:
+        label: Output_W
+        expression: high
+        chain:
+          - tag: alpha_factor # N-terminal secretion signal for yeast
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - tag: GPI_anchor # C-terminal cell-surface localization anchor
+    - terminator: CYC1_term

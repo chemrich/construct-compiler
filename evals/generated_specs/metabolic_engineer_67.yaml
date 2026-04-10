@@ -1,0 +1,57 @@
+construct:
+  name: amino_acid_synthesis_5gene_operon
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: enzyme_1
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: E1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: E2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: E3
+              source: uniprot
+          - cleavage_site: TEV
+    - spacer: 30
+    - cistron:
+        label: enzyme_4
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: E4
+              source: uniprot
+          - cleavage_site: TEV
+    - spacer: 30
+    - cistron:
+        label: enzyme_5
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: E5
+              source: uniprot
+          - cleavage_site: TEV
+    - terminator: BBa_B0015

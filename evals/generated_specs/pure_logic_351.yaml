@@ -1,0 +1,17 @@
+construct:
+  name: "yeast_or_gate_metX_drugY"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: "pOR_metX_drugY" # Chimeric yeast promoter containing binding sites for metabolite_X and drug_Y response factors to implement OR logic
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: CYC1_term

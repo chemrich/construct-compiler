@@ -1,0 +1,54 @@
+construct:
+  name: "antibiotic_biosynthesis_pathway"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: J23100 # High-level constitutive promoter selected for requested expression profile
+    - cistron:
+        label: enzyme_a
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Enzyme_A
+    - spacer: 30
+    - cistron:
+        label: enzyme_b
+        expression: high
+        fused: false
+        gene:
+          id: Enzyme_B
+    - spacer: 30
+    - cistron:
+        label: enzyme_c
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Enzyme_C
+          - cleavage_site: TEV
+          - solubility_tag: SUMO
+    - spacer: 30
+    - cistron:
+        label: enzyme_d
+        expression: high
+        fused: false
+        gene:
+          id: Enzyme_D
+    - spacer: 30
+    - cistron:
+        label: enzyme_e
+        expression: high
+        fused: false
+        gene:
+          id: Enzyme_E
+    - spacer: 30
+    - cistron:
+        label: enzyme_f
+        expression: high
+        fused: false
+        gene:
+          id: Enzyme_F
+    - terminator: rrnB_T1

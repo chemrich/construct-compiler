@@ -1,0 +1,27 @@
+construct:
+  name: "yeast_demultiplexer_1to2"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+
+  cassette:
+    - promoter: GAL1  # Represents AND(CommonInput, Control_A)
+    - cistron:
+        label: OutputGreen
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: CYC1_term
+
+    - promoter: CUP1  # Represents AND(CommonInput, Control_B)
+    - cistron:
+        label: OutputRed
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: ADH1_term

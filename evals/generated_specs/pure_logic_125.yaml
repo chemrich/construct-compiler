@@ -1,0 +1,26 @@
+construct:
+  name: yeast_synthetic_oscillator_circuit
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Yeast GAL1 promoter is tunable via galactose concentration
+    - cistron:
+        label: repressor_unit
+        expression: high
+        chain:
+          - tag: NLS  # Nuclear Localization Signal for yeast repressor function
+          - gene:
+              id: P04483  # TetR repressor
+              source: uniprot
+    - spacer: 40  # Spacer representing a 2A-like sequence for yeast polycistronic translation
+    - cistron:
+        label: reporter_unit
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: CYC1  # Standard yeast terminator

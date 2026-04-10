@@ -1,0 +1,23 @@
+construct:
+  name: "mammalian_neuronal_differentiation_switch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE  # Tetracycline Response Element for Dox-induction and rtTA-mediated positive feedback
+    - cistron:
+        label: differentiation_factor
+        expression: high
+        gene:
+          id: P50553  # Ascl1: basic helix-loop-helix transcription factor that induces neuronal differentiation
+          source: uniprot
+    - spacer: 25
+    - cistron:
+        label: feedback_activator
+        expression: medium
+        fused: false  # Independently translated via P2A self-cleaving peptide
+        chain:
+          - cleavage_site: P2A  # Ribosomal skipping site for polycistronic expression in mammalian cells
+          - gene:
+              id: rtTA3  # Reverse tetracycline-controlled transactivator (rtTA) to maintain the "ON" state
+    - terminator: bGH_pA

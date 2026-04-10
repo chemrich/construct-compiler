@@ -1,0 +1,32 @@
+construct:
+  name: "transcriptional_AND_gate_B_C"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Activated by Inducer_B (L-arabinose)
+    - cistron:
+        label: input_b_split_t7_n
+        expression: medium
+        gene:
+          id: T7_RNAP_N_fragment
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lacUV5  # Activated by Inducer_C (IPTG)
+    - cistron:
+        label: input_c_split_t7_c
+        expression: medium
+        gene:
+          id: T7_RNAP_C_fragment
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: T7  # Active only if both split-T7 fragments are present
+    - cistron:
+        label: reporter_z
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

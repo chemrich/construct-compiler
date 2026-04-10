@@ -1,0 +1,22 @@
+construct:
+  name: "pichia_interferon_expression_system"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: PAOX1
+      cistron:
+        label: interferon_production
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: IFNA2
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - tag: 6xHis
+      terminator: AOX1_TT

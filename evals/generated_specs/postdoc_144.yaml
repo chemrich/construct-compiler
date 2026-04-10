@@ -1,0 +1,37 @@
+construct:
+  name: "yeast_secretion_fab_alpha_factor"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+
+  cassette:
+    - promoter: GPD  # High-power constitutive yeast promoter (TDH3)
+
+    - cistron:
+        label: heavy_chain_Fd
+        expression: high
+        chain:
+          - gene:
+              id: P01149  # Alpha-mating factor leader sequence for yeast secretion
+              source: uniprot
+          - gene:
+              id: antibody_heavy_chain_Fd
+              source: uniprot
+
+    - spacer: 30  # Polycistronic translation in yeast often requires an IRES or 2A peptide; spacer used here per schema for independent translation units
+
+    - cistron:
+        label: light_chain
+        expression: high
+        fused: false  # Independent translation unit
+        chain:
+          - gene:
+              id: P01149
+              source: uniprot
+          - gene:
+              id: antibody_light_chain
+              source: uniprot
+
+    - terminator: CYC1  # Standard yeast transcriptional terminator

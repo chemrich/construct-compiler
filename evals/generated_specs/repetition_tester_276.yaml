@@ -1,0 +1,35 @@
+construct:
+  name: "Y2H_Bait_Prey_Non_Homologous_Dual_Expression"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: bait_fusion
+        expression: high
+        chain:
+          - tag: LexA
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: BaitProtein
+              source: uniprot
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: TEF1
+    - cistron:
+        label: prey_fusion
+        expression: high
+        chain:
+          - tag: VP16
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: PreyProtein
+              source: uniprot
+    - terminator: ADH1_term

@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_protein_j_cfp_fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: target_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: Protein_J
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: CFP
+              source: fpbase
+    - terminator: CYC1_term

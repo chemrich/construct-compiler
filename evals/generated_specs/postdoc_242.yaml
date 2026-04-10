@@ -1,0 +1,36 @@
+construct:
+  name: "his_tagged_tri_enzyme_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "enzyme_1"
+        expression: "high"
+        chain:
+          - tag: "6xHis"
+          - gene:
+              id: "P0A9Q7"
+              source: "uniprot"
+    - spacer: 30 # IRES is for mammalian hosts; substituted with 30bp spacer and fused: false for E. coli operon translation
+    - cistron:
+        label: "enzyme_2"
+        expression: "high"
+        fused: false
+        chain:
+          - tag: "6xHis"
+          - gene:
+              id: "P06106"
+              source: "uniprot"
+    - spacer: 30
+    - cistron:
+        label: "enzyme_3"
+        expression: "high"
+        fused: false
+        chain:
+          - tag: "6xHis"
+          - gene:
+              id: "P09373"
+              source: "uniprot"
+    - terminator: "T7term"

@@ -1,0 +1,40 @@
+construct:
+  name: "reverse_operon_4_enzyme_pathway"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100  # Constitutive strong promoter for E. coli
+    - cistron:
+        label: enzyme_4
+        expression: medium
+        gene:
+          id: enzyme_4
+          source: uniprot
+    - spacer: 30  # IRES in prokaryotes is functionally replaced by an RBS/spacer
+    - cistron:
+        label: enzyme_3
+        expression: medium
+        fused: false  # Ensures independent translation initiation (separate RBS)
+        gene:
+          id: enzyme_3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: medium
+        fused: false
+        gene:
+          id: enzyme_2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_1
+        expression: medium
+        fused: false
+        gene:
+          id: enzyme_1
+          source: uniprot
+    - terminator: rrnB_T1

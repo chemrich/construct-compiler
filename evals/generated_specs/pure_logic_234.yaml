@@ -1,0 +1,28 @@
+construct:
+  name: "blue_light_repressed_secretion"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Constitutive promoter for the light-sensitive transcription factor
+    - cistron:
+        label: sensor
+        expression: medium
+        gene:
+          id: EL222
+          source: uniprot
+    - spacer: 35
+    - promoter: pEL222_repressed  # Custom promoter designed to be repressed when EL222 binds in the presence of blue light
+    - cistron:
+        label: target
+        expression: high
+        fused: false
+        chain:
+          - tag: pelB  # N-terminal secretion signal for E. coli periplasmic export
+          - solubility_tag: MBP
+          - gene:
+              id: Output_Z
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,18 @@
+construct:
+  name: "non_viral_human_ER_chaperone_BiP"
+  host: HEK293
+  backbone:
+    resistance: none  # User requested construct completely free of antibiotic resistance genes
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Strong constitutive non-viral promoter
+    - cistron:
+        label: ER_chaperone
+        expression: high
+        chain:
+          - gene:
+              id: P11021  # Human HSPA5 (BiP), a key ER chaperone
+              source: uniprot
+          - tag: KDEL     # C-terminal ER retention signal
+    - terminator: bGH_pA   # Bovine growth hormone polyadenylation signal (non-viral)

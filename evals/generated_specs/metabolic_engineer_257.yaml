@@ -1,0 +1,46 @@
+construct:
+  name: "metabolic_flux_control_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: FluxE1
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FluxE1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: FluxE2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FluxE2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: FluxE3
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FluxE3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: FluxE4
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FluxE4
+              source: uniprot
+    - terminator: T7term

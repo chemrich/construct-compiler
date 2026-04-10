@@ -1,0 +1,26 @@
+construct:
+  name: "AAV_Bicistronic_Cargo_HEK293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: Cargo1
+        expression: high
+        chain:
+          - gene:
+              id: AAV_Cargo1
+              source: uniprot
+          - tag: FLAG
+    - spacer: 585  # Represents internal ribosome entry site (IRES) sequence
+    - cistron:
+        label: Cargo2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: AAV_Cargo2
+              source: uniprot
+    - terminator: SV40_polyA

@@ -1,0 +1,21 @@
+construct:
+  name: yeast_surface_peptide_display
+  host: yeast
+  backbone:
+    resistance: URA3 # Substituted auxotrophic marker for antibiotic resistance to comply with safety requirements
+    ori: 2micron
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: anchor_fusion
+        expression: high
+        chain:
+          - tag: HA # Representing the short diagnostic peptide
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: AGA2
+              source: uniprot
+    - terminator: CYC1_term

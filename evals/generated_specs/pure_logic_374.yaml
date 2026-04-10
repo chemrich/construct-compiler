@@ -1,0 +1,18 @@
+construct:
+  name: plant_drought_pathogen_and_gate_resist_g
+  host: plant  # Host is a plant as requested; using standard plant regulatory elements
+  backbone:
+    resistance: kanamycin
+    ori: pVS1
+    source: addgene
+  cassette:
+    - promoter: Drought_Pathogen_AND_responsive
+    - cistron:
+        label: chloroplast_targeted_resistance
+        expression: high
+        chain:
+          - tag: CTP  # Chloroplast Transit Peptide for targeting to the chloroplast
+          - gene:
+              id: Resist_G
+              source: uniprot
+    - terminator: nos_T

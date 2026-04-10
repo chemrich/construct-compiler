@@ -1,0 +1,23 @@
+construct:
+  name: "mammalian_protein_x_solubility_optimized"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: Twin-Strep
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - solubility_tag: MBP
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: protein_x
+              source: uniprot
+    - terminator: bGH_polyA

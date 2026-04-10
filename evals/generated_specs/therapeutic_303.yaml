@@ -1,0 +1,30 @@
+construct:
+  name: "human_base_editor_ABE8e"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: U6
+    - cistron:
+        label: guide_rna
+        gene:
+          id: sgRNA_target
+    - spacer: 50
+    - promoter: CMV
+    - cistron:
+        label: adenine_base_editor
+        expression: high
+        fused: false
+        chain:
+          - tag: NLS
+          - gene:
+              id: TadA_8e
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: Cas9_D10A
+              source: uniprot
+          - tag: NLS
+    - terminator: bGH_polyA

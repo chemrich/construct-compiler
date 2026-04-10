@@ -1,0 +1,26 @@
+construct:
+  name: "yeast_pheromone_amplifier_cascade"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: FUS1  # Pheromone-responsive promoter for low-level initial input
+    - cistron:
+        label: activator_gal4
+        expression: medium
+        gene:
+          id: P04386
+          source: uniprot
+    - terminator: ADH1
+    - promoter: GAL1  # Strong GAL4-responsive promoter for high-level output
+    - cistron:
+        label: secreted_output
+        expression: high
+        chain:
+          - tag: alpha_factor  # Yeast secretion signal
+          - gene:
+              id: P01308
+              source: uniprot
+    - terminator: CYC1

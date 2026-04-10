@@ -1,0 +1,24 @@
+construct:
+  name: "deadman_switch_trigger_cascade"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "death_trigger"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CASP3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "activation_reporter"
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: T7term

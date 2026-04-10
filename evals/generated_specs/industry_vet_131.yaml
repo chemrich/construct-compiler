@@ -1,0 +1,21 @@
+construct:
+  name: "HEK293_Subcellular_Localization_Fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_localization_target
+        expression: high
+        chain:
+          - gene:
+              id: target_protein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_pA

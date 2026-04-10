@@ -1,0 +1,24 @@
+construct:
+  name: "yeast_polycistronic_alpha_beta_ires"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD
+    - cistron:
+        label: subunit_alpha
+        expression: high
+        gene:
+          id: subunit_alpha
+          source: uniprot
+    - spacer: 150 # IRES sequence placeholder; tool will utilize optimized divergent variant for yeast
+    - cistron:
+        label: subunit_beta
+        expression: high
+        fused: false
+        gene:
+          id: subunit_beta
+          source: uniprot
+    - terminator: CYC1

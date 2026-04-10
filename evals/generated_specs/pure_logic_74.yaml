@@ -1,0 +1,18 @@
+construct:
+  name: "proportional_metabolic_feedback_controller"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # araBAD provides proportional (rheostatic) control relative to the inducer M
+    - cistron:
+        label: enzyme_Y
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A9G6  # L-arabinose isomerase (araA), part of the metabolic feedback loop
+              source: uniprot
+    - terminator: rrnB_T1

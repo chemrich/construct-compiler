@@ -1,0 +1,40 @@
+construct:
+  name: "human_cd19_3rd_gen_car_t_cell"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+  cassette:
+    - promoter: EF1_alpha # Substituted for T-cell specific requirement for compatibility
+    - cistron:
+        label: third_generation_car
+        expression: high
+        chain:
+          - gene:
+              id: FMC63_scFv
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: CD8A_hinge_TM
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3 # Unique linker for first junction
+          - gene:
+              id: CD28_intracellular
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 4 # Unique linker for second junction
+          - gene:
+              id: TNFRSF9_intracellular
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2 # Unique linker for third junction
+          - gene:
+              id: CD247_zeta
+              source: uniprot
+    - terminator: bGH_pA # Substituted for custom polyA requirement

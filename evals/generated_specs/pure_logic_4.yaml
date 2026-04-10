@@ -1,0 +1,43 @@
+construct:
+  name: "mammalian_bistable_toggle_switch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV_TetO  # Repressible by TetR for mutual inhibition
+    - cistron:
+        label: repressor_1
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 40  # Required for polycistronic separation
+    - cistron:
+        label: output_1
+        expression: high
+        fused: false  # Independently translated via IRES or separate translation initiation
+        chain:
+          - tag: NLS
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_polyA
+
+    - promoter: CMV_LacO  # Repressible by LacI for mutual inhibition
+    - cistron:
+        label: repressor_2
+        expression: medium
+        gene:
+          id: TetR
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: output_2
+        expression: high
+        fused: false
+        chain:
+          - tag: NLS
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: bGH_polyA

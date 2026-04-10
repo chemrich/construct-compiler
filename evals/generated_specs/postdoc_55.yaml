@@ -1,0 +1,26 @@
+construct:
+  name: "human_gpcr_tracking_yeast"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD
+    - cistron:
+        label: gpcr_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P01149
+              source: uniprot
+          - gene:
+              id: ADRB2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1

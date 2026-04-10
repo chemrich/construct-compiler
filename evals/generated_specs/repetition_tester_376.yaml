@@ -1,0 +1,23 @@
+construct:
+  name: peptide_s_5x_phage_display
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: diversified_pentamer
+        expression: medium
+        chain:
+          # PelB signal peptide for periplasmic translocation in phage display
+          - tag: PelB
+          # Five concatenated copies of PeptideS
+          # The compiler must use maximum synonymous DNA diversity and staggered restriction sites to avoid recombination
+          - gene: { id: PeptideS, source: uniprot }
+          - gene: { id: PeptideS, source: uniprot }
+          - gene: { id: PeptideS, source: uniprot }
+          - gene: { id: PeptideS, source: uniprot }
+          - gene: { id: PeptideS, source: uniprot }
+    - terminator: rrnB_T1

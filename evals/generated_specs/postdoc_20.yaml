@@ -1,0 +1,18 @@
+construct:
+  name: "human_PRKACA_Ecoli_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: kinase_a
+        expression: high
+        # Human-like glycosylation is not possible in E. coli; protein will be aglycosylated.
+        # Kozak sequence was substituted with a standard bacterial RBS for host compatibility.
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P17612
+              source: uniprot
+    - terminator: T7term

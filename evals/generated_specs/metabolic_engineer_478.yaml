@@ -1,0 +1,41 @@
+construct:
+  name: "reg_abcd_operon_srna_regulated"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23106  # Medium constitutive promoter
+    - cistron:
+        label: RegA
+        expression: medium
+        gene:
+          id: RegA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: RegB
+        expression: medium
+        fused: false
+        # The sRNA binding site for conditional repression is incorporated into the 5' UTR/RBS region of this cistron
+        gene:
+          id: RegB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: RegC
+        expression: medium
+        fused: false
+        gene:
+          id: RegC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: RegD
+        expression: medium
+        fused: false
+        gene:
+          id: RegD
+          source: uniprot
+    - terminator: rrnB_T1

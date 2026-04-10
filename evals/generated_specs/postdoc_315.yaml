@@ -1,0 +1,17 @@
+construct:
+  name: "tet_inducible_his_tagged_enzyme"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: pTet  # Bacterial tetracycline-inducible promoter (Tet-On equivalent)
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00722
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,19 @@
+construct:
+  name: "mannitol_inducible_toxic_protein_bacillus"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: generic
+  cassette:
+    - promoter: PmtlA
+    - cistron:
+        label: toxic_payload
+        expression: high
+        chain:
+          - solubility_tag: Trx
+          - cleavage_site: TEV
+          - gene:
+              id: toxic_protein
+              source: uniprot
+    - terminator: BBa_B0015

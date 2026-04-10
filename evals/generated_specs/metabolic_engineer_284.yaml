@@ -1,0 +1,46 @@
+construct:
+  name: "mammalian_cytoplasmic_hsaABCD_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: hsaA
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: hsaA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hsaB
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: hsaB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hsaC
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: hsaC
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hsaD
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: hsaD
+              source: uniprot
+    - terminator: bGH_pA # Note: Polycistronic mammalian expression typically requires IRES or 2A peptides; using spacer and fused: false per instructions.

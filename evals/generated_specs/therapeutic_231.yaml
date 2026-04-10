@@ -1,0 +1,20 @@
+construct:
+  name: "therapeutic_nonviral_toxin_expression_system"
+  host: e_coli
+  backbone:
+    # Antibiotic-free selection (e.g., auxotrophy or toxin-antitoxin) is required for therapeutic safety
+    resistance: none
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: araBAD # Strictly bacterial promoter to avoid viral elements (e.g., T7)
+    - cistron:
+        label: toxin_therapeutic
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa # Non-viral protease cleavage site (Factor Xa is a mammalian protease)
+          - gene:
+              id: colicin_A
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator to avoid viral sequences (e.g., T7term)

@@ -1,0 +1,24 @@
+construct:
+  name: "DomainA_DomainB_fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: DomainA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: DomainB
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term

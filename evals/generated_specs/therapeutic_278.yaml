@@ -1,0 +1,18 @@
+construct:
+  name: "periplasmic_scFv_production"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin  # Substitution: Standard resistance marker included for plasmid maintenance as required by the schema.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Substitution: Bacterial inducible promoter used to satisfy the "no viral elements" requirement.
+    - cistron:
+        label: therapeutic_scFv
+        expression: high
+        chain:
+          - tag: PelB  # Signal peptide for periplasmic translocation to facilitate disulfide bond formation.
+          - gene:
+              id: P01730
+              source: uniprot
+    - terminator: rrnB_T1  # Bacterial terminator used to avoid viral elements.

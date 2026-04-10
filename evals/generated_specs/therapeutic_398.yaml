@@ -1,0 +1,22 @@
+construct:
+  name: "lysosomal_ert_gla_nonviral"
+  host: HEK293
+  backbone:
+    resistance: none # Instruction: Exclude antibiotic resistance genes
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Instruction: Exclude viral sequences (non-viral constitutive promoter)
+    - cistron:
+        label: targeted_enzyme
+        expression: high
+        chain:
+          - tag: Twin-Strep
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: GLA
+              source: uniprot # Human Alpha-galactosidase A, natively targeted to the lysosome
+    - terminator: hGH_polyA # Non-viral human polyadenylation signal

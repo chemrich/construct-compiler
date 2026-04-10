@@ -1,0 +1,33 @@
+construct:
+  name: compact_tripeptide_polycistron
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: P1_cistron
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P1
+    - spacer: 20
+    - cistron:
+        label: P2_cistron
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P2
+    - spacer: 20
+    - cistron:
+        label: P3_cistron
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P3
+    - terminator: T7term

@@ -1,0 +1,25 @@
+construct:
+  name: "mCherry_Protein_E_Fusion_Mammalian"
+  host: mammalian
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: RFP_ProteinE_Fusion
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: Protein_E
+              source: uniprot
+
+    - terminator: bGH_pA  # Standard mammalian poly-A tail for strong expression vectors

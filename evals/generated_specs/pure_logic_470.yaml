@@ -1,0 +1,20 @@
+construct:
+  name: "enzyme_e_high_yield_yeast"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: enzyme_e_secreted
+        expression: high
+        chain:
+          - tag: alpha_factor  # Secretion signal for yeast
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P00330  # Representative yeast enzyme (ADH1) used as a placeholder for Enzyme E
+              source: uniprot
+    - terminator: CYC1_term

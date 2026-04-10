@@ -1,0 +1,41 @@
+construct:
+  name: "four_enzyme_biosynthetic_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: SynthaseA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: SynthaseA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: LigaseB
+        expression: high
+        fused: false
+        gene:
+          id: LigaseB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: HydrolaseC
+        expression: high
+        fused: false
+        gene:
+          id: HydrolaseC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: IsomeraseD
+        expression: high
+        fused: false
+        gene:
+          id: IsomeraseD
+          source: uniprot
+    - terminator: T7term

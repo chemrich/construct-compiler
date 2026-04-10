@@ -1,0 +1,40 @@
+construct:
+  name: "three_stage_genetic_inverter_chain"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Activated by L-arabinose (Input)
+    - cistron:
+        label: repressor_1_tetr
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tetO  # Repressed by TetR
+    - cistron:
+        label: repressor_2_laci
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac  # Repressed by LacI
+    - cistron:
+        label: repressor_3_phlf
+        expression: medium
+        gene:
+          id: Q51351
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: phlF  # Repressed by PhlF
+    - cistron:
+        label: fluorescent_output
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

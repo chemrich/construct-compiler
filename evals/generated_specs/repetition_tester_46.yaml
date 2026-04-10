@@ -1,0 +1,27 @@
+construct:
+  name: yeast_multiplex_crispr_array_non_repetitive
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: U6  # Pol III promoter for gRNA transcription in yeast
+    - cistron:
+        label: spacer_1
+        gene:
+          id: target_ADE2
+          # First spacer targeting ADE2 locus
+    - spacer: 36  # Subtly varied Cas9 repeat sequence 1 (36bp)
+    - cistron:
+        label: spacer_2
+        gene:
+          id: target_CAN1
+          # Second spacer targeting CAN1 locus
+    - spacer: 37  # Subtly varied Cas9 repeat sequence 2 (variant length/sequence to avoid recombination)
+    - cistron:
+        label: spacer_3
+        gene:
+          id: target_LYS2
+          # Third spacer targeting LYS2 locus
+    - terminator: BBa_B0015  # Substituted for yeast Pol III terminator (poly-T/SUP4) to meet schema requirements

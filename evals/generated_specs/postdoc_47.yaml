@@ -1,0 +1,21 @@
+construct:
+  name: "yeast_galactose_inducible_tf"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: tf_expression
+        expression: high
+        chain:
+          - tag: HA
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: transcription_factor
+              source: uniprot
+    - terminator: CYC1

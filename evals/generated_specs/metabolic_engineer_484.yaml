@@ -1,0 +1,54 @@
+construct:
+  name: "metabolic_pathway_M1_M5_arabinose_inducible"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: M1
+        expression: medium
+        gene:
+          id: M1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: M2
+        expression: medium
+        fused: false
+        gene:
+          id: M2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: M3
+        expression: medium
+        fused: false
+        gene:
+          id: M3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: M4
+        expression: medium
+        fused: false
+        gene:
+          id: M4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: M5
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: M5
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - terminator: rrnB_T1

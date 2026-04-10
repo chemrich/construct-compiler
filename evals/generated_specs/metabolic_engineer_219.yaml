@@ -1,0 +1,59 @@
+construct:
+  name: "quad_enzyme_interaction_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: InteractA
+        expression: high
+        chain:
+          - gene:
+              id: InteractA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Twin-Strep
+    - spacer: 30
+    - cistron:
+        label: InteractB
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: InteractB
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: S-tag
+    - spacer: 30
+    - cistron:
+        label: InteractC
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: InteractC
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Twin-Strep
+    - spacer: 30
+    - cistron:
+        label: InteractD
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: InteractD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: S-tag
+    - terminator: rrnB_T1

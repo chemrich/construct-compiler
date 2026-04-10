@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_aprotinin_stabilization_system"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2micron
+    source: addgene
+  cassette:
+    - promoter: pTEF1
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: target_protein
+    - spacer: 30
+    - cistron:
+        label: protease_inhibitor
+        expression: high
+        fused: false
+        gene:
+          id: P00974
+          source: uniprot
+    - terminator: CYC1_term

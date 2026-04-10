@@ -1,0 +1,38 @@
+construct:
+  name: "plant_xor_logic_gate"
+  host: Arabidopsis_thaliana # Plant cell host substituted into the specific cell line field
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: pOp6_TetO  # Dexamethasone-inducible promoter containing TetO repression sites
+    - cistron:
+        label: output_unit_a
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: NOS_term
+
+    - spacer: 50
+
+    - promoter: pXVE_TetO  # Estradiol-inducible promoter containing TetO repression sites
+    - cistron:
+        label: output_unit_b
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: NOS_term
+
+    - spacer: 50
+
+    - promoter: pOp6_XVE_AND # Chimeric promoter requiring both Dex and Estradiol activators
+    - cistron:
+        label: logic_repressor
+        expression: high
+        gene:
+          id: P04483 # TetR repressor from UniProt
+          source: uniprot
+    - terminator: 35S_term

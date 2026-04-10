@@ -1,0 +1,22 @@
+construct:
+  name: "sequential_pulse_counter"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Activated by InputPulse1 (Arabinose)
+    - cistron:
+        label: output_1
+        expression: medium
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: BBa_B0015
+    - promoter: lacUV5  # Activated by InputPulse2 (IPTG)
+    - cistron:
+        label: output_2
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

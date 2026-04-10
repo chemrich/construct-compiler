@@ -1,0 +1,19 @@
+construct:
+  name: "pichia_pastoris_kinase_expression"
+  host: yeast  # Pichia pastoris is a yeast; codon optimization will be targeted accordingly
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Moderately strong promoter for yeast/Pichia
+    - cistron:
+        label: SUMO_kinase_fusion
+        expression: medium
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: kinase
+              source: uniprot
+    - terminator: CYC1_term

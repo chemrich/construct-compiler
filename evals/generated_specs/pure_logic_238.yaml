@@ -1,0 +1,22 @@
+construct:
+  name: "pulse_generator_IFFL"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Input_S responsive promoter (IPTG inducible)
+    - cistron:
+        label: Output_Z
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: Repressor_X
+        expression: medium
+        fused: false  # Independently translated to allow delay in repression
+        gene:
+          id: TetR
+          source: uniprot
+    - terminator: rrnB_T1

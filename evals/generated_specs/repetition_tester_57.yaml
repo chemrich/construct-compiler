@@ -1,0 +1,26 @@
+construct:
+  name: "triple_exendin4_2A_polyprotein"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: bioactive_polyprotein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P81057
+              source: uniprot
+          - linker:
+              type: P2A  # Note: 2A self-cleaving peptides require eukaryotic ribosomes; in E. coli, these will act as rigid linkers.
+          - gene:
+              id: P81057
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: P81057
+              source: uniprot
+    - terminator: T7term

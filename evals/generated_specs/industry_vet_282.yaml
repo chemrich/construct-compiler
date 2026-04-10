@@ -1,0 +1,16 @@
+construct:
+  name: "neuron_specific_secreted_mNeonGreen"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: Syn1  # Tissue-specific promoter for neuronal expression
+    - cistron:
+        label: secreted_protein
+        expression: high
+        chain:
+          - tag: IgK_leader  # N-terminal secretion signal peptide
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal/terminator

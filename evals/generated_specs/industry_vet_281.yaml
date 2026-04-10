@@ -1,0 +1,33 @@
+construct:
+  name: "mammalian_bicistronic_reporter_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P04637
+              source: uniprot
+
+    - spacer: 40
+
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - terminator: BGH_pA  # Standard mammalian polyadenylation signal for high expression in HEK293

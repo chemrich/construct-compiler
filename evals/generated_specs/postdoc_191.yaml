@@ -1,0 +1,19 @@
+construct:
+  name: yeast_mitochondrial_protein_expression
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: MTS  # Human mitochondrial targeting sequence
+          - gene:
+              id: MitochondrialProtein
+              source: uniprot
+          - tag: 6xHis
+    - terminator: CYC1_term

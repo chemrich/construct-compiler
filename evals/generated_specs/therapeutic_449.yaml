@@ -1,0 +1,36 @@
+construct:
+  name: yeast_surface_display_bivalent_vaccine
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426" # Auxotrophic (URA3) shuttle vector selected to avoid antibiotic resistance markers
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: display_unit_1
+        expression: high
+        chain:
+          - gene:
+              id: P08431 # AGA2 anchor protein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P43357 # MAGE-A3 therapeutic cancer antigen
+              source: uniprot
+    - spacer: 30 # Minimum distance for independent initiation; compiler handles non-viral IRES or dual-promoter implementation for yeast
+    - cistron:
+        label: display_unit_2
+        expression: high
+        fused: false # Ensures independent translation for separate anchoring
+        chain:
+          - gene:
+              id: P08431 # AGA2 anchor protein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P78358 # NY-ESO-1 therapeutic cancer antigen
+              source: uniprot
+    - terminator: CYC1

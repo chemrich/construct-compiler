@@ -1,0 +1,28 @@
+construct:
+  name: "yeast_surface_display_binding_domain"
+  host: yeast
+
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: TEF1  # Robust constitutive yeast promoter
+
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: AGA2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: binding_domain
+              source: uniprot
+          - tag: FLAG
+
+    - terminator: CYC1

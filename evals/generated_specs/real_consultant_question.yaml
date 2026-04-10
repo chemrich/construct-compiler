@@ -1,49 +1,26 @@
-```yaml
 construct:
-  name: "human_fab_ecoli_expression"
-  host: e_coli_bl21_de3 # Specified for T7 promoter expression
-
+  name: "human_fab_disulfide_optimized"
+  host: e_coli_bl21_de3  # Recommended: use SHuffle or Origami strains for cytoplasmic disulfide bond formation
   backbone:
-    catalog_vector: "pET-28b(+)" # Common E. coli expression vector with T7 promoter
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: fab_light_chain
+        label: heavy_chain_fd
         expression: high
-        fused: false # Each chain is a separate protein, requiring independent translation
-        gene:
-          id: human_fab_light_chain # Placeholder - specific UniProt ID or sequence needed
-          source: uniprot # Assuming a human protein
-
-    - spacer: 30 # Minimum 20 bp spacer for polycistronic expression
-
-    - cistron:
-        label: fab_heavy_chain_fd
-        expression: high
-        fused: false # Each chain is a separate protein
         chain:
-          - tag: 6xHis # Common purification tag
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
           - gene:
-              id: human_fab_heavy_chain_fd # Placeholder - specific UniProt ID or sequence needed
-              source: uniprot # Assuming a human protein
-    # NOTE: Achieving proper disulfide bond formation for functional Fab fragments in E. coli
-    # often requires expression in the periplasm (a redox-active environment). The current
-    # construct is designed for cytoplasmic expression, which is a reducing environment
-    # and typically inhibits disulfide bond formation. The construct_compiler may need
-    # to integrate signal peptides for periplasmic targeting to ensure functionality.
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+              id: P01857 # Human IGHG1 constant region
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: light_chain
+        expression: high
+        fused: false # Independent translation for proper stoichiometry
+        gene:
+          id: P01834 # Human IGKC constant region
+          source: uniprot
+    - terminator: T7term

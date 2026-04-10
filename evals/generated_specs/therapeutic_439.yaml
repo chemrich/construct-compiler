@@ -1,0 +1,18 @@
+construct:
+  name: non_viral_stable_surface_display_receptor
+  host: mammalian
+  backbone:
+    resistance: none # User requested no antibiotic resistance; note that this may hinder plasmid propagation in E. coli
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Strong constitutive human promoter used as a non-viral alternative to CMV
+    - cistron:
+        label: therapeutic_receptor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EGFR # Human EGFR contains natural signal peptide and transmembrane domain for surface display
+              source: uniprot
+    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal (non-viral)

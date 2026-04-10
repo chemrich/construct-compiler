@@ -1,0 +1,24 @@
+construct:
+  name: "diagnostic_bicistronic_binder_reporter"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: binding_domain
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P02976"
+              source: uniprot
+    - spacer: 35  # Intergenic region for internal initiation in E. coli
+    - cistron:
+        label: reporter_enzyme
+        expression: medium
+        fused: false  # Independent translation via internal RBS in spacer
+        gene:
+          id: "P0DIX4"
+          source: uniprot
+    - terminator: T7term

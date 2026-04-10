@@ -1,0 +1,23 @@
+construct:
+  name: "tightly_regulated_toxic_protein_expression"
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Chosen for very tight regulation to prevent leaky expression of toxic proteins
+    - cistron:
+        label: toxic_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: rep
+              source: uniprot
+    - terminator: rrnB_T1

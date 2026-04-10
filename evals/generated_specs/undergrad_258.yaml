@@ -1,0 +1,22 @@
+construct:
+  name: "antisense_targetgene_knockdown"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: antisense_rna
+        expression: high
+        gene:
+          id: TargetGene
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        gene:
+          id: NeoR
+          source: uniprot
+    - terminator: bGH_pA # Standard mammalian polyadenylation signal/terminator</code>

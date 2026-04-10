@@ -1,85 +1,46 @@
-```yaml
 construct:
-  name: "Biofilm_Operon_ExoPoly_Flag_mEGFP"
-  host: e_coli
-
+  name: "biofilm_flagellar_operon_mEGFP"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: epsA
+        label: pgaA_export
+        expression: high
+        gene:
+          id: P0AFD0
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: pgaB_deacetylase
         expression: high
         fused: false
         gene:
-          id: Q8G664 # Example ExoPolysaccharide synthesis gene (B. subtilis)
+          id: P0AF64
           source: uniprot
-
     - spacer: 30
-
     - cistron:
-        label: epsB
-        expression: high
-        fused: false
-        gene:
-          id: Q8G665 # Example ExoPolysaccharide synthesis gene (B. subtilis)
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: epsC
-        expression: high
-        fused: false
-        gene:
-          id: Q8G666 # Example ExoPolysaccharide synthesis gene (B. subtilis)
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: fliC
+        label: fliC_flagellin
         expression: medium
         fused: false
         gene:
-          id: P02942 # Example flagellar protein (E. coli flagellin)
+          id: P04949
           source: uniprot
-
     - spacer: 30
-
     - cistron:
-        label: motA
+        label: flgE_hook
         expression: medium
         fused: false
         gene:
-          id: P0A878 # Example flagellar protein (E. coli flagellar motor protein)
+          id: P0ABW3
           source: uniprot
-
-    - spacer: 30
-
+    - spacer: 40
     - cistron:
-        label: mEGFP
+        label: reporter_mEGFP
         expression: low
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

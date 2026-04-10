@@ -1,0 +1,20 @@
+construct:
+  name: mammalian_bicistronic_ires_expression
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: Protein_A
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 585  # Length of the EMCV IRES sequence to facilitate bicistronic expression
+    - cistron:
+        label: Protein_B
+        fused: false  # Indicates independent translation initiation via IRES
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: BGH_pA

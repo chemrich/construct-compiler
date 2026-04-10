@@ -1,0 +1,22 @@
+construct:
+  name: yeast_y2h_bait_y_fusion
+  host: yeast
+  backbone:
+    resistance: LEU2
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: bait_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: Bait_Protein_Y
+              source: uniprot
+    - terminator: CYC1  # Standard yeast terminator for ADH1-driven constructs

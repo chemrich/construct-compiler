@@ -1,0 +1,18 @@
+construct:
+  name: "input_k_inducible_membrane_output_w"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Inducible promoter used to represent Input_K control
+    - cistron:
+        label: membrane_output_w
+        expression: high
+        chain:
+          - tag: OmpA  # Membrane targeting signal peptide for E. coli
+          - gene:
+              id: Output_W
+              source: uniprot
+    - terminator: rrnB_T1

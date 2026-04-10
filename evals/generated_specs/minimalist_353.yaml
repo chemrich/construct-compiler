@@ -1,0 +1,30 @@
+construct:
+  name: "proteinE_proteinF_yeast_expression"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: GPD  # Standard high-expression constitutive yeast promoter
+
+    - cistron:
+        label: protein_e
+        expression: medium
+        gene:
+          id: ProteinE
+          source: uniprot
+
+    - spacer: 20  # Minimal spacing per user request and schema constraints
+
+    - cistron:
+        label: protein_f
+        expression: medium
+        fused: false  # Ensures independent translation initiation
+        gene:
+          id: ProteinF
+          source: uniprot
+
+    - terminator: CYC1  # Standard yeast terminator

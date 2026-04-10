@@ -1,0 +1,23 @@
+construct:
+  name: genetic_comparator_x_y_dual_fluorescence
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac # Representative for InputX induction/InputY repression logic
+    - cistron:
+        label: blue_fluorescence_output
+        expression: high
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: rrnB_T1
+    - spacer: 30
+    - promoter: araBAD # Representative for InputY induction/InputX repression logic
+    - cistron:
+        label: red_fluorescence_output
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term
