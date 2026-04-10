@@ -1,0 +1,18 @@
+construct:
+  name: "Aggregase_Solubility_Fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: Aggregase
+              source: uniprot
+    - terminator: T7term

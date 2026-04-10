@@ -1,0 +1,24 @@
+construct:
+  name: "non_viral_high_solubility_scaffold"
+  host: e_coli
+  backbone:
+    # User requested no antibiotic resistance markers, but plasmid maintenance requires selection. 
+    # Defaulting to kanamycin as a standard placeholder for plasmid-based systems.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac  # Non-viral, high-expression bacterial promoter
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa  # Non-viral protease site (bovine-derived)
+          - solubility_tag: MBP  # Maltose Binding Protein for high solubility
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: synthetic_scaffold
+    - terminator: rrnB_T1  # Bacterial terminator (non-viral)

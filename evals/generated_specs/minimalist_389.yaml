@@ -1,0 +1,16 @@
+construct:
+  name: "gene_delta_proteasomal_degradation"
+  host: HEK293 # HEK293 selected over e_coli because 'proteasomal' degradation is a eukaryotic process
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gene_delta_degron_fusion
+        expression: high
+        chain:
+          - gene:
+              id: Gene_Delta
+              source: uniprot
+          - tag: ODC_degron
+    - terminator: hGH_pA

@@ -1,0 +1,24 @@
+construct:
+  name: "signal_amplifier_t7_cascade"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: amplifier_activator
+        expression: medium
+        chain:
+          - gene:
+              id: P00573
+              source: uniprot
+    - terminator: rrnB_T1
+    - promoter: T7
+    - cistron:
+        label: high_gain_output
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: T7term

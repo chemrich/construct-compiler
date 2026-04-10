@@ -1,0 +1,18 @@
+construct:
+  name: "secreted_protein_e_coli_amp"
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: PelB # PelB signal sequence for periplasmic secretion in E. coli
+          - gene:
+              id: secreted_protein
+              source: uniprot
+    - terminator: rrnB_T1

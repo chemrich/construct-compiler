@@ -1,44 +1,22 @@
-```yaml
 construct:
-  name: "gfp_rfp_bacterial_expression"
+  name: "bacterial_dual_fluorescence_reporter"
   host: e_coli
-
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: gfp
+        label: gfp_reporter
         expression: high
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: rfp
-        expression: medium
+        label: rfp_reporter
+        expression: high
         fused: false
         gene:
-          id: mScarlet
+          id: mCherry
           source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

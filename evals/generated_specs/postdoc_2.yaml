@@ -1,0 +1,24 @@
+construct:
+  name: "geneA_geneB_complex_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: gene_a
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: GeneA
+    - spacer: 30 # IRES substituted with polycistronic spacer and RBS for E. coli host
+    - cistron:
+        label: gene_b
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneB
+    - terminator: T7term

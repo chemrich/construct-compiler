@@ -1,0 +1,32 @@
+construct:
+  name: mammalian_delayed_activation_switch
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: input_transactivator
+        gene:
+          id: rtTA
+          source: uniprot
+    - terminator: SV40_polyA
+    - promoter: TRE
+    - cistron:
+        label: delay_intermediate_tf
+        # This transcription-translation step provides the first ~1-1.5h delay
+        gene:
+          id: GAL4
+          source: uniprot
+    - terminator: SV40_polyA
+    - promoter: UAS
+    - cistron:
+        label: output_protein
+        # This second transcription-translation step completes the ~2-3h delay
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: SV40_polyA

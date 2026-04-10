@@ -1,0 +1,17 @@
+construct:
+  name: "periplasmic_secretion_construct"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac # CMV is a mammalian promoter; substituted with T7lac for strong expression in E. coli
+      cistron:
+        label: target_secretion
+        expression: high
+        chain:
+          - tag: PelB # PDI is a eukaryotic signal peptide; substituted with PelB for bacterial periplasmic secretion
+          - gene:
+              id: P0A8I3
+              source: uniprot
+          - tag: 6xHis
+      terminator: T7term

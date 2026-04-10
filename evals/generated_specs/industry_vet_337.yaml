@@ -1,0 +1,16 @@
+construct:
+  name: optimized_human_protein_expression
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_protein
+        expression: high  # Setting expression to high ensures Kozak sequence optimization
+        chain:
+          - gene:
+              id: TP53
+              source: uniprot
+          - tag: V5
+    - terminator: BGH_pA

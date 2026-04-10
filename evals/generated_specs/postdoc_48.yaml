@@ -1,0 +1,26 @@
+construct:
+  name: "constitutive_sensor_kinase_rr_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100 # Standard constitutive promoter for E. coli
+    - cistron:
+        label: sensor_kinase
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnvZ
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: response_regulator
+        expression: medium
+        fused: false
+        gene:
+          id: OmpR
+          source: uniprot
+    - terminator: rrnB_T1

@@ -1,33 +1,21 @@
-```yaml
 construct:
-  name: "FRET_mEGFP_mScarlet_linker"
+  name: "FRET_mEGFP_mScarlet_CHO"
   host: CHO
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
     - promoter: CMV
     - cistron:
-        label: fret_pair
+        label: fret_sensor
         expression: high
         chain:
           - gene:
               id: mEGFP
               source: fpbase
           - linker:
-              type: short_GS
-              repeats: 3 # Closest to 5 amino acids (this yields 6 AAs: GSGSGS)
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: BBa_B0015 # Note: This is a bacterial terminator. For mammalian systems, a poly-A signal is typically used and often included in the vector.
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: SV40_polyA

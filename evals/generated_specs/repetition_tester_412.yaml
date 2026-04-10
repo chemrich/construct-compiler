@@ -1,0 +1,41 @@
+construct:
+  name: subcellular_localization_library
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: nuclear_reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: NLS
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_PA
+    - spacer: 100
+    - promoter: EF1_alpha
+    - cistron:
+        label: er_reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: SV40_polyA
+    - spacer: 100
+    - promoter: CAG
+    - cistron:
+        label: peroxisomal_reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: PTS2
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - terminator: hGH_polyA

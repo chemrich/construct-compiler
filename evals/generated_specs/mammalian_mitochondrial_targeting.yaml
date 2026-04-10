@@ -1,32 +1,19 @@
-```yaml
 construct:
-  name: "mEGFP_mito_mammalian"
-  host: mammalian # HEK293 or CHO would be more specific if known
-
+  name: "mEGFP_mitochondrial_localization"
+  host: mammalian
   backbone:
     catalog_vector: "pTwist CMV"
-
   cassette:
-    - promoter: CMV # Default mammalian promoter from catalog vector
-
+    - promoter: CMV
     - cistron:
-        label: mEGFP_mito
+        label: mito_targeted_egfp
         expression: high
-        gene:
-          id: MTS_mEGFP # Assumes a gene ID for mEGFP pre-fused with a mitochondrial targeting sequence (MTS)
-          # source: omitted as this would be a custom fusion protein, not directly from fpbase or uniprot
-
-    - terminator: BBa_B0015 # Note: This terminator is bacterial. For mammalian, polyadenylation signals (e.g., SV40pA, BGHpA) are typically part of the backbone vector. This field is included as required by schema.
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+        chain:
+          - tag: MTS
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_polyA

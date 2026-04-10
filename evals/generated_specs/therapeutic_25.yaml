@@ -1,0 +1,19 @@
+construct:
+  name: "nuclear_therapeutic_effector_vector"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # The user requested no antibiotic resistance; however, a selection marker is required for plasmid propagation. Kanamycin is used here as a placeholder.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Strong, non-viral mammalian promoter.
+    - cistron:
+        label: therapeutic_effector
+        expression: high
+        chain:
+          - tag: NLS # Nuclear Localization Signal for exclusive nuclear localization.
+          - gene:
+              id: P53_HUMAN
+              source: uniprot
+          - tag: Twin-Strep # C-terminal purification tag.
+    - terminator: bGH_polyA # Standard mammalian polyadenylation signal/terminator.

@@ -1,0 +1,40 @@
+construct:
+  name: "genetic_toggle_switch_e_coli"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: repressor_tetR
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: state_1_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: tetA  # TetR-repressible promoter commonly used in toggle switches
+    - cistron:
+        label: repressor_lacI
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: state_2_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term

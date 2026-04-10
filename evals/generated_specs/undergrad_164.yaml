@@ -1,0 +1,24 @@
+construct:
+  name: "dual_protein_expression_pet28"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_a
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_b
+        expression: high
+        fused: false
+        gene:
+          id: ProteinB
+          source: uniprot
+    - terminator: T7term

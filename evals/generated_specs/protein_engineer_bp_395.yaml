@@ -1,0 +1,20 @@
+construct:
+  name: "Pichia_pastoris_viral_antigen_stability"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: antigen_fusion
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: viral_antigen
+              source: uniprot
+          - tag: 6xHis
+    - terminator: CYC1_term

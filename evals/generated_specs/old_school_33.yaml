@@ -1,0 +1,28 @@
+construct:
+  name: "ToxicT_tight_regulation"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A  # p15A is the origin for pACYC plasmids
+    source: addgene
+
+  cassette:
+    - promoter: J23106  # Constitutive promoter for the regulator
+    - cistron:
+        label: regulator
+        expression: medium
+        gene:
+          id: araC
+          source: uniprot
+
+    - spacer: 45
+
+    - promoter: araBAD  # Inducible promoter for the target
+    - cistron:
+        label: toxic_target
+        expression: medium
+        gene:
+          id: ToxicT
+          source: uniprot
+
+    - terminator: T7term

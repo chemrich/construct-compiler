@@ -1,0 +1,40 @@
+construct:
+  name: "bispecific_antibody_non_viral_quad_cistronic"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Substitution: Required for E. coli cloning; to be removed for therapeutic application as per request.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Substitution: Non-viral mammalian promoter used instead of CMV to meet requirements.
+    - cistron:
+        label: light_chain_1
+        expression: high
+        gene:
+          id: P01834
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: heavy_chain_1_knob
+        expression: high
+        fused: false
+        gene:
+          id: P01857
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: light_chain_2
+        expression: high
+        fused: false
+        gene:
+          id: P01833
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: heavy_chain_2_hole
+        expression: high
+        fused: false
+        gene:
+          id: P01859
+          source: uniprot
+    - terminator: BGH_pA # Non-viral mammalian polyadenylation signal for efficient termination.

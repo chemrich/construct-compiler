@@ -1,0 +1,19 @@
+construct:
+  name: "protein_d_solubility_expression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein_d
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P17892
+              source: uniprot
+    - terminator: T7term

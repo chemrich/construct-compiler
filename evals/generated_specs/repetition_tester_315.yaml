@@ -1,0 +1,40 @@
+construct:
+  name: "Mammalian_Dual_Inducible_Toxic_Control"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: tet_activator
+        expression: medium
+        gene:
+          id: rtTA3
+          source: uniprot
+    - spacer: 45
+    - promoter: EF1_alpha
+    - cistron:
+        label: cumate_repressor
+        expression: medium
+        gene:
+          id: CymR
+          source: uniprot
+    - spacer: 60
+    - promoter: TRE3G
+    - cistron:
+        label: toxic_protein
+        expression: high
+        gene:
+          id: P00588
+          source: uniprot
+    - spacer: 45
+    - promoter: CuO
+    - cistron:
+        label: induction_reporter
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

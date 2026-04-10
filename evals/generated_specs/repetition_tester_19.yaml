@@ -1,0 +1,38 @@
+construct:
+  name: "mammalian_triple_2A_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: P1_cistron
+        expression: high
+        gene:
+          id: P1
+          source: uniprot
+    - cistron:
+        label: P2_cistron
+        expression: high
+        fused: true
+        chain:
+          - cleavage_site: T2A
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P2
+              source: uniprot
+    - cistron:
+        label: P3_cistron
+        expression: high
+        fused: true
+        chain:
+          - cleavage_site: P2A
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: P3
+              source: uniprot
+    - terminator: BGH_pA  # Standard mammalian polyadenylation signal for HEK293

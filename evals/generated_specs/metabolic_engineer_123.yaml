@@ -1,0 +1,45 @@
+construct:
+  name: "metabolic_pathway_ires_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: enzyme_m1_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Enzyme_M1
+              source: uniprot
+    - spacer: 580
+    - cistron:
+        label: enzyme_m2
+        expression: medium
+        fused: false
+        gene:
+          id: Enzyme_M2
+          source: uniprot
+    - spacer: 580
+    - cistron:
+        label: enzyme_m3
+        expression: medium
+        fused: false
+        gene:
+          id: Enzyme_M3
+          source: uniprot
+    - spacer: 580
+    - cistron:
+        label: enzyme_m4
+        expression: medium
+        fused: false
+        gene:
+          id: Enzyme_M4
+          source: uniprot
+    - terminator: bGH_polyA

@@ -1,0 +1,32 @@
+construct:
+  name: "bacillus_pveg_acetoin_pathway"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322  # Using pBR322 as a common placeholder for shuttle vector compatibility
+    source: addgene
+  cassette:
+    - promoter: Pveg
+    - cistron:
+        label: alsS
+        expression: high
+        gene:
+          id: P19444
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: alsD
+        expression: high
+        fused: false
+        gene:
+          id: P19445
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: bdhA
+        expression: high
+        fused: false
+        gene:
+          id: P54530
+          source: uniprot
+    - terminator: rrnB_T1

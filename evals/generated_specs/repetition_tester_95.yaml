@@ -1,0 +1,26 @@
+construct:
+  name: "dual_pathway_secreted_protein_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: sec_targeted_copy
+        expression: high
+        chain:
+          - tag: pelB  # Sec-dependent leader peptide
+          - gene:
+              id: P01241
+              source: uniprot
+    - spacer: 45
+    - cistron:
+        label: srp_targeted_copy
+        expression: high
+        fused: false  # Separate RBS for the second cistron
+        chain:
+          - tag: dsbA  # SRP-dependent leader peptide (distinct from pelB)
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: T7term

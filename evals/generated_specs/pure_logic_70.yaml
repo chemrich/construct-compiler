@@ -1,0 +1,24 @@
+construct:
+  name: mammalian_ligand_sensing_secretion_system
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: ligand_receptor
+        expression: medium
+        gene:
+          id: EGFR
+          source: uniprot
+    - terminator: bGH_pA
+    - promoter: NFAT_RE # Synthetic inducible promoter that responds to ligand-receptor signaling
+    - cistron:
+        label: therapeutic_secretion_unit
+        expression: high
+        chain:
+          - tag: IgK_leader # Signal peptide to ensure efficient secretion to the extracellular space
+          - gene:
+              id: IL2
+              source: uniprot
+    - terminator: bGH_pA

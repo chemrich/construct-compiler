@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_two_hybrid_bait_fusion"
+  host: yeast
+  backbone:
+    resistance: trp1
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: bait
+        expression: medium
+        chain:
+          - gene:
+              id: TargetProtein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: GAL4_BD
+              source: uniprot
+    - terminator: CYC1_term

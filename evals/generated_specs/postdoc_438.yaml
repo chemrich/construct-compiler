@@ -1,0 +1,20 @@
+construct:
+  name: "scFv_solubility_enhanced_expression"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: antibody_fragment
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: scFv
+              source: uniprot
+    - terminator: T7term

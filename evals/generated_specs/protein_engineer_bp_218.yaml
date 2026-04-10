@@ -1,0 +1,28 @@
+construct:
+  name: "bacillus_bispecific_nanobody_secretion"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: nanobody_1
+        expression: high
+        chain:
+          - tag: AmyE
+          - gene:
+              id: nanobody_alpha
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nanobody_2
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE
+          - gene:
+              id: nanobody_beta
+              source: uniprot
+    - terminator: rrnB_T1

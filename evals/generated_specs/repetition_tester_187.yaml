@@ -1,0 +1,26 @@
+construct:
+  name: "secreted_dual_domain_fusion_HEK293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: secreted_fusion_protein
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: P01133
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01588
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 3
+          - tag: FLAG
+    - terminator: bGH_pA

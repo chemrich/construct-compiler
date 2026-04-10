@@ -1,0 +1,22 @@
+construct:
+  name: "therapeutic_bicistronic_p2a_expression"
+  host: HEK293
+  backbone:
+    resistance: none # Requirement for antibiotic-free selection; typically utilizes metabolic or RNA-based selection
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_polyprotein
+        expression: high
+        chain:
+          - gene:
+              id: IL12A
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: IL12B
+              source: uniprot
+    - terminator: SV40_pA

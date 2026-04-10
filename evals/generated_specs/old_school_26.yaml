@@ -1,0 +1,27 @@
+construct:
+  name: yeast_copper_inducible_sensory_luciferase
+  host: yeast
+  backbone:
+    resistance: LEU2
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: CUP1
+    - cistron:
+        label: sensory_protein
+        expression: high
+        gene:
+          id: SensorY
+          source: uniprot
+    - cistron:
+        label: luciferase_reporter
+        expression: high
+        fused: true
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: luciferase
+              source: uniprot
+    - terminator: ADH1

@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_surface_antigen_display"
+  host: yeast
+  backbone:
+    resistance: none  # Clinical application: no antibiotic resistance genes used, auxotrophic selection (e.g., URA3/TRP1) assumed
+    ori: 2_micron
+    source: custom
+  cassette:
+    - promoter: GPD  # Strong constitutive yeast promoter for high-density display
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: AGA2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: vaccine_antigen
+              source: uniprot
+    - terminator: CYC1

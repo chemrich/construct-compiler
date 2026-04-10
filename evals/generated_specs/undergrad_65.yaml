@@ -1,0 +1,21 @@
+construct:
+  name: "dox_inducible_proteinz_mneongreen"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Drug-inducible (Dox) promoter for mammalian systems
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: ProteinZ
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: bGH_pA

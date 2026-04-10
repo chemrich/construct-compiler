@@ -1,0 +1,31 @@
+construct:
+  name: "bacillus_kinase_groesl_operon"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: Pxyl # Xylose-inducible promoter for Bacillus subtilis
+    - cistron:
+        label: kinase
+        expression: high
+        gene:
+          id: MAPK1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: groES
+        expression: high
+        fused: false # GroES and GroEL are distinct genes; requires individual RBS
+        gene:
+          id: P05634
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: groEL
+        expression: high
+        fused: false # GroES and GroEL subunits are represented as separate cistrons for the operon
+        gene:
+          id: P05633
+          source: uniprot
+    - terminator: rrnB_T1

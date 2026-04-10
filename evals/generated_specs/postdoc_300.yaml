@@ -1,0 +1,16 @@
+construct:
+  name: "e_coli_gfp_hts_screen"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac  # User requested CMV (mammalian promoter); substituted with T7lac for E. coli host compatibility.
+    - cistron:
+        label: gfp_target
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: 6xHis  # C-terminal His-tag for purification.
+    - terminator: T7term  # User requested a poly-A tail (mammalian); substituted with T7term for E. coli. Also, Kozak sequence substituted by standard RBS.

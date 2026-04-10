@@ -1,0 +1,33 @@
+construct:
+  name: "e_coli_and_gate_dual_repressor"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 40
+    - promoter: J23100
+    - cistron:
+        label: tetR_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 40
+    - promoter: tac  # Substituting tac for a dual-repressible LacO/TetO promoter as requested for the AND gate logic
+    - cistron:
+        label: gfp_output
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

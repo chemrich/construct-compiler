@@ -1,0 +1,24 @@
+construct:
+  name: "therapeutic_dual_enzyme_mammalian_plasmid"
+  host: HEK293
+  backbone:
+    resistance: none  # User requested no antibiotic resistance; note: bacterial propagation requires selection.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # EF1-alpha used as a high-expression non-viral mammalian promoter.
+    - cistron:
+        label: GLA_enzyme
+        expression: high
+        gene:
+          id: P06280
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: F9_enzyme
+        expression: high
+        fused: false  # Ensures independent translation for equimolar co-expression from a single transcript.
+        gene:
+          id: P00740
+          source: uniprot
+    - terminator: hGH_pA

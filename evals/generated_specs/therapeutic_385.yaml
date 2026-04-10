@@ -1,0 +1,25 @@
+construct:
+  name: "tightly_regulated_therapeutic_enzyme"
+  host: e_coli_bl21
+  backbone:
+    # Rule 12: User requested no antibiotic resistance; kanamycin is included as a necessary placeholder 
+    # for plasmid selection during cloning, to be replaced by auxotrophic markers for therapeutic use.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Tightly regulated by arabinose/glucose to minimize basal toxicity
+    - cistron:
+        label: therapeutic_toxin
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P00805
+              source: uniprot
+    - terminator: rrnB_T1

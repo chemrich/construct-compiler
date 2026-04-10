@@ -1,0 +1,32 @@
+construct:
+  name: "multiplexer_priority_logic_A_over_C"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Signal A input
+    - cistron:
+        label: output_B
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: priority_repressor_lacI
+        expression: high
+        fused: false  # Independently translated to repress the second promoter when Signal A is present
+        gene:
+          id: P00371
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lacUV5  # Signal C input, repressed by LacI produced from the Signal A cassette
+    - cistron:
+        label: output_D
+        expression: medium
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,25 @@
+construct:
+  name: "metabolite_z_homeostasis_circuit"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Responsive promoter for dynamic adjustment based on substrate/metabolite availability
+    - cistron:
+        label: production_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P0ABH7  # Representative biosynthetic enzyme: DAHP synthase (AroG)
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: adaptive_regulator
+        expression: medium
+        fused: false  # Independently translated to provide feedback control
+        gene:
+          id: P0A9E5  # AraC transcriptional regulator for the araBAD promoter
+          source: uniprot
+    - terminator: rrnB_T1

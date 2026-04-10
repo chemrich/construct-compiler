@@ -1,0 +1,23 @@
+construct:
+  name: "human_growth_factor_analog_solubility_optimized"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # User requested no antibiotics; substituted with kanamycin for plasmid maintenance as per rule 12.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100 # Strong constitutive bacterial promoter
+    - cistron:
+        label: "growth_factor_expression"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01241 # UniProt ID for Human Somatotropin (Growth Factor)
+              source: uniprot
+    - terminator: BBa_B0015 # Robust double terminator for E. coli

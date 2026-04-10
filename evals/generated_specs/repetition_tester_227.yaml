@@ -1,0 +1,36 @@
+construct:
+  name: "dual_inducible_tandem_promoter_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: tet_on_transactivator
+        expression: medium
+        fused: false
+        gene:
+          id: rtTA3
+          source: uniprot
+    - terminator: SV40_pA
+    - spacer: 50
+    - promoter: Ubc
+    - cistron:
+        label: ecdysone_transactivator
+        expression: medium
+        fused: false
+        gene:
+          id: VgEcR
+          source: uniprot
+    - terminator: hGH_pA
+    - spacer: 50
+    - promoter: TRE3G
+    - promoter: pIND
+    - cistron:
+        label: dual_inducible_target
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bgh_pA

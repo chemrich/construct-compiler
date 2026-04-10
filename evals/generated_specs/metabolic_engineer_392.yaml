@@ -1,0 +1,44 @@
+construct:
+  name: "operon_abcd_inducible_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: pTet
+    - cistron:
+        label: A-Synth
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: A-Synth
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: B-Lygase
+        expression: low
+        fused: false
+        gene:
+          id: B-Lygase
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: C-Hydrolase
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: C-Hydrolase
+              source: uniprot
+          - tag: Strep-II
+    - spacer: 30
+    - cistron:
+        label: D-Dehydr
+        expression: low
+        fused: false
+        gene:
+          id: D-Dehydr
+          source: uniprot
+    - terminator: rrnB_T1

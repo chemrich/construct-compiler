@@ -1,0 +1,21 @@
+construct:
+  name: "gst_tagged_human_enzyme_yeast_genomic"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: HUMAN_ENZYME_GENOMIC  # Note: Human introns are preserved per request; however, yeast splicing machinery may not recognize human splice sites.
+              source: uniprot
+    - terminator: CYC1

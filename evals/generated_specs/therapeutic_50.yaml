@@ -1,0 +1,19 @@
+construct:
+  name: yeast_human_SOD2_MTS_FLAG
+  host: yeast
+  backbone:
+    resistance: ura3 # Using auxotrophic marker for antibiotic resistance-free selection
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: TDH3 # Strong constitutive yeast promoter
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: MTS # Mitochondrial targeting sequence
+          - gene:
+              id: SOD2
+              source: uniprot
+          - tag: FLAG # C-terminal detection tag
+    - terminator: CYC1 # Standard yeast terminator

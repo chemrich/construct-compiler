@@ -1,0 +1,26 @@
+construct:
+  name: "dox_inducible_bicistronic_therapeutic"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE3G  # Doxycycline-inducible TRE3G promoter for tight regulation
+    - cistron:
+        label: therapeutic_protein_a
+        expression: high
+        chain:
+          - gene:
+              id: ProteinA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: therapeutic_protein_b
+        expression: high
+        fused: false  # Independent translation from single transcript (e.g., via IRES or 2A)
+        chain:
+          - gene:
+              id: ProteinB
+              source: uniprot
+    - terminator: bGH_pA  # Standard mammalian polyadenylation signal and terminator

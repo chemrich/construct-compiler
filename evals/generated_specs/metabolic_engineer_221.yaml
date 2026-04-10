@@ -1,0 +1,41 @@
+construct:
+  name: "yeast_tunable_metabolic_operon"
+  host: yeast
+  backbone:
+    resistance: kanamycin # Defaulting to kanamycin per Rule 9
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAL1 # Inducible promoter for S. cerevisiae; RBS-like tuning in yeast is handled via expression level/5'UTR optimization
+    - cistron:
+        label: enz1
+        expression: high
+        fused: false
+        gene:
+          id: Enz1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enz2
+        expression: medium
+        fused: false
+        gene:
+          id: Enz2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enz3
+        expression: medium
+        fused: false
+        gene:
+          id: Enz3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enz4
+        expression: low
+        fused: false
+        gene:
+          id: Enz4
+          source: uniprot
+    - terminator: CYC1_term

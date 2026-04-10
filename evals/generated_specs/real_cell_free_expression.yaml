@@ -1,33 +1,17 @@
-```yaml
 construct:
-  name: "cfps_his_megfp"
-  host: e_coli # Although for wheat germ CFPS, the host is for plasmid propagation. Promoter is key for CFPS.
-
+  name: "wheat_germ_cfps_his_megfp"
+  host: in_vitro
   backbone:
     resistance: kanamycin
-    ori: pBR322
-
+    ori: pUC
   cassette:
-    - promoter: T7lac # Common promoter for CFPS systems, including wheat germ
+    - promoter: T7
     - cistron:
-        label: mEGFP
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

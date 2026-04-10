@@ -1,0 +1,21 @@
+construct:
+  name: "hGH_MBP_soluble_production"
+  host: e_coli_bl21
+  backbone:
+    # Antibiotic resistance set to none per user request for no antibiotic markers
+    resistance: none
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: araBAD  # Non-viral, robust inducible bacterial promoter
+    - cistron:
+        label: human_growth_factor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: Enterokinase  # Non-viral protease cleavage site
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: rrnB_T1  # Non-viral bacterial terminator

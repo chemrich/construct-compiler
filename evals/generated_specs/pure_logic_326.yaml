@@ -1,0 +1,31 @@
+construct:
+  name: "xor_logic_gate_L_M_output_K"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Input L: Induced by Arabinose
+      cistron:
+        label: protein_k_alpha
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1
+    - promoter: lacUV5  # Input M: Induced by IPTG
+      cistron:
+        label: protein_k_beta
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: BBa_B0015
+    # Note: Genetic XOR logic (L XOR M) requires an additional repression layer 
+    # (e.g., an AND gate driving a repressor) to satisfy the "NOT if both" condition. 
+    # This spec defines the primary expression units for output K (sfGFP).

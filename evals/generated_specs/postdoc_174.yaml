@@ -1,0 +1,19 @@
+construct:
+  name: "yeast_constitutive_flag_cite_expression"
+  host: yeast
+  # Note: Mammalian UTR/CITE sequences are placed in the 5' leader by the compiler for yeast stability as requested
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1

@@ -1,0 +1,28 @@
+construct:
+  name: "GeneOfInterest_HDR_Puro_Stable"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - spacer: 500  # Upstream homology arm for HDR
+    - promoter: CAG
+    - cistron:
+        label: target_expression
+        expression: high
+        chain:
+          - gene:
+              id: GeneOfInterest
+              source: uniprot
+          - tag: FLAG
+    - terminator: SV40_polyA
+    - promoter: EF1_alpha
+    - cistron:
+        label: selection_marker
+        expression: high
+        gene:
+          id: pac
+          source: uniprot
+    - terminator: bGH_polyA
+    - spacer: 500  # Downstream homology arm for HDR

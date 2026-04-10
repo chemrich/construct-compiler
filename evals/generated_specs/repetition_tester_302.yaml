@@ -1,0 +1,30 @@
+construct:
+  name: "yeast_mega_fusion_D1_D2_D3"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: catalytic_fusion
+        expression: high
+        # Note: Compiler should use synonymous codons for repeat avoidance as requested
+        chain:
+          - gene:
+              id: P00330
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P00924
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P00549
+              source: uniprot
+    - terminator: CYC1

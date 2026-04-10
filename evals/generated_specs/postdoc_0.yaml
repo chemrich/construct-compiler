@@ -1,0 +1,17 @@
+construct:
+  name: "AwesomeProtein_C_His_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac  # Substituted requested CMV with T7lac for E. coli expression compatibility
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: AwesomeProtein
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - terminator: T7term

@@ -1,0 +1,21 @@
+construct:
+  name: "mammalian_secretion_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: secreted_target
+        expression: high
+        chain:
+          - tag: IgK_leader        # Signal peptide for secretion into the media
+          - tag: Twin-Strep        # High-affinity purification tag for mammalian media
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: bGH_pA           # Standard mammalian polyadenylation signal/terminator

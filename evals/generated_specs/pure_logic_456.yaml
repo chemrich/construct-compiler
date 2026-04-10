@@ -1,0 +1,32 @@
+construct:
+  name: "conditional_lysis_biocontainment_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: essential_gene_rescue
+        expression: high
+        gene:
+          id: "P0A6L1"
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: "P00939"
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lacUV5
+    - cistron:
+        label: lysis_gene_lambda_S
+        expression: high
+        gene:
+          id: "P03756"
+          source: uniprot
+    - terminator: BBa_B0015

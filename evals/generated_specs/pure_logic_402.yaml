@@ -1,0 +1,32 @@
+construct:
+  name: "cooperative_activator_and_gate"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Activated by Input A: L-arabinose
+    - cistron:
+        label: activator_a_hrpR
+        expression: medium
+        gene:
+          id: P27708
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac     # Activated by Input B: IPTG
+    - cistron:
+        label: activator_b_hrpS
+        expression: medium
+        gene:
+          id: P27707
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: hrpL    # AND-gate promoter: requires both HrpR and HrpS for activation
+    - cistron:
+        label: reporter_output
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: BBa_B0015

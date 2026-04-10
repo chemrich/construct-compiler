@@ -1,0 +1,47 @@
+construct:
+  name: "binary_addressable_reporter_logic"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23106  # Logic (0,0): Active in absence of specific inducers
+    - cistron:
+        label: output_00_CFP
+        expression: medium
+        fused: false
+        gene:
+          id: mTurquoise2
+          source: fpbase
+    - terminator: rrnB_T1
+    - spacer: 50
+    - promoter: lacUV5  # Logic (0,1): Induced by AddressBit1 (e.g., IPTG)
+    - cistron:
+        label: output_01_GFP
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - spacer: 50
+    - promoter: araBAD  # Logic (1,0): Induced by AddressBit0 (e.g., L-Arabinose)
+    - cistron:
+        label: output_10_YFP
+        expression: medium
+        fused: false
+        gene:
+          id: mVenus
+          source: fpbase
+    - terminator: rrnB_T1
+    - spacer: 50
+    - promoter: tac     # Logic (1,1): Strong expression representing both bits high
+    - cistron:
+        label: output_11_RFP
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,31 @@
+construct:
+  name: "mammalian_multidomain_fusion_secretion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: complex_fusion
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: "P02976"
+              source: uniprot
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: "P00533"
+              source: uniprot
+          - cleavage_site: Thrombin
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: "P04637"
+              source: uniprot
+          - solubility_tag: MBP
+    - terminator: BBa_B0015

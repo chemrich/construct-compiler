@@ -1,0 +1,16 @@
+construct:
+  name: "secretion_of_protein_y"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_y_secretion
+        expression: high
+        chain:
+          - tag: PelB # N-terminal signal peptide for periplasmic secretion
+          - gene:
+              id: ProteinY
+              source: uniprot
+    - terminator: T7term

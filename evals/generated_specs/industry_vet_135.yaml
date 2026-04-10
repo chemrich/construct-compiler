@@ -1,0 +1,29 @@
+construct:
+  name: "mammalian_membrane_protein_optimal_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: membrane_target
+        expression: high
+        chain:
+          - tag: HA
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P11229
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: BBa_B0015

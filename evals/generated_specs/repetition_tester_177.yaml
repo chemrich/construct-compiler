@@ -1,0 +1,30 @@
+# Generating Variant 1 of 5. As per Rule 14, only one YAML document is provided.
+# ReceptorDomain and TransducerDomain are substituted with EnvZ and OmpR to ensure UniProt resolution.
+# Distinct promoter (T7lac), terminator (T7term), and linker (GS_flexible x5) are selected for this variant.
+construct:
+  name: "Biosensor_Variant_1"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: sensor_fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: EnvZ
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 5
+          - gene:
+              id: OmpR
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: T7term

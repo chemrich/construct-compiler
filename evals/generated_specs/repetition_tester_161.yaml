@@ -1,0 +1,32 @@
+construct:
+  name: "diverse_yeast_metabolic_operon"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Functionally equivalent to other strong constitutive yeast promoters
+    - cistron:
+        label: synthase_x
+        expression: high
+        gene:
+          id: SynthaseX
+          source: uniprot
+    - terminator: CYC1
+    - promoter: TEF1  # Genetically distinct but functionally high expression
+    - cistron:
+        label: kinase_y
+        expression: high
+        gene:
+          id: KinaseY
+          source: uniprot
+    - terminator: ADH1  # Genetically distinct terminator
+    - promoter: PGK1  # Third distinct strong constitutive promoter
+    - cistron:
+        label: reductase_z
+        expression: high
+        gene:
+          id: ReductaseZ
+          source: uniprot
+    - terminator: ENO2  # Third distinct terminator

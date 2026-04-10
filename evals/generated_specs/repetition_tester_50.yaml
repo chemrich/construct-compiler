@@ -1,0 +1,25 @@
+construct:
+  name: yeast_dual_dosage_synonymous_mEGFP
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - cistron:
+        label: mEGFP_synonym_A
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: CYC1_term
+    - spacer: 60  # Spacer to separate the two transcriptional units
+    - promoter: TDH3  # Identical strong promoter as requested
+    - cistron:
+        label: mEGFP_synonym_B  # Different label used to trigger distinct synonymous codon optimization paths
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: ADH1_term  # Different terminator to minimize sequence homology and prevent recombination

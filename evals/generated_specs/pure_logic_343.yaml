@@ -1,0 +1,42 @@
+construct:
+  name: "yeast_oscillatory_glp1_secretion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: oscillator_repressor_1
+        expression: medium
+        gene:
+          id: TetR
+          source: uniprot
+    - spacer: 40
+    - promoter: pTet
+    - cistron:
+        label: oscillator_repressor_2
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 40
+    - promoter: pLac
+    - cistron:
+        label: therapeutic_output
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: GLP1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: low
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: CYC1

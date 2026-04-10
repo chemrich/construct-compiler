@@ -1,0 +1,21 @@
+construct:
+  name: "non_homologous_yeast_ecoli_shuttle_v1"
+  host: yeast
+  backbone:
+    # E. coli specific components
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    # Yeast specific components (URA3 marker and CEN/ARS origin)
+    # The promoter and terminator used here are distinct from the prokaryotic ones in the backbone
+    - promoter: TEF1
+    - cistron:
+        label: yeast_selection_ura3
+        expression: medium
+        gene:
+          id: URA3
+          source: uniprot
+    - terminator: CYC1
+    - spacer: 512  # Sequence representing the CEN6/ARSH4 yeast origin of replication
+    - terminator: BBa_B0015

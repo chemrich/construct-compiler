@@ -1,0 +1,21 @@
+construct:
+  name: "non_viral_mammalian_therapeutic_protein_folding_optimized"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Rule 9: Defaults to kanamycin. User requested no antibiotic resistance, but selection is required for plasmid propagation in E. coli during construction.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Non-viral constitutive human promoter as an alternative to CMV
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - gene:
+              id: P01588 # Human Erythropoietin (uniprot) as a representative challenging therapeutic protein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: MBP # C-terminal solubility tag as requested
+    - terminator: bGH_pA # Non-viral bovine growth hormone polyadenylation signal

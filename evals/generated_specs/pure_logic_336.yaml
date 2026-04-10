@@ -1,0 +1,35 @@
+construct:
+  name: metabolic_load_balancing_circuit
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: pathway_B_activation
+        expression: high
+        fused: false
+        gene:
+          id: P0A715
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: Ptet
+    - cistron:
+        label: pathway_A_activation
+        expression: high
+        fused: false
+        gene:
+          id: P0ABH7
+          source: uniprot
+    - terminator: T7term
+    - spacer: 40
+    - promoter: J23106
+    - cistron:
+        label: basal_pathway_K
+        expression: low
+        fused: false
+        gene:
+          id: P0A944
+          source: uniprot
+    - terminator: BBa_B0015

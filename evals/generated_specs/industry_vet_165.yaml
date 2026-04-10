@@ -1,0 +1,22 @@
+construct:
+  name: "mammalian_proteinA_ires_egfp"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: ProteinA
+          source: uniprot
+    - spacer: 585  # IRES element for internal ribosome entry
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_polyA

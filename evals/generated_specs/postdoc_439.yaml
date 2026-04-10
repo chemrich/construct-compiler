@@ -1,0 +1,26 @@
+construct:
+  name: "yeast_gene_drive_cas9_grna"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD  # Strong yeast Pol II promoter substituted for EF1-alpha
+    - cistron:
+        label: cas9_expression
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Q99ZW2
+              source: uniprot
+    - spacer: 50
+    - promoter: SNR52  # Strong yeast Pol III promoter for gRNA transcription
+    - cistron:
+        label: grna_array
+        expression: high
+        fused: false
+        gene:
+          id: sgRNA
+    - terminator: CYC1  # Standard yeast terminator

@@ -1,0 +1,54 @@
+construct:
+  name: "antigena_shuttle_vector_yeast_ecoli"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pBR322  # pBR322/ColE1 for E. coli; ARS/CEN yeast origin assumed to be part of the custom backbone
+    source: addgene
+
+  cassette:
+    # Yeast expression unit
+    - promoter: GPD  # Strong constitutive promoter for yeast
+    - cistron:
+        label: antigen_a_yeast
+        expression: high
+        gene:
+          id: AntigenA
+          source: uniprot
+    - terminator: BBa_B0015
+
+    - spacer: 50
+
+    # E. coli expression unit
+    - promoter: tac  # Strong inducible promoter for E. coli (substitution for Plac)
+    - cistron:
+        label: antigen_a_ecoli
+        expression: high
+        gene:
+          id: AntigenA
+          source: uniprot
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    # LacI repressor for E. coli regulation
+    - promoter: J23100
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        gene:
+          id: lacI
+          source: uniprot
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    # URA3 Selection Marker for yeast
+    - promoter: J23106
+    - cistron:
+        label: ura3_marker
+        expression: medium
+        gene:
+          id: URA3
+          source: uniprot
+    - terminator: BBa_B0015

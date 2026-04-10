@@ -1,0 +1,24 @@
+construct:
+  name: "metabolic_pathway_operon_X_Y"
+  host: e_coli
+  backbone:
+    resistance: none # Regulatory compliance: excluded antibiotic resistance genes as requested
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: araBAD # Non-viral bacterial promoter (substituted for T7 to meet compliance requirements)
+    - cistron:
+        label: enzyme_x
+        expression: high
+        gene:
+          id: Enzyme_X
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_y
+        expression: high
+        fused: false # Independent translation for polycistronic operon efficiency
+        gene:
+          id: Enzyme_Y
+          source: uniprot
+    - terminator: rrnB_T1 # Strong bacterial terminator (non-viral)

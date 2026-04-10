@@ -1,0 +1,17 @@
+construct:
+  name: "UltraPureProtein_DualTag_Purification"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: UltraPureProtein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: target_protein
+          - tag: Strep-II
+    - terminator: T7term

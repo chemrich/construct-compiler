@@ -1,0 +1,18 @@
+construct:
+  name: "human_therapeutic_enzyme_production"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)" # Kanamycin marker used for cloning; markerless systems (e.g. pFAR/auxotrophy) are recommended for final clinical production.
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: GAA # Acid alpha-glucosidase (representative therapeutic human enzyme)
+              source: uniprot
+    - terminator: T7term

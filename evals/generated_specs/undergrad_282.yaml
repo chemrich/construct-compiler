@@ -1,0 +1,25 @@
+construct:
+  name: HEK293_therapeutic_selection_construct
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P60568
+              source: uniprot
+    - spacer: 50
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        gene:
+          id: P13249
+          source: uniprot
+    - terminator: bGH_polyA

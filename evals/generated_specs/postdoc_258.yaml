@@ -1,0 +1,16 @@
+construct:
+  name: "t7_lentiviral_transfer_system"
+  host: e_coli_bl21_de3  # Selected to support T7-driven RNA production in E. coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7  # High-level transcription for RNA payload production
+    - cistron:
+        label: "lentiviral_payload"
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: T7term  # Note: Lentiviral assembly requires mammalian host machinery (Gag/Pol/Env); this construct is for RNA/DNA production in E. coli.

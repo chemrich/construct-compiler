@@ -1,0 +1,23 @@
+construct:
+  name: "mab_pichia_aox1_p2a"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: antibody_expression
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: trastuzumab_hc
+              source: uniprot
+          - cleavage_site: P2A
+          - tag: alpha_factor
+          - gene:
+              id: trastuzumab_lc
+              source: uniprot
+    - terminator: AOX1_term

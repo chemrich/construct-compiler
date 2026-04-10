@@ -1,39 +1,25 @@
-```yaml
 construct:
-  name: "dox_inducible_lentiviral_transgene"
+  name: "dox_inducible_lenti_tet_on"
   host: HEK293
-
   backbone:
-    catalog_vector: "pTwist CMV" # Note: A true lentiviral backbone would include LTRs and packaging signals, not fully represented by this catalog vector.
-
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
   cassette:
-    # A doxycycline-inducible system typically involves a Tet-response element (TRE)
-    # and a transactivator. The 'CMV' promoter here represents a strong mammalian
-    # promoter often used in such systems, or as the minimal promoter within the TRE.
-    # The schema does not allow for explicit specification of a Tet-On/Off system.
-    - promoter: CMV
-
+    - promoter: TRE3G
     - cistron:
         label: transgene
         expression: high
         gene:
-          id: gene_of_interest # Placeholder for the desired transgene
-          source: uniprot # Generic source for a hypothetical protein
-
-    # Note: For mammalian expression, a polyadenylation signal (e.g., SV40 polyA)
-    # is typically used as a terminator. 'BBa_B0015' is an E. coli terminator
-    # and is used here as the closest option available in the schema.
-    - terminator: BBa_B0015
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+          id: mEGFP
+          source: fpbase
+    - terminator: SV40_polyA
+    - promoter: EF1_alpha
+    - cistron:
+        label: rtTA_activator
+        expression: medium
+        fused: false
+        gene:
+          id: rtTA3
+          source: uniprot
+    - terminator: WPRE

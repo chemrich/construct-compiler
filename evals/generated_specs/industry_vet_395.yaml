@@ -1,0 +1,18 @@
+construct:
+  name: "periplasmic_cytokine_secretion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: secreted_cytokine
+        expression: high
+        chain:
+          - tag: pelB  # Signal peptide for periplasmic export
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P60568  # Human Interleukin-2 as a representative cytokine
+              source: uniprot
+    - terminator: T7term

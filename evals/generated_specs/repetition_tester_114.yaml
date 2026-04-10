@@ -1,0 +1,19 @@
+construct:
+  name: "destabilized_sfgfp_ecoli"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - tag: ssrA_LVA  # Non-standard variant of the ssrA degradation tag
+    - terminator: T7term

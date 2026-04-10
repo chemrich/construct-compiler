@@ -1,0 +1,47 @@
+construct:
+  name: "five_gene_operon_c1_c5_ires_exploration"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_C1
+        expression: medium
+        gene:
+          id: C1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_C2
+        expression: medium
+        fused: false
+        gene:
+          id: C2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_C3
+        expression: medium
+        fused: false
+        gene:
+          id: C3
+          source: uniprot
+    - spacer: 60  # Eukaryotic IRES is substituted with a 60bp intergenic spacer and independent RBS to explore translational uncoupling in E. coli
+    - cistron:
+        label: enzyme_C4
+        expression: medium
+        fused: false
+        gene:
+          id: C4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_C5
+        expression: medium
+        fused: false
+        gene:
+          id: C5
+          source: uniprot
+    - terminator: T7term

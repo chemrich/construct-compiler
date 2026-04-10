@@ -1,0 +1,24 @@
+construct:
+  name: e_coli_kanr_rfp_system
+  host: e_coli_bl21_de3  # Substituted bl21_de3 to support the default T7lac promoter for successful expression
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: kanamycin_resistance
+        expression: medium
+        gene:
+          id: P00551
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: red_fluorescent_protein
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

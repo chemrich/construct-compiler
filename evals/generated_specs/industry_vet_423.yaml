@@ -1,0 +1,22 @@
+construct:
+  name: "HEK293_CAG_GFP_IRES_mCherry"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CAG
+    - cistron:
+        label: GFP_expression
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 580  # IRES sequence (approx. length for EMCV IRES)
+    - cistron:
+        label: mCherry_expression
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: bGH_polyA

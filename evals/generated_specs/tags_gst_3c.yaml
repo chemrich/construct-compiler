@@ -1,18 +1,12 @@
-```yaml
 construct:
-  name: "gst_3c_p12345_fusion"
-  host: e_coli
-
+  name: "GST_3C_P12345_High_Expression"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: target_protein
+        label: target_fusion
         expression: high
         chain:
           - solubility_tag: GST
@@ -20,18 +14,4 @@ construct:
           - gene:
               id: P12345
               source: uniprot
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

@@ -1,0 +1,34 @@
+construct:
+  name: "yeast_feedback_amplifier_circuit"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2micron
+    source: addgene
+  cassette:
+    - promoter: pGAL1
+    - cistron:
+        label: positive_feedback_activator
+        expression: medium
+        gene:
+          id: GAL4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: negative_feedback_repressor
+        expression: low
+        fused: false
+        gene:
+          id: GAL80
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: secreted_output_peptide
+        expression: high
+        fused: false
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: GH1
+              source: uniprot
+    - terminator: CYC1

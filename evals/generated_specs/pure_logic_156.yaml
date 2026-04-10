@@ -1,0 +1,24 @@
+construct:
+  name: "weighted_sum_analog_detector"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # tac promoter is used instead of T7lac to provide a more linear analog response for input integration
+    - cistron:
+        label: FinalProduct
+        expression: high  # High expression level serves as the Weight=2 multiplier for InputA/B integration
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: inhibitor_input_c
+        expression: low  # Low expression of the repressor implements the subtractive -0.5 weighting for InputC
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1

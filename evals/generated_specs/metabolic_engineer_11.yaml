@@ -1,0 +1,48 @@
+construct:
+  name: "metabolic_shunt_LVA_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: enzyme_1
+        expression: high
+        chain:
+          - gene:
+              id: enz1_shunt
+              source: uniprot
+          - tag: LVA # Note: User requested LVA to prevent degradation; however, LVA is a standard SsrA-based degron that typically increases turnover.
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: enz2_shunt
+              source: uniprot
+          - tag: LVA
+    - spacer: 30
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: enz3_shunt
+              source: uniprot
+          - tag: LVA
+    - spacer: 30
+    - cistron:
+        label: enzyme_4
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: enz4_shunt
+              source: uniprot
+          - tag: LVA
+    - terminator: rrnB_T1

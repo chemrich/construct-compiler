@@ -1,0 +1,25 @@
+construct:
+  name: yeast_surface_display_scfv
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: surface_display_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: AGA2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: anti_HER2_scFv
+              source: uniprot
+          - tag: HA
+    - terminator: CYC1

@@ -1,0 +1,32 @@
+construct:
+  name: "Bicistronic_ProteinP_ProteinQ_Mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist EF1-alpha"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: ProteinP
+        expression: high
+        chain:
+          - gene:
+              id: ProteinP
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: SUMO
+    - spacer: 580 # Internal Ribosome Entry Site (IRES) for bicistronic expression
+    - cistron:
+        label: ProteinQ
+        expression: high
+        fused: false # Independent translation via IRES
+        chain:
+          - gene:
+              id: ProteinQ
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+    - terminator: hGH_pA

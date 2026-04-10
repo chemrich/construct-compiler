@@ -1,0 +1,33 @@
+construct:
+  name: "light_inducible_nand_gate_m"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac  # Controlled by a split-repressor complex formed by N and O inputs
+    - cistron:
+        label: output_m
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: input_n_blue
+        expression: medium
+        fused: false
+        gene:
+          id: Q2NB98  # EL222 blue-light sensitive protein
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: input_o_red
+        expression: medium
+        fused: false
+        gene:
+          id: P14712  # PhyB red-light sensitive protein
+          source: uniprot
+    - terminator: T7term

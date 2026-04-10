@@ -1,0 +1,27 @@
+construct:
+  name: "frequency_bandpass_filter_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac  # Input F pulses are modeled as induction pulses for this promoter
+    - cistron:
+        label: integrator_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30 # Minimum spacing for polycistronic translation
+    - cistron:
+        label: output_E
+        expression: low
+        fused: false  # Independent RBS for the output protein
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1 # Standard E. coli terminator for clean transcriptional cutoff
+# Note: 0.1-0.5 Hz frequency filtering typically requires high protein turnover rates or post-translational feedback not fully captured by transcriptional hardware alone.

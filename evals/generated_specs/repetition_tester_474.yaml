@@ -1,0 +1,33 @@
+construct:
+  name: tandem_secretion_signal_test
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: sig1_igk
+        expression: low
+        fused: false
+        gene:
+          id: P01661
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: sig2_il2
+        expression: low
+        fused: false
+        gene:
+          id: P60568
+          source: uniprot
+    - spacer: 52
+    - cistron:
+        label: sig3_reporter_mneon
+        expression: high
+        fused: false
+        chain:
+          - tag: Gaussia_signal
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: bGH_pA

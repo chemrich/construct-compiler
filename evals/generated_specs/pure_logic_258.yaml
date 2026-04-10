@@ -1,0 +1,25 @@
+construct:
+  name: "dual_input_inhibitory_gate"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: "Plac_araO" # Induced by I1 (IPTG), repressed by I2 (Arabinose)
+    - cistron:
+        label: O1
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: "Para_lacO" # Induced by I2 (Arabinose), repressed by I1 (IPTG)
+    - cistron:
+        label: O2
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

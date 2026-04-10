@@ -1,0 +1,31 @@
+construct:
+  name: blue_light_switch_therapeutic_protein
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: J23100  # Constitutive promoter for the light-sensitive transcription factor
+    - cistron:
+        label: sensor
+        expression: medium
+        gene:
+          id: EL222
+          source: uniprot
+    - terminator: BBa_B0015
+
+    - spacer: 40
+
+    - promoter: P_EL222  # Blue light-responsive promoter activated by dimerized EL222
+    - cistron:
+        label: therapeutic_output
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: TherapeuticProtein
+              source: uniprot
+    - terminator: rrnB_T1

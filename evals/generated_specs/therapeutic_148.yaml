@@ -1,0 +1,16 @@
+construct:
+  name: "environmental_safe_metabolic_reporter"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Substituted for antibiotic-free system (e.g., thyA or dapD auxotrophy) as requested for environmental safety
+    ori: p15A
+    source: custom
+  cassette:
+    - promoter: araBAD # Tunable bacterial promoter (arabinose inducible), free of viral elements
+    - cistron:
+        label: activity_reporter
+        expression: medium
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1 # Bacterial terminator, avoids viral T7term

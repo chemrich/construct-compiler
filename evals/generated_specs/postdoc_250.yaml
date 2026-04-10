@@ -1,0 +1,18 @@
+construct:
+  name: "obscure_mammalian_protein_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: medium  # Medium expression to facilitate slower, mammalian-like translation kinetics
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TARGET_GENE  # Replace with specific UniProt ID; sequence optimization should favor rare codons as requested
+              source: uniprot
+    - terminator: T7term
+# Note: User requested codon optimization for 'optimal' rare codons to slow translation and improve folding. 
+# The host e_coli_bl21_de3 is selected for compatibility with the pET-28b(+) T7 expression system.

@@ -1,0 +1,19 @@
+construct:
+  name: "ER_retained_chaperone_clinical"
+  host: HEK293
+  backbone:
+    resistance: none # Requested omission of antibiotic resistance for clinical safety
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human EF1-alpha used instead of CMV to ensure non-viral components
+    - cistron:
+        label: chaperone_PDI
+        expression: high
+        chain:
+          - tag: secretion_signal
+          - gene:
+              id: P4HB
+              source: uniprot
+          - tag: KDEL
+    - terminator: bGH_pA

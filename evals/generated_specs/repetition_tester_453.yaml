@@ -1,0 +1,27 @@
+construct:
+  name: "yeast_secretion_optimization_hGH"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # High-expression yeast constitutive promoter
+    - cistron:
+        label: copy_1_alpha_factor
+        chain:
+          - tag: alpha_mating_factor  # Yeast pre-pro secretion signal
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: CYC1_term
+    - spacer: 60  # Insulation spacer between expression units
+    - promoter: TDH3  # Distinct high-expression yeast promoter to minimize homology
+    - cistron:
+        label: copy_2_suc2
+        chain:
+          - tag: SUC2_signal  # Distinct yeast invertase secretion signal
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: ADH1_term  # Distinct terminator to minimize homology

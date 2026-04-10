@@ -1,0 +1,31 @@
+construct:
+  name: "therapeutic_protein_heterodimer_expression"
+  host: e_coli_bl21
+  backbone:
+    # Note: A resistance marker is required for plasmid maintenance in the YAML schema.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac  # Bacterial-derived promoter used to satisfy 'no viral elements' constraint
+    - cistron:
+        label: subunit_alpha
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P29459
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: subunit_beta
+        expression: high
+        fused: false  # Ensures independent translation for co-expression
+        chain:
+          - tag: Strep-II
+          - cleavage_site: TEV
+          - gene:
+              id: P29460
+              source: uniprot
+    - terminator: rrnB_T1  # Non-viral bacterial terminator

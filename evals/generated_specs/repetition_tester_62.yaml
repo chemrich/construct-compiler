@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_recombination_resistant_2A_polycistron"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: diversified_ABC_payload
+        expression: high
+        chain:
+          - gene:
+              id: GeneA
+              source: uniprot
+          - cleavage_site: P2A  # Porcine teschovirus-1 2A peptide
+          - gene:
+              id: GeneB
+              source: uniprot
+          - cleavage_site: T2A  # Thosea asigna virus 2A peptide (distinct sequence)
+          - gene:
+              id: GeneC
+              source: uniprot
+    - terminator: CYC1_term

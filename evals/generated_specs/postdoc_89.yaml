@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_inducible_gst_toxic_protein"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Tight, galactose-inducible promoter for yeast
+    - cistron:
+        label: toxic_protein
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: ToxicProtein
+              source: uniprot
+    - terminator: CYC1

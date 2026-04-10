@@ -1,0 +1,22 @@
+construct:
+  name: "proteinS_proteinT_fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: fusion_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinS
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProteinT
+              source: uniprot
+    - terminator: T7term

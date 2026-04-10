@@ -1,0 +1,25 @@
+construct:
+  name: "diverged_toxin_antitoxin_expression"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: antitoxin_ccdA
+        expression: high
+        gene:
+          id: P0AD58
+          source: uniprot
+    - spacer: 50
+    - promoter: tac
+    - cistron:
+        label: toxin_ccdB
+        expression: low
+        fused: false
+        gene:
+          id: P0AD60
+          source: uniprot
+    - terminator: BBa_B0015

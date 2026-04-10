@@ -1,0 +1,24 @@
+construct:
+  name: "yeast_surface_display_aav_peptide"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: AGA2
+              source: uniprot
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: VP1
+              source: uniprot
+    - terminator: CYC1_term

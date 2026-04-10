@@ -1,0 +1,21 @@
+construct:
+  name: "therapeutic_lysosomal_glc_nonviral"
+  host: HEK293
+  backbone:
+    resistance: none  # Clinical requirement: antibiotic resistance markers excluded for safety
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral human promoter used instead of CMV for clinical safety
+    - cistron:
+        label: lysosomal_payload
+        expression: high
+        chain:
+          - tag: IGF2  # Peptide tag for targeting the Cation-Independent Mannose-6-Phosphate Receptor (CI-M6PR)
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: GLA  # Human alpha-galactosidase A (UniProt P06280) for Fabry disease therapy
+              source: uniprot
+    - terminator: hGH_polyA  # Human growth hormone polyadenylation signal to ensure non-viral compliance

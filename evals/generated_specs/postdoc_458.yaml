@@ -1,0 +1,33 @@
+construct:
+  name: "large_protein_groESL_operon"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P0A8V2
+              source: uniprot
+    - spacer: 30  # Intergenic spacer for independent translation
+    - cistron:
+        label: groES
+        expression: medium
+        fused: false  # Independently translated within the operon
+        gene:
+          id: P0A6F9
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: groEL
+        expression: medium
+        fused: false
+        gene:
+          id: P0A6F5
+          source: uniprot
+    - terminator: T7term
+# Note: Polycistronic operons are characteristic of bacteria; eukaryotes typically express proteins from monocistronic mRNAs.

@@ -1,0 +1,22 @@
+construct:
+  name: "GOI_RBD_mammalian_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: "P00533" # Placeholder for GOI (EGFR)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: "P0DTC2" # SARS-CoV-2 Spike Protein Receptor Binding Domain
+              source: uniprot
+          - tag: FLAG
+    - terminator: bGH_polyA # Substituted for mammalian polyadenylation signal as requested for HEK293 host

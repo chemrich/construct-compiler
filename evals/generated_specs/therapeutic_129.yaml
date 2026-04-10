@@ -1,0 +1,23 @@
+construct:
+  name: "siRNA_reporter_nonviral_vector"
+  host: HEK293
+  backbone:
+    resistance: kanamycin  # Note: Kanamycin included for bacterial propagation; user requested no ARGs for final construct
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: U6  # Non-viral Pol III promoter for siRNA/shRNA expression
+    - cistron:
+        label: siRNA_expression
+        expression: high
+        gene:
+          id: siRNA_targeting_sequence
+    - spacer: 50
+    - promoter: EF1_alpha  # Non-viral Pol II promoter for protein expression
+    - cistron:
+        label: reporter
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

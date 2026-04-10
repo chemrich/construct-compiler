@@ -1,0 +1,23 @@
+construct:
+  name: "positive_feedback_gh_amplifier"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Synthetic inducible promoter used to create a positive feedback loop with its transactivator
+    - cistron:
+        label: activator
+        expression: medium
+        gene:
+          id: rtTA3
+    - spacer: 30
+    - cistron:
+        label: cargo
+        expression: high
+        fused: false  # Independent translation via IRES/2A for the polycistronic mammalian cassette
+        chain:
+          - tag: IgK_leader  # Secretion signal to ensure the growth hormone is exported from the cell
+          - gene:
+              id: GH1
+              source: uniprot
+    - terminator: bGH_PA

@@ -1,0 +1,38 @@
+construct:
+  name: yeast_polycistronic_ABC_HA
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1  # High-level constitutive expression in yeast
+    - cistron:
+        label: protein_A
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: P00001
+              source: uniprot
+    - spacer: 40  # Minimum 20bp required for polycistronic spacer
+    - cistron:
+        label: protein_B
+        expression: high
+        fused: false  # To ensure independent translation of protein B from the same mRNA (e.g., via IRES or 2A)
+        chain:
+          - tag: HA
+          - gene:
+              id: P00002
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: protein_C
+        expression: high
+        fused: false  # To ensure independent translation of protein C from the same mRNA
+        chain:
+          - tag: HA
+          - gene:
+              id: P00003
+              source: uniprot
+    - terminator: CYC1  # Standard yeast transcription terminator

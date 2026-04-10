@@ -1,0 +1,19 @@
+construct:
+  name: "non_viral_car_t_therapeutic"
+  host: mammalian
+  backbone:
+    resistance: none # Antibiotic resistance markers are excluded per therapeutic safety requirements to prevent horizontal gene transfer
+    ori: pUC
+    source: custom
+
+  cassette:
+    - promoter: EF1_alpha # Robust, constitutive mammalian promoter; substituted for CMV to avoid viral sequences
+
+    - cistron:
+        label: "car_fusion_protein"
+        expression: high
+        gene:
+          id: P20963 # CD247 (CD3-zeta signaling domain), a core component of Chimeric Antigen Receptors
+          source: uniprot
+
+    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal; robust non-viral termination signal

@@ -1,0 +1,20 @@
+construct:
+  name: "bacillus_sumo_kinase_expression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322  # pBR322 is used as a placeholder for the E. coli portion of a B. subtilis shuttle vector
+    source: addgene
+  cassette:
+    - promoter: Pxyl
+    - cistron:
+        label: target_kinase
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: kinase
+              source: uniprot
+          - tag: 6xHis
+    - terminator: BBa_B0015

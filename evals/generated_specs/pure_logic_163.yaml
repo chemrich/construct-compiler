@@ -1,0 +1,28 @@
+construct:
+  name: "logic_and_or_enzyme_construct"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac  # Represents OR gate Input A (Result of Input 1 AND Input 2)
+    - cistron:
+        label: enzyme_path_A
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: P00813
+              source: uniprot
+    - spacer: 40  # Required spacer between logic expression units
+    - promoter: araBAD  # Represents OR gate Input B (Input 3)
+    - cistron:
+        label: enzyme_path_B
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: P00813
+              source: uniprot
+    - terminator: T7term

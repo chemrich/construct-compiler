@@ -1,0 +1,24 @@
+construct:
+  name: "homeostatic_negative_feedback_loop"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: repressor_output
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: monitor_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1

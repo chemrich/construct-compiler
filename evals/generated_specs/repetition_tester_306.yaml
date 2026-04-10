@@ -1,0 +1,27 @@
+construct:
+  name: tandem_BD1_trimer_recombination_resistant
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: BD1_fusion
+        expression: high
+        chain:
+          - gene:
+              id: BD1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: BD1
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: BD1
+              source: uniprot
+    - terminator: T7term

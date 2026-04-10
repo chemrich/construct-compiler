@@ -1,0 +1,18 @@
+construct:
+  name: "mammalian_non_viral_episomal_therapeutic_vector"
+  host: HEK293
+  backbone:
+    resistance: none # User requested no antibiotic resistance genes for safety
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00740 # Human Factor IX as a model therapeutic protein
+              source: uniprot
+    - terminator: bGH_PA

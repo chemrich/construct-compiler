@@ -1,0 +1,34 @@
+construct:
+  name: "triple_aptamer_expression_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: rna_aptamer_array
+        expression: high
+        # Elements are placed in a single chain to ensure a single transcript without internal RBS sequences
+        chain:
+          - gene:
+              id: Hammerhead_Rz_Type_I
+          - gene:
+              id: Spinach
+              source: fpbase
+          - gene:
+              id: HDV_Rz_Genomic
+          - gene:
+              id: Hammerhead_Rz_Type_III
+          - gene:
+              id: Broccoli
+              source: fpbase
+          - gene:
+              id: HDV_Rz_Antigenomic
+          - gene:
+              id: Twister_Rz_P1
+          - gene:
+              id: Mango_III
+              source: fpbase
+          - gene:
+              id: Twister_Rz_env22
+    - terminator: T7term

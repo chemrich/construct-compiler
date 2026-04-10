@@ -1,0 +1,28 @@
+construct:
+  name: "secreted_human_receptor_glycosylated_yeast"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: target_receptor
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: FLAG
+          - cleavage_site: TEV
+          - gene:
+              id: CD4
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: glycosylation_machinery
+        expression: medium
+        fused: false
+        gene:
+          id: MGAT1
+          source: uniprot
+    - terminator: CYC1

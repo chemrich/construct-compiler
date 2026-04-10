@@ -1,0 +1,21 @@
+construct:
+  name: "EnzymeF_T7_expression_C_TwinStrep"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: chloramphenicol
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - gene:
+              id: EnzymeF
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Twin-Strep
+    - terminator: T7term

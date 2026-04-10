@@ -1,0 +1,26 @@
+construct:
+  name: "dual_promoter_cleavable_his_tag_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - spacer: 50
+    - promoter: tac
+    - cistron:
+        label: independent_protease
+        expression: medium
+        fused: false
+        gene:
+          id: P04517
+          source: uniprot
+    - terminator: BBa_B0015

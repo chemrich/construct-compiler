@@ -1,0 +1,56 @@
+construct:
+  name: "xenobiotic_degradation_operon_KT2440"
+  host: e_coli  # Pseudomonas putida KT2440 not in schema; defaulting to E. coli as surrogate host
+  backbone:
+    resistance: kanamycin
+    ori: p15A  # Stable low-to-medium copy origin compatible with wide-host-range systems
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Strong, strictly inducible promoter for Pseudomonas/E. coli systems
+    - cistron:
+        label: dioxygenase
+        expression: high
+        gene:
+          id: "P0A110"
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ring_cleavage_dioxygenase
+        expression: high
+        fused: false
+        gene:
+          id: "P0A113"
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hydrolase
+        expression: medium
+        fused: false
+        gene:
+          id: "P14728"
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reductase
+        expression: medium
+        fused: false
+        gene:
+          id: "P23104"
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: accessory_enzyme_1
+        expression: low
+        fused: false
+        gene:
+          id: "P0A111"
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: accessory_enzyme_2
+        expression: low
+        fused: false
+        gene:
+          id: "P0A112"
+          source: uniprot
+    - terminator: rrnB_T1

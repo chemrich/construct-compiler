@@ -1,0 +1,25 @@
+construct:
+  name: "ProteinK_NonHomologous_Fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: ProteinK
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - solubility_tag: MBP
+    - terminator: CYC1_term

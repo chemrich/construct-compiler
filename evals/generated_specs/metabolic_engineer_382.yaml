@@ -1,0 +1,60 @@
+construct:
+  name: "bacterial_enzyme_operon_kinase_isomerase"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tac  # tac used as equivalent substitution for pTrc
+    - cistron:
+        label: Kinase1
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: Kinase1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ReductaseA
+        expression: high
+        fused: false
+        gene:
+          id: ReductaseA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: LyaseB
+        expression: high
+        fused: false
+        gene:
+          id: LyaseB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: SynthaseC
+        expression: high
+        fused: false
+        gene:
+          id: SynthaseC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: TransferaseD
+        expression: high
+        fused: false
+        gene:
+          id: TransferaseD
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: IsomeraseE
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: IsomeraseE
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

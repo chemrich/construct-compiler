@@ -1,0 +1,21 @@
+construct:
+  name: "gst_mammalian_protein_yeast"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Inducible yeast promoter for high-level expression
+    - cistron:
+        label: gst_fusion_protein
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P04637 # Human TP53 used as representative insoluble mammalian protein
+              source: uniprot
+    - terminator: CYC1

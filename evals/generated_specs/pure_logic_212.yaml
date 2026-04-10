@@ -1,0 +1,22 @@
+construct:
+  name: "frequency_dependent_gfp_detector"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Sensitive to input C1 (Arabinose)
+    - cistron:
+        label: output_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: frequency_regulator
+        expression: low
+        fused: false  # Independent translation for the repressor
+        gene:
+          id: lacI
+          source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,17 @@
+construct:
+  name: "GeneR_multi_intron_mammalian_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: GeneR
+          source: uniprot
+          # Note: The compiler must insert three non-homologous functional introns (e.g., MVM, SV40, and beta-globin) 
+          # into the GeneR coding sequence. Exons and introns must be screened and optimized to eliminate 
+          # internal DNA repeats and maximize sequence diversity.
+    - terminator: BGH_polyA  # Standard mammalian terminator; substituting for bacterial examples provided in schema.

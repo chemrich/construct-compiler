@@ -1,0 +1,22 @@
+construct:
+  name: "cell_free_rna_diagnostic_amplifier"
+  host: in_vitro
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7  # PathogenRNA triggering logic (e.g., toehold switch) is typically implemented in the 5' UTR of the T7 transcript
+    - cistron:
+        label: signal_amplifier
+        expression: high
+        gene:
+          id: P00552
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: color_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

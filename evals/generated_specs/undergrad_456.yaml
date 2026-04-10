@@ -1,0 +1,24 @@
+construct:
+  name: "Nu_Xi_yeast_coexpression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - cistron:
+        label: Nu
+        expression: high
+        gene:
+          id: Nu
+          source: uniprot
+    - spacer: 30  # Polycistronic spacer; in yeast, this may be implemented via IRES or 2A peptide for single-promoter systems
+    - cistron:
+        label: Xi
+        expression: high
+        fused: false  # Independently translated
+        gene:
+          id: Xi
+          source: uniprot
+    - terminator: CYC1  # Standard yeast transcriptional terminator

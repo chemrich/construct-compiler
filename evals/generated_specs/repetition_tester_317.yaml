@@ -1,0 +1,31 @@
+construct:
+  name: "yeast_dual_auxotrophic_centromeric_plasmid"
+  host: yeast
+
+  backbone:
+    resistance: ampicillin
+    ori: CEN6_ARS4  # Centromeric origin for single-copy maintenance in yeast
+    source: addgene
+
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: URA3_marker
+        expression: medium
+        fused: false
+        gene:
+          id: P03315
+          source: uniprot
+    - terminator: CYC1
+
+    - spacer: 50  # Physical separation between transcription units
+
+    - promoter: TEF1  # Distinct promoter to prevent internal rearrangements
+    - cistron:
+        label: LEU2_marker
+        expression: medium
+        fused: false
+        gene:
+          id: P06633
+          source: uniprot
+    - terminator: PGK1  # Distinct terminator to prevent internal rearrangements

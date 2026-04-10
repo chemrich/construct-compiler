@@ -1,0 +1,19 @@
+construct:
+  name: "bacillus_heat_shock_chaperone_expression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: groE  # Heat-shock inducible promoter for Bacillus subtilis
+    - cistron:
+        label: chaperone_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: dnaK
+              source: uniprot
+    - terminator: rrnB_T1

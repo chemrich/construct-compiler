@@ -1,0 +1,17 @@
+construct:
+  name: "pH_Temp_Metal_Logic_Enzyme_X_Production"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: pLogic_pHlow_Thigh_NOTmetal # Logic: (pH_Low AND Temperature_High) AND NOT HeavyMetal_Present
+    - cistron:
+        label: enzyme_x_expression
+        expression: high
+        chain:
+          - tag: PelB # N-terminal secretion signal for E. coli export
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Enzyme_X
+    - terminator: T7term

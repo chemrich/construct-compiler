@@ -1,0 +1,21 @@
+construct:
+  name: "bacillus_subtilis_esterase_secretion"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: custom
+  cassette:
+    - promoter: PxylA
+    - cistron:
+        label: esterase_target
+        expression: high
+        chain:
+          - tag: SacB  # Signal peptide for Bacillus subtilis secretion
+          - tag: 6xHis
+          - tag: Strep-II
+          - cleavage_site: Thrombin
+          - gene:
+              id: P37957
+              source: uniprot
+    - terminator: rrnB_T1

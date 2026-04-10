@@ -1,0 +1,29 @@
+construct:
+  name: "HeLa_SV40_expression_with_neo"
+  host: HeLa
+
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: SV40  # SV40 early promoter requested for constitutive expression in HeLa
+
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: gene_du_jour
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: selection
+        fused: false  # neo gene for G418 resistance
+        gene:
+          id: neo
+          source: uniprot
+
+    - terminator: SV40_pA  # Poly-A tail for mammalian expression stability

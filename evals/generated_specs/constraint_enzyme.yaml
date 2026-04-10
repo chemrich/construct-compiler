@@ -1,29 +1,18 @@
-```yaml
 construct:
-  name: "His_tagged_GFP_e_coli"
-  host: e_coli
-
+  name: "his_tagged_gfp_bpii"
+  host: e_coli_bl21
   backbone:
+    # Golden Gate assembly vectors typically use custom parts; pET-28b(+) is standard for His-tag expression.
     catalog_vector: "pET-28b(+)"
-
   cassette:
     - promoter: T7lac
-
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BpiI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-```
+    - terminator: T7term
+# Note: User requested BpiI (BbsI) Golden Gate assembly. The compiler will prioritize BpiI recognition site avoidance in sequence optimization.

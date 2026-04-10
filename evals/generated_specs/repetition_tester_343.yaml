@@ -1,0 +1,41 @@
+construct:
+  name: "tandem_repeat_5x_non_homologous"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: tandem_repeat_fusion
+        expression: high
+        # To prevent recombination, the compiler must maximize DNA divergence (synonymous codons) 
+        # across all five repeat units and ensure linker DNA homology is minimized.
+        chain:
+          - gene:
+              id: P62988
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P62988
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: P62988
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: P62988
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P62988
+              source: uniprot
+    - terminator: T7term

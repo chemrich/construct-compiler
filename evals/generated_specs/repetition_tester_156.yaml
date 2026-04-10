@@ -1,0 +1,26 @@
+construct:
+  name: "SecretedProteinS_Dual_Secretion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: "S_protein_copy_1"
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: "SecretedProteinS"
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: "S_protein_copy_2"
+        expression: high
+        fused: false
+        chain:
+          - tag: IL2_leader
+          - gene:
+              id: "SecretedProteinS"
+              source: uniprot
+    - terminator: bGH_PA

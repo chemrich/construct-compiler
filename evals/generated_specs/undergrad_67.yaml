@@ -1,0 +1,23 @@
+construct:
+  name: ProteinV_Yeast_Localization
+  host: yeast
+  backbone:
+    resistance: ampicillin # Standard for yeast shuttle vectors in E. coli
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ACT1 # Standard yeast constitutive promoter for localization studies
+    - cistron:
+        label: localization_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: ProteinV
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP # Monomeric GFP for localization (fpbase source)
+              source: fpbase
+    - terminator: CYC1_term # Common yeast terminator

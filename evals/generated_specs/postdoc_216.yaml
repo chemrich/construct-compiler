@@ -1,0 +1,32 @@
+construct:
+  name: stoichiometric_LMN_expression
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: L
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: L
+              source: uniprot
+    - spacer: 30 # P2A/F2A peptides are eukaryotic-specific and do not skip in E. coli; substituted with intergenic spacers to achieve stoichiometric polycistronic expression
+    - cistron:
+        label: M
+        expression: high
+        fused: false
+        gene:
+          id: M
+          source: uniprot
+    - spacer: 30 # P2A/F2A peptides are eukaryotic-specific and do not skip in E. coli; substituted with intergenic spacers to achieve stoichiometric polycistronic expression
+    - cistron:
+        label: N
+        expression: high
+        fused: false
+        gene:
+          id: N
+          source: uniprot
+    - terminator: T7term

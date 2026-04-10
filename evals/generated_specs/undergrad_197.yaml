@@ -1,0 +1,24 @@
+construct:
+  name: "dual_independent_expression_control"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_a_high
+        expression: high
+        gene:
+          id: ProteinA
+          source: uniprot
+    - terminator: T7term
+    - promoter: araBAD  # Used araBAD for independent control via arabinose, distinct from IPTG-inducible T7lac
+    - cistron:
+        label: protein_b_medium
+        expression: medium
+        gene:
+          id: ProteinB
+          source: uniprot
+    - terminator: rrnB_T1

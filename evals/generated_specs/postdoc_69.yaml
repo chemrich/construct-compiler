@@ -1,0 +1,19 @@
+construct:
+  name: "tough_protein_solubility_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23106  # Weak constitutive promoter for low expression level
+    - cistron:
+        label: target
+        expression: low
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: Thrombin
+          - gene:
+              id: ToughProtein
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,29 @@
+construct:
+  name: "chloroplast_mimetic_polyprotein"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: chl_polyprotein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ChlA
+              source: uniprot
+          - cleavage_site: P2A  # 2A peptides (P2A, T2A, F2A) are eukaryotic ribosomal skip sequences and will not self-cleave in E. coli; they will act as flexible linkers.
+          - gene:
+              id: ChlB
+              source: uniprot
+          - cleavage_site: T2A
+          - gene:
+              id: ChlC
+              source: uniprot
+          - cleavage_site: F2A
+          - gene:
+              id: ChlD
+              source: uniprot
+    - terminator: rrnB_T1

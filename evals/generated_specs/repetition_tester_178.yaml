@@ -1,0 +1,57 @@
+construct:
+  name: "mammalian_triple_cpp_delivery_vector"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: fusion_unit_1
+        expression: high
+        chain:
+          - gene:
+              id: TAF_variant_1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: CPP1
+              source: uniprot
+    - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: EF1_alpha
+    - cistron:
+        label: fusion_unit_2
+        expression: high
+        chain:
+          - gene:
+              id: TAF_variant_2
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: CPP2
+              source: uniprot
+    - terminator: hGH_polyA
+
+    - spacer: 50
+
+    - promoter: PGK
+    - cistron:
+        label: fusion_unit_3
+        expression: medium
+        chain:
+          - gene:
+              id: TAF_variant_3
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: CPP3
+              source: uniprot
+    - terminator: bGH_polyA

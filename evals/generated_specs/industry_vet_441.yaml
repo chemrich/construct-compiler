@@ -1,0 +1,22 @@
+construct:
+  name: "bicistronic_aav_human_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: reporter
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 585  # Length of an EMCV IRES sequence for bicistronic expression
+    - cistron:
+        label: therapeutic_peptide
+        expression: medium
+        fused: false  # Enables independent translation initiation via the IRES spacer
+        gene:
+          id: P01275  # Glucagon-like peptide 1 (GLP-1)
+          source: uniprot
+    - terminator: bgh_polyA

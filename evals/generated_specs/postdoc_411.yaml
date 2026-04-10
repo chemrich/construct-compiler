@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_surface_display_construct"
+  host: yeast
+  backbone:
+    resistance: kanamycin # Default resistance for bacterial maintenance
+    ori: pBR322            # Default origin for bacterial maintenance
+    source: addgene
+  cassette:
+    - promoter: PGK1 # Substituted PGK1 as a standard yeast constitutive promoter
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: MF-alpha1_signal # Required signal peptide for secretion to the yeast surface
+              source: uniprot
+          - gene:
+              id: target_peptide
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: AGA2 # Substituted AGA2 as a standard yeast-specific surface anchor protein to achieve display
+              source: uniprot
+    - terminator: CYC1_term # Standard yeast terminator for transcription termination

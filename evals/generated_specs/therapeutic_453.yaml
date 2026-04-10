@@ -1,0 +1,24 @@
+construct:
+  name: "Bacterial_Biosensor_sfGFP_Fusion"
+  host: e_coli
+  backbone:
+    # Note: Kanamycin is used as the selectable marker because the schema requires a standard resistance gene; non-ARG (antibiotic resistance gene) selection systems are not currently supported in the tool's vocabulary.
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac # Non-viral, high-efficiency bacterial promoter (hybrid of trp and lac)
+    - cistron:
+        label: sensor_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P0A9G4 # CueR (bacterial copper-responsive biosensor protein)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1

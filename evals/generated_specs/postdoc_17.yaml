@@ -1,0 +1,16 @@
+construct:
+  name: "immunogen_protein_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: immunogen_protein
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: ImmunogenProtein
+              source: uniprot
+    - terminator: T7term # Mammalian polyA signals do not function in E. coli; substituted with strong T7 terminator for mRNA stability.

@@ -1,0 +1,51 @@
+construct:
+  name: "divergent_dual_scfv_bacterial_expression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "scfv_fmc63_vh"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - gene:
+              id: "FMC63_VH"
+              source: uniprot
+    - cistron:
+        label: "scfv_fmc63_vl"
+        expression: high
+        fused: true
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: "FMC63_VL"
+              source: uniprot
+    - terminator: T7term
+    - spacer: 50
+    - promoter: tac
+    - cistron:
+        label: "scfv_trastuzumab_vh"
+        expression: medium
+        chain:
+          - tag: Twin-Strep
+          - solubility_tag: GST
+          - gene:
+              id: "Trastuzumab_VH"
+              source: uniprot
+    - cistron:
+        label: "scfv_trastuzumab_vl"
+        expression: medium
+        fused: true
+        chain:
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: "Trastuzumab_VL"
+              source: uniprot
+    - terminator: rrnB_T1

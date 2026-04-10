@@ -1,0 +1,33 @@
+construct:
+  name: "relaxation_oscillator_protease_feedback"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: repressor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+          - cleavage_site: TEV
+    - spacer: 30
+    - cistron:
+        label: protease
+        expression: medium
+        fused: false
+        gene:
+          id: TEV_protease
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term

@@ -1,0 +1,49 @@
+construct:
+  name: "sensor_regulated_enzyme_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac # Default regulated promoter for E. coli per Rule 8 to represent the sensor
+    - cistron:
+        label: enzyme_X1
+        expression: medium
+        gene:
+          id: X1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_X2
+        expression: medium
+        fused: false
+        gene:
+          id: X2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_X3
+        expression: medium
+        fused: false
+        gene:
+          id: X3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_X4
+        expression: medium
+        fused: false
+        gene:
+          id: X4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_X5
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: X5
+              source: uniprot
+          - tag: FLAG
+    - terminator: rrnB_T1

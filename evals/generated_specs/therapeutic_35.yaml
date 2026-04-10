@@ -1,0 +1,21 @@
+construct:
+  name: "therapeutic_prodomain_cleavable_fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: none  # User requested no antibiotic resistance; suggested use of auxotrophic complementation (e.g., thyA) or toxin-antitoxin systems.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: GLP1
+              source: uniprot
+    - terminator: T7term

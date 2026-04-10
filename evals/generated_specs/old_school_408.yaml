@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_ecoli_shuttle_GPD"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pBR322 # ColE1-type origin for E. coli; 2-micron origin and URA3 marker are included in the construct design
+    source: addgene
+
+  cassette:
+    - promoter: GPD
+    - cistron:
+        label: target
+        gene:
+          id: target_gene
+    - terminator: CYC1
+    - spacer: 50
+    - promoter: URA3_promoter # Native yeast URA3 promoter
+    - cistron:
+        label: yeast_selection
+        gene:
+          id: URA3
+          source: uniprot
+    - terminator: ADH1

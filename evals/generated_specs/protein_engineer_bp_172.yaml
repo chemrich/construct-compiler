@@ -1,0 +1,25 @@
+construct:
+  name: "bacillus_bicistronic_groel_target"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: chaperone_groEL
+        expression: medium
+        gene:
+          id: P19228 # UniProt ID for Bacillus subtilis GroEL (chaperonin)
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: target_protein
+        expression: high
+        fused: false # Indicated as an independent gene after the RBS
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP # Using mEGFP as a representative target protein as none was specified
+              source: fpbase
+    - terminator: rrnB_T1

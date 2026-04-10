@@ -1,0 +1,17 @@
+construct:
+  name: "xor_gate_protein_c"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: XOR_hybrid_A_B # Custom hybrid promoter logic: ON if Input A or Input B is present, but OFF if both are present
+    - cistron:
+        label: target_protein_c
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P04070
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,22 @@
+construct:
+  name: "therapeutic_tandem_dimer_fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)" # Selection marker included for plasmid stability; E. coli expression systems require a selection marker for maintenance.
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: fused_therapeutic_dimer
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TNF
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: TNF
+              source: uniprot
+    - terminator: T7term

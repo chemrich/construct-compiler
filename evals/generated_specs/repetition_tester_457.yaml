@@ -1,0 +1,29 @@
+construct:
+  name: "CRISPR_CBE_dCas9_APOBEC1_UGI"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: base_editor
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: dCas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 6
+          - gene:
+              id: APOBEC1
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          - gene:
+              id: UGI
+              source: uniprot
+          - tag: NLS
+    - terminator: bGH_pA

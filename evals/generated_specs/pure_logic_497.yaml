@@ -1,0 +1,46 @@
+construct:
+  name: "mammalian_sr_latch_recombinase_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: set_signal_processor
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P06956
+              source: uniprot
+    - terminator: rrnB_T1
+    - promoter: EF1_alpha
+    - cistron:
+        label: reset_signal_processor
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P03870
+              source: uniprot
+    - terminator: rrnB_T1
+    - promoter: CMV
+    - cistron:
+        label: state_green
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 40
+    - cistron:
+        label: state_red
+        expression: medium
+        fused: false
+        chain:
+          - tag: NLS
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: rrnB_T1

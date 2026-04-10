@@ -1,0 +1,23 @@
+construct:
+  name: yeast_solubility_optimized_human_protein_expression
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: human_target
+        expression: medium
+        chain:
+          - tag: 8xHis
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P04637
+              source: uniprot
+    - terminator: CYC1

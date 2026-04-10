@@ -1,0 +1,35 @@
+construct:
+  name: Mammalian_GeneP_Ortholog_Diversity
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: human_ortholog
+        expression: high  # Optimization strategy: independent high expression
+        gene:
+          id: P_human
+          source: uniprot
+    - terminator: BGH_polyA
+    - spacer: 40  # Physical separation between transcriptional units
+
+    - promoter: EF1_alpha
+    - cistron:
+        label: mouse_ortholog
+        expression: high  # Optimization strategy: independent high expression
+        gene:
+          id: P_mouse
+          source: uniprot
+    - terminator: SV40_polyA
+    - spacer: 40
+
+    - promoter: UbC
+    - cistron:
+        label: rat_ortholog
+        expression: high  # Optimization strategy: independent high expression
+        gene:
+          id: P_rat
+          source: uniprot
+    - terminator: hGH_polyA
+# Note: Each ortholog is assigned a unique promoter/terminator pair and marked for high expression to trigger independent codon optimization for minimal DNA homology.

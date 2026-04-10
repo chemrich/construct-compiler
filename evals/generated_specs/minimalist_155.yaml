@@ -1,0 +1,18 @@
+construct:
+  name: "haloferax_volcanii_taq_expression"
+  host: haloferax_volcanii
+  backbone:
+    resistance: kanamycin  # Defaulting to kanamycin per Rule 9; note that mevinolin is the standard selection marker for H. volcanii.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: P_fdx  # High-strength ferredoxin promoter native to haloarchaea.
+    - cistron:
+        label: taq_polymerase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P19822
+              source: uniprot
+    - terminator: rrnB_T1

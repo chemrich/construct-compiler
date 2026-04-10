@@ -1,0 +1,23 @@
+construct:
+  name: "toxinG_araBAD_regulated_expression"
+  host: e_coli
+  backbone:
+    resistance: tetracycline
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: target_toxin
+        expression: medium
+        gene:
+          id: toxinG
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: regulator
+        fused: false  # Independently translated to provide AraC protein in cis
+        gene:
+          id: araC
+          source: uniprot
+    - terminator: rrnB_T1

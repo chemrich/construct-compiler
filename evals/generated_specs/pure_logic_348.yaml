@@ -1,0 +1,19 @@
+construct:
+  name: "light_inducible_therapeutic_analog_tuner"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: pDawn  # Blue-light activated promoter for linear dose-response control
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: T7term

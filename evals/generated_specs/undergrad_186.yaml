@@ -1,0 +1,36 @@
+construct:
+  name: "fret_interaction_assay_proteinA_proteinB"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: donor_fusion
+        expression: high
+        chain:
+          - gene:
+              id: ProteinA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mCerulean3
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: acceptor_fusion
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: ProteinB
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mVenus
+              source: fpbase
+    - terminator: hGH_pA

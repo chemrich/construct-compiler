@@ -1,0 +1,38 @@
+construct:
+  name: "genetic_toggle_switch_bistable"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: lacUV5  # Repressed by LacI; toggled ON by IPTG
+    - cistron:
+        label: repressor_tetR
+        expression: high
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: output_state_a
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: tetR_promoter  # Repressed by TetR; toggled ON by aTc/Anhydrotetracycline
+    - cistron:
+        label: repressor_lacI
+        expression: high
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: output_state_b
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

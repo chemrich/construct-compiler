@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_apoptosis_delay_circuit"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Inducer-responsive promoter (responds to inducer_delay pulse)
+    - cistron:
+        label: delay_relay
+        expression: medium
+        fused: false
+        gene:
+          id: GAL4_VP16
+    - terminator: SV40_PA
+    - spacer: 60  # Intergenic region between transcription units
+    - promoter: UAS  # Responds to GAL4-VP16 to create the 6-8 hour transcriptional delay
+    - cistron:
+        label: apoptosis_effector
+        expression: high
+        fused: false
+        gene:
+          id: BAX
+          source: uniprot
+    - terminator: bGH_PA

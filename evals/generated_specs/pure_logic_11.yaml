@@ -1,0 +1,24 @@
+construct:
+  name: "inverter_secretion_hormone"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: repressor_lacI
+        expression: high
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 50
+    - promoter: T7lac
+    - cistron:
+        label: secreted_hormone
+        expression: medium
+        chain:
+          - tag: PelB
+          - gene:
+              id: P01308
+              source: uniprot
+    - terminator: T7term

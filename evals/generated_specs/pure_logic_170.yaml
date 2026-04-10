@@ -1,0 +1,24 @@
+construct:
+  name: "edge_detector_iffl_pulse_circuit"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: pulse_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - spacer: 40
+    - cistron:
+        label: delayed_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: rrnB_T1

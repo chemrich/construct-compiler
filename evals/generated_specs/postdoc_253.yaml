@@ -1,0 +1,23 @@
+construct:
+  name: yeast_autophagy_mCherry_GFP_fusion
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3 # Strong constitutive promoter for yeast
+    - cistron:
+        label: mCherry_GFP_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1_term

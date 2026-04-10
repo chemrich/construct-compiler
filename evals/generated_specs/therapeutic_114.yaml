@@ -1,0 +1,23 @@
+construct:
+  name: "bacterial_diagnostic_soluble_expression"
+  host: e_coli
+  backbone:
+    resistance: metabolic  # Metabolic selection (e.g. thyA, infA) requested instead of antibiotic resistance
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: tac  # Non-viral hybrid bacterial promoter
+    - cistron:
+        label: diagnostic_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01555  # Bacterial-derived diagnostic protein (Protein A)
+              source: uniprot
+    - terminator: rrnB_T1

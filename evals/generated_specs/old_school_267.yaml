@@ -1,0 +1,18 @@
+construct:
+  name: "BioDrug_Mammalian_High_Expression_Secretion"
+  host: CHO
+  backbone:
+    resistance: dhfr
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: BioDrug_therapeutic
+        expression: high
+        chain:
+          - tag: IL2_signal_peptide
+          - gene:
+              id: BioDrug
+              source: uniprot
+    - terminator: bGH_polyA  # Standard polyadenylation signal for high expression in mammalian systems

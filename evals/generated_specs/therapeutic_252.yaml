@@ -1,0 +1,24 @@
+construct:
+  name: "Therapeutic_Peptide_T_Production_Fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin # Kanamycin used as placeholder for requested non-antibiotic selection (e.g., thyA complementation)
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_peptide_cistron
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - solubility_tag: GST # Acting as the larger protein scaffold
+          - tag: 6xHis # C-terminal purification tag for the upstream scaffold
+          - cleavage_site: P2A # 2A peptide for translational separation; note that 2A efficiency is host-dependent
+          - gene:
+              id: TherapeuticPeptideT
+              source: uniprot
+    - terminator: T7term

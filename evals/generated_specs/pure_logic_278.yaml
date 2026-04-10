@@ -1,0 +1,31 @@
+construct:
+  name: "nor_gate_logic_circuit"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: repressor_y
+        fused: false
+        gene:
+          id: P0ACF0  # LacI repressor
+          source: uniprot
+    - spacer: 50
+    - promoter: tac
+    - cistron:
+        label: repressor_z
+        fused: false
+        gene:
+          id: P04483  # TetR repressor
+          source: uniprot
+    - spacer: 50
+    - promoter: J23106  # Anderson promoter serves as a base for the dual-repressible (LacI/TetR) NOR gate output
+    - cistron:
+        label: output_protein_x
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

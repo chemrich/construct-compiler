@@ -1,0 +1,28 @@
+construct:
+  name: "Bacillus_spore_display_CotG_VHH"
+  host: bacillus
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: cotG  # Spore-specific promoter for surface display
+
+    - cistron:
+        label: spore_anchor_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P19088  # CotG anchor protein (Bacillus subtilis)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Q91630  # Standard GFP Nanobody (VHH)
+              source: uniprot
+          - tag: Myc    # C-terminal detection tag
+
+    - terminator: BBa_B0015

@@ -1,0 +1,24 @@
+construct:
+  name: "genetic_timer_12h_delay_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Responds to Input Y (L-arabinose) to initiate the timing circuit
+    - cistron:
+        label: "timer_activator"
+        expression: medium
+        gene:
+          id: "P06730"  # Cre recombinase used to create a permanent 'ON' state via site-specific recombination
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "output_protein_X"
+        expression: high
+        fused: false  # Independent translation for the output protein
+        gene:
+          id: "mEGFP"
+          source: fpbase
+    - terminator: rrnB_T1

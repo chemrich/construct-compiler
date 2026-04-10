@@ -1,0 +1,22 @@
+construct:
+  name: "ReceptorProtein_C_terminal_Tandem_Purification"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: ReceptorProtein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+          - tag: Strep-II
+    - terminator: T7term

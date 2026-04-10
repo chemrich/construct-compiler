@@ -1,0 +1,22 @@
+construct:
+  name: fusion_alpha_beta_myc
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: alpha_beta_fusion
+        expression: high
+        chain:
+          - tag: Myc
+          - gene:
+              id: Protein_Alpha
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Protein_Beta
+              source: uniprot
+    - terminator: T7term

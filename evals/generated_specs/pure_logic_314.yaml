@@ -1,0 +1,16 @@
+construct:
+  name: "xor_logic_gate_output"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: "P_xor_M_N" # Synthetic composite promoter designed to activate only when either Input M or Input N is present, but not both
+    - cistron:
+        label: "output_y"
+        expression: high
+        chain:
+          - tag: "6xHis"
+          - gene:
+              id: "mEGFP"
+              source: "fpbase"
+    - terminator: "T7term"

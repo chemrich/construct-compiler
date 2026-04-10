@@ -1,0 +1,18 @@
+construct:
+  name: "ER_retained_therapeutic_IL10"
+  host: HEK293
+  backbone:
+    resistance: none # User requested no antibiotic resistance genes; note that this requires alternative selection methods for plasmid maintenance.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: therapeutic_payload
+        expression: high
+        chain:
+          - gene:
+              id: P22301
+              source: uniprot
+          - tag: KDEL
+    - terminator: hGH_polyA

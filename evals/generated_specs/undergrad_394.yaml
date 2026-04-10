@@ -1,0 +1,17 @@
+construct:
+  name: "secreted_protein_x_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: IgK_leader  # Standard secretion signal for mammalian expression
+          - tag: 6xHis
+          - gene:
+              id: SecretedProteinX
+              source: uniprot
+    - terminator: bGH_polyA

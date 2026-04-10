@@ -1,0 +1,19 @@
+construct:
+  name: "dual_gRNA_U6_HEK293_recombination_safe"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: U6
+    - cistron:
+        label: guide_RNA_1
+        expression: high
+        gene:
+          id: "gRNA1_spacer_flanked_by_viral_E1_with_standard_scaffold"
+    - spacer: 35 # Unique viral-derived tRNA-like processing element to prevent recombination
+    - cistron:
+        label: guide_RNA_2
+        expression: high
+        gene:
+          id: "gRNA2_spacer_flanked_by_viral_E2_with_modified_loop_scaffold"
+    - terminator: BBa_B0015 # Pol III termination typically occurs at a T-stretch; BBa_B0015 contains multiple terminator elements

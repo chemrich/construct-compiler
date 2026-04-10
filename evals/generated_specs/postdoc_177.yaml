@@ -1,0 +1,20 @@
+construct:
+  name: fused_subunit_expression_system
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: subunit_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: subunit_1
+              source: uniprot
+          - cleavage_site: TEV # Furin cleavage site substituted with TEV for E. coli host compatibility; Furin is inactive in the E. coli cytoplasm.
+          - gene:
+              id: subunit_2
+              source: uniprot
+    - terminator: T7term

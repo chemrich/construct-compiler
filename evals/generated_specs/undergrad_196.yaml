@@ -1,0 +1,16 @@
+construct:
+  name: "Periplasmic_Enzyme_Secretion_Construct"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-22b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: pelB  # N-terminal signal peptide for periplasmic targeting
+          - gene:
+              id: PeriplasmicEnzyme
+              source: uniprot
+    - terminator: T7term

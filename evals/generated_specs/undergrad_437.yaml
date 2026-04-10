@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_secreted_biocatalyst"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: TEF1  # Strong constitutive promoter for yeast
+
+    - cistron:
+        label: biocatalyst_enzyme
+        expression: high
+        chain:
+          - tag: alpha_factor  # Yeast alpha-mating factor secretion signal peptide
+          - gene:
+              id: BioCatalyst
+              source: uniprot
+
+    - terminator: CYC1_term  # Standard yeast transcriptional terminator_

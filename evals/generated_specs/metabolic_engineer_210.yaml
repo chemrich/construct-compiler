@@ -1,0 +1,35 @@
+construct:
+  name: "Neuron_Signaling_Cascade_2A_Stoichiometric"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: hSyn  # Neuron-specific human Synapsin 1 promoter
+    - cistron:
+        label: signaling_enzymes
+        expression: high
+        chain:
+          - gene:
+              id: EnzymeX
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: EnzymeY
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: EnzymeZ
+              source: uniprot
+          - linker:
+              type: E2A
+          - gene:
+              id: EnzymeW
+              source: uniprot
+          - linker:
+              type: F2A
+          - gene:
+              id: EnzymeV
+              source: uniprot
+    - terminator: WPRE_BGH_pA  # WPRE for mRNA stability/nuclear export + BGH polyA signal

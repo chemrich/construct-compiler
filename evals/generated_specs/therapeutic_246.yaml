@@ -1,0 +1,22 @@
+construct:
+  name: "Degradable_Therapeutic_Protein_L_araBAD"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Substituted for requested auxotrophic marker; tool schema limited to antibiotic selection
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: DegradableProteinL
+              source: uniprot
+          - tag: LVA
+    - terminator: rrnB_T1

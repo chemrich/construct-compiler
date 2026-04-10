@@ -1,0 +1,24 @@
+construct:
+  name: "crispri_nor_gate_protein_q"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: dcas9_expression
+        expression: medium
+        gene:
+          id: dCas9
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: J23100 # This promoter contains target sites for Input_gRNA1 and Input_gRNA2
+    - cistron:
+        label: output_q
+        expression: high
+        gene:
+          id: Q
+          source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,22 @@
+construct:
+  name: "mammalian_bicistronic_ires_enzymex_egfp"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: enzyme_x
+        expression: high
+        gene:
+          id: EnzymeX
+          source: uniprot
+    - spacer: 585  # Approximate length for a standard IRES element to allow internal ribosome entry
+    - cistron:
+        label: fluorescent_marker
+        expression: medium
+        fused: false  # Indicates independent translation via the IRES spacer
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_PA  # Standard mammalian polyadenylation signal/terminator

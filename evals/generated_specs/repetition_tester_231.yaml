@@ -1,0 +1,21 @@
+construct:
+  name: "dual_polIII_shRNA_dissimilar_loop"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: U6
+    - cistron:
+        label: "shRNA_target_A_loop1"
+        expression: high
+        gene:
+          id: "shRNA_target_pos1"
+    - spacer: 50
+    - promoter: H1  # Using H1 promoter to ensure sequence dissimilarity from U6 and prevent recombination
+    - cistron:
+        label: "shRNA_target_A_loop2"
+        expression: high
+        fused: false
+        gene:
+          id: "shRNA_target_pos2"
+    - terminator: BBa_B0015

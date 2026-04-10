@@ -1,0 +1,30 @@
+construct:
+  name: genetic_xor_gate_ara_iptg
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: sensor_A_repressor
+        expression: medium
+        gene:
+          id: P0C1V1
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: lacUV5
+    - cistron:
+        label: sensor_B_repressor
+        expression: medium
+        gene:
+          id: Q6S388
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: J23100
+    - cistron:
+        label: xor_output_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: "megfp_expression_ecoli"
-  host: e_coli
+  name: "mEGFP_mScarlet_His123"
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
@@ -12,15 +11,15 @@ construct:
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: rrnB_T1
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - spacer: 30
+    - cistron:
+        label: mscarlet_multi_tag
+        expression: high
+        fused: false
+        chain:
+          - tag: 123xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+    # Note: 456 copies of mScarlet is physically impossible for a standard genetic construct due to size and repetitive sequence instability; a single high-expression cistron is used instead.
+    - terminator: T7term

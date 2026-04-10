@@ -1,0 +1,19 @@
+construct:
+  name: "human_scFv_pichia_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: scFv_target
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: FLAG
+          - cleavage_site: TEV
+          - gene:
+              id: human_scFv
+              source: uniprot
+    - terminator: AOX1_term

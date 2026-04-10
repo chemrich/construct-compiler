@@ -1,0 +1,25 @@
+construct:
+  name: "genetic_1_to_2_demultiplexer"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Representing Output 0: Active when D is present and S is LOW
+    - cistron:
+        label: output_0
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: T7lac    # Representing Output 1: Active when D is present and S is HIGH
+    - cistron:
+        label: output_1
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term

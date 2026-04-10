@@ -1,0 +1,20 @@
+construct:
+  name: "pPICZalpha_esterase_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin # Zeocin is standard for pPICZ vectors but not in the provided schema list
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: target_esterase
+        expression: high
+        chain:
+          - secretion_signal: alpha_factor_prepro
+          - tag: c-Myc
+          - gene:
+              id: P41734
+              source: uniprot
+          - tag: 8xHis
+    - terminator: AOX1_term

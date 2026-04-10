@@ -1,0 +1,24 @@
+construct:
+  name: "AOX1_AlphaFactor_Therapeutic_HSA_Fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+      cistron:
+        label: secreted_fusion_protein
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: therapeutic_polypeptide
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P02768  # Human Serum Albumin (HSA)
+              source: uniprot
+      terminator: AOX1_TT

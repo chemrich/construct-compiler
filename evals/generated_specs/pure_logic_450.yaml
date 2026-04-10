@@ -1,0 +1,24 @@
+construct:
+  name: "dead_man_switch_logic"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: output_Z
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: logic_repressor_B
+        expression: medium
+        fused: false
+        gene:
+          id: tetR
+          source: uniprot
+    - terminator: T7term

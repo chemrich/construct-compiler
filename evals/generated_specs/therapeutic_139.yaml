@@ -1,0 +1,36 @@
+construct:
+  name: "non_viral_bispecific_antibody_expression"
+  host: HEK293
+
+  backbone:
+    resistance: none  # User requested no ARGs (Antibiotic Resistance Genes)
+    ori: pUC
+    source: custom
+
+  cassette:
+    - promoter: EF1_alpha  # Non-viral mammalian promoter
+
+    - cistron:
+        label: antibody_heavy_chain
+        expression: high
+        chain:
+          - tag: IgK_leader  # Secretion signal for mammalian systems
+          - gene:
+              id: P01857  # Human IgG1 heavy chain constant region
+              source: uniprot
+          - tag: 6xHis      # Common purification tag
+
+    - spacer: 30
+
+    - cistron:
+        label: antibody_light_chain
+        expression: high
+        fused: false  # Independent translation for the second chain
+        chain:
+          - tag: IgK_leader  # Secretion signal for mammalian systems
+          - gene:
+              id: P01834  # Human Ig kappa light chain constant region
+              source: uniprot
+          - tag: 6xHis
+
+    - terminator: bGH_PA  # Non-viral bovine growth hormone polyadenylation signal systems

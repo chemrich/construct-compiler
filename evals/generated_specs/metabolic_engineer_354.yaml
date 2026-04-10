@@ -1,0 +1,98 @@
+construct:
+  name: "pla_degradation_operon_pseudomonas"
+  host: pseudomonas_putida  # Rule 15: Use specific host if requested
+  backbone:
+    resistance: kanamycin
+    ori: pBBR1  # Rule 15: Broad-host range origin for Pseudomonas
+    source: custom
+  cassette:
+    - promoter: tac  # Strong promoter commonly used in Pseudomonas
+
+    - cistron:
+        label: plaA
+        expression: high
+        chain:
+          - gene:
+              id: PlaA
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: S-tag
+
+    - spacer: 30
+
+    - cistron:
+        label: plaB
+        expression: high
+        fused: false  # Rule 4: independent translation for polycistronic
+        chain:
+          - gene:
+              id: PlaB
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: S-tag
+
+    - spacer: 30
+
+    - cistron:
+        label: plaC
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PlaC
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: S-tag
+
+    - spacer: 30
+
+    - cistron:
+        label: plaD
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PlaD
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: S-tag
+
+    - spacer: 30
+
+    - cistron:
+        label: plaE
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PlaE
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: S-tag
+
+    - spacer: 30
+
+    - cistron:
+        label: plaF
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PlaF
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: S-tag
+
+    - terminator: rrnB_T1

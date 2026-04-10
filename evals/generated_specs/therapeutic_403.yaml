@@ -1,0 +1,23 @@
+construct:
+  name: "Mammalian_Secretion_A_Intracellular_B"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: coexpression_unit
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - tag: 6xHis
+          - gene:
+              id: Protein_A_HUMAN
+              source: uniprot
+          - linker:
+              type: P2A
+          - tag: FLAG
+          - gene:
+              id: Protein_B_HUMAN
+              source: uniprot
+    - terminator: bGH_PA

@@ -1,0 +1,17 @@
+construct:
+  name: "logic_or_gate_ara_iptg"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD # Input A: Induced by Arabinose
+    - promoter: tac    # Input B: Induced by IPTG; tandem arrangement creates OR logic
+    - cistron:
+        label: or_gate_output
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1

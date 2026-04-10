@@ -1,0 +1,21 @@
+construct:
+  name: "yeast_surface_display_protein_c"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: TDH3 # Strong constitutive promoter (GPD) for yeast expression
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: PROC
+              source: uniprot
+
+    - terminator: CYC1 # Standard yeast transcriptional terminator

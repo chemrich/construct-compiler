@@ -1,0 +1,36 @@
+construct:
+  name: "Lentiviral_Packaging_VSVG_GagPol_Puro"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+    source: twist
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: VSVG_envelope
+        expression: high
+        gene:
+          id: P03522
+          source: uniprot
+    - terminator: SV40_pA
+    - spacer: 100
+    - promoter: CMV
+    - cistron:
+        label: GagPol_packaging
+        expression: high
+        gene:
+          id: P03367
+          source: uniprot
+    - terminator: SV40_pA
+    - spacer: 100
+    - promoter: CMV
+    - cistron:
+        label: Puromycin_selection
+        expression: medium
+        fused: false
+        gene:
+          id: P08397
+          source: uniprot
+    - terminator: bGH_pA

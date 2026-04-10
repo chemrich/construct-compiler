@@ -1,0 +1,22 @@
+construct:
+  name: "synthetic_capsid_variant_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: capsid_variant
+        expression: high
+        chain:
+          - gene:
+              id: capsid_domain_A
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: capsid_domain_B
+              source: uniprot
+          - tag: 6xHis
+    - terminator: bGH_pA

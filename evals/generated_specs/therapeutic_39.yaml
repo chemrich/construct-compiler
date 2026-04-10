@@ -1,0 +1,23 @@
+construct:
+  name: "therapeutic_mammalian_degrader_nonviral"
+  host: HEK293
+  backbone:
+    resistance: none # Absence of antibiotic resistance genes requested
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # EF1_alpha substituted for CMV to ensure complete absence of viral sequences
+    - cistron:
+        label: targeted_degrader
+        expression: high
+        chain:
+          - gene:
+              id: P19036 # VHL: Human E3 ligase recruitment domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P00533 # EGFR: Targeted binding domain for endogenous protein
+              source: uniprot
+    - terminator: hGH_polyA # Human growth hormone polyA substituted for SV40 to avoid viral sequences

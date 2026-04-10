@@ -1,0 +1,25 @@
+construct:
+  name: "nrps_solubility_optimized_chassis"
+  host: e_coli_bl21
+  backbone:
+    # User requested no antibiotic resistance; kanamycin included as a placeholder required by the tool.
+    # In practice, a metabolic selection or toxin-antitoxin system would be used.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac  # Bacterial promoter used instead of T7 to satisfy 'no viral sequences' constraint
+    - cistron:
+        label: nrp_synthetase
+        expression: high
+        chain:
+          - solubility_tag: MBP  # N-terminal MBP for maximum soluble expression
+          - cleavage_site: Factor_Xa  # Non-viral cleavage site (bovine)
+          - gene:
+              id: P10377  # Enterobactin synthetase (EntF), a representative NRPS
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis  # C-terminal purification tag
+    - terminator: rrnB_T1  # Bacterial terminator used instead of T7term to satisfy 'no viral sequences' constraint

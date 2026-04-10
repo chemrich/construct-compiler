@@ -1,0 +1,28 @@
+construct:
+  name: "bacillus_pveg_operon_chaperone_target"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pveg  # Strong constitutive promoter for Bacillus subtilis
+    - cistron:
+        label: chaperone
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P13303  # GroEL chaperone (Bacillus subtilis)
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: target_enzyme
+        expression: high
+        fused: false  # Ensures independent translation with its own RBS
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P00691  # AmyE alpha-amylase (Bacillus subtilis)
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,26 @@
+construct:
+  name: "uAA_peptide_and_synthetase_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: target_peptide
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: peptide_uAA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: aaRS
+        expression: high
+        fused: false
+        gene:
+          id: MjTyrRS
+          source: uniprot
+    - terminator: rrnB_T1

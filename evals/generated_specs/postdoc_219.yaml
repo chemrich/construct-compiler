@@ -1,0 +1,26 @@
+construct:
+  name: "dox_inducible_yeast_coexpression_E_F"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE
+    - cistron:
+        label: E_protein
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: E
+              source: uniprot
+    - spacer: 500
+    - cistron:
+        label: F_protein
+        expression: high
+        fused: false
+        gene:
+          id: F
+          source: uniprot
+    - terminator: CYC1_term

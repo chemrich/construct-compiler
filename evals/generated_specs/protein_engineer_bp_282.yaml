@@ -1,0 +1,19 @@
+construct:
+  name: "constitutive_secreted_scFv_pichia"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: target_scFv
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: scFv
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - terminator: CYC1_TT

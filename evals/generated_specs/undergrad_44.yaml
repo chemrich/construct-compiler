@@ -1,0 +1,20 @@
+construct:
+  name: "mammalian_bicistronic_p2a_puro"
+  host: HEK293
+  backbone:
+    resistance: puromycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_a_b_expression
+        chain:
+          - gene:
+              id: Protein_A
+              source: uniprot
+          - cleavage_site: P2A  # 2A self-cleaving peptide for bicistronic expression
+          - gene:
+              id: Protein_B
+              source: uniprot
+    - terminator: bGH_polyA

@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_secretory_expression"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter
+    - cistron:
+        label: secreted_cargo
+        expression: high
+        chain:
+          - tag: alpha_factor  # Yeast secretion signal peptide
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: CYC1  # Standard robust yeast terminator

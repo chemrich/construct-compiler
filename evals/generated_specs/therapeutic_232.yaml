@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_y2h_bait_p53_fusion"
+  host: yeast
+  backbone:
+    resistance: TRP1 # Using TRP1 nutritional marker to avoid antibiotic resistance genes for clinical safety
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: ADH1 # Native yeast promoter (non-viral)
+    - cistron:
+        label: bait_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: P04386 # GAL4 DNA-binding domain (from S. cerevisiae)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P04637 # Human p53 bait protein (non-viral)
+              source: uniprot
+    - terminator: ADH1_term # Native yeast terminator (non-viral)

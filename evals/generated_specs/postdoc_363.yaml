@@ -1,0 +1,30 @@
+construct:
+  name: "mammalian_chaperone_polycistronic_expression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: hsp70
+        expression: high
+        gene:
+          id: HSPA1A
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hsp40
+        expression: medium
+        fused: false # P2A and IRES are eukaryotic; substituted with independent ribosomal binding sites (fused: false) for E. coli polycistronic expression.
+        gene:
+          id: DNAJB1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hsp60
+        expression: medium
+        fused: false
+        gene:
+          id: HSPD1
+          source: uniprot
+    - terminator: T7term

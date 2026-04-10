@@ -1,0 +1,27 @@
+construct:
+  name: "bacillus_secretion_optimization_secA_gfp"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pxyl
+    - cistron:
+        label: secA_enhancer
+        expression: high
+        gene:
+          id: P09831
+          source: uniprot
+    - spacer: 35
+    - cistron:
+        label: secretion_reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE_signal_peptide
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: 6xHis
+    - terminator: BBa_B0015

@@ -1,0 +1,22 @@
+construct:
+  name: "HEK293_Strep_SLC2A1_mEGFP_Fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: SLC2A1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: SV40_polyA

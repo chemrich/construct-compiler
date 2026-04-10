@@ -1,0 +1,27 @@
+construct:
+  name: "divergent_recombination_resistant_activator_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    # The user requested a "two-gene operon" but specified individual promoters for each gene.
+    # To satisfy the requirement for non-identical promoters and RBS divergence for recombination avoidance,
+    # this construct uses two distinct transcription units with different promoter and RBS (expression) profiles.
+    - promoter: tac
+    - cistron:
+        label: activator_gene_a
+        expression: medium
+        gene:
+          id: P12746
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: J23100
+    - cistron:
+        label: reporter_gene_b
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,16 @@
+construct:
+  name: "human_protein_expression_ecoli"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P01112  # Human HRAS used as a representative human gene; compiler handles E. coli codon optimization
+              source: uniprot
+    - terminator: T7term

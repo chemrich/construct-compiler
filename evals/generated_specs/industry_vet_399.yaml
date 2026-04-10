@@ -1,0 +1,32 @@
+construct:
+  name: "polycistronic_p1_p2_p3_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: p1
+        expression: high
+        gene:
+          id: P1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: p2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: p3
+        expression: high
+        fused: false
+        gene:
+          id: P3
+          source: uniprot
+    - terminator: T7term

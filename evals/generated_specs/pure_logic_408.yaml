@@ -1,0 +1,28 @@
+construct:
+  name: multiplexer_2to1_logic
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: araBAD  # SELECT input (S) activates production of the repressor
+    - cistron:
+        label: not_s_signal_generator
+        gene:
+          id: lacI
+          source: uniprot
+    - spacer: 40
+    - promoter: tac     # AND Gate 0: (D0 AND NOT S). Inducible by IPTG (D0), repressed by LacI (S)
+    - cistron:
+        label: and_gate_d0_not_s
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 40
+    - promoter: T7lac   # AND Gate 1: (D1 AND S). Simplified convergence logic
+    - cistron:
+        label: and_gate_d1_s
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

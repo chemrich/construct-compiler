@@ -1,0 +1,19 @@
+construct:
+  name: "HEK293_CMV_CtermHis_WPRE"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 2
+          - tag: 6xHis
+    - terminator: WPRE_BGH_pA  # WPRE included before BGH_pA to boost mRNA stability and expression as requested

@@ -1,0 +1,22 @@
+construct:
+  name: "peptide_z_surface_display"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: surface_display_fusion
+        expression: high
+        chain:
+          - tag: signal_peptide
+          - gene:
+              id: PeptideZ
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: PDGFR_TM
+              source: uniprot
+    - terminator: bGH_polyA

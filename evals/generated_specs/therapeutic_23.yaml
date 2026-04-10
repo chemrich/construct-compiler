@@ -1,0 +1,22 @@
+construct:
+  name: "solubility_enhanced_therapeutic_hGH_nonviral_system"
+  host: e_coli
+  backbone:
+    resistance: none  # Designed for auxotrophic selection or toxin-antitoxin stabilization to avoid antibiotic resistance genes
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: Factor_Xa
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: rrnB_T1

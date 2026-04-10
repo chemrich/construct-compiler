@@ -1,0 +1,16 @@
+construct:
+  name: "light_synchronized_circadian_oscillator"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: pDawn  # Blue-light responsive promoter for external LightCycle synchronization
+    - cistron:
+        label: "CircadianReporter"
+        expression: medium
+        chain:
+          - gene:
+              id: "sfGFP"
+              source: "fpbase"
+          - tag: "LVA"  # Standard E. coli degradation tag for rapid protein turnover
+    - terminator: "rrnB_T1"

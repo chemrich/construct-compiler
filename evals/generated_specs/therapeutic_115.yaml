@@ -1,0 +1,19 @@
+construct:
+  name: "cas9_nuclease_ivt_template"
+  host: in_vitro
+  backbone:
+    resistance: kanamycin # Required for DNA template propagation in E. coli; the final transcribed mRNA will be marker-free.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: cas9_nuclease
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Q99ZW2
+              source: uniprot
+          - tag: NLS
+    - terminator: T7term

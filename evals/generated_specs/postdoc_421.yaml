@@ -1,0 +1,19 @@
+construct:
+  name: yeast_secreted_cytokine_myc
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: cytokine_expression
+        expression: high
+        chain:
+          - tag: IgK_leader  # Mammalian signal peptide as requested; yeast alpha-factor is usually preferred for S. cerevisiae
+          - gene:
+              id: IL2
+              source: uniprot
+          - tag: Myc
+    - terminator: CYC1_terminator

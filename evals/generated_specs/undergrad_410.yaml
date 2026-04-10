@@ -1,0 +1,20 @@
+construct:
+  name: "ProteinX_ProteinY_Polycistronic_Mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: ProteinX
+        gene:
+          id: ProteinX
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ProteinY
+        fused: false  # Enables independent translation initiation (e.g., via IRES for mammalian)
+        gene:
+          id: ProteinY
+          source: uniprot
+    - terminator: bGH_pA

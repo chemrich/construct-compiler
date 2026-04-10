@@ -1,0 +1,32 @@
+construct:
+  name: "dual_operator_poly_cistronic_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: "P_lac_tet_dual" # Custom promoter with two distinct operator sites (e.g., LacI and TetR)
+    - cistron:
+        label: G1_cistron
+        expression: medium
+        gene:
+          id: G1
+          source: uniprot
+    - spacer: 40 # Minimum 20bp; 40bp allows for distinct RBS placement
+    - cistron:
+        label: G2_cistron
+        expression: medium
+        fused: false # Ensures independent translation with a unique RBS
+        gene:
+          id: G2
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: G3_cistron
+        expression: medium
+        fused: false # Ensures independent translation with a unique RBS
+        gene:
+          id: G3
+          source: uniprot
+    - terminator: rrnB_T1

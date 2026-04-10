@@ -1,0 +1,28 @@
+construct:
+  name: "bacillus_pveg_polycistronic_amyE_secretion"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pveg
+    - cistron:
+        label: protein_1_secreted
+        expression: high
+        chain:
+          - tag: AmyE
+          - gene:
+              id: protein_1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_2_secreted
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE
+          - gene:
+              id: protein_2
+              source: uniprot
+    - terminator: rrnB_T1

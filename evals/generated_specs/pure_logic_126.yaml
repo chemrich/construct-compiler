@@ -1,0 +1,21 @@
+construct:
+  name: "mammalian_conditional_secretion_and_gate"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV # Substituted for a synthetic logic-gated promoter responsive to Input_X AND Input_Y
+    - cistron:
+        label: effector_cistron
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: P01241
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - terminator: SV40_polyA

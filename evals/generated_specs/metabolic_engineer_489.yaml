@@ -1,0 +1,40 @@
+construct:
+  name: "four_enzyme_pathway_prf_stoichiometry"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: T1
+        expression: high
+        gene:
+          id: T1_enzyme
+          source: uniprot
+    - spacer: 20 # Programmed ribosomal frameshifting (PRF) is not a direct schema field; stoichiometry is handled here by designating T2 as medium expression relative to T1/T3/T4 high expression.
+    - cistron:
+        label: T2
+        expression: medium
+        fused: false
+        gene:
+          id: T2_enzyme
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: T3
+        expression: high
+        fused: false
+        gene:
+          id: T3_enzyme
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: T4
+        expression: high
+        fused: false
+        gene:
+          id: T4_enzyme
+          source: uniprot
+    - terminator: rrnB_T1

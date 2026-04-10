@@ -1,0 +1,17 @@
+construct:
+  name: "protein_C_solubility_optimized"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: medium  # Adjusted to medium to mitigate aggregation issues and support low-temperature expression
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "C"
+              source: uniprot
+          - solubility_tag: SUMO
+    - terminator: T7term

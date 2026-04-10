@@ -1,0 +1,21 @@
+construct:
+  name: "therapeutic_degron_expression_system"
+  host: HEK293
+  backbone:
+    resistance: none # Substituted for none to comply with 'no antibiotic resistance' requirement
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Non-viral mammalian promoter substituted for CMV
+    - cistron:
+        label: therapeutic_payload
+        expression: high
+        chain:
+          - gene:
+              id: P01588 # Human Erythropoietin (EPO)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: PEST # Validated mammalian degradation tag
+    - terminator: bGH_polyA # Non-viral polyadenylation signal

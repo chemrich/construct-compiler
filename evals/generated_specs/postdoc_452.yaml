@@ -1,0 +1,28 @@
+construct:
+  name: "TRE_geneX_P2A_mCherry_U6_gRNA"
+  host: HEK293
+  backbone:
+    resistance: neomycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE
+    - cistron:
+        label: cargo_expression
+        expression: high
+        chain:
+          - gene:
+              id: gene_X
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: bGH_PA
+    - promoter: U6
+    - cistron:
+        label: guide_rna
+        gene:
+          id: target_sgRNA
+    - terminator: polyT

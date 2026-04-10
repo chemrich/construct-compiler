@@ -1,0 +1,88 @@
+construct:
+  name: "pectin_degradation_secretion_system"
+  host: aspergillus_niger
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: gpdA  # Strong constitutive promoter for Aspergillus species
+    - cistron:
+        label: pgaA_fusion
+        expression: high
+        chain:
+          - tag: glaA_signal  # Aspergillus niger glucoamylase signal peptide for secretion
+          - gene:
+              id: P26225
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: pelA_fusion
+        expression: high
+        fused: false
+        chain:
+          - tag: glaA_signal
+          - gene:
+              id: P27209
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: pmeA_fusion
+        expression: high
+        fused: false
+        chain:
+          - tag: glaA_signal
+          - gene:
+              id: P17872
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: rgaA_fusion
+        expression: high
+        fused: false
+        chain:
+          - tag: glaA_signal
+          - gene:
+              id: P49063
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: xgaA_fusion
+        expression: high
+        fused: false
+        chain:
+          - tag: glaA_signal
+          - gene:
+              id: O59957
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: trpC_term  # Standard fungal transcriptional terminator

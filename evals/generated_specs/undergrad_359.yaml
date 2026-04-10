@@ -1,0 +1,24 @@
+construct:
+  name: mammalian_bicistronic_ires_zeocin
+  host: HEK293
+  backbone:
+    resistance: zeocin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_1
+        expression: high
+        gene:
+          id: Protein1
+          source: uniprot
+    - spacer: 585 # Length of EMCV IRES for bicistronic mammalian translation
+    - cistron:
+        label: protein_2
+        expression: medium
+        fused: false # Necessary for independent translation via IRES
+        gene:
+          id: Protein2
+          source: uniprot
+    - terminator: bGH_polyA

@@ -1,0 +1,22 @@
+construct:
+  name: "genetic_bandpass_filter_ara"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Input C = Arabinose; promoter provides the responsive input
+    - cistron:
+        label: logic_repressor
+        expression: low
+        gene:
+          id: lacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: chromogenic_reporter
+        expression: high
+        fused: false  # Independently translated via its own RBS
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1

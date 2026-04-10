@@ -1,0 +1,22 @@
+construct:
+  name: "Human_Insulin_BiP_Coexpression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: insulin
+        expression: high
+        gene:
+          id: P01308
+          source: uniprot
+    - spacer: 30  # IRES replaced with internal ribosome entry site/spacer for E. coli translation
+    - cistron:
+        label: BiP_chaperone
+        expression: medium
+        fused: false
+        gene:
+          id: P11021
+          source: uniprot
+    - terminator: T7term

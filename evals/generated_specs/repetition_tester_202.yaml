@@ -1,0 +1,40 @@
+construct:
+  name: "yeast_diverse_enzyme_pathway"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: synthase_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Synthase1
+              source: uniprot
+    - terminator: CYC1
+    - spacer: 40
+    - promoter: TEF1
+    - cistron:
+        label: reductase_2
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: Reductase2
+              source: uniprot
+    - terminator: ADH1
+    - spacer: 40
+    - promoter: PGK1
+    - cistron:
+        label: kinase_3
+        expression: low
+        chain:
+          - tag: FLAG
+          - gene:
+              id: Kinase3
+              source: uniprot
+    - terminator: ENO2

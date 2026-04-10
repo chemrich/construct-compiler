@@ -1,0 +1,19 @@
+construct:
+  name: yeast_vaccine_antigen_expression
+  host: yeast
+  backbone:
+    resistance: ampicillin  # Ampicillin for E. coli propagation of the yeast shuttle vector
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Standard inducible yeast promoter
+    - cistron:
+        label: vaccine_antigen
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P03141  # Hepatitis B surface antigen (HBsAg) as a representative vaccine antigen
+              source: uniprot
+    - terminator: CYC1_term  # Standard yeast transcriptional terminator</pre>

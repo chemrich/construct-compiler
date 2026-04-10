@@ -1,0 +1,25 @@
+construct:
+  name: "unique_dual_tag_fusion_construct"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - cleavage_site: TEV
+          - tag: Strep-II
+          - linker:
+              type: short_GS
+              repeats: 2
+          - cleavage_site: 3C
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term

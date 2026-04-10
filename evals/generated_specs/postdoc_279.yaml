@@ -1,0 +1,19 @@
+construct:
+  name: "protein_d_destabilized_yeast"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+    resistance: ampicillin
+    ori: pUC
+  cassette:
+    - promoter: GAL1  # Strong yeast promoter repressible by glucose and inducible by galactose
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: FLAG
+          - tag: PEST
+          - gene:
+              id: Protein_D
+              source: uniprot
+    - terminator: CYC1_term

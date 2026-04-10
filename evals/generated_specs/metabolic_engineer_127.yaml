@@ -1,0 +1,32 @@
+construct:
+  name: "mammalian_mitochondrial_enzymes_2A_vector"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: mito_enzyme_polyprotein
+        expression: high
+        chain:
+          - gene:
+              id: mito_E1
+              source: uniprot
+          - tag: HA
+          - linker:
+              type: P2A
+          - gene:
+              id: mito_E2
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: mito_E3
+              source: uniprot
+          - linker:
+              type: E2A
+          - gene:
+              id: mito_E4
+              source: uniprot
+    - terminator: bGH_pA # Standard mammalian polyadenylation signal appropriate for HEK293 and EF1a promoters.

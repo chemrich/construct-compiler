@@ -1,0 +1,16 @@
+construct:
+  name: "yeast_threshold_detector_L"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+  cassette:
+    - promoter: GAL1  # Standard yeast switch-like promoter responding to galactose/Input M
+    - cistron:
+        label: output_L
+        expression: high
+        chain:
+          - solubility_tag: SUMO  # Protein stability and solubility tag
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: CYC1_term

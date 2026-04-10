@@ -1,0 +1,20 @@
+construct:
+  name: "bacillus_amyE_integration_phytase"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+    # Targeting amyE locus for integration via homology arms
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: secreted_phytase
+        expression: high
+        chain:
+          - tag: SacB
+          - gene:
+              id: phyC
+              source: uniprot
+          - tag: 6xHis
+    - terminator: BBa_B0015

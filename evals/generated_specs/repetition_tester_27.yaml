@@ -1,0 +1,27 @@
+construct:
+  name: "dual_reporter_orthogonal_mammalian"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV  # Viral promoter (Human cytomegalovirus)
+    - cistron:
+        label: red_reporter
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: bGH_polyA  # Bovine terminator (Bovine Growth Hormone)
+    - spacer: 100
+    - promoter: EF1_alpha  # Human promoter (Elongation Factor 1-alpha)
+    - cistron:
+        label: green_reporter
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: SV40_polyA  # Simian Viral terminator (Simian Virus 40)

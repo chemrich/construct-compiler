@@ -1,0 +1,47 @@
+construct:
+  name: "orthogonal_regulatory_operon_sfGFP"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tac  # Inducible promoter representing the requested orthogonal TF-BS control
+    - cistron:
+        label: TF1
+        expression: medium
+        gene:
+          id: TF1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: TF2
+        expression: medium
+        fused: false
+        gene:
+          id: TF2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CoFactor3
+        expression: medium
+        fused: false
+        gene:
+          id: CoFactor3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: Regulator4
+        expression: medium
+        fused: false
+        gene:
+          id: Regulator4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1

@@ -1,0 +1,19 @@
+construct:
+  name: "inducible_secreted_hGH_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Inducible promoter for tight tetracycline-controlled expression
+    - cistron:
+        label: human_growth_factor
+        expression: high
+        chain:
+          - gene:
+              id: P01241  # Human Somatotropin (GH1), contains natural signal peptide for secretion
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 8xHis  # C-terminal tag to avoid interference with N-terminal signal peptide cleavage
+    - terminator: bGH_pA

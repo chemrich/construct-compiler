@@ -1,0 +1,25 @@
+construct:
+  name: "mammalian_bistable_switch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: UAS  # Synthetic Upstream Activating Sequence for positive feedback logic
+    - cistron:
+        label: activator
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: GAL4_VP16
+    - spacer: 30  # Acts as an internal ribosome entry site (IRES) for polycistronic mammalian expression
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false  # Independently translated protein
+        chain:
+          - tag: NLS
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: SV40_polyA

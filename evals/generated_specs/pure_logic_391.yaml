@@ -1,0 +1,30 @@
+construct:
+  name: "multiplexer_2to1_logic_gate"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "gate_output"
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: "select_logic_repressor"
+        expression: medium
+        fused: false
+        gene:
+          id: P03034
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "data_logic_repressor"
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: T7term

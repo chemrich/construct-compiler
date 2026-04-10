@@ -1,0 +1,29 @@
+construct:
+  name: "dual_T7_expression_protein_A_B"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: protein_a_unit
+        expression: high
+        chain:
+          - gene:
+              id: ProteinA
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term
+    - spacer: 40
+    - promoter: T7
+    - cistron:
+        label: protein_b_unit
+        expression: high
+        chain:
+          - gene:
+              id: ProteinB
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term

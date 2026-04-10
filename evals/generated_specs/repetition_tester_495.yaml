@@ -1,0 +1,16 @@
+construct:
+  name: "redundant_high_copy_divergent_plasmid"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pUC  # Note: The schema supports one primary origin. Biologically, two high-copy origins from the pMB1/ColE1 group are incompatible and would cause plasmid instability. pUC is the preferred high-copy choice.
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1

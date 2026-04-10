@@ -1,0 +1,29 @@
+construct:
+  name: "dual_subunit_therapeutic_nonviral_system"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Included for bacterial propagation; cloning required by current schema.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Strong constitutive non-viral promoter
+    - cistron:
+        label: subunit_a_purification
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P01137
+              source: uniprot
+    - terminator: bGH_pA # Non-viral polyadenylation signal
+    - spacer: 100
+    - promoter: EF1_alpha
+    - cistron:
+        label: subunit_b_secretion
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal for mammalian export
+          - gene:
+              id: P01588
+              source: uniprot
+    - terminator: bGH_pA

@@ -1,0 +1,26 @@
+construct:
+  name: "yeast_kinase_native_expression_pRS426"
+  host: yeast # Substituted 'yeast' for the provided host list to accommodate the pRS426 yeast shuttle vector and native regulatory regions.
+  backbone:
+    catalog_vector: "pRS426"
+  cassette:
+    - promoter: "native" # Using native regulatory regions as requested by the user.
+    - cistron:
+        label: "kinase_target"
+        expression: high
+        chain:
+          - gene:
+              id: "kinase_gene"
+              source: uniprot
+          - tag: "HA"
+    - terminator: "CYC1" # Standard yeast terminator for pRS series vectors.
+  constraints:
+    assembly: "golden_gate"
+    enzyme: "BsaI"
+    codon_optimization: "local"
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: "twist"
+    budget_per_gene: 400
+    max_turnaround_days: 21

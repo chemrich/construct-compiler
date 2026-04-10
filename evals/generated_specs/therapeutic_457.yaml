@@ -1,0 +1,24 @@
+construct:
+  name: "dual_fluorescence_safe_ecoli"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Defaulted to kanamycin as the schema requires a valid selection marker; antibiotic-free selection is not supported in the current spec.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Selected tac (bacterial hybrid) instead of T7 to satisfy the 'no viral elements' requirement.
+    - cistron:
+        label: green_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: red_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1

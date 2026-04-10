@@ -1,0 +1,27 @@
+construct:
+  name: yeast_metabolic_not_gate
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: input_repressor_x
+        expression: high
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: CYC1
+
+    - promoter: TetO_TDH3
+    - cistron:
+        label: reporter_y
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: ADH1

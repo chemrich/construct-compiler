@@ -1,0 +1,35 @@
+construct:
+  name: "anti_CD19_CAR_T_receptor"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: CAR_receptor
+        expression: high
+        chain:
+          - gene:
+              id: CD8A_signal_peptide
+              source: uniprot
+          - gene:
+              id: FMC63_scFv
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD8A_hinge_TM
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: CD28_signaling_domain
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: CD247_CD3_zeta
+              source: uniprot
+    - terminator: bGH_PA

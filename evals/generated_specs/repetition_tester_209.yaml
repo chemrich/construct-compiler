@@ -1,0 +1,23 @@
+construct:
+  name: "diversified_scFv_secretion_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)" # Standard E. coli vector, resistance: kanamycin
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: scFv_production
+        expression: high
+        chain:
+          - tag: PelB # Signal peptide for periplasmic secretion
+          - gene:
+              id: VH_antibody_fragment
+              source: uniprot # Sequence optimization/diversification handled by compiler
+          - linker:
+              type: GS_flexible
+              repeats: 4 # Linker between VH and VL domains
+          - gene:
+              id: VL_antibody_fragment
+              source: uniprot # Diversified from VH to prevent homologous recombination
+          - tag: 8xHis # C-terminal purification tag
+    - terminator: T7term # Standard T7 terminator for E. coli expression systems

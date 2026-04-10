@@ -1,0 +1,24 @@
+construct:
+  name: "protein_a_protein_b_fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: "ProteinA"
+              source: uniprot
+          - linker:
+              # GS_flexible selected to meet the requirement for diversity; 
+              # the compiler handles synonymous codon diversity and repeat avoidance.
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: "ProteinB"
+              source: uniprot
+    - terminator: rrnB_T1

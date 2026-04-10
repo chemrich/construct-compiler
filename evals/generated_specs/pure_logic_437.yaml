@@ -1,0 +1,18 @@
+construct:
+  name: "temperature_sensitive_biosynthesis_switch"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: pL_lambda # Thermally regulated promoter; active at 37°C+ when cI857 repressor is present
+    - cistron:
+        label: biosynthesis_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A9A6
+              source: uniprot
+    - terminator: rrnB_T1

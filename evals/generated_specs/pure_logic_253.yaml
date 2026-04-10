@@ -1,0 +1,25 @@
+construct:
+  name: "selection_logic_mux"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac  # Driven by Select_A and Input_Data_1 (e.g., IPTG)
+    - cistron:
+        label: output_x_branch_a
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: araBAD  # Driven by Select_B and Input_Data_2 (e.g., Arabinose)
+    - cistron:
+        label: output_x_branch_b
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,21 @@
+construct:
+  name: "human_SLC2A1_yeast_expression"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter
+    - cistron:
+        label: target_transmembrane
+        expression: high
+        chain:
+          - gene:
+              id: SLC2A1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 8xHis
+    - terminator: CYC1_term

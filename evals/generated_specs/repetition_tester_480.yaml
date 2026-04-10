@@ -1,0 +1,29 @@
+construct:
+  name: "proteus_alpha_trimer_divergent"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: Proteus_ALPHA
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: Proteus_ALPHA
+              source: uniprot
+              # Requesting synonymous codon divergence for repeated domain to prevent recombination
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: Proteus_ALPHA
+              source: uniprot
+              # Requesting maximal synonymous codon divergence from previous domains
+    - terminator: T7term

@@ -1,0 +1,23 @@
+construct:
+  name: "mammalian_shRNA_knockdown_with_GFP_reporter"
+  host: HEK293
+  backbone:
+    resistance: puromycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: U6
+    - cistron:
+        label: shRNA_knockdown
+        gene:
+          id: target_shRNA
+          source: custom
+    - terminator: polyT
+    - promoter: CMV
+    - cistron:
+        label: transfection_marker
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_polyA

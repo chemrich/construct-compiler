@@ -1,0 +1,38 @@
+construct:
+  name: "and_gate_hrpRS_logic_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Input A: L-arabinose inducible
+    - cistron:
+        label: activator_r
+        expression: medium
+        fused: false
+        gene:
+          id: P27657
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lacUV5  # Input B: IPTG inducible
+    - cistron:
+        label: activator_s
+        expression: medium
+        fused: false
+        gene:
+          id: P27658
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: hrpL    # Output C: Activated only by HrpR/HrpS heterocomplex
+    - cistron:
+        label: output_enzyme
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,26 @@
+construct:
+  name: "X_Y_coexpression_mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_X
+        expression: high
+        chain:
+          - gene:
+              id: X
+              source: uniprot
+          - tag: FLAG
+    - spacer: 30 # For mammalian polycistronic expression, this spacer represents the IRES/2A sequence
+    - cistron:
+        label: protein_Y
+        expression: high
+        fused: false # Indicated for independent translation (IRES-mediated)
+        chain:
+          - gene:
+              id: Y
+              source: uniprot
+          - tag: FLAG
+    - terminator: bGH_PA

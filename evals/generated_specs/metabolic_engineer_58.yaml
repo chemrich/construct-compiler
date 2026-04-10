@@ -1,0 +1,61 @@
+construct:
+  name: "tet_on_inducible_drug_metabolism_panel"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: TRE3G  # High-sensitivity Tet-responsive promoter for tight regulation
+    - cistron:
+        label: CYP1A1_expression
+        expression: high
+        chain:
+          - gene:
+              id: CYP1A1
+              source: uniprot
+          - tag: FLAG  # C-terminal detection tag
+    - terminator: bGH_pA
+    - spacer: 50
+    - promoter: TRE3G
+    - cistron:
+        label: CYP2D6_expression
+        expression: high
+        chain:
+          - gene:
+              id: CYP2D6
+              source: uniprot
+          - tag: V5  # C-terminal detection tag
+    - terminator: bGH_pA
+    - spacer: 50
+    - promoter: TRE3G
+    - cistron:
+        label: CYP3A4_expression
+        expression: high
+        chain:
+          - gene:
+              id: CYP3A4
+              source: uniprot
+          - tag: Myc  # C-terminal detection tag
+    - terminator: bGH_pA
+    - spacer: 50
+    - promoter: TRE3G
+    - cistron:
+        label: NAT2_expression
+        expression: high
+        chain:
+          - gene:
+              id: NAT2
+              source: uniprot
+          - tag: HA  # C-terminal detection tag
+    - terminator: bGH_pA
+    - spacer: 50
+    - promoter: TRE3G
+    - cistron:
+        label: UGT1A1_expression
+        expression: high
+        chain:
+          - gene:
+              id: UGT1A1
+              source: uniprot
+          - tag: Strep-II  # C-terminal detection tag
+    - terminator: bGH_pA

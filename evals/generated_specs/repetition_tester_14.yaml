@@ -1,0 +1,21 @@
+construct:
+  name: "intein_mediated_protein_splicing"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: precursor_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - gene:
+              id: P0A5U4 # Mxe GyrA Intein - Apply extreme codon optimization to minimize sequence identity with exteins and eliminate internal repeats
+              source: uniprot
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: T7term

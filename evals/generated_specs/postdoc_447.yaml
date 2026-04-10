@@ -1,0 +1,25 @@
+construct:
+  name: "araBAD_P_Q_polycistronic_strep"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: protein_P
+        expression: medium
+        chain:
+          - gene:
+              id: P
+          - tag: Strep-II
+    - spacer: 30 # IRES is eukaryotic; substituted with a 30bp spacer and fused:false to provide an RBS for the second cistron in E. coli.
+    - cistron:
+        label: protein_Q
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: Q
+          - tag: Strep-II
+    - terminator: rrnB_T1

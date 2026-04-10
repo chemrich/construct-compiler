@@ -1,0 +1,22 @@
+construct:
+  name: "Pichia_secretion_fusion_screen"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: "secretion_reporter_fusion"
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - tag: mCherry
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: "affibody_Z"
+              source: uniprot
+    - terminator: AOX1_term

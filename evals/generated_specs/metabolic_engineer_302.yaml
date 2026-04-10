@@ -1,0 +1,42 @@
+construct:
+  name: "phb_production_with_folding_chaperone"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: phaA_flux_control
+        expression: medium
+        chain:
+          - gene:
+              id: phaA
+              source: uniprot
+          - tag: LVA
+    - spacer: 30
+    - cistron:
+        label: phaB
+        expression: medium
+        fused: false
+        gene:
+          id: phaB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: phaC
+        expression: medium
+        fused: false
+        gene:
+          id: phaC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: chaperone
+        expression: low
+        fused: false
+        gene:
+          id: groEL
+          source: uniprot
+    - terminator: T7term

@@ -1,0 +1,22 @@
+construct:
+  name: "HEK293_TherapeuticProtein_PuroR_Selection"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        gene:
+          id: TherapeuticProtein
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: selection_marker
+        expression: low
+        fused: false
+        gene:
+          id: PuroR
+          source: uniprot
+    - terminator: bGH_polyA # Standard mammalian polyadenylation signal for HEK293 expression

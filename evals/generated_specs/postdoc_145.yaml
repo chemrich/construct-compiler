@@ -1,0 +1,24 @@
+construct:
+  name: "operon_gst_A_B_coexpression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_A
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: protein_A
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_B
+        expression: high
+        fused: false
+        gene:
+          id: protein_B
+          source: uniprot
+    - terminator: T7term

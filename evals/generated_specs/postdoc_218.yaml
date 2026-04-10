@@ -1,0 +1,18 @@
+construct:
+  name: "high_expression_protein_D_pUC"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pUC # SV40 ori is a mammalian viral origin and is non-functional for plasmid replication in E. coli; pUC is a high-copy bacterial origin.
+    source: custom
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: D
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term

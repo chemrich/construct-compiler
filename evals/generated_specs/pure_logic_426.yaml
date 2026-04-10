@@ -1,0 +1,25 @@
+construct:
+  name: "homeostatic_mEGFP_feedback_loop"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lacUV5
+    - cistron:
+        label: reporter_output
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: feedback_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1

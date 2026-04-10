@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_secretory_endosomal_gfp_fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2u
+    source: addgene
+  cassette:
+    - promoter: pTEF1  # High-expression constitutive promoter for yeast
+    - cistron:
+        label: secreted_fusion
+        expression: high
+        chain:
+          - tag: alpha_factor # Secretion signal for S. cerevisiae (Rule 18)
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P14906 # Sec63 placeholder target protein
+              source: uniprot
+          - tag: FYVE # Common tag for targeting PI3P-rich endosomal membranes
+    - terminator: CYC1_term # Standard yeast terminator

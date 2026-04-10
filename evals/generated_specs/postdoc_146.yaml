@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_mCherry_EGFP_IRES_sensor"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: mCherry_tag
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+          - tag: HA
+    - spacer: 500  # Spacer representing the IRES sequence for polycistronic expression
+    - cistron:
+        label: EGFP_reporter
+        expression: high
+        fused: false
+        gene:
+          id: EGFP
+          source: fpbase
+    - terminator: bGH_pA

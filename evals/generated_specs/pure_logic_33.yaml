@@ -1,0 +1,39 @@
+construct:
+  name: "mammalian_sr_latch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Logic: Engineered with LacO sites for LacI-mediated repression (Reset state)
+      cistron:
+        label: repressor_tetr
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+      spacer: 150  # Represents an Internal Ribosome Entry Site (IRES) for polycistronic mammalian expression
+      cistron:
+        label: output_u
+        expression: medium
+        fused: false  # Independent translation via IRES/spacer
+        gene:
+          id: mCherry
+          source: fpbase
+      terminator: SV40_polyA
+
+    - promoter: CMV  # Logic: Engineered with TetO sites for TetR-mediated repression (Set state)
+      cistron:
+        label: repressor_laci
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+      spacer: 150  # Represents an Internal Ribosome Entry Site (IRES)
+      cistron:
+        label: reporter_v
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+      terminator: SV40_polyA

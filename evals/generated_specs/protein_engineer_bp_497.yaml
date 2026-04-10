@@ -1,0 +1,20 @@
+construct:
+  name: "Pichia_GPCR_YPT1_Expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: YPT1
+    - cistron:
+        label: gpcr_target
+        expression: medium
+        chain:
+          - tag: FLAG
+          - cleavage_site: TEV
+          - gene:
+              id: ADRB2
+              source: uniprot
+          - tag: 10xHis
+    - terminator: CYC1

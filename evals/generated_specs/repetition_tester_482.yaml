@@ -1,0 +1,29 @@
+construct:
+  name: yeast_catalase_beta_expression
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2u
+    source: addgene
+  cassette:
+    - promoter: GPD
+    - cistron:
+        label: enzyme_construct
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+              repeats: 2
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Catalase_Beta
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - tag: Strep-II
+    - terminator: CYC1

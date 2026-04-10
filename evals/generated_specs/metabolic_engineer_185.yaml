@@ -1,0 +1,48 @@
+construct:
+  name: "balanced_four_enzyme_operon_araBAD"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: enzyme_A
+        expression: medium
+        chain:
+          - gene:
+              id: EnzA
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: enzyme_B
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: EnzB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_C
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: EnzC
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: enzyme_D
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: EnzD
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

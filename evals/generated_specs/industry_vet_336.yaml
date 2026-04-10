@@ -1,0 +1,33 @@
+construct:
+  name: "bidirectional_aav_mammalian_construct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV_bidirectional  # Using a bidirectional CMV promoter region to drive divergent transcription
+    - cistron:
+        label: protein_a
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Myc
+    - spacer: 40
+    - cistron:
+        label: protein_b
+        expression: high
+        fused: false  # Independently translated from the bidirectional promoter
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_PA

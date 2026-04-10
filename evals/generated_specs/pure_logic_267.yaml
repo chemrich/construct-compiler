@@ -1,0 +1,28 @@
+construct:
+  name: "genetic_relaxation_oscillator"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Strong constitutive promoter for autonomous expression without external induction
+    - cistron:
+        label: S1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: S2
+        expression: medium
+        fused: false  # Independent translation for the second protein in the operon
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015

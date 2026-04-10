@@ -1,0 +1,28 @@
+construct:
+  name: "mammalian_dual_subunit_coexpression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: subunit_a
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01001
+              source: uniprot
+    - spacer: 50  # Representing an IRES or 2A sequence for multicistronic expression
+    - cistron:
+        label: subunit_b
+        expression: high
+        fused: false  # Ensures independent translation of the second subunit
+        chain:
+          - tag: Twin-Strep
+          - cleavage_site: 3C
+          - gene:
+              id: P01002
+              source: uniprot
+    - terminator: BBa_B0015

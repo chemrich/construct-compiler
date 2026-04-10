@@ -1,0 +1,29 @@
+construct:
+  name: "mEGFP_ProteinS_DualCleavage_Diversity_Fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "reporter_fusion"
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 2
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - cleavage_site: 3C
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: P07225
+              source: uniprot
+    - terminator: T7term

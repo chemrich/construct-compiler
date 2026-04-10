@@ -1,0 +1,24 @@
+construct:
+  name: "yeast_high_expression_human_enzyme"
+  host: yeast
+
+  backbone:
+    # Using URA3 auxotrophic marker to satisfy 'no antibiotic' requirement
+    resistance: ura3
+    ori: 2_micron
+    source: yeast_native
+
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for yeast (GPD)
+
+    - cistron:
+        label: human_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P00338  # Human Lactate Dehydrogenase A (LDHA)
+              source: uniprot
+
+    - terminator: CYC1_term

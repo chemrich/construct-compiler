@@ -1,0 +1,28 @@
+construct:
+  name: "triple_BindingDomainX_tandem_mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: BindingDomainX_tandem
+        expression: high
+        chain:
+          - gene:
+              id: BindingDomainX
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: BindingDomainX
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: BindingDomainX
+              source: uniprot
+        # Note: Compiler must ensure distinct synonymous coding sequences for each BindingDomainX repeat (<70% identity).
+    - terminator: bGH_polyA

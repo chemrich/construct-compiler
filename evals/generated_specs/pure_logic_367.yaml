@@ -1,0 +1,32 @@
+construct:
+  name: "genetic_small_molecule_comparator"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Activated by Input A (e.g., Arabinose)
+    - cistron:
+        label: High_A_Reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: tac     # Activated by Input B (e.g., IPTG)
+    - cistron:
+        label: High_B_Reporter
+        expression: high
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: T7term
+    - promoter: J23106  # Placeholder for 'Equal' logic; ideally would be an A AND B logic gate
+    - cistron:
+        label: Equal_Reporter
+        expression: low
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: BBa_B0015

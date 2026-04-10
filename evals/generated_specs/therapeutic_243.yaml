@@ -1,0 +1,24 @@
+construct:
+  name: "episomal_therapeutic_gene_z_dhfr"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: custom  # Custom backbone incorporates non-viral S/MAR episomal origin for human cells
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        gene:
+          id: TherapeuticGeneZ
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: metabolic_selection
+        expression: low
+        fused: false
+        gene:
+          id: DHFR
+          source: uniprot
+    - terminator: SV40_polyA

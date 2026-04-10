@@ -1,0 +1,23 @@
+construct:
+  name: "clinical_nonviral_bicistronic_P2A"
+  host: HEK293
+  backbone:
+    resistance: none  # Clinical requirement: antibiotic-free selection (e.g., RNA-out or sucrose-based)
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral mammalian promoter suitable for clinical applications
+    - cistron:
+        label: therapeutic_payload
+        expression: high
+        chain:
+          - gene:
+              id: Protein_X
+              source: uniprot
+          - linker:
+              type: P2A  # Self-cleaving 2A peptide for stoichiometric co-expression
+              repeats: 1
+          - gene:
+              id: Protein_Y
+              source: uniprot
+    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal

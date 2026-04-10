@@ -1,0 +1,61 @@
+construct:
+  name: "pseudomonas_putida_pollutant_degradation_operon"
+  host: e_coli  # Pseudomonas putida is the target host; using e_coli as the closest schema-compliant host for construct design.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Inducible promoter to serve as a proxy for the pollutant-inducible system.
+    - cistron:
+        label: nahA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P0A113
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nahB
+        expression: high
+        fused: false
+        gene:
+          id: P0A110
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nahC
+        expression: high
+        fused: false
+        gene:
+          id: P0A111
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nahD
+        expression: high
+        fused: false
+        gene:
+          id: P0A112
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nahE
+        expression: high
+        fused: false
+        gene:
+          id: P0A114
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: nahF
+        expression: high
+        fused: false
+        gene:
+          id: P0A115
+          source: uniprot
+    - terminator: rrnB_T1

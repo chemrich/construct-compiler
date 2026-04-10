@@ -1,0 +1,42 @@
+construct:
+  name: "fatty_alcohol_biosynthesis_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: fatty_acyl_CoA_reductase
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q51206
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: alcohol_dehydrogenase
+        expression: medium
+        fused: false
+        gene:
+          id: P17547
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: thioesterase
+        expression: medium
+        fused: false
+        gene:
+          id: P0ADA1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: acetyl_CoA_carboxylase
+        expression: medium
+        fused: false
+        gene:
+          id: P0ABD8
+          source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,23 @@
+construct:
+  name: "therapeutic_cpp_delivery_system"
+  host: HEK293
+  backbone:
+    resistance: none # Antibiotic resistance-free requirement for human therapeutic application
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P60484 # Human PTEN (Therapeutic protein example)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P04608 # TAT peptide domain from HIV-1 (Cell-penetrating peptide)
+              source: uniprot
+    - terminator: bGH_polyA

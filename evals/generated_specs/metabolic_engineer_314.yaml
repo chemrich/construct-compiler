@@ -1,0 +1,52 @@
+construct:
+  name: "Heavy_Metal_Bioreporter_Operon"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac  # T7lac used as the standard strong inducible promoter for E. coli BL21
+    - cistron:
+        label: sensor_MecR
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MecR
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: transducer_MecT
+        expression: high
+        fused: false
+        gene:
+          id: MecT
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_GFP
+        expression: high
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: regulator_RegP
+        expression: high
+        fused: false
+        gene:
+          id: RegP
+          source: uniprot
+    - terminator: BBa_B0015
+  constraints:
+    assembly: golden_gate
+    enzyme: BsaI
+    codon_optimization: local
+    gc_window: [0.35, 0.65]
+    max_homopolymer: 6
+  synthesis:
+    vendor: twist
+    budget_per_gene: 400
+    max_turnaround_days: 21

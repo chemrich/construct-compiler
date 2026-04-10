@@ -1,0 +1,18 @@
+construct:
+  name: "bsub_nprE_nanoluc_reporter"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322  # pBR322 used for E. coli propagation as part of B. subtilis shuttle vector
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: secreted_nanoluc
+        expression: high
+        chain:
+          - tag: nprE  # Bacillus subtilis neutral protease signal peptide
+          - gene:
+              id: NanoLuc
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

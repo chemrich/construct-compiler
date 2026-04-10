@@ -1,0 +1,59 @@
+construct:
+  name: "temp_inducible_6enzyme_carbon_fixation"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lambda_pL  # Temperature-inducible promoter (regulated by cI857)
+    - cistron:
+        label: rbcL
+        expression: medium
+        fused: false
+        gene:
+          id: rbcL
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: rbcS
+        expression: medium
+        fused: false
+        gene:
+          id: rbcS
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: prkA
+        expression: medium
+        fused: false
+        gene:
+          id: prkA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: fbp
+        expression: medium
+        fused: false
+        gene:
+          id: fbp
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: glpX
+        expression: medium
+        fused: false
+        gene:
+          id: glpX
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: rpiA
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: rpiA
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

@@ -1,0 +1,28 @@
+construct:
+  name: "Pichia_IgG_Secretion_PGAP"
+  host: yeast
+  backbone:
+    catalog_vector: "pGAPZ_A"
+  cassette:
+    - promoter: PGAP
+    - cistron:
+        label: light_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: IgG1_LC
+              source: uniprot
+    - terminator: CYC1_term
+    - spacer: 40
+    - promoter: PGAP
+    - cistron:
+        label: heavy_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: IgG1_HC
+              source: uniprot
+          - tag: Strep-II
+    - terminator: AOX1_term

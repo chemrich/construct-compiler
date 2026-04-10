@@ -1,0 +1,37 @@
+construct:
+  name: orthogonal_three_stage_transcriptional_cascade
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: stage_1_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 35
+    - promoter: lacUV5
+    - cistron:
+        label: stage_2_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: T7term
+    - spacer: 45
+    - promoter: tetA
+    - cistron:
+        label: stage_3_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,29 @@
+construct:
+  name: "non_homologous_dual_lbd_tf"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Standard constitutive yeast promoter for medium-high expression
+    - cistron:
+        label: synth_tf_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: P03372  # Human Estrogen Receptor (ER) LBD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P34021  # Drosophila melanogaster Ecdysone Receptor (EcR) LBD
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          - gene:
+              id: P04386  # Saccharomyces cerevisiae Gal4 DNA-binding domain (DBD)
+              source: uniprot
+    - terminator: CYC1_term  # Common yeast terminator for Pol II transcripts

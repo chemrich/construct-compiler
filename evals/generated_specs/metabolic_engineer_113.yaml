@@ -1,0 +1,58 @@
+construct:
+  name: "optimized_bicistronic_four_enzyme_cascade"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_1
+        expression: high
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: enzyme_1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: enzyme_2
+              source: uniprot
+    - terminator: T7term
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_3
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: enzyme_3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_4
+        expression: low
+        fused: false
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: enzyme_4
+              source: uniprot
+    - terminator: T7term

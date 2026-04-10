@@ -1,0 +1,20 @@
+construct:
+  name: "secreted_his_tagged_mammalian_transgene"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - secretion_signal: Igk_leader
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: FIX
+              source: uniprot
+    - terminator: BGH_pA

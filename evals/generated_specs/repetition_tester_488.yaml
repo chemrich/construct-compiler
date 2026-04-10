@@ -1,0 +1,28 @@
+construct:
+  name: "max_divergence_xyz_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: chimeric_protein
+        expression: high
+        chain:
+          - gene:
+              id: Domain_X
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Domain_Y
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: Domain_Z
+              source: uniprot
+        # Note: Codon optimization must maximize DNA sequence divergence between domains and non-homologous linkers to prevent recombination.
+    - terminator: bgh_pa

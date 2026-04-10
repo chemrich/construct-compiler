@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_secretion_protein_e"
+  host: yeast
+  backbone:
+    resistance: LEU2
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1  # User requested constitutive but specified GAL1, which is galactose-inducible in S. cerevisiae.
+    - cistron:
+        label: secreted_protein_e
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: ProteinE
+              source: uniprot
+    - terminator: CYC1_term

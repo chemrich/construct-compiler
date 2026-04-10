@@ -1,0 +1,24 @@
+construct:
+  name: "inducible_lacI_geneY_divergent_design"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: target_gene_y
+        expression: high
+        gene:
+          id: GeneY
+    - spacer: 50
+    - promoter: J23106 # Constitutive promoter for LacI, distinct from tac to prevent recombination
+    - cistron:
+        label: lacI_repressor
+        expression: low
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,25 @@
+construct:
+  name: "CPP_PTEN_NonViral_Fusion"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Note: Included for bacterial propagation only; no mammalian ARG in cassette.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Substitution: EF1_alpha (human) used instead of CMV to avoid viral elements.
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa # Substitution: Factor_Xa (human factor) used instead of TEV to avoid viral elements.
+          - gene:
+              id: P02833 # Antennapedia (Penetratin) CPP
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P60484 # Human PTEN therapeutic cargo
+              source: uniprot
+    - terminator: bGH_pA # Substitution: bGH_pA is a standard non-viral mammalian terminator.

@@ -1,0 +1,21 @@
+construct:
+  name: "GFP_TEV_MyProtein_Fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Standard strong constitutive promoter for S. cerevisiae
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - cleavage_site: TEV
+          - gene:
+              id: MyProtein
+              source: uniprot
+    - terminator: CYC1_term  # Standard yeast terminator for transcript stability

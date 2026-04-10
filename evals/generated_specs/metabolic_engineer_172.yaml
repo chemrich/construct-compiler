@@ -1,0 +1,53 @@
+construct:
+  name: "VisE_Polycistronic_Expression_Monitor"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: VisE1
+        expression: high
+        gene:
+          id: VisE1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: VisE2
+        expression: high
+        fused: false
+        gene:
+          id: VisE2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: VisE3_monitor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: VisE3
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: VisE4
+        expression: high
+        fused: false
+        gene:
+          id: VisE4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: VisE5
+        expression: high
+        fused: false
+        gene:
+          id: VisE5
+          source: uniprot
+    - terminator: T7term

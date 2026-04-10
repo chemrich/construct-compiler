@@ -1,0 +1,18 @@
+construct:
+  name: "mRNA_vaccine_component_IVT"
+  host: in_vitro
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: antigen_presentation
+        expression: high
+        chain:
+          - tag: IgK_leader  # Strong signal peptide for secretion
+          - gene:
+              id: P0DTC2
+              source: uniprot
+    - terminator: T7term  # T7 terminator; optimized UTRs and poly-A tail are integrated into the template sequence prior to IVT

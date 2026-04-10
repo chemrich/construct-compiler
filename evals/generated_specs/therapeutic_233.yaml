@@ -1,0 +1,23 @@
+construct:
+  name: "exosome_targeted_IL10_clinical_construct"
+  host: HEK293
+  backbone:
+    resistance: none  # Clinical-grade design omitting antibiotic resistance markers for safety
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_exosome_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CD63
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: IL10
+              source: uniprot
+    - terminator: bGH_PA

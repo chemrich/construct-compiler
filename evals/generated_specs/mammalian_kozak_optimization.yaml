@@ -1,18 +1,15 @@
-```yaml
 construct:
-  name: "mammalian_egfp_expression"
-  host: mammalian # Inferred from "optimal Kozak consensus for mammalian translation initiation"
-
+  name: "mammalian_kozak_optimized_mEGFP"
+  host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV" # Common mammalian expression vector, suitable for mammalian host
-
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # Default promoter for mammalian host
+    - promoter: CMV
     - cistron:
-        label: egfp_reporter
-        expression: high # Assuming high expression for a reporter
-        gene:
-          id: mEGFP # No specific gene described, using mEGFP as a common mammalian reporter example
-          source: fpbase
-    - terminator: BBa_B0015 # A general robust terminator
-```
+        label: target_reporter
+        expression: high # High expression setting triggers optimal translation initiation sequences (Kozak) for the specified host
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: SV40_polyA # Standard polyadenylation signal for mammalian termination

@@ -1,0 +1,18 @@
+construct:
+  name: "intracellular_SmallProteinW_delivery"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin # Kanamycin included for bacterial propagation as plasmids require selection; no mammalian selection marker is included.
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: "therapeutic_fusion"
+        expression: high
+        chain:
+          - tag: CPP
+          - gene:
+              id: "SmallProteinW"
+              source: uniprot
+          - tag: 6xHis
+    - terminator: bGH_PA

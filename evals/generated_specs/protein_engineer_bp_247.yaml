@@ -1,0 +1,18 @@
+construct:
+  name: "bacillus_pxyl_mbp_kinase_expression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110  # Common high-copy origin for Bacillus subtilis shuttle vectors
+  cassette:
+    - promoter: Pxyl  # Xylose-inducible promoter for Bacillus subtilis
+    - cistron:
+        label: mbp_kinase_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: Enterokinase
+          - gene:
+              id: KINASE_OF_INTEREST  # User to replace with specific UniProt ID (e.g., P00533)
+              source: uniprot
+    - terminator: BBa_B0015  # Efficient double terminator for multiple hosts

@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_mystery_protein_localization"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: MysteryProtein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: CYC1

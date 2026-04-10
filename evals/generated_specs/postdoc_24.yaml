@@ -1,0 +1,16 @@
+construct:
+  name: "enzyme_cytoplasmic_kdel"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - gene:
+              id: P00330
+              source: uniprot
+          - tag: KDEL # Note: KDEL is a eukaryotic ER-retention signal; it will be expressed on the C-terminus as requested but is non-functional for retention in E. coli.
+    - terminator: T7term

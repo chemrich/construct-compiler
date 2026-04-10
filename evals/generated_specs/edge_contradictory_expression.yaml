@@ -1,36 +1,16 @@
-```yaml
 construct:
-  name: "high_expression_soluble_protein"
-  host: e_coli_bl21
-
+  name: "high_expression_inducible_toxic_safe"
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
-
   cassette:
-    - promoter: T7lac
-
+    - promoter: T7lac # T7lac is used for tight control of toxic protein expression in BL21(DE3)
     - cistron:
         label: target_protein
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
-          - solubility_tag: MBP
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

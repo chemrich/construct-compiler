@@ -1,0 +1,24 @@
+construct:
+  name: "time_delayed_expression_cascade"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Activated by ligand S (Arabinose)
+    - cistron:
+        label: delay_element
+        expression: low  # Low expression to increase the time needed to reach the threshold for the next stage
+        gene:
+          id: P00573  # T7 RNA Polymerase
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: T7  # Strong promoter activated only after T7 Polymerase accumulates
+    - cistron:
+        label: output_protein_T
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

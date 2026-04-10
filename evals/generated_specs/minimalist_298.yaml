@@ -1,0 +1,19 @@
+construct:
+  name: "protein_m_self_excising_reporter"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: m_protein_reporter_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P0DTC5
+              source: uniprot
+          - cleavage_site: TEV
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: T7term

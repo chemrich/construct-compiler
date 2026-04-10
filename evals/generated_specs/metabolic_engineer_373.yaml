@@ -1,0 +1,41 @@
+construct:
+  name: "synechocystis_photosynthetic_enhancement"
+  host: algae  # Synechocystis PCC 6803 is a cyanobacterium; algae is the closest schema match.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene  # Standard for chromosomal integration vectors like pAM1579
+  cassette:
+    - promoter: PpsbA2  # Strong, light-inducible promoter specific to Synechocystis
+    - cistron:
+        label: rubisco_variant
+        expression: high
+        fused: false
+        gene:
+          id: rbcL
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: shell_protein
+        expression: high
+        fused: false
+        gene:
+          id: ccmK2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: carbonic_anhydrase
+        expression: high
+        fused: false
+        gene:
+          id: ccaA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: rubisco_chaperone
+        expression: high
+        fused: false
+        gene:
+          id: rbcX
+          source: uniprot
+    - terminator: BBa_B0015

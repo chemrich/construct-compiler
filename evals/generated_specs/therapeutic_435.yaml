@@ -1,0 +1,27 @@
+construct:
+  name: "non_viral_inducible_secreted_therapeutic"
+  host: HEK293
+  backbone:
+    resistance: none # User requested no antibiotic resistance genes for a purely non-viral system.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human constitutive promoter used to drive the transactivator without viral sequences.
+    - cistron:
+        label: tet_transactivator
+        expression: medium
+        gene:
+          id: rtTA3
+          source: uniprot
+    - spacer: 60
+    - promoter: TRE3G # Tetracycline-responsive element for inducible expression.
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: IgK_leader # N-terminal secretion signal
+          - gene:
+              id: EPO # Erythropoietin used as a model secreted therapeutic
+              source: uniprot
+          - tag: 6xHis # C-terminal purification tag
+    - terminator: hGH_polyA # Human-derived non-viral polyadenylation signal.

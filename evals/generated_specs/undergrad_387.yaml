@@ -1,0 +1,22 @@
+construct:
+  name: "ProteinZ_NLS_mCherry_HEK293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: ProteinZ
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: bGH_polyA

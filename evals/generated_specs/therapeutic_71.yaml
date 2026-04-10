@@ -1,0 +1,23 @@
+construct:
+  name: "therapeutic_nabp_nuclear_delivery"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Placeholder; user requested antibiotic-free (suggested: auxotrophy or toxin-antitoxin selection)
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac # Bacterial origin; chosen to satisfy "free of viral sequences" constraint.
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - tag: NLS
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P09429
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial origin; chosen to satisfy "free of viral sequences" constraint.

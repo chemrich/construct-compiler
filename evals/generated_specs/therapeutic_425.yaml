@@ -1,0 +1,33 @@
+construct:
+  name: "NonViral_Therapeutic_Heterodimer"
+  host: HEK293
+  backbone:
+    # Kanamycin included for bacterial propagation; for therapeutic use, resistance is typically removed via minicircle or dogbone DNA methods.
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Utilizing non-viral human EF1-alpha promoter instead of CMV to avoid viral elements
+    - cistron:
+        label: subunit_a
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal peptide
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: subunit_a
+              source: uniprot
+    - spacer: 66 # Spacer representing the self-cleaving P2A peptide sequence (~22 aa)
+    - cistron:
+        label: subunit_b
+        expression: high
+        fused: false
+        chain:
+          - tag: IgK_leader # Secretion signal peptide
+          - tag: Strep-II
+          - cleavage_site: TEV
+          - gene:
+              id: subunit_b
+              source: uniprot
+    - terminator: hGH_PA # Non-viral human growth hormone polyadenylation signal

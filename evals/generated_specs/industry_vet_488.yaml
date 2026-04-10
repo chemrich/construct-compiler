@@ -1,0 +1,21 @@
+construct:
+  name: "ProteinH_C_terminal_GFP_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: ProteinH_GFP
+        expression: high
+        chain:
+          - gene:
+              id: ProteinH
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_pA

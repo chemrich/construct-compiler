@@ -1,19 +1,16 @@
-```yaml
 construct:
-  name: sffv_mscarlet_lentiviral
+  name: "SFFV_mScarlet_hygromycin_lenti"
   host: mammalian
-
   backbone:
-    catalog_vector: "pTwist CMV" # pTwist CMV is a general mammalian expression vector. A specific lentiviral backbone is not an option in the schema.
-
+    resistance: hygromycin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: CMV # SFFV promoter is not an option in the schema. CMV is a common mammalian promoter.
-
+    - promoter: SFFV
     - cistron:
-        label: mScarlet
+        label: reporter
+        expression: high
         gene:
           id: mScarlet
           source: fpbase
-
-    - terminator: BBa_B0015 # A mammalian polyadenylation signal (e.g., SV40 polyA) would typically be used here, but is not an option in the schema.
-```
+    - terminator: bGH_pA

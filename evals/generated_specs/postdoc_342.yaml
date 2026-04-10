@@ -1,0 +1,27 @@
+construct:
+  name: "ComplexAlpha_Beta_Bicistronic_Mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: "ComplexAlpha"
+        expression: high
+        chain:
+          - tag: "IgK_leader" # Signal peptide for secretion
+          - gene:
+              id: "ComplexAlpha"
+              source: uniprot
+          - tag: "FLAG"
+    - spacer: 574 # Standard length for IRES2 sequence to enable bicistronic translation
+    - cistron:
+        label: "ComplexBeta"
+        expression: high
+        fused: false # Independent translation via IRES
+        chain:
+          - gene:
+              id: "ComplexBeta"
+              source: uniprot
+          - tag: "FLAG"
+    - terminator: bGH_pA

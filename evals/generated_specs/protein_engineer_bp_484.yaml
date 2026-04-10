@@ -1,0 +1,20 @@
+construct:
+  name: "bacillus_toxic_protease_inhibitor_expression"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110  # Standard Bacillus subtilis rolling-circle replication origin
+    source: addgene
+  cassette:
+    - promoter: Pxyl  # Xylose-inducible promoter for low basal expression in Bacillus
+    - cistron:
+        label: inhibitor_target
+        expression: low
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: protease_inhibitor
+              source: uniprot
+          - tag: Strep-II
+    - terminator: rrnB_T1

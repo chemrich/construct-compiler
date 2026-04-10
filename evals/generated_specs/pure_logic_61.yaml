@@ -1,0 +1,37 @@
+construct:
+  name: "transcriptional_and_gate_hrpRS"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Input A: Activated by L-arabinose
+    - cistron:
+        label: input_A_regulator
+        expression: medium
+        gene:
+          id: P13271  # HrpR transcriptional regulator
+          source: uniprot
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5  # Input B: Activated by IPTG
+    - cistron:
+        label: input_B_regulator
+        expression: medium
+        gene:
+          id: P13272  # HrpS transcriptional regulator
+          source: uniprot
+    - terminator: rrnB_T1
+
+    - promoter: phrpL  # AND gate: phrpL is only active when both HrpR and HrpS are present
+    - cistron:
+        label: and_gate_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: T7term

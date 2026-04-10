@@ -1,0 +1,24 @@
+construct:
+  name: "bacillus_subtilis_spore_display"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: spore_display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CotG
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: scFv
+              source: uniprot
+          - tag: 6xHis
+    - terminator: BBa_B0015

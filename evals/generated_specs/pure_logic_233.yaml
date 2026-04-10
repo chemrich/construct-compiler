@@ -1,0 +1,42 @@
+construct:
+  name: "comparator_winner_take_all"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: Plac
+    - cistron:
+        label: signal_A_gt_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: repressor_A
+        expression: medium
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: Ptet
+    - cistron:
+        label: signal_B_gt_A
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: repressor_B
+        expression: medium
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: BBa_B0015

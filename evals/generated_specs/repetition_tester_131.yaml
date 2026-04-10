@@ -1,0 +1,38 @@
+construct:
+  name: "yeast_two_hybrid_bait_prey_system"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: bait_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: BaitProtein
+              source: uniprot
+    - terminator: ADH1_term
+    - promoter: PGK1
+    - cistron:
+        label: prey_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: GAL4_AD
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 4
+          - gene:
+              id: PreyProtein
+              source: uniprot
+    - terminator: CYC1_term

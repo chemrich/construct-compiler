@@ -1,0 +1,34 @@
+construct:
+  name: "yeast_dual_expression_protein_c_and_d"
+  host: yeast
+  backbone:
+    # Custom backbone setup for yeast-bacterial shuttle vector
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    # To comply with the single YAML document constraint, both Protein C and D 
+    # are provided as independent expression cassettes on a single construct. 
+    # This design uses separate strong constitutive promoters and terminators 
+    # to ensure independent expression without polycistronic fusion.
+    - promoter: TDH3  # Strong constitutive promoter (GPD)
+    - cistron:
+        label: protein_c
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Protein_C
+              source: uniprot
+    - terminator: CYC1
+    - spacer: 30
+    - promoter: TEF1  # Strong constitutive promoter
+    - cistron:
+        label: protein_d
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: Protein_D
+              source: uniprot
+    - terminator: ADH1

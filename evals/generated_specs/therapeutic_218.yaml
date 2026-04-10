@@ -1,0 +1,27 @@
+construct:
+  name: "e_coli_surface_display_antigen"
+  host: e_coli_bl21
+  backbone:
+    resistance: none # User requested no resistance marker; assuming auxotrophic selection or genomic integration.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Inducible bacterial promoter (L-arabinose) to avoid viral elements like T7.
+    - cistron:
+        label: surface_display_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P02933 # Lpp anchor (UniProt)
+              source: uniprot
+          - gene:
+              id: P0A910 # OmpA anchor (UniProt)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01112 # Human HRAS antigenic peptide source
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator (rrnB operon) to avoid viral elements like T7term.

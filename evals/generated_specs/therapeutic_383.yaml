@@ -1,0 +1,41 @@
+construct:
+  name: "human_therapeutic_complex_ABC"
+  host: e_coli_bl21
+  backbone:
+    resistance: none # User requested no antibiotic resistance; requires alternative selection like auxotrophy
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: tac # Substituted T7 with tac to avoid bacteriophage components while maintaining high yield
+    - cistron:
+        label: subunit_A
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P69905
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: subunit_B
+        expression: high
+        fused: false
+        chain:
+          - tag: Twin-Strep
+          - cleavage_site: 3C
+          - gene:
+              id: P68871
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: subunit_C
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - cleavage_site: Thrombin
+          - gene:
+              id: P69891
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator; avoids bacteriophage-derived T7term

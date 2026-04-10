@@ -1,0 +1,40 @@
+construct:
+  name: "anaerobic_H2_production_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: PFOR
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P94489
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: HydE
+        expression: medium
+        fused: false
+        gene:
+          id: Q9L6S1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: HydF
+        expression: medium
+        fused: false
+        gene:
+          id: Q9L6S0
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: HydG
+        expression: medium
+        fused: false
+        gene:
+          id: Q9L6R9
+          source: uniprot
+    - terminator: T7term

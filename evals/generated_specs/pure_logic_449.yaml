@@ -1,0 +1,56 @@
+construct:
+  name: "tristable_switch_genetic_spec"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: repressor_1_TetR
+        expression: medium
+        gene:
+          id: TetR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_1_mEGFP
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: pTet
+    - cistron:
+        label: repressor_2_cI
+        expression: medium
+        gene:
+          id: cI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_2_mScarlet
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: pL
+    - cistron:
+        label: repressor_3_LacI
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_3_mTagBFP2
+        expression: medium
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: BBa_B0015

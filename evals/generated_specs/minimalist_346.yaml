@@ -1,0 +1,20 @@
+construct:
+  name: "genec_gfp_yeast_fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GPD  # Substituted GPD for 'minimal RBS' as S. cerevisiae uses 5' UTR/promoter logic for translation initiation.
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: GeneC
+              source: uniprot
+          - gene:
+              id: GFP
+              source: fpbase
+    - terminator: CYC1_term

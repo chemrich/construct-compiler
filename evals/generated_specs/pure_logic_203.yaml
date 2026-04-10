@@ -1,0 +1,24 @@
+construct:
+  name: "xor_apoptosis_logic_gate"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Synthetic XOR-gated promoter responsive to trans-acting C1 and C2 factors
+    - cistron:
+        label: apoptosis_effector
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: BAX
+              source: uniprot
+    - spacer: 45  # Internal Ribosome Entry Site (IRES) for independent translation of reporter
+    - cistron:
+        label: gate_reporter
+        expression: low
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: BBa_B0015

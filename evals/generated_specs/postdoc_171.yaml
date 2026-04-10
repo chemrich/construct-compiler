@@ -1,0 +1,40 @@
+construct:
+  name: "Yeast_Polycistronic_2A_Pathway"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: pathway_polyprotein
+        expression: high
+        chain:
+          - tag: V5
+          - gene:
+              id: ERG10
+              source: uniprot
+          - linker:
+              type: P2A
+              repeats: 1
+          - tag: V5
+          - gene:
+              id: ERG13
+              source: uniprot
+          - linker:
+              type: T2A
+              repeats: 1
+          - tag: V5
+          - gene:
+              id: HMG1
+              source: uniprot
+          - linker:
+              type: E2A
+              repeats: 1
+          - tag: V5
+          - gene:
+              id: ERG12
+              source: uniprot
+    - terminator: CYC1_term

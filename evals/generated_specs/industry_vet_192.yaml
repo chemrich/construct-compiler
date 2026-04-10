@@ -1,0 +1,27 @@
+construct:
+  name: "HEK293_TetOn_Inducible_Target_Expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: rtTA_transactivator
+        expression: medium
+        gene:
+          id: rtTA3
+          source: uniprot
+    - spacer: 40
+    - promoter: TRE3G  # Tet-responsive promoter for drug-inducible expression
+    - cistron:
+        label: target_protein
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: 6xHis
+          - tag: FLAG
+    - terminator: bGH_pA

@@ -1,0 +1,27 @@
+construct:
+  name: "ProteinX_P2A_ProteinY_Fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: "ProteinX"
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: "P2A"
+              source: uniprot  # Note: P2A is a eukaryotic ribosomal skip sequence; in E. coli, it will not self-cleave and will result in a continuous fusion protein.
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: "ProteinY"
+              source: uniprot
+    - terminator: T7term

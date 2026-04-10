@@ -1,0 +1,24 @@
+construct:
+  name: "b2h_factor_a_t25_plasmid"
+  # Note: Bacterial Two-Hybrid systems require two plasmids. This YAML describes the first plasmid (T25-FactorA). 
+  # The second plasmid (T18-FactorB) should use a different backbone, such as ampicillin resistance and a pBR322 origin.
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: t25_fusion
+        expression: high
+        chain:
+          - gene:
+              id: T25
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: FactorA
+    - terminator: rrnB_T1

@@ -1,0 +1,26 @@
+construct:
+  name: "genetic_not_gate_inverter"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Input signal: Arabinose induces expression of the repressor
+    - cistron:
+        label: repressor
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: lacUV5  # Repressible promoter: LacI binds here to turn off the output
+    - cistron:
+        label: output_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,26 @@
+construct:
+  name: "yeast_metabolic_fate_switch"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: state_A_transcription_factor
+        expression: high
+        gene:
+          id: ACE2
+          source: uniprot
+    - terminator: CYC1
+    - spacer: 50
+    - promoter: MET25
+    - cistron:
+        label: state_B_transcription_factor
+        expression: high
+        fused: false
+        gene:
+          id: SWI5
+          source: uniprot
+    - terminator: ADH1

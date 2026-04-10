@@ -1,0 +1,39 @@
+construct:
+  name: "three_input_majority_gate"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: sensor_A
+        expression: medium
+        fused: false
+        gene:
+          id: araC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: sensor_B
+        expression: medium
+        fused: false
+        gene:
+          id: luxR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: sensor_C
+        expression: medium
+        fused: false
+        gene:
+          id: lacI
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac  # Proxy for majority gate logic promoter (A+B or A+C or B+C)
+    - cistron:
+        label: output_Z
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term

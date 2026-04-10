@@ -1,0 +1,19 @@
+construct:
+  name: "his_tagged_cpp_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: cpp_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: TAT # Using TAT (UniProt P04608) as a representative CPP since 'novel' sequences require database IDs
+              source: uniprot
+    - terminator: T7term

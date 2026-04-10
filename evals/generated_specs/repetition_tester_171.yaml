@@ -1,0 +1,28 @@
+construct:
+  name: membrane_protein_a_tmd_variant_1
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: membrane_fusion_v1
+        expression: high
+        chain:
+          - gene:
+              id: P0AE08
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P0A910
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: T7term

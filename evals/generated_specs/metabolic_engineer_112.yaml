@@ -1,0 +1,60 @@
+construct:
+  name: "six_enzyme_antibiotic_resistance_pathway"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: enzyme_1_bla
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00810
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2_cat
+        expression: medium
+        fused: false
+        gene:
+          id: P00487
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_3_tetA
+        expression: medium
+        fused: false
+        gene:
+          id: P02938
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: rhaBAD
+    - cistron:
+        label: enzyme_4_aphA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A2B9
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_5_dhfr
+        expression: medium
+        fused: false
+        gene:
+          id: P00508
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_6_sul1
+        expression: medium
+        fused: false
+        gene:
+          id: P04825
+          source: uniprot
+    - terminator: BBa_B0015

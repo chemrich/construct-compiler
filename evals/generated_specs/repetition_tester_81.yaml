@@ -1,0 +1,28 @@
+construct:
+  name: "synonymous_triple_repeat_binder"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: tandem_repeat_fusion
+        expression: high
+        # Note: The three identical protein domains must be encoded by synonymous DNA variants to prevent recombination.
+        chain:
+          - gene:
+              id: "GFP_nanobody"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: "GFP_nanobody"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: "GFP_nanobody"
+              source: uniprot
+    - terminator: bGH_polyA

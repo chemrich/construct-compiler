@@ -1,0 +1,22 @@
+construct:
+  name: "secreted_therapeutic_targeting_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: IL2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: ANXA5
+              source: uniprot
+    - terminator: BBa_B0015 # Double terminator for high stability; substituted standard mammalian pA with schema-provided terminator.

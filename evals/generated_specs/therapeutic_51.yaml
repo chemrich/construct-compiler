@@ -1,0 +1,20 @@
+construct:
+  name: nusa_hgh_therapeutic_fusion
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin  # Defaulted per Rule 9; schema requires resistance for custom backbones
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Used instead of T7 to fulfill the "no viral elements" requirement
+    - cistron:
+        label: therapeutic_construct
+        expression: high
+        chain:
+          - solubility_tag: NusA
+          - cleavage_site: TEV
+          - gene:
+              id: P01241
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

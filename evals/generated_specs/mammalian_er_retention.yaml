@@ -1,31 +1,17 @@
-```yaml
 construct:
-  name: "mEGFP_KDEL_ER_HEK293"
+  name: "mEGFP_KDEL_ER_localization"
   host: HEK293
-
   backbone:
     catalog_vector: "pTwist CMV"
-
   cassette:
     - promoter: CMV
     - cistron:
-        label: mEGFP_KDEL
+        label: mEGFP_ER
         expression: high
         chain:
+          - tag: ER_signal_peptide
           - gene:
-              id: mEGFP_KDEL # Represents mEGFP with the C-terminal KDEL sequence
+              id: mEGFP
               source: fpbase
-    - terminator: BBa_B0015
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+          - tag: KDEL
+    - terminator: SV40_pA

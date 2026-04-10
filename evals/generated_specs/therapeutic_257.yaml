@@ -1,0 +1,36 @@
+construct:
+  name: "Dual_Therapeutic_Mammalian_Expression_Plasmid"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Kanamycin is the clinical standard for plasmid manufacturing; metabolic selection (DHFR) is provided in the cassette for host cells.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_y
+        expression: high
+        gene:
+          id: TherapeuticGeneY
+          source: uniprot
+    - terminator: SV40_pA
+    - spacer: 60
+    - promoter: EF1_alpha
+    - cistron:
+        label: therapeutic_z2
+        expression: high
+        fused: false
+        gene:
+          id: TherapeuticGeneZ2
+          source: uniprot
+    - terminator: BGH_pA
+    - spacer: 60
+    - promoter: PGK
+    - cistron:
+        label: metabolic_selection
+        expression: medium
+        fused: false
+        gene:
+          id: DHFR
+          source: uniprot
+    - terminator: hGH_pA

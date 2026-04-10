@@ -1,0 +1,24 @@
+construct:
+  name: "Non_Viral_CPP_Therapeutic_Coexpression_System"
+  host: HEK293
+  backbone:
+    # Antibiotic resistance genes omitted per user requirement; design assumes alternative selection or transient transfection
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral constitutive mammalian promoter
+    - cistron:
+        label: cpp_penetratin
+        expression: high
+        gene:
+          id: P02881
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: therapeutic_cargo_IL2
+        expression: high
+        fused: false  # Ensures independent translation (separate protein)
+        gene:
+          id: P60568
+          source: uniprot
+    - terminator: hGH_polyA  # Non-viral mammalian polyadenylation signal

@@ -1,0 +1,24 @@
+construct:
+  name: "bacillus_stability_monitor"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322  # Standard ori placeholder; construct_compiler handles host-specific replication origins
+    source: addgene
+  cassette:
+    - promoter: Pveg  # Strong constitutive promoter for Bacillus subtilis
+    - cistron:
+        label: GFP_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: RFP_reporter
+        expression: high
+        fused: false  # Ensures independent translation with a strong Bacillus RBS
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

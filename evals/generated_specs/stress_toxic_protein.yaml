@@ -1,34 +1,21 @@
 construct:
-  name: "toxic_protease_expression_tight_control"
+  name: "toxic_protease_lethality_control"
   host: e_coli_bl21
-
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-
   cassette:
-    - promoter: tac # Chosen for tight regulation, often combined with cold-shock induction protocols for toxic proteins.
-
+    - promoter: cspA  # Cold-shock promoter for 16°C induction
     - cistron:
-        label: toxic_protease
-        expression: very_low # Specified for minimal low-expression RBS
+        label: protease_domain
+        expression: very_low
         chain:
-          - solubility_tag: MBP # Specified for MBP solubility tag
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: toxic_protease_domain # Placeholder for the toxic protease gene
-              source: uniprot # Assuming a natural protein, use uniprot as source
-
-    - terminator: rrnB_T1 # A standard strong terminator. While "weak terminator" was requested, a strong terminator like rrnB_T1 is generally preferred for "stringent control architecture" of a toxic protein to prevent read-through and ensure tight regulation.
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+              id: P03398
+              source: uniprot
+    - terminator: rrnB_T1  # Standard terminator chosen to meet basic expression needs

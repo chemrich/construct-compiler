@@ -1,0 +1,44 @@
+construct:
+  name: "yeast_constitutive_gfp_homology_reduced_comparison"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene # Representing a standard pRS-series shuttle vector (e.g., pRS416)
+
+  cassette:
+    # First Expression Unit: TDH3 Promoter + CYC1 Terminator
+    - promoter: TDH3
+    - cistron:
+        label: gfp_tdh3
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: CYC1_terminator
+
+    - spacer: 50 # Non-homologous spacer to separate transcription units
+
+    # Second Expression Unit: TEF1 Promoter + ADH1 Terminator
+    - promoter: TEF1
+    - cistron:
+        label: gfp_tef1
+        expression: high
+        fused: false # Indicates independent translation unit
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: ADH1_terminator
+
+    - spacer: 50
+
+    # Third Expression Unit: PGK1 Promoter + ENO2 Terminator
+    - promoter: PGK1
+    - cistron:
+        label: gfp_pgk1
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: ENO2_terminator

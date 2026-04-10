@@ -1,36 +1,18 @@
-```yaml
 construct:
-  name: "HisSUMO_hSOD1"
-  host: e_coli
-
+  name: "human_SOD1_high_expression"
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
-
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: hSOD1
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: SUMO
-          - cleavage_site: TEV # SUMO protease cleavage site (Ulp1) is not explicitly listed in the schema; TEV is used as a common alternative.
+          - cleavage_site: SUMO
           - gene:
-              id: SOD1_HUMAN
+              id: P00441
               source: uniprot
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

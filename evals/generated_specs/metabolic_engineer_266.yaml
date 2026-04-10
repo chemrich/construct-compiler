@@ -1,0 +1,40 @@
+construct:
+  name: "clostridium_butanol_production_operon"
+  host: e_coli  # Substituted for Clostridium acetobutylicum; will require appropriate shuttle vector for expression
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: P_thl  # Strong constitutive anaerobic promoter from C. acetobutylicum thiolase gene
+    - cistron:
+        label: thiolase
+        expression: high
+        gene:
+          id: P45359
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hbd
+        expression: medium
+        fused: false
+        gene:
+          id: P45362
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: crotonase
+        expression: medium
+        fused: false
+        gene:
+          id: P45361
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: adhE
+        expression: medium
+        fused: false
+        gene:
+          id: P33744
+          source: uniprot
+    - terminator: T_adc  # Robust terminator from the acetoacetate decarboxylase gene (adc)

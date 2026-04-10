@@ -1,0 +1,51 @@
+construct:
+  name: "carbon_fixation_calvin_cycle_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: rbcL
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0C511
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: pgk
+        expression: medium
+        fused: false
+        gene:
+          id: Q00624
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gapA
+        expression: medium
+        fused: false
+        gene:
+          id: Q02264
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: tpiA
+        expression: medium
+        fused: false
+        gene:
+          id: Q00625
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: sbp
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: Q01091
+              source: uniprot
+    - terminator: T7term

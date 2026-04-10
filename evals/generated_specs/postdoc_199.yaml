@@ -1,0 +1,24 @@
+construct:
+  name: yeast_mammalian_domain_fusion
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD  # Standard yeast constitutive promoter
+    - cistron:
+        label: chimera
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: YeastDomain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: MammalianDomain
+              source: uniprot
+    - terminator: CYC1  # Standard yeast terminator

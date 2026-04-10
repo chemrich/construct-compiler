@@ -1,0 +1,23 @@
+construct:
+  name: "inducible_yeast_expression_awesomeprotein"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE  # Tet-Responsive Element for Dox-inducible expression in yeast
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: Myc
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: HA
+          - cleavage_site: Thrombin
+          - gene:
+              id: AwesomeYeastProtein
+              source: uniprot
+    - terminator: CYC1_term

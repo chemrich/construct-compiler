@@ -1,0 +1,57 @@
+construct:
+  name: "pollutant_degradation_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: araBAD  # araBAD used as a proxy for an inducible pollutant-responsive promoter system
+    - cistron:
+        label: degradase_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Degradase1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: degradase_2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Degradase2
+              source: uniprot
+          - tag: FLAG
+    - spacer: 30
+    - cistron:
+        label: degradase_3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Degradase3
+              source: uniprot
+          - tag: FLAG
+    - spacer: 30
+    - cistron:
+        label: degradase_4
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Degradase4
+              source: uniprot
+          - tag: FLAG
+    - spacer: 30
+    - cistron:
+        label: degradase_5
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Degradase5
+              source: uniprot
+    - terminator: rrnB_T1

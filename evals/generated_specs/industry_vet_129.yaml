@@ -1,0 +1,23 @@
+construct:
+  name: "tet_on_inducible_mNeonGreen_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # High-induction, low-leakage tet-responsive promoter
+    - cistron:
+        label: target_goi
+        expression: high
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: bGH_polyA
+    - promoter: EF1_alpha  # Constitutive promoter to drive the transactivator
+    - cistron:
+        label: transactivator
+        expression: medium
+        fused: false
+        gene:
+          id: rtTA3
+          source: uniprot
+    - terminator: SV40_polyA

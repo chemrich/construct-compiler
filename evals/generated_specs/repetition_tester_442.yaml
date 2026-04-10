@@ -1,0 +1,28 @@
+construct:
+  name: "divergent_dual_inducible_biosensor"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
+  cassette:
+    - promoter: TRE3G  # High-efficiency Tet-On 3G response element with minimal CMV promoter
+    - cistron:
+        label: green_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - spacer: 100  # Separation to prevent transcriptional interference and maintain sequence divergence
+
+    - promoter: TRE_minTK  # Alternative Tet-response element using minimal Thymidine Kinase promoter for sequence divergence
+    - cistron:
+        label: luciferase_reporter
+        expression: high
+        fused: false  # Independently translated transcription unit
+        gene:
+          id: P08659  # Firefly luciferase (Photinus pyralis)
+          source: uniprot
+
+    - terminator: bGH_polyA  # Bovine growth hormone polyadenylation signal for stable mammalian expression

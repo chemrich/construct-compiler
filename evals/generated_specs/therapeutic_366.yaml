@@ -1,0 +1,17 @@
+construct:
+  name: "clinical_safe_hNIS_imaging_construct"
+  host: mammalian
+  backbone:
+    # Set to none to comply with clinical safety requirements for antibiotic-free vectors
+    resistance: none
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human promoter substituted for CMV to ensure construct is free of viral elements
+    - cistron:
+        label: hNIS_reporter
+        expression: high
+        gene:
+          id: P51913 # Human SLC5A5 (Sodium/Iodide Symporter) - endogenous non-immunogenic reporter for PET/SPECT imaging
+          source: uniprot
+    - terminator: hGH_polyA # Human growth hormone polyadenylation signal for clinical safety

@@ -1,0 +1,21 @@
+construct:
+  name: "K_phaffii_scFv_solubility_optimization"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: scFv_target
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - solubility_tag: SUMO
+          - cleavage_site: Kex2
+          - gene:
+              id: scFv
+              source: uniprot
+          - tag: Strep-II
+    - terminator: AOX1_term

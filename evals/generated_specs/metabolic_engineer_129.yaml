@@ -1,0 +1,47 @@
+construct:
+  name: "yeast_gal1_sugar_assimilation"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
+    - promoter: GAL1
+
+    - cistron:
+        label: sugar_pathway_polyprotein
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: Gluco1
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: Gluco2
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: Gluco3
+              source: uniprot
+          - linker:
+              type: E2A
+          - gene:
+              id: Gluco4
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: Gluco5
+              source: uniprot
+
+    - terminator: CYC1

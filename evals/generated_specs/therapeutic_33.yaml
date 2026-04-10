@@ -1,0 +1,30 @@
+construct:
+  name: "dual_therapeutic_peptide_inducible_expression"
+  host: e_coli_bl21
+  backbone:
+    resistance: none # User requested to avoid antibiotic markers; selection must be managed via alternative methods (e.g., auxotrophy)
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_peptide_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01308
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: therapeutic_peptide_2
+        expression: high
+        fused: false # Ensures independent translation via internal ribosome binding site/RBS
+        chain:
+          - tag: FLAG
+          - cleavage_site: 3C
+          - gene:
+              id: P01133
+              source: uniprot
+    - terminator: T7term

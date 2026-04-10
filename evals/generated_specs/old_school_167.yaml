@@ -1,0 +1,25 @@
+construct:
+  name: "lambda_PL_heat_inducible_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Strong constitutive promoter for cI repressor
+    - cistron:
+        label: cI_repressor
+        expression: medium
+        gene:
+          id: cI
+          source: uniprot
+    - spacer: 50
+    - promoter: lambda_PL  # Inducible promoter controlled by cI
+    - cistron:
+        label: target_protein
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

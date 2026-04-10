@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_peptidey_secretion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD  # High-level constitutive expression in S. cerevisiae
+    - cistron:
+        label: secreted_peptide_y
+        expression: high
+        chain:
+          - tag: SP_Alpha  # Alpha-mating factor secretion signal; DNA will be optimized for non-homology as requested
+          - gene:
+              id: PeptideY
+              source: uniprot
+    - terminator: CYC1

@@ -1,0 +1,24 @@
+construct:
+  name: "delayed_on_detox_gate"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: delay_element_t7pol
+        expression: medium
+        gene:
+          id: P03847
+          source: uniprot
+    - spacer: 50
+    - promoter: T7
+    - cistron:
+        label: detoxification_enzyme_gst
+        expression: high
+        gene:
+          id: P0ACA9
+          source: uniprot
+    - terminator: T7term

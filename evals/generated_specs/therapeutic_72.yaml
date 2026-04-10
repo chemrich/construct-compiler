@@ -1,0 +1,23 @@
+construct:
+  name: "non_viral_secreted_enzyme_variant"
+  host: HEK293
+  backbone:
+    # User requested antibiotic-free selection; kanamycin is provided as a placeholder for E. coli cloning stages.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # Non-viral constitutive mammalian promoter
+    - cistron:
+        label: enzyme_production
+        expression: high
+        chain:
+          - tag: IgK_leader  # N-terminal secretion signal for efficient export
+          - tag: FLAG        # Short, non-immunogenic purification tag
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P81331    # Gaussia princeps luciferase (secreted, constitutively active enzyme)
+              source: uniprot
+    - terminator: hGH_pA    # Non-viral polyadenylation signal derived from human growth hormone

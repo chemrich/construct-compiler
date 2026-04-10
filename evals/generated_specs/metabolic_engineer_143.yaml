@@ -1,0 +1,52 @@
+construct:
+  name: "PHA_production_pathway_solubility_optimized"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: P1
+        expression: high
+        gene:
+          id: P1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: P2
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: P2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: P3
+        expression: high
+        fused: false
+        gene:
+          id: P3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: P4
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: P4
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: P5
+        expression: high
+        fused: false
+        gene:
+          id: P5
+          source: uniprot
+    - terminator: T7term

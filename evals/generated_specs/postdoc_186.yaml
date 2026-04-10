@@ -1,0 +1,16 @@
+construct:
+  name: FragileProtein_E_coli_Production
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac # Mammalian Kozak and UTRs are incompatible with E. coli; substituted with T7lac and a high-expression prokaryotic RBS/terminator system.
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FragileProtein
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,32 @@
+construct:
+  name: "genetic_and_gate_split_t7"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Input A: Induced by L-arabinose
+    - cistron:
+        label: split_t7_n
+        expression: medium
+        gene:
+          id: P00573  # UniProt ID for T7 RNA Polymerase; engineered as N-terminal fragment
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: lacUV5  # Input B: Induced by IPTG
+    - cistron:
+        label: split_t7_c
+        expression: medium
+        gene:
+          id: P00573  # UniProt ID for T7 RNA Polymerase; engineered as C-terminal fragment
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: T7      # Logic Gate: Requires both N and C fragments to form functional T7 RNA Pol
+    - cistron:
+        label: reporter_output
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term

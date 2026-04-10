@@ -1,0 +1,21 @@
+construct:
+  name: "yeast_strep_ii_affinity_tagged_protein"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # High-expression constitutive yeast promoter
+    - cistron:
+        label: yeast_target
+        expression: high
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: ACT1
+              source: uniprot
+    - terminator: ADH1_term  # Standard yeast terminator

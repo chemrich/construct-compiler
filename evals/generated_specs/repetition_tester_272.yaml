@@ -1,0 +1,28 @@
+construct:
+  name: "triple_tmd_fusion_recombination_resistant"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: tmd_fusion
+        expression: high
+        # DNA diversity achieved via three non-homologous TMD sources and distinct linker architectures
+        chain:
+          - gene:
+              id: P01732
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P10747
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: P01730
+              source: uniprot
+    - terminator: bGH_pA

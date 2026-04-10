@@ -1,0 +1,19 @@
+construct:
+  name: "pulse_activated_memory_counter"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Inducible promoter acting as the sensor for input molecule pulses
+    - cistron:
+        label: memory_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1

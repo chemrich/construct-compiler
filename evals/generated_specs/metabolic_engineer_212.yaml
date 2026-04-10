@@ -1,0 +1,58 @@
+construct:
+  name: "bacillus_subtilis_extracellular_hydrolase_operon"
+  host: b_subtilis
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pxyl  # Xylose-inducible promoter for Bacillus subtilis
+    - cistron:
+        label: hydrolase_1
+        expression: high
+        chain:
+          - tag: SP_amyE # Robust alpha-amylase secretion signal peptide
+          - gene:
+              id: Hydrolase1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hydrolase_2
+        expression: high
+        fused: false # Independent translation with its own RBS
+        chain:
+          - tag: SP_amyE
+          - gene:
+              id: Hydrolase2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hydrolase_3
+        expression: high
+        fused: false
+        chain:
+          - tag: SP_amyE
+          - gene:
+              id: Hydrolase3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hydrolase_4
+        expression: high
+        fused: false
+        chain:
+          - tag: SP_amyE
+          - gene:
+              id: Hydrolase4
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: hydrolase_5
+        expression: high
+        fused: false
+        chain:
+          - tag: SP_amyE
+          - gene:
+              id: Hydrolase5
+              source: uniprot
+    - terminator: BBa_B0015 # Standard double terminator for efficient transcriptional stop

@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_high_solubility_nanoparticle_subunit"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for high expression in S. cerevisiae
+    - cistron:
+        label: nanoparticle_component
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P02794
+              source: uniprot
+    - terminator: CYC1_term  # Standard yeast transcription terminator

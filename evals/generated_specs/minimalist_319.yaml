@@ -1,0 +1,20 @@
+construct:
+  name: "bacterial_self_cleaving_x_y"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "cleavable_fusion"
+        expression: high
+        chain:
+          - gene:
+              id: "protein_x"
+              source: uniprot
+          - linker:
+              type: P2A # Note: 2A self-cleaving peptides are primarily eukaryotic; in E. coli, polycistronic spacers are more efficient for dual expression.
+          - gene:
+              id: "protein_y"
+              source: uniprot
+    - terminator: T7term

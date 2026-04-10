@@ -1,0 +1,26 @@
+construct:
+  name: "YeastProteinX_Mito_Luciferase"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TDH3 # Substituted requested mammalian promoter with strong yeast TDH3 promoter as mammalian promoters are typically inactive in S. cerevisiae.
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: MTS
+          - gene:
+              id: YeastProteinX
+              source: uniprot
+    - spacer: 66 # DNA sequence encoding the P2A self-cleaving peptide to allow bicistronic expression.
+    - cistron:
+        label: reporter
+        expression: high
+        fused: true
+        gene:
+          id: firefly_luciferase
+          source: uniprot
+    - terminator: CYC1_term

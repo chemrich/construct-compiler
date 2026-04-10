@@ -1,0 +1,37 @@
+construct:
+  name: "genetic_memory_toggle_switch"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    # State 1: Write_ON_Input (Induced by IPTG via lacUV5)
+    # This unit produces the TetR repressor to shut off the OFF state and mEGFP as a readout.
+    - promoter: lacUV5
+    - cistron:
+        label: write_on_state_repressor
+        expression: high
+        gene:
+          id: P04483 # TetR
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: readout_reporter
+        expression: medium
+        fused: false # Independent translation for reporter
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+
+    # State 2: Write_OFF_Input (Induced by aTc via tet promoter)
+    # This unit produces the LacI repressor to shut off the ON state.
+    - promoter: tet # tet-responsive promoter (P_LtetO-1)
+    - cistron:
+        label: write_off_state_repressor
+        expression: high
+        gene:
+          id: P03023 # LacI
+          source: uniprot
+    - terminator: BBa_B0015

@@ -1,0 +1,17 @@
+construct:
+  name: "tet_inducible_toxinA_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tetA  # Substituted mammalian Tet-on/off with E. coli tetA promoter for tetracycline induction
+    - cistron:
+        label: target_toxin
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ToxinA
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,0 +1,25 @@
+construct:
+  name: "starvation_induced_autolysis_cascade"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Required for plasmid maintenance during development; system design is for chromosomal integration or markerless maintenance
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: "P_bolA" # Starvation and stationary phase-responsive promoter in E. coli
+    - cistron:
+        label: "signal_amplifier"
+        expression: medium
+        gene:
+          id: "P0AFG3" # rpoE (RNA polymerase sigma-E factor), endogenous stress response regulator
+          source: uniprot
+    - spacer: 30
+    - promoter: "P_degP" # Sigma-E dependent promoter to amplify the starvation signal
+    - cistron:
+        label: "autolysis_effector"
+        expression: high
+        fused: false
+        gene:
+          id: "P06132" # amiA (N-acetylmuramoyl-L-alanine amidase), an endogenous autolysin
+          source: uniprot
+    - terminator: rrnB_T1

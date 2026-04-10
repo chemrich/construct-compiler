@@ -1,0 +1,30 @@
+construct:
+  name: "divergent_three_enzyme_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: E1_subunit
+        expression: high
+        gene:
+          id: P0AFG8 # aceE: Pyruvate dehydrogenase E1 component
+          source: uniprot
+    - spacer: 27 # Unique spacer length to ensure sequence divergence
+    - cistron:
+        label: E2_subunit
+        expression: medium
+        fused: false # Ensures independent translation with a unique RBS
+        gene:
+          id: P07016 # aceF: Dihydrolipoyl transacetylase
+          source: uniprot
+    - spacer: 43 # Distinct spacer length to avoid homology/recombination
+    - cistron:
+        label: E3_subunit
+        expression: low
+        fused: false # Ensures independent translation with a unique RBS
+        gene:
+          id: P0A9P0 # lpd: Dihydrolipoyl dehydrogenase
+          source: uniprot
+    - terminator: T7term

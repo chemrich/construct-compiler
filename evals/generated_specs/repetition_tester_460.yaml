@@ -1,0 +1,24 @@
+construct:
+  name: "recombination_resistant_multi_tag"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: multi_tagged_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Strep-II
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: T7term # The construct_compiler automatically applies host-specific codon optimization and repeat-avoidance for linkers and tags.

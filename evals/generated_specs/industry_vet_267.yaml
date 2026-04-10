@@ -1,0 +1,22 @@
+construct:
+  name: "mammalian_ProteinZ_mCherry_IRES"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        gene:
+          id: ProteinZ
+          source: uniprot
+    - spacer: 585  # Typical length for an IRES sequence to allow internal ribosome entry
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false  # Enables independent translation initiation for the second cistron
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: bGH_polyA

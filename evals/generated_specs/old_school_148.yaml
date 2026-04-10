@@ -1,0 +1,17 @@
+construct:
+  name: "shuttle_pCMV_T7_kan_g418_mEGFP"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Marker for both E. coli (Kan) and mammalian cells (G418)
+    ori: pUC # ColE1 derivative for E. coli; SV40 origin for mammalian replication is implicit in shuttle designs
+    source: addgene
+  cassette:
+    - promoter: CMV # Mammalian promoter
+    - promoter: T7 # Bacterial promoter (for T7-expressing strains)
+    - cistron:
+        label: target_expression
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

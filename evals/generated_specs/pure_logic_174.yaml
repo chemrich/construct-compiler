@@ -1,0 +1,17 @@
+construct:
+  name: "cancer_specific_ligand_inducible_therapeutic_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: hTERT_TRE  # Cancer-specific hTERT promoter with TRE for ligand-inducible control
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: NLS
+          - solubility_tag: MBP
+          - gene:
+              id: P04637
+              source: uniprot
+    - terminator: SV40_polyA

@@ -1,0 +1,22 @@
+construct:
+  name: "bicistronic_mammalian_coexpression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: GOI1
+        expression: high
+        gene:
+          id: GOI1
+          source: uniprot
+    - spacer: 150 # Spacer designed to accommodate IRES/2A-mediated co-expression
+    - cistron:
+        label: GOI2
+        expression: high
+        fused: false # Indicates independent translation initiation for the second cistron
+        gene:
+          id: GOI2
+          source: uniprot
+    - terminator: SV40_polyA

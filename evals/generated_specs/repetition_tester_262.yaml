@@ -1,0 +1,42 @@
+construct:
+  name: yeast_recombination_proof_enzyme_operon
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+
+  # Yeast does not naturally support bacterial-style polycistronic operons with RBS; 
+  # however, this spec uses fused:false and spacers to fulfill the user's design 
+  # for independent translation units under a single transcript.
+  cassette:
+    - promoter: TDH3  # Strong constitutive GPD promoter for high expression in yeast
+
+    - cistron:
+        label: enzyme_a
+        expression: high
+        gene:
+          id: EnzymeA
+          source: uniprot
+
+    - spacer: 40  # Distinct spacer to separate translation units
+
+    - cistron:
+        label: enzyme_b
+        expression: high
+        fused: false  # Triggers the compiler to insert a distinct independent translation initiation site
+        gene:
+          id: EnzymeB
+          source: uniprot
+
+    - spacer: 45
+
+    - cistron:
+        label: enzyme_c
+        expression: high
+        fused: false
+        gene:
+          id: EnzymeC
+          source: uniprot
+
+    - terminator: CYC1  # Note: To maintain a "single strong promoter" transcript, a single terminator is used at the end.

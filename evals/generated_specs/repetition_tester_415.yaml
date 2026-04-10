@@ -1,0 +1,72 @@
+construct:
+  name: divergent_metabolic_pathway_E1_E5
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_1
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: E1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: medium
+        fused: false
+        chain:
+          - tag: FLAG
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: E2
+              source: uniprot
+    - spacer: 31
+    - cistron:
+        label: enzyme_3
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: E3
+              source: uniprot
+    - spacer: 32
+    - cistron:
+        label: enzyme_4
+        expression: medium
+        fused: false
+        chain:
+          - tag: HA
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: E4
+              source: uniprot
+    - spacer: 33
+    - cistron:
+        label: enzyme_5
+        expression: medium
+        fused: false
+        chain:
+          - tag: Twin-Strep
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: E5
+              source: uniprot
+    - terminator: rrnB_T1

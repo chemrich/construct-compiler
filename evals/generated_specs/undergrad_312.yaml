@@ -1,0 +1,25 @@
+construct:
+  name: "blue_light_inducible_reporter"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: light_sensitive_activator
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: VP16_EL222
+              source: uniprot
+    - spacer: 50
+    - promoter: 5xBS_C120
+    - cistron:
+        label: light_activated_reporter
+        expression: high
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: bGH_PA

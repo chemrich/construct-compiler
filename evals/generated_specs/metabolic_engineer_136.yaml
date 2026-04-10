@@ -1,0 +1,54 @@
+construct:
+  name: "yeast_methionine_pathway_multigene"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: metA_metB_coexpression
+        expression: high
+        chain:
+          - gene:
+              id: MetA
+              source: uniprot
+          - tag: Strep-II
+          - linker:
+              type: P2A
+          - gene:
+              id: MetB
+              source: uniprot
+          - tag: Strep-II
+    - terminator: CYC1
+    - promoter: CUP1
+    - cistron:
+        label: metC_expression
+        expression: medium
+        chain:
+          - gene:
+              id: MetC
+              source: uniprot
+          - tag: Strep-II
+    - terminator: CYC1
+    - promoter: CUP1
+    - cistron:
+        label: metD_expression
+        expression: medium
+        chain:
+          - gene:
+              id: MetD
+              source: uniprot
+          - tag: Strep-II
+    - terminator: CYC1
+    - promoter: CUP1
+    - cistron:
+        label: metE_expression
+        expression: medium
+        chain:
+          - gene:
+              id: MetE
+              source: uniprot
+          - tag: Strep-II
+    - terminator: CYC1

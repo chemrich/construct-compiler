@@ -1,0 +1,26 @@
+construct:
+  name: "bacillus_amylase_groes_operon"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: secreted_amylase
+        expression: high
+        chain:
+          - tag: AprE
+          - gene:
+              id: amyE
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: chaperone
+        expression: high
+        fused: false
+        gene:
+          id: groS
+          source: uniprot
+    - terminator: rrnB_T1

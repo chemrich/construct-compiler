@@ -1,0 +1,17 @@
+construct:
+  name: "secreted_secretase_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: secretase_target
+        expression: high
+        chain:
+          - tag: PelB  # PelB leader sequence for periplasmic secretion
+          - tag: 6xHis
+          - gene:
+              id: Secretase
+              source: uniprot
+    - terminator: T7term

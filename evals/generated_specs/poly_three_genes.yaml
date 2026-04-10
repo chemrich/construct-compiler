@@ -1,17 +1,12 @@
-```yaml
 construct:
-  name: "three_gene_operon_hismbpefg_mscarlet_mtagbfp2"
-  host: e_coli
-
+  name: "tri_fluorescent_protein_operon"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: his_tev_mbp_megfp
+        label: megfp_fusion
         expression: high
         chain:
           - tag: 6xHis
@@ -20,26 +15,20 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
-
     - spacer: 50
-
     - cistron:
-        label: mscarlet_reporter
+        label: mscarlet_cistron
         expression: medium
         fused: false
         gene:
           id: mScarlet
           source: fpbase
-
     - spacer: 50
-
     - cistron:
-        label: mtagbfp2_reporter
+        label: mtagbfp2_cistron
         expression: low
         fused: false
         gene:
           id: mTagBFP2
           source: fpbase
-
     - terminator: rrnB_T1
-```

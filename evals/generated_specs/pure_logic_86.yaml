@@ -1,0 +1,33 @@
+construct:
+  name: "mammalian_sr_latch_secreted_mNeonGreen"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE  # SET signal input: activated by Doxycycline/rtTA or repressed by TetR (Reset)
+    - cistron:
+        label: latch_repressor_lacI
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: secreted_output
+        expression: high
+        fused: false  # Independently translated via IRES or 2A peptide for mammalian host
+        chain:
+          - tag: IgK_leader  # Secretion signal for mammalian cells
+          - cleavage_site: TEV
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: bGH_pA
+    - promoter: CMV_LacO  # RESET signal input: repressed by LacI (Output state)
+    - cistron:
+        label: latch_repressor_tetR
+        expression: medium
+        gene:
+          id: TetR
+          source: uniprot
+    - terminator: bGH_pA

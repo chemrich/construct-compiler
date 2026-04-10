@@ -1,0 +1,21 @@
+construct:
+  name: "protein_o_mcherry_fusion"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: o_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P03688
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: T7term

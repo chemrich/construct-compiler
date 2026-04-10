@@ -1,0 +1,23 @@
+construct:
+  name: "pichia_secreted_fab_2a_system"
+  host: yeast
+  backbone:
+    catalog_vector: "pPICZ_A"
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: fab_bicistronic_orf
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: fab_light_chain
+              source: uniprot
+          - linker:
+              type: P2A
+          - tag: alpha_factor
+          - gene:
+              id: fab_heavy_chain
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1_TT

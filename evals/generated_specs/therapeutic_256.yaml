@@ -1,0 +1,25 @@
+construct:
+  name: "hEnzymeX2_solubility_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Substituted for non-antibiotic selection as per schema constraints
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: fusion_target
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: hEnzymeX2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: rrnB_T1

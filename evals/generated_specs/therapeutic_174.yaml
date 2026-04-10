@@ -1,0 +1,23 @@
+construct:
+  name: "human_scaffold_high_expression_no_selection"
+  host: e_coli_bl21
+  backbone:
+    resistance: none # User requested no antibiotic resistance; requires auxotrophic or toxin-antitoxin selection
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: tac # Non-viral bacterial promoter
+    - cistron:
+        label: scaffold_target
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - tag: 6xHis
+          - cleavage_site: Enterokinase # Non-viral cleavage site (bovine)
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P62993
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator

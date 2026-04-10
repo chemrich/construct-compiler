@@ -1,0 +1,26 @@
+construct:
+  name: "Pichia_AOX1_Kinase_Expression_HIS4"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    source: addgene # HIS4 marker is provided as part of the integration cassette
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: secreted_kinase
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - solubility_tag: MBP
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: kinase
+              source: uniprot
+    - spacer: 60
+    - cistron:
+        label: selection_marker
+        fused: false # Independent translation for the defective HIS4 marker
+        gene:
+          id: HIS4
+          source: uniprot
+    - terminator: AOX1_term

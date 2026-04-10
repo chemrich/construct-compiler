@@ -1,0 +1,24 @@
+construct:
+  name: "t7_positive_feedback_bistable_switch"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: self_activator_driver
+        expression: high
+        gene:
+          id: P00573
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: activity_enzyme
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00813
+              source: uniprot
+    - terminator: T7term

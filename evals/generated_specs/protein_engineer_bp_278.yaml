@@ -1,0 +1,21 @@
+construct:
+  name: "Pichia_AOX1_GST_TEV_Target_10xHis"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: target_protein_expression
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - cleavage_site: TEV
+          - gene:
+              id: target_protein
+              source: uniprot
+          - tag: 10xHis
+    - terminator: AOX1_TT

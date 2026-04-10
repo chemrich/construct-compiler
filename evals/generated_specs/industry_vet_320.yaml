@@ -1,0 +1,39 @@
+construct:
+  name: "polycistronic_alpha_beta_gamma_expression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: alpha_subunit
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: alpha
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: beta_subunit
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
+          - cleavage_site: TEV
+          - gene:
+              id: beta
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gamma_subunit
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - cleavage_site: TEV
+          - gene:
+              id: gamma
+              source: uniprot
+    - terminator: T7term

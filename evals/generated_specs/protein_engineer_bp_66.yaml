@@ -1,0 +1,20 @@
+construct:
+  name: "pichia_scfv_secretion_cassette"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: scfv_secretion_unit
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: scFv
+              source: uniprot
+          - cleavage_site: Enterokinase
+          - tag: FLAG
+    - terminator: AOX1_TT

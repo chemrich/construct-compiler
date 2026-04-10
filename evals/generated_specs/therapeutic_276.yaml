@@ -1,0 +1,40 @@
+construct:
+  name: non_viral_inducible_cytokine_msc
+  host: mammalian
+  backbone:
+    # Requirement: No antibiotic resistance genes. Standard plasmids require selection for production; 
+    # kanamycin is provided here as a default placeholder for the cloning stage.
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+
+  cassette:
+    # Cistron 1: Constitutive expression of the non-viral transactivator (TetR-p65)
+    - promoter: EF1_alpha
+    - cistron:
+        label: transactivator
+        chain:
+          - gene:
+              id: TetR
+              source: uniprot # P04483
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: RELA
+              source: uniprot # Q04206 (p65 subunit of NF-kappaB)
+    
+    - terminator: rrnB_T1 # Bacterial terminator used as a transcription stop/insulator
+
+    - spacer: 50
+
+    # Cistron 2: Inducible expression of the therapeutic cytokine
+    - promoter: TRE3G # Tet-responsive element (7xTetO + minimal promoter, non-viral)
+    - cistron:
+        label: therapeutic_cytokine
+        expression: high
+        gene:
+          id: IL10
+          source: uniprot # P22301
+          
+    - terminator: rrnB_T1

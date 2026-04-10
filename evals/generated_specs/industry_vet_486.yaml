@@ -1,0 +1,20 @@
+construct:
+  name: "ChallengingF_MBP_solubility_optimized"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: ChallengingF
+              source: uniprot
+    - terminator: T7term

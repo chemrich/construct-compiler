@@ -1,59 +1,31 @@
-```yaml
 construct:
-  name: "multivalent_scaffold_mcherry_fusion"
-  host: e_coli
-
+  name: "multivalent_his_mcherry_scaffold"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
         label: multivalent_scaffold
         expression: high
         chain:
           - tag: 6xHis
-          - gene:
-              id: test_protein_A # Placeholder for actual test protein ID
-              source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 1
-          - gene:
-              id: test_protein_B # Placeholder for actual test protein ID
-              source: uniprot
+              repeats: 3
+          - tag: 6xHis
           - linker:
               type: rigid_EAAAK
-              repeats: 1
-          - gene:
-              id: test_protein_C # Placeholder for actual test protein ID
-              source: uniprot
+              repeats: 3
+          - tag: 6xHis
           - linker:
               type: rigid_EAAAK
-              repeats: 1
-          - gene:
-              id: test_protein_D # Placeholder for actual test protein ID
-              source: uniprot
+              repeats: 3
+          - tag: 6xHis
           - linker:
               type: rigid_EAAAK
-              repeats: 1
+              repeats: 3
           - gene:
               id: mCherry
               source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

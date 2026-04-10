@@ -1,0 +1,26 @@
+construct:
+  name: "secreted_human_scfv_therapeutic_system"
+  host: CHO
+  backbone:
+    resistance: kanamycin  # Required for E. coli cloning stage; host selection is metabolic
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Robust mammalian promoter, non-viral
+    - cistron:
+        label: scFv_therapeutic
+        expression: high
+        chain:
+          - tag: Igk_leader  # N-terminal secretion signal for supernatant export
+          - gene:
+              id: scFv_human_therapeutic
+              source: uniprot
+    - spacer: 40  # Minimum 20 bp spacer for polycistronic organization
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false  # Independent translation for the metabolic marker
+        gene:
+          id: DHFR  # Dihydrofolate reductase for non-antibiotic metabolic selection
+          source: uniprot
+    - terminator: bGH_polyA  # Non-viral mammalian polyadenylation signal

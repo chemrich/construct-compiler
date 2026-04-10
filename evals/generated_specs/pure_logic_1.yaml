@@ -1,0 +1,24 @@
+construct:
+  name: "and_gate_therapeutic_production"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Input 1: Arabinose induces expression of T7 RNA Polymerase
+    - cistron:
+        label: t7_polymerase_controller
+        gene:
+          id: P03874
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: T7lac    # Input 2: IPTG removes LacI; requires T7 Pol from Input 1 for expression
+    - cistron:
+        label: hgh_therapeutic
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: T7term

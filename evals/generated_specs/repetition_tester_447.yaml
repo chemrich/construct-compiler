@@ -1,0 +1,27 @@
+construct:
+  name: "orthogonal_dual_inducible_expression_system"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: T7lac  # IPTG-inducible promoter, requires T7 RNA polymerase
+    - cistron:
+        label: enzyme_1_pykF
+        expression: high
+        chain:
+          - gene:
+              id: P0AD67
+              source: uniprot
+    - terminator: T7term  # T7-specific transcription terminator
+    - spacer: 50  # Large physical separation to prevent transcriptional read-through
+    - promoter: araBAD  # Arabinose-inducible promoter, utilizes host RNA polymerase
+    - cistron:
+        label: enzyme_2_eno
+        expression: high
+        chain:
+          - gene:
+              id: P0A6P1
+              source: uniprot
+    - terminator: rrnB_T1  # Classic E. coli rho-independent terminator, non-homologous to T7term

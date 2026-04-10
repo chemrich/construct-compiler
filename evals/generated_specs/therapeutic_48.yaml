@@ -1,0 +1,24 @@
+construct:
+  name: "therapeutic_fusion_A_B"
+  host: e_coli
+  backbone:
+    resistance: kanamycin # Placeholder: Schema requires resistance; antibiotic-free selection intended.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Bacterial hybrid promoter used to avoid viral (T7) components.
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - gene:
+              id: domain_a
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: domain_b
+              source: uniprot
+          - tag: 6xHis
+    - terminator: rrnB_T1

@@ -1,0 +1,26 @@
+construct:
+  name: "polycistronic_stoichiometric_geneA_geneB"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: gene_a
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneA
+              source: uniprot
+    - spacer: 30 # IRES is replaced with a polycistronic spacer and separate RBS for E. coli expression
+    - cistron:
+        label: gene_b
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneB
+              source: uniprot
+    - terminator: T7term

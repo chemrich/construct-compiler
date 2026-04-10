@@ -1,0 +1,17 @@
+construct:
+  name: "SUMO_fusion_solubility_construct"
+  host: e_coli_bl21_de3  # T7-based expression requires a DE3 lysogen host
+  backbone:
+    resistance: chloramphenicol
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: target_protein
+              source: uniprot
+    - terminator: T7term

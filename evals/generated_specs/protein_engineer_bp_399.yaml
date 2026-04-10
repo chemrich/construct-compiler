@@ -1,0 +1,24 @@
+construct:
+  name: "pichia_scfv_mcherry_secretion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: YPT1
+      cistron:
+        label: scfv_fusion
+        expression: medium
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: scFv
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mCherry
+              source: fpbase
+      terminator: CYC1_term

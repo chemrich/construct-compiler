@@ -1,0 +1,39 @@
+construct:
+  name: "yeast_polycistronic_enzymes_IJK"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for high expression in S. cerevisiae
+
+    - cistron:
+        label: enzyme_I
+        expression: high
+        gene:
+          id: enzyme_I
+          source: uniprot
+
+    - spacer: 150  # Spacer to accommodate yeast-compatible IRES elements
+
+    - cistron:
+        label: enzyme_J
+        expression: high
+        fused: false  # Independent translation initiated by IRES
+        gene:
+          id: enzyme_J
+          source: uniprot
+
+    - spacer: 150
+
+    - cistron:
+        label: enzyme_K
+        expression: high
+        fused: false
+        gene:
+          id: enzyme_K
+          source: uniprot
+
+    - terminator: CYC1_term  # Standard yeast transcriptional terminator

@@ -1,0 +1,24 @@
+construct:
+  name: "non_viral_secreted_therapeutic_fusion"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Bacterial resistance included for plasmid propagation; no mammalian antibiotic selection used.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Non-viral, human-derived constitutive promoter
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal for mammalian export
+          - gene:
+              id: TNFRSF1B
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: IL10
+              source: uniprot
+    - terminator: bGH_polyA # Non-viral, bovine-derived polyadenylation signal

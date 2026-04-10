@@ -1,0 +1,26 @@
+construct:
+  name: "non_viral_dual_fp_tracker"
+  host: HEK293
+  backbone:
+    resistance: none  # User requested no antibiotic resistance elements
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Strong non-viral constitutive mammalian promoter
+    - cistron:
+        label: tracker_protein
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - cistron:
+        label: monitor_protein
+        expression: high
+        fused: true  # Joined in a single ORF for 2A-mediated cleavage
+        chain:
+          - linker:
+              type: P2A
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: hGH_pA  # Human growth hormone polyadenylation signal (non-viral)

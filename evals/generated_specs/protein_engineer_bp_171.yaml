@@ -1,0 +1,20 @@
+construct:
+  name: "Pichia_membrane_receptor_FLAG_3C"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: PAOX1  # Optimized for Pichia pastoris methanol-inducible expression
+    - cistron:
+        label: receptor_target
+        expression: high
+        chain:
+          - tag: FLAG
+          - cleavage_site: 3C
+          - gene:
+              id: ADRB2  # Representative membrane-bound receptor (Beta-2 adrenergic receptor)
+              source: uniprot
+    - terminator: AOX1_TT

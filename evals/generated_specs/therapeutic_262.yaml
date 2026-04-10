@@ -1,0 +1,29 @@
+construct:
+  name: "nonviral_dCas9_p65_human_activation_system"
+  host: HEK293
+  backbone:
+    resistance: none # Substituted 'none' to satisfy the strict "no antibiotic resistance markers" requirement
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human constitutive promoter; non-viral alternative to CMV
+    - cistron:
+        label: dCas9_p65_fusion
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: dCas9 # Catalytically inactive SpCas9 (D10A, H840A)
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: p65 # Human NF-kappaB transactivation domain; non-viral alternative to VP64/VPR
+          - tag: NLS
+    - spacer: 60 # Spacer between the protein expression unit and the RNA expression unit
+    - promoter: U6 # Human Pol III promoter for independent gRNA transcription
+    - cistron:
+        label: gRNA_expression_unit
+        fused: false # Independent transcription/translation unit
+        gene:
+          id: sgRNA_scaffold # Standard chimeric guide RNA scaffold
+    - terminator: bGH_polyA # Bovine growth hormone polyadenylation signal; non-viral alternative to SV40 polyA

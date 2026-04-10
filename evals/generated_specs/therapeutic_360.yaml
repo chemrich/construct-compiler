@@ -1,0 +1,18 @@
+construct:
+  name: "HighLevel_Secretion_EPO_NonViral"
+  host: HEK293
+  backbone:
+    resistance: none # Requested no antibiotic markers; alternative selection or minicircle approach assumed
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Robust, non-viral, human constitutive promoter
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal peptide for efficient export
+          - gene:
+              id: P01588 # Human Erythropoietin
+              source: uniprot
+    - terminator: hGH_polyA # Human Growth Hormone polyadenylation signal (non-viral)

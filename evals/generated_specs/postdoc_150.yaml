@@ -1,0 +1,19 @@
+construct:
+  name: "shuttle_protein_f_expression"
+  host: HEK293  # Selected HEK293 for mammalian expression; E. coli validation occurs in BL21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    mammalian_ori: SV40
+    source: custom
+  cassette:
+    - promoter: CMV_T7  # Dual promoter configuration for mammalian (CMV) and E. coli (T7) expression
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_F
+              source: uniprot
+    - terminator: SV40_polyA  # Functions as a polyadenylation signal in mammalian cells and a terminator in bacteria

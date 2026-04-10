@@ -1,0 +1,20 @@
+construct:
+  name: "two_input_nor_gate_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tac # tac is a repressible promoter; for NOR logic, this promoter is assumed to contain operator sites for both repressor inputs E and F.
+      cistron:
+        label: output_q
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis # C-terminal purification tag
+      terminator: BBa_B0015

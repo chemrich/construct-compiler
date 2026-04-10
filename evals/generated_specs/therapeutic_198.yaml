@@ -1,0 +1,22 @@
+construct:
+  name: enzyme_z_bicistronic_gfp
+  host: mammalian
+  backbone:
+    resistance: none # User requested no antibiotic resistance genes
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Non-viral strong constitutive promoter used to satisfy "no viral sequences"
+    - cistron:
+        label: therapeutic_enzyme
+        gene:
+          id: EnzymeZ
+          source: uniprot
+    - spacer: 500 # IRES sequence placeholder to link the two coding sequences in a single transcript
+    - cistron:
+        label: reporter
+        fused: false # Set to false to allow independent translation via the IRES
+        gene:
+          id: GFP
+          source: fpbase
+    - terminator: bGH_polyA # Bovine growth hormone polyadenylation signal (non-viral)

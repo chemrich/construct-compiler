@@ -1,0 +1,22 @@
+construct:
+  name: yeast_v5_biotin_fusion
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3 # CMV enhancer is not functional in yeast; TDH3 (GPD) used as a strong yeast constitutive promoter substitute.
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: V5
+          - tag: AviTag
+    - terminator: CYC1_term

@@ -1,0 +1,16 @@
+construct:
+  name: "bacterial_reliable_expression_cassette"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac # Substituted T7lac for CMV as a high-strength bacterial equivalent
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: 6xHis
+    - terminator: T7term # Substituted T7term for polyA signal as the bacterial equivalent

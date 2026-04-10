@@ -1,0 +1,23 @@
+construct:
+  name: nuclear_targeted_fusion_protein_x_y
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - tag: NLS  # SV40 nuclear localization signal (N-terminal)
+          - gene:
+              id: P01106
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3  # Linker length optimized for flexibility and non-homology
+          - gene:
+              id: P04637
+              source: uniprot
+          - tag: NLS  # Nucleoplasmin nuclear localization signal (C-terminal); codon-diversified DNA to ensure no homology
+    - terminator: bGH_PA

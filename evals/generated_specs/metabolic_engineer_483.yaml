@@ -1,0 +1,47 @@
+construct:
+  name: "constitutive_strong_operon_k1_k4"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: k1_fusion
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: K1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: k2_enzyme
+        expression: high
+        fused: false
+        gene:
+          id: K2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: k3_enzyme
+        expression: high
+        fused: false
+        gene:
+          id: K3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: k4_enzyme
+        expression: high
+        fused: false
+        gene:
+          id: K4
+          source: uniprot
+    - terminator: rrnB_T1

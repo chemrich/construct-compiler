@@ -1,0 +1,57 @@
+construct:
+  name: "five_enzyme_operon_with_gfp_reporter"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_u
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeU
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_v
+        expression: medium
+        fused: false
+        gene:
+          id: EnzymeV
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_w
+        expression: medium
+        fused: false
+        gene:
+          id: EnzymeW
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_x
+        expression: medium
+        fused: false
+        gene:
+          id: EnzymeX
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_y
+        expression: medium
+        fused: false
+        gene:
+          id: EnzymeY
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: low
+        fused: false
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1

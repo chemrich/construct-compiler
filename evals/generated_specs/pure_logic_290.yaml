@@ -1,0 +1,30 @@
+construct:
+  name: dual_stage_transcriptional_amplifier
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23106
+    - cistron:
+        label: activator_1_stage_1
+        expression: low
+        gene:
+          id: P12746
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac
+    - cistron:
+        label: activator_2_stage_2
+        expression: medium
+        gene:
+          id: P0A9E0
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: araBAD
+    - cistron:
+        label: AMP_OUT
+        expression: high
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: T7term

@@ -1,0 +1,54 @@
+construct:
+  name: "triple_localized_enzymes_mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: enzyme_a_nuclear
+        expression: high
+        chain:
+          - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: EnzymeA
+              source: uniprot
+    - terminator: BGH_pA
+
+    - spacer: 50
+
+    - promoter: EF1_alpha
+    - cistron:
+        label: enzyme_b_mitochondrial
+        expression: medium
+        chain:
+          - tag: MTS
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: EnzymeB
+              source: uniprot
+    - terminator: SV40_pA
+
+    - spacer: 50
+
+    # Using hPGK1 as a third distinct non-homologous mammalian promoter
+    - promoter: hPGK1
+    - cistron:
+        label: enzyme_c_er
+        expression: medium
+        chain:
+          - tag: ER_signal
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: EnzymeC
+              source: uniprot
+          - tag: KDEL
+    - terminator: hGH_pA

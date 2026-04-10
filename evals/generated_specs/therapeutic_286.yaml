@@ -1,0 +1,18 @@
+construct:
+  name: mitochondrial_therapeutic_construct
+  host: HEK293
+  backbone:
+    resistance: none # User requested no drug resistance markers
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # EF1_alpha is a constitutive mammalian promoter (non-viral)
+    - cistron:
+        label: therapeutic_payload
+        expression: high
+        chain:
+          - tag: MTS # Mitochondrial Targeting Sequence
+          - gene:
+              id: FXN # Frataxin, a common therapeutic target for mitochondrial delivery
+              source: uniprot
+    - terminator: bGH_polyA # Bovine growth hormone polyadenylation signal (non-viral)

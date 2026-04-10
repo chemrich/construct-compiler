@@ -1,0 +1,34 @@
+construct:
+  name: "multivalent_vaccine_polycistronic_system"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: antigen_unit_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P03468
+              source: uniprot
+    - spacer: 35
+    - cistron:
+        label: antigen_unit_2
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P0DTC2
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,22 @@
+construct:
+  name: mammalian_bicistronic_GeneA_GeneB
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: GeneA
+        expression: medium
+        gene:
+          id: GeneA
+          source: uniprot
+    - spacer: 30  # Note: For mammalian systems, this spacer typically represents an IRES or 2A sequence for multicistronic expression.
+    - cistron:
+        label: GeneB
+        expression: medium
+        fused: false
+        gene:
+          id: GeneB
+          source: uniprot
+    - terminator: bGH_polyA

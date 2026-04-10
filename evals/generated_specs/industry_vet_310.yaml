@@ -1,0 +1,17 @@
+construct:
+  name: "mammalian_protein_turnover_study"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: degradation_reporter
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: PEST
+    - terminator: SV40_polyA # Substituted for bacterial terminator as host is mammalian

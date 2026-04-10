@@ -1,0 +1,42 @@
+construct:
+  name: "balanced_4_enzyme_pathway_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: CoE1
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: CoE1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CoE2
+        expression: medium
+        fused: false
+        gene:
+          id: CoE2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CoE3
+        expression: medium
+        fused: false
+        gene:
+          id: CoE3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CoE4
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: CoE4
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term

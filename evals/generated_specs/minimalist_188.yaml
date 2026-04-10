@@ -1,0 +1,22 @@
+construct:
+  name: "A_B_TEV_fusion_construct"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: A_B_fusion
+        expression: high
+        chain:
+          - gene:
+              id: protein_A
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - cleavage_site: TEV
+          - gene:
+              id: protein_B
+              source: uniprot
+    - terminator: T7term

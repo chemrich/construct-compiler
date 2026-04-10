@@ -1,0 +1,19 @@
+construct:
+  name: "stable_therapeutic_protein_periplasmic_production"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Defaulted per Rule 9; schema requires a resistance marker for plasmid maintenance.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Non-viral bacterial inducible promoter (L-arabinose regulated)
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - tag: PelB # Bacterial secretion signal for periplasmic translocation
+          - tag: 6xHis
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: rrnB_T1 # Strong bacterial terminator, non-viral source

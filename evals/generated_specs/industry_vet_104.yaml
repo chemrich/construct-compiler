@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_nanoparticle_factory"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter
+    - cistron:
+        label: nanoparticle_scaffold
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P03513  # Ty1-Gag protein which forms virus-like particles (nanoparticles) in yeast
+              source: uniprot
+    - terminator: CYC1_term  # Standard yeast transcription terminator

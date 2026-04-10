@@ -1,0 +1,23 @@
+construct:
+  name: "ProteinH_sfGFP_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_h_gfp
+        expression: high
+        chain:
+          - gene:
+              id: "P0A3V8"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: "sfGFP"
+              source: fpbase
+          - linker:
+              type: short_GS
+    - terminator: T7term

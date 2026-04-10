@@ -1,0 +1,57 @@
+construct:
+  name: "five_enzyme_scaffold_operon"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: enzyme_1
+        expression: medium
+        chain:
+          - tag: SpyTag
+          - gene:
+              id: U1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: medium
+        fused: false
+        chain:
+          - tag: SpyCatcher
+          - gene:
+              id: U2
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_3
+        expression: medium
+        fused: false
+        chain:
+          - tag: Dockerin
+          - gene:
+              id: U3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_4
+        expression: medium
+        fused: false
+        chain:
+          - tag: Cohesin
+          - gene:
+              id: U4
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_5
+        expression: medium
+        fused: false
+        chain:
+          - tag: SnoopTag
+          - gene:
+              id: U5
+              source: uniprot
+    - terminator: rrnB_T1

@@ -1,27 +1,21 @@
-```yaml
 construct:
   name: "cytochrome_c_oxidase_subunit_expression"
-  host: e_coli
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: cytochrome_c_oxidase_subunit
+        label: cox4i1_target
         expression: high
-        gene:
-          id: cytochrome_c_oxidase_subunit # Placeholder: please provide UniProt ID or specific gene name if available.
-    - terminator: rrnB_T1
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P13073
+              source: uniprot
+    - terminator: T7term

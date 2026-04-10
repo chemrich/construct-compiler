@@ -1,0 +1,20 @@
+construct:
+  name: "chimeric_AAV_capsid_solubility_optimized"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: capsid_protein
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: VP1
+              source: uniprot
+    - terminator: bGH_pA # Standard mammalian polyadenylation signal for high-level expression

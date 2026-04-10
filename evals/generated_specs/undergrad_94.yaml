@@ -1,0 +1,25 @@
+construct:
+  name: "mammalian_cas9_targetgenex_knockout"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: cas9_nuclease
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Q99ZW2
+              source: uniprot
+          - tag: NLS
+    - terminator: bGH_pA
+    - promoter: U6
+    - cistron:
+        label: sgRNA_target
+        expression: high
+        fused: false
+        gene:
+          id: sgRNA_TargetGeneX
+    - terminator: U6_term

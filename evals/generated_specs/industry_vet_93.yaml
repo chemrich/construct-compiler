@@ -1,0 +1,17 @@
+construct:
+  name: "self_cleaving_intein_purification_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Intein  # Intein provides self-cleavage triggered by pH or thiol shift, avoiding external proteases
+          - gene:
+              id: P60709
+              source: uniprot
+    - terminator: T7term

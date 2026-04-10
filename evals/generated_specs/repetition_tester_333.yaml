@@ -1,0 +1,24 @@
+construct:
+  name: non_repetitive_solubility_fusion
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - cleavage_site: TEV
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - tag: 8xHis
+    - terminator: T7term

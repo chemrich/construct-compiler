@@ -1,0 +1,18 @@
+construct:
+  name: "secreted_scfv_nonviral_mammalian"
+  host: mammalian
+  backbone:
+    resistance: kanamycin # Defaulting to kanamycin for E. coli propagation as per rule 9; no mammalian selection marker included per request.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Strong constitutive human promoter substituted for CMV to avoid viral elements.
+    - cistron:
+        label: secreted_scfv
+        expression: high
+        chain:
+          - tag: IgK_leader # Mammalian secretion signal
+          - gene:
+              id: scFv
+              source: uniprot
+    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal; non-viral alternative to SV40pA.

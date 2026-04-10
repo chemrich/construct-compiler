@@ -1,0 +1,22 @@
+construct:
+  name: "therapeutic_enzyme_negative_feedback_loop"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV_TetO # CMV promoter containing Tet operator sites to enable negative feedback via TetR-mediated repression
+    - cistron:
+        label: feedback_fusion_protein
+        expression: high
+        chain:
+          - tag: NLS # Nuclear localization signal to ensure the TetR-fusion can reach the DNA for repression
+          - gene:
+              id: TetR
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: TherapeuticEnzyme
+              source: uniprot
+    - terminator: bGH_pA # Standard mammalian polyadenylation signal for robust termination

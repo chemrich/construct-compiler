@@ -1,0 +1,19 @@
+construct:
+  name: "mitochondrial_matrix_targeted_enzyme_non_viral"
+  host: HEK293
+  backbone:
+    resistance: none # Designed for antibiotic-free delivery (e.g., pFAR or minicircle)
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - tag: MTS # Mitochondrial Targeting Sequence
+          - tag: 6xHis
+          - gene:
+              id: SOD2
+              source: uniprot
+    - terminator: bGH_polyA

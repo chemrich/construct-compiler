@@ -1,0 +1,35 @@
+construct:
+  name: modular_tripartite_scaffold_assembly
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: scaffold_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          - gene:
+              id: mScarlet
+              source: fpbase
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: T7term

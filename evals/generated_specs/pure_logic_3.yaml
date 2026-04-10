@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_xor_gate_mNeonGreen"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: synthetic_XOR_GAL1_CUP1  # Logic: Active if either Galactose or Copper is present, but repressed if both are present
+    - cistron:
+        label: logic_output
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: CYC1

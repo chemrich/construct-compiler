@@ -1,0 +1,19 @@
+construct:
+  name: "plant_hGH_clinical_expression"
+  host: plant # plant host selected as requested for production context
+  backbone:
+    resistance: none # Clinical safety: no antibiotic resistance genes included
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: AtUbi10 # Strong constitutive non-viral Arabidopsis Ubiquitin 10 promoter
+    - cistron:
+        label: human_growth_factor
+        expression: high
+        chain:
+          - tag: SP_extensin # Plant-specific signal peptide for apoplast secretion
+          - gene:
+              id: P01241
+              source: uniprot
+          - tag: 6xHis
+    - terminator: Nos_term # Plant-specific polyadenylation signal (non-viral)

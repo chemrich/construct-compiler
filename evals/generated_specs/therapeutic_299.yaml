@@ -1,0 +1,17 @@
+construct:
+  name: "cell_cycle_regulated_therapeutic_hEPO"
+  host: HEK293
+  backbone:
+    # Resistance and ori are included for E. coli propagation prior to transfection
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: CCNB1 # Human Cyclin B1 promoter for G2/M phase-specific expression
+    - cistron:
+        label: therapeutic_protein
+        expression: medium
+        gene:
+          id: P01588
+          source: uniprot
+    - terminator: bGH_pA # Non-viral polyadenylation signal

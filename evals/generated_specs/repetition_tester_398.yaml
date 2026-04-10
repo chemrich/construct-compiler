@@ -1,0 +1,38 @@
+construct:
+  name: mammalian_dual_variant_polycistronic_expression
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: version_1_P2A
+        expression: high
+        chain:
+          - gene:
+              id: GeneW
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: GeneX
+              source: uniprot
+    - terminator: SV40_polyA
+    - spacer: 50
+    - promoter: EF1_alpha
+    - cistron:
+        label: version_2_T2A
+        expression: high
+        fused: false # Indicates independent translation context (new promoter/transcript)
+        chain:
+          - gene:
+              id: GeneW
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: GeneX
+              source: uniprot
+    - terminator: bGH_polyA
+# Note: Unique Kozak contexts are provided by distinct 5' UTRs from CMV and EF1_alpha.
+# Note: GeneW and GeneX sequences are to be codon-diversified by the compiler to ensure zero homology between units.

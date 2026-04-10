@@ -1,0 +1,50 @@
+construct:
+  name: "pathway_PQRST_operon"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_p
+        expression: medium
+        chain:
+          - gene:
+              id: EnzymeP
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: enzyme_q
+        expression: medium
+        fused: false
+        gene:
+          id: EnzymeQ
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_r
+        expression: medium
+        fused: false
+        gene:
+          id: EnzymeR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_s
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: EnzymeS
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_t
+        expression: medium
+        fused: false
+        gene:
+          id: EnzymeT
+          source: uniprot
+    - terminator: T7term

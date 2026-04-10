@@ -1,0 +1,19 @@
+construct:
+  name: "yeast_inducible_secretion_secretp"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Standard galactose-inducible promoter for yeast
+    - cistron:
+        label: secretory_target
+        expression: high
+        chain:
+          - tag: alpha_factor # N-terminal yeast secretion signal peptide
+          - tag: 6xHis
+          - gene:
+              id: SecretP
+              source: uniprot
+    - terminator: CYC1_term # Common yeast transcription terminator

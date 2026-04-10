@@ -1,35 +1,38 @@
-```yaml
 construct:
-  name: "his_megfp_terminator_test_rrnb_t1"
-  host: e_coli
-
+  name: "terminator_efficiency_comparison_mEGFP"
+  host: e_coli_bl21_de3
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: his_megfp
+        label: mEGFP_rrnB
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-
     - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - spacer: 50
+    - promoter: T7lac
+    - cistron:
+        label: mEGFP_T7term
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term
+    - spacer: 50
+    - promoter: T7lac
+    - cistron:
+        label: mEGFP_B0015
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BBa_B0015

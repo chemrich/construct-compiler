@@ -1,0 +1,21 @@
+construct:
+  name: "GFP_membrane_protein_tracking"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: GFP_target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P08913  # Alpha-2A adrenergic receptor (example membrane protein)
+              source: uniprot
+    - terminator: SV40_polyA

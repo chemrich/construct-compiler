@@ -1,0 +1,24 @@
+construct:
+  name: "bacillus_spore_display_nanobody"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: CotG
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CotG
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: nanobody
+              source: uniprot
+          - tag: Myc
+    - terminator: BBa_B0015

@@ -1,0 +1,27 @@
+construct:
+  name: "distinct_linked_tri_domain_fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: tri_domain_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P03030
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 4
+          - gene:
+              id: P06492
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: P03023
+              source: uniprot
+    - terminator: T7term

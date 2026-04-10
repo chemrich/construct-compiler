@@ -1,0 +1,23 @@
+construct:
+  name: "non_viral_therapeutic_cpp_fusion"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Note: Schema requires a resistance gene; kanamycin is used as a placeholder for selection.
+    ori: pBR322 # Bacterial origin, non-viral.
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human constitutive promoter; selected to avoid viral sequences like CMV.
+    - cistron:
+        label: therapeutic_payload
+        expression: high
+        chain:
+          - gene:
+              id: P01588
+              source: uniprot # Human Erythropoietin (EPO) as the therapeutic payload.
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P02833
+              source: uniprot # Antennapedia homeodomain (Penetratin CPP).
+    - terminator: hGH_polyA # Human Growth Hormone polyA signal; non-viral termination.

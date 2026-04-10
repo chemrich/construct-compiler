@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_bicistronic_enzyme_ires_egfp"
+  host: HEK293
+  backbone:
+    resistance: puromycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: enzyme
+        expression: high
+        gene:
+          id: P08659 # Firefly Luciferase
+          source: uniprot
+    - spacer: 580 # IRES (Internal Ribosome Entry Site) sequence for bicistronic translation
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_polyA

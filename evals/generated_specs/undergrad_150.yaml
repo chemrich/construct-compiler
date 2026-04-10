@@ -1,0 +1,23 @@
+construct:
+  name: "SuperEnzyme_Secreted_Fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-22b(+)"  # pET-22b is optimized for periplasmic secretion
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: secreted_target
+        expression: high
+        chain:
+          - tag: PelB  # N-terminal signal sequence for secretion
+          - tag: 6xHis
+          - gene:
+              id: SuperEnzyme
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: HelperProtein
+              source: uniprot
+    - terminator: T7term

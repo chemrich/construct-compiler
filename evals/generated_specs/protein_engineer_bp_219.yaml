@@ -1,0 +1,28 @@
+construct:
+  name: "pichia_capsid_high_expression"
+  host: yeast
+  backbone:
+    resistance: zeocin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAP
+    - cistron:
+        label: capsid_protein
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: VP1
+              source: uniprot
+    - terminator: AOX1
+    - spacer: 50
+    - promoter: TEF1
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        gene:
+          id: ble
+          source: uniprot
+    - terminator: CYC1

@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_surface_display_aga2_antigen"
+  host: yeast
+  backbone:
+    resistance: kanamycin  # Note: Host uses auxotrophic marker (e.g., URA3/TRP1) for selection as requested.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Standard galactose-inducible promoter for yeast surface display.
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - secretion_signal: alpha_factor # Required for translocation to the secretory pathway.
+          - tag: HA
+          - gene:
+              id: AGA2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: target_antigen
+              source: uniprot
+    - terminator: CYC1_term

@@ -1,0 +1,36 @@
+construct:
+  name: "dual_optogenetic_mammalian_effector_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: LSD1_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CRY2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: RELA
+              source: uniprot
+    - terminator: SV40_polyA
+    - promoter: CMV
+    - cistron:
+        label: LSD2_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CIB1
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: RELA
+              source: uniprot
+    - terminator: bGH_polyA

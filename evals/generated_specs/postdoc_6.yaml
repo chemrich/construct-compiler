@@ -1,0 +1,20 @@
+construct:
+  name: "human_kinase_expression_system"
+  host: e_coli_bl21_de3  # Host updated to DE3 to support T7-driven expression
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7  # T7 promoter as requested
+    - cistron:
+        label: target_kinase
+        expression: high
+        # The schema requires resolving proteins by ID and source; the compiler will automatically 
+        # re-optimize the sequence for E. coli expression, overriding mammalian optimization.
+        chain:
+          - gene:
+              id: HumanKinase
+              source: uniprot
+          - tag: 6xHis  # C-terminal His-tag
+    - terminator: T7term

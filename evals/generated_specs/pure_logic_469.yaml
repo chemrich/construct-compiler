@@ -1,0 +1,40 @@
+construct:
+  name: "sequential_3stage_logic_circuit"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+  cassette:
+    - promoter: araBAD  # Stage 1: Input A (Arabinose) activates R1 expression
+    - cistron:
+        label: R1_stage
+        expression: high
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: rrnB_T1
+
+    - spacer: 40  # Physical separation for independent transcriptional units
+
+    - promoter: J23100  # Stage 2: Represents R1-mediated activation after 6h delay
+    - cistron:
+        label: R2_stage
+        expression: medium
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+
+    - spacer: 40
+
+    - promoter: J23106  # Stage 3: Represents R2-mediated activation after 12h total delay
+    - cistron:
+        label: R3_stage
+        expression: low
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1
+# Note: The precise 6-hour timing and "turn-off" logic (e.g., via SsrA degradation or antisense RNA) 
+# are implemented through the regulatory network logic; this construct provides the 
+# physical sequence for the reporters and their respective transcriptional units.

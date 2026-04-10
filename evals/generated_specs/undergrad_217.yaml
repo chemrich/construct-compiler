@@ -1,0 +1,21 @@
+construct:
+  name: "temperature_inducible_tempguy_reporter"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: pL_lambda  # Standard temperature-sensitive promoter in E. coli (heat induction)
+    - cistron:
+        label: target
+        gene:
+          id: TempGuy
+    - spacer: 30
+    - cistron:
+        label: reporter
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

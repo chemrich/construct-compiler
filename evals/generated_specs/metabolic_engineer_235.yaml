@@ -1,0 +1,86 @@
+construct:
+  name: "biopolymer_synthesis_scaffold_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: scaffold_enzyme
+        expression: high
+        chain:
+          - gene:
+              id: ScaffoldA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: scaffold_domain
+    - spacer: 30
+    - cistron:
+        label: polymerase_b
+        expression: high
+        fused: false
+        chain:
+          - tag: scaffold_binding_domain
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: PolymeraseB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ligator_c
+        expression: high
+        fused: false
+        chain:
+          - tag: scaffold_binding_domain
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: LigatorC
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: modulator_d
+        expression: high
+        fused: false
+        chain:
+          - tag: scaffold_binding_domain
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: ModulatorD
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: crosslinker_e
+        expression: high
+        fused: false
+        chain:
+          - tag: scaffold_binding_domain
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: CrosslinkerE
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: finisher_f
+        expression: high
+        fused: false
+        chain:
+          - tag: scaffold_binding_domain
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: FinisherF
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,50 @@
+construct:
+  name: "lux_quorum_sensing_synthase_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23106  # Constitutive low promoter for Lux regulators
+    - cistron:
+        label: luxR
+        expression: low
+        fused: false
+        gene:
+          id: P12746
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: luxI
+        expression: low
+        fused: false
+        gene:
+          id: P12747
+          source: uniprot
+    - spacer: 30
+    - promoter: Plux  # Density-dependent promoter activated by LuxR-AHL complex
+    - cistron:
+        label: synthase_1
+        expression: high
+        fused: false
+        gene:
+          id: Synthase1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: synthase_2
+        expression: high
+        fused: false
+        gene:
+          id: Synthase2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: synthase_3
+        expression: high
+        fused: false
+        gene:
+          id: Synthase3
+          source: uniprot
+    - terminator: rrnB_T1

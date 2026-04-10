@@ -1,16 +1,14 @@
-```yaml
 construct:
-  name: "mammalian_high_expression_construct"
-  host: HEK293 # Lentiviral vectors are typically used in mammalian cells.
+  name: "lentiviral_mEGFP_WPRE"
+  host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV" # A common mammalian expression vector.
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: CMV # Default mammalian promoter, strong expression.
+    - promoter: CMV
     - cistron:
-        label: target_gene
-        expression: high # Aims for high expression, similar to WPRE's function.
+        label: reporter
+        expression: high
         gene:
-          id: mEGFP # A common reporter gene for demonstration.
+          id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015 # Note: Woodchuck Posttranscriptional Regulatory Element (WPRE) is a post-transcriptional element not directly supported by a field in this schema. This construct is designed for high expression in mammalian cells, aiming to achieve the goal of "better expression."
-```
+    - terminator: WPRE_bGH_pA  # WPRE is placed before the polyadenylation signal for enhanced mRNA stability and expression

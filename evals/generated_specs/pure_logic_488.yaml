@@ -1,0 +1,36 @@
+construct:
+  name: "yeast_3pulse_event_counter"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2-micron
+    source: addgene
+  cassette:
+    - promoter: CUP1  # Activated by transient 'SignalP' pulses
+    - cistron:
+        label: pulse_1_green
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 40  # Spacer provides modular interface for recombinase logic integration
+    - cistron:
+        label: pulse_2_blue
+        expression: medium
+        fused: false
+        chain:
+          - tag: P2A  # 2A peptide for polycistronic processing in yeast
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - spacer: 40
+    - cistron:
+        label: pulse_3_red
+        expression: low
+        fused: false
+        chain:
+          - tag: P2A
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: ADH1

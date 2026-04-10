@@ -1,0 +1,58 @@
+construct:
+  name: "tri_stable_repressilator_timer"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: PLtetO-1  # Repressed by TetR (State 3); can be triggered by aTc pulse
+    - cistron:
+        label: state_1_lacI
+        expression: medium
+        chain:
+          - gene:
+              id: P03023 # LacI repressor
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+          - tag: SsrA # C-terminal degradation tag for rapid turnover/cycling
+    - terminator: BBa_B0015
+
+    - promoter: Plac_ara-1 # Repressed by LacI (State 1)
+    - cistron:
+        label: state_2_cI
+        expression: medium
+        chain:
+          - gene:
+              id: P03034 # Lambda cI repressor
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: SsrA
+    - terminator: BBa_B0015
+
+    - promoter: PLlambda # Repressed by Lambda cI (State 2)
+    - cistron:
+        label: state_3_tetR
+        expression: medium
+        chain:
+          - gene:
+              id: P04483 # TetR repressor
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mScarlet
+              source: fpbase
+          - tag: SsrA
+    - terminator: rrnB_T1

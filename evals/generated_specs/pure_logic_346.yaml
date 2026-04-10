@@ -1,0 +1,30 @@
+construct:
+  name: "yeast_nor_gate_metabolite_production"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+  cassette:
+    - promoter: "pADH2"
+    - cistron:
+        label: "sensor_gas_x"
+        expression: "low"
+        gene:
+          id: "P04483"
+          source: "uniprot"
+    - terminator: "ADH1_term"
+    - promoter: "pGAL1"
+    - cistron:
+        label: "sensor_nutrient_depletion"
+        expression: "low"
+        gene:
+          id: "P03023"
+          source: "uniprot"
+    - terminator: "TEF1_term"
+    - promoter: "pTEF1_TetO_LacO"  # Repressed by TetR (Sensor X) and LacI (Sensor Y) to form a NOR gate
+    - cistron:
+        label: "stilbene_synthase"
+        expression: "high"
+        gene:
+          id: "Q0E4H4"
+          source: "uniprot"
+    - terminator: "CYC1_term"

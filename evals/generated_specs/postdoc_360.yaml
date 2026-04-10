@@ -1,0 +1,16 @@
+construct:
+  name: "secreted_mammalian_cytokine_ecoli"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-22b(+)" # pET-22b(+) is used for its pelB leader sequence to facilitate periplasmic secretion in E. coli
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: cytokine_secretion
+        expression: medium
+        chain:
+          - tag: pelB # Using pelB signal peptide to direct protein to the E. coli periplasm, mimicking mammalian secretion
+          - gene:
+              id: IL2_HUMAN
+              source: uniprot
+    - terminator: T7term

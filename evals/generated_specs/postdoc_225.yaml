@@ -1,0 +1,29 @@
+construct:
+  name: "yeast_tet_on_human_tf_system"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: TRE
+    - cistron:
+        label: human_tf
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P53_HUMAN
+              source: uniprot
+    - spacer: 100
+    - promoter: TEF1
+    - cistron:
+        label: rtTA_activator
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: RTTA
+              source: uniprot
+          - tag: V5
+    - terminator: CYC1_term

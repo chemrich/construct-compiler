@@ -1,0 +1,27 @@
+construct:
+  name: "soluble_therapeutic_targeted_enzyme_fusion"
+  host: e_coli
+  backbone:
+    resistance: none
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: targeted_enzyme_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: P01133
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - cleavage_site: Enterokinase
+          - gene:
+              id: P00805
+              source: uniprot
+    - terminator: rrnB_T1

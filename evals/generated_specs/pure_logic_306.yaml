@@ -1,0 +1,32 @@
+construct:
+  name: "genetic_amplification_cascade"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: lacUV5  # Responds to Input_G (IPTG)
+    - cistron:
+        label: Activator_A
+        expression: medium
+        gene:
+          id: P00552 # T7 RNA Polymerase
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 30
+    - promoter: T7     # Activated by A; provides first level of amplification
+    - cistron:
+        label: Activator_B
+        expression: high
+        gene:
+          id: P0A9E0 # araC transcriptional regulator
+          source: uniprot
+    - terminator: T7term
+    - spacer: 30
+    - promoter: araBAD # Activated by B (AraC); provides second level of amplification
+    - cistron:
+        label: Output_R
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

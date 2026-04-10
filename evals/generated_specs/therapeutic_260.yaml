@@ -1,0 +1,25 @@
+construct:
+  name: "Therapeutic_HGF_Production"
+  host: e_coli_bl21
+  backbone:
+    # Kanamycin selected as the schema requires a resistance gene; for clinical production, an auxotrophic marker would be substituted.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    # tac promoter used instead of T7 to ensure the construct contains no viral elements.
+    - promoter: tac
+    - cistron:
+        label: hgf_analog
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - tag: 6xHis
+          - cleavage_site: Enterokinase # Enterokinase (bovine) used instead of TEV (viral) to satisfy the 'no viral elements' requirement.
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator used instead of T7term to avoid viral elements.

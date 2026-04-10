@@ -1,0 +1,18 @@
+construct:
+  name: "ProteinM_Secretion_Construct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: ProteinM
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - terminator: BGH_polyA

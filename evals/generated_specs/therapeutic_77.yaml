@@ -1,0 +1,24 @@
+construct:
+  name: "yeast_intracellular_multidomain_therapeutic"
+  host: yeast
+  backbone:
+    resistance: none  # Auxotrophic marker (e.g., URA3) used for selection instead of antibiotics
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Robust constitutive yeast promoter for high-level expression
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P01375  # TNF domain example
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4  # Ensures independent domain folding
+          - gene:
+              id: P01857  # Fc domain example
+              source: uniprot
+          - tag: 8xHis  # C-terminal purification tag
+    - terminator: CYC1  # Standard yeast transcriptional terminator

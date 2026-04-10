@@ -1,0 +1,30 @@
+construct:
+  name: "multi_level_threshold_detector"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: low_threshold_gfp
+        expression: low
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: medium_threshold_rfp
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: high_threshold_bfp
+        expression: high
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: rrnB_T1

@@ -1,0 +1,45 @@
+construct:
+  name: "blue_repressilator_oscillator"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: pL_lambda  # Repressed by cI protein; substituted standard promoter for repressilator logic
+    - cistron:
+        label: lacI_repressor
+        expression: high
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+
+    - promoter: tac  # Repressed by lacI protein; standard IPTG-inducible/LacI-repressible promoter
+    - cistron:
+        label: tetR_repressor
+        expression: high
+        fused: false
+        gene:
+          id: P04483
+          source: uniprot
+
+    - promoter: pTet  # Repressed by tetR protein; substituted standard promoter for repressilator logic
+    - cistron:
+        label: cI_repressor
+        expression: high
+        fused: false
+        gene:
+          id: P03034
+          source: uniprot
+
+    - spacer: 30
+    - cistron:
+        label: blue_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+
+    - terminator: rrnB_T1

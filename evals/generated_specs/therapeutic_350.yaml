@@ -1,0 +1,21 @@
+construct:
+  name: yeast_surface_display_therapeutic_peptide
+  host: yeast
+  backbone:
+    catalog_vector: "pYD1" # Uses TRP1 auxotrophic marker for selection in yeast, satisfying the requirement for no antibiotic resistance
+  cassette:
+    - promoter: GAL1 # Strong yeast promoter typically used for surface display in the pYD1 system
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: AGA2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: GLP1
+              source: uniprot # Example therapeutic peptide (Glucagon-like peptide 1)
+    - terminator: CYC1

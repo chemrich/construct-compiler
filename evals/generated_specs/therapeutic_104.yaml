@@ -1,0 +1,23 @@
+construct:
+  name: "inducible_cytotoxic_therapeutic_nonviral"
+  host: HEK293
+  backbone:
+    resistance: none  # Avoidance of antibiotic resistance for clinical safety
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Constitutive non-viral promoter for the regulator
+    - cistron:
+        label: tet_on_regulator
+        gene:
+          id: P04483  # TetR-based transactivator (rtTA)
+          source: uniprot
+    - terminator: bGH_pA
+    - promoter: TRE3G  # Inducible promoter (Tetracycline-Responsive Element) for tight regulation
+    - cistron:
+        label: therapeutic_cytotoxin
+        expression: high
+        gene:
+          id: P50591  # TNFSF10 (TRAIL), a cytotoxic therapeutic protein
+          source: uniprot
+    - terminator: bGH_pA

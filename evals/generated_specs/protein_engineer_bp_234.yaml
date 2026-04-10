@@ -1,0 +1,22 @@
+construct:
+  name: "Pichia_AOX1_GPCR_eGFP_Fusion"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: gpcr_fusion
+        expression: high
+        chain:
+          - tag: 10xHis
+          - cleavage_site: TEV
+          - gene:
+              id: GPCR
+              source: uniprot
+          - gene:
+              id: eGFP
+              source: fpbase
+    - terminator: AOX1_TT

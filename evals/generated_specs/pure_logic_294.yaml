@@ -1,0 +1,47 @@
+construct:
+  name: "cancer_specific_dual_drug_and_gate"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  cassette:
+    - promoter: hTERT  # Cancer-specific promoter driving the first part of the split-TF
+    - cistron:
+        label: tf_dbd_input_1
+        expression: medium
+        chain:
+          - gene:
+              id: Gal4_DBD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: FKBP12  # Sensor domain for Input_Drug1
+              source: uniprot
+    - terminator: bGH_pA
+
+    - promoter: CMV    # Constitutive promoter driving the second part of the split-TF
+    - cistron:
+        label: tf_ad_input_2
+        expression: medium
+        chain:
+          - gene:
+              id: VP64_AD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: FRB     # Sensor domain for Input_Drug2
+              source: uniprot
+    - terminator: bGH_pA
+
+    - promoter: UAS    # Gal4-responsive promoter, active only when both TF halves dimerize
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        gene:
+          id: THERAPEUTIC_P
+          source: uniprot
+    - terminator: bGH_pA

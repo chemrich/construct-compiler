@@ -1,0 +1,19 @@
+construct:
+  name: "pBR322_lac_6xHis_FactorXa_sfGFP"
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lacUV5  # lacUV5 is used as the standard IPTG-inducible version of the lac promoter
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: sfGFP  # sfGFP included as a standard reporter gene to satisfy cistron requirements
+              source: fpbase
+    - terminator: rrnB_T1

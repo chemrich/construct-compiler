@@ -1,0 +1,20 @@
+construct:
+  name: "Pichia_pastoris_AOX1_scFv_secretion"
+  host: yeast
+  backbone:
+    resistance: kanamycin  # Defaulted to kanamycin per rule 9; Zeocin is also common for Pichia
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: "scFv_secretion_cistron"
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: scFv
+              source: uniprot
+    - terminator: AOX1_TT

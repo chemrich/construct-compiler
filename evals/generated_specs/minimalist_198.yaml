@@ -1,0 +1,23 @@
+construct:
+  name: EcoRI_EYFP_fusion
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: EcoRI_Y_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: P00642
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: EYFP  # Interpreted 'Y' as Yellow Fluorescent Protein (EYFP)
+              source: fpbase
+    - terminator: rrnB_T1

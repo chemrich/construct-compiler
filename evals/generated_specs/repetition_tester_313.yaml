@@ -1,0 +1,27 @@
+construct:
+  name: "stability_optimized_large_vector"
+  host: e_coli
+  backbone:
+    # Note: Dual origins (e.g., pBR322 and p15A) are often used for stability in large plasmids.
+    # The current schema allows for one 'ori' definition; pBR322 is selected for its 
+    # superior structural stability over pUC-derived high-copy origins.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_gene
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 100  # Large unique non-coding spacer to serve as a genetic fingerprint and prevent recombination
+    - cistron:
+        label: monitoring_reporter
+        expression: low
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

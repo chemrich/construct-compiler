@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_surface_antigen_display"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - tag: α_mating_factor_signal # Added to ensure secretion for surface display in yeast
+          - gene:
+              id: viral_antigen
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: GPI_anchor # Mammalian GPI anchor sequence requested for C-terminus
+    - terminator: CYC1_term

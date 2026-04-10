@@ -1,0 +1,26 @@
+construct:
+  name: "pulse_generator_iffl_lva"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Constant arabinose input triggers the circuit
+    - cistron:
+        label: repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 45
+    - cistron:
+        label: pulsed_output
+        expression: high
+        fused: false  # Independent translation with its own RBS
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: LVA  # C-terminal SsrA-based degradation tag for rapid turnover
+    - terminator: rrnB_T1

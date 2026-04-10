@@ -1,0 +1,17 @@
+construct:
+  name: "periplasmic_protein_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: pelB # Mammalian secretion signals do not function in E. coli; substituted with bacterial pelB for periplasmic targeting.
+          - gene:
+              id: target_protein
+              source: uniprot
+          - tag: 6xHis
+    - terminator: T7term

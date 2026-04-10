@@ -1,0 +1,24 @@
+construct:
+  name: ultra_high_yield_expression_system
+  host: e_coli_bl21_de3
+  backbone:
+    # High-copy pUC origin and kanamycin selection maximize plasmid yield and stability for high protein production
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: T7term

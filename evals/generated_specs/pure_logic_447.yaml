@@ -1,0 +1,29 @@
+construct:
+  name: "mercury_sensor_actuator_system"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: merR_regulator
+        expression: medium
+        gene:
+          id: P06687
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: PmerT
+    - cistron:
+        label: merA_actuator
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P06683
+              source: uniprot
+    - terminator: T7term

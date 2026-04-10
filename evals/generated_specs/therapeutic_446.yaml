@@ -1,0 +1,20 @@
+construct:
+  name: "human_gh1_solubility_fusion_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: none # Requirement: Exclusion of antibiotic resistance genes; assumes alternative selection (e.g., auxotrophy).
+    ori: pBR322      # Bacterial origin; contains no viral sequences.
+    source: custom
+  cassette:
+    - promoter: tac # High-level non-viral hybrid promoter for E. coli.
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP # Effective bacterial solubility tag (MalE).
+          - cleavage_site: Factor_Xa # Site-specific cleavage using a mammalian-derived (non-viral) protease.
+          - gene:
+              id: P01241 # Human Somatotropin (hGH), a therapeutic protein known to aggregate in E. coli.
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator.

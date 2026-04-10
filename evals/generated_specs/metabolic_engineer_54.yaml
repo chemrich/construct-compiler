@@ -1,0 +1,45 @@
+construct:
+  name: "biodegradable_plastic_synthesis_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Glucose-repressible promoter (repressed by glucose via catabolite repression)
+    - cistron:
+        label: enzyme_A
+        expression: medium
+        gene:
+          id: phaA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_B
+        expression: medium
+        fused: false
+        gene:
+          id: phaB1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_C
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: phaC1
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: T7
+    - spacer: 30
+    - cistron:
+        label: enzyme_D
+        expression: medium
+        fused: false
+        gene:
+          id: phaJ
+          source: uniprot
+    - terminator: rrnB_T1

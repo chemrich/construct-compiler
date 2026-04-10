@@ -1,0 +1,40 @@
+construct:
+  name: "balanced_four_enzyme_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: E_A_E_B_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: E_A
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: E_B
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E_C
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: E_C
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E_D
+        expression: medium
+        fused: false
+        gene:
+          id: E_D
+          source: uniprot
+    - terminator: rrnB_T1

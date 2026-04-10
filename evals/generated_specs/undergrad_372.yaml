@@ -1,0 +1,17 @@
+construct:
+  name: membrane_protein_solubility_optimized
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: lacUV5  # Selected lacUV5 as a weaker promoter than T7 to reduce inclusion body formation for hydrophobic proteins
+    - cistron:
+        label: target
+        expression: low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MembraneThing
+              source: uniprot
+    - terminator: BBa_B0015

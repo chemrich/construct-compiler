@@ -1,0 +1,24 @@
+construct:
+  name: "inducible_mammalian_crispr_editor"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G # Tet-inducible promoter requiring Doxycycline/rtTA for Cas9 and reporter expression
+    - cistron:
+        label: cas9_effector
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: Q99ZW2
+              source: uniprot
+    - spacer: 30 # Spacer representing a P2A self-cleaving peptide for independent translation in mammalian cells
+    - cistron:
+        label: activation_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: SV40_polyA

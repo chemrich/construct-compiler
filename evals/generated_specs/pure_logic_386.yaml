@@ -1,0 +1,40 @@
+construct:
+  name: "synthetic_repressilator_oscillator"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: PLtetO
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: PLlacO
+    - cistron:
+        label: lambda_cI_repressor
+        expression: medium
+        gene:
+          id: P03034
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: PR
+    - cistron:
+        label: tetR_repressor
+        expression: medium
+        gene:
+          id: P04483
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: mEGFP_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

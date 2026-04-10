@@ -1,0 +1,19 @@
+construct:
+  name: "chloroplast_targeted_diversified_mEGFP"
+  host: Arabidopsis_thaliana  # Specific plant host for optimized codon usage
+  backbone:
+    catalog_vector: "pCAMBIA1300"
+  cassette:
+    - promoter: 35S  # Standard CaMV 35S promoter for high-level plant expression
+    - cistron:
+        label: target
+        expression: high  # codon-optimized for plants; diversification and GC variation requested
+        chain:
+          - tag: RBCS_CTS  # Rubisco small subunit chloroplast transit peptide for targeting
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: NOS_term  # Nopaline synthase terminator for plant expression systems

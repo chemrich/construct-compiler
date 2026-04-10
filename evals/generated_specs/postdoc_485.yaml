@@ -1,0 +1,16 @@
+construct:
+  name: "high_expression_gfp_reporter"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac # CMV is mammalian; T7lac substituted for high-level expression in E. coli
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term

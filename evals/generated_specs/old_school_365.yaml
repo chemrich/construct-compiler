@@ -1,0 +1,39 @@
+construct:
+  name: "factorC_dual_selection_CHO"
+  host: CHO
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: SV40
+    - cistron:
+        label: factorC_unit
+        expression: high
+        chain:
+          - gene:
+              id: P28175
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: V5
+    - terminator: bGH_polyA
+    - spacer: 50
+    - promoter: SV40
+    - cistron:
+        label: hygromycin_selection
+        expression: medium
+        gene:
+          id: P00557
+          source: uniprot
+    - terminator: SV40_polyA
+    - spacer: 50
+    - promoter: SV40
+    - cistron:
+        label: g418_selection
+        expression: medium
+        gene:
+          id: P00552
+          source: uniprot
+    - terminator: SV40_polyA

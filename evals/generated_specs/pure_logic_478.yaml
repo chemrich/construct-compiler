@@ -1,0 +1,38 @@
+construct:
+  name: "precision_time_delay_pulse_generator"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Inducible by L-arabinose (Input S)
+    - cistron:
+        label: delay_timer_activator
+        expression: low  # Slow accumulation to achieve 4-6h delay
+        chain:
+          - solubility_tag: MBP  # Tag increases translation/folding time to sharpen delay
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: luxR
+              source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac  # Proxy for pLux/pTet hybrid promoter for logic implementation
+    - cistron:
+        label: target_O
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - spacer: 45
+    - cistron:
+        label: shutoff_repressor
+        expression: medium  # Kinetic delay in repressor accumulation allows 8h pulse duration
+        fused: false
+        gene:
+          id: tetR
+          source: uniprot
+    - terminator: T7term

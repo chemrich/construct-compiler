@@ -1,0 +1,18 @@
+construct:
+  name: "human_gene_MBP_6xHis_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: lambda_PL
+    - cistron:
+        label: fusion_protein
+        expression: high  # High expression corresponds to the requested strong Shine-Dalgarno site
+        chain:
+          - gene:
+              id: human_gene_target
+              source: uniprot
+          - solubility_tag: MBP
+          - tag: 6xHis
+    - terminator: T7term

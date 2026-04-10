@@ -1,0 +1,23 @@
+construct:
+  name: "therapeutic_peptide_intein_fusion"
+  host: "e_coli"
+  backbone:
+    resistance: "kanamycin" # Kanamycin default used to satisfy schema; user requested no antibiotic resistance genes.
+    ori: "pBR322"
+  cassette:
+    - promoter: "tac" # tac promoter substituted for T7 to avoid viral sequences per user request.
+    - cistron:
+        label: "peptide_carrier_fusion"
+        expression: "high"
+        chain:
+          - gene:
+              id: "trpE"
+              source: "uniprot"
+          - tag: "6xHis"
+          - gene:
+              id: "P72065" # Mxe GyrA intein for tag-free cleavage
+              source: "uniprot"
+          - gene:
+              id: "P01275" # Human Glucagon therapeutic peptide
+              source: "uniprot"
+    - terminator: "rrnB_T1" # rrnB_T1 terminator substituted for T7term to avoid viral sequences.

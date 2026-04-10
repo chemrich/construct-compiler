@@ -1,0 +1,18 @@
+construct:
+  name: "solubility_enhanced_expression_construct"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: GOI
+              source: uniprot
+    - terminator: T7term

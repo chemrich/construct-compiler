@@ -1,0 +1,28 @@
+construct:
+  name: "tightly_inducible_two_component_biosensor"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Defaulted per Rule 9; used for plasmid maintenance despite 'no resistance' request
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD # Tightly inducible bacterial promoter (non-viral)
+    - cistron:
+        label: membrane_receptor
+        expression: high
+        chain:
+          - tag: Lpp_OmpA # N-terminal membrane anchor
+          - gene:
+              id: EnvZ
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_enzyme
+        expression: high
+        fused: false # Independent translation with its own RBS
+        chain:
+          - gene:
+              id: LacZ
+              source: uniprot
+          - tag: 6xHis # C-terminal purification tag
+    - terminator: rrnB_T1 # Bacterial terminator (non-viral)

@@ -1,0 +1,19 @@
+construct:
+  name: "human_therapeutic_enzyme_high_yield"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Kanamycin used as substitution; compiler requires selection marker. Use auxotrophic complementation (e.g., infA) for final non-antibiotic design.
+    ori: pUC # High copy number origin for high yield
+    source: custom
+  cassette:
+    - promoter: tac # Potent bacterial promoter; substitution for T7/T7lac to avoid viral sequences.
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa # Non-viral protease recognition site; substitution for viral TEV/3C.
+          - gene:
+              id: P00918 # Human Carbonic Anhydrase II (29.1 kDa), representative therapeutic enzyme.
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator; avoids viral T7 terminator sequences.

@@ -1,0 +1,16 @@
+construct:
+  name: "NAND_temp_ph_resistance_gate"
+  host: e_coli_bl21
+  backbone:
+    resistance: chloramphenicol
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: pNAND_TlpA_Asr  # NAND logic: Inhibits expression only when High Temperature AND Low pH are detected
+    - cistron:
+        label: resistance_marker
+        expression: high
+        gene:
+          id: P62593  # Beta-lactamase (Ampicillin resistance)
+          source: uniprot
+    - terminator: rrnB_T1

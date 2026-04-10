@@ -1,0 +1,30 @@
+construct:
+  name: "protein_l_isoform_sequential_ires"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_l_isoform_1
+        expression: high
+        gene:
+          id: ProteinL_L1
+          source: uniprot
+    - spacer: 584 # IRES_EMCV used to initiate translation of the second cistron independently
+    - cistron:
+        label: protein_l_isoform_2
+        expression: medium
+        fused: false
+        gene:
+          id: ProteinL_L2
+          source: uniprot
+    - spacer: 452 # IRES_EV71 used to initiate translation of the third cistron (non-homologous to EMCV)
+    - cistron:
+        label: protein_l_isoform_3
+        expression: low
+        fused: false
+        gene:
+          id: ProteinL_L3
+          source: uniprot
+    - terminator: hGH_pA

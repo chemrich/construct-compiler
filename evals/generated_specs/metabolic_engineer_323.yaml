@@ -1,0 +1,52 @@
+construct:
+  name: "KsaABCD_purification_operon"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac  # Selected for consistent, moderate expression levels in E. coli
+    - cistron:
+        label: KsaA
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: KsaA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: KsaB
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: KsaB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: KsaC
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: KsaC
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: KsaD
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: KsaD
+              source: uniprot
+    - terminator: rrnB_T1

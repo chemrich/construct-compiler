@@ -1,45 +1,28 @@
-```yaml
 construct:
-  name: "his_tev_mbp_cyclind1_cdk4"
-  host: e_coli
-
+  name: "CyclinD1_CDK4_Coexpression"
+  host: e_coli_bl21
   backbone:
     resistance: kanamycin
     ori: pBR322
-
+    source: addgene
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: cyclin_d1
+        label: target_CyclinD1
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - solubility_tag: MBP
           - gene:
-              id: CyclinD1
-
+              id: P24385
+              source: uniprot
     - spacer: 30
-
     - cistron:
-        label: cdk4
+        label: target_CDK4
         expression: medium
         fused: false
         gene:
-          id: CDK4
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+          id: P11802
+          source: uniprot
+    - terminator: T7term

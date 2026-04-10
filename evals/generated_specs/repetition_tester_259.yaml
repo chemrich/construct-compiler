@@ -1,0 +1,28 @@
+construct:
+  name: "gateway_entry_p15A_spectinomycin_divergent"
+  host: e_coli
+  backbone:
+    resistance: spectinomycin  # Selected for uniqueness and to avoid cross-reactivity with common Amp/Kan markers
+    ori: CloDF13               # Chosen for high divergence from common pUC/pBR322 origins
+    source: addgene
+  cassette:
+    - promoter: lacUV5         # Strong but distinct from standard T7 or tac promoters
+    - cistron:
+        label: gateway_negative_selection
+        expression: medium
+        chain:
+          - tag: attL1         # Recombination site variant 1
+          - gene:
+              id: ccdB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: gateway_positive_selection
+        expression: medium
+        fused: false           # Independent translation via separate RBS
+        chain:
+          - gene:
+              id: cat          # Chloramphenicol acetyltransferase for cassette maintenance
+              source: uniprot
+          - tag: attL2         # Recombination site variant 2 (divergent from attL1)
+    - terminator: rrnB_T1      # Robust terminator for distinct expression boundaries

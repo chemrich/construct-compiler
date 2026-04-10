@@ -1,0 +1,40 @@
+construct:
+  name: "bistable_toggle_switch"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: repressor_tetR
+        expression: medium
+        gene:
+          id: tetR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: output_A
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: PtetO  # Repressed by TetR, induced by aTc
+    - cistron:
+        label: repressor_lacI
+        expression: medium
+        gene:
+          id: lacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: output_B
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

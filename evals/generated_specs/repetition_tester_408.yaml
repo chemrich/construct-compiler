@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_non_repetitive_2A_skip_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: skip_polypeptide
+        expression: high
+        chain:
+          - gene:
+              id: Protein_A
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - cleavage_site: P2A
+          - linker:
+              type: short_GS
+          - gene:
+              id: Protein_B
+              source: uniprot
+    - terminator: bGH_polyA

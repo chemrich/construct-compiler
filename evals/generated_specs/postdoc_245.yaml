@@ -1,0 +1,19 @@
+construct:
+  name: "human_gpcr_yeast_membrane_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1 # Standard high-level inducible promoter for yeast
+    - cistron:
+        label: gpcr_target
+        expression: high
+        chain:
+          - tag: Myristoylation
+          - gene:
+              id: ADRB2_HUMAN
+              source: uniprot
+          - tag: FLAG
+    - terminator: CYC1 # Standard yeast terminator

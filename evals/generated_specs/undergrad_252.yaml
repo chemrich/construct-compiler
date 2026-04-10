@@ -1,0 +1,17 @@
+construct:
+  name: "sticky_protein_mbp_solubility_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: mbp_sticky_protein
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: StickyProtein
+              source: uniprot
+    - terminator: T7term

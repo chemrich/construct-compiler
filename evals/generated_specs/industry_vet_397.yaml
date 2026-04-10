@@ -1,0 +1,23 @@
+construct:
+  name: "nusA_solubility_fusion_capsid"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_capsid_protein
+        expression: high
+        chain:
+          - solubility_tag: NusA
+          - cleavage_site: TEV
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P03135 # Hepatitis B virus core antigen (model capsid protein)
+              source: uniprot
+    - terminator: T7term

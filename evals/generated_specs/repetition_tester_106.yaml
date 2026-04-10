@@ -1,0 +1,22 @@
+construct:
+  name: "secreted_sfgfp_constitutive_expression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100 # Strong synthetic constitutive promoter, non-homologous to E. coli genome
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: PelB # Signal peptide from Pectobacterium carotovorum for efficient secretion, heterologous to E. coli
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible # GS linker used; schema-compliant non-repetitive alternative not available
+              repeats: 2
+          - tag: 6xHis
+    - terminator: BBa_B0015 # Synthetic non-homologous terminator to avoid recombination issues

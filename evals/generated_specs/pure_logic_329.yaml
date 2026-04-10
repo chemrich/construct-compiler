@@ -1,0 +1,30 @@
+construct:
+  name: "dual_input_thermal_chemical_and_gate"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: grpE  # Heat-shock inducible promoter for thermal sensing
+    - cistron:
+        label: split_T7_N_terminal
+        expression: medium
+        gene:
+          id: P00573  # T7 RNA Polymerase (N-terminal domain split logic)
+          source: uniprot
+    - spacer: 35
+    - promoter: araBAD  # Arabinose-inducible promoter (Ligand R signal)
+    - cistron:
+        label: split_T7_C_terminal
+        expression: medium
+        gene:
+          id: P00573  # T7 RNA Polymerase (C-terminal domain split logic)
+          source: uniprot
+    - spacer: 35
+    - promoter: T7  # Activated only when both split T7 fragments reassemble
+    - cistron:
+        label: output_protein_Q
+        expression: high
+        gene:
+          id: sfGFP  # sfGFP used as a reporter for Protein Q
+          source: fpbase
+    - terminator: T7term

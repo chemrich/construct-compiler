@@ -1,0 +1,36 @@
+construct:
+  name: "Multidomain_Diversified_Binding_Scaffold"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: scaffold_fusion
+        expression: high
+        chain:
+          - tag: Twin-Strep  # Sequence-diversified purification tag relative to standard His-tags
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P12931  # BD1: Src SH3 domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3  # Unique linker 1
+          - gene:
+              id: P31016  # BD2: Syntrophin PDZ domain
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2  # Unique linker 2 (structural variation)
+          - gene:
+              id: P46937  # BD3: YAP1 WW domain
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2  # Unique linker 3 (length variation)
+          - gene:
+              id: P60468  # BD4: VASP EVH1 domain
+              source: uniprot
+    - terminator: T7term # Standard for pET-based expression in E. coli BL21(DE3)

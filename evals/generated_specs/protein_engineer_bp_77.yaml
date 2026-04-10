@@ -1,0 +1,23 @@
+construct:
+  name: "bacillus_intracellular_antigen_expression"
+  host: bacillus
+
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+
+  cassette:
+    - promoter: Pgrac
+
+    - cistron:
+        label: antigen_production
+        expression: high
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: P01012
+              source: uniprot
+          - tag: 6xHis
+
+    - terminator: BBa_B0015

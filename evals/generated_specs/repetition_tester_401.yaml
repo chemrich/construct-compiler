@@ -1,0 +1,28 @@
+construct:
+  name: "tandem_triple_fp_fusion_unique_dna"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: triple_reporter_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+        # The compiler will apply unique synonymous codon optimization to each domain to maximize sequence divergence and prevent recombination/deletion.
+    - terminator: hGH_polyA

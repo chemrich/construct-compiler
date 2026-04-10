@@ -1,0 +1,44 @@
+construct:
+  name: "gradient_expression_toxic_pathway_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: Path1_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Path1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: Path2_enzyme
+        expression: medium
+        fused: false
+        gene:
+          id: Path2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: Path3_enzyme
+        expression: low
+        fused: false
+        gene:
+          id: Path3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: Path4_enzyme
+        expression: very_low
+        fused: false
+        chain:
+          - gene:
+              id: Path4
+              source: uniprot
+          - tag: FLAG
+    - terminator: rrnB_T1

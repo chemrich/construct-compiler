@@ -1,0 +1,26 @@
+construct:
+  name: "positive_feedback_signal_amplifier"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: pLuxR  # LuxR-responsive promoter (e.g., BBa_R0062) to create positive feedback loop
+    - cistron:
+        label: activator
+        expression: medium
+        gene:
+          id: LuxR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: growth_factor_output
+        expression: high
+        fused: false  # Separate RBS for the second protein in the bicistronic transcript
+        chain:
+          - tag: PelB  # N-terminal secretion signal for periplasmic export in E. coli
+          - gene:
+              id: IGF1
+              source: uniprot
+    - terminator: rrnB_T1

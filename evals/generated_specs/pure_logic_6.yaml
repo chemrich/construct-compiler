@@ -1,0 +1,26 @@
+construct:
+  name: "negative_feedback_autoregulation_loop"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lacUV5
+    - cistron:
+        label: lac_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P03023
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: homeostasis_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: rrnB_T1

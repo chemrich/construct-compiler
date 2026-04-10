@@ -1,0 +1,36 @@
+construct:
+  name: "four_enzyme_cleavable_operon"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: E_start
+        expression: high
+        fused: false
+        gene:
+          id: E_start
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E_mid1
+        expression: high
+        fused: false
+        gene:
+          id: E_mid1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: E_mid2_E_end_fusion
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: E_mid2
+              source: uniprot
+          - cleavage_site: TEV
+          - gene:
+              id: E_end
+              source: uniprot
+    - terminator: T7term

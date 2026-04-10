@@ -1,0 +1,21 @@
+construct:
+  name: "ProteinY_secretion_E_coli"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: secreted_protein_y
+        expression: high
+        chain:
+          - tag: PelB
+          - gene:
+              id: ProteinY
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+    - terminator: T7term

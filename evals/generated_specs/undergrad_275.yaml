@@ -1,0 +1,22 @@
+construct:
+  name: "mammalian_polycistronic_proteinA_proteinB"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: ProteinA
+        expression: high
+        gene:
+          id: ProteinA
+          source: uniprot
+    - spacer: 580  # Spacer representing the IRES sequence for internal ribosome entry
+    - cistron:
+        label: ProteinB
+        expression: high
+        fused: false  # Indicates independent translation from the same transcript
+        gene:
+          id: ProteinB
+          source: uniprot
+    - terminator: bGH_PA

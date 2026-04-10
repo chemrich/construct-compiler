@@ -1,0 +1,22 @@
+construct:
+  name: "nls_gfp_bacterial_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - tag: NLS  # SV40 NLS requested; note: E. coli lacks a nucleus, so this will not target a specific compartment.
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P0A705
+              source: uniprot
+    - terminator: T7term

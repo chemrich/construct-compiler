@@ -1,0 +1,23 @@
+construct:
+  name: "metabolite_x_sensor_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lacUV5
+    - cistron:
+        label: sensor
+        expression: low
+        chain:
+          - gene:
+              id: binding_domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

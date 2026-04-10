@@ -1,0 +1,25 @@
+construct:
+  name: "pichia_secreted_mcherry_scfv"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: secreted_fusion_reporter
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: scFv
+              source: uniprot
+          - tag: 6xHis
+    - terminator: AOX1_TT

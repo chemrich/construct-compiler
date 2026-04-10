@@ -1,0 +1,56 @@
+construct:
+  name: "rhamnose_inducible_6_enzyme_cascade"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: rhaBAD # L-Rhamnose inducible promoter for graded, dose-dependent control
+    - cistron:
+        label: enzyme_1
+        expression: high
+        gene:
+          id: enzyme_1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: high
+        fused: false
+        gene:
+          id: enzyme_2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_3
+        expression: medium
+        fused: false
+        gene:
+          id: enzyme_3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_4
+        expression: medium
+        fused: false
+        gene:
+          id: enzyme_4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_5
+        expression: low
+        fused: false
+        gene:
+          id: enzyme_5
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_6
+        expression: very_low
+        fused: false
+        gene:
+          id: enzyme_6
+          source: uniprot
+    - terminator: rrnB_T1

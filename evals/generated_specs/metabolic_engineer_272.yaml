@@ -1,0 +1,57 @@
+construct:
+  name: "cellulose_degradation_operon_b_subtilis"
+  host: e_coli  # B. subtilis host not in standard list, using e_coli with Bacillus-specific parts
+  backbone:
+    resistance: chloramphenicol
+    ori: pBR322
+  cassette:
+    - promoter: P_veg  # Strong constitutive promoter for Bacillus subtilis
+    - cistron:
+        label: endoglucanase
+        expression: high
+        chain:
+          - tag: Signal_Peptide_AmyE
+          - gene:
+              id: P06210
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: exoglucanase
+        expression: high
+        fused: false
+        chain:
+          - tag: Signal_Peptide_AmyE
+          - gene:
+              id: P18126
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: beta_glucosidase
+        expression: high
+        fused: false
+        chain:
+          - tag: Signal_Peptide_AmyE
+          - gene:
+              id: P0C0A3
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: xylanase
+        expression: high
+        fused: false
+        chain:
+          - tag: Signal_Peptide_AmyE
+          - gene:
+              id: P18429
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: esterase
+        expression: high
+        fused: false
+        chain:
+          - tag: Signal_Peptide_AmyE
+          - gene:
+              id: O31551
+              source: uniprot
+    - terminator: rrnB_T1

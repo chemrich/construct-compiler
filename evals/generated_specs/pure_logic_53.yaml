@@ -1,0 +1,20 @@
+construct:
+  name: "therapeutic_logic_gate_circuit"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: "logic_A_notB_OR_CD" # Custom hybrid promoter implementing (A AND NOT B) OR (C AND D) logic
+    - cistron:
+        label: "stabilized_therapeutic_cargo"
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - cleavage_site: TEV
+          - gene:
+              id: P01241 # human Growth Hormone (hGH)
+              source: uniprot
+    - terminator: rrnB_T1

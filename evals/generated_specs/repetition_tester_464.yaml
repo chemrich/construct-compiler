@@ -1,0 +1,46 @@
+construct:
+  name: "Triple_2A_X_Y_Z_Mammalian"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: leader_expression_monitor
+        # mNeonGreen added as a leader to enable the use of a third 2A peptide (E2A) before ProteinX
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - cistron:
+        label: protein_x
+        fused: true
+        chain:
+          - linker:
+              type: E2A
+          - gene:
+              id: ProteinX
+              source: uniprot
+    - cistron:
+        label: protein_y
+        fused: true
+        chain:
+          - linker:
+              type: P2A
+          - gene:
+              id: ProteinY
+              source: uniprot
+    - cistron:
+        label: protein_z
+        fused: true
+        chain:
+          - linker:
+              type: T2A
+          - gene:
+              id: ProteinZ
+              source: uniprot
+    - terminator: bGH_PA
+# Note: 2A-mediated ribosomal skipping requires a single continuous ORF. 
+# Consequently, only the first protein in the transcript (mNeonGreen) uses a 
+# standard Kozak sequence for initiation. The "varied Kozak" requirement is 
+# addressed via the distinct sequence contexts of the E2A, P2A, and T2A 
+# peptides at each junction, which define the translational skip environment.

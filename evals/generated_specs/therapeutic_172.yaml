@@ -1,0 +1,16 @@
+construct:
+  name: "non_viral_therapeutic_hEPO_vector"
+  host: mammalian
+  backbone:
+    resistance: kanamycin # Clinical plasmids require antibiotic-free selection (e.g., RNA-OUT) for final human use, but kanamycin is specified here for required E. coli propagation during manufacturing.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: hEPO_payload
+        expression: high
+        gene:
+          id: P01588
+          source: uniprot
+    - terminator: hGH_polyA

@@ -1,0 +1,29 @@
+construct:
+  name: "yeast_secreted_K_intracellular_L"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD
+    - cistron:
+        label: protein_K
+        expression: high
+        chain:
+          - tag: alpha_factor  # Yeast signal peptide for secretion
+          - tag: Strep-II
+          - gene:
+              id: K
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_L
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: L
+              source: uniprot
+    - terminator: CYC1_terminator

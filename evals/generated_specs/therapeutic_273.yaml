@@ -1,0 +1,25 @@
+construct:
+  name: "Bicistronic_Therapeutic_Enzyme_System"
+  host: mammalian
+  backbone:
+    # No antibiotic resistance or viral sequences as requested
+    resistance: none
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Robust constitutive human promoter, non-viral
+    - cistron:
+        label: Enzyme_A
+        expression: high
+        gene:
+          id: P00441  # Superoxide dismutase 1 (Example therapeutic enzyme)
+          source: uniprot
+    - spacer: 585  # Approximate length of a standard IRES sequence
+    - cistron:
+        label: Enzyme_B
+        expression: medium
+        fused: false  # Independent translation via the IRES-like spacer
+        gene:
+          id: P04062  # Glucosylceramidase (Example therapeutic enzyme)
+          source: uniprot
+    - terminator: bGH_polyA  # Non-viral mammalian polyadenylation signal

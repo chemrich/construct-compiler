@@ -1,0 +1,36 @@
+construct:
+  name: "synthetic_organelle_targeting_array"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_1_torA_target
+        expression: high
+        chain:
+          - tag: TorA
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: protein_2_ompA_target
+        expression: high
+        fused: false
+        chain:
+          - tag: OmpA
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: protein_3_pelB_target
+        expression: high
+        fused: false
+        chain:
+          - tag: PelB
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: T7term

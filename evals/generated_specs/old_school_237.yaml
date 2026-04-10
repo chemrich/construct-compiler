@@ -1,0 +1,22 @@
+construct:
+  name: "phage_display_scfv_p3"
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lac
+    - cistron:
+        label: "scFv_pIII_fusion"
+        chain:
+          - tag: PelB  # Signal peptide for periplasmic secretion required for phage display
+          - gene:
+              id: scFv
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P03661
+              source: uniprot
+    - terminator: BBa_B0015

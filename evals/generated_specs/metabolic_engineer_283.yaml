@@ -1,0 +1,53 @@
+construct:
+  name: "lux_bioluminescence_operon_inducible"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: luxA
+        expression: medium
+        gene:
+          id: luxA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: luxB
+        expression: medium
+        fused: false
+        gene:
+          id: luxB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: luxC_GFP_fusion
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: luxC
+              source: uniprot
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: luxD
+        expression: medium
+        fused: false
+        gene:
+          id: luxD
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: luxE
+        expression: medium
+        fused: false
+        gene:
+          id: luxE
+          source: uniprot
+    - terminator: rrnB_T1

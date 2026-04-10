@@ -1,0 +1,25 @@
+construct:
+  name: "tricistronic_2A_recombination_resistant"
+  host: HEK293 # Defaulted to HEK293 as 2A peptides are specific to eukaryotic translation
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: p1_p2_p3_2A_polycistron
+        expression: high
+        chain:
+          - gene:
+              id: P1
+              source: uniprot
+          - linker:
+              type: P2A
+          - gene:
+              id: P2
+              source: uniprot
+          - linker:
+              type: T2A
+          - gene:
+              id: P3
+              source: uniprot
+    - terminator: bGH_PA

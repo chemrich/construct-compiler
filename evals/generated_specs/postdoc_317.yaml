@@ -1,0 +1,78 @@
+construct:
+  name: "mammalian_complex_reconstitution_ecoli"
+  host: e_coli_bl21_de3
+
+  backbone:
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: subunit_1_h2a
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P04908
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: subunit_2_h2b
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P06899
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: subunit_3_h3
+        expression: high
+        fused: false
+        chain:
+          - tag: Myc
+          - gene:
+              id: P68431
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: subunit_4_h4
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P62805
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: chaperone_hsp70
+        expression: medium
+        fused: false
+        gene:
+          id: P0DMV8
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: chaperone_hsp90
+        expression: medium
+        fused: false
+        gene:
+          id: P07900
+          source: uniprot
+
+    - terminator: T7term

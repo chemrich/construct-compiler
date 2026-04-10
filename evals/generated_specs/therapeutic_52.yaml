@@ -1,0 +1,22 @@
+construct:
+  name: "non_viral_therapeutic_hek293_cpp"
+  host: HEK293
+  backbone:
+    resistance: none  # Specifically requested no antibiotic resistance genes
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral mammalian promoter
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: Polyarginine  # Non-viral cell-penetrating peptide (alternative to viral TAT)
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P53_HUMAN
+              source: uniprot
+          - tag: HA
+    - terminator: bGH_pA  # Non-viral polyadenylation signal (bovine)

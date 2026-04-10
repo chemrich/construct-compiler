@@ -1,0 +1,28 @@
+construct:
+  name: "dual_protein_z_secretion_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_z_albumin_sp
+        expression: high
+        chain:
+          - tag: Albumin_SP
+          - gene:
+              id: P22891
+              source: uniprot
+    - terminator: bGH_polyA
+    - spacer: 100
+    - promoter: EF1_alpha
+    - cistron:
+        label: protein_z_immunoglobulin_sp
+        expression: high
+        fused: false
+        chain:
+          - tag: Ig_kappa_SP
+          - gene:
+              id: P22891
+              source: uniprot
+    - terminator: SV40_polyA

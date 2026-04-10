@@ -1,0 +1,18 @@
+construct:
+  name: "bug_protein_insect_secretion"
+  host: Sf9  # Substituted insect cell line Sf9 as requested for 'insect cells'
+  backbone:
+    catalog_vector: "pIB/V5-His"
+  cassette:
+    - promoter: OpIE2  # Standard constitutive promoter for insect cell expression
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: melittin_leader  # N-terminal secretion signal for insect cells
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: BugProtein
+              source: uniprot
+    - terminator: SV40_polyA

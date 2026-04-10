@@ -1,0 +1,49 @@
+construct:
+  name: "yeast_metabolic_pathway_gradient"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Strong constitutive yeast promoter
+    - cistron:
+        label: enzyme_1
+        expression: high
+        fused: false
+        gene:
+          id: ERG1
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: enzyme_2
+        expression: high  # Mapping 'medium-strong' to high; compiler will select distinct sequence
+        fused: false
+        gene:
+          id: ERG7
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: enzyme_3
+        expression: medium
+        fused: false
+        gene:
+          id: ERG11
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: enzyme_4
+        expression: low
+        fused: false
+        gene:
+          id: ERG24
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: enzyme_5
+        expression: very_low
+        fused: false
+        gene:
+          id: ERG25
+          source: uniprot
+    - terminator: CYC1_term

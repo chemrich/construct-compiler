@@ -1,0 +1,51 @@
+construct:
+  name: "e_coli_inducible_five_enzyme_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: lacUV5  # IPTG-inducible, optimized version of pLac
+    - cistron:
+        label: OuterMembraneEnz
+        expression: medium  # Balanced to reduce translocation-induced stress
+        chain:
+          - tag: PelB       # N-terminal signal peptide for membrane translocation
+          - gene:
+              id: OuterMembraneEnz
+              source: uniprot
+          - tag: 6xHis      # C-terminal purification tag
+    - spacer: 30
+    - cistron:
+        label: CytosolEnz1
+        expression: high
+        fused: false
+        gene:
+          id: CytosolEnz1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CytosolEnz2
+        expression: high
+        fused: false
+        gene:
+          id: CytosolEnz2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CytosolEnz3
+        expression: high
+        fused: false
+        gene:
+          id: CytosolEnz3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CytosolEnz4
+        expression: high
+        fused: false
+        gene:
+          id: CytosolEnz4
+          source: uniprot
+    - terminator: rrnB_T1

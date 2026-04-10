@@ -1,0 +1,21 @@
+construct:
+  name: "mammalian_rbp_tracking_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: rbp_reporter_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: P03300
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BGH_pA  # BGH polyA is a standard mammalian terminator substituted for the bacterial examples provided.

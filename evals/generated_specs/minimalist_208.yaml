@@ -1,0 +1,23 @@
+construct:
+  name: "fret_sensor_cfp_yfp"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23106 # Weak constitutive promoter from the Anderson library
+    - cistron:
+        label: sensor_fusion
+        expression: low
+        chain:
+          - gene:
+              id: CFP
+              source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: YFP
+              source: fpbase
+    - terminator: rrnB_T1 # Added to comply with Rule 10 despite user request for no terminator

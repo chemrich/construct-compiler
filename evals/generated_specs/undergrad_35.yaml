@@ -1,0 +1,26 @@
+construct:
+  name: "dox_inducible_gene_f_purification"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TRE3G  # Doxycycline-inducible promoter (Tet-On system)
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: F
+              source: uniprot
+    - terminator: bGH_pA
+    - promoter: SV40
+    - cistron:
+        label: selection_marker
+        expression: medium
+        gene:
+          id: PAC
+          source: uniprot
+    - terminator: SV40_polyA

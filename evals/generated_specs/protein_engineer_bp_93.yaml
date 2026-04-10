@@ -1,0 +1,27 @@
+construct:
+  name: "bacillus_keratinase_expression_system"
+  host: bacillus
+  backbone:
+    resistance: chloramphenicol
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: Pspac
+    - cistron:
+        label: secreted_keratinase
+        expression: high
+        chain:
+          - tag: NprE_signal_peptide
+          - tag: 6xHis
+          - gene:
+              id: P00780
+              source: uniprot
+    - terminator: rrnB_T1

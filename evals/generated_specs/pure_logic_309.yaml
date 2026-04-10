@@ -1,0 +1,24 @@
+construct:
+  name: "h_and_not_i_logic_gate"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Activated by Input H (e.g., Doxycycline/rtTA system)
+    - cistron:
+        label: output_u
+        expression: high
+        chain:
+          - cleavage_site: TEV  # Target for the Input I-induced protease
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: SV40_pA
+    - promoter: NFkB  # Induced by Input I (e.g., pro-inflammatory signaling)
+    - cistron:
+        label: protease_i
+        expression: medium
+        gene:
+          id: P03328  # UniProt ID for TEV protease
+          source: uniprot
+    - terminator: bGH_pA

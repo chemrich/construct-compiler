@@ -1,0 +1,17 @@
+construct:
+  name: "plant_protein_expression_with_cTP_and_strep"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: cTP  # Chloroplast targeting peptide as requested
+          - tag: Strep-II
+          - gene:
+              id: plant_protein_target
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,15 @@
+construct:
+  name: "proteinL_mammalian_low_basal"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha  # EF1_alpha provides more stable, less "bursty" expression than CMV in many mammalian cell lines
+    - cistron:
+        label: protein_L
+        expression: low  # Configured for low basal expression as requested
+        chain:
+          - gene:
+              id: P18570
+              source: uniprot
+    - terminator: SV40_polyA

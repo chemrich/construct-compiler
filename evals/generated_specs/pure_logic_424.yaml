@@ -1,0 +1,16 @@
+construct:
+  name: "XOR_logic_gate_secreted_peptide"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: "ara_lac_XOR" # Chimeric promoter logic: Output is active only if Arabinose OR IPTG is present, but not both.
+    - cistron:
+        label: "secreted_output"
+        expression: medium
+        chain:
+          - tag: PelB # N-terminal signal peptide for periplasmic secretion in E. coli
+          - gene:
+              id: "GH1_HUMAN"
+              source: uniprot
+    - terminator: "T7term"

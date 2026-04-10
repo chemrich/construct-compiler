@@ -1,0 +1,33 @@
+construct:
+  name: "hrpRS_and_gate"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: input_hrpR
+        expression: high
+        fused: false
+        gene:
+          id: P27110
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac
+    - cistron:
+        label: input_hrpS
+        expression: high
+        fused: false
+        gene:
+          id: P27109
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: hrpL
+    - cistron:
+        label: output_reporter
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

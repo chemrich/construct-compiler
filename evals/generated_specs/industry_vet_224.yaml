@@ -1,0 +1,18 @@
+construct:
+  name: "AAV_Rep_Sf9_Production"
+  host: Sf9  # Selected Sf9 insect cells for Baculovirus-mediated high-yield expression and post-translational modifications
+  backbone:
+    catalog_vector: "pFastBac1"
+    resistance: gentamicin
+  cassette:
+    - promoter: Polh  # Strong Polyhedrin promoter for high-level expression in insect cells
+    - cistron:
+        label: rep_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P03133  # UniProt ID for Adeno-associated virus 2 Rep78 protein
+              source: uniprot
+    - terminator: SV40_polyA

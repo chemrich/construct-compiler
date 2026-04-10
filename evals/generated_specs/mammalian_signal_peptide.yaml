@@ -1,32 +1,16 @@
-```yaml
 construct:
   name: "mEGFP_secretion_HEK293"
   host: HEK293
-
   backbone:
     catalog_vector: "pTwist CMV"
-
   cassette:
     - promoter: CMV
-
     - cistron:
         label: secreted_mEGFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-
-    - terminator: BBa_B0015 # Note: For mammalian expression, a PolyA signal (e.g., SV40 PolyA, BGH PolyA) is typically required, but not available in the provided terminator options. BBa_B0015 is used as a placeholder.
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: bGH_polyA

@@ -1,0 +1,23 @@
+construct:
+  name: "enzyme_e_arabinose_inducible"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: target_enzyme
+        expression: high
+        chain:
+          - tag: Strep-II
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: EnzymeE
+              source: uniprot
+    - terminator: rrnB_T1

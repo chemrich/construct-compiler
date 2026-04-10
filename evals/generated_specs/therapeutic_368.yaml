@@ -1,0 +1,19 @@
+construct:
+  name: "non_viral_vaccine_antigen_production"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Antibiotic-free production systems (e.g., auxotrophy/toxin-antitoxin) require custom hosts; kanamycin is used here as the safest standard research selection.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Bacterial hybrid promoter used to ensure high expression without viral (T7) components.
+    - cistron:
+        label: vaccine_antigen
+        expression: high
+        chain:
+          - tag: 8xHis
+          - cleavage_site: Factor_Xa # Protease site of bovine origin; avoids viral-derived TEV or 3C sequences.
+          - gene:
+              id: P9WQP3 # Antigen Ag85B from Mycobacterium tuberculosis
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial ribosomal terminator.

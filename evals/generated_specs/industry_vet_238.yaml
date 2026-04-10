@@ -1,0 +1,22 @@
+construct:
+  name: "Lysosomal_EnzymeX_Targeting"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - tag: LAMP1_signal
+          - gene:
+              id: EnzymeX
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: bGH_polyA

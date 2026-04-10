@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_metabolic_logic_circuit"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: 2micron
+    source: addgene
+  cassette:
+    - promoter: "ADH2-MEP2_hybrid" # Synthetic hybrid promoter for glucose-repression and ammonium-activation
+    - cistron:
+        label: enzyme_y_mitochondrial
+        expression: high
+        chain:
+          - tag: MTS # Mitochondrial targeting sequence
+          - gene:
+              id: Enzyme_Y
+              source: uniprot
+    - terminator: CYC1_term

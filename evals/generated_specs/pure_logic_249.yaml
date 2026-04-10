@@ -1,0 +1,20 @@
+construct:
+  name: "xor_gate_np_m"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD_lacO # N-activated, P-repressed: ON only when N is present and P is absent
+    - cistron:
+        label: output_m_logic_unit_1
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1
+    - promoter: tac_araO # P-activated, N-repressed: ON only when P is present and N is absent
+    - cistron:
+        label: output_m_logic_unit_2
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: T7term

@@ -1,0 +1,36 @@
+construct:
+  name: enzyme_XYZ_operon
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_X
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: X
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_Y
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Y
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_Z
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Z
+              source: uniprot
+    - terminator: T7term

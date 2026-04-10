@@ -1,0 +1,23 @@
+construct:
+  name: "acid_and_molecule_x_responsive_therapeutic_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # araBAD represents the 'molecule X' induction; since the standard schema lacks a specific pH-responsive promoter, pH logic is assumed to be integrated via a custom host or asr-based circuit.
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P60568
+              source: uniprot
+    - terminator: rrnB_T1

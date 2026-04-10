@@ -1,0 +1,33 @@
+construct:
+  name: genetic_xor_gate
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100  # Placeholder constitutive promoter for logic circuit components
+    - cistron:
+        label: InputA
+        expression: medium
+        fused: false
+        gene:
+          id: AraC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: InputB
+        expression: medium
+        fused: false
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: ResultReporter
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BBa_B0015  # Note: XOR logic behavior is typically achieved via specific operator arrangements within the promoter regions.

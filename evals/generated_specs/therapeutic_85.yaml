@@ -1,0 +1,19 @@
+construct:
+  name: "non_viral_cas9_nls_flag"
+  host: HEK293
+  backbone:
+    resistance: none # Requirement for no antibiotic resistance markers implies a minicircle or nanoplasmid system
+    ori: none        # Requirement for no viral replication origins
+    source: custom
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: cas9_effector
+        expression: high
+        chain:
+          - tag: FLAG
+          - tag: NLS
+          - gene:
+              id: Q99ZW2
+              source: uniprot
+    - terminator: hGH_pA

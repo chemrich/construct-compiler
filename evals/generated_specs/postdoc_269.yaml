@@ -1,0 +1,28 @@
+construct:
+  name: "yeast_dual_expression_protein_x_y"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Standard high-expression yeast promoter
+    - cistron:
+        label: protein_x
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PROTEIN_X_UNIPROT_ID
+              source: uniprot
+    - spacer: 40  # Provides space for internal ribosome entry/re-initiation
+    - cistron:
+        label: protein_y
+        expression: medium
+        fused: false  # Ensures independent translation (required for IRES-like behavior)
+        chain:
+          - tag: FLAG
+          - gene:
+              id: PROTEIN_Y_UNIPROT_ID
+              source: uniprot
+    - terminator: CYC1_term  # Common yeast terminator

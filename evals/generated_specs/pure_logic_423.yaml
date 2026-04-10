@@ -1,0 +1,19 @@
+construct:
+  name: "therapeutic_not_gate_insulin"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: trp  # The trp promoter acts as a NOT gate: it is constitutively active but repressed by the addition of the chemical input tryptophan.
+    - cistron:
+        label: insulin_production
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01308
+              source: uniprot
+    - terminator: rrnB_T1

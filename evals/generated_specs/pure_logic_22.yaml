@@ -1,0 +1,35 @@
+construct:
+  name: "yeast_or_gate_logic_sfGFP"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: output_d_unit1
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: CUP1
+    - cistron:
+        label: output_d_unit2
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: ADH1_term

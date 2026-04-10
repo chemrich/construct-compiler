@@ -1,0 +1,27 @@
+construct:
+  name: "yeast_glow_helper_system"
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter
+    - cistron:
+        label: glow_protein
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: CYC1
+
+    - promoter: TEF1  # Medium-strong constitutive yeast promoter
+    - cistron:
+        label: helper_enzyme
+        expression: medium
+        gene:
+          id: HelperEnzyme
+          source: uniprot
+    - terminator: ADH1

@@ -1,0 +1,30 @@
+construct:
+  name: "gateway_dual_destination_vector"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: lacUV5
+    - cistron:
+        label: gateway_cassette_set_1
+        expression: medium
+        chain:
+          - tag: attR1.1
+          - gene:
+              id: ccdB
+              source: uniprot
+          - tag: attR2.2
+    - spacer: 40
+    - cistron:
+        label: gateway_cassette_set_2
+        expression: medium
+        fused: false
+        chain:
+          - tag: attR3.3
+          - gene:
+              id: ccdB
+              source: uniprot
+          - tag: attR4.4
+    - terminator: rrnB_T1

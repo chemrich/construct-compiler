@@ -1,0 +1,24 @@
+construct:
+  name: "difficult_protein_bip_coexpression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: DifficultProtein
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: chaperone
+        expression: medium
+        fused: false
+        gene:
+          id: P11021
+          source: uniprot
+    - terminator: rrnB_T1

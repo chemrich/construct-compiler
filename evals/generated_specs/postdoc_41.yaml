@@ -1,0 +1,19 @@
+construct:
+  name: "yeast_secreted_cytokine_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: TEF1  # constitutive yeast promoter substituted for CMV
+    - cistron:
+        label: target_cytokine
+        expression: high
+        chain:
+          - tag: alpha_factor  # secretion signal for S. cerevisiae
+          - solubility_tag: SUMO
+          - cleavage_site: TEV
+          - gene:
+              id: IL2
+              source: uniprot
+    - terminator: CYC1_term

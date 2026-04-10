@@ -1,0 +1,22 @@
+construct:
+  name: "therapeutic_peptide_fc_fusion"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: peptide_fc_fusion
+        expression: high
+        chain:
+          - gene:
+              id: "SmallPeptide"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "P01857"
+              source: uniprot
+          - tag: 6xHis
+    - terminator: bGH_pA

@@ -1,0 +1,25 @@
+construct:
+  name: "HSA_GLP1_Fusion_Pichia_Expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - gene:
+              id: P02768
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01275
+              source: uniprot
+          - tag: FLAG
+    - terminator: AOX1

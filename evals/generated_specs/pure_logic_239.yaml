@@ -1,0 +1,37 @@
+construct:
+  name: "mitochondrial_logic_metabolic_circuit"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV # Modified synthetic promoter for Nutrient AND Quorum sensing logic gate
+    - cistron:
+        label: enzyme_a
+        expression: high
+        fused: false
+        chain:
+          - tag: MTS # Mitochondrial Targeting Sequence
+          - gene:
+              id: Enzyme_A
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_b
+        expression: high
+        fused: false
+        chain:
+          - tag: MTS
+          - gene:
+              id: Enzyme_B
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_c
+        expression: high
+        fused: false
+        chain:
+          - tag: MTS
+          - gene:
+              id: Enzyme_C
+              source: uniprot
+    - terminator: SV40_polyA

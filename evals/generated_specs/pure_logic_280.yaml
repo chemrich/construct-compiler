@@ -1,0 +1,32 @@
+construct:
+  name: "not_logic_gate_arabinose_input"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Input A (Arabinose) induces the repressor
+    - cistron:
+        label: repressor_lacI
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: tac  # This promoter is repressed by LacI (Output X logic)
+    - cistron:
+        label: output_protein_x
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term
+    - promoter: J23100  # Constitutive promoter for validation reporter
+    - cistron:
+        label: validation_reporter
+        expression: low
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: BBa_B0015

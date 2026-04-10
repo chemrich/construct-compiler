@@ -1,0 +1,18 @@
+construct:
+  name: "high_yield_ecoli_strep_tagged_mEGFP"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin # Neomycin/Kanamycin (NPTII) is used for selection in E. coli.
+    ori: pUC            # High-copy origin for maximum DNA yield and protein expression in E. coli.
+    # User requested mammalian origin; pUC substituted for robust high-copy amplification in E. coli host.
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - tag: Strep-II
+    - terminator: T7term

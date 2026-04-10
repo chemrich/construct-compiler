@@ -1,0 +1,24 @@
+construct:
+  name: "biofuel_negative_feedback_loop"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: precursor_synthase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0ADA1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: feedback_regulator
+        expression: low
+        fused: false
+        gene:
+          id: P0ACJ8
+          source: uniprot
+    - terminator: rrnB_T1

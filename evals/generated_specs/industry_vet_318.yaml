@@ -1,0 +1,23 @@
+construct:
+  name: "yeast_bicistronic_2A_metabolic_expression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: metabolic_unit
+        expression: high
+        chain:
+          - gene:
+              id: ERG10
+              source: uniprot
+          - tag: FLAG
+          - linker:
+              type: P2A
+          - gene:
+              id: ERG13
+              source: uniprot
+    - terminator: CYC1

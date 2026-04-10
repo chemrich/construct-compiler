@@ -1,0 +1,23 @@
+construct:
+  name: "FusionProteinA_v1"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: DNA_BindingDomain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: EffectorDomain
+              source: uniprot
+    - terminator: T7term # Note: System constraints limit output to a single YAML document; version 1 of 2 is provided.

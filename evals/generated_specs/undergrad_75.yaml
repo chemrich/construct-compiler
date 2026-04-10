@@ -1,0 +1,23 @@
+construct:
+  name: "ProteinO_GFP_Expression_Test"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: test_fusion
+        expression: high # This field acts as the RBS strength selector
+        chain:
+          - gene:
+              id: ProteinO
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1

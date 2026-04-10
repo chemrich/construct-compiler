@@ -1,0 +1,19 @@
+construct:
+  name: "secreted_diagnostic_protein_hek293"
+  host: HEK293
+  backbone:
+    resistance: zeocin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: CAG
+    - cistron:
+        label: diagnostic_antigen
+        expression: high
+        chain:
+          - tag: Ig_kappa_leader
+          - gene:
+              id: diagnostic_protein
+              source: uniprot
+          - tag: 6xHis
+    - terminator: bGH_PA

@@ -1,0 +1,17 @@
+construct:
+  name: "algal_therapeutic_scfv_intracellular"
+  host: algae
+  backbone:
+    resistance: kanamycin # Placeholder: Algal metabolic selection (e.g., ARG7 or NIT1) should be used as no antibiotic elements are allowed.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: HSP70_RBCS2 # Chimeric algal promoter for robust nuclear expression
+    - cistron:
+        label: antibody_fragment
+        expression: high
+        chain:
+          - gene:
+              id: P01857 # UniProt ID for Immunoglobulin heavy constant gamma 1 as a therapeutic fragment representative
+              source: uniprot
+    - terminator: rbcS2 # Standard algal 3' UTR/terminator for Chlamydomonas

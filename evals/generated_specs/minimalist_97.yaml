@@ -1,0 +1,21 @@
+construct:
+  name: "yeast_two_hybrid_bait_protein_z"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: bait_fusion
+        expression: medium
+        chain:
+          - tag: Gal4_DBD
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Protein_Z
+              source: uniprot
+    - terminator: CYC1

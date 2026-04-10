@@ -1,0 +1,27 @@
+construct:
+  name: bicistronic_enzymea_enzymeb_expression
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: enzyme_a
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: EnzymeA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_b
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: EnzymeB
+              source: uniprot
+          - tag: FLAG
+    - terminator: rrnB_T1

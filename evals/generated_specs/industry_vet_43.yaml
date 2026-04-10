@@ -1,0 +1,27 @@
+construct:
+  name: "bicistronic_payload_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: payload_one
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: payload_two
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: T7term

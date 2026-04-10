@@ -1,43 +1,24 @@
-```yaml
 construct:
-  name: "kinase_regulatory_bicistronic_e_coli"
-  host: e_coli
-
+  name: kinase_regulator_bicistronic_operon
+  host: e_coli_bl21
   backbone:
     resistance: kanamycin
     ori: pBR322
-
+    source: addgene
   cassette:
     - promoter: T7lac
-
     - cistron:
         label: kinase
         expression: high
         gene:
-          id: kinase_gene
+          id: P28482
           source: uniprot
-
     - spacer: 30
-
     - cistron:
-        label: regulatory_protein
+        label: regulator
         expression: low
         fused: false
         gene:
-          id: regulatory_protein_gene
+          id: P28562
           source: uniprot
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

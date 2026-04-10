@@ -1,0 +1,23 @@
+construct:
+  name: "delayed_negative_feedback_oscillator"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: repressor
+        expression: high
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: output_signal
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: T7term

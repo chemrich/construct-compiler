@@ -1,0 +1,46 @@
+construct:
+  name: "metabolic_operon_ABCD"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "InitialStepA"
+        expression: low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: InitialStepA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "MidStepB"
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MidStepB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "MidStepC"
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MidStepC
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: "FinalStepD"
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FinalStepD
+              source: uniprot
+    - terminator: T7term

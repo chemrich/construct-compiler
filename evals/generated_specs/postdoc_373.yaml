@@ -1,0 +1,21 @@
+construct:
+  name: "protease_shielded_expression_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP  # MBP fusion provides physical shielding and enhances folding to resist degradation
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P04637  # Using UniProt P04637 (p53) as a model unstable protein
+              source: uniprot
+    - terminator: T7term

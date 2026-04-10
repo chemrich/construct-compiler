@@ -1,0 +1,20 @@
+construct:
+  name: "Pichia_AOX1_Lipase_Secretion_Construct"
+  host: yeast
+  backbone:
+    resistance: zeocin # Standard selection for Pichia AOX1 vectors
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: lipase_production
+        expression: high
+        chain:
+          - tag: alpha_factor # Saccharomyces cerevisiae alpha-mating factor secretion signal
+          - gene:
+              id: P61877 # Thermomyces lanuginosus lipase
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - terminator: AOX1_terminator

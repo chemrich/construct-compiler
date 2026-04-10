@@ -1,0 +1,21 @@
+construct:
+  name: "protein_p_surface_display"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: OmpA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P
+              source: uniprot
+    - terminator: T7term

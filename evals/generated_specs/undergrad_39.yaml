@@ -1,0 +1,22 @@
+construct:
+  name: "mCherry_Blasticidin_Mammalian_Expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: reporter
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: selection
+        expression: medium
+        fused: false # Indicated independent translation; in mammalian systems this usually implies an IRES or 2A, here represented by a spacer per instructions
+        gene:
+          id: bsr
+          source: uniprot
+    - terminator: bGH_polyA

@@ -1,0 +1,30 @@
+construct:
+  name: "mammalian_graded_output_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G # Doxycycline-inducible promoter for graded response to input molecule concentration
+    - cistron:
+        label: high_state_output
+        expression: high
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - spacer: 30 # Represents an IRES or 2A peptide for polycistronic expression
+    - cistron:
+        label: medium_state_output
+        expression: medium
+        fused: false # Independent translation start (e.g., via IRES)
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: low_state_output
+        expression: low
+        fused: false
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: SV40_pA # Standard mammalian polyadenylation signal for mRNA stability and termination

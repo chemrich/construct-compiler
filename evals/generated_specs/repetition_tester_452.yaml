@@ -1,0 +1,23 @@
+construct:
+  name: "tandem_magainin_2_array"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "magainin_tandem"
+        expression: high
+        chain:
+          - gene:
+              id: P11006
+              source: uniprot
+          - cleavage_site: TEV  # DNA sequence 1
+          - gene:
+              id: P11006        # DNA sequence 2 (synonymously recoded)
+              source: uniprot
+          - cleavage_site: TEV  # DNA sequence 3 (synonymously recoded)
+          - gene:
+              id: P11006        # DNA sequence 4 (synonymously recoded)
+              source: uniprot
+    - terminator: T7term

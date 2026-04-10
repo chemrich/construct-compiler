@@ -1,0 +1,26 @@
+construct:
+  name: "genetic_timer_hormone_maturation"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: trigger_reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    - spacer: 40
+    - cistron:
+        label: hormone_output
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: P01275
+              source: uniprot
+    - terminator: T7term # The 6-8 hour delay is achieved by transcriptional regulation logic (e.g. a feed-forward loop) external to this output construct.

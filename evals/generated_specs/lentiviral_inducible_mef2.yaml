@@ -1,19 +1,14 @@
-```yaml
 construct:
-  name: mEGFP_MEF2_myocyte_expression
+  name: "lenti_mef2_megfp"
   host: mammalian
-
   backbone:
-    catalog_vector: "pTwist CMV" # pTwist CMV is a general mammalian expression vector, not specifically lentiviral. The compiler will use this as a mammalian backbone.
-
+    catalog_vector: "pLenti-Puro"
   cassette:
-    - promoter: CMV # MEF2 promoter is not in the list of supported promoters. Using CMV as a common mammalian promoter placeholder.
-
+    - promoter: MEF2
     - cistron:
-        label: mEGFP
+        label: target
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-
-    - terminator: BBa_B0015 # This is a bacterial terminator. For mammalian expression, a polyadenylation signal is typically used, but none are explicitly listed. Using BBa_B0015 as a placeholder.
-```
+    - terminator: bGH_pA

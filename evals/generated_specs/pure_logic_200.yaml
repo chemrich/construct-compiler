@@ -1,0 +1,26 @@
+construct:
+  name: "NOT_gate_C1_logic"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: araBAD  # C1 chemical input (L-arabinose) activates this promoter
+    - cistron:
+        label: repressor_lacI
+        expression: high
+        fused: false
+        gene:
+          id: lacI
+          source: uniprot
+    - terminator: BBa_B0015
+    - promoter: tac     # This promoter is repressed by the LacI protein
+    - cistron:
+        label: reporter_GFP
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

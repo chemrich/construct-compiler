@@ -1,0 +1,26 @@
+construct:
+  name: "bacillus_lipase_foldase_operon"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: Pveg
+    - cistron:
+        label: lipase
+        expression: high
+        chain:
+          - tag: AmyQ_signal
+          - gene:
+              id: LipA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: foldase
+        expression: high
+        fused: false
+        gene:
+          id: PrsA
+          source: uniprot
+    - terminator: rrnB_T1

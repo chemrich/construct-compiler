@@ -1,0 +1,23 @@
+construct:
+  name: "cytotoxic_fragment_expression_system"
+  host: e_coli
+  backbone:
+    resistance: none # User requested strict exclusion of antibiotic resistance; implies auxotrophic or toxin-antitoxin selection
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: lacUV5 # Bacterial IPTG-inducible promoter to avoid viral elements (T7)
+    - cistron:
+        label: cytotoxic_target
+        expression: high
+        chain:
+          - tag: 8xHis
+          - solubility_tag: MBP
+          - cleavage_site: Enterokinase # Mammalian protease site to avoid viral-derived sites like TEV or 3C
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: barnase
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator to avoid viral sequences like T7term

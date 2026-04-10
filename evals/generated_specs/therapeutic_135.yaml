@@ -1,0 +1,18 @@
+construct:
+  name: mitochondrial_gene_therapy_OTC
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Substituted for 'no ARG' request as standard plasmid selection requires an antibiotic marker; kanamycin is preferred for clinical-grade production over ampicillin.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: therapeutic_cargo
+        expression: high
+        chain:
+          - tag: MTS
+          - gene:
+              id: OTC
+              source: uniprot
+    - terminator: bGH_pA

@@ -1,0 +1,24 @@
+construct:
+  name: "bacillus_cotg_antigen_display"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: CotG  # Native Bacillus subtilis spore coat protein promoter
+    - cistron:
+        label: spore_display_fusion
+        expression: high
+        chain:
+          - gene:
+              id: CotG
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - tag: HA
+          - gene:
+              id: antigen
+              source: uniprot
+    - terminator: rrnB_T1

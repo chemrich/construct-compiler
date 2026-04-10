@@ -1,0 +1,29 @@
+construct:
+  name: "ScaffoldZ_Tandem_Repeat"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD  # Strong constitutive promoter for Saccharomyces cerevisiae
+    - cistron:
+        label: scaffold_z
+        expression: high
+        chain:
+          - gene:
+              id: DomainA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: DomainA  # Each instance of DomainA will be codon-optimized with distinct synonymous DNA sequences
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: DomainA
+              source: uniprot
+    - terminator: CYC1_term

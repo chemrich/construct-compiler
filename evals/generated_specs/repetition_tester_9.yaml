@@ -1,0 +1,26 @@
+construct:
+  name: "Bicistronic_ProteinP_ProteinQ_Scrambled_IRES"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: ProteinP
+        expression: medium
+        chain:
+          - gene:
+              id: ProteinP
+              source: uniprot
+          - tag: FLAG
+    - spacer: 585  # Represents a codon-scrambled, non-homologous IRES sequence for internal ribosome entry
+    - cistron:
+        label: ProteinQ
+        expression: medium
+        fused: false  # Indicates independent translation initiation via the upstream IRES
+        chain:
+          - gene:
+              id: ProteinQ
+              source: uniprot
+          - tag: HA
+    - terminator: bGH_polyA

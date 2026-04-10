@@ -1,0 +1,30 @@
+construct:
+  name: polycistronic_therapeutic_expression_system
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Defaulted to kanamycin per rule 9; schema does not explicitly support non-antibiotic markers like infB/dapD.
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: therapeutic_protein_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01375 # TNF-alpha
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: therapeutic_protein_2
+        expression: high
+        fused: false # Ensures independent translation with its own RBS
+        chain:
+          - tag: Strep-II
+          - cleavage_site: 3C
+          - gene:
+              id: P22301 # IL10
+              source: uniprot
+    - terminator: T7term

@@ -1,0 +1,18 @@
+construct:
+  name: "secreted_nanoluc_nonviral_transient_expression"
+  host: HEK293
+  backbone:
+    resistance: none # Omitted per user request; standard E. coli-based manufacturing usually requires a selection marker.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Non-viral constitutive high-expression promoter
+    - cistron:
+        label: secreted_reporter
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal peptide
+          - gene:
+              id: NanoLuc
+              source: uniprot
+    - terminator: hGH_PA # Human growth hormone polyadenylation signal (non-viral)

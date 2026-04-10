@@ -1,0 +1,32 @@
+construct:
+  name: "frequency_divider_flip_flop"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: repressor_A
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: repressor_B
+        expression: medium
+        fused: false
+        gene:
+          id: TetR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_output
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

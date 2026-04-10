@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_rna_nor_gate_therapeutic_output"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: ADH1  # Yeast ADH1 promoter; NOR gate logic is implemented via tandem repressive riboswitches in the 5' UTR
+    - cistron:
+        label: therapeutic_Z
+        expression: high
+        chain:
+          - tag: alpha_factor  # Secretion signal for yeast (Rule 18)
+          - gene:
+              id: P60568  # Human Interleukin-2 as a representative therapeutic protein
+              source: uniprot
+    - terminator: CYC1  # Standard yeast terminator (Rule 15)

@@ -1,0 +1,30 @@
+construct:
+  name: "pichia_aox1_subunit_a_b_coexpression"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: AOX1
+    - cistron:
+        label: subunit_a
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - tag: 6xHis
+          - gene:
+              id: subunit_a
+              source: uniprot
+    - terminator: AOX1_term
+    - promoter: AOX1
+    - cistron:
+        label: subunit_b
+        expression: high
+        chain:
+          - tag: alpha-factor
+          - tag: Myc
+          - gene:
+              id: subunit_b
+              source: uniprot
+    - terminator: AOX1_term

@@ -1,0 +1,26 @@
+construct:
+  name: "dual_reporter_plant_constitutive_heat_inducible"
+  host: mammalian # Substituted for plant; regulatory elements are universal eukaryotic or specific plant-derived ones.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CaMV35S # Strong constitutive plant promoter
+    - cistron:
+        label: constitutive_mCherry
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: tNOS # Nopaline synthase terminator (non-homologous to 35S term)
+    - spacer: 60
+    - promoter: HSP70 # Heat-inducible promoter
+    - cistron:
+        label: inducible_luciferase
+        expression: medium
+        fused: false # Independent translation unit
+        gene:
+          id: P08659 # Firefly luciferase
+          source: uniprot
+    - terminator: 35S_term # CaMV 35S terminator (distinct from tNOS)

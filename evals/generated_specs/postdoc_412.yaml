@@ -1,0 +1,33 @@
+construct:
+  name: "GroEL_ES_Chaperone_Assisted_Expression"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: groEL
+        expression: high
+        fused: false  # Independent translation for polycistronic operon
+        gene:
+          id: P0A6F5  # GroEL (Hsp60 family, user requested GroEL/ES as Hsp70 analogs)
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: groES
+        expression: high
+        fused: false
+        gene:
+          id: P0A6F9  # GroES (Hsp10 co-chaperone)
+          source: uniprot
+    - terminator: rrnB_T1

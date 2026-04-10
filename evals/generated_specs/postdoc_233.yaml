@@ -1,0 +1,24 @@
+construct:
+  name: "human_antibody_full_length_yeast_secretion"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - cistron:
+        label: antibody_polyprotein
+        expression: high
+        chain:
+          - tag: Human_Ig_Signal_Peptide # Mammalian signal peptide as requested; yeast can process some mammalian leaders although alpha-factor is typical
+          - gene:
+              id: IGHG1
+              source: uniprot
+          - linker:
+              type: F2A
+          - tag: Human_Ig_Signal_Peptide
+          - gene:
+              id: IGKC
+              source: uniprot
+    - terminator: CYC1_term

@@ -1,0 +1,22 @@
+construct:
+  name: "t_flip_flop_recombinase_circuit"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD  # Inducible promoter acting as the input pulse S
+    - cistron:
+        label: signal_processor
+        expression: high
+        gene:
+          id: Bxb1  # Integrase that mediates the T-flip logic via DNA inversion
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: output_T
+        expression: medium
+        fused: false  # Independently translated reporter
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: T7term

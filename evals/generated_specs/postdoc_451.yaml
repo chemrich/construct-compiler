@@ -1,0 +1,26 @@
+construct:
+  name: "human_fv_periplasmic_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: vh_domain
+        expression: high
+        chain:
+          - tag: PelB # Mammalian ER targeting signals are not functional in E. coli; substituted with PelB leader for periplasmic translocation to facilitate disulfide bond formation.
+          - gene:
+              id: P01736
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: vl_domain
+        expression: high
+        fused: false
+        chain:
+          - tag: PelB
+          - gene:
+              id: P01591
+              source: uniprot
+    - terminator: T7term

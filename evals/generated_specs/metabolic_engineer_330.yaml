@@ -1,0 +1,42 @@
+construct:
+  name: "pks_operon_fusion_assembly"
+  host: streptomyces_coelicolor
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: tipA  # Strong thiostrepton-inducible regulated promoter for Streptomyces
+    - cistron:
+        label: pks_assembly
+        expression: high
+        # The 'chain' format with 'linker' elements creates a multi-domain fusion protein
+        # to aid complex formation as requested, despite the 'operon' nomenclature.
+        chain:
+          - gene:
+              id: Module1
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: Module2
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: Module3
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: Module4
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: ModifyingEnz
+              source: uniprot
+    - terminator: BBa_B0015

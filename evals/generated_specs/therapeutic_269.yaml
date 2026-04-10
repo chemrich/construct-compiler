@@ -1,0 +1,21 @@
+construct:
+  name: "mitochondrial_mNeonGreen_human_nonviral"
+  host: HEK293
+  backbone:
+    resistance: none # User requested no antibiotic resistance; requires custom selection mechanism
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Strong constitutive non-viral mammalian promoter
+    - cistron:
+        label: mito_reporter
+        expression: high
+        chain:
+          - tag: MTS # Mitochondrial Targeting Sequence for localization
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: bGH_polyA # Non-viral mammalian polyadenylation signal

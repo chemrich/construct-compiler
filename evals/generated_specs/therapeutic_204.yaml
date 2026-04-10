@@ -1,0 +1,24 @@
+construct:
+  name: "non_viral_dual_therapeutic_expression_system"
+  host: mammalian
+  backbone:
+    resistance: none # User requested no selection markers reliant on antibiotics
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha # Strong mammalian promoter; used as a non-viral alternative to CMV
+    - cistron:
+        label: therapeutic_tandem
+        expression: high
+        chain:
+          - tag: Twin-Strep
+          - gene:
+              id: Protein_A
+              source: uniprot
+          - linker:
+              type: P2A # Porcine 2A self-cleaving peptide; used to produce two proteins from one transcript
+          - tag: 6xHis
+          - gene:
+              id: Protein_B
+              source: uniprot
+    - terminator: hGH_polyA # Human growth hormone polyadenylation signal; used as a non-viral alternative to SV40 or bGH polyA

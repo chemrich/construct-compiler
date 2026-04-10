@@ -1,0 +1,22 @@
+construct:
+  name: "metabolite_z_homeostatic_control"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV # CMV promoter modified with operator sites for repressor_z binding
+    - cistron:
+        label: synthase_z
+        expression: high
+        gene:
+          id: GCH1
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: repressor_z
+        expression: medium
+        fused: false
+        gene:
+          id: TrpR
+          source: uniprot
+    - terminator: BBa_B0015

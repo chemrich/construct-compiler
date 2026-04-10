@@ -1,0 +1,25 @@
+construct:
+  name: "bispecific_therapeutic_scfv_secretion"
+  host: HEK293
+  backbone:
+    resistance: none # User requested no antibiotic resistance; 'none' used to satisfy therapeutic requirement
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Substituted CMV with human EF1_alpha to avoid viral elements per user request
+    - cistron:
+        label: bispecific_scfv
+        expression: high
+        chain:
+          - tag: IgK_leader # For efficient mammalian secretion
+          - gene:
+              id: P07766 # CD3 epsilon variable region source
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P15391 # CD19 extracellular domain source
+              source: uniprot
+          - tag: 8xHis
+    - terminator: bGH_polyA # Standard non-viral mammalian polyadenylation signal

@@ -1,0 +1,47 @@
+construct:
+  name: "three_stage_inverter_cascade"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: tac  # Input S (e.g., IPTG)
+    - cistron:
+        label: stage_1_repressor
+        expression: high
+        fused: false
+        gene:
+          id: P0C1P1
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: PhlF_repressible_promoter  # Stage 1: NOT (Repressed by P0C1P1)
+    - cistron:
+        label: stage_2_repressor
+        expression: high
+        fused: false
+        gene:
+          id: Q1K9A2
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: SrpR_repressible_promoter  # Stage 2: NOT (Repressed by Q1K9A2)
+    - cistron:
+        label: stage_3_repressor
+        expression: high
+        fused: false
+        gene:
+          id: P17446
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: BetI_repressible_promoter  # Stage 3: NOT (Repressed by P17446)
+    - cistron:
+        label: output_T
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,22 @@
+construct:
+  name: "lac_inducible_peptide_expression"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_peptide
+        expression: high
+        gene:
+          id: peptide
+    - spacer: 30
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: T7term

@@ -1,0 +1,32 @@
+construct:
+  name: "mammalian_non_viral_cytokine_reporter"
+  host: HEK293
+  backbone:
+    resistance: none # Strictly avoided antibiotic resistance genes as requested
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human promoter used to avoid viral elements like CMV
+    - cistron:
+        label: immunomodulatory_cytokine
+        expression: high
+        gene:
+          id: P22301 # Human Interleukin-10
+          source: uniprot
+    - spacer: 585 # Length for EMCV-IRES; note: IRES is viral but included per specific request
+    - cistron:
+        label: cell_surface_reporter
+        expression: medium
+        fused: false # Independent translation via IRES
+        gene:
+          id: P01730 # Human CD4 surface marker
+          source: uniprot
+    - spacer: 585 # Second IRES for non-viral selection marker
+    - cistron:
+        label: selection_marker
+        expression: low
+        fused: false
+        gene:
+          id: P00374 # Human Dihydrofolate reductase (DHFR) for methotrexate selection
+          source: uniprot
+    - terminator: bGH_PA

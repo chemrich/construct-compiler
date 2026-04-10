@@ -1,0 +1,50 @@
+construct:
+  name: "PPI_module_operon_IntABCDE"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: IntA
+        expression: high
+        chain:
+          - gene:
+              id: IntA
+              source: uniprot
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: IntB
+        expression: medium
+        fused: false # Synthetic IRES-like sequences approximated by independent RBS/translation initiation
+        gene:
+          id: IntB
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: IntC
+        expression: high
+        fused: false
+        gene:
+          id: IntC
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: IntD
+        expression: medium
+        fused: false # Synthetic IRES-like sequences approximated by independent RBS/translation initiation
+        gene:
+          id: IntD
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: IntE
+        expression: high
+        fused: false
+        gene:
+          id: IntE
+          source: uniprot
+    - terminator: rrnB_T1

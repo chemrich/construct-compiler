@@ -1,0 +1,41 @@
+construct:
+  name: "mammalian_bistable_toggle_switch"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE3G  # Repressed by TetR; Tet-Off/On system component
+    - cistron:
+        label: state_P1_secretion_output
+        expression: high
+        chain:
+          - tag: IgK_leader  # Mammalian secretion signal
+          - gene:
+              id: P01241     # Human Growth Hormone (hGH)
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: state_P1_repressor
+        expression: medium
+        fused: false         # Independent translation via IRES/2A
+        gene:
+          id: Q83RE7         # CymR repressor
+          source: uniprot
+    - terminator: bGH_PA
+
+    - promoter: CMV_CuO      # Repressed by CymR; Cumate-controlled promoter
+    - cistron:
+        label: state_P2_reporter
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: state_P2_repressor
+        expression: medium
+        fused: false         # Independent translation via IRES/2A
+        gene:
+          id: P04483         # TetR repressor
+          source: uniprot
+    - terminator: bGH_PA

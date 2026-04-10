@@ -1,0 +1,27 @@
+construct:
+  name: "bacillus_subtilis_amyE_replacement_sacB"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: AmyE_native
+    - cistron:
+        label: amylase_payload
+        expression: high
+        chain:
+          - tag: AmyE_signal  # Native signal peptide as requested
+          - gene:
+              id: P00691      # Bacillus subtilis alpha-amylase (AmyE)
+              source: uniprot
+    - spacer: 50
+    - promoter: sacB_native   # Native sacB promoter for counter-selection
+    - cistron:
+        label: sacB_counterselection
+        expression: medium
+        fused: false          # Independent translation unit
+        gene:
+          id: P05655          # Bacillus subtilis Levansucrase (SacB)
+          source: uniprot
+    - terminator: BBa_B0015   # Standard double terminator for Bacillus systems

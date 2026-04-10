@@ -263,7 +263,7 @@ python evals/run_eval.py -j 5 --rpm 15
 *   **Gemini Paid Tier / Internal Projects:** Typically **360 RPM** or higher. You can increase concurrency (e.g., `-j 10`) and RPM accordingly.
 *   If you set concurrency but not RPM, the script auto-calculates a limit of `max(30, concurrency * 8)`.
 
-Four prompt corpora are included (1750 prompts total across 10 categories):
+Five prompt corpora are included:
 
 | Corpus | File | Description |
 |--------|------|-------------|
@@ -271,8 +271,11 @@ Four prompt corpora are included (1750 prompts total across 10 categories):
 | v2 | `evals/prompt_corpus_v2.yaml` | Fresh 250 prompts (holdout validation) |
 | v3 | `evals/prompt_corpus_v3.yaml` | Fresh 250 prompts (includes split-GFP tags) |
 | v4 | `evals/prompt_corpus_v4.yaml` | Expanded corpus with 1000 prompts |
+| Baseline 1000 | `evals/prompt_corpus_baseline_1000.yaml` | 1000 prompts across 10 personas (baseline calibration) |
 
 Categories: basic, tags, polycistronic, edge_cases, constraints, realistic, mammalian, lentiviral, stress, robustness. Results are written to `evals/results/` as structured JSON.
+
+For detailed evaluation results and persona breakdowns, see [evals/README.md](evals/README.md).
 
 ### Test suite
 

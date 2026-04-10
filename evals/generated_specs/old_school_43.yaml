@@ -1,0 +1,26 @@
+construct:
+  name: "T7_GST_Complex_Coexpression"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: subunit_1
+        expression: high
+        chain:
+          - solubility_tag: GST
+          - gene:
+              id: target_protein_1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: subunit_2
+        expression: high
+        fused: false
+        gene:
+          id: target_protein_2
+          source: uniprot
+    - terminator: T7term

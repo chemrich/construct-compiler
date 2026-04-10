@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_genomic_integration_dual_cassette"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: selection_marker
+        expression: medium
+        gene:
+          id: HIS3
+          source: uniprot
+    - terminator: CYC1
+    - spacer: 50
+    - promoter: TDH3
+    - cistron:
+        label: target_gene
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: ADH1

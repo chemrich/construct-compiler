@@ -1,0 +1,23 @@
+construct:
+  name: "human_CD80_insect_non_viral"
+  host: Sf9
+  backbone:
+    # Strict exclusion of antibiotic resistance elements requested. 
+    # Note: Using 'none' to override the default kanamycin requirement.
+    resistance: none
+    ori: pUC
+    source: custom
+
+  cassette:
+    - promoter: Actin5C  # Strong non-viral constitutive insect promoter (Drosophila)
+
+    - cistron:
+        label: immunomodulator
+        expression: high
+        chain:
+          - tag: HBM_signal_peptide  # Honeybee melittin signal peptide for efficient insect cell secretion/targeting
+          - gene:
+              id: P33681  # UniProt ID for Human T-lymphocyte activation antigen CD80
+              source: uniprot
+
+    - terminator: Hsp70_terminator  # Non-viral insect-compatible terminator/polyA signal

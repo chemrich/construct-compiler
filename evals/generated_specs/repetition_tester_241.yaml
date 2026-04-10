@@ -1,0 +1,22 @@
+construct:
+  name: secreted_EGF_EGFR_fusion_construct
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: receptor_ligand_fusion
+        expression: high
+        chain:
+          - tag: IgK_leader  # Unique secretion signal for mammalian expression
+          - gene:
+              id: EGF
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK  # Rigid linker chosen to prevent deletions associated with repetitive GS-linkers
+              repeats: 2
+          - gene:
+              id: EGFR
+              source: uniprot
+    - terminator: bGH_pA  # Bovine growth hormone polyA signal, providing a non-repetitive termination sequence compared to simple poly-A tracks

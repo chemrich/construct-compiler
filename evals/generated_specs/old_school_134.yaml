@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_proteinK_proteinL_coexpression_dual_cassette"
+  host: yeast
+  # The user requested two plasmids; combined into a single dual-cassette plasmid as the spec supports one construct document.
+  backbone:
+    resistance: HIS3
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: ADH1
+    - cistron:
+        label: proteinK
+        gene:
+          id: proteinK
+          source: uniprot
+    - terminator: CYC1_term
+    - spacer: 40
+    - promoter: TEF1
+    - cistron:
+        label: proteinL
+        fused: false
+        gene:
+          id: proteinL
+          source: uniprot
+    - terminator: ADH1_term

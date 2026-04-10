@@ -1,0 +1,15 @@
+construct:
+  name: "C_S_Logic_Antitoxin_Sensor"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: "pAND_C_S"  # Logic: Promoter requires Contaminant 'C' AND Safety Signal 'S' for activation
+    - cistron:
+        label: "antitoxin_T"
+        expression: high
+        chain:
+          - gene:
+              id: "P07102"  # CcdA antitoxin
+              source: uniprot
+    - terminator: "rrnB_T1"

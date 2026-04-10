@@ -1,0 +1,27 @@
+construct:
+  name: "triple_gRNA_HEK293_tRNA_processed"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: U6 # U6 is the standard Pol III promoter for gRNA expression in mammalian cells
+    - cistron:
+        label: gRNA1
+        expression: high
+        gene:
+          id: gRNA1
+    - spacer: 72 # 72bp spacer simulates a tRNA processing site for polycistronic gRNA release
+    - cistron:
+        label: gRNA2
+        expression: high
+        fused: false
+        gene:
+          id: gRNA2
+    - spacer: 72 # 72bp spacer simulates a tRNA processing site for polycistronic gRNA release
+    - cistron:
+        label: gRNA3
+        expression: high
+        fused: false
+        gene:
+          id: gRNA3
+    - terminator: BBa_B0015

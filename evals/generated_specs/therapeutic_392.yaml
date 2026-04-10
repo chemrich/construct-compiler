@@ -1,0 +1,23 @@
+construct:
+  name: "mitochondrial_human_enzyme_tracker"
+  host: HEK293
+  backbone:
+    resistance: none  # User requested no antibiotic resistance; substituted with none
+    ori: pBR322       # Non-viral origin
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral constitutive mammalian promoter
+    - cistron:
+        label: mito_enzyme_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: P04179  # Human SOD2 (Superoxide dismutase, mitochondrial)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: bGH_pA  # Bovine growth hormone polyadenylation signal (non-viral)

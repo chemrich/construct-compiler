@@ -1,0 +1,27 @@
+construct:
+  name: "tet_on_inducible_reporter_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE
+    - cistron:
+        label: inducible_reporter
+        expression: high
+        chain:
+          - gene:
+              id: luciferase
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: mEGFP
+    - terminator: bGH_pA
+    - promoter: EF1_alpha
+    - cistron:
+        label: rtTA_driver
+        expression: medium
+        gene:
+          id: rtTA
+          source: uniprot
+    - terminator: SV40_pA

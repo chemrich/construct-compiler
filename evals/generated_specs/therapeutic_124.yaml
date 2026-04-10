@@ -1,0 +1,34 @@
+construct:
+  name: "Mammalian_NonViral_Polycistronic_Immunomodulator"
+  host: HEK293
+  backbone:
+    resistance: kanamycin  # Necessary for bacterial propagation
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha  # Human promoter used to avoid viral CMV
+    - cistron:
+        label: IL2_purification
+        expression: medium
+        chain:
+          - gene:
+              id: P60568
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 8xHis
+    - spacer: 40  # Required for polycistronic spacing
+    - cistron:
+        label: IL10_purification
+        expression: medium
+        fused: false  # Enables independent translation from single mRNA
+        chain:
+          - gene:
+              id: P22301
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: Twin-Strep
+    - terminator: hGH_polyA  # Human growth hormone polyadenylation signal (non-viral)

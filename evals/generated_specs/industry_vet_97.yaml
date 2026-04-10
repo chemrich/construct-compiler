@@ -1,0 +1,16 @@
+construct:
+  name: "CAG_optimized_mammalian_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CAG
+    - cistron:
+        label: target
+        expression: high  # Setting expression to high for mammalian hosts triggers a strong Kozak sequence (GCCACC)
+        chain:
+          - gene:
+              id: P04406
+              source: uniprot
+          - tag: 6xHis
+    - terminator: bGH_pA

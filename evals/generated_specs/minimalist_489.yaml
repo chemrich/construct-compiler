@@ -1,0 +1,24 @@
+construct:
+  name: "mammalian_bicistronic_secretion_x_y"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: secreted_protein_x
+        expression: high
+        chain:
+          - tag: IgK_leader
+          - gene:
+              id: Protein_X
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_y
+        expression: medium
+        fused: false
+        gene:
+          id: Protein_Y
+          source: uniprot
+    - terminator: bGH_polyA

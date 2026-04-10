@@ -1,0 +1,26 @@
+construct:
+  name: bicistronic_ompA_protein_A_B
+  host: e_coli
+  backbone:
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: protein_a_secreted
+        expression: high
+        chain:
+          - tag: ompA
+          - gene:
+              id: Protein_A
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: protein_b
+        expression: high
+        fused: false
+        gene:
+          id: Protein_B
+          source: uniprot
+    - terminator: T7term

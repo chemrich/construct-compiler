@@ -1,0 +1,16 @@
+construct:
+  name: "P_ESS_Negative_Feedback_Loop"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Note: Robust autoregulation typically requires a promoter with operator sites (e.g., TetO) bound by P_ESS
+    - cistron:
+        label: P_ESS_target
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: P_ESS
+              source: uniprot
+    - terminator: bGH_pA

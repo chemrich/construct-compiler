@@ -1,0 +1,27 @@
+construct:
+  name: "positive_feedback_amplification_loop"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: UAS # Responsive to Gal4-VP16 for amplification
+    - cistron:
+        label: transactivator_amplifier
+        expression: high
+        chain:
+          - gene:
+              id: Gal4_VP16 # Synthetic transactivator fusion
+    - terminator: SV40_PA
+    - spacer: 100
+    - promoter: UAS # Feedback loop drives output of growth factor
+    - cistron:
+        label: growth_factor_output
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal for mammalian host
+          - gene:
+              id: P01343
+              source: uniprot # Human IGF-1
+    - terminator: bGH_PA

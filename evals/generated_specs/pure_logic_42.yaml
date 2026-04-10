@@ -1,0 +1,26 @@
+construct:
+  name: "therapeutic_or_gate_secretion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac # Input signal S1
+    - cistron:
+        label: therapeutic_s1
+        expression: high
+        chain:
+          - tag: PelB # Secretion signal for E. coli
+          - gene:
+              id: P01241 # Human Growth Hormone (hGH)
+              source: uniprot
+    - terminator: T7term
+    - promoter: araBAD # Input signal S2
+    - cistron:
+        label: therapeutic_s2
+        expression: high
+        chain:
+          - tag: PelB
+          - gene:
+              id: P01241
+              source: uniprot
+    - terminator: rrnB_T1

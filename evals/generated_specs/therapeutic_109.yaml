@@ -1,0 +1,19 @@
+construct:
+  name: "nonviral_nuclear_therapeutic_expression_system"
+  host: HEK293
+  backbone:
+    # User requested no antibiotic resistance; using 'none' to signify a minicircle or metabolic complementation approach
+    resistance: none
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Robust, non-viral human promoter for high-level expression
+    - cistron:
+        label: nuclear_therapeutic
+        expression: high
+        chain:
+          - tag: NLS  # Nuclear Localization Signal for targeted transport
+          - gene:
+              id: P04637  # Human TP53 as a representative therapeutic protein
+              source: uniprot
+    - terminator: hGH_polyA  # Human-derived polyadenylation signal to ensure no viral components are used

@@ -1,0 +1,27 @@
+construct:
+  name: "yeast_genetic_bandpass_filter"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1  # Activated by Galactose (Input S)
+    - cistron:
+        label: repressor_tetR
+        gene:
+          id: P04483
+          source: uniprot
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: GAL1_tetO  # Activated by Galactose, repressed by TetR (Incoherent Feed-Forward Loop)
+    - cistron:
+        label: output_R
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: SUMO
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: ADH1_term

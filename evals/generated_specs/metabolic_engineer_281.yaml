@@ -1,0 +1,53 @@
+construct:
+  name: "yeast_ergosterol_pathway_ho_integration"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene # Standard for HO-integration plasmids (e.g., pHO-Pol-kanMX-LacZ)
+  cassette:
+    - promoter: GAL1 # Galactose-inducible promoter for yeast
+    - cistron:
+        label: erg1
+        expression: medium
+        gene:
+          id: P32377
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: erg3
+        expression: medium
+        fused: false
+        gene:
+          id: P32357
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: erg6
+        expression: medium
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P38444
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: erg9
+        expression: medium
+        fused: false
+        gene:
+          id: P29704
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: erg11
+        expression: medium
+        fused: false
+        gene:
+          id: P10614
+          source: uniprot
+    - terminator: CYC1 # Standard yeast terminator; BBa_B0015 also acceptable

@@ -1,0 +1,18 @@
+construct:
+  name: "non_viral_antibiotic_free_egf_expression"
+  host: e_coli
+  backbone:
+    resistance: none # User requested no antibiotic resistance; requires metabolic selection (e.g., auxotrophy) or toxin-antitoxin systems.
+    ori: pBR322
+  cassette:
+    - promoter: tac # Bacterial tac promoter used instead of T7 to satisfy 'no viral sequences' constraint.
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Enterokinase
+          - gene:
+              id: P01133
+              source: uniprot
+    - terminator: rrnB_T1 # Bacterial terminator used instead of T7term to avoid viral sequences.

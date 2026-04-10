@@ -1,0 +1,27 @@
+construct:
+  name: "sustained_input_memory_switch"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac
+    - cistron:
+        label: integrator_recombinase
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P0C6T1
+              source: uniprot
+    - spacer: 45
+    - cistron:
+        label: output_z
+        expression: high
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

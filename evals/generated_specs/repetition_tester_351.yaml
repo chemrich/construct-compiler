@@ -1,0 +1,32 @@
+construct:
+  name: yeast_tricolor_2a_polyprotein
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: gfp_segment
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - cistron:
+        label: bfp_segment
+        fused: true
+        chain:
+          - cleavage_site: P2A
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - cistron:
+        label: rfp_segment
+        fused: true
+        chain:
+          - cleavage_site: T2A
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: CYC1

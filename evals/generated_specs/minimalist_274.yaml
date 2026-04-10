@@ -1,0 +1,18 @@
+construct:
+  name: "protein_p_short_half_life_degradation"
+  host: e_coli_bl21_de3
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - gene:
+              id: P
+              source: uniprot
+          - tag: SsrA  # Added SsrA tag to C-terminus for rapid proteolysis in E. coli
+    - terminator: T7term

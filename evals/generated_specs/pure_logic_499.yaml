@@ -1,0 +1,14 @@
+construct:
+  name: "conditional_cell_elimination_logic_gate"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: TRE_LacO # Hybrid promoter: TRE requires ToxinInducer (Dox), LacO is repressed in presence of SurvivalFactor (via LacI)
+    - cistron:
+        label: toxin_effector
+        expression: high
+        gene:
+          id: BAX
+          source: uniprot
+    - terminator: bGH_PA # Robust mammalian polyadenylation signal

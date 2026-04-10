@@ -1,0 +1,18 @@
+construct:
+  name: "ReceptorR_solubility_enhanced_expression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: ReceptorR
+              source: uniprot
+    - terminator: T7term

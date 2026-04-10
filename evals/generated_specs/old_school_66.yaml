@@ -1,0 +1,25 @@
+construct:
+  name: "tet_inducible_system"
+  host: e_coli
+  backbone:
+    resistance: chloramphenicol
+    ori: p15A
+    source: addgene
+  cassette:
+    - promoter: J23106  # Constitutive promoter for the repressor
+    - cistron:
+        label: tetR_repressor
+        expression: medium
+        gene:
+          id: P03038
+          source: uniprot
+    - terminator: BBa_B0015
+    - spacer: 40
+    - promoter: tet  # Inducible promoter regulated by TetR
+    - cistron:
+        label: target_gene
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

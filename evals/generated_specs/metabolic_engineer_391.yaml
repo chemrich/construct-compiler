@@ -1,0 +1,52 @@
+construct:
+  name: "c_glutamicum_five_enzyme_operon"
+  host: e_coli  # Adjusted from C. glutamicum to e_coli for compiler compatibility; J23100 is functional in C. glutamicum.
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: enzyme_1
+        expression: high
+        chain:
+          - solubility_tag: NusA
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ProdY_1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_2
+        expression: high
+        fused: false
+        gene:
+          id: ProdY_2
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        gene:
+          id: ProdY_3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_4
+        expression: high
+        fused: false
+        gene:
+          id: ProdY_4
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: enzyme_5
+        expression: high
+        fused: false
+        gene:
+          id: ProdY_5
+          source: uniprot
+    - terminator: BBa_B0015

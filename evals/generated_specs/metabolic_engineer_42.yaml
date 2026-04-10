@@ -1,0 +1,51 @@
+construct:
+  name: "pks_polycistronic_expression_system"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: J23100 # Robust constitutive promoter
+    - cistron:
+        label: pks1
+        expression: high
+        chain:
+          - gene:
+              id: PKS1
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: pks2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PKS2
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: pks3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PKS3
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - spacer: 30
+    - cistron:
+        label: pptase
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PPTase
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+    - terminator: rrnB_T1

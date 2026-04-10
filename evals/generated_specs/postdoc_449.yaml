@@ -1,0 +1,17 @@
+construct:
+  name: "protein_s_nuclear_expression_e_coli"
+  host: e_coli_bl21_de3 # Note: E. coli is a prokaryote and lacks a nucleus; NLS is added per user request for C-terminal localization logic.
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - gene:
+              id: S
+              source: uniprot
+          - tag: NLS
+          - tag: c-Myc
+    - terminator: T7term

@@ -1,0 +1,19 @@
+construct:
+  name: "bacillus_lipase_secretion_mbp"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: Pgrac01
+    - cistron:
+        label: secreted_lipase
+        expression: high
+        chain:
+          - tag: LipA_signal_peptide
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: LipA
+              source: uniprot
+    - terminator: rrnB_T1

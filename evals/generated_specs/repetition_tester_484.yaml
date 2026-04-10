@@ -1,0 +1,40 @@
+construct:
+  name: "Binding_Peptide_X_5x_Divergent_Fusion"
+  host: mammalian
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: divergent_tandem_repeat
+        expression: high
+        # Note: Compiler should use maximal codon diversification for each 'Binding_Peptide_X' instance to prevent recombination.
+        chain:
+          - gene:
+              id: Binding_Peptide_X
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: Binding_Peptide_X
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: Binding_Peptide_X
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: Binding_Peptide_X
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: Binding_Peptide_X
+              source: uniprot
+    - terminator: bGH_PA

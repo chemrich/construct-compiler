@@ -1,0 +1,19 @@
+construct:
+  name: "dual_tag_sequential_purification_construct"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: high_purity_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - tag: Twin-Strep
+          - cleavage_site: 3C
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: T7term

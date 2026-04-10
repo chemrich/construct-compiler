@@ -1,0 +1,39 @@
+construct:
+  name: "yeast_surface_dual_display_orthologous"
+  host: yeast
+
+  backbone:
+    resistance: ampicillin
+    ori: 2u
+    source: addgene
+
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: aga2_display_system
+        expression: high
+        chain:
+          - solubility_tag: Aga2
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: CYC1_term
+
+    - spacer: 60
+
+    - promoter: TEF1
+    - cistron:
+        label: cwp2_display_system
+        expression: high
+        chain:
+          - solubility_tag: Cwp2
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: ADH1_term

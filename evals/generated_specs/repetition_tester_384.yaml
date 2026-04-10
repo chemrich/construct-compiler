@@ -1,0 +1,31 @@
+construct:
+  name: "peptideX_triple_synonymous_yeast"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: GPD  # Strong constitutive yeast promoter (TDH3)
+
+    - cistron:
+        label: peptideX_fusion
+        expression: high
+        # To satisfy the requirement for unique DNA, the compiler must use distinct synonymous codons for each gene entry.
+        chain:
+          - gene:
+              id: PeptideX
+          - linker:
+              type: short_GS
+              repeats: 2
+          - gene:
+              id: PeptideX
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: PeptideX
+
+    - terminator: CYC1_term # Standard yeast terminator to ensure DNA uniqueness from promoter/gene sequences

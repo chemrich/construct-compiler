@@ -1,0 +1,18 @@
+construct:
+  name: "non_viral_nuclear_therapeutic_expression"
+  host: HEK293
+  backbone:
+    resistance: none # User requested strict non-antibiotic resistance design
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Selected human EF1-alpha as a strong non-viral constitutive promoter
+    - cistron:
+        label: therapeutic_cargo
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P04637
+              source: uniprot
+    - terminator: hGH_pA # Human growth hormone polyadenylation signal for mammalian termination/processing

@@ -1,0 +1,20 @@
+construct:
+  name: "high_yield_constitutive_GFP_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: J23100  # CMV is a mammalian promoter and will not function in E. coli; substituted with J23100, a strong constitutive bacterial promoter, to meet high-yield requirements.
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

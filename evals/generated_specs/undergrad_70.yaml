@@ -1,0 +1,31 @@
+construct:
+  name: "yeast_dcas9_mxi1_knockdown"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - cistron:
+        label: dCas9_repressor
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: dCas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: Mxi1
+              source: uniprot
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: SNR52  # Strong yeast Pol III promoter for RNA expression
+    - cistron:
+        label: guide_RNA
+        gene:
+          id: sgRNA_scaffold
+    - terminator: SUP4  # Standard Pol III terminator for yeast

@@ -1,0 +1,22 @@
+construct:
+  name: "CAG_mEGFP_IRES_MyGene_Puro"
+  host: mammalian
+  backbone:
+    resistance: puromycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CAG
+    - cistron:
+        label: reporter
+        gene:
+          id: mEGFP
+          source: fpbase
+    - spacer: 585  # Represents the IRES element (e.g., EMCV IRES) for polycistronic expression
+    - cistron:
+        label: target
+        fused: false # Indicates independent translation via the preceding IRES element
+        gene:
+          id: MyGene
+          source: uniprot
+    - terminator: SV40_polyA

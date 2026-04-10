@@ -1,53 +1,31 @@
-```yaml
 construct:
-  name: "tri_cistron_mEGFP_mNeonGreen_mTagBFP2_low_exp"
+  name: "low_toxicity_fluorescent_triplet"
   host: e_coli
-
   backbone:
     resistance: kanamycin
     ori: pBR322
-
   cassette:
-    - promoter: T7lac
-
+    - promoter: J23106  # Anderson promoter for constitutive low expression
     - cistron:
-        label: mEGFP
+        label: egfp_cistron
         expression: low
         gene:
           id: mEGFP
           source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: mNeonGreen
+        label: neongreen_cistron
         expression: low
         fused: false
         gene:
           id: mNeonGreen
           source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: mTagBFP2
+        label: tagbfp2_cistron
         expression: low
         fused: false
         gene:
           id: mTagBFP2
           source: fpbase
-
     - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```

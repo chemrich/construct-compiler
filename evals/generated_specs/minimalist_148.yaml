@@ -1,0 +1,18 @@
+construct:
+  name: "baculovirus_secreted_human_antibody_fragment"
+  host: Sf9
+  backbone:
+    catalog_vector: "pFastBac1"
+  cassette:
+    - promoter: polh
+    - cistron:
+        label: "human_antibody_fragment"
+        expression: high
+        chain:
+          - tag: gp67  # Baculovirus-specific signal peptide for secretion
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01857
+              source: uniprot
+    - terminator: SV40_polyA

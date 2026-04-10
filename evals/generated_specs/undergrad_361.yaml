@@ -1,0 +1,17 @@
+construct:
+  name: "mystery_protein_a_expression"
+  host: e_coli_bl21_de3 # T7 promoter requires a host with T7 RNA polymerase, such as BL21(DE3)
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MysteryProteinA
+              source: uniprot
+    - terminator: T7term

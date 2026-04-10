@@ -1,0 +1,23 @@
+construct:
+  name: "bfp_t7rnap_fusion"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: T7lac  # Default for E. coli per instructions
+    - cistron:
+        label: bfp_t7_fusion
+        expression: high
+        chain:
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P00573
+              source: uniprot
+    - terminator: rrnB_T1

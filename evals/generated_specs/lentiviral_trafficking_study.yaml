@@ -1,40 +1,35 @@
-```yaml
 construct:
-  name: "lentiviral_trafficking_reporter"
-  host: HEK293 # Lentiviral constructs are typically used in mammalian cells like HEK293 for packaging and subsequent stable line generation.
-
+  name: lentiviral_dual_trafficking_reporter
+  host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV" # Best available mammalian catalog vector in the schema. In a true lentiviral vector, this expression cassette would be cloned into a lentiviral backbone (e.g., containing LTRs, packaging signal).
-
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
   cassette:
-    - promoter: CMV # Strong constitutive promoter commonly used for mammalian expression.
-
+    - promoter: EF1_alpha
     - cistron:
-        label: target_protein_mEGFP_fusion
-        expression: high # High expression desired for robust trafficking visualization.
+        label: nuclear_reporter
+        expression: high
         chain:
-          - tag: FLAG # N-terminal FLAG tag for immunological detection or purification.
-          - gene:
-              id: KIF5B # Example of a trafficking protein (Kinesin family member 5B).
-              source: uniprot # UniProt ID for natural proteins.
+          - tag: NLS
           - linker:
-              type: GS_flexible # Flexible linker to separate the two protein domains.
-              repeats: 2
+              type: short_GS
+              repeats: 1
           - gene:
-              id: mEGFP # Green fluorescent protein for tracking.
-              source: fpbase # Fluorescent proteins are sourced from fpbase.
-
-    - terminator: BBa_B0015 # The schema provides bacterial terminators. In mammalian constructs, a polyadenylation signal (e.g., SV40 or bGH polyA) would typically be used for proper mRNA processing and stability. This choice is based on available schema options.
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local # Codon optimization for expression in the HEK293 host.
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
+    - cistron:
+        label: er_reporter
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: SEC61B
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,30 @@
+construct:
+  name: "analog_to_digital_switch"
+  host: e_coli
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: araBAD
+    - cistron:
+        label: reporter_B_high_signal
+        expression: high
+        gene:
+          id: mScarlet
+          source: fpbase
+    - spacer: 30
+    - cistron:
+        label: inverter_lacI
+        expression: high
+        fused: false
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - promoter: lacUV5
+    - cistron:
+        label: reporter_A_low_signal
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

@@ -1,0 +1,16 @@
+construct:
+  name: "environmental_niche_self_destruct"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV  # Represents the constitutive expression logic triggered by the niche-sensing circuit
+    - cistron:
+        label: apoptosis_inducer
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: P55957  # Human BAX (Apoptosis regulator BAX)
+              source: uniprot
+    - terminator: SV40_polyA

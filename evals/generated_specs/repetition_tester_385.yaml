@@ -1,0 +1,23 @@
+construct:
+  name: dual_reporter_distinct_terminators
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gfp_reporter
+        expression: high
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: bGH_pA # First non-homologous terminator sequence
+    - spacer: 50 # Physical separation between independent expression cassettes
+    - promoter: CMV # Re-use of the same strong promoter for the second unit
+    - cistron:
+        label: mcherry_reporter
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: SV40_pA # Second distinct, non-homologous terminator sequence

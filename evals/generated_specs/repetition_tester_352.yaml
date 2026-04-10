@@ -1,0 +1,20 @@
+construct:
+  name: "poi_nusa_insect_fusion"
+  host: Sf9  # Insect cell line for use with Baculovirus expression systems
+  backbone:
+    catalog_vector: "pFastBac1"
+    resistance: gentamicin
+  cassette:
+    - promoter: Polh  # Strong polyhedrin promoter for insect cells
+    - cistron:
+        label: nusa_target_fusion
+        expression: high
+        chain:
+          - solubility_tag: NusA
+          - linker:
+              type: GS_flexible
+              repeats: 4  # Sequence-diverse flexible linker
+          - gene:
+              id: POI
+              source: uniprot
+    - terminator: SV40_polyA

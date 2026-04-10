@@ -1,0 +1,40 @@
+construct:
+  name: "therapeutic_coexpression_chaperone_system"
+  host: e_coli_bl21
+  backbone:
+    resistance: none # User requested no antibiotic resistance; requires auxotrophic or toxin-antitoxin selection
+    ori: pBR322
+    source: custom
+  cassette:
+    - promoter: tac # Inducible bacterial promoter used to avoid viral-derived T7 systems
+    - cistron:
+        label: therapeutic_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP # MBP included to assist with human protein folding in E. coli
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P00766 # Human Alpha-1-antitrypsin (SERPINA1)
+              source: uniprot
+    - spacer: 45
+    - promoter: J23100 # Constitutive promoter for chaperone system
+    - cistron:
+        label: chaperone_dnak
+        expression: medium
+        fused: false
+        gene:
+          id: P0A6Y8 # E. coli DnaK
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: chaperone_dnaj
+        expression: medium
+        fused: false
+        gene:
+          id: P08622 # E. coli DnaJ
+          source: uniprot
+    - terminator: rrnB_T1

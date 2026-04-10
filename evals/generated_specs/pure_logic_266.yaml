@@ -1,0 +1,25 @@
+construct:
+  name: "positive_feedback_hysteresis_module"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD  # Ligand J (Arabinose) triggers initial expression of Protein R
+    - cistron:
+        label: protein_R_trigger
+        expression: medium
+        gene:
+          id: P00573  # T7 RNA Polymerase (Protein R)
+          source: uniprot
+    - spacer: 40
+    - promoter: T7  # Protein R (T7 polymerase) binds here to create self-sustaining feedback
+    - cistron:
+        label: protein_R_sustainer
+        expression: high
+        fused: false
+        gene:
+          id: P00573
+          source: uniprot
+    - terminator: T7term

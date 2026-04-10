@@ -1,0 +1,22 @@
+construct:
+  name: "CHO_secreted_antibody_Fc_fusion"
+  host: CHO
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: antibody_Fc_fusion
+        expression: high
+        chain:
+          - tag: Albumin_signal_peptide
+          - gene:
+              id: antibody_fragment
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01857
+              source: uniprot
+    - terminator: bGH_PA

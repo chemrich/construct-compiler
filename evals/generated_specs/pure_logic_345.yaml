@@ -1,0 +1,46 @@
+construct:
+  name: "sequential_logic_circuit_abc"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: step_a_enzyme
+        expression: high
+        chain:
+          - gene:
+              id: P00688
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: step_b_enzyme
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: P00722
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: step_c_enzyme
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: P08659
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    - terminator: T7term # Sequential logic timing (A -> off -> B -> off -> C) is assumed to be controlled by external induction timing or secondary regulatory elements not explicitly defined in the structural schema.

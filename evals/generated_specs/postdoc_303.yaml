@@ -1,0 +1,28 @@
+construct:
+  name: yeast_bicistronic_strep_coexpression
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Strong constitutive promoter for high expression in yeast
+    - cistron:
+        label: protein_a
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: PROTEIN_A
+              source: uniprot
+    - spacer: 40  # Spacer for bicistronic architecture
+    - cistron:
+        label: protein_b
+        expression: high
+        fused: false  # Enables independent translation (e.g., via IRES or internal initiation)
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: PROTEIN_B
+              source: uniprot
+    - terminator: CYC1

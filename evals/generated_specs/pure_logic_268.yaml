@@ -1,0 +1,24 @@
+construct:
+  name: "signal_amplification_cascade_HEK293"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: sensor_receptor
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: "P04386"
+              source: uniprot
+    - terminator: bGH_polyA
+    - promoter: UAS
+    - cistron:
+        label: output_T
+        expression: high
+        gene:
+          id: "protein_T"
+          source: uniprot
+    - terminator: bGH_polyA

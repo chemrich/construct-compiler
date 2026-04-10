@@ -1,0 +1,26 @@
+construct:
+  name: "circadian_pulsed_antibody_oscillator"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: Per2  # Mammalian circadian promoter driving ~24h rhythmic expression
+    - cistron:
+        label: "heavy_chain"
+        expression: high
+        chain:
+          - tag: Ig_kappa_signal  # N-terminal secretion signal for mammalian export
+          - gene:
+              id: Rituximab_HC
+              source: uniprot
+    - spacer: 580  # IRES (Internal Ribosome Entry Site) for bicistronic translation
+    - cistron:
+        label: "light_chain"
+        expression: high
+        fused: false  # Independently translated via IRES
+        chain:
+          - tag: Ig_kappa_signal  # N-terminal secretion signal for mammalian export
+          - gene:
+              id: Rituximab_LC
+              source: uniprot
+    - terminator: bGH_polyA

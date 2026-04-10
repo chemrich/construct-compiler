@@ -1,0 +1,20 @@
+construct:
+  name: "e_coli_secretion_self_cleave_sfGFP"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+  cassette:
+    - promoter: J23114  # Minimal constitutive promoter
+    - cistron:
+        label: "secreted_target"
+        expression: very_low  # Approximating 'no RBS' requirement by using a minimal translation initiation site
+        chain:
+          - gene:
+              id: pelB
+              source: uniprot
+          - cleavage_site: T2A  # Self-cleaving peptide for auto-cleavage
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1

@@ -1,0 +1,19 @@
+construct:
+  name: "pichia_hsa_secretion_fld1"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: FLD1  # Inducible by methylamine to avoid methanol safety concerns
+    - cistron:
+        label: hsa_target
+        expression: high
+        chain:
+          - tag: alpha_factor  # Secretion signal for yeast
+          - tag: FLAG
+          - gene:
+              id: P02763
+              source: uniprot
+    - terminator: AOX1_term

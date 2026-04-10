@@ -1,0 +1,25 @@
+construct:
+  name: "ProteinX_sfGFP_fusion_TEV"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: fusion_protein
+        expression: high
+        chain:
+          - gene:
+              id: ProteinX
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - cleavage_site: TEV  # Compiler: Use rare codon-optimization for site differentiation
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: bGH_polyA

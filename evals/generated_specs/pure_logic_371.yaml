@@ -1,0 +1,26 @@
+construct:
+  name: "Mammalian_Gene_Switch_Therap_X"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: transactivator_driver
+        expression: medium
+        gene:
+          id: rtTA3
+          source: uniprot
+    - terminator: SV40_polyA
+    - spacer: 100
+    - promoter: TRE3G  # Inducible promoter tunable by Drug_Input_A (Doxycycline)
+    - cistron:
+        label: target_therapeutic
+        expression: high
+        chain:
+          - tag: IgK_leader  # Secretion signal for mammalian hosts
+          - tag: 6xHis
+          - gene:
+              id: Therap_X
+              source: uniprot
+    - terminator: bGH_polyA

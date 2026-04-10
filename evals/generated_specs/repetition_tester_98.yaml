@@ -1,0 +1,33 @@
+construct:
+  name: "non_homologous_domain_swap_scaffold"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: domain_swap_fusion
+        expression: high
+        chain:
+          # N-terminal purification tag
+          - tag: 6xHis
+          # Domain 1 insertion site (represented by MBP)
+          - solubility_tag: MBP
+          # Non-homologous Linker 1
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          # Domain 2 insertion site (represented by GST)
+          - solubility_tag: GST
+          # Non-homologous Linker 2 (rigid to ensure zero homology with Linker 1)
+          - linker:
+              type: rigid_EAAAK
+              repeats: 4
+          # Domain 3 insertion site (represented by mEGFP)
+          - gene:
+              id: mEGFP
+              source: fpbase
+        # Note: Specific non-palindromic restriction sites for insertion are omitted
+        # as the schema focuses on protein components; non-homologous domains and
+        # linkers are used here to prevent recombination.
+    - terminator: T7term

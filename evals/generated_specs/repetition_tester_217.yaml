@@ -1,0 +1,42 @@
+construct:
+  name: yeast_triple_diverse_degron_expression
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3
+    - cistron:
+        label: target_a_fusion
+        expression: high
+        chain:
+          - gene:
+              id: TargetA
+              source: uniprot
+          - tag: DegTag_Variant_1
+    - terminator: ADH1
+    - spacer: 50
+    - promoter: TEF1
+    - cistron:
+        label: target_b_fusion
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: TargetB
+              source: uniprot
+          - tag: DegTag_Variant_2
+    - terminator: CYC1
+    - spacer: 50
+    - promoter: CCW12
+    - cistron:
+        label: target_c_fusion
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: TargetC
+              source: uniprot
+          - tag: DegTag_Variant_3
+    - terminator: ENO2

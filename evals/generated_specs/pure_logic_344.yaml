@@ -1,0 +1,25 @@
+construct:
+  name: "heavy_metal_threshold_detector"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+  cassette:
+    - promoter: pZntA  # Metal-responsive promoter (Pb2+, Cd2+, Zn2+) acting as the primary sensor
+    - cistron:
+        label: threshold_activator
+        expression: medium
+        gene:
+          id: P00552
+          source: uniprot  # T7 RNA Polymerase (activator for switch-like amplification)
+    - spacer: 40
+    - promoter: T7  # High-affinity T7 promoter provides the digital/switch-like threshold response
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false  # Independently translated to produce the reporter protein only when threshold is met
+        gene:
+          id: sfGFP
+          source: fpbase
+    - terminator: rrnB_T1

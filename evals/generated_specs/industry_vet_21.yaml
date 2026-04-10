@@ -1,0 +1,22 @@
+construct:
+  name: "mammalian_therapeutic_expression_system"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        gene:
+          id: P01588 # Human Erythropoietin (EPO) as a representative therapeutic protein
+          source: uniprot
+    - spacer: 574 # Representing the IRES sequence for independent translation of the reporter
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false # Ensures independent translation via IRES
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BGH_polyA # Configuration includes WPRE element prior to the BGH polyA signal for mRNA stability

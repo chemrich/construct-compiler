@@ -1,0 +1,21 @@
+construct:
+  name: "therapeutic_cpp_non_viral_expression"
+  host: HEK293
+  backbone:
+    resistance: none # User requested no antibiotic resistance markers for therapeutic application
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Human promoter used as a non-viral alternative to CMV
+    - cistron:
+        label: therapeutic_fusion
+        expression: high
+        chain:
+          - tag: Poly-Arg # Synthetic cell-penetrating peptide (non-viral)
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P04637 # Human TP53 (Tumor protein p53)
+              source: uniprot
+    - terminator: hGH_pA # Human growth hormone polyadenylation signal (non-viral)

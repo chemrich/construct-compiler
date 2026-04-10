@@ -1,0 +1,24 @@
+construct:
+  name: yeast_promoter_strength_test_CAT
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GPD  # Strong constitutive yeast promoter (also known as TDH3 promoter)
+    - cistron:
+        label: CAT_reporter
+        expression: high
+        gene:
+          id: P62577
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: URA3_marker
+        expression: medium
+        fused: false
+        gene:
+          id: P03315
+          source: uniprot
+    - terminator: CYC1_term

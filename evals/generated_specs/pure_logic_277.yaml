@@ -1,0 +1,24 @@
+construct:
+  name: "spatial_patterning_shh_circuit"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: factor_u_sender
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal for mammalian export
+          - gene:
+              id: SHH
+              source: uniprot
+    - terminator: bGH_pA
+    - promoter: GLI_responsive # GLI-RE responding to SHH signaling
+    - cistron:
+        label: protein_v_reporter
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: SV40_pA

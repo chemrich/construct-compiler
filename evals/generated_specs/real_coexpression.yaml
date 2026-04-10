@@ -1,32 +1,22 @@
-```yaml
 construct:
-  name: "scFv_light_heavy_coexpression"
+  name: antibody_fragment_coexpression
   host: e_coli
-
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
-
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: scFv_A_light_chain
+        label: light_chain_scFv_A
         expression: medium
-        fused: false
         gene:
-          id: scFv-A # Custom gene; sequence assumed to be provided to compiler externally, as direct sequence inclusion is not supported.
-
+          id: scFv-A
     - spacer: 30
-
     - cistron:
-        label: mEGFP_heavy_chain_placeholder
+        label: heavy_chain_placeholder
         expression: medium
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-
     - terminator: rrnB_T1
-```

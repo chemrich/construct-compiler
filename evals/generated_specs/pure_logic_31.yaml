@@ -1,0 +1,49 @@
+construct:
+  name: "mammalian_genetic_cascade_amplifier"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: EF1_alpha  # Weak constitutive promoter for initial input Stage P
+    - cistron:
+        label: stage_p_input
+        expression: low
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P03006  # TetR transactivator component
+              source: uniprot
+    - terminator: BBa_B0015
+
+    - promoter: TRE  # Tet-Responsive Element for the first amplification stage
+    - cistron:
+        label: stage_intermediate_1
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P04386  # GAL4 DNA-binding domain component
+              source: uniprot
+    - terminator: BBa_B0015
+
+    - promoter: UAS  # Upstream Activating Sequence for the second amplification stage
+    - cistron:
+        label: stage_intermediate_2
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: P0A7B8  # LexA DNA-binding component
+              source: uniprot
+    - terminator: BBa_B0015
+
+    - promoter: CMV  # Strong promoter for final amplified output Q
+    - cistron:
+        label: stage_q_output
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: BBa_B0015

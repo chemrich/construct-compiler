@@ -1,0 +1,27 @@
+construct:
+  name: "integrase_logic_memory_unit"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: Reporter1
+        gene:
+          id: mCerulean
+          source: fpbase
+    - spacer: 40  # Spacer for insertion of recombinase target sites (e.g., loxP or attB/P)
+    - cistron:
+        label: Reporter2
+        fused: false  # Independently translated to allow expression after DNA rearrangement
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: T7term
+    - promoter: araBAD  # Inducible promoter to simulate the transient pulse of integrase
+    - cistron:
+        label: X_integrase
+        gene:
+          id: P06956  # Cre recombinase (UniProt P06956) used as the site-specific integrase
+          source: uniprot
+    - terminator: BBa_B0015

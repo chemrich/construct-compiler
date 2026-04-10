@@ -1,0 +1,25 @@
+construct:
+  name: "dual_promoter_puro_peptide_mammalian"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: EF1_alpha
+    - cistron:
+        label: selection_marker
+        gene:
+          id: P13249
+          source: uniprot
+    - terminator: bGH_polyA
+    - spacer: 50
+    - promoter: U6
+    - cistron:
+        label: internal_peptide
+        chain:
+          - tag: NLS
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - terminator: SV40_polyA

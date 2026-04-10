@@ -1,0 +1,28 @@
+construct:
+  name: pichia_metabolic_dual_enzyme_expression
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: PGAP
+    - cistron:
+        label: enzyme_a_cistron
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - gene:
+              id: enzyme_A
+              source: uniprot
+    - terminator: AOX1_term
+    - promoter: PGAP
+    - cistron:
+        label: enzyme_b_cistron
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: enzyme_B
+              source: uniprot
+    - terminator: AOX1_term

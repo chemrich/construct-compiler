@@ -1,0 +1,19 @@
+construct:
+  name: "Therapeutic_hGH_Soluble_System"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin # Kanamycin included to satisfy schema; antibiotic-free production suggested via alternative selection (e.g., complementation) for clinical grades.
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: tac # Bacterial inducible promoter used to avoid T7-related viral components and ensure robustness.
+    - cistron:
+        label: target_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P01241
+              source: uniprot
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+    - terminator: rrnB_T1

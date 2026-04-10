@@ -1,0 +1,23 @@
+construct:
+  name: "Px_Py_P2A_balanced_expression"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: protein_x
+        expression: high
+        gene:
+          id: Px
+          source: uniprot
+    - cistron:
+        label: protein_y
+        expression: high
+        fused: true
+        chain:
+          - cleavage_site: P2A
+          - gene:
+              id: Py
+              source: uniprot
+    - terminator: SV40_polyA

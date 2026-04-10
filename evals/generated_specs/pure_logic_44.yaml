@@ -1,0 +1,30 @@
+construct:
+  name: "negative_feedback_p_control"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: lacUV5  # Repressed by the product LacI
+    - cistron:
+        label: activator
+        expression: medium
+        gene:
+          id: luxR
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: product_p
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI  # Acts as the feedback repressor P
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: rrnB_T1

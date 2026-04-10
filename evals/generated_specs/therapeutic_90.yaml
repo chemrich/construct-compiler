@@ -1,0 +1,22 @@
+construct:
+  name: "human_transmembrane_inducible_nonviral"
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: TRE  # Inducible Tetracycline Response Element, non-viral origin
+    - cistron:
+        label: target_receptor
+        expression: high
+        chain:
+          - tag: IgK_leader  # Signal peptide for ER insertion/transmembrane targeting
+          - gene:
+              id: ADRB2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 8xHis  # C-terminal purification tag
+    - terminator: hGH_pA  # Human growth hormone polyadenylation signal, non-viral

@@ -1,0 +1,18 @@
+construct:
+  name: "yeast_secretion_secretstuff"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TEF1  # Robust constitutive yeast promoter
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: alpha_factor  # Yeast alpha-mating factor secretion signal
+          - gene:
+              id: SecretStuff
+              source: uniprot
+    - terminator: CYC1  # Robust yeast terminator

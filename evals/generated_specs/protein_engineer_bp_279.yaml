@@ -1,0 +1,24 @@
+construct:
+  name: "bacillus_secretion_efficiency_screen"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: Spac
+    - cistron:
+        label: reporter_hydrolase_fusion
+        expression: high
+        chain:
+          - tag: AmyQ
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: P00692
+              source: uniprot
+    - terminator: rrnB_T1

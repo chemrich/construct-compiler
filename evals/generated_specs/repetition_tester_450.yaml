@@ -1,0 +1,24 @@
+construct:
+  name: "dual_divergent_reporter_system"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: inducible_reporter
+        expression: high
+        gene:
+          id: mNeonGreen
+          source: fpbase
+    - terminator: T7term
+    - spacer: 60
+    - promoter: J23106
+    - cistron:
+        label: internal_control
+        expression: low
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+    - terminator: rrnB_T1

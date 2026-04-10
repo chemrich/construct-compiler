@@ -1,0 +1,19 @@
+construct:
+  name: human_il2_yeast_secretion
+  host: yeast
+  backbone:
+    resistance: none # User requested no antibiotic markers; auxotrophic selection (e.g., URA3) assumed
+    ori: 2_micron
+    source: addgene
+  cassette:
+    - promoter: GAL1 # Strong, regulated yeast promoter (galactose-inducible)
+      cistron:
+        label: secreted_il2
+        expression: high
+        chain:
+          - tag: alpha_factor # Secretion leader sequence for S. cerevisiae
+          - gene:
+              id: IL2
+              source: uniprot
+          - tag: 6xHis # C-terminal purification tag
+      terminator: CYC1 # Standard yeast terminator

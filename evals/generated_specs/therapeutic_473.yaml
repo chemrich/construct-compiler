@@ -1,0 +1,22 @@
+construct:
+  name: "yeast_secretory_scaffold_production"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: scaffold_secretion
+        expression: high
+        chain:
+          - tag: Alpha_MF
+          - gene:
+              id: P41671
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: 6xHis
+    - terminator: CYC1

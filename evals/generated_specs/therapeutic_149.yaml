@@ -1,0 +1,23 @@
+construct:
+  name: "therapeutic_nonviral_tet_on_hEPO"
+  host: HEK293
+  backbone:
+    # Antibiotic-free and viral-free backbone as requested
+    resistance: none
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: TRE3G # Inducible Tet-on promoter (Non-viral)
+    - cistron:
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P01588 # Human Erythropoietin (EPO)
+              source: uniprot
+    - terminator: bGH_PA # Non-viral polyadenylation signal

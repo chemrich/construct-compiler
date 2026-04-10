@@ -1,0 +1,19 @@
+construct:
+  name: mito_protein_y_yeast_expression
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae (also known as GPD)
+    - cistron:
+        label: mito_target
+        expression: high
+        chain:
+          - tag: MTS  # Mammalian mitochondrial targeting sequence as requested
+          - gene:
+              id: MitoProteinY
+              source: uniprot
+          - tag: Strep-II
+    - terminator: CYC1_term  # Standard yeast transcription terminator

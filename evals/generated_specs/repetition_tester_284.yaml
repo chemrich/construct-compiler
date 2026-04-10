@@ -1,0 +1,25 @@
+construct:
+  name: "yeast_dual_inducible_bfp_reporters"
+  host: yeast
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: bfp_gal_inducible
+        expression: high
+        gene:
+          id: mTagBFP2
+          source: fpbase
+    - terminator: CYC1_term
+    - spacer: 50
+    - promoter: CUP1
+    - cistron:
+        label: bfp_copper_inducible
+        expression: high
+        gene:
+          id: EBFP2 # mTagBFP2 and EBFP2 used to ensure sequence diversity as distinct synonymous DNA variants cannot be manually specified
+          source: fpbase
+    - terminator: ADH1_term

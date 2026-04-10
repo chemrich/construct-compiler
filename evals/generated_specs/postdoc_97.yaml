@@ -1,0 +1,42 @@
+construct:
+  name: mammalian_dual_stable_expression_genex_geney
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: gene_x_expression
+        expression: high
+        chain:
+          - gene:
+              id: GeneX
+              source: uniprot
+          - tag: HA
+    - terminator: BGH_pA
+    - promoter: PGK
+    - cistron:
+        label: gene_y_expression
+        expression: high
+        chain:
+          - gene:
+              id: GeneY
+              source: uniprot
+          - tag: Myc
+    - terminator: SV40_pA
+    - promoter: SV40
+    - cistron:
+        label: blasticidin_selection
+        gene:
+          id: bsr
+          source: uniprot
+    - terminator: SV40_pA
+    - promoter: SV40
+    - cistron:
+        label: g418_selection
+        gene:
+          id: nptII
+          source: uniprot
+    - terminator: SV40_pA

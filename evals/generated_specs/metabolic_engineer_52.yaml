@@ -1,0 +1,63 @@
+construct:
+  name: "yeast_cellulose_degradation_system"
+  host: yeast
+
+  backbone:
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
+  cassette:
+    - promoter: GAL1
+    - cistron:
+        label: endoglucanase
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: endoglucanase
+              source: uniprot
+          - tag: HA
+    - terminator: CYC1
+
+    - spacer: 30
+
+    - promoter: GAL1
+    - cistron:
+        label: exoglucanase
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: exoglucanase
+              source: uniprot
+          - tag: HA
+    - terminator: CYC1
+
+    - spacer: 30
+
+    - promoter: GAL1
+    - cistron:
+        label: beta_glucosidase
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: beta_glucosidase
+              source: uniprot
+          - tag: HA
+    - terminator: CYC1
+
+    - spacer: 30
+
+    - promoter: GAL1
+    - cistron:
+        label: cellobiose_phosphorylase
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: cellobiose_phosphorylase
+              source: uniprot
+          - tag: HA
+    - terminator: CYC1

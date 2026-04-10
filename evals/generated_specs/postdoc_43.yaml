@@ -1,0 +1,19 @@
+construct:
+  name: "his_tagged_stable_enzyme_yeast"
+  host: yeast
+  backbone:
+    catalog_vector: "pRS426"
+  cassette:
+    - promoter: TEF1
+    - cistron:
+        label: enzyme_expression
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: target_enzyme
+              source: uniprot
+    - terminator: CYC1_term

@@ -1,0 +1,31 @@
+construct:
+  name: "complex_multidomain_fusion_secretion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: multi_domain_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P0A910  # OmpA secretion signal
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: P62593  # TEM-1 enzyme domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P12931  # Src (PPI domain source)
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - solubility_tag: MBP
+    - terminator: T7term

@@ -1,17 +1,12 @@
-```yaml
 construct:
-  name: "Bicistronic_His_TEV_mEGFP_Strep_TEV_mScarlet"
-  host: e_coli
-
+  name: "bicistronic_his_megfp_strep_mscarlet"
+  host: e_coli_bl21
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
-
     - cistron:
-        label: mEGFP_expression
+        label: megfp_cistron
         expression: high
         chain:
           - tag: 6xHis
@@ -19,11 +14,9 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
-
     - spacer: 30
-
     - cistron:
-        label: mScarlet_expression
+        label: mscarlet_cistron
         expression: medium
         fused: false
         chain:
@@ -32,18 +25,4 @@ construct:
           - gene:
               id: mScarlet
               source: fpbase
-
-    - terminator: rrnB_T1
-
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
-```
+    - terminator: T7term

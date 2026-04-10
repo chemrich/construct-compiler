@@ -96,6 +96,19 @@ CORPUS_PATH = EVALS_DIR / "prompt_corpus.yaml"
 SYSTEM_PROMPT_PATH = EVALS_DIR / "spec_generation_prompt.txt"
 RESULTS_DIR = EVALS_DIR / "results"
 SPECS_DIR = EVALS_DIR / "generated_specs"
+THESAURUS_PATH = EVALS_DIR / "thesaurus.yaml"
+
+# Load thesaurus if it exists
+_thesaurus = {}
+if THESAURUS_PATH.exists():
+    _thesaurus = yaml.safe_load(THESAURUS_PATH.read_text()) or {}
+
+# Load evaluation overrides if they exist
+_overrides = {}
+OVERRIDES_PATH = Path(__file__).parent / "evaluation_overrides.yaml"
+if OVERRIDES_PATH.exists():
+    _overrides = yaml.safe_load(OVERRIDES_PATH.read_text()) or {}
+
 
 
 # ---------------------------------------------------------------------------
@@ -348,11 +361,69 @@ def check_expectations(
     if "must_have_parts" in expect and spec:
         # We check the spec structure since the harness result doesn't list part types
         found_types = _extract_part_types_from_spec(spec)
+        parts_thesaurus = _thesaurus.get("parts", {})
+        
+        root = spec.get("construct", spec)
+        actual_host = root.get("host", "") if isinstance(root, dict) else ""
+        host_norm = actual_host.lower().replace("-", "").replace("_", "") if actual_host else ""
+        
+        # Map to canonical host using thesaurus
+        hosts_thesaurus = _thesaurus.get("hosts", {})
+        canonical_actual_host = host_norm
+        for canon, synonyms in hosts_thesaurus.items():
+            norm_synonyms = [s.lower().replace("-", "").replace("_", "") for s in synonyms]
+            if host_norm == canon or host_norm in norm_synonyms:
+                canonical_actual_host = canon
+                break
+                
+        host_overrides = _overrides.get(canonical_actual_host, {})
+        
         for required in expect["must_have_parts"]:
-            present = required in found_types
+            req_norm = required.lower().replace("-", "").replace("_", "")
+            present = False
+            for t in found_types:
+                if req_norm == t.lower().replace("-", "").replace("_", ""):
+                    present = True
+                    break
+                synonyms = parts_thesaurus.get(t, [])
+                norm_synonyms = [s.lower().replace("-", "").replace("_", "") for s in synonyms]
+                if req_norm in norm_synonyms:
+                    present = True
+                    break
+            
+            # Apply overrides if not already present
+            if not present and host_overrides:
+                override_synonyms = host_overrides.get(req_norm, [])
+                norm_found_types = [ft.lower().replace("-", "").replace("_", "") for ft in found_types]
+                if any(osyn in norm_found_types for osyn in override_synonyms):
+                    present = True
+                    
             results[f"has_{required}"] = {
                 "expected": True, "actual": present,
                 "passed": present,
+            }
+
+    # Forbidden part types
+    if "must_not_have_parts" in expect and spec:
+        found_types = _extract_part_types_from_spec(spec)
+        parts_thesaurus = _thesaurus.get("parts", {})
+        
+        for forbidden in expect["must_not_have_parts"]:
+            forbid_norm = forbidden.lower().replace("-", "").replace("_", "")
+            present = False
+            for t in found_types:
+                if forbid_norm == t.lower().replace("-", "").replace("_", ""):
+                    present = True
+                    break
+                synonyms = parts_thesaurus.get(t, [])
+                norm_synonyms = [s.lower().replace("-", "").replace("_", "") for s in synonyms]
+                if forbid_norm in norm_synonyms:
+                    present = True
+                    break
+            
+            results[f"not_have_{forbidden}"] = {
+                "expected": False, "actual": present,
+                "passed": not present,
             }
 
     # Must pass harness
@@ -365,15 +436,193 @@ def check_expectations(
     return results
 
 
-def _hosts_match(expected: str, actual: str) -> bool:
+def check_expectations_with_llm(
+    case: PromptCase,
+    spec: dict | None,
+    eval_result: EvalResult | None,
+    model: str = "gemini-2.5-flash",
+) -> dict[str, dict]:
     """
-    Flexible host matching. Handles:
-    - Substring: "e_coli" matches "e_coli_bl21_de3"
-    - Category equivalence: "mammalian" matches "HEK293", "CHO", etc.
-    - Cell line specificity: "HEK293" matches "mammalian", "HEK293T", etc.
+    Use Gemini to judge whether expectations are met.
+    """
+    results = {}
+    expect = case.expect
+    if not expect:
+        return results
+
+    # Host check
+    if "host" in expect:
+        actual_host = ""
+        if spec:
+            root = spec.get("construct", spec)
+            actual_host = root.get("host", "")
+        expected = expect["host"]
+        passed = _hosts_match(expected, actual_host or "")
+        results["host"] = {"expected": expected, "actual": actual_host, "passed": passed}
+
+    # Cistron count
+    if "min_cistrons" in expect and eval_result:
+        actual = eval_result.cistron_count
+        expected = expect["min_cistrons"]
+        results["min_cistrons"] = {
+            "expected": f">= {expected}", "actual": actual,
+            "passed": actual >= expected,
+        }
+    if "max_cistrons" in expect and eval_result:
+        actual = eval_result.cistron_count
+        expected = expect["max_cistrons"]
+        results["max_cistrons"] = {
+            "expected": f"<= {expected}", "actual": actual,
+            "passed": actual <= expected,
+        }
+
+    # Must pass harness
+    if expect.get("must_pass") and eval_result:
+        results["must_pass"] = {
+            "expected": True, "actual": eval_result.passed,
+            "passed": eval_result.passed,
+        }
+
+    must_have = expect.get("must_have_parts", [])
+    must_not_have = expect.get("must_not_have_parts", [])
+    if not must_have and not must_not_have or not spec:
+        return results
+
+    api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    if not api_key:
+        logging.warning("No Gemini API key found for LLM judge. Falling back to empty results for parts.")
+        return results
+
+    from google import genai
+    from google.genai import types
+    client = genai.Client(api_key=api_key)
+
+    import yaml
+    spec_yaml = yaml.dump(spec)
+    
+    prompt = f"""You are an expert biological engineer evaluating a generated DNA construct specification against requirements.
+
+User Prompt:
+{case.prompt}
+
+Generated YAML Specification:
+```yaml
+{spec_yaml}
+```
+
+We need to check if the following required parts are present or reasonably represented in the specification:
+{must_have}
+
+We also need to check if the following parts are NOT present or represented in the specification:
+{must_not_have}
+
+For each part in BOTH lists above, determine if the specification includes or reasonably represents it.
+IMPORTANT CONSIDERATIONS:
+1. The schema used by the generator is limited (e.g., it only has bacterial terminators, specific origins, etc.).
+2. If the user asked for something (like a PolyA signal or a specific mammalian promoter) and the model used a reasonable placeholder (like a bacterial terminator or a standard strong promoter) and ideally explained it in a comment, consider it PRESENT.
+3. We care about intent and reasonable execution within schema limits.
+
+ADDITIONAL EVALUATION:
+4. **Host Compatibility**: Verify if the selected parts (promoters, RBSs, terminators) are generally compatible with the specified host organism (e.g., don't use bacterial promoters in mammalian cells unless intended). If there is a clear mismatch that would prevent function and is NOT a reasonable placeholder or requested by the user, note it.
+5. **Genetic Circuit Logic**: If the user prompt describes a genetic circuit (e.g., a logic gate, toggle switch, oscillator, feedback loop), evaluate if the generated specification logically implements that circuit using the available parts, or at least attempts to do so reasonably within schema limits.
+
+Respond ONLY with a JSON object mapping each part name from BOTH lists above to a boolean 'passed' and a string 'reason'.
+Also include a key "logic_verification" if the prompt describes a circuit, and "host_compatibility" as a general check (use 'passed' boolean for these extra checks).
+
+Example:
+{{
+  "PolyA_Signal": {{
+    "passed": true,
+    "reason": "Used BBa_B0015 as placeholder for mammalian polyA due to schema limits."
+  }},
+  "Resistance": {{
+    "passed": true,
+    "reason": "Kanamycin is in backbone but not in cassette as requested."
+  }},
+  "logic_verification": {{
+    "passed": false,
+    "reason": "The NOT gate logic is inverted; it activates reporter when input is high instead of low."
+  }},
+  "host_compatibility": {{
+    "passed": true,
+    "reason": "Parts are appropriate for E. coli host."
+  }}
+}}
+"""
+
+    try:
+        response = client.models.generate_content(
+            model=model,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+            ),
+        )
+        import json
+        judge_results = json.loads(response.text)
+        
+        for part in must_have:
+            res = judge_results.get(part, {})
+            passed = res.get("passed", False)
+            reason = res.get("reason", "")
+            results[f"has_{part}"] = {
+                "expected": True,
+                "actual": passed,
+                "passed": passed,
+                "reason": reason
+            }
+            
+        for part in must_not_have:
+            res = judge_results.get(part, {})
+            passed = res.get("passed", False)
+            reason = res.get("reason", "")
+            results[f"not_have_{part}"] = {
+                "expected": False,
+                "actual": not passed,
+                "passed": passed,
+                "reason": reason
+            }
+            
+        for extra in ["logic_verification", "host_compatibility"]:
+            if extra in judge_results:
+                res = judge_results[extra]
+                passed = res.get("passed", False)
+                reason = res.get("reason", "")
+                results[extra] = {
+                    "expected": True,
+                    "actual": passed,
+                    "passed": passed,
+                    "reason": reason
+                }
+    except Exception as e:
+        logging.error(f"LLM Judge error for {case.id}: {e}")
+        for part in must_have:
+            results[f"has_{part}"] = {
+                "expected": True,
+                "actual": False,
+                "passed": False,
+                "reason": f"Judge error: {e}"
+            }
+        for part in must_not_have:
+            results[f"not_have_{part}"] = {
+                "expected": False,
+                "actual": True,
+                "passed": False,
+                "reason": f"Judge error: {e}"
+            }
+
+    return results
+
+
+def _hosts_match(expected: str | list[str], actual: str) -> bool:
+    """
+    Flexible host matching using thesaurus.
     """
     if not actual:
         return False
+
+    if isinstance(expected, list):
+        return any(_hosts_match(e, actual) for e in expected)
 
     # Direct substring match (original behavior)
     if expected in actual or actual in expected:
@@ -386,63 +635,115 @@ def _hosts_match(expected: str, actual: str) -> bool:
     if exp_low in act_low or act_low in exp_low:
         return True
 
-    # Category mappings
-    mammalian_hosts = {"mammalian", "hek293", "hek293t", "cho", "hela",
-                       "cos7", "nih3t3", "vero", "a549", "jurkat",
-                       "k562", "u2os", "sf9", "sf21", "hi5"}
-    bacterial_hosts = {"ecoli", "ecolibl21", "ecolibl21de3", "ecolik12",
-                       "ecolirosetta", "ecolishuffle", "ecoliarctic"}
-
-    exp_norm = exp_low
-    act_norm = act_low
-
-    # If both are in the same category, it's a match
-    if exp_norm in mammalian_hosts and act_norm in mammalian_hosts:
-        return True
-    if exp_norm in bacterial_hosts and act_norm in bacterial_hosts:
-        return True
+    # Use thesaurus
+    hosts_thesaurus = _thesaurus.get("hosts", {})
+    for canonical_host, synonyms in hosts_thesaurus.items():
+        # Normalize synonyms
+        norm_synonyms = [s.lower().replace("-", "").replace("_", "") for s in synonyms]
+        
+        if exp_low == canonical_host or exp_low in norm_synonyms:
+            if act_low == canonical_host or act_low in norm_synonyms:
+                return True
 
     return False
 
 
+
 def _extract_part_types_from_spec(spec: dict) -> set[str]:
-    """Walk the spec to find what part types are present."""
+    """Walk the spec to find what part types are present using thesaurus."""
     types = set()
     root = spec.get("construct", spec)
     cassette = root.get("cassette", [])
+
+    parts_thesaurus = _thesaurus.get("parts", {})
+
+    def _check_string(s: str) -> bool:
+        found = False
+        s_low = s.lower()
+        for canonical_type, synonyms in parts_thesaurus.items():
+            for syn in synonyms:
+                if syn in s_low:
+                    types.add(canonical_type)
+                    found = True
+        return found
 
     for element in cassette:
         if not isinstance(element, dict):
             continue
         for key, value in element.items():
-            if key == "cistron":
-                chain = value.get("chain", []) if isinstance(value, dict) else []
-                gene = value.get("gene") if isinstance(value, dict) else None
-                n_tag = value.get("n_tag") if isinstance(value, dict) else None
-                c_tag = value.get("c_tag") if isinstance(value, dict) else None
+            if key == "promoter":
+                types.add("Promoter")
+                types.add(str(value))
+                _check_string(str(value))
+            elif key == "terminator":
+                types.add("Terminator")
+                types.add(str(value))
+                _check_string(str(value))
+            elif key == "rbs":
+                types.add("RBS")
+                types.add(str(value))
+            elif key == "cistron":
+                if isinstance(value, dict):
+                    gene = value.get("gene")
+                    n_tag = value.get("n_tag")
+                    c_tag = value.get("c_tag")
+                    chain = value.get("chain", [])
 
-                if gene:
-                    types.add("CDS")
-                if n_tag or c_tag:
-                    types.add("PurificationTag")  # simplification
+                    if gene:
+                        types.add("CDS")
+                        gene_id = str(gene.get("id", "")) if isinstance(gene, dict) else str(gene)
+                        types.add(gene_id)
+                        _check_string(gene_id)
+                        types.add(gene_id.lower())
+                        
+                        for part in gene_id.split("_"):
+                            if part:
+                                types.add(part)
+                                types.add(part.lower())
 
-                for item in chain:
-                    if isinstance(item, dict):
-                        for k in item.keys():
-                            if k == "tag":
-                                types.add("PurificationTag")
-                            elif k == "solubility_tag":
-                                types.add("SolubilityTag")
-                                # Recognize known dual-purpose tags as satisfying PurificationTag
-                                if item[k] in ["MBP", "SUMO", "GST", "Trx"]:
+                        is_special = _check_string(gene_id)
+                        
+                        if not is_special and gene_id:
+                            types.add("ProteinOfInterest")
+
+                    if n_tag or c_tag:
+                        types.add("PurificationTag")
+                        if n_tag: _check_string(str(n_tag))
+                        if c_tag: _check_string(str(c_tag))
+
+                    for item in chain:
+                        if isinstance(item, dict):
+                            for k, v in item.items():
+                                if k == "tag":
                                     types.add("PurificationTag")
-                            elif k == "cleavage_site":
-                                types.add("CleavageSite")
-                            elif k == "linker":
-                                types.add("Linker")
-                            elif k == "gene":
-                                types.add("CDS")
+                                    _check_string(str(v))
+                                elif k == "solubility_tag":
+                                    types.add("SolubilityTag")
+                                    _check_string(str(v))
+                                elif k == "cleavage_site":
+                                    types.add("CleavageSite")
+                                    _check_string(str(v))
+                                elif k == "linker":
+                                    types.add("Linker")
+                                elif k == "gene":
+                                    types.add("CDS")
+                                    gene_id = str(v.get("id", "")) if isinstance(v, dict) else str(v)
+                                    types.add(gene_id)
+                                    types.add(gene_id.lower())
+                                    
+                                    for part in gene_id.split("_"):
+                                        if part:
+                                            types.add(part)
+                                            types.add(part.lower())
+                                            
+                                    is_special = _check_string(gene_id)
+                                    if not is_special and gene_id:
+                                        types.add("ProteinOfInterest")
+                else:
+                    _check_string(str(value))
+
     return types
+
 
 
 def _count_cistrons_in_spec(spec: dict) -> int:
@@ -470,6 +771,8 @@ def _eval_single_case(
     skip_constraints: bool,
     system_prompt: str,
     print_lock: threading.Lock | None = None,
+    use_llm_judge: bool = False,
+    judge_model: str | None = None,
 ) -> EvalOutcome | None:
     """
     Evaluate a single prompt case (thread-safe).
@@ -557,9 +860,14 @@ def _eval_single_case(
             eval_r.passed = outcome.harness_passed
             eval_r.cistron_count = _count_cistrons_in_spec(outcome.generated_spec)
 
-        outcome.expectation_results = check_expectations(
-            case, outcome.generated_spec, eval_r,
-        )
+        if use_llm_judge:
+            outcome.expectation_results = check_expectations_with_llm(
+                case, outcome.generated_spec, eval_r, model=judge_model or "gemini-3-flash-preview",
+            )
+        else:
+            outcome.expectation_results = check_expectations(
+                case, outcome.generated_spec, eval_r,
+            )
         outcome.all_expectations_met = all(
             r["passed"] for r in outcome.expectation_results.values()
         ) if outcome.expectation_results else (outcome.harness_passed or False)
@@ -586,6 +894,9 @@ def run_eval(
     dry_run: bool = False,
     skip_constraints: bool = True,
     concurrency: int = 1,
+    use_llm_judge: bool = False,
+    judge_model: str | None = None,
+    system_prompt_path: str | None = None,
 ) -> list[EvalOutcome]:
     """
     Run the eval for a list of prompt cases.
@@ -598,10 +909,17 @@ def run_eval(
         dry_run: if True, just print what would be tested
         skip_constraints: skip codon optimization for speed
         concurrency: number of parallel workers (1 = sequential)
+        use_llm_judge: use LLM to judge expectations
+        judge_model: Gemini model to use for LLM judge
+        system_prompt_path: path to custom system prompt file
     """
     SPECS_DIR.mkdir(parents=True, exist_ok=True)
 
-    system_prompt = SYSTEM_PROMPT_PATH.read_text()
+    if system_prompt_path:
+        system_prompt = Path(system_prompt_path).read_text()
+    else:
+        system_prompt = SYSTEM_PROMPT_PATH.read_text()
+
 
     if dry_run:
         for i, case in enumerate(cases):
@@ -618,7 +936,8 @@ def run_eval(
         for i, case in enumerate(cases):
             outcome = _eval_single_case(
                 case, i + 1, total, model, retries, reeval,
-                skip_constraints, system_prompt,
+                skip_constraints, system_prompt, None, use_llm_judge,
+                judge_model,
             )
             if outcome:
                 outcomes.append(outcome)
@@ -635,7 +954,8 @@ def run_eval(
         i, case = args
         result = _eval_single_case(
             case, i + 1, total, model, retries, reeval,
-            skip_constraints, system_prompt, print_lock,
+            skip_constraints, system_prompt, print_lock, use_llm_judge,
+            judge_model,
         )
         with print_lock:
             completed += 1
@@ -828,6 +1148,12 @@ def main():
                         help="Max API requests per minute (0 = unlimited). "
                              "Recommended: 40-50 for most tiers.")
     parser.add_argument("--run-name", help="Name for the results file")
+    parser.add_argument("--llm-judge", action="store_true",
+                        help="Use LLM to judge expectations")
+    parser.add_argument("--judge-model", default="gemini-3-flash-preview",
+                        help="Gemini model to use for LLM judge")
+    parser.add_argument("--limit", type=int, help="Limit number of prompts to run")
+    parser.add_argument("--system-prompt", help="Path to custom system prompt file")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO if args.concurrency > 1 else logging.WARNING)
@@ -845,6 +1171,8 @@ def main():
 
     corpus_path = Path(args.corpus) if args.corpus else CORPUS_PATH
     cases = load_corpus(corpus_path=corpus_path, filter_id=args.id, filter_category=args.category)
+    if args.limit:
+        cases = cases[:args.limit]
     if not cases:
         print("No matching prompt cases found.")
         sys.exit(1)
@@ -860,7 +1188,11 @@ def main():
         dry_run=args.dry_run,
         skip_constraints=skip,
         concurrency=args.concurrency,
+        use_llm_judge=args.llm_judge,
+        judge_model=args.judge_model,
+        system_prompt_path=args.system_prompt,
     )
+
 
     if not args.dry_run and outcomes:
         print_report(outcomes)

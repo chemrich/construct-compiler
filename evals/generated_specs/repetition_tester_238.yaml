@@ -1,0 +1,29 @@
+construct:
+  name: "tripartite_non_recombining_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: "unique_fusion_protein"
+        expression: high
+        # Note: Since the schema requires id/source and prohibits raw sequences, 
+        # three distinct protein IDs are used here to represent the three segments.
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mScarlet
+              source: fpbase
+          - linker:
+              type: short_GS
+              repeats: 4
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - terminator: T7term

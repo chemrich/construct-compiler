@@ -1,0 +1,17 @@
+construct:
+  name: "dual_light_inducible_mito_p"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV # CMV serves as a placeholder for a specific light-inducible promoter (e.g., a Red-light responsive PhyB/PIF-based UAS system)
+    - cistron:
+        label: "targeted_p"
+        expression: high
+        chain:
+          - tag: MTS # Mitochondrial Targeting Signal for N-terminal localization
+          - gene:
+              id: "P"
+              source: uniprot
+          - tag: B-LID # Blue-Light Inducible Degron for wavelength-tunable degradation
+    - terminator: BBa_B0015

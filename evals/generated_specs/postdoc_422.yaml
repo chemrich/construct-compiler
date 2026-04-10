@@ -1,0 +1,16 @@
+construct:
+  name: "his_tagged_human_protein_expression"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00533 # Placeholder: EGFR selected as a representative human protein as none was specified.
+              source: uniprot
+    - terminator: T7term # User requested eukaryotic codon optimization for E. coli; the compiler will apply E. coli optimization for functional expression.

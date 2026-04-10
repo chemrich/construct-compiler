@@ -1,0 +1,19 @@
+construct:
+  name: "protein_g_mbp_fusion"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_g_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - cleavage_site: TEV
+          - gene:
+              id: P19909
+              source: uniprot
+    - terminator: T7term

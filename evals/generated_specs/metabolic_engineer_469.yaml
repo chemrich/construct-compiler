@@ -1,0 +1,44 @@
+construct:
+  name: "cold_adapted_enzyme_operon"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Strong constitutive promoter for robust expression at 18°C
+    - cistron:
+        label: CA1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CA1
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CA2
+        expression: high
+        fused: false  # Independent translation with own RBS
+        gene:
+          id: CA2
+          source: uniprot
+          start_codon: GTG  # Alternative start codon for low-temp translation efficiency
+    - spacer: 30
+    - cistron:
+        label: CA3
+        expression: high
+        fused: false
+        gene:
+          id: CA3
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: CA4
+        expression: high
+        fused: false
+        gene:
+          id: CA4
+          source: uniprot
+          start_codon: TTG  # Alternative start codon for low-temp translation efficiency
+    - terminator: rrnB_T1

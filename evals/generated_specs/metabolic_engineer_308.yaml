@@ -1,0 +1,49 @@
+construct:
+  name: "bacillus_subtilis_cellulase_operon"
+  host: b_subtilis  # Host set to Bacillus subtilis as requested
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pveg  # Strong constitutive Bacillus promoter
+    - cistron:
+        label: endoglucanaseA
+        expression: high
+        chain:
+          - tag: AmyE_signal
+          - tag: FLAG
+          - gene:
+              id: endoglucanaseA
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: exoglucanaseB
+        expression: high
+        fused: false  # Independent translation for polycistronic operon
+        chain:
+          - tag: AmyE_signal
+          - gene:
+              id: exoglucanaseB
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: beta_glucosidaseC
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE_signal
+          - gene:
+              id: beta-glucosidaseC
+              source: uniprot
+    - spacer: 30
+    - cistron:
+        label: xylanaseD
+        expression: high
+        fused: false
+        chain:
+          - tag: AmyE_signal
+          - gene:
+              id: xylanaseD
+              source: uniprot
+    - terminator: BBa_B0015

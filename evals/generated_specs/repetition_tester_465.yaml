@@ -1,0 +1,26 @@
+construct:
+  name: secreted_insect_protein_dual_tag
+  host: Sf9  # Selected Sf9 as specific insect cell host for codon optimization
+  backbone:
+    catalog_vector: "pFastBac1"  # Standard insect cell expression vector
+    resistance: ampicillin
+    source: addgene
+  cassette:
+    - promoter: Polh  # High-level polyhedrin promoter for insect expression
+    - cistron:
+        label: secreted_target
+        expression: high
+        chain:
+          - tag: melittin_signal_peptide  # N-terminal insect-specific secretion signal
+          - gene:
+              id: mEGFP
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 5  # Highly flexible linker between tags
+          - tag: Strep-II
+    - terminator: SV40_polyA  # Standard terminator for insect expression cassettes

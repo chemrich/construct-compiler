@@ -1,0 +1,24 @@
+construct:
+  name: "nuclear_protein_O_mEGFP_fusion_yeast"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: TDH3  # Strong constitutive promoter for yeast
+    - cistron:
+        label: NLS_O_GFP_fusion
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: O
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - terminator: CYC1_term  # Standard yeast terminator

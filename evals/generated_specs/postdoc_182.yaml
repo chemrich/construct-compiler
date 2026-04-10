@@ -1,0 +1,21 @@
+construct:
+  name: "proteinA_proteinB_coexpression"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: protein_a
+        gene:
+          id: ProteinA
+          source: uniprot
+    - spacer: 30 # IRES substituted with a 30bp spacer for E. coli polycistronic translation
+    - cistron:
+        label: protein_b
+        fused: false
+        gene:
+          id: ProteinB
+          source: uniprot
+    - terminator: rrnB_T1

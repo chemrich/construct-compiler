@@ -1,0 +1,29 @@
+construct:
+  name: "Pichia_Antibody_Dual_PGAP"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: PGAP
+    - cistron:
+        label: antibody_heavy_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: heavy_chain_IgG1
+              source: uniprot
+          - tag: 6xHis
+    - terminator: CYC1_term
+    - promoter: PGAP
+    - cistron:
+        label: antibody_light_chain
+        expression: high
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: light_chain_kappa
+              source: uniprot
+    - terminator: CYC1_term

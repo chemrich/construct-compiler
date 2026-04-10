@@ -1,0 +1,18 @@
+construct:
+  name: "humanized_mAb_heavy_chain_secretion"
+  host: HEK293
+  backbone:
+    resistance: kanamycin # Kanamycin included for E. coli propagation as per schema requirements; no mammalian selection marker is present.
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha # Non-viral constitutive mammalian promoter
+    - cistron:
+        label: heavy_chain
+        expression: high
+        chain:
+          - tag: IgK_leader # Secretion signal peptide for export to supernatant
+          - gene:
+              id: P01857
+              source: uniprot
+    - terminator: bGH_pA # Non-viral mammalian polyadenylation signal

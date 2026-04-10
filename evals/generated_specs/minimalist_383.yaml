@@ -1,0 +1,21 @@
+construct:
+  name: "T7_polymerase_mCherry_fusion"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: tac # Substituted T7lac with tac to avoid autocatalytic feedback loop when expressing T7 polymerase
+    - cistron:
+        label: T7pol_fusion
+        expression: high
+        chain:
+          - gene:
+              id: P00573
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: rrnB_T1

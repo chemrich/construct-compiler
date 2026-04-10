@@ -1,0 +1,25 @@
+construct:
+  name: "clinical_receptor_fc_fusion_HEK293"
+  host: HEK293
+  backbone:
+    # Kanamycin resistance is included for E. coli production; for clinical use, this would be processed into a minicircle or use a non-antibiotic selection marker.
+    resistance: kanamycin
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Human promoter used to avoid viral sequences (CMV) as per clinical safety request.
+    - cistron:
+        label: ectodomain_fc_fusion
+        expression: high
+        chain:
+          - tag: IgK_leader  # Standard mammalian secretion signal
+          - gene:
+              id: P19438  # Human TNFRSF1A ectodomain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P01857  # Human IgG1 Fc region for stability and dimerization
+              source: uniprot
+    - terminator: bGH_PA  # Bovine growth hormone polyadenylation signal (non-viral)

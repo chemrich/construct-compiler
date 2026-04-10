@@ -1,0 +1,38 @@
+construct:
+  name: "yeast_polycistronic_ires_construct"
+  host: yeast
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: pGPD
+    - cistron:
+        label: YeastA_cistron
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: YeastA
+              source: uniprot
+    - spacer: 150 # Intercistronic region containing requested IRES
+    - cistron:
+        label: YeastB_cistron
+        expression: medium
+        fused: false # Independent translation via IRES
+        chain:
+          - tag: Myc
+          - gene:
+              id: YeastB
+              source: uniprot
+    - spacer: 150 # Intercistronic region containing requested IRES
+    - cistron:
+        label: YeastC_cistron
+        expression: medium
+        fused: false # Independent translation via IRES
+        chain:
+          - tag: FLAG
+          - gene:
+              id: YeastC
+              source: uniprot
+    - terminator: CYC1_term

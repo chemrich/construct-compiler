@@ -1,0 +1,18 @@
+construct:
+  name: "periplasmic_human_receptor_fragment"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: pelB # Substituted mammalian signal with pelB signal peptide; mammalian signals are not recognized by E. coli secretion machinery.
+          - tag: HA
+          - gene:
+              id: Receptor_Frag
+              source: uniprot
+    - terminator: T7term

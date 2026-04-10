@@ -1,0 +1,46 @@
+construct:
+  name: "genetic_sr_latch_toggle"
+  host: e_coli_bl21
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: araBAD
+      # Set Input: Arabinose induces LacI expression to flip the toggle to the ON state.
+    - cistron:
+        label: set_driver
+        expression: high
+        gene:
+          id: P03023
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: tac
+      # Reset Input: IPTG derepresses tac, producing CI to flip the toggle to the OFF state.
+      # If both Arabinose and IPTG are present, CI production is prioritized, ensuring a safe OFF output.
+    - cistron:
+        label: reset_driver
+        expression: high
+        gene:
+          id: P03034
+          source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 40
+    - promoter: pL
+      # Memory/Logic Unit: Repressed by CI. When CI is low, it produces LacI (to maintain repression of Reset) and mEGFP.
+    - cistron:
+        label: memory_repressor
+        expression: medium
+        gene:
+          id: P03023
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: reporter_output
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: BBa_B0015

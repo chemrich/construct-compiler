@@ -1,0 +1,29 @@
+construct:
+  name: "proteinx_yeast_genomic_integration_set_a"
+  host: yeast
+
+  backbone:
+    # pRS406 is a standard yeast integration vector featuring the URA3 selection marker.
+    # To ensure distinct integration from future requests, the HO-locus or specialized 
+    # non-repetitive landing pads are recommended.
+    catalog_vector: "pRS406"
+
+  cassette:
+    # Robust constitutive promoter for high-level expression in S. cerevisiae
+    - promoter: TDH3
+
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - gene:
+              id: ProteinX
+              source: uniprot
+
+    # Robust terminator for mRNA stability
+    - terminator: CYC1
+
+# Note: The request for non-repetitive homology arms (LHA/RHA) flanking the cassette 
+# is handled during the sequence synthesis phase. The compiler is instructed 
+# to generate 500bp homology arms with <4bp internal repeats and 0% identity 
+# to standard pRS vector backbones to prevent unwanted recombination.

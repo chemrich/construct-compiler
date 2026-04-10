@@ -1,0 +1,29 @@
+construct:
+  name: "divergent_triplicate_domain_fusion"
+  host: e_coli_bl21_de3
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: T7lac
+    - cistron:
+        label: tandem_repeat_target
+        expression: high
+        chain:
+          - gene:
+              id: "target_domain"
+              source: uniprot
+          # Linker 1: Flexible GS linker to separate first and second domain
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: "target_domain"
+              source: uniprot # Note: Backend requested to use divergent codon optimization for repeat 2
+          # Linker 2: Rigid EAAAK linker to provide structural separation and sequence divergence
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: "target_domain"
+              source: uniprot # Note: Backend requested to use divergent codon optimization for repeat 3
+    - terminator: T7term

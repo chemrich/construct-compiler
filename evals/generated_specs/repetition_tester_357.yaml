@@ -1,0 +1,29 @@
+construct:
+  name: "non_homologous_lbd_activator_biosensor"
+  host: e_coli_bl21
+  backbone:
+    catalog_vector: "pET-28b(+)"
+  cassette:
+    - promoter: J23100
+    - cistron:
+        label: sensor_fusion
+        expression: medium
+        chain:
+          - gene:
+              id: P12746
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 5
+          - gene:
+              id: P04150
+              source: uniprot
+    - spacer: 45
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+    - terminator: rrnB_T1

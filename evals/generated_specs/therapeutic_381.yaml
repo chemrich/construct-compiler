@@ -1,0 +1,36 @@
+construct:
+  name: "Clinical_Fab_CHO_EF1a_DHFR_Secretion_Vector"
+  host: CHO
+  backbone:
+    # No antibiotic selection markers permitted for clinical manufacturing
+    resistance: none
+    # Non-viral origin of replication for bacterial expansion
+    ori: pUC
+    source: custom
+  cassette:
+    - promoter: EF1_alpha  # Non-viral constitutive promoter for mammalian expression
+    - cistron:
+        label: Fab_Light_Chain
+        expression: high
+        gene:
+          id: P01834  # Human Ig kappa chain C region (representative)
+          source: uniprot
+    - spacer: 40
+    - cistron:
+        label: Fab_Heavy_Chain_Fd
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis  # N-terminal His-tag for affinity purification
+          - gene:
+              id: P01857  # Human Ig gamma-1 chain C region (representative Fd segment)
+              source: uniprot
+    - spacer: 40
+    - cistron:
+        label: DHFR_Selectable_Marker
+        expression: low
+        fused: false  # Independently translated metabolic selection marker
+        gene:
+          id: P00374  # Dihydrofolate reductase (DHFR) for non-antibiotic selection
+          source: uniprot
+    - terminator: BBa_B0015

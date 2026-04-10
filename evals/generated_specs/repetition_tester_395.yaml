@@ -1,0 +1,22 @@
+construct:
+  name: "genes_dual_kozak_stability"
+  host: HEK293
+  backbone:
+    catalog_vector: "pTwist CMV"
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_genes
+        expression: high # Utilizes first unique Kozak sequence variant
+        gene:
+          id: GeneS
+          source: uniprot
+    - spacer: 60 # Acts as the first non-homologous 3' UTR stability element
+    - cistron:
+        label: reporter
+        expression: medium # Utilizes second, non-homologous Kozak sequence
+        fused: false # Required for independent translation initiation
+        gene:
+          id: mCherry
+          source: fpbase
+    - terminator: bGH_polyA # Acts as the second non-homologous 3' UTR stability element/terminator

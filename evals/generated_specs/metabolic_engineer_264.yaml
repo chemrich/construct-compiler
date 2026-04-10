@@ -1,0 +1,48 @@
+construct:
+  name: "anaerobic_co2_fixation_operon"
+  host: e_coli
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  cassette:
+    - promoter: J23100  # Strong constitutive promoter robust across metabolic states
+    - cistron:
+        label: rubisco_form_II
+        expression: high
+        gene:
+          id: cbbM
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: phosphoribulokinase
+        expression: high
+        fused: false
+        gene:
+          id: prkA
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: sbpase
+        expression: high
+        fused: false
+        gene:
+          id: sbp
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: fbpase
+        expression: high
+        fused: false
+        gene:
+          id: fbp
+          source: uniprot
+    - spacer: 30
+    - cistron:
+        label: transketolase
+        expression: high
+        fused: false
+        gene:
+          id: tktA
+          source: uniprot
+    - terminator: rrnB_T1

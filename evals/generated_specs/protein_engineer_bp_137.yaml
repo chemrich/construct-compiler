@@ -1,0 +1,26 @@
+construct:
+  name: "bacillus_protease_stabilization_system"
+  host: bacillus
+  backbone:
+    resistance: kanamycin
+    ori: pUB110
+    source: addgene
+  cassette:
+    - promoter: Pgrac
+    - cistron:
+        label: secreted_protease
+        expression: high
+        chain:
+          - tag: AmyE
+          - gene:
+              id: subtilisin_E
+              source: uniprot
+    - terminator: rrnB_T1
+    - promoter: Pxyl
+    - cistron:
+        label: intracellular_inhibitor
+        expression: medium
+        gene:
+          id: protease_inhibitor_peptide
+          source: uniprot
+    - terminator: BBa_B0015

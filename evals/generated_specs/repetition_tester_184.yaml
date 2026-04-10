@@ -1,0 +1,24 @@
+construct:
+  name: mammalian_dual_promoter_y_z_no_homology
+  host: HEK293
+  backbone:
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  cassette:
+    - promoter: CMV
+    - cistron:
+        label: target_y
+        gene:
+          id: GeneY
+          source: uniprot
+    - terminator: SV40_polyA # Non-homologous terminator for the first transcription unit
+    - spacer: 100
+    - promoter: EF1_alpha # Sequence-divergent promoter to prevent recombination
+    - cistron:
+        label: target_z
+        fused: false # Ensures independent translation from the second promoter
+        gene:
+          id: GeneZ
+          source: uniprot
+    - terminator: bGH_polyA # Sequence-divergent second terminator
