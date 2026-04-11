@@ -77,6 +77,8 @@ def parse_spec(spec: dict | str | Path) -> ConstructGraph:
                 if "promoter" in vector_provides:
                     # Catalog vector already has a promoter — skip
                     continue
+                if value is None:
+                    continue  # model emitted `promoter: null` — skip gracefully
                 graph.add_part(_parse_promoter(value, _next_id("prom")))
 
             elif key == "cistron":
@@ -400,10 +402,10 @@ def _parse_gene(spec: dict | str | tuple | None, graph: ConstructGraph,
     if not isinstance(spec, dict):
         return
 
-    # Dict format
-    source = spec.get("source", "")
-    gene_id = spec.get("id", spec.get("name", "unknown"))
-    codon_opt = spec.get("codon_optimization", "local")
+    # Dict format — guard against null values emitted by the LLM (e.g. `id: null`)
+    source = spec.get("source") or ""
+    gene_id = spec.get("id") or spec.get("name") or "unknown"
+    codon_opt = spec.get("codon_optimization") or "local"
 
     graph.add_part(CDS(
         id=next_id("cds"),
