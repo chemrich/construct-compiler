@@ -1,19 +1,26 @@
+```yaml
 construct:
-  name: bacillus_pgrac_secretion_construct
+  name: "pgrac_amyE_secretion_vector"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: AmyE
+          - secretion_signal: AmyE
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: target_protein
-              source: uniprot
-    - terminator: BBa_B0015
+              id: target_gene  # Replace with your actual gene ID
+              codon_optimize: bacillus_subtilis
+
+    - terminator: rrnB_T1
+```

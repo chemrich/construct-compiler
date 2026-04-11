@@ -1,23 +1,28 @@
+```yaml
 construct:
-  name: tet_off_regulated_reporter_system
+  name: TetOff_ReporterR_dual_cassette
   host: HEK293
+  
   backbone:
-    resistance: kanamycin
-    ori: SV40
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    
   cassette:
     - promoter: CMV
     - cistron:
-        label: tTA_regulator
+        label: tTA
         expression: medium
         gene:
-          id: tTA
+          id: P04386
           source: uniprot
-    - terminator: SV40_polyA
-    - promoter: Ptight
+    - terminator: polyA
+    
+    - spacer: 100
+    
+    - promoter: TetO
     - cistron:
-        label: target_reporter
+        label: reporter
         expression: high
         gene:
-          id: ReporterR
-    - terminator: bGH_polyA
+          id: ReporterR  # Custom gene - compiler will need sequence
+    - terminator: polyA
+```

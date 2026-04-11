@@ -1,22 +1,28 @@
 construct:
-  name: "mammalian_polycistronic_D_E"
+  name: mammalian_D_E_IRES_coexpression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: protein_D
-        expression: medium
+        expression: high
         gene:
           id: D
           source: uniprot
-    - spacer: 585  # Length of an EMCV IRES for independent translation in mammalian systems
+
+    - spacer: 500  # IRES sequence for independent translation initiation
+
     - cistron:
         label: protein_E
         expression: medium
-        fused: false  # Indicates independent translation via the IRES spacer
+        fused: false  # independent translation via IRES
         gene:
           id: E
           source: uniprot
-    - terminator: bGH_polyA  # Standard polyadenylation signal for mammalian expression constructs
+
+    - terminator: rrnB_T1

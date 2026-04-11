@@ -1,27 +1,35 @@
+```yaml
 construct:
-  name: "bacillus_target_secretion_coexpression"
+  name: target_protein_PrsA_coexpression
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: target
+        label: target_secreted
         expression: high
         chain:
-          - tag: AmyE
-          - tag: 6xHis
+          - tag: AmyE_signal
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: target_protein
+              source: uniprot
+          - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
         label: chaperone
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: PrsA
           source: uniprot
+
     - terminator: rrnB_T1
+```

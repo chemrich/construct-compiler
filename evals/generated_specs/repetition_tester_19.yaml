@@ -1,38 +1,35 @@
+```yaml
 construct:
-  name: "mammalian_triple_2A_expression"
+  name: triple_protein_2A_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: P1_cistron
+        label: P1_F2A_P2_P2A_P3
         expression: high
-        gene:
-          id: P1
-          source: uniprot
-    - cistron:
-        label: P2_cistron
-        expression: high
-        fused: true
         chain:
-          - cleavage_site: T2A
+          - gene:
+              id: P1
+              source: uniprot
+          - cleavage_site: F2A  # First 2A peptide
           - linker:
-              type: GS_flexible
+              type: GS_flexible  # First unique linker
               repeats: 2
           - gene:
               id: P2
               source: uniprot
-    - cistron:
-        label: P3_cistron
-        expression: high
-        fused: true
-        chain:
-          - cleavage_site: P2A
+          - cleavage_site: P2A  # Second 2A peptide (different from F2A)
           - linker:
-              type: rigid_EAAAK
+              type: rigid_EAAAK  # Second unique linker (different from GS_flexible)
               repeats: 1
           - gene:
               id: P3
               source: uniprot
-    - terminator: BGH_pA  # Standard mammalian polyadenylation signal for HEK293
+
+    - terminator: rrnB_T1
+```

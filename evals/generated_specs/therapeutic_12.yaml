@@ -1,23 +1,30 @@
+```yaml
 construct:
-  name: "CPP_TAT_IL2_Fusion_Production"
+  name: CPP_therapeutic_fusion_high_expression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: therapeutic_fusion
+        label: CPP_therapeutic_fusion
         expression: high
         chain:
           - tag: 6xHis
-          - gene:
-              id: P04608
-              source: uniprot
           - cleavage_site: TEV
+          - gene:
+              id: P10163  # TAT protein (HIV-1) - contains CPP domain
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
+          - cleavage_site: 3C
           - gene:
-              id: P60568
+              id: P01308  # Human insulin - example therapeutic cargo
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

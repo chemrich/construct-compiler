@@ -1,25 +1,44 @@
+```yaml
 construct:
-  name: "mammalian_polycistronic_ABC_2A"
+  name: "triple_protein_P2A_T2A_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: ABC_polyprotein
+        label: protein_A
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: Protein_A
+              id: "protein_A"  # Replace with actual protein ID
               source: uniprot
-          - cleavage_site: P2A
+          - cleavage_site: P2A  # P2A self-cleaving peptide
+
+    - cistron:
+        label: protein_B
+        expression: high
+        fused: true  # Part of polycistronic transcript
+        chain:
           - tag: Myc
           - gene:
-              id: Protein_B
+              id: "protein_B"  # Replace with actual protein ID
               source: uniprot
-          - cleavage_site: T2A
+          - cleavage_site: T2A  # T2A self-cleaving peptide
+
+    - cistron:
+        label: protein_C
+        expression: high
+        fused: true  # Part of polycistronic transcript
+        chain:
           - tag: FLAG
           - gene:
-              id: Protein_C
+              id: "protein_C"  # Replace with actual protein ID
               source: uniprot
-    - terminator: BGH_pA
+
+    - terminator: BBa_B0015
+```

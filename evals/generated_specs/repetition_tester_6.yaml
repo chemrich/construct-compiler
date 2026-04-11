@@ -1,23 +1,29 @@
+```yaml
 construct:
-  name: "enzyme_e_arabinose_inducible"
+  name: araBAD_EnzymeE_Strep_GST
   host: e_coli
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: target_enzyme
-        expression: high
+        label: target
+        expression: medium
         chain:
           - tag: Strep-II
-          - solubility_tag: SUMO
-          - cleavage_site: TEV
+          - solubility_tag: GST
           - linker:
-              type: GS_flexible
+              type: rigid_EAAAK
               repeats: 2
+          - cleavage_site: 3C
           - gene:
-              id: EnzymeE
+              id: P00720  # EnzymeE (lysozyme)
               source: uniprot
+
     - terminator: rrnB_T1
+```

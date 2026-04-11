@@ -1,18 +1,44 @@
+```yaml
 construct:
-  name: reporter_gene_triple_resistance
+  name: triple_resistance_reporter_stable
   host: e_coli_bl21_de3
+  
   backbone:
-    resistance: kanamycin # User requested ampicillin, kanamycin, and chloramphenicol; schema supports one primary selection marker.
-    ori: pUC # High copy requested for high plasmid yield.
-    source: custom
+    resistance: ampicillin  # Primary resistance marker
+    ori: pUC  # High copy number origin
+    source: addgene
+    
   cassette:
     - promoter: T7
+    
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: ReporterGene  # User-specified gene name
+    
+    # Additional resistance cassettes for triple selection
+    - spacer: 30
+    
+    - cistron:
+        label: kan_resistance
+        expression: medium
+        fused: false
+        gene:
+            id: nptII  # Kanamycin resistance gene
+            source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: cam_resistance  
+        expression: medium
+        fused: false
+        gene:
+            id: cat  # Chloramphenicol resistance gene
+            source: uniprot
+            
+    - terminator: rrnB_T1
+```

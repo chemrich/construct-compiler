@@ -1,24 +1,22 @@
+```yaml
 construct:
-  name: "yeast_lacZ_reporter_2micron_LEU2"
+  name: test_promoter_lacZ_reporter
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: LEU2
     ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: test_promoter
+    - promoter: test_promoter  # User-specified promoter to be tested
+
     - cistron:
-        label: lacZ_reporter
+        label: reporter
         expression: high
         gene:
-          id: lacZ
+          id: P00722  # E. coli beta-galactosidase
           source: uniprot
+
     - terminator: CYC1_term
-    - promoter: LEU2_promoter
-    - cistron:
-        label: LEU2_marker
-        expression: medium
-        gene:
-          id: LEU2
-          source: uniprot
-    - terminator: LEU2_term
+```

@@ -1,13 +1,22 @@
+```yaml
 construct:
-  name: "t7_small_rna_expression_vector"
-  host: e_coli_bl21_de3
+  name: "small_RNA_expression"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: "sRNA_payload"
-        # Note: Expression as a cistron allows DNA assembly; intended for transcription of non-coding RNA
+        label: small_RNA
+        expression: high
         gene:
-          id: "small_RNA_sequence"
+          id: "custom_small_RNA"  # Replace with your specific RNA sequence ID
+          source: custom
+
     - terminator: T7term
+```

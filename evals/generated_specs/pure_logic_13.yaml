@@ -1,37 +1,33 @@
+```yaml
 construct:
-  name: "triple_parallel_nor_gate_system"
+  name: triple_NOR_gate_system
   host: e_coli
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: "NOR_gate_LacI_TetR"  # ON only when both LacI and TetR are absent
+    - promoter: T7lac
     - cistron:
-        label: gate_1_green
+        label: NOR_gate_1
         expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: "NOR_gate_PhlF_SrpR"  # ON only when both PhlF and SrpR are absent
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+    - spacer: 30
     - cistron:
-        label: gate_2_red
+        label: NOR_gate_2
         expression: medium
         fused: false
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: T7term
-    - spacer: 50
-    - promoter: "NOR_gate_CymR_BM3R1"  # ON only when both CymR and BM3R1 are absent
+    - spacer: 30
     - cistron:
-        label: gate_3_blue
+        label: NOR_gate_3
         expression: medium
         fused: false
         gene:
           id: mTagBFP2
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1
+```

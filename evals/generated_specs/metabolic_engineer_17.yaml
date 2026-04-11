@@ -1,40 +1,52 @@
+```yaml
 construct:
-  name: "reverse_operon_4_enzyme_pathway"
+  name: reverse_pathway_operon_ires
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100  # Constitutive strong promoter for E. coli
+    - promoter: J23100  # Strong constitutive promoter for balanced expression
+    
     - cistron:
-        label: enzyme_4
+        label: enzyme4
         expression: medium
         gene:
-          id: enzyme_4
+          id: P0A9P0  # Example enzyme 4 (placeholder UniProt ID)
           source: uniprot
-    - spacer: 30  # IRES in prokaryotes is functionally replaced by an RBS/spacer
+    
+    - spacer: 30  # IRES-like spacer for independent translation
+    
     - cistron:
-        label: enzyme_3
+        label: enzyme3
         expression: medium
-        fused: false  # Ensures independent translation initiation (separate RBS)
+        fused: false  # Independent translation initiation
         gene:
-          id: enzyme_3
+          id: P0A9Q0  # Example enzyme 3 (placeholder UniProt ID)
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 30  # IRES-like spacer for independent translation
+    
     - cistron:
-        label: enzyme_2
+        label: enzyme2
         expression: medium
-        fused: false
+        fused: false  # Independent translation initiation
         gene:
-          id: enzyme_2
+          id: P0A9R0  # Example enzyme 2 (placeholder UniProt ID)
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 30  # IRES-like spacer for independent translation
+    
     - cistron:
-        label: enzyme_1
+        label: enzyme1
         expression: medium
-        fused: false
+        fused: false  # Independent translation initiation
         gene:
-          id: enzyme_1
+          id: P0A9S0  # Example enzyme 1 (placeholder UniProt ID)
           source: uniprot
+    
     - terminator: rrnB_T1
+```

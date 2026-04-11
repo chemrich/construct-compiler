@@ -1,19 +1,25 @@
+```yaml
 construct:
-  name: "Bacillus_subtilis_Pveg_secreted_cutinase"
+  name: "Bacillus_cutinase_secretion_vector"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: target
+        label: secreted_cutinase
         expression: high
         chain:
-          - tag: AmyE
+          - signal_peptide: AmyE
           - tag: FLAG
           - gene:
-              id: cutinase
+              id: P43155
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+```

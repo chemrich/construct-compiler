@@ -1,13 +1,25 @@
 construct:
-  name: "lentiviral_GeneG_optimized"
+  name: lentiviral_GeneG_expression_vector
   host: HEK293
+  
   backbone:
-    catalog_vector: "pLenti-puro"
+    catalog_vector: "pLenti-CMV-Puro"  # Commercial lentiviral backbone with optimized LTRs
+    
   cassette:
     - promoter: CMV
+    
     - cistron:
-        label: GeneG_payload
-        expression: high # High expression setting triggers synonymous codon optimization to ensure viral integrity and avoid repeats
+        label: target_gene
+        expression: high
         gene:
-          id: GeneG
-    - terminator: bGH_polyA
+          id: GeneG  # Note: synonymous codon optimization required for viral safety
+          source: uniprot
+          
+    - terminator: SV40_polyA
+
+# Critical note: This YAML represents the expression cassette only. 
+# Actual lentiviral production requires:
+# 1. Synonymous codon optimization of GeneG to eliminate LTR homology
+# 2. Professional vector design with optimized packaging signal
+# 3. Split-packaging system for biosafety compliance
+# 4. Regulatory approval for lentiviral work

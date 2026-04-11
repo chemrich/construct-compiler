@@ -1,20 +1,26 @@
+```yaml
 construct:
-  name: "bacillus_pmtla_lipa_cellulase"
+  name: "Bacillus_cellulase_secretion_construct"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PmtlA
+
     - cistron:
-        label: target
+        label: cellulase
         expression: high
         chain:
-          - tag: LipA
+          - tag: LipA_signal  # secretion signal for Bacillus
           - tag: Twin-Strep
           - cleavage_site: 3C
           - gene:
-              id: celA
+              id: cellulase
               source: uniprot
+
     - terminator: rrnB_T1
+```

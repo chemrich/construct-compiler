@@ -1,18 +1,24 @@
+```yaml
 construct:
-  name: "bacillus_tat_phytase_secretion"
+  name: bacillus_tat_phytase_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: phytase_expression
+        label: secreted_phytase
         expression: high
         chain:
-          - tag: PhoD
+          - signal_peptide: PhoD  # Twin-arginine translocation signal
           - gene:
-              id: P06629
+              id: P06400  # Aspergillus niger phyA phytase
               source: uniprot
+
     - terminator: rrnB_T1
+```

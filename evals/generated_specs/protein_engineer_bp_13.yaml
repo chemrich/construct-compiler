@@ -1,19 +1,26 @@
+```yaml
 construct:
-  name: "bacillus_high_yield_amylase_secretion"
+  name: "bacillus_extracellular_amylase_production"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
-        label: amylase_target
+        label: secreted_amylase
         expression: high
         chain:
-          - tag: YncM
+          - signal_peptide: YncM
           - solubility_tag: MBP
           - cleavage_site: Factor_Xa
           - gene:
-              id: amyE
+              id: P00691
               source: uniprot
+
     - terminator: rrnB_T1
+```

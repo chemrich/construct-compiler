@@ -1,16 +1,26 @@
 construct:
-  name: "ubiquitin_n_fusion_expression"
-  host: e_coli_bl21_de3
+  name: ubiquitin_fusion_degradation_control
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
-          - solubility_tag: Ubiquitin # E. coli lacks the 26S proteasome system; N-terminal Ubiquitin fusion is provided as requested, though N-end rule degradation in bacteria is functionally distinct from the mammalian system.
+          - tag: 6xHis
           - gene:
-              id: sfGFP
+              id: P0CG48  # Human ubiquitin
+              source: uniprot
+          # Note: Ubiquitin fusion for degradation control - protein will be processed by E. coli deubiquitinating enzymes
+          - gene:
+              id: mEGFP  # Replace with your target protein
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,36 +1,44 @@
+```yaml
 construct:
-  name: "AAV_PF_L_GroEL_GroES_Coexpression"
+  name: "AAV_Packaging_Factor_L_with_GroEL_coexpression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_PF_L
-        expression: high
+        label: packaging_factor
+        expression: medium
         chain:
           - tag: 6xHis
           - gene:
               id: Packaging_Factor_L
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: chaperone_groL
-        expression: medium
+        label: groEL_chaperone
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: groL
+              id: P0A6F5
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: chaperone_groS
-        expression: medium
+        label: groES_cochaperone
+        expression: high
         fused: false
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: groS
-              source: uniprot
-    - terminator: T7term
+        gene:
+          id: P0A6F9
+          source: uniprot
+
+    - terminator: rrnB_T1
+```

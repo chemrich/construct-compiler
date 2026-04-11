@@ -1,18 +1,24 @@
+```yaml
 construct:
-  name: "antibody_fragment_CHO_secretion"
+  name: antibody_fragment_CHO_expression
   host: CHO
+
   backbone:
     resistance: hygromycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: antibody_fragment
         expression: high
         chain:
-          - tag: IgK_leader
+          - signal_peptide: generic_mammalian
           - gene:
               id: antibody_fragment
               source: uniprot
+
     - terminator: BGH_polyA
+```

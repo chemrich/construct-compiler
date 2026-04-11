@@ -1,88 +1,102 @@
+```yaml
 construct:
-  name: "pectin_degradation_secretion_system"
-  host: aspergillus_niger
+  name: aspergillus_pectin_degradation_pathway
+  host: aspergillus
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: hygromycin
+    ori: AMA1
     source: addgene
+
   cassette:
-    - promoter: gpdA  # Strong constitutive promoter for Aspergillus species
+    - promoter: gpdA  # strong constitutive promoter from A. nidulans
+
     - cistron:
-        label: pgaA_fusion
+        label: polygalacturonase
         expression: high
         chain:
-          - tag: glaA_signal  # Aspergillus niger glucoamylase signal peptide for secretion
+          - secretion_signal: AmyA  # A. niger amylase signal peptide
           - gene:
-              id: P26225
+              id: P07528  # polygalacturonase
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
               id: mEGFP
               source: fpbase
-    - spacer: 30
+
+    - spacer: 50
+
     - cistron:
-        label: pelA_fusion
-        expression: high
-        fused: false
-        chain:
-          - tag: glaA_signal
-          - gene:
-              id: P27209
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mEGFP
-              source: fpbase
-    - spacer: 30
-    - cistron:
-        label: pmeA_fusion
+        label: pectate_lyase
         expression: high
         fused: false
         chain:
-          - tag: glaA_signal
+          - secretion_signal: AmyA
           - gene:
-              id: P17872
+              id: P55327  # pectate lyase
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
               id: mEGFP
               source: fpbase
-    - spacer: 30
+
+    - spacer: 50
+
     - cistron:
-        label: rgaA_fusion
+        label: pectin_methylesterase
         expression: high
         fused: false
         chain:
-          - tag: glaA_signal
+          - secretion_signal: AmyA
           - gene:
-              id: P49063
+              id: P56216  # pectin methylesterase
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
               id: mEGFP
               source: fpbase
-    - spacer: 30
+
+    - spacer: 50
+
     - cistron:
-        label: xgaA_fusion
+        label: rhamnogalacturonan_lyase
         expression: high
         fused: false
         chain:
-          - tag: glaA_signal
+          - secretion_signal: AmyA
           - gene:
-              id: O59957
+              id: Q00023  # rhamnogalacturonan lyase
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: trpC_term  # Standard fungal transcriptional terminator
+
+    - spacer: 50
+
+    - cistron:
+        label: exopolygalacturonase
+        expression: high
+        fused: false
+        chain:
+          - secretion_signal: AmyA
+          - gene:
+              id: P26215  # exopolygalacturonase
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: trpC
+```

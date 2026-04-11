@@ -1,32 +1,42 @@
+```yaml
 construct:
-  name: "polycistronic_abc_expression_system"
-  host: e_coli_bl21_de3
+  name: polycistronic_GeneA_GeneB_GeneC
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gene_a
-        expression: medium
+        label: GeneA
+        expression: high
         gene:
           id: GeneA
           source: uniprot
-    - spacer: 32
+
+    - spacer: 45  # unique spacer length
+
     - cistron:
-        label: gene_b
+        label: GeneB
         expression: medium
-        fused: false
+        fused: false  # independent translation with distinct RBS
         gene:
           id: GeneB
           source: uniprot
-    - spacer: 47
+
+    - spacer: 32  # different spacer length
+
     - cistron:
-        label: gene_c
-        expression: medium
-        fused: false
+        label: GeneC
+        expression: low
+        fused: false  # independent translation with distinct RBS
         gene:
           id: GeneC
           source: uniprot
+
     - terminator: rrnB_T1
+```

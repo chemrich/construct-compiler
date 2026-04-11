@@ -1,23 +1,30 @@
 construct:
-  name: yeast_polycistronic_subunit_expression
+  name: polycistronic_subunit1_subunit2_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: subunit_1
+        label: subunit1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: Subunit1
               source: uniprot
-    - spacer: 30 # Note: In yeast, polycistronic expression typically requires an IRES or 2A peptide rather than a simple spacer.
+
+    # Note: Yeast lacks IRES machinery for polycistronic mRNA translation
+    # Using spacer but recommend separate cassettes for functional expression
+    - spacer: 30
+
     - cistron:
-        label: subunit_2
+        label: subunit2
         expression: high
         fused: false
         chain:
@@ -25,4 +32,5 @@ construct:
           - gene:
               id: Subunit2
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

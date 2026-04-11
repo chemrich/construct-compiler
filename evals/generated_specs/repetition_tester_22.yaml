@@ -1,30 +1,44 @@
+```yaml
 construct:
-  name: "divergent_three_enzyme_operon"
-  host: e_coli_bl21_de3
+  name: three_enzyme_operon_distinct_RBS
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: E1_subunit
+        label: E1
         expression: high
-        gene:
-          id: P0AFG8 # aceE: Pyruvate dehydrogenase E1 component
-          source: uniprot
-    - spacer: 27 # Unique spacer length to ensure sequence divergence
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A6F5  # E. coli beta-galactosidase (lacZ)
+              source: uniprot
+
+    - spacer: 35  # Unique spacer length to avoid recombination
+
     - cistron:
-        label: E2_subunit
+        label: E2
         expression: medium
-        fused: false # Ensures independent translation with a unique RBS
+        fused: false  # Independent translation with distinct RBS
         gene:
-          id: P07016 # aceF: Dihydrolipoyl transacetylase
+          id: P00350  # E. coli 6-phosphofructokinase (pfkA)
           source: uniprot
-    - spacer: 43 # Distinct spacer length to avoid homology/recombination
+
+    - spacer: 47  # Different spacer length for sequence divergence
+
     - cistron:
-        label: E3_subunit
-        expression: low
-        fused: false # Ensures independent translation with a unique RBS
+        label: E3
+        expression: medium
+        fused: false  # Independent translation with distinct RBS
         gene:
-          id: P0A9P0 # lpd: Dihydrolipoyl dehydrogenase
+          id: P0A9P0  # E. coli alkaline phosphatase (phoA)
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

@@ -1,5 +1,6 @@
+```yaml
 construct:
-  name: "pichia_pastoris_antibody_expression"
+  name: antibody_heavy_light_chain_expression
   host: yeast
 
   backbone:
@@ -13,22 +14,22 @@ construct:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: antibody_HC
-              source: uniprot
+              id: heavy_chain
+              source: custom  # User will provide sequence
           - tag: 6xHis
     - terminator: AOX1_TT
-
-    - spacer: 50
 
     - promoter: AOX1
     - cistron:
         label: light_chain
         expression: high
+        fused: false
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: antibody_LC
-              source: uniprot
+              id: light_chain
+              source: custom  # User will provide sequence
     - terminator: AOX1_TT
+```

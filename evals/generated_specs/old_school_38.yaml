@@ -1,14 +1,22 @@
+```yaml
 construct:
-  name: "proteinX_pUC_kanR_T7"
-  host: e_coli_bl21_de3  # T7 promoter requires a DE3 lysogen for expression
+  name: "ProteinX_simple_expression"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pUC
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
         label: target
+        expression: high
         gene:
           id: ProteinX
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

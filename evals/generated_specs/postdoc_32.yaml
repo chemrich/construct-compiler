@@ -1,16 +1,23 @@
 construct:
-  name: "e_coli_strep_tagged_target"
-  host: e_coli_bl21_de3
+  name: gene_with_strep_and_bgh_polya
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: target_protein
-              source: uniprot
+              id: your_gene_id  # Replace with actual gene ID
+              source: uniprot   # Replace with appropriate source
           - tag: Strep-II
-    - terminator: rrnB_T1 # User requested BGH polyA, which is a mammalian signal; substituted with rrnB_T1 for efficient transcriptional termination in E. coli.
+
+    # Note: BGH polyA won't function in E. coli - using rrnB_T1 terminator instead
+    - terminator: rrnB_T1

@@ -1,20 +1,30 @@
+```yaml
 construct:
-  name: "mammalian_IRES_bicistronic_D_E"
+  name: "Protein_D_IRES_Protein_E_bicistronic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: protein_d
+        expression: high
         gene:
           id: Protein_D
           source: uniprot
-    - spacer: 585  # EMCV IRES (Internal Ribosome Entry Site) sequence
+
+    - spacer: 30  # IRES element - enables independent translation of downstream cistron
+
     - cistron:
         label: protein_e
-        fused: false  # Independent translation via IRES
+        expression: medium
+        fused: false  # independent translation via IRES
         gene:
           id: Protein_E
           source: uniprot
-    - terminator: BGH_pA
+
+    - terminator: polyA
+```

@@ -1,16 +1,20 @@
+```yaml
 construct:
-  name: "Protein_M_Divergent_Mammalian_Expression"
+  name: "ProteinM_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: CMV # High expression mammalian promoter
+    - promoter: CMV
+    
     - cistron:
-        label: protein_m
-        expression: high # Triggers strong Kozak sequence optimization for HEK293
+        label: target
+        expression: high
         gene:
           id: ProteinM
           source: uniprot
-    # Multiple divergent poly(A) signals to prevent read-through and satisfy non-repetitive requirement
-    - terminator: bGH_pA
-    - terminator: SV40_pA # Sequence-divergent from bGH_pA to avoid repetitive elements in the 3' UTR
+    
+    - terminator: rrnB_T1  # Single terminator to avoid repetitive elements as requested
+```

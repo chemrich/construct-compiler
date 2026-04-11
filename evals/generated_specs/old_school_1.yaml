@@ -1,27 +1,36 @@
+```yaml
 construct:
-  name: "yeast_constitutive_alpha_amylase_expression"
+  name: ADH1_alpha_amylase_Myc_LEU2
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: LEU2
+    ori: ARS
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
         label: alpha_amylase
         expression: high
         chain:
-          - tag: alpha_factor
           - gene:
               id: AMY1
               source: uniprot
           - tag: Myc
-    - spacer: 30
+
+    - terminator: ADH1_term
+
+    - promoter: LEU2_promoter
+
     - cistron:
-        label: selection_marker
+        label: selectable_marker
         expression: medium
         fused: false
         gene:
           id: LEU2
           source: uniprot
-    - terminator: CYC1
+
+    - terminator: LEU2_term
+```

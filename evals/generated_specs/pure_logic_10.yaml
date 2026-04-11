@@ -1,32 +1,66 @@
+```yaml
 construct:
-  name: "bistable_genetic_latch"
+  name: genetic_latch_circuit
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: lacUV5
+    - promoter: J23100
+
     - cistron:
-        label: repressor_tetR
+        label: latch_repressor
         expression: medium
         gene:
-          id: P04483
+          id: P0440  # CI repressor
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: luminescent_reporter
+        label: set_activator
+        expression: medium
+        fused: false
+        gene:
+          id: P03023  # CAP-cAMP activator
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD  # SET input promoter
+
+    - cistron:
+        label: set_circuit
+        expression: high
+        gene:
+          id: P0440  # CI repressor for self-reinforcement
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5  # RESET input promoter
+
+    - cistron:
+        label: reset_circuit
+        expression: high
+        gene:
+          id: P06959  # Cro repressor to inhibit CI
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: tac  # Output promoter (repressed by CI when latch is OFF)
+
+    - cistron:
+        label: luminescent_output
         expression: high
         fused: false
         gene:
-          id: Q9GV45
-          source: uniprot
+          id: mNeonGreen  # Luminescent reporter
+          source: fpbase
+
     - terminator: rrnB_T1
-    - promoter: tetO
-    - cistron:
-        label: repressor_lacI
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: BBa_B0015
+```

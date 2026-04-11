@@ -1,52 +1,64 @@
+```yaml
 construct:
-  name: "doxycycline_inducible_drug_resistance_operon"
-  host: e_coli
+  name: doxycycline_inducible_drug_resistance_operon
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: tetA  # Doxycycline-inducible promoter
+    - promoter: tetR_TetA  # doxycycline-inducible promoter
+    
     - cistron:
-        label: enzyme_1
-        expression: high
+        label: enzyme1
+        expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: enzyme_1
+              id: P0A9Q7  # beta-lactamase
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_2
-        expression: high
-        fused: false
-        gene:
-          id: enzyme_2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_3
+        label: enzyme2
         expression: medium
         fused: false
         gene:
-          id: enzyme_3
+          id: P00552  # chloramphenicol acetyltransferase
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_4
+        label: enzyme3
         expression: medium
         fused: false
         gene:
-          id: enzyme_4
+          id: P00557  # aminoglycoside phosphotransferase
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_5
-        expression: low
+        label: enzyme4
+        expression: medium
+        fused: false
+        gene:
+          id: P04994  # tetracycline resistance protein
+          source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: enzyme5
+        expression: medium
         fused: false
         chain:
           - gene:
-              id: enzyme_5
+              id: P20659  # streptomycin phosphotransferase
               source: uniprot
           - tag: FLAG
+    
     - terminator: rrnB_T1
+```

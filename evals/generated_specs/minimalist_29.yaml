@@ -1,14 +1,23 @@
+```yaml
 construct:
-  name: "repressor_protein_r_expression"
-  host: e_coli_bl21
+  name: "repressor_protein_R"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: repressor_r
+        label: repressor_R
         expression: high
-        gene:
-          id: R
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: R_repressor
+              source: uniprot
+    
+    - terminator: rrnB_T1
+```

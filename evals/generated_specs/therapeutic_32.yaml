@@ -1,23 +1,30 @@
+```yaml
 construct:
   name: "yeast_surface_display_therapeutic_peptide"
   host: yeast
+
   backbone:
-    resistance: TRP1  # Auxotrophic marker used because antibiotic resistance is prohibited per request
-    source: addgene
+    resistance: none
+    ori: CEN_ARS
+    source: custom
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
-          - tag: alpha_factor  # Secretion signal for export to the yeast cell surface
+          - secretion_signal: alpha_factor
           - gene:
-              id: P0CY27
-              source: uniprot  # Aga2p cell wall anchor protein
+              id: "therapeutic_peptide"
+              source: custom
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P01275
-              source: uniprot  # GLP-1 (Glucagon-like peptide 1) as a representative therapeutic peptide
-    - terminator: ADH1
+              id: "Aga2p"
+              source: uniprot
+
+    - terminator: CYC1
+```

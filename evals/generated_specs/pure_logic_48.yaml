@@ -1,20 +1,27 @@
+```yaml
 construct:
-  name: "nor_gate_cytotoxic_ccdB"
-  host: e_coli
+  name: "NOR_gate_cytotoxic_protein"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac  # Functioning as a NOR gate output; promoter is repressed if Input A or Input B is present
+    - promoter: T7lac
+
     - cistron:
-        label: toxin
+        label: cytotoxic_protein
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: P0AD98
+              id: P0A9P0  # colicin E1 (cytotoxic protein)
               source: uniprot
+
     - terminator: rrnB_T1
+```

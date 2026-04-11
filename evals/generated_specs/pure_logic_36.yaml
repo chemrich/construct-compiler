@@ -1,19 +1,25 @@
+```yaml
 construct:
-  name: "pH_responsive_ON_gate_yeast"
+  name: pH_responsive_ON_gate_yeast
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: FIT2 # Natural acid-inducible promoter in S. cerevisiae (active at pH < 6.0)
+    - promoter: PHO5  # pH-responsive promoter, activated under acidic conditions
+
     - cistron:
-        label: Output_W
+        label: pH_sensor_output
         expression: high
         chain:
-          - tag: alpha_factor # N-terminal secretion signal for yeast
+          - tag: alpha_factor_signal  # secretion signal for yeast
+          - tag: GPI_anchor  # cell-surface localization
           - gene:
-              id: sfGFP
-              source: fpbase
-          - tag: GPI_anchor # C-terminal cell-surface localization anchor
-    - terminator: CYC1_term
+              id: W  # output protein W
+              source: uniprot
+
+    - terminator: CYC1
+```

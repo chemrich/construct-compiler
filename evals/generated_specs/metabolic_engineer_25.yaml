@@ -1,59 +1,74 @@
+```yaml
 construct:
-  name: "temp_inducible_6enzyme_carbon_fixation"
-  host: e_coli_bl21
+  name: carbon_fixation_6enzyme_pathway
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: lambda_pL  # Temperature-inducible promoter (regulated by cI857)
+    - promoter: lambda_PL  # temperature-inducible promoter system
+    
     - cistron:
-        label: rbcL
+        label: rubisco_large
+        expression: medium
+        gene:
+          id: P00877
+          source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: rubisco_small
         expression: medium
         fused: false
         gene:
-          id: rbcL
+          id: P69249
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: rbcS
+        label: phosphoglycerate_kinase
         expression: medium
         fused: false
         gene:
-          id: rbcS
+          id: P00560
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: prkA
+        label: glyceraldehyde_3p_dehydrogenase
         expression: medium
         fused: false
         gene:
-          id: prkA
+          id: P00354
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: fbp
+        label: triose_phosphate_isomerase
         expression: medium
         fused: false
         gene:
-          id: fbp
+          id: P00938
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: glpX
-        expression: medium
-        fused: false
-        gene:
-          id: glpX
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: rpiA
+        label: aldolase_his_tagged
         expression: medium
         fused: false
         chain:
           - gene:
-              id: rpiA
+              id: P00883
               source: uniprot
           - tag: 6xHis
+    
     - terminator: rrnB_T1
+```

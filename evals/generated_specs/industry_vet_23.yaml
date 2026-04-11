@@ -1,19 +1,30 @@
+```yaml
 construct:
-  name: "mammalian_stoichiometric_2A_bicistronic"
+  name: bicistronic_proteinA_proteinB_2A
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "bicistronic_payload"
+        label: proteinA
         expression: high
+        gene:
+          id: P04637  # p53 tumor suppressor as example Protein A
+          source: uniprot
+
+    - cistron:
+        label: proteinB
+        expression: high
+        fused: true  # 2A peptide creates stoichiometric co-translation
         chain:
+          - cleavage_site: P2A  # 2A self-cleaving peptide for stoichiometric expression
           - gene:
-              id: Protein_A
+              id: P21359  # NF-kB p65 as example Protein B
               source: uniprot
-          - cleavage_site: P2A
-          - gene:
-              id: Protein_B
-              source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: BBa_B0015
+```

@@ -1,20 +1,30 @@
+```yaml
 construct:
-  name: "geneM_geneN_independent_expression"
+  name: geneM_geneN_mammalian_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: geneM_cistron
+        label: geneM
+        expression: high
         gene:
           id: geneM
           source: uniprot
-    - terminator: bGH_polyA
-    - promoter: EF1_alpha
+
+    - spacer: 30
+
     - cistron:
-        label: geneN_cistron
+        label: geneN
+        expression: high
+        fused: false
         gene:
           id: geneN
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1
+```

@@ -1,28 +1,37 @@
+```yaml
 construct:
-  name: "pichia_fab_dual_cassette"
+  name: heterodimeric_fab_pichia_expression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor  # secretion signal for yeast
           - gene:
-              id: trastuzumab_LC
+              id: P01834  # human immunoglobulin kappa light chain constant region
               source: uniprot
-    - terminator: AOX1
+
+    - terminator: CYC1
+
     - promoter: GAP
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor  # secretion signal for yeast
           - gene:
-              id: trastuzumab_HC
+              id: P01857  # human immunoglobulin heavy chain constant region Fab fragment
               source: uniprot
-    - terminator: AOX1
+
+    - terminator: CYC1
+```

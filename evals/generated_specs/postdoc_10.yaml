@@ -1,13 +1,17 @@
+```yaml
 construct:
-  name: "target_protein_purification_nmr"
-  host: e_coli_bl21_de3  # T7 promoter requires a DE3 lysogen host for expression
+  name: "TargetProtein_NMR_dual_tag"
+  host: e_coli_bl21_de3
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: T7lac
-      cistron:
+    - promoter: T7
+
+    - cistron:
         label: target
         expression: high
         chain:
@@ -16,4 +20,6 @@ construct:
               id: TargetProtein
               source: uniprot
           - tag: 6xHis
-      terminator: T7term
+
+    - terminator: rrnB_T1
+```

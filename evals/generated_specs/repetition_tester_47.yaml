@@ -1,21 +1,38 @@
 construct:
-  name: "triple_tev_divergent_construct"
-  host: e_coli_bl21
+  name: triple_TEV_cleavage_synonymous_sites
+  host: e_coli_bl21_de3
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target_protein
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
-          - solubility_tag: MBP
-          - cleavage_site: TEV
-          - tag: FLAG
-          - cleavage_site: TEV
+          - cleavage_site: TEV  # Site 1: ENLYFQG (canonical)
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+            # User must provide their target protein sequence
+            # This construct provides framework for triple TEV sites
+            id: target_gene
+            source: custom
+          - cleavage_site: TEV  # Site 2: ENLYFQS (synonymous variant)
+          - gene:
+            id: linker_domain
+            source: custom
+          - cleavage_site: TEV  # Site 3: ENLYFQT (synonymous variant)
+          - gene:
+            id: final_domain
+            source: custom
+    
+    - terminator: rrnB_T1
+
+# Note: TEV protease recognizes ENLYFQ|G/S where cleavage occurs after Q
+# Synonymous variants can use different codons for each amino acid:
+# Site 1: GAA AAC CTC TAC TTC CAG GGC (ENLYFQG)
+# Site 2: GAG AAT CTG TAT TTT CAA AGC (ENLYFQS) 
+# Site 3: GAA AAC TTG TAC TTT CAA ACG (ENLYFQT)
+# All encode functional TEV sites with maximal codon divergence

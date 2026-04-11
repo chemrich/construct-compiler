@@ -1,18 +1,26 @@
+```yaml
 construct:
-  name: "bacillus_subtilis_intracellular_antigen_expression"
+  name: bacillus_viral_antigen_trx_fusion
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110  # Bacillus-specific origin for stable maintenance
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Pgrac100  # High-level IPTG-inducible promoter for Bacillus
+    - promoter: Pgrac100
+
     - cistron:
-        label: target_antigen
+        label: viral_antigen
         expression: high
         chain:
           - solubility_tag: Trx
           - cleavage_site: TEV
           - gene:
-              id: viral_antigen
+              id: P1A  # Example viral antigen - replace with specific antigen ID
               source: uniprot
+              codon_optimize: B_subtilis
+
     - terminator: rrnB_T1
+```

@@ -1,22 +1,32 @@
+```yaml
 construct:
-  name: "bicistronic_bacterial_enzymes"
-  host: e_coli_bl21_de3
+  name: "bicistronic_enzyme_A_enzyme_B"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: enzyme_a
+        label: enzyme_A
         expression: high
         gene:
-          id: P00001
+          id: "Enzyme A"  # Replace with actual gene ID/name
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_b
+        label: enzyme_B
         expression: high
         fused: false
         gene:
-          id: P00002
+          id: "Enzyme B"  # Replace with actual gene ID/name
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

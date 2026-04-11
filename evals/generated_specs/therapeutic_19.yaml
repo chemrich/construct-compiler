@@ -1,17 +1,24 @@
+```yaml
 construct:
-  name: "commensal_secretion_therapeutic_glp1"
+  name: "therapeutic_protein_gut_secretion"
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: p15A
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23106
+    - promoter: J23106  # Constitutive, moderate strength
+
     - cistron:
-        label: secreted_therapeutic
+        label: therapeutic
         expression: medium
         chain:
-          - tag: PelB
+          - secretion_signal: pelB  # Bacterial periplasmic secretion
           - gene:
-              id: P01275
-              source: uniprot
+            id: P01308  # Human insulin as example therapeutic
+            source: uniprot
+
     - terminator: rrnB_T1
+```

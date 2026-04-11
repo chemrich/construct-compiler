@@ -1,17 +1,27 @@
+```yaml
 construct:
-  name: "therapeutic_short_half_life_expression"
+  name: therapeutic_protein_degradation_controlled
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01588
-              source: uniprot
-          - tag: PEST
-    - terminator: bGH_polyA
+            id: P01308  # human insulin
+            source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: PEST  # degradation signal for short half-life
+
+    - terminator: rrnB_T1
+```

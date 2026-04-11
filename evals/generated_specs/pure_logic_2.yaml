@@ -1,37 +1,73 @@
+```yaml
 construct:
-  name: "mammalian_or_gate_cytokine"
+  name: three_input_OR_gate_secreted_cytokine
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G  # Input 1: Doxycycline-inducible promoter
+    - promoter: CMV
+      
     - cistron:
-        label: cytokine_branch_1
-        expression: high
+        label: dCas9_VP64
+        expression: medium
         chain:
+          - tag: NLS
           - gene:
-              id: P60568  # Human Interleukin-2 (IL-2), naturally contains secretion signal
+              id: P61964  # dCas9 (nuclease dead)
               source: uniprot
-    - terminator: bgh_polyA
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: VP64_activation_domain  # transcriptional activator
+              source: uniprot
 
-    - promoter: CRE  # Input 2: cAMP-responsive promoter (e.g., Forskolin)
-    - cistron:
-        label: cytokine_branch_2
-        expression: high
-        chain:
-          - gene:
-              id: P60568
-              source: uniprot
-    - terminator: bgh_polyA
+    - spacer: 50
 
-    - promoter: GRE  # Input 3: Glucocorticoid-responsive promoter (e.g., Dexamethasone)
+    - promoter: U6
+      
     - cistron:
-        label: cytokine_branch_3
+        label: gRNA_signal1
+        expression: high
+        fused: false
+        gene:
+          id: gRNA_scaffold_signal1_target  # targets signal1-responsive promoter
+          source: custom
+
+    - spacer: 30
+
+    - cistron:
+        label: gRNA_signal2
+        expression: high
+        fused: false
+        gene:
+          id: gRNA_scaffold_signal2_target  # targets signal2-responsive promoter
+          source: custom
+
+    - spacer: 30
+
+    - cistron:
+        label: gRNA_signal3
+        expression: high
+        fused: false
+        gene:
+          id: gRNA_scaffold_signal3_target  # targets signal3-responsive promoter
+          source: custom
+
+    - spacer: 50
+
+    - promoter: minimal_CMV  # minimal promoter with gRNA target sites
+      
+    - cistron:
+        label: secreted_cytokine
         expression: high
         chain:
+          - tag: signal_peptide  # for secretion
           - gene:
-              id: P60568
+              id: P01579  # Interferon-gamma as example cytokine
               source: uniprot
-    - terminator: bgh_polyA
+
+    - terminator: BBa_B0015
+```

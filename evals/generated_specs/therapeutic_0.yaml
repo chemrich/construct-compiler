@@ -1,20 +1,25 @@
+```yaml
 construct:
-  name: "therapeutic_antibody_fragment_production"
+  name: human_antibody_fragment_TEV_cleavable
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance; selection via auxotrophy or TA systems
-    ori: pUC
-    source: addgene
+    resistance: none  # No antibiotic resistance permitted
+    ori: pBR322
+    source: custom
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
-          - tag: pelB  # Secretion signal for periplasmic folding of antibody fragment
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P01857
-              source: uniprot
-    - terminator: T7term
+            id: P01834  # Human Ig kappa chain C region - representative antibody fragment
+            source: uniprot
+
+    - terminator: rrnB_T1
+```

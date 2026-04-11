@@ -1,21 +1,28 @@
 construct:
-  name: "intein_mediated_protein_splicing"
+  name: intein_mediated_protein_splicing
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: precursor_fusion
+        label: intein_precursor
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-          - gene:
-              id: P0A5U4 # Mxe GyrA Intein - Apply extreme codon optimization to minimize sequence identity with exteins and eliminate internal repeats
+              id: P0DTC1  # SARS-CoV-2 nsp1 as N-extein example
               source: uniprot
           - gene:
-              id: mScarlet
-              source: fpbase
-    - terminator: T7term
+              id: DnaE_intein_Ssp  # Split intein from Synechocystis
+              source: uniprot
+              codon_optimization: extensive  # Forces complete recodon to avoid homology
+          - gene:
+              id: P0DTD1  # SARS-CoV-2 nsp2 as C-extein example
+              source: uniprot
+
+    - terminator: rrnB_T1

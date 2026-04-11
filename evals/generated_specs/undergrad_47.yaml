@@ -1,18 +1,24 @@
+```yaml
 construct:
-  name: "secreted_protein_e_coli_amp"
+  name: "secreted_protein_pelB_signal"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: PelB # PelB signal sequence for periplasmic secretion in E. coli
+          - signal_peptide: pelB  # periplasmic export signal
           - gene:
-              id: secreted_protein
+              id: "your_protein_id"  # replace with actual protein ID
               source: uniprot
+
     - terminator: rrnB_T1
+```

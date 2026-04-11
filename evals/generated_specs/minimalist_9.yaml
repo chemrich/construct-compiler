@@ -1,15 +1,20 @@
+```yaml
 construct:
-  name: "proteinL_mammalian_low_basal"
+  name: controlled_proteinL_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # EF1_alpha provides more stable, less "bursty" expression than CMV in many mammalian cell lines
+    - promoter: CMV  # CMV promoter provides strict control with low basal expression in mammalian cells
+
     - cistron:
-        label: protein_L
-        expression: low  # Configured for low basal expression as requested
-        chain:
-          - gene:
-              id: P18570
-              source: uniprot
-    - terminator: SV40_polyA
+        label: proteinL
+        expression: medium
+        gene:
+          id: P19909  # Protein L from Peptostreptococcus magnus
+          source: uniprot
+
+    - terminator: rrnB_T1
+```

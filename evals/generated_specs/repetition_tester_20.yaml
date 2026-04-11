@@ -1,22 +1,27 @@
+```yaml
 construct:
-  name: "recombination_resistant_orthogonal_coexpression"
+  name: "dual_expression_anti_recombination"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
     - cistron:
-        label: protein_x
+        label: target
         expression: high
         gene:
-          id: P01106
+          id: ProteinX
           source: uniprot
-    - terminator: T7term
-    - promoter: tac
+    - terminator: rrnB_T1
+
+    - promoter: araBAD  # completely different regulation mechanism from T7
     - cistron:
         label: reporter
-        expression: low
+        expression: medium
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: rrnB_T1
+    - terminator: BBa_B0015  # BioBrick terminator, phylogenetically distant from rrnB
+```

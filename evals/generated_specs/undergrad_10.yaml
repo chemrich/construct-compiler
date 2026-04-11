@@ -1,16 +1,22 @@
+```yaml
 construct:
-  name: heat_shock_inducible_gfp
+  name: "heat_inducible_GFP"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: dnaK # E. coli heat shock promoter (sigma-32 regulated) induced at elevated temperatures
+    - promoter: groE  # Heat shock promoter, active at elevated temperatures
+    
     - cistron:
-        label: temperature_reporter
+        label: reporter
         expression: high
         gene:
           id: mEGFP
           source: fpbase
+    
     - terminator: rrnB_T1
+```

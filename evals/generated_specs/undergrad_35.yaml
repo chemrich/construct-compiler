@@ -1,26 +1,22 @@
+```yaml
 construct:
-  name: "dox_inducible_gene_f_purification"
+  name: "Dox_inducible_Strep_geneF_mammalian"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G  # Doxycycline-inducible promoter (Tet-On system)
+    - promoter: TRE  # Tet-responsive element, requires rtTA for dox induction
+    
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: F
-              source: uniprot
-    - terminator: bGH_pA
-    - promoter: SV40
-    - cistron:
-        label: selection_marker
-        expression: medium
-        gene:
-          id: PAC
-          source: uniprot
-    - terminator: SV40_polyA
+              id: F  # User-specified gene F
+              # Note: source omitted as this appears to be a custom gene
+    
+    - terminator: rrnB_T1
+```

@@ -1,22 +1,80 @@
+```yaml
 construct:
-  name: "mammalian_and_gate_split_egfp"
+  name: mammalian_AND_gate_with_NLS
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+    
     - cistron:
-        label: input_a_split_n_egfp
+        label: input_A_detector
+        expression: medium
+        chain:
+          - gene:
+              id: P2A4-1-dCas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: VP64
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: input_B_detector
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: P2A4-1-dCas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: VPR
+              source: uniprot
+
+    - spacer: 50
+
+    - promoter: U6
+
+    - cistron:
+        label: guide_RNA_A
+        expression: high
+        fused: false
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
-    - promoter: EF1_alpha
+          id: gRNA_target_A
+          source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: input_b_split_c_egfp
+        label: guide_RNA_B
+        expression: high
+        fused: false
+        gene:
+          id: gRNA_target_B
+          source: uniprot
+
+    - spacer: 50
+
+    # Minimal promoter activated by both inputs
+    - promoter: CMV  # This would be a minimal promoter with both gRNA target sites
+
+    - cistron:
+        label: output_C
+        expression: high
         chain:
           - tag: NLS
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+```

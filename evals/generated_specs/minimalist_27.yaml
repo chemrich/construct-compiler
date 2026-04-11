@@ -1,24 +1,34 @@
+```yaml
 construct:
-  name: "coexpression_protein_x_y"
-  host: e_coli_bl21_de3
+  name: protein_X_Y_coexpression
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: protein_x
-        expression: medium
+        label: protein_X
+        expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: Protein_X
+              id: protein_X
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: protein_y
-        expression: medium
+        label: protein_Y
+        expression: high
         fused: false
         gene:
-          id: Protein_Y
+          id: protein_Y
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+```

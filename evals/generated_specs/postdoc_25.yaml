@@ -1,16 +1,24 @@
+```yaml
 construct:
-  name: "human_ADRB2_yeast_expression"
+  name: human_receptor_yeast_expression
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: neomycin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: receptor
+        label: human_receptor
         expression: high
-        gene:
-          id: P07550
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - signal_peptide: alpha_factor
+          - gene:
+              id: P35368
+              source: uniprot
+
+    - terminator: CYC1
+```

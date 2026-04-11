@@ -1,21 +1,22 @@
+```yaml
 construct:
-  name: "mammalian_secreted_scfv_nonviral"
-  host: HEK293
+  name: "secreted_antibody_fragment_mammalian"
+  host: CHO
+
   backbone:
-    # A standard bacterial resistance gene is included for cloning purposes; 
-    # bacterial resistance is required for construct propagation in E. coli.
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Human promoter used to avoid sequences of viral origin (like CMV)
+    - promoter: EF1_alpha
+
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
-          - tag: Ig_kappa_leader # Signal peptide for efficient mammalian secretion
+          - signal_peptide: IgG_kappa  # secretion signal for mammalian cells
           - gene:
-              id: "trastuzumab_scFv"
+              id: P01834  # human immunoglobulin kappa light chain variable region
               source: uniprot
-          - tag: 8xHis
-    - terminator: hGH_polyA # Human-derived terminator to avoid viral sequences (like SV40 or BGH pA)
+
+    - terminator: BGH_pA
+```

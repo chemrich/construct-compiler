@@ -1,22 +1,28 @@
 construct:
   name: "ProteinX_ProteinY_tandem_fusion"
   host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: fusion_construct
+        label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: ProteinX
+              id: P0A6X3  # Example ProteinX - E. coli chaperonin GroEL
               source: uniprot
           - linker:
-              type: rigid_EAAAK # Selected to satisfy the requirement for a non-repetitive, distinct structural linker
-              repeats: 3
-          - cleavage_site: TEV
+              type: custom
+              sequence: "QNPDWLRAHSLTEQGGSGGSGG"  # Novel 22-residue non-repetitive linker
+          - cleavage_site: custom
+            sequence: "LVPRGS"  # HRV 3C protease site with custom flanking
           - gene:
-              id: ProteinY
+              id: P0A6F5  # Example ProteinY - E. coli chaperonin GroES
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

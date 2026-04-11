@@ -1,14 +1,19 @@
 construct:
-  name: HEK293_receptor_expression_shuttle
+  name: receptor_protein_HEK293
   host: HEK293
+
   backbone:
+    # Using CMV instead of T7 - T7 promoter doesn't work in mammalian cells
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: CMV # T7 substituted with CMV for HEK293; T7 is a bacteriophage promoter that requires T7 polymerase, while CMV is a strong mammalian promoter.
+    - promoter: CMV  # CMV promoter for mammalian expression, not T7
+
     - cistron:
-        label: receptor_target
+        label: receptor
         expression: high
         gene:
-          id: P00533
+          id: your_receptor_gene
           source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: SV40_polyA

@@ -1,63 +1,61 @@
+```yaml
 construct:
-  name: "pharmaceutical_intermediate_pathway"
+  name: yeast_4enzyme_pharmaceutical_pathway
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3
-    - cistron:
-        label: enzyme_1
-        expression: high
-        chain:
-          - gene:
-              id: "P00330"
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - solubility_tag: MBP
-    - terminator: CYC1
-    - spacer: 50
-    - promoter: PGK1
-    - cistron:
-        label: enzyme_2
-        expression: high
-        chain:
-          - gene:
-              id: "P00547"
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - solubility_tag: SUMO
-    - terminator: ADH1
-    - spacer: 50
     - promoter: TEF1
     - cistron:
-        label: enzyme_3
-        expression: medium
+        label: enzyme1
+        expression: high
         chain:
           - gene:
-              id: "P04035"
+              id: P450_CYP51
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - solubility_tag: MBP
-    - terminator: ENO2
+          - solubility_tag: SUMO
+    - terminator: CYC1
+
     - spacer: 50
+
     - promoter: ADH1
     - cistron:
-        label: enzyme_4
+        label: enzyme2
+        expression: high
+        chain:
+          - gene:
+              id: ALDH2
+              source: uniprot
+          - solubility_tag: MBP
+    - terminator: ADH1
+
+    - spacer: 50
+
+    - promoter: PGK1
+    - cistron:
+        label: enzyme3
         expression: medium
         chain:
           - gene:
-              id: "P10591"
+              id: ALDH3A1
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - solubility_tag: SUMO
-    - terminator: BBa_B0015
+    - terminator: PGK1
+
+    - spacer: 50
+
+    - promoter: TPI1
+    - cistron:
+        label: enzyme4
+        expression: medium
+        chain:
+          - gene:
+              id: ADH1B
+              source: uniprot
+          - solubility_tag: MBP
+    - terminator: TPI1
+```

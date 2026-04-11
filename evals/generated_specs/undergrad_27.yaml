@@ -1,23 +1,29 @@
+```yaml
 construct:
-  name: yeast_protein_C_GFP_fusion
+  name: protein_C_GFP_fusion_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: ADH1
+    - promoter: pADH1
+
     - cistron:
-        label: target
+        label: target_fusion
         expression: high
         chain:
           - gene:
-              id: C
+              id: protein_C
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: CYC1
+
+    - terminator: rrnB_T1
+```

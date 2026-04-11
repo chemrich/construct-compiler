@@ -1,19 +1,25 @@
+```yaml
 construct:
-  name: "pichia_tef1_ost1_nanobody_6xhis"
+  name: TEF1_Ost1_nanobody_His
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: TEF1
+
     - cistron:
         label: secreted_nanobody
         expression: high
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - gene:
-              id: nanobody
+              id: nanobody  # User needs to specify actual nanobody sequence
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: CYC1
+```

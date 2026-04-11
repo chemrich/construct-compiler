@@ -1,21 +1,24 @@
+```yaml
 construct:
-  name: "yeast_galactose_inducible_tf"
+  name: galactose_inducible_transcription_factor
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2_micron
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: tf_expression
+        label: transcription_factor
         expression: high
         chain:
-          - tag: HA
-          - linker:
-              type: short_GS
-              repeats: 1
+          - tag: 6xHis
           - gene:
-              id: transcription_factor
+              id: P_TETX_HUMAN  # Tet-On transcriptional activator
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: ADH1
+```

@@ -1,19 +1,27 @@
+```yaml
 construct:
   name: "antigenA_surface_display"
   host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: surface_fusion
-        expression: high
+        label: surface_display
+        expression: medium
         chain:
-          - tag: Lpp-OmpA
+          - gene:
+              id: P1NTL7N6
+              source: uniprot  # OmpA signal peptide + transmembrane domain for surface display
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: antigenA
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

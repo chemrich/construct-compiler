@@ -1,19 +1,25 @@
+```yaml
 construct:
-  name: "periplasmic_his_tagged_sfgfp_expression"
-  host: e_coli_bl21_de3
+  name: periplasmic_expression_construct
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: periplasmic_target
+        label: target
         expression: high
         chain:
-          - tag: pelB
+          - signal_peptide: pelB  # periplasmic secretion signal
           - tag: 6xHis
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: P0A6F5  # example protein - replace with desired target
+              source: uniprot
+
+    - terminator: rrnB_T1
+```

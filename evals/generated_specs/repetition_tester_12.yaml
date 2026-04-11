@@ -1,32 +1,41 @@
+```yaml
 construct:
-  name: "baculovirus_tri_viral_protein_orthogonal_expression"
-  host: mammalian # Substituted 'mammalian' for insect cells to comply with schema host list
+  name: orthogonal_viral_protein_triad
+  host: sf9  # insect cells for baculovirus system
+
   backbone:
-    catalog_vector: "pFastBac1"
+    catalog_vector: pFastBac1
+    source: invitrogen
+
   cassette:
-    - promoter: polh
+    - promoter: polyhedrin
     - cistron:
-        label: VP1_expression_unit
+        label: VP1
         expression: high
         gene:
-          id: VP1
+          id: P03300  # VP1 example - replace with actual VP1 UniProt ID
           source: uniprot
-    - terminator: polh_term
-    - spacer: 50
+    - terminator: polyhedrin_3UTR
+
+    - spacer: 200  # substantial spacing between independent expression units
+
     - promoter: p10
     - cistron:
-        label: VP2_expression_unit
+        label: VP2
         expression: high
         gene:
-          id: VP2
+          id: P03301  # VP2 example - replace with actual VP2 UniProt ID
           source: uniprot
-    - terminator: p10_term
-    - spacer: 50
-    - promoter: gp64
+    - terminator: SV40_polyA
+
+    - spacer: 200
+
+    - promoter: ie1  # immediate early 1 promoter - completely orthogonal
     - cistron:
-        label: VP3_expression_unit
+        label: VP3
         expression: high
         gene:
-          id: VP3
+          id: P03302  # VP3 example - replace with actual VP3 UniProt ID
           source: uniprot
-    - terminator: sv40_polyA
+    - terminator: hr5_enhancer_term  # baculovirus hr5 region terminator
+```

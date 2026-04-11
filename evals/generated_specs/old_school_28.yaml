@@ -1,16 +1,23 @@
+```yaml
 construct:
-  name: therapeutic_p_high_expression_cag
+  name: CAG_TherapeuticP_mammalian
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: blasticidin
-    ori: pUC
-    source: custom
+
   cassette:
-    - promoter: CAG # Includes CMV enhancer, chicken beta-actin promoter, and rabbit beta-globin intron
+    - promoter: CAG  # CMV enhancer + chicken beta-actin promoter + rabbit beta-globin intron
+
     - cistron:
-        label: therapeutic_p
-        expression: high # High expression setting incorporates a consensus Kozak sequence for mammalian hosts
+        label: therapeutic
+        expression: high
         gene:
           id: TherapeuticP
           source: uniprot
-    - terminator: BGH_polyA_WPRE # BGH polyadenylation signal with WPRE for mRNA stability
+
+    - element: WPRE  # Woodchuck Hepatitis Virus Posttranscriptional Regulatory Element
+
+    - terminator: BGH_polyA
+```

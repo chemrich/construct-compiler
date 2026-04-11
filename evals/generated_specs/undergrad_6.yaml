@@ -1,16 +1,25 @@
+```yaml
 construct:
-  name: "awesome_protein_purification_construct"
-  host: e_coli_bl21
+  name: "His_TEV_Awesome_Protein"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: Awesome_Protein
-    - terminator: T7term
+              id: "Awesome Protein"
+              source: uniprot
+
+    - terminator: rrnB_T1
+```

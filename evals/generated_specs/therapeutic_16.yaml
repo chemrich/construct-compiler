@@ -1,10 +1,26 @@
+```yaml
 construct:
-  name: "inducible_therapeutic_enzyme_expression"
+  name: "doxycycline_inducible_therapeutic_enzyme"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G  # Inducible TRE3G promoter for robust, non-leaky, dose-dependent control
+    - promoter: CMV
+      
+    - cistron:
+        label: transactivator
+        expression: medium
+        chain:
+          - gene:
+              id: rtTA3
+              source: uniprot
+              
+    - spacer: 50
+    
+    - promoter: TRE3G  # Tight, doxycycline-responsive promoter
+      
     - cistron:
         label: therapeutic_enzyme
         expression: high
@@ -12,6 +28,8 @@ construct:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P00740  # Human Coagulation Factor IX
+              id: ASPA  # Aspartoacylase - therapeutic enzyme for Canavan disease
               source: uniprot
-    - terminator: bGH_pA
+              
+    - terminator: BGH_polyA
+```

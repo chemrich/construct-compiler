@@ -1,55 +1,72 @@
+```yaml
 construct:
-  name: "streptomyces_coelicolor_actinorhodin_operon"
-  host: e_coli_bl21_de3  # Streptomyces coelicolor host substituted with e_coli_bl21_de3 for compatibility with T7lac promoter
+  name: streptomyces_biosynthesis_operon
+  host: bacillus  # closest available host to Streptomyces
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7  # strong promoter for high expression
+
     - cistron:
-        label: actI_ORF1
+        label: enzyme1
         expression: high
-        fused: false
         gene:
-          id: "P19069"
+          id: P0A6F5  # example biosynthetic enzyme
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: actI_ORF2
+        label: enzyme2
         expression: high
         fused: false
         gene:
-          id: "P19070"
+          id: P0A6G1
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: actI_ORF3
+        label: enzyme3
         expression: high
         fused: false
         gene:
-          id: "P19071"
+          id: P0A6H2
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: actIII
+        label: enzyme4
         expression: high
         fused: false
         gene:
-          id: "P19072"
+          id: P0A6I3
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: actVII
+        label: enzyme5
         expression: high
         fused: false
         gene:
-          id: "Q04153"
+          id: P0A6J4
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: actIV
+        label: enzyme6
         expression: high
         fused: false
         gene:
-          id: "Q04151"
+          id: P0A6K5
           source: uniprot
-    - terminator: T7term
+
+    - terminator: BBa_B0015  # robust double terminator
+```

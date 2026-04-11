@@ -1,21 +1,23 @@
+```yaml
 construct:
-  name: "secreted_fc_mEGFP_fusion"
+  name: "mammalian_secreted_fc_fusion"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: target_fusion
+        label: secreted_fc_fusion
         expression: high
         chain:
-          - tag: IgK_leader  # Secretory signal peptide for mammalian export
+          - tag: signal_peptide
           - gene:
-              id: mEGFP
-              source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - tag: Fc           # C-terminal Fc fusion for half-life and purification
-    - terminator: bGH_PA      # Standard mammalian polyadenylation signal/terminator
+              id: target_protein
+              source: uniprot
+          - tag: Fc
+
+    - terminator: rrnB_T1
+```

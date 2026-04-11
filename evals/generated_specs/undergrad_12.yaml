@@ -1,19 +1,25 @@
+```yaml
 construct:
-  name: "SuperDrug_TAT_CPP_Fusion"
+  name: CPP_SuperDrug_delivery
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: cell_penetrating_fusion
         expression: high
         chain:
-          - tag: TAT
+          - tag: TAT  # Cell-penetrating peptide for cellular uptake
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: SuperDrug
+              id: P04637  # p53 tumor suppressor as example "SuperDrug" - replace with actual protein
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1
+```

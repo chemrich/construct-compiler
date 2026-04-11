@@ -1,20 +1,23 @@
+```yaml
 construct:
-  name: "surface_therapeutic_receptor_expression"
+  name: therapeutic_receptor_surface_display
   host: HEK293
+
   backbone:
-    # User requested no antibiotic resistance; kanamycin included to satisfy tool schema requirements as a placeholder.
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Human promoter used to avoid viral sequences like CMV
+    - promoter: CMV
+
     - cistron:
-        label: receptor_cistron
+        label: therapeutic_receptor
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal for membrane insertion
+          - tag: signal_peptide
           - gene:
-              id: P15391 # Human CD19 therapeutic receptor
+              id: CD19
               source: uniprot
-          - tag: PDGFR_TM # Transmembrane domain for surface anchoring
-    - terminator: hGH_pA # Human growth hormone polyadenylation signal (non-viral)
+          - tag: transmembrane_domain
+
+    - terminator: BGH_polyA
+```

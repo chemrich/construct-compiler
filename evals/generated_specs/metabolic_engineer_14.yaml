@@ -1,34 +1,40 @@
+```yaml
 construct:
-  name: "metabolon_4_enzyme_fusion"
+  name: four_enzyme_metabolon_fusion
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: enzyme_metabolon
+        label: metabolon_fusion
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: "enzyme_1"
+              id: P0A6F5  # Example enzyme 1
               source: uniprot
           - linker:
-              type: short_GS
-              repeats: 2
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: "enzyme_2"
+              id: P0ABJ9  # Example enzyme 2
               source: uniprot
           - linker:
-              type: short_GS
-              repeats: 2
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: "enzyme_3"
+              id: P0A9P0  # Example enzyme 3
               source: uniprot
           - linker:
-              type: short_GS
-              repeats: 2
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: "enzyme_4"
+              id: P0AC41  # Example enzyme 4
               source: uniprot
+
     - terminator: T7term
+```

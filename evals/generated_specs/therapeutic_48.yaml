@@ -1,24 +1,30 @@
+```yaml
 construct:
-  name: "therapeutic_fusion_A_B"
+  name: therapeutic_fusion_protein_AB
   host: e_coli
+
   backbone:
-    resistance: kanamycin # Placeholder: Schema requires resistance; antibiotic-free selection intended.
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac # Bacterial hybrid promoter used to avoid viral (T7) components.
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: domain_a
-              source: uniprot
+              id: domain_A
+              # Note: Replace with actual UniProt ID for domain A
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: domain_b
-              source: uniprot
+              id: domain_B
+              # Note: Replace with actual UniProt ID for domain B
           - tag: 6xHis
+
     - terminator: rrnB_T1
+```

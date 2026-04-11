@@ -1,22 +1,32 @@
+```yaml
 construct:
-  name: "divergent_two_enzyme_pathway"
+  name: divergent_two_enzyme_pathway
   host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enzyme_A
+        label: EnzA
         expression: high
-        gene:
-          id: P0AD61
-          source: uniprot
-    - spacer: 53  # Prime-length spacer to minimize repetitive motifs and direct repeats
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A6F5  # E. coli lacZ (beta-galactosidase) as EnzA
+              source: uniprot
+    
+    - spacer: 127  # Odd number, highly divergent sequence to avoid palindromes
+    
     - cistron:
-        label: enzyme_B
+        label: EnzB
         expression: high
-        fused: false  # Ensures independent translation with a unique RBS
+        fused: false  # Independent translation with separate RBS
         gene:
-          id: P0A9P0
+          id: P31677  # E. coli galK (galactokinase) as EnzB
           source: uniprot
+    
     - terminator: T7term
+```

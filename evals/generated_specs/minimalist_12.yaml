@@ -1,14 +1,23 @@
+```yaml
 construct:
-  name: "low_expression_amp_magainin"
-  host: e_coli_bl21_de3
+  name: "AMP_production"
+  host: e_coli
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: magainin_2
-        expression: low
-        gene:
-          id: P01503
-          source: uniprot
-    - terminator: T7term
+        label: AMP_peptide
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P01185
+              source: uniprot
+    
+    - terminator: rrnB_T1
+```

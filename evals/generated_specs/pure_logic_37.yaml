@@ -1,48 +1,78 @@
+```yaml
 construct:
-  name: "mammalian_blue_red_and_gate"
+  name: dual_light_AND_gate_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: blue_sensor_component
+        label: CRY2_PHR
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: CRY2-PHR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: CIB1_VP16
         expression: medium
         fused: false
         chain:
           - gene:
-              id: CRY2
+              id: CIB1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P00573
-              source: uniprot
-    - spacer: 40
+              repeats: 2
+          - tag: VP16  # transcriptional activator domain
+
+    - spacer: 30
+
     - cistron:
-        label: red_sensor_component
+        label: PhyB_DBD
         expression: medium
         fused: false
         chain:
           - gene:
-              id: PIF6
+              id: PHYB
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P00573
-              source: uniprot
-    - terminator: bgh_pa
-    - promoter: T7
+              repeats: 2
+          - tag: GAL4_DBD  # DNA binding domain
+
+    - spacer: 30
+
     - cistron:
-        label: target_output
+        label: PIF3
+        expression: medium
+        fused: false
+        gene:
+          id: PIF3
+          source: uniprot
+
+    - terminator: BGH_pA
+
+    - promoter: GAL4_UAS  # synthetic promoter with GAL4 binding sites
+
+    - cistron:
+        label: output_protein
         expression: high
-        fused: false
         chain:
           - gene:
-              id: mEGFP
+              id: mScarlet
               source: fpbase
-          - tag: NES
-    - terminator: sv40_pa
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NES  # Nuclear Export Signal
+
+    - terminator: BGH_pA
+```

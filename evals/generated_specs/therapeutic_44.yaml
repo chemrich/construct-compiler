@@ -1,25 +1,28 @@
+```yaml
 construct:
-  name: "non_viral_egfp_cas9_nls"
+  name: gene_editing_enzyme_GFP_NLS
   host: HEK293
+
   backbone:
-    # Bacterial resistance (kanamycin) is required for plasmid propagation; no mammalian selection markers are included as requested.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Non-viral eukaryotic promoter used to avoid viral elements like CMV.
+    - promoter: CMV
+
     - cistron:
-        label: nls_fusion_editor
+        label: gene_editor
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: Q99ZW2 # Cas9 from S. pyogenes
+              id: P9WQL1  # Cas9 from Streptococcus pyogenes
               source: uniprot
-          - tag: NLS # C-terminal nuclear localization signal for nuclear delivery.
-    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal (non-viral).
+          - tag: NLS
+
+    - terminator: SV40_polyA
+```

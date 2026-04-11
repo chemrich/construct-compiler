@@ -1,20 +1,33 @@
+```yaml
 construct:
-  name: "mammalian_high_expression_bicistronic_therapeutic"
+  name: dual_therapeutic_2A_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_1
         expression: high
         chain:
+          - signal_peptide: IgK  # Immunoglobulin kappa light chain signal for secretion
           - gene:
-              id: P01584  # Human Interleukin-2 (hIL2)
+              id: VEGFA
               source: uniprot
-          - linker:
-              type: P2A
+          - cleavage_peptide: P2A  # Self-cleaving 2A peptide for coordinated expression
+
+    - cistron:
+        label: therapeutic_2
+        expression: high
+        fused: true  # Fused via 2A peptide, but will separate post-translationally
+        chain:
+          - signal_peptide: IgK
           - gene:
-              id: P01588  # Human Erythropoietin (hEPO)
+              id: FGF2
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: SV40_polyA
+```

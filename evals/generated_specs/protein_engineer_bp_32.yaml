@@ -1,17 +1,21 @@
+```yaml
 construct:
-  name: "bacillus_surface_display_cotA"
+  name: "bacillus_surface_display_CotA_YuaB"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: surface_display_fusion
-        expression: high
+        label: surface_display
+        expression: medium
         chain:
-          - tag: YuaB
+          - secretion_signal: YuaB
           - gene:
               id: CotA
               source: uniprot
@@ -19,7 +23,9 @@ construct:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P37957  # LipA (lipase) used as a representative target enzyme
+              id: target_enzyme  # placeholder - specify actual enzyme
               source: uniprot
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+```

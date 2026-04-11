@@ -1,20 +1,25 @@
+```yaml
 construct:
-  name: "inducible_nonviral_aggregation_prone_peptide_fusion"
+  name: MBP_HRV3C_therapeutic_peptide
   host: e_coli
+
   backbone:
-    # Note: Schema requires an antibiotic resistance; kanamycin selected as the default fallback despite the 'no antibiotic' request.
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD # Inducible bacterial promoter (avoids viral T7/T7lac)
+    - promoter: araBAD
+
     - cistron:
-        label: therapeutic_fusion
-        expression: high
+        label: therapeutic_peptide
+        expression: medium
         chain:
           - solubility_tag: MBP
-          - cleavage_site: 3C # Note: HRV3C is of viral origin (Rhinovirus), but used here per specific functional request.
+          - cleavage_site: 3C
           - gene:
-              id: P05067 # UniProt ID for Amyloid-beta precursor protein (Abeta42 is aggregation-prone)
+              id: P01308  # human insulin as example therapeutic peptide
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator (avoids viral T7term)
+
+    - terminator: rrnB_T1
+```

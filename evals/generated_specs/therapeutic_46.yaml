@@ -1,14 +1,18 @@
+```yaml
 construct:
-  name: "tandem_affinity_purification_construct"
-  host: e_coli_bl21
+  name: challenging_protein_tandem_affinity
+  host: e_coli
+
   backbone:
-    resistance: kanamycin # User requested no antibiotic resistance; kanamycin provided as standard default for selection.
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac # tac promoter used instead of T7 to ensure no viral sequences are present.
+    - promoter: T7lac
+
     - cistron:
-        label: challenging_protein
+        label: target
         expression: high
         chain:
           - tag: Strep-II
@@ -16,10 +20,12 @@ construct:
               type: GS_flexible
               repeats: 1
           - gene:
-              id: P0A8I3
+              id: P0A6F5  # Example challenging E. coli protein (GroEL)
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 1
           - tag: 6xHis
-    - terminator: rrnB_T1 # Bacterial terminator used to ensure no viral sequences.
+
+    - terminator: rrnB_T1
+```

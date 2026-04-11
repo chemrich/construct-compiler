@@ -1,15 +1,23 @@
+```yaml
 construct:
-  name: "Enhanced_Protein_M"
+  name: Enhanced_Protein_M_CMV_WPRE
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: Enhanced_Protein_M
         expression: high
-        chain:
-          - gene:
-              id: Protein_M
-              source: uniprot
-    - terminator: bGH_polyA # WPRE is typically included in the 3' UTR before the polyA signal in high-yield mammalian vectors.
+        gene:
+          id: Enhanced_Protein_M
+          source: uniprot
+
+    # WPRE represented as regulatory element
+    - regulatory_element: WPRE  # Woodchuck Hepatitis Post-transcriptional Regulatory Element
+
+    - terminator: polyA_SV40
+```

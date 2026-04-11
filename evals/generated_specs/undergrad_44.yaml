@@ -1,20 +1,35 @@
+```yaml
 construct:
-  name: "mammalian_bicistronic_p2a_puro"
+  name: dual_protein_2A_puromycin
   host: HEK293
+
   backbone:
-    resistance: puromycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_a_b_expression
+        label: protein_a_2a_protein_b
+        expression: high
         chain:
           - gene:
-              id: Protein_A
-              source: uniprot
-          - cleavage_site: P2A  # 2A self-cleaving peptide for bicistronic expression
-          - gene:
-              id: Protein_B
-              source: uniprot
-    - terminator: bGH_polyA
+              id: P2A  # 2A self-cleaving peptide for polycistronic expression
+              source: synthetic
+          - linker:
+              type: short_GS
+              repeats: 1
+          # Note: Protein A and B would need to be specified with actual gene IDs
+
+    - spacer: 30
+
+    - cistron:
+        label: puromycin_resistance
+        expression: medium
+        fused: false
+        gene:
+          id: pac  # puromycin N-acetyltransferase
+          source: bacterial
+
+    - terminator: SV40_polyA
+```

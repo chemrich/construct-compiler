@@ -1,26 +1,48 @@
+```yaml
 construct:
-  name: "negative_feedback_autoregulation_loop"
+  name: negative_feedback_homeostasis_loop
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: lacUV5
+    - promoter: T7lac
+
     - cistron:
-        label: lac_repressor
+        label: repressor
         expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: P03023
+              id: P0451  # LacI repressor
               source: uniprot
-    - spacer: 40
+
+    - spacer: 25
+
     - cistron:
-        label: homeostasis_reporter
+        label: output_protein
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    # Second cassette for repressor-regulated output
+    - promoter: lacUV5  # Repressible by LacI
+
+    - cistron:
+        label: regulated_output
         expression: medium
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
     - terminator: rrnB_T1
+```

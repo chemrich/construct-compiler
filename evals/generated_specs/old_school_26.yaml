@@ -1,27 +1,29 @@
+```yaml
 construct:
-  name: yeast_copper_inducible_sensory_luciferase
+  name: "CUP1_SensorY_Luciferase_yeast"
   host: yeast
+
   backbone:
     resistance: LEU2
     ori: 2_micron
-    source: addgene
+    source: custom
+
   cassette:
     - promoter: CUP1
+
     - cistron:
-        label: sensory_protein
+        label: sensor_luciferase_fusion
         expression: high
-        gene:
-          id: SensorY
-          source: uniprot
-    - cistron:
-        label: luciferase_reporter
-        expression: high
-        fused: true
         chain:
+          - gene:
+              id: SensorY
+              source: custom
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: luciferase
+              id: firefly_luciferase
               source: uniprot
+
     - terminator: ADH1
+```

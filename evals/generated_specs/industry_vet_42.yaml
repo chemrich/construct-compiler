@@ -1,21 +1,27 @@
+```yaml
 construct:
-  name: AAV_capsid_solubility_MBP_fusion
+  name: soluble_transgene_with_chaperone_tag
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
-        expression: high
+        expression: medium
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP  # Maltose Binding Protein acts as molecular chaperone
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: P03135
+              id: transgene  # Replace with actual gene ID/source when known
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

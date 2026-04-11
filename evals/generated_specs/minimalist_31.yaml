@@ -1,6 +1,7 @@
+```yaml
 construct:
-  name: "plant_transformation_nptII_marker"
-  host: e_coli  # Agrobacterium is the intended delivery vehicle; e_coli is used as the cloning host for binary vector maintenance.
+  name: plant_resistance_gene
+  host: agrobacterium
 
   backbone:
     resistance: kanamycin
@@ -8,13 +9,14 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: CaMV_35S  # Constitutive promoter for high-level expression in plant cells
+    - promoter: 35S  # CaMV 35S promoter for plant expression
 
     - cistron:
-        label: plant_selectable_marker
+        label: resistance
         expression: medium
         gene:
-          id: P00552  # Neomycin phosphotransferase II (NPTII) for kanamycin/neomycin resistance in plants
+          id: nptII  # neomycin phosphotransferase II for kanamycin resistance
           source: uniprot
 
-    - terminator: nos_terminator  # Nopaline synthase terminator, standard for plant expression cassettes
+    - terminator: 35S_term  # CaMV 35S terminator
+```

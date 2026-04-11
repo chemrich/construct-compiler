@@ -1,15 +1,26 @@
+```yaml
 construct:
-  name: "mammalian_high_stability_cbh_mEGFP"
+  name: mammalian_enhanced_expression_vector
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: CBh  # Strong hybrid promoter for mammalian expression
+    - promoter: CBh  # Hybrid chicken beta-actin/CMV enhancer for strong expression
+    
     - cistron:
         label: target_protein
         expression: high
+        # Kozak consensus sequence will be automatically optimized by compiler
         chain:
+          - tag: 6xHis
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: WPRE_BGH_polyA  # WPRE included for mRNA stability and packaging efficiency, followed by BGH polyA signal
+              id: P04637  # p53 tumor suppressor as example target
+              source: uniprot
+    
+    # WPRE enhances mRNA stability and translation efficiency
+    - enhancer: WPRE  # Woodchuck Hepatitis Virus Post-transcriptional Regulatory Element
+    
+    - terminator: BGH_polyA  # Bovine Growth Hormone polyadenylation signal
+```

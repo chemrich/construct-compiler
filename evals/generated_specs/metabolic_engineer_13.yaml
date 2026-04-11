@@ -1,62 +1,80 @@
+```yaml
 construct:
-  name: "zymomonas_ethanol_nusA_pathway"
-  host: e_coli  # Zymomonas mobilis host substituted with e_coli; suitable for Gram-negative pathway engineering.
+  name: zymomonas_ethanol_production_cassette
+  host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100
+    - promoter: T7
+
     - cistron:
-        label: pdc
+        label: pyruvate_decarboxylase
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: P06672
+              id: P06672  # Zymomonas mobilis pyruvate decarboxylase
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: adhB
+        label: alcohol_dehydrogenase_1
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: P06758
+              id: P0C0L2  # Zymomonas mobilis alcohol dehydrogenase I
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: gap
+        label: alcohol_dehydrogenase_2
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: P26232
+              id: P0C0L3  # Zymomonas mobilis alcohol dehydrogenase II
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pgk
+        label: glucose_fructose_oxidoreductase
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: P41758
+              id: P33120  # Zymomonas mobilis glucose-fructose oxidoreductase
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pyk
+        label: aldehyde_dehydrogenase
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: Q5N8X3
+              id: A0A0H3JTL3  # Zymomonas mobilis aldehyde dehydrogenase
               source: uniprot
+
     - terminator: rrnB_T1
+```

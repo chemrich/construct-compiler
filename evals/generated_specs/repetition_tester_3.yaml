@@ -1,30 +1,31 @@
+```yaml
 construct:
-  name: "GeneY_yeast_expression_with_scrambled_marker"
+  name: "GeneY_expression_yeast"
   host: yeast
 
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: G418  # neomycin/geneticin resistance
+    ori: 2_micron
     source: addgene
 
   cassette:
-    - promoter: TDH3  # Strong constitutive promoter in S. cerevisiae
+    - promoter: TEF1  # strong constitutive promoter in yeast
 
     - cistron:
-        label: target_gene
+        label: target
         expression: high
         gene:
           id: GeneY
           source: uniprot
 
-    - spacer: 40
+    - terminator: synthetic_unique  # completely synthetic terminator with no homology to yeast terminators
+
+    - promoter: ADH1  # promoter for selection marker
 
     - cistron:
         label: selection_marker
         expression: medium
-        fused: false  # Independently translated to act as a selection marker
         gene:
-          id: URA3  # Codon-scrambled during synthesis to minimize recombination with genome
-          source: uniprot
-
-    - terminator: SYNTHETIC_TERM_1  # A unique synthetic terminator designed to avoid homology with common yeast genomic sequences
+          id: KanMX_codon_scrambled  # extensively codon-optimized G418 resistance gene
+          source: synthetic
+```

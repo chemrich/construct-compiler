@@ -1,20 +1,30 @@
+```yaml
 construct:
-  name: "AAV_P2A_GFP_Therapeutic_Enzyme"
+  name: "AAV_GFP_P2A_therapeutic_dual_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: bicistronic_expression
+        label: reporter_gfp
         expression: high
-        chain:
-          - gene:
-              id: mEGFP
-              source: fpbase
-          - linker:
-              type: P2A
-          - gene:
-              id: P10253 # Human Acid alpha-glucosidase (GAA) as therapeutic enzyme example
-              source: uniprot
-    - terminator: bGH_polyA
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - spacer: 66  # P2A self-cleaving peptide sequence length
+
+    - cistron:
+        label: therapeutic_enzyme
+        expression: high
+        fused: false  # P2A causes ribosomal skipping, producing separate proteins
+        gene:
+          id: THERAPEUTIC_ENZYME  # Replace with actual enzyme UniProt ID
+          source: uniprot
+
+    - terminator: polyA  # Single polyA signal for both proteins
+```

@@ -1,18 +1,23 @@
 construct:
-  name: "non_viral_therapeutic_degrader"
+  name: "therapeutic_protein_degrader_mammalian"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Kanamycin is used for bacterial propagation; clinical-grade constructs typically use antibiotic-free selection systems like Nanoplasmid or minicircle.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Human EF1-alpha promoter used as a constitutive non-viral alternative to CMV.
+    - promoter: EF1_alpha
+
     - cistron:
         label: therapeutic_degrader
-        expression: high
+        expression: medium
         chain:
-          - tag: HA
+          - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P40337
+              id: "PROTAC_E3_ligase_domain"  # Placeholder for therapeutic protein
               source: uniprot
-    - terminator: hGH_pA # Human Growth Hormone polyadenylation signal used as a non-viral termination sequence.
+
+    - terminator: BGH_polyA

@@ -1,18 +1,24 @@
+```yaml
 construct:
-  name: "MBP_TEV_fusion_protein_expression"
+  name: soluble_protein_expression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_expression
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: P04637
+              id: P0DTC2  # SARS-CoV-2 spike protein as example challenging protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

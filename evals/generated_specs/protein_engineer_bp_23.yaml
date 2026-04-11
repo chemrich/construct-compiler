@@ -1,21 +1,24 @@
+```yaml
 construct:
-  name: "pichia_hsa_native_signal_gap_expression"
+  name: HSA_expression_pichia_GAP
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: HSA_secretion_target
+        label: HSA_secreted
         expression: high
         chain:
           - gene:
               id: P02768
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - tag: 8xHis
-    - terminator: BBa_B0015
+          - tag: 6xHis
+
+    - terminator: rrnB_T1
+```

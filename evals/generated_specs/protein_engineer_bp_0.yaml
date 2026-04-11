@@ -1,18 +1,26 @@
+```yaml
 construct:
-  name: "pichia_aox1_alpha_megfp_6xhis"
+  name: "pichia_secreted_GFP_his"
   host: yeast
+
   backbone:
     resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: secreted_gfp
+        label: secreted_GFP
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
+              codon_optimization: pichia_pastoris
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: AOX1_TT
+```

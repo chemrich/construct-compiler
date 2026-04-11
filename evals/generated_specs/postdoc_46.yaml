@@ -1,10 +1,15 @@
 construct:
-  name: "solubility_enhanced_target_expression"
-  host: e_coli_bl21
+  name: "soluble_protein_with_MBP_tag"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
@@ -13,6 +18,7 @@ construct:
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: P0A7B8  # placeholder - replace with actual protein ID
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,27 +1,35 @@
+```yaml
 construct:
-  name: "bacillus_secretion_optimization_secA_gfp"
+  name: "secA_amyE_gfp_secretion_optimizer"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: secA_enhancer
+        label: secA
         expression: high
         gene:
-          id: P09831
+          id: P37368
           source: uniprot
-    - spacer: 35
+
+    - spacer: 30
+
     - cistron:
-        label: secretion_reporter
+        label: secreted_reporter
         expression: high
         fused: false
         chain:
-          - tag: AmyE_signal_peptide
+          - tag: AmyE_signal  # secretion signal for B. subtilis
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+```

@@ -1,22 +1,38 @@
 construct:
-  name: "yeast_scaffold_assembly_complex"
+  name: "yeast_scaffold_protein_expression"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: scaffold_target
+        label: scaffold_protein
         expression: high
         chain:
-          - solubility_tag: SUMO
-          - cleavage_site: TEV
+          - tag: 6xHis
+          - solubility_tag: GST
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 3
           - gene:
-              id: P40504
+              id: P0A9Z4  # DnaK J-domain (protein-binding domain)
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P0A9Z4  # Second copy of DnaK J-domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P0A9Z4  # Third copy of DnaK J-domain
+              source: uniprot
+
     - terminator: CYC1

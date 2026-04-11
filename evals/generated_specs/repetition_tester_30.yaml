@@ -1,19 +1,25 @@
 construct:
-  name: "proteinx_proteiny_fusion_divergent_tev"
-  host: e_coli_bl21_de3
+  name: ProteinX_TEV_ProteinY_fusion
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: ProteinX
+              id: ProteinX  # Replace with actual protein ID
               source: uniprot
-          - cleavage_site: TEV  # DNA optimized for maximal divergence from ProteinX and ProteinY
+          - cleavage_site: TEV  # Compiler will optimize codon usage for maximal divergence
           - gene:
-              id: ProteinY
+              id: ProteinY  # Replace with actual protein ID
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

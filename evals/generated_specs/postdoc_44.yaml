@@ -1,14 +1,21 @@
 construct:
-  name: "high_level_therapeutic_peptide_expression"
+  name: therapeutic_peptide_high_expression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7  # Strong promoter for high expression
+
     - cistron:
         label: therapeutic_peptide
-        expression: high # Note: E. coli requires a Shine-Dalgarno (RBS) rather than a Kozak sequence; 'expression: high' provides an optimized RBS for E. coli.
-        gene:
-          id: P01133 # Representing human Epidermal Growth Factor as a model therapeutic peptide
-          source: uniprot
-    - terminator: T7term
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+            id: UNKNOWN  # User did not specify which therapeutic peptide
+            source: uniprot
+            # Note: Kozak sequences are for eukaryotic translation; E. coli uses Shine-Dalgarno sequences instead
+
+    - terminator: rrnB_T1

@@ -1,48 +1,72 @@
+```yaml
 construct:
-  name: "metabolic_shunt_LVA_operon"
+  name: "4_enzyme_metabolic_shunt_operon"
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
-        label: enzyme_1
+        label: enzyme1
         expression: high
+        gene:
+          id: P0A9B2  # example enzyme 1
+          source: uniprot
         chain:
           - gene:
-              id: enz1_shunt
+              id: P0A9B2
               source: uniprot
-          - tag: LVA # Note: User requested LVA to prevent degradation; however, LVA is a standard SsrA-based degron that typically increases turnover.
-    - spacer: 30
+          - tag: LVA_degron
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_2
-        expression: high
-        fused: false
-        chain:
-          - gene:
-              id: enz2_shunt
-              source: uniprot
-          - tag: LVA
-    - spacer: 30
-    - cistron:
-        label: enzyme_3
+        label: enzyme2
         expression: high
         fused: false
+        gene:
+          id: P0AB91  # example enzyme 2
+          source: uniprot
         chain:
           - gene:
-              id: enz3_shunt
+              id: P0AB91
               source: uniprot
-          - tag: LVA
-    - spacer: 30
+          - tag: LVA_degron
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_4
+        label: enzyme3
         expression: high
         fused: false
+        gene:
+          id: P0A6F5  # example enzyme 3
+          source: uniprot
         chain:
           - gene:
-              id: enz4_shunt
+              id: P0A6F5
               source: uniprot
-          - tag: LVA
+          - tag: LVA_degron
+    
+    - spacer: 25
+    
+    - cistron:
+        label: enzyme4
+        expression: high
+        fused: false
+        gene:
+          id: P0ADA1  # example enzyme 4
+          source: uniprot
+        chain:
+          - gene:
+              id: P0ADA1
+              source: uniprot
+          - tag: LVA_degron
+    
     - terminator: rrnB_T1
+```

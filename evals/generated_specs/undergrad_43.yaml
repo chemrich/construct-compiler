@@ -1,16 +1,23 @@
+```yaml
 construct:
-  name: "protein_alpha_purification"
-  host: e_coli_bl21
+  name: "protein_alpha_his_purification"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: protein_alpha
-              source: uniprot
+              id: "Protein Alpha"  # Replace with actual gene ID/name
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

@@ -1,18 +1,25 @@
+```yaml
 construct:
-  name: "Pichia_YPT1_Ost1_scFv_His"
+  name: "YPT1_Ost1_scFv_His_secretion"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: YPT1
+
     - cistron:
         label: secreted_scFv
-        expression: high
+        expression: medium
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - gene:
-              id: scFv
+              id: scFv_generic
+              source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1
+```

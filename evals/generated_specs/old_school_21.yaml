@@ -1,24 +1,33 @@
+```yaml
 construct:
-  name: "tet_inducible_gfp_reporter"
+  name: TetR_Ptet_GFP_reporter
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pUC
-    source: custom
+    source: addgene
+  
   cassette:
-    - promoter: J23100  # Constitutive promoter for TetR expression
+    - promoter: J23100
+    
     - cistron:
-        label: tet_repressor
+        label: repressor
         expression: medium
         gene:
           id: P04483
           source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: Ptet  # Tet-inducible promoter (repressed by TetR, induced by aTc)
+    
+    - promoter: Ptet
+    
     - cistron:
-        label: gfp_reporter
+        label: reporter
         expression: high
         gene:
           id: sfGFP
           source: fpbase
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1
+```

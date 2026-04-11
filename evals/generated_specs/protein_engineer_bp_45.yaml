@@ -1,21 +1,27 @@
+```yaml
 construct:
-  name: "bacillus_pxyla_nanobody_secretion"
+  name: "xylose_inducible_nanobody_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PxylA
+
     - cistron:
-        label: nanobody_production
+        label: secreted_nanobody
         expression: high
         chain:
-          - tag: AmyE
+          - signal_peptide: AmyE
           - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: NbV4
+              id: nanobody_target
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+```

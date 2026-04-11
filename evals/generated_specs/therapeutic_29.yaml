@@ -1,30 +1,36 @@
+```yaml
 construct:
-  name: "therapeutic_fragment_coexpression_system"
-  host: e_coli_bl21
+  name: dual_therapeutic_fragment_expression
+  host: e_coli
+
   backbone:
-    resistance: kanamycin # Note: Antibiotic resistance-free systems (e.g., auxotrophy or toxin-antitoxin) are not directly supported in the selection schema; kanamycin is used as a default placeholder.
-    ori: pBR322
+    resistance: none
+    ori: p15A
     source: addgene
+
   cassette:
-    - promoter: tac # Non-viral alternative to T7lac
+    - promoter: T7lac
+    
     - cistron:
-        label: fragment_a
+        label: fragment_A
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: FRAGMENT_A_ID
+              id: P01308
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: fragment_b
+        label: fragment_B
         expression: high
-        fused: false # Ensures independent translation for the second fragment
+        fused: false
         chain:
           - tag: Strep-II
-          - cleavage_site: TEV
           - gene:
-              id: FRAGMENT_B_ID
+              id: P01315
               source: uniprot
+    
     - terminator: rrnB_T1
+```

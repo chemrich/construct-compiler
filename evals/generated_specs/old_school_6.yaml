@@ -1,22 +1,29 @@
+```yaml
 construct:
-  name: "yeast_y2h_bait_lexa_fusion"
+  name: Y2H_bait_domain_of_interest
   host: yeast
+
   backbone:
-    resistance: trp1
-    ori: 2_micron
+    resistance: TRP1
+    ori: CEN_ARS
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
         label: bait_fusion
         expression: medium
         chain:
           - gene:
-              id: LexA
+              id: LexA_DBD
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
               id: domain_of_interest
-    - terminator: CYC1_term
+              source: custom  # user will provide sequence
+
+    - terminator: ADH1
+```

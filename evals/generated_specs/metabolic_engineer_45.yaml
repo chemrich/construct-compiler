@@ -1,46 +1,91 @@
+```yaml
 construct:
-  name: "xenobiotic_degradation_yeast_system"
+  name: xenobiotic_hydrolase_GAL1_HA
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: GAL1  # Standard inducible promoter in yeast
+    - promoter: GAL1
     - cistron:
         label: hydrolase
-        expression: medium
+        expression: high
         chain:
           - gene:
-              id: P72156
+              id: P22333  # carboxylesterase
               source: uniprot
           - tag: HA
-    - terminator: CYC1_term
+    - terminator: CYC1
+
+---
+
+construct:
+  name: xenobiotic_oxidase_GAL1_HA
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
     - promoter: GAL1
     - cistron:
         label: oxidase
-        expression: medium
+        expression: high
         chain:
           - gene:
-              id: Q9X6S1
+              id: P00394  # cytochrome c oxidase
               source: uniprot
           - tag: HA
-    - terminator: ADH1_term
+    - terminator: CYC1
+
+---
+
+construct:
+  name: xenobiotic_reductase_GAL1_HA
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
     - promoter: GAL1
     - cistron:
         label: reductase
-        expression: medium
+        expression: high
         chain:
           - gene:
-              id: P0AEN1
+              id: P00330  # alcohol dehydrogenase
               source: uniprot
           - tag: HA
-    - terminator: PGK1_term
+    - terminator: CYC1
+
+---
+
+construct:
+  name: xenobiotic_ligase_GAL1_HA
+  host: yeast
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
+  cassette:
     - promoter: GAL1
     - cistron:
         label: ligase
-        expression: medium
+        expression: high
         chain:
           - gene:
-              id: P00958
+              id: P04076  # glutamine synthetase
               source: uniprot
           - tag: HA
-    - terminator: TEF1_term
+    - terminator: CYC1
+```

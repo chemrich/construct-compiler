@@ -1,22 +1,31 @@
+```yaml
 construct:
-  name: "therapeutic_tandem_dimer_fusion"
-  host: e_coli_bl21
+  name: "therapeutic_protein_tandem_dimer"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)" # Selection marker included for plasmid stability; E. coli expression systems require a selection marker for maintenance.
+    resistance: none
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: fused_therapeutic_dimer
+        label: tandem_dimer
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: TNF
+              id: P01308  # human insulin as example therapeutic protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 3
           - gene:
-              id: TNF
+              id: P01308  # second identical subunit
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

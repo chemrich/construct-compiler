@@ -1,16 +1,22 @@
 construct:
-  name: "peptide_X_protein_Y_fusion"
-  host: e_coli_bl21_de3
+  name: "peptideX_proteinY_fusion"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: Peptide_X
+              id: "peptideX"  # Replace with actual peptide/protein ID
           - gene:
-              id: Protein_Y
-    - terminator: T7term
+              id: "proteinY"  # Replace with actual protein ID and source
+              # source: uniprot  # Add source when replacing with real ID
+
+    - terminator: rrnB_T1

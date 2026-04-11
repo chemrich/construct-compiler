@@ -1,18 +1,29 @@
+```yaml
 construct:
-  name: "human_therapeutic_enzyme_production"
+  name: therapeutic_enzyme_production
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)" # Kanamycin marker used for cloning; markerless systems (e.g. pFAR/auxotrophy) are recommended for final clinical production.
+    resistance: kanamycin  # Will be removed before final use
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: GAA # Acid alpha-glucosidase (representative therapeutic human enzyme)
+              id: P0DP24  # Human α-L-iduronidase (example therapeutic enzyme)
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

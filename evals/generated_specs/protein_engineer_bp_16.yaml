@@ -1,17 +1,24 @@
+```yaml
 construct:
-  name: "FLD1_Phytase_Commercial_Pichia"
+  name: commercial_phytase_pichia
   host: yeast
+
   backbone:
-    catalog_vector: "pPICZ_A"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: phytase_production
+        label: secreted_phytase
         expression: high
         chain:
-          - tag: alpha_factor
-          - cleavage_site: Kex2
+          - secretion_signal: alpha_mating_factor_engineered  # includes Kex2 cleavage site
           - gene:
-              id: P34752
+              id: P16499  # Aspergillus niger phytase
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1
+```

@@ -1,16 +1,20 @@
+```yaml
 construct:
-  name: "nonviral_cytoplasmic_luciferase"
+  name: cytoplasmic_luciferase_reporter
   host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic selection markers
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Human EF1-alpha promoter used to satisfy 'non-viral' requirement
+    - promoter: EF1_alpha
+
     - cistron:
-        label: luciferase_reporter
+        label: reporter
         expression: high
         gene:
           id: P08659
           source: uniprot
-    - terminator: bGH_pA # Standard mammalian polyadenylation signal
+
+    - terminator: rrnB_T1
+```

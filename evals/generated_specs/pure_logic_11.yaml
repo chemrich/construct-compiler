@@ -1,24 +1,32 @@
+```yaml
 construct:
-  name: "inverter_secretion_hormone"
-  host: e_coli_bl21_de3
+  name: inverter_with_secretion
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD
+    - promoter: araBAD  # Repressible by glucose, inducible by arabinose
+
     - cistron:
-        label: repressor_lacI
+        label: repressor
         expression: high
         gene:
-          id: P03023
+          id: lacI
           source: uniprot
-    - spacer: 50
-    - promoter: T7lac
+
+    - spacer: 30
+
     - cistron:
         label: secreted_hormone
         expression: medium
+        fused: false
         chain:
-          - tag: PelB
+          - tag: pelB  # E. coli secretion signal
           - gene:
-              id: P01308
+              id: insulin
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

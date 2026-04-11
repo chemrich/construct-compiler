@@ -1,14 +1,27 @@
+```yaml
 construct:
-  name: "TF_reporter_5x_diverged_sites"
+  name: TF_reporter_diversified_binding_sites
   host: HEK293
+  
   backbone:
     catalog_vector: "pTwist CMV"
+  
   cassette:
-    - promoter: "5x_diverged_TF_BS_minP" # Minimal promoter preceded by 5 tandem, synonymous (diverged) TF binding sites
+    - promoter: 
+        type: custom
+        elements:
+          - binding_sites:
+              count: 5
+              factor: transcription_factor
+              sequences: diversified  # Each of 5 sites uses different synonymous sequence
+          - minimal_promoter: TATA_box
+    
     - cistron:
-        label: luciferase_reporter
+        label: reporter
         expression: high
         gene:
-          id: P08659
+          id: firefly_luciferase
           source: uniprot
-    - terminator: BGH_polyA
+    
+    - terminator: SV40_polyA
+```

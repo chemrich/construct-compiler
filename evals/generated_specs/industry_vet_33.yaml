@@ -1,19 +1,30 @@
+```yaml
 construct:
-  name: "mammalian_bicistronic_CAG_P2A_mCherry"
+  name: CAG_GOI_2A_mCherry_bicistronic
   host: mammalian
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: target_and_reporter
+        label: GOI
         expression: high
-        chain:
-          - gene:
-              id: target_gene
-          - linker:
-              type: P2A
-          - gene:
-              id: mCherry
-              source: fpbase
-    - terminator: SV40
+        gene:
+          id: your_gene_of_interest  # Replace with actual gene ID
+          source: uniprot
+
+    - cleavage_site: P2A  # 2A self-cleaving peptide for polycistronic expression
+
+    - cistron:
+        label: reporter
+        expression: high
+        fused: true  # Part of same translation unit via 2A
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: BGH_polyA
+```
