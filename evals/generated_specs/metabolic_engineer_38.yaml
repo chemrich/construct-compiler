@@ -1,39 +1,50 @@
+```yaml
 construct:
-  name: "quorum_sensing_interference_operon"
-  host: e_coli_bl21
+  name: quorum_sensing_interference_operon
+  host: e_coli_bl21_de3
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: pLux  # LuxR-inducible promoter
+    - promoter: luxR_inducible  # LuxR-responsive promoter
+    
     - cistron:
-        label: aiiA_ytnP_fusion
+        label: enzyme1
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: Q9L9V1
-              source: uniprot
+              id: aiiA
+              source: uniprot  # lactonase enzyme
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 2  # GGSGGS
           - gene:
-              id: O34962
-              source: uniprot
+              id: ahlD
+              source: uniprot  # AHL-degrading enzyme
+    
     - spacer: 30
+    
     - cistron:
-        label: qsdA_cistron
-        expression: medium
+        label: enzyme3
+        expression: high
         fused: false
         gene:
-          id: Q9K9Z1
-          source: uniprot
-    - spacer: 30
+          id: attM
+          source: uniprot  # acyl-homoserine lactone acylase
+    
+    - spacer: 25
+    
     - cistron:
-        label: pvdQ_cistron
-        expression: medium
+        label: enzyme4
+        expression: high
         fused: false
         gene:
-          id: Q9I0G8
-          source: uniprot
+          id: aidH
+          source: uniprot  # AHL-inactivating enzyme
+    
     - terminator: rrnB_T1
+```

@@ -1,15 +1,20 @@
 construct:
-  name: "mammalian_secretory_expression_system"
+  name: secreted_protein_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: IgK_leader  # Standard secretion signal for mammalian cell secretion
+          - tag: signal_peptide  # Ensures secretion from mammalian cells
           - gene:
-              id: protein_of_interest
-    - terminator: bGH_pA
+              id: P04637  # p53 tumor suppressor as example secreted protein
+              source: uniprot
+
+    - terminator: rrnB_T1

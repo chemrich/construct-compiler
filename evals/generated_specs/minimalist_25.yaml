@@ -1,22 +1,31 @@
+```yaml
 construct:
-  name: "enzyme_a_enzyme_b_coexpression"
-  host: e_coli_bl21_de3
+  name: "dual_enzyme_expression"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: enzyme_a
         expression: high
         gene:
-          id: EnzymeA
+          id: "ENZYME_A"
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: enzyme_b
         expression: high
         fused: false
         gene:
-          id: EnzymeB
+          id: "ENZYME_B" 
           source: uniprot
-    - terminator: T7term
+          
+    - terminator: rrnB_T1
+```

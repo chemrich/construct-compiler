@@ -1,23 +1,22 @@
+```yaml
 construct:
-  name: "therapeutic_mammalian_degrader_nonviral"
+  name: "therapeutic_protein_degrader"
   host: HEK293
+
   backbone:
-    resistance: none # Absence of antibiotic resistance genes requested
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # EF1_alpha substituted for CMV to ensure complete absence of viral sequences
+    - promoter: EF1_alpha
+
     - cistron:
-        label: targeted_degrader
-        expression: high
+        label: therapeutic_degrader
+        expression: medium
         chain:
+          - tag: NLS
           - gene:
-              id: P19036 # VHL: Human E3 ligase recruitment domain
+              id: P62987  # UBQLN2 - ubiquilin-2, involved in protein degradation
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P00533 # EGFR: Targeted binding domain for endogenous protein
-              source: uniprot
-    - terminator: hGH_polyA # Human growth hormone polyA substituted for SV40 to avoid viral sequences
+
+    - terminator: rrnB_T1
+```

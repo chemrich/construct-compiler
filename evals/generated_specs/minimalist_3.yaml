@@ -1,22 +1,32 @@
+```yaml
 construct:
-  name: "bacterial_polycistronic_coexpression_geneA_geneB"
-  host: e_coli_bl21_de3
+  name: geneA_geneB_coexpression
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: geneA_expression
-        expression: medium
+        label: geneA
+        expression: high
         gene:
           id: geneA
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: geneB_expression
-        expression: medium
+        label: geneB
+        expression: high
         fused: false
         gene:
           id: geneB
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

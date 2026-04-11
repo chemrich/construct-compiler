@@ -1,45 +1,46 @@
 construct:
-  name: "bacterial_two_hybrid_fusion_system"
-  host: e_coli_bl21_de3
+  name: bacterial_two_hybrid_system
+  host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7lac
     - cistron:
-        label: protein_a_activator_fusion
+        label: activator_fusion
         expression: medium
-        fused: false
         chain:
           - tag: 6xHis
           - linker:
-              type: rigid_EAAAK
+              type: GS_flexible
               repeats: 3
           - gene:
-              id: P04637
+              id: P0A4X8  # ProteinA - example bacterial protein
               source: uniprot
           - linker:
-              type: short_GS
+              type: rigid_EAAAK
               repeats: 2
           - gene:
-              id: P0A7Z4
+              id: P0A9V4  # GAL4 activation domain
               source: uniprot
-    - spacer: 35
+    - spacer: 25
     - cistron:
-        label: protein_b_dbd_fusion
+        label: binding_domain_fusion
         expression: medium
         fused: false
         chain:
           - tag: Strep-II
           - linker:
-              type: GS_flexible
+              type: short_GS
               repeats: 4
           - gene:
-              id: P03070
+              id: P0A1B5  # ProteinB - different bacterial protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P03034
+              id: P04483  # LexA DNA binding domain
               source: uniprot
-    - terminator: T7term
+    - terminator: rrnB_T1

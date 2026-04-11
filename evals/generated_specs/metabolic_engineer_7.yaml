@@ -1,60 +1,73 @@
+```yaml
 construct:
-  name: "kl_lactis_xylose_mitochondrial_pathway"
+  name: xylose_utilization_pathway_mitochondrial
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    # Robust constitutive expression in K. lactis is achieved via individual transcriptional units
     - promoter: TEF1
+
     - cistron:
-        label: xyr1_xylose_reductase
+        label: xylose_reductase
         expression: high
         chain:
-          - tag: MTS
+          - tag: mito_targeting_sequence
           - gene:
-              id: O74205
+              id: XYL1
               source: uniprot
-    - terminator: CYC1
-    - promoter: TEF1
+
+    - spacer: 30
+
     - cistron:
-        label: xdh1_xylitol_dehydrogenase
+        label: xylitol_dehydrogenase
         expression: high
+        fused: false
         chain:
-          - tag: MTS
+          - tag: mito_targeting_sequence
           - gene:
-              id: O74206
+              id: XYL2
               source: uniprot
-    - terminator: CYC1
-    - promoter: TEF1
+
+    - spacer: 30
+
     - cistron:
-        label: xks1_xylulokinase
+        label: xylulokinase
         expression: high
+        fused: false
         chain:
-          - tag: MTS
+          - tag: mito_targeting_sequence
           - tag: FLAG
           - gene:
-              id: P42328
+              id: XYL3
               source: uniprot
-    - terminator: CYC1
-    - promoter: TEF1
+
+    - spacer: 30
+
     - cistron:
-        label: tkl1_transketolase
+        label: ribulose_5_phosphate_3_epimerase
         expression: high
+        fused: false
         chain:
-          - tag: MTS
+          - tag: mito_targeting_sequence
           - gene:
-              id: Q6CWN1
+              id: RPE1
               source: uniprot
-    - terminator: CYC1
-    - promoter: TEF1
+
+    - spacer: 30
+
     - cistron:
-        label: tal1_transaldolase
+        label: ribose_5_phosphate_ketol_isomerase
         expression: high
+        fused: false
         chain:
-          - tag: MTS
+          - tag: mito_targeting_sequence
           - gene:
-              id: Q6CIT1
+              id: RKI1
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: CYC1_terminator
+```

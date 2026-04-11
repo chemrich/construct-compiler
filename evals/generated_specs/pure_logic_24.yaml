@@ -1,42 +1,51 @@
+```yaml
 construct:
-  name: "mammalian_bistable_toggle_switch"
+  name: bistable_toggle_switch_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G
+    - promoter: CMV
+    
     - cistron:
-        label: state_1_repressor
-        expression: high
-        chain:
-          - tag: NLS
-          - gene:
-              id: P03023
-              source: uniprot
+        label: tetR_repressor
+        expression: medium
+        gene:
+          id: P04483  # TetR from E. coli
+          source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: state_1_reporter
-        expression: high
+        label: mCherry_output_state1
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+    
+    - terminator: rrnB_T1
+    
+    - promoter: CMV  # Second cassette for the reciprocal repressor
+    
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        gene:
+          id: P03023  # LacI from E. coli
+          source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: mEGFP_output_state2
+        expression: medium
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: bGH_pA
-    - promoter: CMV_lacO
-    - cistron:
-        label: state_2_repressor
-        expression: high
-        chain:
-          - tag: NLS
-          - gene:
-              id: P04483
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: state_2_reporter
-        expression: high
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_pA
+    
+    - terminator: rrnB_T1
+```

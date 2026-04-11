@@ -1,17 +1,22 @@
 construct:
-  name: "protein_k_periplasmic_expression"
-  host: e_coli_bl21_de3
+  name: "protein_K_periplasmic_export"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: pelB
+          - signal_peptide: pelB  # periplasmic export signal
           - gene:
-              id: Protein_K
+              id: K
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

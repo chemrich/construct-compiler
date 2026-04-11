@@ -1,30 +1,42 @@
+```yaml
 construct:
-  name: "therapeutic_metabolic_pathway_trio"
-  host: e_coli_bl21
+  name: therapeutic_pathway_polycistronic
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: pathway_enzyme_1
-        expression: medium
-        gene:
-          id: P0A6C8
-          source: uniprot
+        label: enzyme1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A9P0
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pathway_enzyme_2
-        expression: medium
+        label: enzyme2
+        expression: high
         fused: false
         gene:
-          id: P00883
+          id: P0ABJ9
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pathway_enzyme_3
-        expression: medium
+        label: enzyme3
+        expression: high
         fused: false
         gene:
-          id: P00891
+          id: P0A6F5
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

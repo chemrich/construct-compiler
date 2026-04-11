@@ -1,19 +1,26 @@
+```yaml
 construct:
-  name: "ProteinS_Mito_Fusion_Repeat_Free"
-  host: mammalian
+  name: "ProteinS_mitochondrial_targeting"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: mito_target_protein_s
+        label: mito_targeted_proteinS
         expression: high
         chain:
-          - tag: MTS
+          - tag: mito_targeting_sequence  # mitochondrial targeting peptide
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: PROS1
+              id: P04637  # ProteinS (p53 tumor suppressor)
               source: uniprot
-    - terminator: bGH_pA  # Standard mammalian terminator for stable expression
+              codon_optimize: true  # ensures synonymous codon usage to avoid repeats
+
+    - terminator: rrnB_T1
+```

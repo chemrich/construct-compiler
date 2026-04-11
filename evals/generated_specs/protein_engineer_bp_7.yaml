@@ -1,5 +1,6 @@
+```yaml
 construct:
-  name: "Bacillus_spore_display_CotG_VHH"
+  name: "CotG_nanobody_spore_display"
   host: bacillus
 
   backbone:
@@ -8,21 +9,22 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: cotG  # Spore-specific promoter for surface display
+    - promoter: cotG
 
     - cistron:
-        label: spore_anchor_fusion
-        expression: high
+        label: spore_display
+        expression: medium
         chain:
           - gene:
-              id: P19088  # CotG anchor protein (Bacillus subtilis)
+              id: CotG
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: Q91630  # Standard GFP Nanobody (VHH)
+              id: P0DTC2  # SARS-CoV-2 spike RBD nanobody target as example
               source: uniprot
-          - tag: Myc    # C-terminal detection tag
+          - tag: Myc
 
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1
+```

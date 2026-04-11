@@ -1,26 +1,71 @@
+```yaml
 construct:
-  name: "yeast_metabolic_fate_switch"
+  name: yeast_decision_switch_tf1_tf2
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GAL1
+    - promoter: GAL1  # Input A-responsive promoter
+    
     - cistron:
-        label: state_A_transcription_factor
+        label: tf1_branch
         expression: high
-        gene:
-          id: ACE2
-          source: uniprot
-    - terminator: CYC1
-    - spacer: 50
-    - promoter: MET25
+        chain:
+          - tag: 3xFLAG
+          - gene:
+              id: P53398  # GAL4 DNA-binding domain as TF1 scaffold
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P32585  # VP16 activation domain
+              source: uniprot
+
+    - terminator: CYC1_term
+
+    - promoter: MET25  # Input B-responsive promoter (methionine-repressible)
+    
     - cistron:
-        label: state_B_transcription_factor
+        label: tf2_branch  
         expression: high
-        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P04386  # GAL80 as TF2 scaffold
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: P25367  # SIN3 repression domain
+              source: uniprot
+
+    - terminator: ADH1_term
+
+    - promoter: GAL4_UAS  # TF1 target promoter
+    
+    - cistron:
+        label: state1_reporter
+        expression: medium
         gene:
-          id: SWI5
-          source: uniprot
-    - terminator: ADH1
+          id: sfGFP
+          source: fpbase
+
+    - terminator: CYC1_term
+
+    - promoter: GAL80_target  # TF2 target promoter  
+    
+    - cistron:
+        label: state2_reporter
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: ADH1_term
+```

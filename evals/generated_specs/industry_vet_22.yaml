@@ -1,18 +1,24 @@
+```yaml
 construct:
-  name: "yeast_secretory_expression"
+  name: yeast_secreted_protein_expression
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: secreted_cargo
+        label: secreted_target
         expression: high
         chain:
-          - tag: alpha_factor  # Yeast secretion signal peptide
+          - tag: alpha_factor_signal  # yeast secretion signal
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: CYC1  # Standard robust yeast terminator
+              id: P01308  # human insulin as example secreted protein
+              source: uniprot
+
+    - terminator: CYC1
+```

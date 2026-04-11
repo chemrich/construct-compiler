@@ -1,41 +1,54 @@
+```yaml
 construct:
-  name: anaerobic_degradation_pathway
+  name: anaerobic_degradation_pathway_4enzyme
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: narG # narG is a native E. coli promoter highly induced under anaerobic conditions by FNR and NarL
+    - promoter: narG  # anaerobic-responsive promoter active under anoxic conditions
+
     - cistron:
-        label: enzyme_1
+        label: enzyme1
         expression: high
         gene:
-          id: anaerobic_enz1
+          id: P0A6F1  # fumarate reductase subunit A
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_2
+        label: enzyme2
         expression: high
-        fused: false # Ensures independent translation with its own RBS
+        fused: false
         chain:
           - gene:
-              id: anaerobic_enz2
+              id: P69441  # nitrate reductase A
               source: uniprot
-          - tag: FLAG # C-terminal FLAG tag for immunodetection
+          - tag: FLAG
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_3
+        label: enzyme3
         expression: high
         fused: false
         gene:
-          id: anaerobic_enz3
+          id: P0ABK2  # formate dehydrogenase-O major subunit
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_4
+        label: enzyme4
         expression: high
         fused: false
         gene:
-          id: anaerobic_enz4
+          id: P0A9Q7  # pyruvate formate-lyase
           source: uniprot
+
     - terminator: rrnB_T1
+```

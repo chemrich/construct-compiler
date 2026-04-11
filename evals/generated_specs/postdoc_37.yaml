@@ -1,17 +1,23 @@
 construct:
-  name: human_mitochondrial_CYCS_yeast
+  name: human_mito_protein_yeast_expression
   host: yeast
+
   backbone:
-    catalog_vector: "pYES2"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: GAL1
+    - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: COX8_MTS
+          - tag: COX8_MTS  # mitochondrial targeting sequence from COX8
           - tag: Strep-II
           - gene:
-              id: CYCS
+              id: P12345  # replace with actual UniProt ID
               source: uniprot
-    - terminator: CYC1_terminator
+
+    - terminator: rrnB_T1

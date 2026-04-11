@@ -1,18 +1,25 @@
+```yaml
 construct:
-  name: "chaperone_gst_thrombin_expression"
+  name: "chaperone_protein_gst_tagged"
   host: e_coli
+
   backbone:
     resistance: chloramphenicol
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
         label: chaperone
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: GroEL
+              id: P0A6Y8  # DnaK chaperone protein
               source: uniprot
+
     - terminator: rrnB_T1
+```

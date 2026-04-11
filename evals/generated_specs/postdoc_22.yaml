@@ -1,26 +1,36 @@
 construct:
-  name: "bicistronic_protein_a_b_coexpression"
-  host: e_coli_bl21
+  name: bicistronic_proteinA_proteinB
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_a
+        label: protein_A
         expression: high
         chain:
           - tag: Myc
           - gene:
-              id: Protein_A
+              id: # Please specify UniProt ID for Protein A
               source: uniprot
-    - spacer: 30 # IRES is replaced by a prokaryotic spacer and RBS to enable polycistronic expression in E. coli
+
+    # Note: E. coli ribosomes cannot use IRES elements (eukaryotic mechanism)
+    # Using spacer + separate RBS for prokaryotic bicistronic expression
+    - spacer: 30
+
     - cistron:
-        label: protein_b
+        label: protein_B
         expression: high
         fused: false
         chain:
           - tag: Strep-II
           - gene:
-              id: Protein_B
+              id: # Please specify UniProt ID for Protein B
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

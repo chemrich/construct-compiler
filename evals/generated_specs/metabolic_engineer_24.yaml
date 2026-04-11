@@ -1,50 +1,64 @@
+```yaml
 construct:
-  name: "lysine_biosynthesis_operon_low_burden"
+  name: lysine_biosynthesis_5enzyme_operon
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: p15A  # low copy number for minimal metabolic burden
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # araBAD selected to allow tunable control and minimize metabolic burden as a substitute for specific feedback promoters
+    - promoter: araBAD  # amino acid-responsive feedback control via arabinose
+
     - cistron:
-        label: lysC
-        expression: low
-        fused: false
+        label: aspartokinase_III
+        expression: medium
         gene:
-          id: P0A725
+          id: P00562  # lysC from E. coli
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: dapA
-        expression: low
+        label: dapA_with_cleavage
+        expression: medium
         fused: false
         chain:
-          - cleavage_site: TEV
+          - cleavage_site: TEV  # for post-expression modification studies
           - gene:
-              id: P0A6L2
+              id: P0A6L2  # dapA from E. coli
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: asd
-        expression: low
-        fused: false
-        gene:
-          id: P00564
-          source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: dapB
-        expression: low
+        expression: medium
         fused: false
         gene:
-          id: P0CB45
+          id: P0A6K1  # dapB from E. coli
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: dapD
-        expression: low
+        expression: low  # tuned lower to prevent accumulation
         fused: false
         gene:
-          id: P0AFG8
+          id: P0A6K6  # dapD from E. coli
           source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: dapE
+        expression: medium
+        fused: false
+        gene:
+          id: P0AED7  # dapE from E. coli
+          source: uniprot
+
     - terminator: rrnB_T1
+```

@@ -1,20 +1,26 @@
+```yaml
 construct:
-  name: "Bacillus_AprE_Protease_Secretion"
+  name: bacillus_protease_secretion
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: chloramphenicol
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: AprE
+
     - cistron:
-        label: protease_target
+        label: secreted_protease
         expression: high
         chain:
-          - tag: AprE_signal_peptide
-          - tag: propeptide
+          - signal_peptide: AprE
+          - pro_peptide: subtilisin_pro
           - gene:
-              id: subtilisin_E
-              source: uniprot
+              id: target_protease
+              codon_optimize: bacillus
           - tag: 6xHis
+
     - terminator: rrnB_T1
+```

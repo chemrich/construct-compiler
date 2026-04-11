@@ -1,16 +1,20 @@
+```yaml
 construct:
-  name: liver_specific_luciferase_reporter
+  name: hepatocyte_luciferase_reporter
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: ApoE_hAAT  # Synthetic hepatocyte-specific promoter (ApoE enhancer + hAAT promoter)
+    - promoter: hepatocyte_specific  # synthetic liver-specific promoter for hepatocyte targeting
+
     - cistron:
-        label: luciferase_reporter
+        label: reporter
         expression: high
         gene:
-          id: P08659
+          id: P08659  # Firefly luciferase
           source: uniprot
-    - terminator: SV40_polyA  # Standard mammalian termination and polyadenylation signal
+
+    - terminator: SV40_polyA  # SV40 polyadenylation signal
+```

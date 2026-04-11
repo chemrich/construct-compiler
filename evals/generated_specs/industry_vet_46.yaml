@@ -1,16 +1,23 @@
+```yaml
 construct:
-  name: "Sf9_high_yield_secretion_GOI"
-  host: Sf9
+  name: secreted_protein_baculovirus_expression
+  host: insect_cells
+
   backbone:
     catalog_vector: "pFastBac1"
+    resistance: ampicillin
+
   cassette:
-    - promoter: polh
+    - promoter: polyhedrin
+
     - cistron:
-        label: target_secretion
+        label: secreted_target
         expression: high
         chain:
-          - tag: gp67_signal
+          - signal_peptide: gp67  # baculovirus envelope glycoprotein signal for secretion
           - gene:
-              id: gene_of_interest
-              source: uniprot
-    - terminator: SV40_polyA
+              id: your_gene_of_interest
+              source: uniprot  # replace with actual gene ID
+
+    - terminator: polyhedrin_terminator
+```

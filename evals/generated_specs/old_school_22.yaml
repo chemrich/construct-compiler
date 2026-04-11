@@ -1,18 +1,25 @@
+```yaml
 construct:
-  name: "GrowthFactorZ_Mammalian_Expression"
-  host: HEK293
+  name: GrowthFactorZ_mammalian_expression
+  host: mammalian
+
   backbone:
-    resistance: kanamycin
-    ori: pUC # ColE1-derived origin for E. coli subcloning; SV40 origin included for episomal replication
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: ColE1
+    source: twist_bioscience
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: growth_factor
         expression: high
         chain:
-          - tag: IgK_leader # N-terminal secretion signal for GrowthFactorZ secretion
+          - signal_peptide: native  # for secretion
           - gene:
               id: GrowthFactorZ
               source: uniprot
+
     - terminator: SV40_polyA
+```

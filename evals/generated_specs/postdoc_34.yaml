@@ -1,25 +1,30 @@
+```yaml
 construct:
-  name: "yeast_secretory_endosomal_gfp_fusion"
+  name: secreted_GFP_target_fusion
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2u
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pTEF1  # High-expression constitutive promoter for yeast
+    - promoter: GAL1
+
     - cistron:
-        label: secreted_fusion
+        label: secreted_target
         expression: high
         chain:
-          - tag: alpha_factor # Secretion signal for S. cerevisiae (Rule 18)
+          - signal_peptide: alpha_factor  # for secretion into media
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P14906 # Sec63 placeholder target protein
-              source: uniprot
-          - tag: FYVE # Common tag for targeting PI3P-rich endosomal membranes
-    - terminator: CYC1_term # Standard yeast terminator
+              id: target_protein  # replace with your actual target protein ID
+              source: uniprot     # or appropriate source
+
+    - terminator: CYC1
+```

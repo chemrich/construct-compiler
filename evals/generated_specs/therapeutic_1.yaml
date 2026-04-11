@@ -1,18 +1,23 @@
+```yaml
 construct:
-  name: "stable_secreted_therapeutic_human"
-  host: HEK293
+  name: human_therapeutic_peptide_secretion
+  host: CHO
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral constitutive promoter used for stable expression in human cells
+    - promoter: EF1_alpha
+
     - cistron:
         label: therapeutic_peptide
         expression: high
         chain:
-          - tag: IgK_leader  # Standard mammalian secretion signal for extracellular targeting
+          - tag: signal_peptide_IgK  # Immunoglobulin kappa light chain signal peptide
           - gene:
-              id: P01588  # Human Erythropoietin (EPO)
+              id: P01308  # Human insulin precursor as example therapeutic peptide
               source: uniprot
-    - terminator: hGH_pA  # Human Growth Hormone polyadenylation signal for enhanced mRNA stability without viral sequences
+          - tag: 6xHis
+
+    - terminator: BGH_polyA
+```

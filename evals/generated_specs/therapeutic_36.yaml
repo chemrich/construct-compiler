@@ -1,19 +1,22 @@
+```yaml
 construct:
-  name: "non_viral_transmembrane_receptor"
+  name: transmembrane_receptor_expression
   host: HEK293
+
   backbone:
-    # Kanamycin used for bacterial cloning; auxotrophic selection suggested for drug-free requirement.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # Constitutive mammalian promoter (non-viral)
+    - promoter: EF1_alpha
+
     - cistron:
         label: receptor
-        expression: high
+        expression: medium
         chain:
+          - signal_peptide: native  # endogenous signal sequence for membrane targeting
           - gene:
-              id: CXCR4  # Human multi-pass transmembrane G-protein coupled receptor
+              id: GPCR_template
               source: uniprot
-          - tag: FLAG    # Synthetic tag for localization verification
-    - terminator: BGH_polyA  # Mammalian polyadenylation signal (non-viral)
+
+    - terminator: SV40_polyA
+```

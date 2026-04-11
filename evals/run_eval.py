@@ -151,6 +151,9 @@ class EvalOutcome:
     # Expectation checks
     expectation_results: dict = field(default_factory=dict)
     all_expectations_met: bool = False
+    expectations_ok: int = 0
+    expectations_total: int = 0
+    expectations_pct: Optional[float] = None  # None when no expectations defined
 
     # Meta
     attempt: int = 1
@@ -443,7 +446,7 @@ def check_expectations_with_llm(
     model: str = "gemini-2.5-flash",
 ) -> dict[str, dict]:
     """
-    Use Gemini to judge whether expectations are met.
+    Use an LLM (Claude or Gemini) to judge whether expectations are met.
     """
     results = {}
     expect = case.expect
@@ -488,18 +491,10 @@ def check_expectations_with_llm(
     if not must_have and not must_not_have or not spec:
         return results
 
-    api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-    if not api_key:
-        logging.warning("No Gemini API key found for LLM judge. Falling back to empty results for parts.")
-        return results
-
-    from google import genai
-    from google.genai import types
-    client = genai.Client(api_key=api_key)
-
     import yaml
+    import json
     spec_yaml = yaml.dump(spec)
-    
+
     prompt = f"""You are an expert biological engineer evaluating a generated DNA construct specification against requirements.
 
 User Prompt:
@@ -551,15 +546,46 @@ Example:
 """
 
     try:
-        response = client.models.generate_content(
-            model=model,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-            ),
-        )
-        import json
-        judge_results = json.loads(response.text)
+        raw_response: str
+        if "claude" in model.lower():
+            # --- Anthropic / Claude branch ---
+            api_key = os.environ.get("ANTHROPIC_API_KEY")
+            if not api_key:
+                logging.warning("No ANTHROPIC_API_KEY found for LLM judge.")
+                return results
+            import anthropic
+            client = anthropic.Anthropic(api_key=api_key)
+            response = client.messages.create(
+                model=model,
+                max_tokens=2048,
+                system="You are an expert biological engineer. Respond only with valid JSON — no markdown fences, no commentary.",
+                messages=[{"role": "user", "content": prompt}],
+            )
+            raw_response = response.content[0].text
+        else:
+            # --- Gemini branch ---
+            api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+            if not api_key:
+                logging.warning("No Gemini API key found for LLM judge. Falling back to empty results for parts.")
+                return results
+            from google import genai
+            from google.genai import types
+            client = genai.Client(api_key=api_key)
+            response = client.models.generate_content(
+                model=model,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                ),
+            )
+            raw_response = response.text
+
+        # Strip markdown code fences if present (Claude sometimes wraps JSON)
+        stripped = raw_response.strip()
+        if stripped.startswith("```"):
+            stripped = re.sub(r"^```[a-zA-Z]*\n?", "", stripped)
+            stripped = re.sub(r"\n?```$", "", stripped.strip())
+        judge_results = json.loads(stripped)
         
         for part in must_have:
             res = judge_results.get(part, {})
@@ -871,6 +897,12 @@ def _eval_single_case(
         outcome.all_expectations_met = all(
             r["passed"] for r in outcome.expectation_results.values()
         ) if outcome.expectation_results else (outcome.harness_passed or False)
+        outcome.expectations_total = len(outcome.expectation_results)
+        outcome.expectations_ok = sum(1 for r in outcome.expectation_results.values() if r["passed"])
+        outcome.expectations_pct = (
+            round(outcome.expectations_ok / outcome.expectations_total * 100, 1)
+            if outcome.expectations_total else None
+        )
 
         for check_name, check_result in outcome.expectation_results.items():
             status = "OK" if check_result["passed"] else "MISS"
@@ -910,7 +942,7 @@ def run_eval(
         skip_constraints: skip codon optimization for speed
         concurrency: number of parallel workers (1 = sequential)
         use_llm_judge: use LLM to judge expectations
-        judge_model: Gemini model to use for LLM judge
+        judge_model: model to use for LLM judge (Claude or Gemini)
         system_prompt_path: path to custom system prompt file
     """
     SPECS_DIR.mkdir(parents=True, exist_ok=True)
@@ -1018,6 +1050,8 @@ def _compute_summary(outcomes: list[EvalOutcome]) -> dict:
     harness_failed = sum(1 for o in outcomes if o.harness_passed is False)
     compile_errors = sum(1 for o in outcomes if o.compile_error)
     expectations_met = sum(1 for o in outcomes if o.all_expectations_met)
+    expectations_ok_total = sum(o.expectations_ok for o in outcomes)
+    expectations_grand_total = sum(o.expectations_total for o in outcomes)
 
     # By category
     categories = {}
@@ -1056,8 +1090,11 @@ def _compute_summary(outcomes: list[EvalOutcome]) -> dict:
         "harness_failed": harness_failed,
         "compile_errors": compile_errors,
         "all_expectations_met": expectations_met,
+        "expectations_ok": expectations_ok_total,
+        "expectations_total": expectations_grand_total,
         "pass_rate": round(harness_passed / total * 100, 1) if total else 0,
         "expectation_rate": round(expectations_met / total * 100, 1) if total else 0,
+        "individual_expectation_rate": round(expectations_ok_total / expectations_grand_total * 100, 1) if expectations_grand_total else 0,
         "by_category": categories,
         "by_difficulty": difficulties,
         "error_types": error_types,
@@ -1079,7 +1116,9 @@ def print_report(outcomes: list[EvalOutcome]) -> None:
           f"({summary['pass_rate']}%)")
     print(f"Compile errors:       {summary['compile_errors']}")
     print(f"Expectations met:     {summary['all_expectations_met']}/{total} "
-          f"({summary['expectation_rate']}%)")
+          f"({summary['expectation_rate']}%) [all-or-nothing]")
+    print(f"Individual exp. met:  {summary['expectations_ok']}/{summary['expectations_total']} "
+          f"({summary['individual_expectation_rate']}%) [fractional]")
 
     print(f"\nBy category:")
     for cat, stats in summary.get("by_category", {}).items():
@@ -1150,7 +1189,7 @@ def main():
     parser.add_argument("--run-name", help="Name for the results file")
     parser.add_argument("--llm-judge", action="store_true",
                         help="Use LLM to judge expectations")
-    parser.add_argument("--judge-model", default="gemini-3-flash-preview",
+    parser.add_argument("--judge-model", default="gemini-2.5-flash",
                         help="Gemini model to use for LLM judge")
     parser.add_argument("--limit", type=int, help="Limit number of prompts to run")
     parser.add_argument("--system-prompt", help="Path to custom system prompt file")

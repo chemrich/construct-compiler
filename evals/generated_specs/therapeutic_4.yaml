@@ -1,29 +1,38 @@
+```yaml
 construct:
-  name: "dCas9_KRAB_CRISPRi_system"
+  name: dCas9_KRAB_gRNA_knockdown_system
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: dCas9_KRAB_repressor
+        label: dCas9_KRAB
         expression: high
         chain:
-          - tag: NLS
           - gene:
-              id: dCas9
+              id: P0DMV0  # dCas9 (catalytically dead Cas9)
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: KRAB
+              id: P51608  # KRAB domain from KOX1
               source: uniprot
-          - tag: NLS
-    - terminator: BGH_pA
-    - promoter: U6
+
+    - terminator: rrnB_T1
+
+    - promoter: U6  # RNA Pol III promoter for gRNA
+
     - cistron:
-        label: gRNA_scaffold
+        label: gRNA
+        expression: high
         gene:
-          id: sgRNA_scaffold
-    - terminator: polyT
+          id: guide_RNA_scaffold  # Cas9 gRNA scaffold
+          source: addgene
+
+    - terminator: rrnB_T1
+```

@@ -1,27 +1,34 @@
+```yaml
 construct:
-  name: "bicistronic_payload_expression"
+  name: dual_payload_coexpression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: payload_one
+        label: payload_1
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: P0A6X3  # Example payload - replace with actual protein
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: payload_two
+        label: payload_2
         expression: high
-        fused: false
+        fused: false  # Independent translation - gets own RBS
         chain:
           - tag: Strep-II
           - gene:
-              id: mScarlet
-              source: fpbase
-    - terminator: T7term
+              id: P0A6Y2  # Example payload - replace with actual protein
+              source: uniprot
+
+    - terminator: rrnB_T1
+```

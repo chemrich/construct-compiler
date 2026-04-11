@@ -1,16 +1,24 @@
+```yaml
 construct:
-  name: "peptideM_c_terminal_flag_expression"
+  name: peptideM_flag_trp
   host: e_coli
+
   backbone:
-    resistance: tetracycline  # User requested tetracycline; common for pBR322-based vectors
+    resistance: tetracycline
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: trp
+
     - cistron:
-        label: target
+        label: peptideM
         expression: high
         chain:
           - gene:
               id: peptideM
+              source: uniprot
           - tag: FLAG
-    - terminator: rrnB_T1  # Strong Rho-independent terminator
+
+    - terminator: rrnB_T1
+```

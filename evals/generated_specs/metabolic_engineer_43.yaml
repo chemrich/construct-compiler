@@ -1,68 +1,75 @@
+```yaml
 construct:
-  name: "mammalian_pathway_5_enzyme_secretion"
+  name: therapeutic_pathway_five_enzymes
   host: HEK293
+  
   backbone:
     catalog_vector: "pTwist CMV"
-    # Note: For stable integration, this construct would typically be delivered via a lentiviral or transposon-based system;
-    # pTwist CMV is used here as a standard mammalian expression backbone.
-
+    
   cassette:
     - promoter: CMV
+    
     - cistron:
-        label: enzyme_a
+        label: enzymeA
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal peptide
+          - tag: signal_peptide
           - gene:
-              id: Enzyme_A
-              source: uniprot
-          - tag: FLAG # C-terminal Flag-tag
-    - terminator: bGH_pA
-
-    - promoter: CMV
-    - cistron:
-        label: enzyme_b
-        expression: high
-        chain:
-          - tag: IgK_leader
-          - gene:
-              id: Enzyme_B
+              id: enzymeA
               source: uniprot
           - tag: FLAG
-    - terminator: bGH_pA
-
-    - promoter: CMV
+              
+    - spacer: 30
+    
     - cistron:
-        label: enzyme_c
+        label: enzymeB
         expression: high
+        fused: false
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide
           - gene:
-              id: Enzyme_C
+              id: enzymeB
               source: uniprot
           - tag: FLAG
-    - terminator: bGH_pA
-
-    - promoter: CMV
+              
+    - spacer: 30
+    
     - cistron:
-        label: enzyme_d
+        label: enzymeC
         expression: high
+        fused: false
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide
           - gene:
-              id: Enzyme_D
+              id: enzymeC
               source: uniprot
           - tag: FLAG
-    - terminator: bGH_pA
-
-    - promoter: CMV
+              
+    - spacer: 30
+    
     - cistron:
-        label: enzyme_e
+        label: enzymeD
         expression: high
+        fused: false
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide
           - gene:
-              id: Enzyme_E
+              id: enzymeD
               source: uniprot
           - tag: FLAG
-    - terminator: bGH_pA
+              
+    - spacer: 30
+    
+    - cistron:
+        label: enzymeE
+        expression: high
+        fused: false
+        chain:
+          - tag: signal_peptide
+          - gene:
+              id: enzymeE
+              source: uniprot
+          - tag: FLAG
+    
+    - terminator: rrnB_T1
+```

@@ -1,17 +1,24 @@
+```yaml
 construct:
-  name: "GeneR_Stability_Reporter"
+  name: GeneR_dual_terminator_reporter
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - terminator: lambda_t0  # Phage-derived terminator used for upstream insulation; zero sequence identity to E. coli genomic terminators
-    - promoter: J23100       # Synthetic constitutive Anderson promoter
+    - promoter: J23100  # synthetic constitutive promoter
+
     - cistron:
-        label: GeneR
+        label: GeneR_reporter
         expression: medium
         gene:
-          id: mScarlet       # Substituting 'GeneR' placeholder with mScarlet as the fluorescent reporter
+          id: mEGFP
           source: fpbase
-    - terminator: T7term     # Phage T7 terminator; distinct and non-homologous to lambda_t0 or native E. coli terminators
+
+    - terminator: rrnB_T1  # first terminator
+
+    - terminator: T7term   # second terminator with different sequence/structure
+```

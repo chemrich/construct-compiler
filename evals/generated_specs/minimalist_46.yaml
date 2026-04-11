@@ -1,13 +1,22 @@
+```yaml
 construct:
-  name: "toxic_protein_t_expression"
-  host: e_coli_bl21_de3
+  name: "toxic_protein_T_expression"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7
+    - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         gene:
-          id: protein_T
-    - terminator: T7term
+          id: T
+          source: uniprot
+
+    - terminator: rrnB_T1
+```

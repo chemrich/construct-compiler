@@ -1,39 +1,75 @@
+```yaml
 construct:
-  name: "mammalian_sr_latch"
+  name: genetic_set_reset_latch_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-  cassette:
-    - promoter: CMV  # Logic: Engineered with LacO sites for LacI-mediated repression (Reset state)
-      cistron:
-        label: repressor_tetr
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-      spacer: 150  # Represents an Internal Ribosome Entry Site (IRES) for polycistronic mammalian expression
-      cistron:
-        label: output_u
-        expression: medium
-        fused: false  # Independent translation via IRES/spacer
-        gene:
-          id: mCherry
-          source: fpbase
-      terminator: SV40_polyA
 
-    - promoter: CMV  # Logic: Engineered with TetO sites for TetR-mediated repression (Set state)
-      cistron:
-        label: repressor_laci
+  cassette:
+    - promoter: CMV
+    
+    - cistron:
+        label: tetR_repressor
         expression: medium
         gene:
-          id: P03023
+          id: P04483  # TetR repressor
           source: uniprot
-      spacer: 150  # Represents an Internal Ribosome Entry Site (IRES)
-      cistron:
-        label: reporter_v
+    
+    - terminator: rrnB_T1
+    
+    - promoter: EF1_alpha
+    
+    - cistron:
+        label: cI_repressor
         expression: medium
-        fused: false
+        gene:
+          id: P03034  # Lambda cI repressor
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - promoter: CMV  # Set promoter - induces tetR when doxycycline present
+    
+    - cistron:
+        label: set_response
+        expression: high
+        gene:
+          id: P04483  # TetR (activated by doxycycline to repress cI)
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - promoter: EF1_alpha  # Reset promoter - induces cI when IPTG present
+    
+    - cistron:
+        label: reset_response  
+        expression: high
+        gene:
+          id: P03034  # Lambda cI (activated by IPTG to repress tetR)
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - promoter: CMV  # Output promoter - repressed by cI, drives mEGFP (ON state)
+    
+    - cistron:
+        label: output_on
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-      terminator: SV40_polyA
+    
+    - terminator: rrnB_T1
+    
+    - promoter: EF1_alpha  # Constitutive promoter for OFF state reporter
+    
+    - cistron:
+        label: output_off
+        expression: medium
+        gene:
+          id: mScarlet
+          source: fpbase
+    
+    - terminator: rrnB_T1
+```

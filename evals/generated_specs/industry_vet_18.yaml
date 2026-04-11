@@ -1,25 +1,28 @@
+```yaml
 construct:
-  name: yeast_surface_display_scFv_AAV_P
+  name: yeast_surface_display_antibody_Aga2p
   host: yeast
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
+          - gene:
+              id: Capsid_Epitope_P
+              source: uniprot
           - gene:
               id: AGA2
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: scFv_Capsid_Epitope_P
-              source: uniprot
           - tag: Myc
+
     - terminator: CYC1
+```

@@ -1,34 +1,46 @@
+```yaml
 construct:
-  name: "bacillus_protease_chaperone_operon"
+  name: chaperone_assisted_protease_expression_bacillus
   host: bacillus
+
   backbone:
-    resistance: chloramphenicol
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: groES
-        expression: medium
+        label: groES_chaperone
+        expression: high
         gene:
-          id: P19104
+          id: P0A6F9
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: groEL
-        expression: medium
+        label: groEL_chaperone
+        expression: high
         fused: false
         gene:
-          id: P19105
+          id: P0A6F5
           source: uniprot
-    - spacer: 40
+
+    - terminator: rrnB_T1
+
     - promoter: Pxyl
+
     - cistron:
         label: target_protease
-        expression: high
+        expression: medium
+        fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: P00782
+              id: P00776  # Trypsin precursor as example inactive protease mutant
               source: uniprot
+
     - terminator: rrnB_T1
+```

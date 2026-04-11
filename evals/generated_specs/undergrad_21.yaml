@@ -1,16 +1,24 @@
+```yaml
 construct:
-  name: "protein_X_expression_construct"
-  host: e_coli_bl21_de3
+  name: "protein_X_His_tagged_IPTG_inducible"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: X
+              id: protein_X
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

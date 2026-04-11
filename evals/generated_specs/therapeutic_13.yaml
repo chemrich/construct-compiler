@@ -1,24 +1,34 @@
+```yaml
 construct:
-  name: "ABE8e_mammalian_base_editor"
+  name: ABE8e_dual_gRNA_transient
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: base_editor_fusion
+        label: base_editor
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: ABE8e
+              id: P1UBF5  # ABE8e adenine base editor
               source: uniprot
-    - terminator: SV40_pA
+          - tag: NLS
+
+    - terminator: BBa_B0015
+
     - promoter: U6
+
     - cistron:
-        label: guide_rna
+        label: gRNA
         expression: high
         gene:
-          id: sgRNA_scaffold
-          source: uniprot
-    - terminator: BBa_B0015  # Representative terminator for the U6 cassette terminal sequence
+          id: scaffold_gRNA
+          source: addgene  # Standard Cas9 gRNA scaffold sequence
+
+    - terminator: rrnB_T1
+```

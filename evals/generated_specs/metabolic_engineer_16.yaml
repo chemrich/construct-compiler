@@ -1,58 +1,74 @@
+```yaml
 construct:
   name: clostridium_solvent_production_operon
-  host: clostridium_acetobutylicum
+  host: bacillus  # closest available host for Clostridium
+
   backbone:
-    resistance: chloramphenicol  # Commonly used in Clostridium shuttle vectors (catP)
-    ori: pBR322 # Representative Gram-negative ori for cloning; requires a Gram-positive ori like pCB102 for Clostridia
+    resistance: chloramphenicol
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_ptb  # Butyrate-inducible promoter from Clostridium acetobutylicum
+    - promoter: araBAD  # butyrate-inducible system not in schema, using araBAD as tightly controlled alternative
+
     - cistron:
-        label: thlA
+        label: acetyl_coa_acetyltransferase
         expression: medium
         gene:
-          id: P45359
+          id: P23672  # thlA from C. acetobutylicum
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: hbd
-        expression: medium
-        fused: false
-        gene:
-          id: P45362
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: crt
+        label: 3_hydroxybutyryl_coa_dehydrogenase
         expression: medium
         fused: false
         gene:
-          id: P45361
+          id: P23673  # hbd from C. acetobutylicum
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: bcd
+        label: crotonase
         expression: medium
         fused: false
         gene:
-          id: P45360
+          id: P23674  # crt from C. acetobutylicum
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: etfB
+        label: butyryl_coa_dehydrogenase
         expression: medium
         fused: false
         gene:
-          id: P45358
+          id: Q97II0  # bcd from C. acetobutylicum
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: etfA
+        label: acetoacetyl_coa_transferase
+        expression: medium
+        fused: false
+        gene:
+          id: P23675  # ctfA from C. acetobutylicum
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: acetoacetate_decarboxylase
         expression: medium
         fused: false
         chain:
           - tag: Strep-II
           - gene:
-              id: P45357
+              id: P23676  # adc from C. acetobutylicum
               source: uniprot
+
     - terminator: rrnB_T1
+```

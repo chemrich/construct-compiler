@@ -1,19 +1,40 @@
+```yaml
 construct:
-  name: "yeast_two_hybrid_bait_H"
+  name: GAL4_DBD_bait_H_y2h
   host: yeast
+
   backbone:
-    catalog_vector: "pGBKT7"  # Standard Y2H bait vector providing TRP1 selection and GAL4-DBD fusion
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: ADH1  # Strong constitutive yeast promoter standard for Y2H
+    - promoter: ADH1
+    
     - cistron:
         label: bait_fusion
         expression: high
         chain:
-          - tag: GAL4_DBD
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
               id: H
               source: uniprot
+        
     - terminator: ADH1
+    
+    - promoter: TRP1_promoter
+    
+    - cistron:
+        label: selection_marker
+        expression: medium
+        gene:
+          id: TRP1
+          source: uniprot
+          
+    - terminator: TRP1_terminator
+```

@@ -1,30 +1,40 @@
+```yaml
 construct:
-  name: "gateway_dual_destination_vector"
+  name: Gateway_dual_destination_vector
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: lacUV5
+    
     - cistron:
-        label: gateway_cassette_set_1
-        expression: medium
-        chain:
-          - tag: attR1.1
-          - gene:
-              id: ccdB
-              source: uniprot
-          - tag: attR2.2
-    - spacer: 40
+        label: attR1_1_site
+        expression: very_low
+        gene:
+          id: attR1.1_recombination_site
+          # Gateway attR1.1 variant for first cloning site
+    
+    - spacer: 50
+    
     - cistron:
-        label: gateway_cassette_set_2
+        label: ccdB_counter_selection
         expression: medium
-        fused: false
-        chain:
-          - tag: attR3.3
-          - gene:
-              id: ccdB
-              source: uniprot
-          - tag: attR4.4
+        gene:
+          id: ccdB_codon_optimized
+          # Codon-optimized ccdB for negative selection against empty vector
+    
+    - spacer: 50
+    
+    - cistron:
+        label: attR2_2_site
+        expression: very_low
+        gene:
+          id: attR2.2_recombination_site
+          # Gateway attR2.2 variant for second cloning site - distinct from attR1.1
+    
     - terminator: rrnB_T1
+```

@@ -1,18 +1,35 @@
+```yaml
 construct:
-  name: "temperature_controlled_switch_v"
+  name: temperature_controlled_genetic_switch
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pL_cI857  # Standard temperature-sensitive system: cI857 represses pL at <30C; induction occurs >37C
+    - promoter: araBAD  # Temperature-inducible promoter system
+
     - cistron:
-        label: output_v
+        label: temperature_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: P0A1X3  # E. coli TlpA thermosensor protein
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_protein
         expression: high
+        fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: V
-              source: uniprot
+              id: mEGFP  # Visual output indicator
+              source: fpbase
+
     - terminator: rrnB_T1
+```

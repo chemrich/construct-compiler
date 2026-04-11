@@ -1,16 +1,22 @@
+```yaml
 construct:
-  name: "short_lived_protein_f_degradation"
-  host: mammalian
+  name: Short_Lived_Protein_F_PEST_degradation
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
-      cistron:
+
+    - cistron:
         label: target
         expression: high
         chain:
           - gene:
               id: Short_Lived_Protein_F
               source: uniprot
-          - tag: PEST
-      terminator: BGH_polyA
+          - tag: PEST  # C-terminal PEST degradation signal
+
+    - terminator: polyA
+```

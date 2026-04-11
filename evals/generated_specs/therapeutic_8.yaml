@@ -1,17 +1,24 @@
+```yaml
 construct:
-  name: "algal_therapeutic_scfv_intracellular"
+  name: algal_antibody_fragment_intracellular
   host: algae
+
   backbone:
-    resistance: kanamycin # Placeholder: Algal metabolic selection (e.g., ARG7 or NIT1) should be used as no antibiotic elements are allowed.
-    ori: pUC
-    source: addgene
+    resistance: none  # No antibiotic resistance allowed
+    ori: algal_endogenous
+    source: custom
+
   cassette:
-    - promoter: HSP70_RBCS2 # Chimeric algal promoter for robust nuclear expression
+    - promoter: HSP70A  # Strong constitutive promoter for Chlamydomonas
+
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P01857 # UniProt ID for Immunoglobulin heavy constant gamma 1 as a therapeutic fragment representative
+              id: P01857  # Human IgG1 heavy chain variable region example
               source: uniprot
-    - terminator: rbcS2 # Standard algal 3' UTR/terminator for Chlamydomonas
+
+    - terminator: RBCS2  # Ribulose bisphosphate carboxylase small subunit terminator
+```

@@ -1,21 +1,27 @@
+```yaml
 construct:
-  name: p_pastoris_fld1_kinase_secretion
+  name: kinase_secretion_sumo_construct
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: kinase_secretion_cistron
+        label: target_kinase
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor  # secretion signal for yeast
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: kinase
+              id: kinase_gene  # replace with actual kinase ID
               source: uniprot
           - tag: c-myc
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1
+```

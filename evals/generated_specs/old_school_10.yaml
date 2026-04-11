@@ -1,16 +1,24 @@
+```yaml
 construct:
-  name: yeast_inducible_toxic_protein_x
+  name: toxic_protein_X_yeast_expression
   host: yeast
+
   backbone:
-    resistance: URA3  # Using URA3 auxotrophic marker for yeast selection
+    resistance: URA3
+    ori: CEN_ARS
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: toxic_protein
-        expression: high
+        label: toxic_protein_X
+        expression: medium
         chain:
           - gene:
-              id: toxic_protein_x
-          - tag: HA  # C-terminal HA-tag placed after the gene in the chain
+              id: protein_X  # Replace with actual protein ID
+              source: uniprot
+          - tag: HA
+
     - terminator: CYC1
+```

@@ -1,61 +1,74 @@
+```yaml
 construct:
-  name: "pseudomonas_putida_pollutant_degradation_operon"
-  host: e_coli  # Pseudomonas putida is the target host; using e_coli as the closest schema-compliant host for construct design.
+  name: pollutant_degradation_operon
+  host: e_coli  # Using E. coli as host since P. putida not in schema
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Inducible promoter to serve as a proxy for the pollutant-inducible system.
+    - promoter: araBAD  # Inducible promoter as proxy for pollutant-inducible system
+
     - cistron:
-        label: nahA
+        label: enzyme1
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: short_GS
-              repeats: 1
           - gene:
-              id: P0A113
+              id: P19835  # Example degradation enzyme
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahB
+        label: enzyme2
         expression: high
         fused: false
         gene:
-          id: P0A110
+          id: P0A9P0
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahC
+        label: enzyme3
         expression: high
         fused: false
         gene:
-          id: P0A111
+          id: P77731
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahD
+        label: enzyme4
         expression: high
         fused: false
         gene:
-          id: P0A112
+          id: P39831
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahE
+        label: enzyme5
         expression: high
         fused: false
         gene:
-          id: P0A114
+          id: P0A9Q1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahF
+        label: enzyme6
         expression: high
         fused: false
         gene:
-          id: P0A115
+          id: P77212
           source: uniprot
+
     - terminator: rrnB_T1
+```

@@ -1,18 +1,21 @@
 construct:
-  name: ProteinP_mammalian_secretion_optimized
+  name: "ProteinP_secreted_FLAG_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target_protein
         expression: high
         chain:
-          - tag: IgK_leader  # Standard mammalian secretion signal
+          - tag: signal_peptide  # secretion signal for mammalian export
           - gene:
               id: ProteinP
               source: uniprot
-          - tag: FLAG        # C-terminal tag for purification/detection
-        # Note: Codon optimization for maximal sequence diversity and host expression requested by user
-    - terminator: bGH_pA
+          - tag: FLAG  # C-terminal FLAG tag with maximal codon optimization
+
+    - terminator: SV40_polyA

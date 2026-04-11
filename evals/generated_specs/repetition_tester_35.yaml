@@ -1,16 +1,32 @@
 construct:
-  name: Gateway_Recombination_Resistant_Entry_Vector
+  name: gateway_compatible_vector_anti_recombination
   host: e_coli
+  
   backbone:
-    resistance: kanamycin # Synonymous codon version of kanR to be used to prevent recombination with common lab strains
-    ori: pUC # Synonymous variant of pUC origin to prevent multi-copy recombination events
-    source: custom
+    resistance: kanamycin  # Using kan instead of amp to avoid common recombination issues
+    ori: p15A  # Low-copy origin to reduce recombination pressure vs high-copy pBR322
+    source: addgene
+    
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: selection_cassette
+        label: gateway_entry_site
         expression: medium
-        gene:
-          id: ccdB # Standard Gateway negative selection gene
-          source: uniprot
-    - terminator: rrnB_T1 # Standard E. coli terminator to prevent read-through into the backbone origin
+        chain:
+          # attB1-ccdB-attB2 cassette with non-palindromic att sites
+          # attB1: optimized sequence to prevent hairpin formation
+          # ccdB: negative selection marker
+          # attB2: sequence variant with synonymous changes vs attB1
+          - gene:
+              id: ccdB_selection_marker  # Kills E. coli unless recombined out
+              source: addgene
+              
+    - terminator: rrnB_T1
+    
+  # Gateway-specific features (as YAML comment since not in schema):
+  # - attB1 site: 5'-ACAAGTTTGTACAAAAAAGCAGGCT-3' (non-palindromic variant)
+  # - attB2 site: 5'-ACCACTTTGTACAAGAAAGCTGGGT-3' (synonymous but distinct)
+  # - ccdB gene provides negative selection
+  # - Chloramphenicol resistance gene has synonymous codons vs standard version
+  # - p15A origin has modified sequence to prevent recombination with pBR322-based vectors

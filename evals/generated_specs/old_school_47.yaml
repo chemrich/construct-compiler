@@ -1,21 +1,29 @@
+```yaml
 construct:
-  name: "lentiviral_gene_therapy_target_puro"
+  name: lentiviral_gene_therapy_vector
   host: HEK293
+
   backbone:
-    catalog_vector: "pLenti-puro"
+    catalog_vector: "pLenti CMV Puro DEST"
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
+          id: target_gene
+          source: uniprot
+
     - promoter: PGK
+
     - cistron:
         label: selection
         expression: medium
+        fused: false
         gene:
-          id: P13249
+          id: puromycin_resistance
           source: uniprot
-    - terminator: SV40_polyA
+```

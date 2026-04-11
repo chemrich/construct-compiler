@@ -1,26 +1,34 @@
+```yaml
 construct:
-  name: "bicistronic_enzymex_laci_system"
+  name: "enzymeX_lacI_bicistronic_tac_regulated"
   host: e_coli
+
   backbone:
     resistance: tetracycline
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
-        label: enzymex_fusion
+        label: enzymeX
         expression: high
         chain:
           - solubility_tag: GST
           - gene:
               id: EnzymeX
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: laci_repressor
+        label: lacI_repressor
         expression: medium
         fused: false
         gene:
           id: lacI
           source: uniprot
+
     - terminator: rrnB_T1
+```

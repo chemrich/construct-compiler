@@ -1,42 +1,54 @@
+```yaml
 construct:
-  name: "essential_cofactor_synthesis_pathway"
-  host: e_coli_bl21
+  name: cofactor_synthesis_pathway_araBAD
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: enzyme_1
+        label: enzyme1
         expression: medium
         gene:
-          id: bioF
+          id: P0A6E4  # folA (dihydrofolate reductase)
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
-        expression: medium
-        fused: false
-        gene:
-          id: bioA
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_3
+        label: enzyme2
         expression: medium
         fused: false
         gene:
-          id: bioD
+          id: P0AC13  # folB (dihydroneopterin aldolase)
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_4
+        label: enzyme3
+        expression: medium
+        fused: false
+        gene:
+          id: P0AC17  # folK (2-amino-4-hydroxy-6-hydroxymethyldihydropteridine pyrophosphokinase)
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme4
         expression: medium
         fused: false
         chain:
           - gene:
-              id: bioB
+              id: P0AC19  # folP (dihydropteroate synthase)
               source: uniprot
           - tag: LVA
+
     - terminator: rrnB_T1
+```

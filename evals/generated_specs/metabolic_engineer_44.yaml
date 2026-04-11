@@ -1,48 +1,64 @@
+```yaml
 construct:
-  name: "butanol_biosynthesis_operon"
-  host: e_coli_bl21_de3
+  name: butanol_pathway_operon
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: thl
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P45359
+              id: P11836
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: ctfa
+        label: ctfA
         expression: medium
         fused: false
         gene:
-          id: P71077
+          id: P38946
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: ctfb
+        label: ctfB
         expression: medium
         fused: false
         gene:
-          id: P71078
+          id: P38945
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: adhe
-        expression: medium
+        label: adhE
+        expression: high
         fused: false
         gene:
-          id: P33744
+          id: P0A9Q7
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 35
+    
     - cistron:
         label: bcd
-        expression: medium
+        expression: low
         fused: false
         gene:
-          id: P52042
+          id: P22588
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+```

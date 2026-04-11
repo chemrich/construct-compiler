@@ -1,56 +1,79 @@
+```yaml
 construct:
-  name: "rhodobacter_sphaeroides_nitrogenase_operon"
-  host: e_coli  # Using e_coli as a proxy for Rhodobacter sphaeroides as it is not in the supported host list
+  name: nitrogenase_assembly_operon_rhodobacter
+  host: rhodobacter_sphaeroides
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac  # Strong bacterial promoter often used for metabolic engineering
+    - promoter: nifH  # strong anaerobic promoter for nitrogenase regulation
+
     - cistron:
-        label: nifH
+        label: nifS_iron_sulfur_assembly
         expression: high
+        rbs_strength: 1.0  # reference strength for 2x expression
+        fused: false
         gene:
-          id: Q05149
+          id: P54190  # NifS iron-sulfur cluster assembly
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifD
+        label: nifU_scaffold_protein
         expression: high
+        rbs_strength: 1.0  # reference strength for 2x expression
         fused: false
         gene:
-          id: Q05151
+          id: P54189  # NifU scaffold protein
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifK
+        label: nifB_cofactor_synthesis
         expression: medium
+        rbs_strength: 0.5  # half strength for standard expression
         fused: false
         gene:
-          id: Q05152
+          id: P54188  # NifB FeMo-cofactor synthesis
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifE
+        label: nifE_alpha_subunit
         expression: medium
+        rbs_strength: 0.5
         fused: false
         gene:
-          id: Q53102
+          id: P54186  # NifE alpha subunit
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifN
+        label: nifN_beta_subunit
         expression: medium
+        rbs_strength: 0.5
         fused: false
         gene:
-          id: Q53103
+          id: P54187  # NifN beta subunit
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifB
+        label: nifX_assembly_factor
         expression: medium
+        rbs_strength: 0.5
         fused: false
         gene:
-          id: Q05146
+          id: P54191  # NifX assembly factor
           source: uniprot
+
     - terminator: rrnB_T1
+```

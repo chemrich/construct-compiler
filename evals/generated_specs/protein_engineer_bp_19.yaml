@@ -1,21 +1,27 @@
+```yaml
 construct:
-  name: "bacillus_subtilis_esterase_secretion"
+  name: "bacillus_esterase_secretion_vector"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
-    source: custom
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: PxylA
+
     - cistron:
-        label: esterase_target
+        label: esterase
         expression: high
         chain:
-          - tag: SacB  # Signal peptide for Bacillus subtilis secretion
+          - signal_peptide: SacB
           - tag: 6xHis
           - tag: Strep-II
           - cleavage_site: Thrombin
           - gene:
-              id: P37957
+              id: esterase
               source: uniprot
+
     - terminator: rrnB_T1
+```

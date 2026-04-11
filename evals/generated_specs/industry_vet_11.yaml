@@ -1,14 +1,21 @@
+```yaml
 construct:
-  name: "Bacterial_Origin_Protein_H_Human_Optimized"
+  name: "AAV_human_codon_optimized_Bacterial_Origin_Protein_H"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         gene:
-          id: Bacterial_Origin_Protein_H
+          id: "Bacterial_Origin_Protein_H"
           source: uniprot
-    - terminator: bGH_polyA # Standard strong mammalian polyA signal
+          codon_optimize: human  # Human codon optimization for AAV transgene
+
+    - terminator: polyA  # Standard polyadenylation signal for mammalian expression
+```

@@ -1,27 +1,33 @@
+```yaml
 construct:
-  name: "e_coli_genetic_not_gate_lacI"
-  host: e_coli_bl21
+  name: genetic_NOT_gate_A_to_B
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD
+    - promoter: araBAD  # Input A controls this promoter
+
     - cistron:
-        label: repressor_lacI
+        label: repressor
         expression: high
         gene:
-          id: P03023
-          source: uniprot
-    - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: lacUV5
+          id: P0321
+          source: uniprot  # LacI repressor protein
+
+    - spacer: 50
+
+    - promoter: lacUV5  # Repressed by LacI when input A is HIGH
+
     - cistron:
-        label: output_reporter
-        expression: medium
+        label: output_B
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

@@ -1,15 +1,19 @@
 construct:
-  name: "HEK293_Dox_Inducible_Awesome_Protein"
+  name: doxycycline_inducible_awesome_protein
   host: HEK293
+
   backbone:
-    resistance: neomycin # Neomycin resistance (NPTII) confers G418 selection in mammalian cells
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin  # for bacterial propagation; G418 resistance in mammalian cells via neomycin gene
+
   cassette:
-    - promoter: TRE_CMV # Dox-inducible promoter (Tetracycline Response Element + CMV minimal promoter)
+    - promoter: CMV_TetO  # CMV promoter with TetO operator sequences for doxycycline induction
+    
     - cistron:
-        label: target
+        label: awesome_protein
         expression: high
         gene:
-          id: Awesome_Protein
-    - terminator: BGH_pA # Standard mammalian polyadenylation signal for high expression
+          id: "custom_awesome_protein"  # placeholder - user would need to provide actual sequence
+          source: custom
+    
+    - terminator: SV40_polyA

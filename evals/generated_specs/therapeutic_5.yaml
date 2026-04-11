@@ -1,18 +1,25 @@
+```yaml
 construct:
-  name: non_viral_nls_reporter_engraftment
+  name: "nuclear_reporter_for_engraftment_tracking"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral human promoter for constitutive expression
+    - promoter: EF1_alpha
+
     - cistron:
         label: nuclear_reporter
-        expression: high
+        expression: medium
         chain:
           - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mScarlet
+              id: mNeonGreen
               source: fpbase
-    - terminator: hGH_pA  # Human growth hormone polyadenylation signal (non-viral)
+
+    - terminator: rrnB_T1
+```

@@ -1,26 +1,41 @@
+```yaml
 construct:
-  name: "therapeutic_or_gate_secretion"
-  host: e_coli_bl21_de3
+  name: therapeutic_protein_OR_gate
+  host: HEK293
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+  
   cassette:
-    - promoter: T7lac # Input signal S1
+    - promoter: CMV
+    
     - cistron:
-        label: therapeutic_s1
-        expression: high
-        chain:
-          - tag: PelB # Secretion signal for E. coli
-          - gene:
-              id: P01241 # Human Growth Hormone (hGH)
-              source: uniprot
-    - terminator: T7term
-    - promoter: araBAD # Input signal S2
+        label: S1_sensor
+        expression: medium
+        gene:
+          id: P21398  # GAL4 DNA-binding domain
+          source: uniprot
+    
+    - spacer: 30
+    
     - cistron:
-        label: therapeutic_s2
+        label: S2_sensor
+        expression: medium
+        gene:
+          id: P21398  # GAL4 DNA-binding domain  
+          source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: therapeutic_output
         expression: high
+        fused: false
         chain:
-          - tag: PelB
+          - tag: signal_peptide  # Secretion signal for mammalian cells
           - gene:
-              id: P01241
+              id: P01308  # Human insulin
               source: uniprot
+    
     - terminator: rrnB_T1
+```

@@ -1,14 +1,22 @@
+```yaml
 construct:
-  name: "secreted_protein_S_insect_expression"
-  host: mammalian # Insect cell lines not in schema; using mammalian as eukaryotic proxy for glycosylated protein expression
+  name: "secreted_protein_S_insect"
+  host: insect
+  
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+  
   cassette:
-    - promoter: CMV # CMV substituted for insect-specific promoter (e.g. Polh/OpIE2) to align with tool schema
+    - promoter: OpIE2
+    
     - cistron:
-        label: target
+        label: protein_S
         expression: high
         gene:
-          id: P06401 # UniProt ID for Human Protein S; assumes signal peptide is intrinsic as per prompt
+          id: P0DTC2
           source: uniprot
-    - terminator: BBa_B0015
+    
+    - terminator: SV40_polyA
+```

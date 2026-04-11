@@ -1,17 +1,26 @@
 construct:
-  name: "therapeutic_protein_T_high_yield_optimized"
+  name: therapeutic_protein_T_high_yield_optimized
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: therapeutic_target
+        label: therapeutic_protein_T
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: T
-              source: uniprot
-    - terminator: T7term
+            id: # UniProt ID for protein T required
+            source: uniprot
+            codon_optimization: strict  # strict repeat avoidance and E. coli codon bias
+            repeat_screening: true      # scan for direct and inverted repeats
+
+    - terminator: rrnB_T1
+    
+# Note: Actual UniProt ID for therapeutic protein T must be specified
+# All sequences will undergo rigorous repeat screening and synonymous codon optimization

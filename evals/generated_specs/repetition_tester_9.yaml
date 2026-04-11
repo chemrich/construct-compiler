@@ -1,26 +1,35 @@
+```yaml
 construct:
-  name: "Bicistronic_ProteinP_ProteinQ_Scrambled_IRES"
+  name: "ProteinP_IRES_ProteinQ_bicistronic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: ProteinP
-        expression: medium
+        label: proteinP
+        expression: high
         chain:
           - gene:
-              id: ProteinP
+              id: "ProteinP"  # User must provide actual protein ID
               source: uniprot
-          - tag: FLAG
-    - spacer: 585  # Represents a codon-scrambled, non-homologous IRES sequence for internal ribosome entry
+          - tag: V5  # Unique C-terminal tag for ProteinP
+
+    - spacer: 150  # IRES-like element (user must provide non-standard scrambled IRES sequence)
+    # Note: This spacer represents the custom scrambled IRES - actual sequence must be provided by user
+
     - cistron:
-        label: ProteinQ
+        label: proteinQ
         expression: medium
-        fused: false  # Indicates independent translation initiation via the upstream IRES
+        fused: false  # Independent translation via IRES
         chain:
           - gene:
-              id: ProteinQ
+              id: "ProteinQ"  # User must provide actual protein ID
               source: uniprot
-          - tag: HA
-    - terminator: bGH_polyA
+          - tag: Myc  # Unique C-terminal tag for ProteinQ
+
+    - terminator: rrnB_T1
+```

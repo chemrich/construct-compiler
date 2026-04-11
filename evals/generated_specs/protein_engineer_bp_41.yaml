@@ -1,19 +1,26 @@
+```yaml
 construct:
-  name: "pichia_pastoris_aox1_secretion_construct"
+  name: "pichia_aox1_secreted_protein_flag"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: secreted_protein
+        label: target
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: mCherry
-              source: fpbase
+              id: target_protein  # Replace with actual protein ID
+              source: uniprot
+              codon_optimize: pichia
           - tag: FLAG
-    - terminator: AOX1_term
+
+    - terminator: AOX1_TT
+```

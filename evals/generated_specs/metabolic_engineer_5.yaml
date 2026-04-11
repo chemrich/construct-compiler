@@ -1,42 +1,69 @@
+```yaml
 construct:
-  name: "corynebacterium_lysine_biosynthesis_p2a"
-  host: bacillus  # Substitution: C. glutamicum is not in the schema; bacillus used as a Gram-positive bacterial proxy.
+  name: Cglu_amino_acid_biosynthesis_operon_P2A
+  host: bacillus  # closest available host for Corynebacterium glutamicum
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100  # Strong constitutive promoter compatible with Gram-positive bacteria.
+    - promoter: J23100  # strong constitutive promoter suitable for Corynebacterium
+    
     - cistron:
-        label: "aspartokinase_lysC"
+        label: enzyme1_dehydratase
         expression: high
-        gene:
-          id: "P0C1E7"
-          source: uniprot
-    - cistron:
-        label: "asd_dehydrogenase"
-        expression: high
-        fused: true  # fused: true creates a single ORF for P2A-mediated cleavage.
         chain:
-          - cleavage_site: P2A  # User requested P2A; note that 2A-mediated skipping typically requires a eukaryotic host.
+          - solubility_tag: SUMO  # help prevent aggregation
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: "P09126"
+              id: P9WQE3  # example dehydratase from Mycobacterium (related actinobacteria)
               source: uniprot
+          - cleavage_site: P2A  # P2A self-cleaving peptide for co-translational separation
+    
     - cistron:
-        label: "dapA_synthase"
+        label: enzyme2_transaminase
+        expression: high
+        fused: true  # part of polycistronic transcript but P2A cleaves for separate folding
+        chain:
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: Q8NR74  # example transaminase
+              source: uniprot
+          - cleavage_site: P2A
+    
+    - cistron:
+        label: enzyme3_dehydratase2
         expression: high
         fused: true
         chain:
-          - cleavage_site: P2A
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: "P0A4B5"
+              id: P9WQE5  # second dehydratase
               source: uniprot
+          - cleavage_site: P2A
+    
     - cistron:
-        label: "dapB_reductase"
+        label: enzyme4_transaminase2
         expression: high
         fused: true
         chain:
-          - cleavage_site: P2A
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: "P0A4C2"
+              id: Q8NR75  # second transaminase
               source: uniprot
+    
     - terminator: rrnB_T1
+```

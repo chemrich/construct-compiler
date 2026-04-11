@@ -1,14 +1,22 @@
+```yaml
 construct:
-  name: "yeast_high_mCherry_LEU2"
+  name: yeast_mCherry_strong_expression
   host: yeast
+
   backbone:
-    catalog_vector: "pRS425"  # High-copy yeast shuttle vector with LEU2 selection marker
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: GPD  # Strong constitutive promoter for S. cerevisiae
+    - promoter: TEF1
+
     - cistron:
-        label: reporter
+        label: mCherry_reporter
         expression: high
         gene:
           id: mCherry
           source: fpbase
-    - terminator: CYC1_term
+
+    - terminator: CYC1
+```

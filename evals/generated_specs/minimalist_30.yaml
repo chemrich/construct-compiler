@@ -1,15 +1,20 @@
 construct:
-  name: "toxin_a_low_noise_expression"
+  name: toxin_A_low_noise
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Used for tight regulation and minimizing expression noise compared to T7lac
+    - promoter: J23106  # Low-strength constitutive promoter for minimal noise
+    
     - cistron:
-        label: toxin_a
-        expression: low
-        gene:
-          id: P16154
-          source: uniprot
+        label: toxin_A
+        expression: very_low  # Minimize expression for toxicity concerns
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P16562  # Clostridium difficile Toxin A
+              source: uniprot
+    
     - terminator: rrnB_T1

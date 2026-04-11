@@ -1,12 +1,18 @@
+```yaml
 construct:
-  name: "mammalian_u6_sgrna_expression"
+  name: sgRNA_expression_vector
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: U6
     - cistron:
-        label: guide_rna
+        label: sgRNA
+        expression: high
         gene:
-          id: sgRNA
-    - terminator: polyU # Specific terminator for RNA Pol III promoters like U6
+          id: sgRNA_target  # Replace with your specific target sequence
+          source: custom
+    - terminator: U6_terminator
+```

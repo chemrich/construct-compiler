@@ -1,16 +1,37 @@
+```yaml
 construct:
-  name: "event_counter_3pulse_output"
-  host: e_coli_bl21
+  name: genetic_event_counter_3pulse
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: reporter_output
+        label: counter_integrase
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P1_CRE
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_protein
         expression: high
+        fused: false
         chain:
           - gene:
-              id: sfGFP
+              id: mScarlet
               source: fpbase
-          - tag: ssrA
-    - terminator: T7term
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: ssrA  # degradation tag for pulse counting reset
+
+    - terminator: rrnB_T1
+```

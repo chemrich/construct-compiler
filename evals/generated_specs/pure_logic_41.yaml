@@ -1,14 +1,32 @@
+```yaml
 construct:
-  name: "metabolic_not_gate"
-  host: e_coli_bl21
+  name: genetic_NOT_gate_metabolic_enzyme
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: trp  # The trp promoter is constitutively active but repressed by the presence of tryptophan (Input A)
+    - promoter: J23100  # Constitutive promoter for NOT gate logic
+
     - cistron:
-        label: target
+        label: repressor
+        expression: medium
+        chain:
+          - gene:
+              id: P0451  # LacI repressor
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: essential_enzyme
         expression: high
-        gene:
-          id: GLNA_ECOLI
-          source: uniprot
+        fused: false
+        chain:
+          - gene:
+              id: P0A9Q7  # thrA (aspartate kinase I) - essential for amino acid biosynthesis
+              source: uniprot
+
     - terminator: rrnB_T1
+```

@@ -1,27 +1,35 @@
+```yaml
 construct:
-  name: "pichia_pdi_lipase_coexpression"
+  name: pichia_PDI_lipase_coexpression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+    
     - cistron:
-        label: chaperone_pdi
-        expression: medium
+        label: chaperone
+        expression: high
         gene:
-          id: P41544
+          id: PDI1
           source: uniprot
-    - terminator: AOX1_term
-    - spacer: 30
+    
+    - terminator: CYC1
+    
     - promoter: GAP
+    
     - cistron:
-        label: target_lipase
+        label: target_enzyme
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor  # secretion signal for yeast
           - gene:
-              id: P41365
+              id: lipase
               source: uniprot
-    - terminator: BBa_B0015
+    
+    - terminator: ADH1
+```

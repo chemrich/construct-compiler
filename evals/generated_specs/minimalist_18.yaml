@@ -1,15 +1,20 @@
+```yaml
 construct:
-  name: "e_coli_stress_reporter_mcherry"
+  name: "stress_reporter_mCherry"
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: dnaK  # Stress-responsive promoter responding to protein folding stress and heat shock
+    - promoter: T7lac
+
     - cistron:
-        label: stress_sensor
-        expression: medium
+        label: stress_reporter
+        expression: high
         gene:
           id: mCherry
           source: fpbase
+
     - terminator: rrnB_T1
+```

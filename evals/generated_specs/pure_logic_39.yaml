@@ -1,40 +1,62 @@
+```yaml
 construct:
-  name: "yeast_3_input_decoder"
+  name: three_input_genetic_decoder_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: "pLogic_A0B0C1" # Activated when Input A=0, B=0, C=1
+    # Output O1 - active when A=0, B=0, C=1
+    - promoter: GAL1  # activated by galactose (input C)
     - cistron:
-        label: "O1_output"
-        expression: medium
-        chain:
-          - gene:
-              id: mCherry
-              source: fpbase
-          - tag: PEST
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: "pLogic_A0B1C1" # Activated when Input A=0, B=1, C=1
-    - cistron:
-        label: "O3_output"
-        expression: medium
-        chain:
-          - gene:
-              id: mEGFP
-              source: fpbase
-          - tag: PEST
-    - terminator: ADH1_term
-    - spacer: 50
-    - promoter: "pLogic_A1B0C1" # Activated when Input A=1, B=0, C=1
-    - cistron:
-        label: "O5_output"
+        label: output_O1
         expression: medium
         chain:
           - gene:
               id: mTagBFP2
               source: fpbase
-          - tag: PEST
-    - terminator: TEF1_term
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: degron_CLN2  # degradation tag for S. cerevisiae
+    - terminator: CYC1
+
+    # Spacer between cassettes
+    - spacer: 50
+
+    # Output O3 - active when A=0, B=1, C=1
+    - promoter: MET25  # repressed by methionine (input A absent) and activated by other conditions
+    - cistron:
+        label: output_O3
+        expression: medium
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: degron_CLN2
+    - terminator: CYC1
+
+    # Spacer between cassettes
+    - spacer: 50
+
+    # Output O5 - active when A=1, B=0, C=1
+    - promoter: CUP1  # activated by copper (input A) with additional logic
+    - cistron:
+        label: output_O5
+        expression: medium
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: degron_CLN2
+    - terminator: CYC1
+```

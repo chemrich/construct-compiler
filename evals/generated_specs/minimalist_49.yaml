@@ -1,13 +1,19 @@
+```yaml
 construct:
-  name: "fusion_P_Q_direct"
+  name: "protein_P_Q_fusion"
   host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: p_q_fusion
-        expression: medium
+        label: fusion
+        expression: high
         chain:
           - gene:
               id: P
@@ -15,4 +21,6 @@ construct:
           - gene:
               id: Q
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+```

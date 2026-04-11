@@ -1,14 +1,18 @@
+```yaml
 construct:
-  name: "yeast_GAL1_MyAntigen_integrative"
+  name: "MyAntigen_GAL1_inducible_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin # kanMX module for G418 selection in yeast
-    ori: pUC
+    resistance: G418
+    ori: CEN/ARS
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: antigen_expression
+        label: MyAntigen
         expression: high
         chain:
           - gene:
@@ -16,4 +20,6 @@ construct:
               source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
+
     - terminator: CYC1
+```

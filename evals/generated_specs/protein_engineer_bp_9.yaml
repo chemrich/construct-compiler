@@ -1,32 +1,43 @@
+```yaml
 construct:
-  name: "bacillus_pveg_acetoin_pathway"
+  name: bacillus_metabolic_pathway_operon
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322  # Using pBR322 as a common placeholder for shuttle vector compatibility
+    resistance: chloramphenicol
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: alsS
+        label: enzyme1
         expression: high
-        gene:
-          id: P19444
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: P00489  # phosphofructokinase
+              source: uniprot
+
+    - spacer: 25  # strong Bacillus RBS spacing
+
     - cistron:
-        label: alsD
-        expression: high
-        fused: false
-        gene:
-          id: P19445
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: bdhA
+        label: enzyme2
         expression: high
         fused: false
         gene:
-          id: P54530
+          id: P21599  # fructose-bisphosphate aldolase
           source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme3
+        expression: high
+        fused: false
+        gene:
+          id: P00354  # glyceraldehyde-3-phosphate dehydrogenase
+          source: uniprot
+
     - terminator: rrnB_T1
+```

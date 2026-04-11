@@ -1,48 +1,72 @@
+```yaml
 construct:
-  name: "carotenoid_biosynthesis_operon_pichia"
-  host: yeast  # Komagataella phaffii (Pichia pastoris)
+  name: carotenoid_biosynthesis_operon_pichia
+  host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: AOX1  # Strong methanol-inducible promoter for Pichia
+    - promoter: AOX1
+
     - cistron:
-        label: crtE_GGPP_synthase
+        label: GGPP_synthase_1
         expression: high
         gene:
-          id: P22849
+          id: P27578
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: crtB_phytoene_synthase
-        expression: medium  # Set to medium to maintain 2:1 ratio with crtE
-        fused: false  # Independent translation unit for polycistronic mRNA
-        gene:
-          id: P22851
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: crtI_phytoene_desaturase
-        expression: medium
+        label: GGPP_synthase_2
+        expression: high
         fused: false
         gene:
-          id: P22852
+          id: P27578
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: crtY_lycopene_cyclase
-        expression: medium
+        label: phytoene_synthase
+        expression: high
         fused: false
         gene:
-          id: P22853
+          id: P37269
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: crtZ_beta_carotene_hydroxylase
-        expression: medium
+        label: phytoene_desaturase
+        expression: high
         fused: false
         gene:
-          id: P22854
+          id: P05797
           source: uniprot
-    - terminator: AOX1_TT # Standard AOX1 transcription terminator
+
+    - spacer: 25
+
+    - cistron:
+        label: zeta_carotene_desaturase
+        expression: high
+        fused: false
+        gene:
+          id: P05798
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: lycopene_cyclase
+        expression: high
+        fused: false
+        gene:
+          id: P05799
+          source: uniprot
+
+    - terminator: CYC1
+```

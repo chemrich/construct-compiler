@@ -1,19 +1,76 @@
+```yaml
 construct:
-  name: "xor_logic_gate_coli"
-  host: e_coli
+  name: XOR_logic_gate_ecoli
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: P_xor  # Synthetic promoter implementing (InputA OR InputB) AND NOT (InputA AND InputB)
+    - promoter: araBAD  # Input A promoter - inducible by arabinose
+
     - cistron:
-        label: output_protein_E
+        label: repressor_A
+        expression: high
+        gene:
+          id: P0029  # TetR repressor
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: protease_A
+        expression: medium
+        fused: false
+        gene:
+          id: P04188  # TEV protease
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5  # Input B promoter - inducible by IPTG
+
+    - cistron:
+        label: repressor_B
+        expression: high
+        gene:
+          id: P03023  # LacI repressor
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: activator_B
+        expression: medium
+        fused: false
+        gene:
+          id: P0ACB0  # CAP-CRP activator
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: J23106  # Constitutive promoter for NOR gate
+
+    - cistron:
+        label: nor_repressor
+        expression: high
+        gene:
+          id: P04483  # CI repressor
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: J23100  # Output promoter - repressed by CI, activated by CRP
+
+    - cistron:
+        label: output_E
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: sfGFP
+              id: mEGFP
               source: fpbase
+
     - terminator: rrnB_T1
+```

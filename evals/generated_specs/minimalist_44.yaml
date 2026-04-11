@@ -1,16 +1,20 @@
 construct:
-  name: plant_herbicide_resistance_Z
-  host: plant  # Rule 15: Using plant as requested; CaMV35S and NOS are standard plant components.
+  name: herbicide_resistance_Z_plant_expression
+  host: plant
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: CaMV35S
+    - promoter: 35S_CaMV
+
     - cistron:
         label: herbicide_resistance
         expression: high
         gene:
-          id: Z
-          source: uniprot
-    - terminator: NOS_term
+          id: herbicide_resistance_Z
+          source: custom
+
+    - terminator: nos_terminator

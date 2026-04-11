@@ -1,15 +1,22 @@
+```yaml
 construct:
-  name: "dox_inducible_therapeutic_expression"
+  name: "dox_inducible_therapeutic_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G  # Tet-on 3G promoter for strong Dox-induced expression
+    - promoter: TRE3GS  # Tet-responsive element with strong induction
+
     - cistron:
         label: therapeutic_protein
         expression: high
         chain:
+          - signal_peptide: IL2_SP  # secretion signal for therapeutic delivery
           - gene:
-              id: IL2  # Using Human Interleukin-2 as a representative therapeutic protein
+              id: P01308  # human insulin, replace with actual therapeutic protein
               source: uniprot
-    - terminator: bGH_polyA  # Standard strong mammalian polyadenylation signal
+
+    - terminator: SV40_polyA
+```

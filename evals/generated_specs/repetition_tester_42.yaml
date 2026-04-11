@@ -1,18 +1,25 @@
+```yaml
 construct:
-  name: "conditional_degradation_system"
+  name: conditional_degradation_system
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: J23100
+    
     - cistron:
-        label: degradation_target
-        expression: high
+        label: target_with_dual_degrons
+        expression: medium
         chain:
-          - tag: ssrA
+          - tag: ClpXP_ssrA_N  # N-terminal ClpXP recognition sequence (codon-optimized variant 1)
           - gene:
               id: mEGFP
               source: fpbase
-          - tag: ssrA
+          - tag: ClpXP_ssrA_C  # C-terminal ClpXP recognition sequence (codon-optimized variant 2)
+    
     - terminator: rrnB_T1
+```

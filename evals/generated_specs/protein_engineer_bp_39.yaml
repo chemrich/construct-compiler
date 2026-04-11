@@ -1,19 +1,26 @@
+```yaml
 construct:
-  name: "pichia_methanol_free_nanobody_secretion"
+  name: "G1_promoter_nanobody_secretion_pichia"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: G1
+    - promoter: G1  # glucose-repressible promoter for methanol-free induction
+
     - cistron:
         label: secreted_nanobody
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor  # secretion signal for yeast
           - gene:
-              id: nanobody
+              id: nanobody  # specify actual nanobody ID/sequence
+              source: uniprot
           - cleavage_site: Enterokinase
           - tag: 6xHis
-    - terminator: AOX1
+
+    - terminator: rrnB_T1
+```

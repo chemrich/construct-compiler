@@ -1,21 +1,37 @@
+```yaml
 construct:
-  name: "and_not_gate_sfgfp_logic"
-  host: e_coli_bl21
+  name: AND_NOT_logic_gate
+  host: e_coli_bl21_de3
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: araBAD # Inducible by Input A (Arabinose); logic assumes a repressor for Input B is present
+    - promoter: araBAD  # Input A presence
+    
     - cistron:
-        label: logic_output
+        label: repressor
+        expression: high
+        gene:
+          id: P0401_ECOLI  # LacI repressor
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - promoter: lacUV5  # Repressed by Input B (LacI)
+    
+    - cistron:
+        label: output
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: sfGFP
+              id: mEGFP
               source: fpbase
+    
     - terminator: rrnB_T1
+```

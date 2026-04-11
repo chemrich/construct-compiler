@@ -1,26 +1,59 @@
+```yaml
 construct:
-  name: "positive_feedback_signal_amplifier"
-  host: e_coli_bl21
+  name: positive_feedback_amplifier_system
+  host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: pLuxR  # LuxR-responsive promoter (e.g., BBa_R0062) to create positive feedback loop
+    - promoter: CMV
+    
     - cistron:
-        label: activator
+        label: transcriptional_activator
         expression: medium
-        gene:
-          id: LuxR
-          source: uniprot
-    - spacer: 30
+        chain:
+          - signal_peptide: native  # For nuclear localization
+          - gene:
+              id: P65_AD_VP16  # Strong transcriptional activator domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: GAL4_DBD  # DNA binding domain for feedback promoter
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+    - promoter: GAL4_UAS  # Upstream Activating Sequence responsive to GAL4
+    
+    - cistron:
+        label: amplified_activator
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P65_AD_VP16
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
+
+    - spacer: 50
+
     - cistron:
         label: growth_factor_output
         expression: high
-        fused: false  # Separate RBS for the second protein in the bicistronic transcript
+        fused: false
         chain:
-          - tag: PelB  # N-terminal secretion signal for periplasmic export in E. coli
+          - signal_peptide: native  # For secretion
           - gene:
-              id: IGF1
+              id: PDGFB  # Platelet-derived growth factor
               source: uniprot
-    - terminator: rrnB_T1
+
+    - terminator: BGH_polyA
+```

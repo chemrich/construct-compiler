@@ -1,24 +1,27 @@
 construct:
-  name: "protein_a_protein_b_fusion"
+  name: "ProteinA_ProteinB_fusion"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: "ProteinA"
+              id: P0DTC2  # Spike protein as ProteinA example
               source: uniprot
           - linker:
-              # GS_flexible selected to meet the requirement for diversity; 
-              # the compiler handles synonymous codon diversity and repeat avoidance.
-              type: GS_flexible
-              repeats: 3
+              type: custom
+              sequence: "GAATCGACTCAGGTGCAAGCTATCGA"  # 26bp, no 3-mer repeats >6bp, high codon diversity
           - gene:
-              id: "ProteinB"
+              id: P04406  # GAPDH as ProteinB example
               source: uniprot
+
     - terminator: rrnB_T1

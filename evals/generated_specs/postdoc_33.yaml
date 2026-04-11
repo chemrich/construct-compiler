@@ -1,16 +1,21 @@
 construct:
-  name: "mammalian_ha_fusion_construct"
+  name: "mammalian_optimized_with_ha_tag"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
-        expression: high # User requested Shine-Dalgarno (bacterial); substituted with Kozak sequence for HEK293 host
+        label: target
+        expression: high
         chain:
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: optimized_gene  # User-provided optimized sequence
           - tag: HA
-    - terminator: BBa_B0015
+
+    - terminator: SV40_polyA
+
+# Note: Shine-Dalgarno sequences are prokaryotic ribosome binding sites and not used in mammalian systems. Mammalian ribosomes recognize the 5' cap structure and Kozak sequence instead. The CMV promoter and proper Kozak consensus will ensure efficient translation initiation.

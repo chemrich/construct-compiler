@@ -1,18 +1,24 @@
+```yaml
 construct:
-  name: "mRNA_vaccine_component_IVT"
+  name: mRNA_vaccine_antigen_IVT
   host: in_vitro
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: T7
+    - promoter: T7  # T7 promoter for in vitro transcription
+
     - cistron:
-        label: antigen_presentation
+        label: vaccine_antigen
         expression: high
         chain:
-          - tag: IgK_leader  # Strong signal peptide for secretion
+          - tag: tPA_signal  # tissue plasminogen activator signal peptide for secretion
           - gene:
-              id: P0DTC2
+              id: P0DTC2  # SARS-CoV-2 spike protein as example antigen
               source: uniprot
-    - terminator: T7term  # T7 terminator; optimized UTRs and poly-A tail are integrated into the template sequence prior to IVT
+
+    - terminator: rrnB_T1
+```

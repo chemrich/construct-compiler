@@ -1,17 +1,23 @@
+```yaml
 construct:
-  name: "secreted_flag_antibody_fragment_cho"
+  name: secreted_antibody_fragment_FLAG
   host: CHO
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide  # CHO secretion signal
           - tag: FLAG
           - gene:
-              id: scFv_anti_TNF_alpha
+              id: scFv_anti_CD20  # example single-chain variable fragment
               source: uniprot
-    - terminator: BGH_polyA
+
+    - terminator: rrnB_T1
+```

@@ -1,22 +1,35 @@
+```yaml
 construct:
-  name: "tet_on_inducible_mammalian_expression"
+  name: "tet_on_inducible_mammalian_system"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G
-    - cistron:
-        label: target_gene
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_polyA
     - promoter: CMV
+
     - cistron:
-        label: transactivator
+        label: rtTA
         expression: medium
         gene:
-          id: rtTA3
+          id: rtTA
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1
+
+    - spacer: 100
+
+    - promoter: TRE  # Tetracycline Response Element promoter
+
+    - cistron:
+        label: GOI
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: EGFP  # placeholder - replace with actual gene of interest
+              source: fpbase
+
+    - terminator: rrnB_T1
+```

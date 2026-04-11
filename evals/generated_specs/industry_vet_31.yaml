@@ -1,16 +1,18 @@
 construct:
-  name: "mammalian_gene_therapy_minimal_non_viral"
+  name: gene_therapy_minimal_immunogenicity
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"  # Will modify promoter below
+    
   cassette:
-    - promoter: EF1_alpha  # Non-viral ubiquitous human promoter
+    - promoter: EF1_alpha  # Human cellular promoter, less immunogenic than viral CMV
+    
     - cistron:
-        label: therapy_cargo
-        expression: high
+        label: therapeutic_protein
+        expression: medium
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: hBG_polyA  # Human beta-globin polyadenylation signal
+          id: # Gene ID needed - please specify target protein
+          source: uniprot
+    
+    - terminator: human_beta_globin_polyA  # Human-derived terminator for reduced immunogenicity

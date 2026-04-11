@@ -1,27 +1,56 @@
 construct:
-  name: "positive_feedback_amplification_loop"
+  name: positive_feedback_signal_amplifier
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: UAS # Responsive to Gal4-VP16 for amplification
+    - promoter: CMV
+
     - cistron:
-        label: transactivator_amplifier
-        expression: high
+        label: transcriptional_activator
+        expression: medium
         chain:
           - gene:
-              id: Gal4_VP16 # Synthetic transactivator fusion
-    - terminator: SV40_PA
-    - spacer: 100
-    - promoter: UAS # Feedback loop drives output of growth factor
-    - cistron:
-        label: growth_factor_output
-        expression: high
-        chain:
-          - tag: IgK_leader # Secretion signal for mammalian host
+              id: VP64-dCas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: P01343
-              source: uniprot # Human IGF-1
-    - terminator: bGH_PA
+              id: P2A  # self-cleaving peptide for polycistronic expression
+              source: uniprot
+
+    - cistron:
+        label: growth_factor
+        expression: high
+        fused: false
+        chain:
+          - tag: signal_peptide  # for secretion
+          - gene:
+              id: PDGF-BB
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: T2A  # self-cleaving peptide
+              source: uniprot
+
+    - cistron:
+        label: feedback_sensor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: PDGFR-beta
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: gRNA_scaffold
+              source: uniprot
+
+    - terminator: BBa_B0015

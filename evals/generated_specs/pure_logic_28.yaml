@@ -1,16 +1,42 @@
+```yaml
 construct:
-  name: "yeast_threshold_detector_L"
+  name: "yeast_threshold_detector_M_to_L"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: GAL1  # Standard yeast switch-like promoter responding to galactose/Input M
+    - promoter: GAL1  # Galactose-inducible promoter for input M sensing
+
+    - cistron:
+        label: threshold_detector
+        expression: medium
+        chain:
+          - gene:
+              id: GAL4
+              source: uniprot  # Transcriptional activator for threshold detection
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: FLAG  # For detection/purification
+
+    - terminator: CYC1
+
+    - promoter: GAL4_UAS  # Activated by GAL4 when threshold is reached
+
     - cistron:
         label: output_L
         expression: high
         chain:
-          - solubility_tag: SUMO  # Protein stability and solubility tag
+          - secretion_signal: alpha_factor  # For yeast secretion
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: CYC1_term
+              id: P53
+              source: uniprot  # Output protein L
+          - tag: PEST  # Protein stability/degradation tag
+          - tag: 6xHis
+
+    - terminator: ADH1
+```

@@ -1,23 +1,27 @@
+```yaml
 construct:
-  name: "EF1a_mEGFP_LacZ_Fusion"
+  name: GFP_LacZ_fusion_mammalian
   host: mammalian
+
   backbone:
-    resistance: kanamycin # Defaulting to kanamycin per Rule 9; prompt requested no selection marker
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: fusion_protein
+        label: GFP_LacZ_fusion
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: lacZ
+              id: P00722
               source: uniprot
+
     - terminator: SV40_polyA
+```

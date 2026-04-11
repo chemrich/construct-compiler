@@ -1,23 +1,29 @@
+```yaml
 construct:
-  name: "yeast_surface_display_aga2_peptide"
+  name: "yeast_surface_display_awesome_peptide"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: surface_display
         expression: high
         chain:
           - gene:
-              id: P16223
+              id: P32775  # Aga2p from S. cerevisiae
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: My_Awesome_Peptide
-          - tag: HA
-    - terminator: BBa_B0015
+              id: custom_peptide
+              sequence: "MYAWESOMEPEPTIDE"  # placeholder for user's peptide
+
+    - terminator: CYC1
+```

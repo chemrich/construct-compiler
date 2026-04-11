@@ -1,18 +1,24 @@
+```yaml
 construct:
-  name: "protein_Y_strep_fusion_expression"
+  name: "protein_Y_strep_tag_expression"
   host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: Strep-II
+          - gene:
+              id: Y  # Replace with actual protein ID and source
           - linker:
               type: GS_flexible
               repeats: 2
-          - gene:
-              id: Y
-    - terminator: T7term
+          - tag: Strep-II
+
+    - terminator: rrnB_T1
+```

@@ -1,54 +1,67 @@
+```yaml
 construct:
-  name: "qs_regulated_biodegradation_operon"
+  name: quorum_sensing_biodegradation_operon
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: pET-28b(+)
+  
   cassette:
-    - promoter: luxI  # Quorum-sensing regulated promoter activated by LuxR-AHL complex
+    - promoter: luxI  # quorum sensing activated promoter
+    
     - cistron:
-        label: enzyme_1_fusion
+        label: enzyme1_reporter
         expression: high
         chain:
           - gene:
-              id: nahA
-              source: uniprot
+              id: sfGFP
+              source: fpbase
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: sfGFP
-              source: fpbase
-    - spacer: 30
+              id: P0A9B2  # example biodegradation enzyme
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_2
+        label: enzyme2
         expression: high
         fused: false
         gene:
-          id: nahB
+          id: P77173  # example biodegradation enzyme
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_3
+        label: enzyme3
         expression: high
         fused: false
         gene:
-          id: nahC
+          id: P23522  # example biodegradation enzyme
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_4
+        label: enzyme4
         expression: high
         fused: false
         gene:
-          id: nahD
+          id: P31658  # example biodegradation enzyme
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_5
+        label: enzyme5
         expression: high
         fused: false
         gene:
-          id: nahE
+          id: P0AC55  # example biodegradation enzyme
           source: uniprot
+    
     - terminator: rrnB_T1
+```

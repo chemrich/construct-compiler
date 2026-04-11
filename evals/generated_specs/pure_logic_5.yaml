@@ -1,54 +1,56 @@
+```yaml
 construct:
-  name: "repressilator_oscillator_LVA_optimized"
+  name: repressilator_oscillator
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pSC101
+    ori: pBR322
     source: addgene
-
+  
   cassette:
-    # Node 1: TetR-repressible promoter driving LacI
-    - promoter: PLtetO_1
+    - promoter: lacI
+    
     - cistron:
-        label: node_lacI
+        label: tetR_repressor
         expression: medium
-        chain:
-          - gene:
-              id: P03023
-              source: uniprot
-          - tag: LVA # SsrA degradation tag (AANDENYALVA) to ensure 60-90 min period
-    - terminator: rrnB_T1
-
-    # Node 2: LacI-repressible promoter driving Lambda cI
-    - promoter: Plac_O1
-    - cistron:
-        label: node_cI
-        expression: medium
-        chain:
-          - gene:
-              id: P03034
-              source: uniprot
-          - tag: LVA
-    - terminator: rrnB_T1
-
-    # Node 3: Lambda cI-repressible promoter driving TetR
-    - promoter: PL_lambda
-    - cistron:
-        label: node_tetR
-        expression: medium
-        chain:
-          - gene:
-              id: P04483
-              source: uniprot
-          - tag: LVA
-    - terminator: rrnB_T1
-
-    # Readout: TetR-repressible promoter driving mEGFP reporter
-    - promoter: PLtetO_1
-    - cistron:
-        label: reporter_mEGFP
-        expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+          id: P0040  # TetR repressor
+          source: biobrick
+    
+    - spacer: 25
+    
+    - promoter: tetR
+    
+    - cistron:
+        label: cI_repressor
+        expression: medium
+        gene:
+          id: C0051  # CI repressor (lambda)
+          source: biobrick
+    
+    - spacer: 25
+    
+    - promoter: cI
+    
+    - cistron:
+        label: lacI_repressor
+        expression: medium
+        gene:
+          id: C0012  # LacI repressor
+          source: biobrick
+    
+    - spacer: 30
+    
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1
+```

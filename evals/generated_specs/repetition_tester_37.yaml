@@ -1,25 +1,27 @@
+```yaml
 construct:
-  name: "orthogonal_dual_signaling_reporters"
+  name: dual_pathway_reporter_system
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: NFKB_minimal  # Signaling pathway reporter 1 (NF-kB)
+    - promoter: CMV
     - cistron:
-        label: signaling_reporter_1
-        expression: medium
-        fused: false
+        label: nfkb_reporter
+        expression: high
         gene:
-          id: mCherry
+          id: mNeonGreen
           source: fpbase
-    - terminator: SV40_polyA
-    - spacer: 100
-    - promoter: CRE_minimal   # Signaling pathway reporter 2 (cAMP/CREB)
+    - terminator: rrnB_T1
+
+    - promoter: EF1_alpha
     - cistron:
-        label: signaling_reporter_2
-        expression: medium
-        fused: false
+        label: ap1_reporter
+        expression: high
         gene:
-          id: mEGFP
+          id: mTagBFP2
           source: fpbase
-    - terminator: bGH_polyA  # Use a different polyA signal to avoid recombination motifs
+    - terminator: T7term
+```

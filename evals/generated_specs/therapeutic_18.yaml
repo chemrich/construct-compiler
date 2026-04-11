@@ -1,18 +1,20 @@
+```yaml
 construct:
-  name: "human_enhancer_trap_mEGFP"
+  name: enhancer_trap_minimal_promoter_reporter
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: minCMV  # Minimal CMV promoter lacking enhancer elements for enhancer-trap readout
+    - promoter: minimal_TATA  # Minimal promoter with low basal activity
+
     - cistron:
         label: reporter
-        expression: low
-        chain:
-          - tag: NLS
-          - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_pA
+        expression: low  # Only active when near enhancers
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - terminator: SV40_polyA
+```

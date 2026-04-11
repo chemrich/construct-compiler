@@ -1,30 +1,36 @@
+```yaml
 construct:
-  name: "secreted_therapeutic_heterodimer_cho"
+  name: therapeutic_heterodimer_alpha_beta_secreted
   host: CHO
+
   backbone:
-    resistance: none # Substitution: User requested no antibiotic markers; assumed metabolic selection (e.g., GS/DHFR)
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: alpha_subunit
+        label: alpha_chain
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide
           - gene:
-              id: alpha_chain_therapeutic
+              id: alpha_chain
               source: uniprot
           - tag: Strep-II
-    - terminator: hGH_polyA
-    - promoter: EF1_alpha
+
+    - spacer: 30
+
     - cistron:
-        label: beta_subunit
+        label: beta_chain
         expression: high
+        fused: false
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide
           - gene:
-              id: beta_chain_therapeutic
+              id: beta_chain
               source: uniprot
           - tag: Strep-II
-    - terminator: hGH_polyA
+
+    - terminator: rrnB_T1
+```

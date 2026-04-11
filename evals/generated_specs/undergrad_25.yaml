@@ -1,17 +1,23 @@
+```yaml
 construct:
-  name: "secreted_flag_protein_z"
+  name: secreted_protein_Z_FLAG
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "target_protein"
+        label: secreted_protein_Z
         expression: high
         chain:
-          - tag: IgK_leader
-          - tag: FLAG
+          - tag: signal_peptide
           - gene:
               id: Z
               source: uniprot
-    - terminator: bGH_PA
+          - tag: FLAG
+
+    - terminator: rrnB_T1
+```

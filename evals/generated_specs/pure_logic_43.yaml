@@ -1,40 +1,51 @@
+```yaml
 construct:
-  name: "genetic_toggle_switch_e_coli"
+  name: bistable_toggle_switch
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+    
   cassette:
-    - promoter: tac
+    - promoter: araBAD  # Signal A inducible promoter
+    
     - cistron:
-        label: repressor_tetR
-        expression: medium
+        label: repressor_B
+        expression: high
         gene:
-          id: P04483
+          id: P0351_CI  # lambda CI repressor
           source: uniprot
-    - spacer: 35
+          
+    - spacer: 30
+    
     - cistron:
-        label: state_1_reporter
-        expression: medium
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: rrnB_T1
-    - promoter: tetA  # TetR-repressible promoter commonly used in toggle switches
-    - cistron:
-        label: repressor_lacI
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 35
-    - cistron:
-        label: state_2_reporter
+        label: reporter_G1
         expression: medium
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: T7term
+          
+    - terminator: rrnB_T1
+    
+    - promoter: lacUV5  # Signal B inducible promoter (repressed by CI)
+    
+    - cistron:
+        label: repressor_A
+        expression: high
+        gene:
+          id: P03023_ARAC  # AraC repressor domain
+          source: uniprot
+          
+    - spacer: 30
+    
+    - cistron:
+        label: reporter_G2
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+          
+    - terminator: rrnB_T1
+```

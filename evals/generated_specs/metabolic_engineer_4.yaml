@@ -1,51 +1,63 @@
 construct:
-  name: "carbon_fixation_calvin_cycle_operon"
+  name: calvin_cycle_5enzyme_operon
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: rbcL
+        label: rubisco_large
         expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: P0C511
+              id: P00877  # RuBisCO large subunit from Synechococcus
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: pgk
+        label: phosphoglycerate_kinase
         expression: medium
         fused: false
         gene:
-          id: Q00624
+          id: P0A799  # Phosphoglycerate kinase from E. coli
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: gapA
+        label: triose_phosphate_isomerase
         expression: medium
         fused: false
         gene:
-          id: Q02264
+          id: P0A858  # Triose-phosphate isomerase from E. coli
           source: uniprot
-    - spacer: 30
+
+    - spacer: 28
+
     - cistron:
-        label: tpiA
+        label: aldolase
         expression: medium
         fused: false
         gene:
-          id: Q00625
+          id: P0A6V8  # Fructose-bisphosphate aldolase from E. coli
           source: uniprot
-    - spacer: 30
+
+    - spacer: 32
+
     - cistron:
-        label: sbp
+        label: sedoheptulose_bisphosphatase
         expression: medium
         fused: false
         chain:
-          - solubility_tag: SUMO
-          - cleavage_site: TEV
+          - tag: SUMO
+          - cleavage_site: SUMO_protease
           - gene:
-              id: Q01091
+              id: Q46893  # Sedoheptulose-1,7-bisphosphatase from E. coli
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

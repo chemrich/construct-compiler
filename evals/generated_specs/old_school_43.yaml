@@ -1,26 +1,34 @@
+```yaml
 construct:
-  name: "T7_GST_Complex_Coexpression"
+  name: protein_complex_coexpression
   host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: subunit_1
+        label: complex_subunit_1
         expression: high
         chain:
           - solubility_tag: GST
           - gene:
-              id: target_protein_1
+              id: P0A6X3
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: subunit_2
+        label: complex_subunit_2
         expression: high
         fused: false
         gene:
-          id: target_protein_2
+          id: P0A6Y8
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

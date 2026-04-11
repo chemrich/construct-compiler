@@ -1,22 +1,29 @@
+```yaml
 construct:
-  name: "solubility_enhanced_therapeutic_hGH_nonviral_system"
-  host: e_coli
+  name: "antibiotic_free_therapeutic_expression"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: none  # Designed for auxotrophic selection or toxin-antitoxin stabilization to avoid antibiotic resistance genes
-    ori: pBR322
-    source: custom
+    resistance: none
+    ori: CloDF13
+    source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_target
-        expression: high
+        label: therapeutic_protein
+        expression: medium
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: MBP
-          - cleavage_site: Factor_Xa
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P01241
+              id: P01308  # human insulin
               source: uniprot
+
     - terminator: rrnB_T1
+```

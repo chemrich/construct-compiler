@@ -1,33 +1,41 @@
+```yaml
 construct:
-  name: "anaerobic_lactic_acid_pathway_operon"
+  name: "lactic_acid_pathway_anaerobic"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: nirB  # Anaerobic-inducible promoter
+    - promoter: narG  # anaerobic-inducible promoter
+    
     - cistron:
-        label: pflB
+        label: PFL
         expression: high
         chain:
           - gene:
               id: pflB
               source: uniprot
           - tag: Strep-II
+    
     - spacer: 30
+    
     - cistron:
-        label: aceE
+        label: Pdh
         expression: high
         fused: false
         chain:
           - gene:
-              id: aceE
+              id: pdhA
               source: uniprot
           - tag: Strep-II
+    
     - spacer: 30
+    
     - cistron:
-        label: ldhA
+        label: LdhA
         expression: high
         fused: false
         chain:
@@ -35,9 +43,11 @@ construct:
               id: ldhA
               source: uniprot
           - tag: Strep-II
+    
     - spacer: 30
+    
     - cistron:
-        label: adhE
+        label: ADH
         expression: high
         fused: false
         chain:
@@ -45,4 +55,6 @@ construct:
               id: adhE
               source: uniprot
           - tag: Strep-II
+    
     - terminator: rrnB_T1
+```

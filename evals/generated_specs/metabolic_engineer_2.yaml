@@ -1,65 +1,83 @@
 construct:
-  name: "Bacillus_Biofuel_Pathway_IPTG"
+  name: biofuel_precursor_pathway_operon
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pBR322 # Standard E. coli origin for shuttle vector; Bacillus replication assumed via pUB110/pAMB1
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: tac # IPTG-inducible promoter for tight control in Bacillus subtilis
+    - promoter: lacI_Phyperspank  # IPTG-inducible promoter for tight control in B. subtilis
+
     - cistron:
-        label: dxs_enzyme
+        label: enzyme1
         expression: high
         gene:
-          id: P71015
+          id: P450BM3  # example pathway enzyme
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: dxr_enzyme
+        label: enzyme2
         expression: medium
         fused: false
         gene:
-          id: P54518
+          id: Q45619  # example dehydrogenase
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: yisB_enzyme
+        label: enzyme3
+        expression: high
+        fused: false
+        gene:
+          id: P39844  # example synthase
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme4
         expression: medium
         fused: false
         gene:
-          id: O31613
+          id: O34667  # example reductase
           source: uniprot
-    - spacer: 30
+
+    - spacer: 35
+
     - cistron:
-        label: ispE_enzyme
+        label: enzyme5
         expression: low
         fused: false
         gene:
-          id: P54497
+          id: P54424  # example isomerase
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: ispF_enzyme
-        expression: low
+        label: enzyme6
+        expression: medium
         fused: false
         gene:
-          id: P54498
+          id: P80877  # example transferase
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: ispG_enzyme
-        expression: low
-        fused: false
-        gene:
-          id: P54571
-          source: uniprot
-    - spacer: 40 # Upstream spacer contains flanking BsaI site for reporter excision
+
+    - spacer: 40  # larger spacer before reporter with BsaI sites
+
     - cistron:
         label: gfp_reporter
         expression: low
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 25 # Downstream spacer contains flanking BsaI site for reporter excision
+        chain:
+          - BsaI_site: GGTCTC  # flanking BsaI site for removal
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - BsaI_site: GAGACC  # complementary BsaI site
+
     - terminator: rrnB_T1

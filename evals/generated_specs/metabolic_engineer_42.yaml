@@ -1,51 +1,62 @@
+```yaml
 construct:
-  name: "pks_polycistronic_expression_system"
-  host: e_coli
+  name: polyketide_pks_system
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100 # Robust constitutive promoter
+    - promoter: T7
+
     - cistron:
-        label: pks1
+        label: PKS1
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: PKS1
               source: uniprot
-          - cleavage_site: TEV
-          - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: pks2
+        label: PKS2
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: PKS2
               source: uniprot
-          - cleavage_site: TEV
-          - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: pks3
+        label: PKS3
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: PKS3
               source: uniprot
-          - cleavage_site: TEV
-          - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: pptase
+        label: PPTase
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: PPTase
               source: uniprot
-          - cleavage_site: TEV
-          - tag: 6xHis
+
     - terminator: rrnB_T1
+```

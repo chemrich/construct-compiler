@@ -1,18 +1,22 @@
 construct:
-  name: "yeast_secretion_peptideS"
+  name: "secreted_peptideS_yeast"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: EF1_alpha
+
     - cistron:
-        label: peptideS_cistron
-        expression: medium
+        label: secreted_peptideS
+        expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal  # yeast secretion signal
           - gene:
-              id: peptideS
+              id: P01308  # human insulin precursor as example peptide
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

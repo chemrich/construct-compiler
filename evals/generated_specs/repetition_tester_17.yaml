@@ -1,32 +1,47 @@
+```yaml
 construct:
-  name: "dual_operator_poly_cistronic_operon"
+  name: synthetic_three_gene_operon_dual_control
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: "P_lac_tet_dual" # Custom promoter with two distinct operator sites (e.g., LacI and TetR)
+    - operator: LacO1  # First operator site for LacI repressor
+    - operator: AraO2  # Second operator site for AraC repressor (non-homologous)
+    - promoter: tac    # Hybrid promoter responsive to both operators
+    
     - cistron:
-        label: G1_cistron
-        expression: medium
+        label: gene_G1
+        expression: high
+        rbs: BBa_B0034  # Strong RBS for first gene
         gene:
           id: G1
           source: uniprot
-    - spacer: 40 # Minimum 20bp; 40bp allows for distinct RBS placement
+    
+    - spacer: 25
+    
     - cistron:
-        label: G2_cistron
+        label: gene_G2
         expression: medium
-        fused: false # Ensures independent translation with a unique RBS
+        fused: false
+        rbs: BBa_B0032  # Medium strength RBS, non-homologous to B0034
         gene:
           id: G2
           source: uniprot
-    - spacer: 40
+    
+    - spacer: 30
+    
     - cistron:
-        label: G3_cistron
+        label: gene_G3
         expression: medium
-        fused: false # Ensures independent translation with a unique RBS
+        fused: false
+        rbs: BBa_B0030  # Different RBS sequence, non-homologous to previous
         gene:
           id: G3
           source: uniprot
+    
     - terminator: rrnB_T1
+```

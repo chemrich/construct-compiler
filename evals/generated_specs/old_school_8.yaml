@@ -1,24 +1,31 @@
+```yaml
 construct:
-  name: "mammalian_bicistronic_EF1a_IRES_GFP"
+  name: "EF1a_regulatory_protein_IRES_GFP_G418"
   host: HEK293
+
   backbone:
-    resistance: neomycin  # Conferring G418 selection
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin  # G418 resistance in mammalian cells, kanamycin for bacterial propagation
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: "regulatory_protein"
+        label: regulatory_protein
         expression: high
         gene:
-          id: "P53_HUMAN"
+          id: your_regulatory_protein  # Replace with actual protein ID
           source: uniprot
-    - spacer: 585  # EMCV IRES sequence for bicistronic translation
+
+    - spacer: 500  # IRES sequence - larger spacer to accommodate IRES functionality
+
     - cistron:
-        label: "reporter"
+        label: reporter
         expression: medium
-        fused: false  # Independently translated via IRES
+        fused: false  # Independent translation via IRES
         gene:
-          id: "mEGFP"
+          id: EGFP
           source: fpbase
+
     - terminator: SV40_polyA
+```

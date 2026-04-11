@@ -1,18 +1,23 @@
 construct:
-  name: "industrial_cellulase_secretion"
+  name: bacillus_secreted_cellulase_pgrac
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: cellulase_production
+        label: secreted_cellulase
         expression: high
         chain:
-          - tag: AmyE
+          - secretion_signal: AmyE
           - gene:
-              id: P06883
+              id: P62694  # Trichoderma reesei endoglucanase I (codon-optimized for Bacillus)
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

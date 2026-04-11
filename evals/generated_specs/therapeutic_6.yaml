@@ -1,18 +1,23 @@
+```yaml
 construct:
-  name: "bacterial_metabolite_biosensor"
+  name: bacterial_metabolite_biosensor
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Metabolite-responsive promoter induced by L-arabinose
+    - promoter: araBAD  # arabinose-inducible promoter for metabolite sensing
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: secreted_reporter
+        expression: high
         chain:
-          - tag: PelB  # Signal peptide for periplasmic secretion in E. coli
+          - signal_peptide: pelB  # periplasmic export signal
+          - tag: 6xHis
           - gene:
-              id: P05630  # beta-glucuronidase (GusA) enzymatic reporter
+              id: lacZ  # beta-galactosidase produces blue color with X-gal substrate
               source: uniprot
+
     - terminator: rrnB_T1
+```

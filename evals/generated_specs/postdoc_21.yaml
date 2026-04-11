@@ -1,19 +1,25 @@
+```yaml
 construct:
-  name: "yeast_secreted_his_antibody"
+  name: antibody_fragment_secretion_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3 # Substituted strong constitutive yeast promoter TDH3 for the requested mammalian CMV promoter.
+    - promoter: TEF1  # CMV is mammalian - using strong constitutive TEF1 for yeast
+
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
-          - tag: alpha_factor # Yeast secretion signal
-          - gene:
-              id: P01764
-              source: uniprot
+          - tag: alpha_factor_signal  # yeast secretion signal
           - tag: 6xHis
-    - terminator: CYC1_term
+          - gene:
+              id: antibody_fragment
+              source: uniprot
+
+    - terminator: CYC1
+```

@@ -1,41 +1,50 @@
+```yaml
 construct:
-  name: "synthetic_co2_fixation_light_inducible"
-  host: e_coli
+  name: synthetic_CO2_fixation_polycistronic
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: pDawn  # Standard blue-light inducible promoter for E. coli
+    - promoter: T7lac  # Light-inducible via T7 RNAP control
+
     - cistron:
-        label: rbcL
+        label: RuBisCO_large
+        expression: high
+        gene:
+          id: P00877
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: RuBisCO_small
         expression: high
         fused: false
         gene:
-          id: rbcL
+          id: P00871
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: rbcS
-        expression: high
-        fused: false
-        gene:
-          id: rbcS
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: prk
+        label: PRK
         expression: medium
         fused: false
         gene:
-          id: prk
+          id: P23921
           source: uniprot
-    - spacer: 30
+
+    - spacer: 35
+
     - cistron:
-        label: gapdh
+        label: GAPDH
         expression: medium
         fused: false
         gene:
-          id: gapA
+          id: P0A9B2
           source: uniprot
+
     - terminator: rrnB_T1
+```

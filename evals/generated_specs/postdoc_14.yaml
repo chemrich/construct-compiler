@@ -1,19 +1,24 @@
 construct:
-  name: "Secreted_Cytokine_E_coli"
+  name: "SecretedCytokine_E_coli"
   host: e_coli_bl21_de3
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: secreted_cytokine
         expression: high
         chain:
-          - tag: OmpA # Bacterial signal peptide for periplasmic secretion
+          - signal_peptide: OmpA  # E. coli signal peptide for periplasmic export
           - gene:
-              id: IL2
+              id: SecretedCytokine
               source: uniprot
-          - tag: Myc # C-terminal detection tag
-    - terminator: T7term # Substituted mammalian polyA with T7term for E. coli host compatibility; note that native E. coli does not support mammalian-style glycosylation.
+          - tag: Myc
+    
+    - terminator: rrnB_T1
+    
+    # Note: E. coli cannot perform mammalian-style glycosylation or polyA processing
+    # For proper glycosylation and processing, consider mammalian expression systems

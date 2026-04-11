@@ -1,17 +1,22 @@
+```yaml
 construct:
-  name: "xor_gate_protein_c"
-  host: e_coli_bl21
+  name: XOR_logic_gate_protein_C
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: XOR_hybrid_A_B # Custom hybrid promoter logic: ON if Input A or Input B is present, but OFF if both are present
+    - promoter: T7lac
+
     - cistron:
-        label: target_protein_c
+        label: XOR_output_C
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P04070
-              source: uniprot
+            id: P0A9X9  # LacI repressor for logic implementation
+            source: uniprot
+
     - terminator: rrnB_T1
+```

@@ -1,13 +1,21 @@
+```yaml
 construct:
-  name: "mammalian_shRNA_silencing_vector"
+  name: "shRNA_knockdown_vector"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: U6
+    - promoter: U6  # RNA Pol III promoter for shRNA expression
+
     - cistron:
-        label: shRNA_expression
+        label: shRNA_hairpin
         expression: high
         gene:
-          id: gene_specific_shRNA
-    - terminator: BBa_B0015
+          id: "custom_shRNA"
+          # shRNA hairpin structure will be designed by compiler
+          # targeting sequence and loop structure optimized for RNAi
+
+    - terminator: U6_terminator  # Pol III terminator (polyT tract)
+```

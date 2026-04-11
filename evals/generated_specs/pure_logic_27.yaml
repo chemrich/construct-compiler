@@ -1,23 +1,37 @@
+```yaml
 construct:
-  name: "mammalian_delay_element"
+  name: genetic_delay_element_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G  # Responds to Input K (assuming rtTA is present)
+    - promoter: CMV
     - cistron:
-        label: intermediate_activator
+        label: delay_circuit
         expression: medium
-        gene:
-          id: GAL4_VP16  # Synthetic activator to create cascade delay
-    - terminator: SV40_polyA
-    - promoter: UAS    # Activated by the intermediate GAL4_VP16
+        chain:
+          - gene:
+              id: rtTA3  # tetracycline-controlled transactivator for delay
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: PEST  # degradation tag for rapid turnover
+    - terminator: BGH_polyA
+
+    - promoter: TRE3GS  # tetracycline response element - activated by rtTA3
     - cistron:
-        label: output_j
+        label: output_protein
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: mScarlet  # output protein J
               source: fpbase
-          - tag: PEST  # C-terminal degradation tag for rapid turnover
-    - terminator: SV40_polyA  # Standard mammalian terminator for final transcript
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: CL1  # degradation tag for quick shutdown
+    - terminator: SV40_polyA
+```

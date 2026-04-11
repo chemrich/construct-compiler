@@ -1,24 +1,34 @@
+```yaml
 construct:
-  name: "ecoli_hk_rr_coexpression"
-  host: e_coli_bl21_de3
+  name: two_component_system
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: sensor_histidine_kinase
+        label: sensor_kinase
         expression: medium
-        gene:
-          id: P0AEJ4
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0AEC3
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: response_regulator
-        expression: high
+        expression: medium
         fused: false
         gene:
-          id: P0AA1B
+          id: P0AA18
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+```

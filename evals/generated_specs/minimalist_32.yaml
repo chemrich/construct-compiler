@@ -1,21 +1,27 @@
 construct:
-  name: "soluble_expression_protein_D"
-  host: e_coli_bl21_de3
+  name: "soluble_difficult_protein_D"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target
-        expression: high
+        expression: medium
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: protein_D
+              id: P0A6X3  # example difficult E. coli protein
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

@@ -1,18 +1,49 @@
+```yaml
 construct:
-  name: "yeast_xor_gate_mNeonGreen"
+  name: yeast_XOR_fluorescent_gate
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: synthetic_XOR_GAL1_CUP1  # Logic: Active if either Galactose or Copper is present, but repressed if both are present
+    # Input A activates repressor R1
+    - promoter: GAL1
+      
     - cistron:
-        label: logic_output
-        expression: medium
+        label: repressor_R1
+        expression: high
+        gene:
+          id: P0AC54  # LacI repressor
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Input B activates repressor R2  
+    - promoter: GAL10
+
+    - cistron:
+        label: repressor_R2
+        expression: high
+        gene:
+          id: P03023  # TetR repressor
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    # XOR output: dual-repressible promoter driving fluorescent protein
+    - promoter: J23100  # Constitutive promoter with lac and tet operator sites
+
+    - cistron:
+        label: XOR_output
+        expression: high
         chain:
-          - tag: 6xHis
+          - tag: NLS  # Nuclear localization for yeast
           - gene:
               id: mNeonGreen
               source: fpbase
-    - terminator: CYC1
+
+    - terminator: rrnB_T1
+```

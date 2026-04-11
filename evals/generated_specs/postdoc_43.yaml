@@ -1,19 +1,27 @@
+```yaml
 construct:
-  name: "his_tagged_stable_enzyme_yeast"
+  name: His_tagged_enzyme_yeast
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: EF1_alpha
+
     - cistron:
-        label: enzyme_expression
+        label: target_enzyme
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: target_enzyme
+              id: # Need enzyme ID and source to be specified
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1
+```

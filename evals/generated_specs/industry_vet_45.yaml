@@ -1,18 +1,29 @@
+```yaml
 construct:
-  name: "Yeast_Therapeutic_Payload_Expression"
+  name: therapeutic_payload_yeast_expression
   host: yeast
+
   backbone:
-    catalog_vector: "pYES2"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: GAL1  # High-level galactose-inducible promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
         label: therapeutic_payload
         expression: high
         chain:
-          - tag: alpha_factor  # Secretion signal for yeast to facilitate purification from media
+          - tag: alpha_factor  # secretion signal for yeast
           - tag: 6xHis
           - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: IL2  # Representative therapeutic payload (Interleukin-2)
+              id: payload_gene  # replace with actual therapeutic gene ID
               source: uniprot
-    - terminator: CYC1  # Standard yeast transcription terminator
+
+    - terminator: CYC1
+```

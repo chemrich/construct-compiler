@@ -1,15 +1,25 @@
 construct:
-  name: "divergent_rna_aptamer_expression"
+  name: divergent_rna_aptamer_expression
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: chloramphenicol  # divergent from common kanamycin vectors
+    ori: p15A  # low-copy, divergent from pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD  # tight regulation, divergent from T7 systems
+    
     - cistron:
-        label: "aptamer_expression_unit"
-        expression: high
-        # Note: Constant regions and internal elements must be synthesized with maximal sequence divergence
-        # to ensure RNA integrity and minimize recombination.
-        gene:
-          id: "RNA_Aptamer_Divergent_Scaffold"
-    - terminator: T7term
+        label: aptamer_rna
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa  # divergent from common TEV sites
+          - gene:
+              # Custom aptamer scaffold with divergent flanking sequences
+              id: ATGGGCAACGTGCTGAAACAGATCACCAATCTGTTGGCGCAGTTCGGTGCGGAAATCGCC
+              # Encodes structured aptamer with non-canonical flanking regions
+              # avoiding homology to common vector elements
+    
+    - terminator: BBa_B0015  # strong bidirectional terminator for RNA stability

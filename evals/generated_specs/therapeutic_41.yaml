@@ -1,22 +1,23 @@
+```yaml
 construct:
-  name: "rhGH_CHO_secreted_purification"
+  name: "hGH_variant_secretion_CHO"
   host: CHO
+
   backbone:
-    resistance: none # User requested a construct free of antibiotic resistance markers
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # EF1_alpha used instead of CMV to meet the non-viral requirement
+    - promoter: CMV
+
     - cistron:
-        label: rhGH_variant
+        label: hGH_variant
         expression: high
         chain:
-          - tag: signal_peptide # N-terminal secretion signal for media export
+          - signal_peptide: tPA  # tissue plasminogen activator signal for mammalian secretion
           - gene:
-              id: P01241
+              id: P01241  # human growth hormone
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - tag: Twin-Strep # C-terminal tag for gentle purification
-    - terminator: bGH_PA
+          - tag: Strep-II
+
+    - terminator: SV40_polyA
+```

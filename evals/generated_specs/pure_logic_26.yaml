@@ -1,35 +1,46 @@
+```yaml
 construct:
-  name: "positive_feedback_amplification_loop"
-  host: e_coli
+  name: positive_feedback_amplifier
+  host: e_coli_bl21_de3
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: luxI
+    - promoter: araBAD  # Input H controls this promoter
+    
     - cistron:
-        label: regulator
+        label: transcriptional_activator
         expression: medium
-        fused: false
-        gene:
-          id: P12746
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A9E2  # AraC transcriptional activator
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: feedback_generator
-        expression: medium
-        fused: false
-        gene:
-          id: P12747
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: amplified_output
+        label: output_enzyme
         expression: high
         fused: false
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P00512
+              id: P00634  # Beta-galactosidase (highly active enzyme)
               source: uniprot
-    - terminator: BBa_B0015
+    
+    - spacer: 30
+    
+    - cistron:
+        label: feedback_activator
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: P0A9E2  # Second copy of AraC for positive feedback
+              source: uniprot
+    
+    - terminator: rrnB_T1
+```

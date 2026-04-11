@@ -1,21 +1,27 @@
+```yaml
 construct:
-  name: "genex_recombination_resistant_expression"
-  host: e_coli_bl21
+  name: GeneX_expression_recombination_safe
+  host: e_coli_bl21_de3
+  
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: p15A  # Lower copy number reduces recombination risk
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: genex_target
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: custom
+              sequence: QTNPKL  # Unique sequence avoiding standard GS/EAAAK motifs
           - gene:
               id: GeneX
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+```

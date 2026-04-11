@@ -1,20 +1,26 @@
+```yaml
 construct:
-  name: "pichia_kinase_stability_tester"
-  host: pichia_pastoris
+  name: "ubiquitin_kinase_stability_test"
+  host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: ubiquitin_fusion_kinase
+        label: target_kinase
         expression: high
         chain:
           - tag: Ubiquitin
-          - cleavage_site: DUB
+          - cleavage_site: Ubp1  # deubiquitinase cleavage site
           - gene:
-              id: AURKA
+              id: P06493  # CDK1 human kinase
               source: uniprot
           - tag: HA
-    - terminator: AOX1_term
+
+    - terminator: CYC1
+```

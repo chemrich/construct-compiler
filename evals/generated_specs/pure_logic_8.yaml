@@ -1,17 +1,34 @@
+```yaml
 construct:
-  name: "high_threshold_enzyme_activator"
-  host: e_coli_bl21_de3
+  name: threshold_detector_switch
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD  # Inducible promoter for threshold control
+
     - cistron:
-        label: critical_enzyme
+        label: threshold_detector
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P00644
+              id: P0A6F5  # LacI repressor for threshold detection
               source: uniprot
-    - terminator: T7term
+
+    - spacer: 30
+
+    - cistron:
+        label: critical_enzyme
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00722  # Beta-galactosidase as critical enzyme output
+              source: uniprot
+
+    - terminator: rrnB_T1
+```

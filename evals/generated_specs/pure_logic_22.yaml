@@ -1,35 +1,48 @@
+```yaml
 construct:
-  name: "yeast_or_gate_logic_sfGFP"
+  name: yeast_OR_gate_circuit
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+      
     - cistron:
-        label: output_d_unit1
+        label: input_A_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: P04386
+              source: uniprot  # GAL4 transcription factor
+              
+    - terminator: CYC1
+
+    - promoter: GAL10
+      
+    - cistron:
+        label: input_B_sensor  
+        expression: medium
+        chain:
+          - gene:
+              id: P04386
+              source: uniprot  # GAL4 transcription factor
+              
+    - terminator: CYC1
+
+    - promoter: GAL4_UAS
+      
+    - cistron:
+        label: output_D
         expression: high
         chain:
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - solubility_tag: GST
           - gene:
               id: sfGFP
               source: fpbase
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: CUP1
-    - cistron:
-        label: output_d_unit2
-        expression: high
-        chain:
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: ADH1_term
+              
+    - terminator: ADH1
+```

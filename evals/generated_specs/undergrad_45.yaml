@@ -1,16 +1,33 @@
+```yaml
 construct:
-  name: "human_u6_grna_blasticidin_vector"
+  name: "U6_gRNA_blasticidin_selection"
   host: HEK293
+
   backbone:
     resistance: blasticidin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: grna_expression
+        label: guide_RNA
         expression: high
         gene:
-          id: gRNA_scaffold
+          id: sgRNA_scaffold
           source: addgene
-    - terminator: BBa_B0015
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: selection_marker
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: blasticidin_resistance
+              source: addgene
+
+    - terminator: SV40_polyA
+```

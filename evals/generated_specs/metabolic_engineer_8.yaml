@@ -1,38 +1,55 @@
+```yaml
 construct:
-  name: "glucose_pathway_4321_ratio"
+  name: glucose_pathway_4enzyme_graded_expression
   host: e_coli_bl21_de3
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+    
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: glucokinase
-        expression: high
-        gene:
-          id: P0A6F5
-          source: uniprot
-    - spacer: 30
+        label: enzyme1
+        expression: high  # highest expression level (4x ratio)
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P0A6F5  # example glucose-6-phosphate isomerase
+              source: uniprot
+              
+    - spacer: 25
+    
     - cistron:
-        label: phosphoglucose_isomerase
-        expression: medium
+        label: enzyme2
+        expression: medium  # 3x ratio level
         fused: false
-        gene:
-          id: P0A7B8
-          source: uniprot
+        chain:
+          - gene:
+              id: P0A9B2  # example 6-phosphofructokinase
+              source: uniprot
+              
     - spacer: 30
+    
     - cistron:
-        label: phosphofructokinase
-        expression: low
+        label: enzyme3
+        expression: low  # 2x ratio level
         fused: false
-        gene:
-          id: P0ABH0
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: P0A796  # example fructose-bisphosphate aldolase
+              source: uniprot
+              
+    - spacer: 35
+    
     - cistron:
-        label: fructose_bisphosphate_aldolase
-        expression: very_low
+        label: enzyme4
+        expression: very_low  # 1x ratio level (lowest)
         fused: false
-        gene:
-          id: P0A796
-          source: uniprot
+        chain:
+          - gene:
+              id: P0A9C5  # example triose-phosphate isomerase
+              source: uniprot
+              
     - terminator: T7term
+```

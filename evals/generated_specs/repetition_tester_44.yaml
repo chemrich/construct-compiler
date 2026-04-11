@@ -1,24 +1,32 @@
+```yaml
 construct:
-  name: "tandem_affinity_purification_vector"
+  name: dual_tag_tev_cleavable_protein
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
               repeats: 3
-          - tag: Strep-II
+          - cleavage_site: TEV
           - linker:
               type: rigid_EAAAK
               repeats: 2
-          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: your_protein_id  # Replace with actual protein ID
+              source: uniprot
+          - linker:
+              sequence: SGTASGSPVAT  # Custom non-homologous linker
+          - tag: Strep-II
+
+    - terminator: rrnB_T1
+```

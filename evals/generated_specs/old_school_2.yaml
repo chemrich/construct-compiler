@@ -1,16 +1,37 @@
+```yaml
 construct:
-  name: HEK293_secreted_peptide_expression
+  name: secreted_peptide_CMV_neo
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: neomycin
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_peptide
         expression: high
         chain:
-          - tag: IgKappa
+          - signal_peptide: IL2_signal  # Signal peptide for mammalian secretion
           - gene:
-              id: target_peptide
+              id: "custom_peptide"  # Replace with actual peptide ID/sequence
+              source: uniprot
+
     - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: SV40
+
+    - cistron:
+        label: selection_marker
+        expression: medium
+        fused: false
+        gene:
+          id: neo
+          source: uniprot
+
+    - terminator: SV40_polyA
+```

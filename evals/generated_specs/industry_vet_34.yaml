@@ -1,23 +1,28 @@
+```yaml
 construct:
-  name: "tandem_purified_target_construct"
-  host: e_coli_bl21_de3
+  name: tandem_purification_construct
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: your_protein_id
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - tag: Strep-II
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+```

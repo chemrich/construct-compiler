@@ -1,16 +1,20 @@
 construct:
-  name: "h_drug_target_yeast_expression"
+  name: hDrugTarget_yeast_expression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2um
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: TEF1
+
     - cistron:
         label: target
         expression: high
         gene:
           id: hDrugTarget
           source: uniprot
-    - terminator: CYC1 # Native human Kozak sequences and polyA signals (AATAAA) are not recognized by the S. cerevisiae transcription/translation machinery; substituted with yeast-specific translation initiation context and the CYC1 terminator.
+
+    - terminator: CYC1  # Yeast terminator - human polyA signals may not work efficiently in yeast

@@ -1,20 +1,27 @@
+```yaml
 construct:
-  name: "capsid_egfp_fusion_tracking"
+  name: capsid_GFP_fusion
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: capsid_fusion
+        label: capsid_reporter_fusion
         expression: high
         chain:
           - gene:
-              id: "target_capsid"
+              id: your_gene_of_interest  # Replace with actual gene ID
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1
+```
