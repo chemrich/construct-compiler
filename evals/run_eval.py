@@ -290,6 +290,13 @@ def _extract_yaml(raw: str) -> tuple[dict | None, str | None]:
     cleaned = re.sub(r'\n```\s*$', '', cleaned, flags=re.MULTILINE)
     cleaned = cleaned.strip()
 
+    # Strip markdown bold/italic markers that confuse YAML's alias parser.
+    # Models sometimes append "**Note:** ..." lines after the YAML block; the
+    # `**` sequence triggers YAML's alias scanner and causes a parse error.
+    # Replace **text** → text and *text* → text (only outside quoted strings).
+    cleaned = re.sub(r'\*\*([^*\n]*)\*\*', r'\1', cleaned)
+    cleaned = re.sub(r'\*([^*\n]+)\*', r'\1', cleaned)
+
     # Handle multi-document YAML: take only the first document
     if "\n---\n" in cleaned or cleaned.startswith("---\n"):
         parts = re.split(r'\n---\n', cleaned)

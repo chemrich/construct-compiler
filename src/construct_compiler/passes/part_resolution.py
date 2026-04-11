@@ -170,7 +170,7 @@ def _resolve_cds(part: CDS) -> None:
         part.resolution = ResolutionState.RESOLVED
         return
 
-    source = part.source_db.lower()
+    source = (part.source_db or "").lower()
     seq = None
 
     if source == "fpbase":
