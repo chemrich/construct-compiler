@@ -454,7 +454,7 @@ def rejudge_file_batch(
     print(f"  Polling every {poll_interval}s until complete...")
 
     # Poll until done
-    while batch.processing_status == "in_progress":
+    while batch.processing_status != "ended":
         time.sleep(poll_interval)
         batch = client.messages.batches.retrieve(batch.id)
         counts = batch.request_counts
@@ -486,6 +486,8 @@ def rejudge_file_batch(
         elif result.result.type == "errored":
             err = result.result.error
             logger.error(f"Batch error for {outcome.prompt_id}: {err.type} — {getattr(err, 'message', '')}")
+        elif result.result.type == "expired":
+            logger.warning(f"Request expired (24h timeout) for {outcome.prompt_id}")
         else:
             logger.warning(f"Unexpected result type for {outcome.prompt_id}: {result.result.type}")
 
