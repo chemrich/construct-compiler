@@ -630,11 +630,12 @@ construct_compiler/
 
 ## Vendor integration
 
-Twist and IDT vendor plugins support screening, codon optimization, and ordering via their APIs. Set credentials as environment variables:
+Twist and IDT vendor plugins support screening, codon optimization, and (for IDT) ordering via their APIs. Set credentials as environment variables:
 
 ```bash
-export TWIST_API_KEY=your_key
-export TWIST_API_SECRET=your_secret
+export TWIST_JWT_TOKEN=your_jwt
+export TWIST_END_USER_TOKEN=your_end_user_token
+export TWIST_USER_EMAIL=you@example.com    # required for path construction
 
 export IDT_CLIENT_ID=your_id
 export IDT_CLIENT_SECRET=your_secret
@@ -642,7 +643,41 @@ export IDT_USERNAME=your_username
 export IDT_PASSWORD=your_password
 ```
 
-Live IDT API integration is enabled automatically when these 4 variables are set. Tests can be run with `pytest tests/test_idt_live.py`. Without credentials, the plugin runs in mock mode with heuristic feasibility checks.
+### Twist Bioscience
+
+`TwistVendor` wraps Twist's TAPI for live sequence screening, vector lookups, and codon optimization. Without credentials, it falls back to local heuristic screening.
+
+- **`screen(sequence)`** — submits a Construct, polls Twist's bulk-retrieve scoring endpoint, returns real `score_data` with `difficulty`, GC stats, and 35 mapped issue codes (`ISSUE_MESSAGES` in `vendors/twist.py`). 4xxx codes become `warnings`; 5xxx codes become `errors` and force `feasible=False`.
+- **`list_vectors()` / `get_vector(id)`** — fetch the user's available vectors and insertion sites for cloned-gene targeting.
+- **`get_codon_optimization_choices()`** — valid `organism` and `avoid_introducing` enum values for codon-opt jobs.
+- **`optimize_codons(protein, organism)`** — chains two async TAPI jobs: reverse translation (protein → DNA on the host's codon table) followed by codon-fitting optimization (DNA → manufacturability-optimised DNA). Returns the optimised sequence plus `OptimizationResult.notes` populated from `score_data.scoring_metrics`: GC content, GC delta across 50 bp windows, max homopolymer run, max long-repeat length and homology, banned/warning sub-sequence flags, and any per-issue codes. `gc_content` is a fraction (0–1), despite Twist's `overall_gc_percent` field name.
+- **Order placement** (quotes → orders, plate maps, CoA download) is fully implemented but intentionally separated from the synthesis workflow — only call after constructs have screened `BUILDABLE` and the quote reaches `SUCCESS`.
+
+Twist async jobs (reverse-translate, codon-opt, construct scoring) are polled via `_poll_async_job` / `_bulk_retrieve_construct` with `id__in=` filtering so the server only returns the caller's job. Defaults: 3 s poll interval, 5 min timeout for codon-opt jobs, 3 min for scoring.
+
+#### Live smoke test
+
+```bash
+uv run python scripts/test_twist_api.py
+```
+
+The script exercises auth, codon-opt choices, vector listing, screening, and the full reverse-translate + codon-opt chain against the live API. A clean run on a 239 aa protein (eGFP) typically takes ~25 s end-to-end:
+
+```
+[PASS] Auth Probe                        (0.5s)
+[PASS] Codon Optimization Choices        (0.4s)
+[PASS] List Vectors                      (2.8s)
+[PASS] Sequence Screening                (7.5s)   ← real score_data, not mock
+[PASS] Codon Optimization (RT + optimize) (10.7s)  ← STANDARD difficulty, GC 46.1%
+```
+
+`test["likely_mock"]` flags whether `screen()` fell back to the heuristic path (real path returns `estimated_price=0.0`; mock returns `length × $0.07/bp`). Use `optimize_codons` only on proteins that produce ≥300 bp of DNA (≥100 aa) — shorter inputs hit Twist's minimum-length thresholds and come back as `NOT ACCEPTED` with no scoring metrics.
+
+Twist also whitelists the requesting IP and maps it back to the tokens — calls from a different network will fail auth. Full architecture, endpoint mappings, and known issues in [docs/twist_integration.md](docs/twist_integration.md).
+
+### IDT
+
+Live IDT API integration is enabled automatically when the 4 IDT variables above are set. Tests can be run with `pytest tests/test_idt_live.py`. Without credentials, the plugin runs in mock mode with heuristic feasibility checks.
 
 ---
 
@@ -655,7 +690,7 @@ Live IDT API integration is enabled automatically when these 4 variables are set
 - [x] LLM eval harness — 750 prompts across 3 corpora, parallel execution, rate-limited API calls
 - [x] Assembled view — merges insert + backbone features with real DNA sequences from GenBank annotations
 - [x] Restriction site-aware cloning pair inference — auto-selects best RE pair based on insert vs backbone features
-- [ ] Live Twist API integration (screening + vendor codon optimization)
+- [x] Live Twist API integration (screening + vendor codon optimization, with rich `score_data` surfacing)
 - [x] Live IDT API integration (screening + vendor codon optimization)
 - [ ] Protocol generation backend (human-readable step-by-step assembly instructions)
 - [ ] Primer design backend (primer3-py for Golden Gate primers with overhangs)
