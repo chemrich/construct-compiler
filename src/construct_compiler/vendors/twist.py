@@ -4,7 +4,7 @@ Twist Bioscience vendor plugin — full TAPI coverage.
 Implements every endpoint in the Twist Application Programming Interface (TAPI)
 v1 OpenAPI spec, organised by logical group:
 
-    Account Info          get_user, create_address,
+    Account Info          get_user, list_addresses, create_address,
                           list_payment_methods, create_payment_method
     Vectors               list_vectors, get_vector
     Codon optimisation    get_codon_optimization_choices, reverse_translate,
@@ -208,6 +208,17 @@ class TwistVendor(VendorPlugin):
     def get_user(self) -> dict:
         """GET /users/{email}/ — fetch user profile and account ID."""
         return self._request("GET", self._user_url()) or {}
+
+    def list_addresses(self) -> list[dict]:
+        """GET /users/{email}/addresses/ — list all shipping and billing addresses.
+
+        Useful for discovering ``recipient_address_id`` values to pass to
+        ``create_quote()``.  Each entry includes ``id``, ``address_type``
+        ("Shipping"/"Billing"), ``verification_status``, ``is_default``, and
+        the full address fields.
+        """
+        result = self._request("GET", self._user_url("addresses"))
+        return result if isinstance(result, list) else ([result] if result else [])
 
     def create_address(
         self,
