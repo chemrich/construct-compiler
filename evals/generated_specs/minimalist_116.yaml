@@ -1,21 +1,31 @@
 construct:
-  name: "mammalian_optogenetic_actuator"
+  name: mammalian_optogenetics_light_sensor_effector
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: sensor_effector_fusion
+        label: LightSensor
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: LightSensor
+              id: CRY2
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 4
+
+    - spacer: 30
+
+    - cistron:
+        label: EffectorDomain
+        expression: high
+        chain:
+          - tag: FLAG
           - gene:
-              id: EffectorDomain
+              id: CIBN
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

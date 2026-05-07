@@ -1,61 +1,75 @@
 construct:
-  name: "three_node_repressilator_oscillator"
-  host: e_coli
+  name: three_node_repressilator_circuit
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pSC101  # Low-copy origin is essential for circuit stability and reducing stochastic noise
+    ori: pBR322
     source: addgene
-  cassette:
-    # Node A: Repressor LacI and BFP reporter (Inhibited by cI)
-    - promoter: pL_lambda  # Repressed by cI
-    - cistron:
-        label: repressor_A_LacI
-        expression: medium
-        gene:
-          id: LacI
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reporter_A_BFP
-        expression: medium
-        fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: rrnB_T1
 
-    # Node B: Repressor TetR and Cherry reporter (Inhibited by LacI)
-    - promoter: lacUV5     # Repressed by LacI
+  cassette:
+    - promoter: araBAD
+    
     - cistron:
-        label: repressor_B_TetR
-        expression: medium
-        gene:
-          id: TetR
-          source: uniprot
-    - spacer: 30
+        label: node_A
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: reporter_B_Cherry
+        label: reporter_A
         expression: medium
         fused: false
         gene:
           id: mCherry
           source: fpbase
+
     - terminator: rrnB_T1
 
-    # Node C: Repressor cI and GFP reporter (Inhibited by TetR)
-    - promoter: P_tet      # Repressed by TetR
+    - promoter: lacUV5
+
     - cistron:
-        label: repressor_C_cI
-        expression: medium
-        gene:
-          id: cI
-          source: uniprot
-    - spacer: 30
+        label: node_B
+        expression: high
+        chain:
+          - gene:
+              id: lambda_CI
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: reporter_C_GFP
+        label: reporter_B
         expression: medium
         fused: false
         gene:
-          id: mEGFP
+          id: mNeonGreen
           source: fpbase
+
+    - terminator: rrnB_T1
+
+    - promoter: tac
+
+    - cistron:
+        label: node_C
+        expression: high
+        chain:
+          - gene:
+              id: cI_repressor
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: reporter_C
+        expression: medium
+        fused: false
+        gene:
+          id: mTagBFP2
+          source: fpbase
+
     - terminator: rrnB_T1

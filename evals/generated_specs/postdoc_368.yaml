@@ -1,22 +1,29 @@
 construct:
-  name: "yeast_er_targeted_egfp"
+  name: protein_ER_GFP_KDEL
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: GAL1  # Inducible yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: er_marker
+        label: target
         expression: high
         chain:
-          - tag: Kar2_signal  # N-terminal yeast ER translocation signal
+          - tag: ER_signal_peptide
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: your_protein
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: HDEL  # Yeast-specific ER retention signal (substituted for KDEL)
-    - terminator: CYC1_term
+              repeats: 1
+          - gene:
+              id: sfGFP
+              source: fpbase
+          - tag: KDEL
+
+    - terminator: CYC1

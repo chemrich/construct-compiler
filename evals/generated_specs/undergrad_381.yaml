@@ -1,15 +1,20 @@
 construct:
   name: "IPTG_inducible_mCherry"
-  host: e_coli_bl21_de3
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: red_fluorescent_protein
+        label: mCherry
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

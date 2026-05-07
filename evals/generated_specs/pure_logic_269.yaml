@@ -1,24 +1,63 @@
 construct:
-  name: "logic_array_L_M_exclusive_outputs"
-  host: e_coli_bl21
+  name: "logic_AND_NOT_gate_array"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD_lacO  # Logic: L AND NOT M (Inducer L: Arabinose; Repressor M: LacI/IPTG)
+    - promoter: T7lac
+
     - cistron:
-        label: output_U
-        expression: high
+        label: LacI_repressor
+        expression: medium
         gene:
-          id: sfGFP
-          source: fpbase
+          id: lacI
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_U_L_AND_NOT_M
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: output_V_NOT_L_AND_M
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: input_sensor_L
+        expression: medium
+        fused: false
+        gene:
+          id: araC
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: input_sensor_M
+        expression: medium
+        fused: false
+        gene:
+          id: rhaSR
+          source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: tac_araO    # Logic: M AND NOT L (Inducer M: IPTG; Repressor L: AraC/Arabinose)
-    - cistron:
-        label: output_V
-        expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: BBa_B0015

@@ -1,17 +1,49 @@
 construct:
-  name: "genetic_OR_gate_D_OR_E"
+  name: "OR_gate_Inducer_D_E_Reporter_Y"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
-    - promoter: tac
+      label: "input_D_branch"
+
     - cistron:
-        label: Reporter_Y
+        label: "activator_D"
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: rhaPBAD
+      label: "input_E_branch"
+
+    - cistron:
+        label: "activator_E"
+        expression: high
+        chain:
+          - gene:
+              id: rhaS
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD_rhaPBAD_dual
+      label: "reporter_output"
+
+    - cistron:
+        label: "reporter_Y"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
     - terminator: rrnB_T1

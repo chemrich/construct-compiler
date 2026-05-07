@@ -1,28 +1,66 @@
 construct:
-  name: "integrase_identity_lock_module"
-  host: e_coli_bl21
+  name: cell_identity_lock_module
+  host: mammalian
+  
   backbone:
+    catalog_vector: pTwist CMV
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+  
   cassette:
-    - promoter: araBAD  # Inducible input signal for transient integrase expression
+    - promoter: CMV
+    
     - cistron:
-        label: input_integrase
+        label: input_signal_sensor
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: rtTA
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: integrase_effector
+        expression: medium
+        chain:
+          - gene:
+              id: Cre
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: loxP_flanked_inverter
         expression: high
+        fused: false
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - spacer: 30
+    
+    - cistron:
+        label: reporter_state_x
+        expression: high
+        fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: P0CK48
-              source: uniprot
+              id: mNeonGreen
+              source: fpbase
+    
     - terminator: rrnB_T1
-    - spacer: 50  # Insulation spacer between cassettes
-    - promoter: J23100  # Constitutive promoter for the lock state reporter
-    - cistron:
-        label: reporter_state_x
-        expression: medium
-        fused: false
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: BBa_B0015
+
+  # Design notes:
+  # - rtTA (reverse tetracycline transactivator) detects Input_Signal (e.g., doxycycline)
+  # - Cre recombinase is expressed downstream
+  # - loxP sites flank mCherry (acts as inverter/blocker)
+  # - Upon transient signal, Cre excises or inverts the loxP-flanked segment
+  # - Reporter_State_X (mNeonGreen) becomes constitutively ON after excision
+  # - This creates an irreversible, heritable cell identity lock
+  # - For full functionality, loxP sites must be added manually to flanking regions

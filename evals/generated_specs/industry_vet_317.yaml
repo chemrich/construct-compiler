@@ -1,18 +1,22 @@
 construct:
-  name: "secreted_therapeutic_protein_hek293"
+  name: secreted_therapeutic_protein
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal secretion signal
           - cleavage_site: TEV
           - gene:
-              id: P01588
+              id: therapeutic_protein
               source: uniprot
-          - tag: 6xHis
-    - terminator: bGH_pA
+          - tag: 6xHis  # C-terminal His-tag for purification
+
+    - terminator: SV40_polyA

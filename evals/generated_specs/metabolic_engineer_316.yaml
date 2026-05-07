@@ -1,44 +1,56 @@
 construct:
-  name: "pah_bioremediation_operon"
-  host: e_coli  # Rhodococcus opacus is not explicitly supported; using E. coli as a proxy for the design.
+  name: "Rhodococcus_PAH_degradation_operon"
+  host: bacillus
+  # Note: Rhodococcus opacus is not in the standard host list; using bacillus as closest gram-positive alternative with similar expression machinery
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive promoter chosen for stable expression in Rhodococcus.
+    - promoter: J23100
+      # Constitutive promoter; J23100 provides stable expression analogous to native Rhodococcus promoters
+
     - cistron:
         label: pahA
-        expression: medium
+        expression: high
         gene:
           id: pahA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: pahB
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: pahB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: pahC
-        expression: medium
+        expression: high
         fused: false
         chain:
           - gene:
               id: pahC
               source: uniprot
-          - tag: Strep-II  # C-terminal purification tag
-    - spacer: 30
+          - c_tag: Strep-II
+
+    - spacer: 25
+
     - cistron:
         label: pahD
-        expression: medium
+        expression: high
         fused: false
         chain:
           - gene:
               id: pahD
               source: uniprot
-          - tag: Myc  # C-terminal tracking tag
+          - c_tag: myc
+
     - terminator: rrnB_T1

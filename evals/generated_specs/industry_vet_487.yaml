@@ -1,20 +1,21 @@
 construct:
-  name: "CardiacG_Cardiac_Specific_Expression"
-  host: mammalian
+  name: "CardiacG_cardiac_specific"
+  host: HEK293
 
   backbone:
-    resistance: ampicillin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
-    - promoter: cTnT  # Cardiac Troponin T promoter used for cardiac-specific expression tropism
+    - promoter: cTnT  # Cardiac troponin T promoter - cardiac tissue-specific
 
     - cistron:
-        label: target
-        expression: medium
-        gene:
-          id: CardiacG
-          source: uniprot
+        label: CardiacG
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CardiacG
+              source: uniprot
 
-    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal/terminator
+    - terminator: rrnB_T1

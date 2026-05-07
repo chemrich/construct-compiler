@@ -1,33 +1,35 @@
-```yaml
 construct:
   name: dual_therapeutic_2A_mammalian
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: therapeutic_1
+        label: therapeutic_protein_1
         expression: high
         chain:
-          - signal_peptide: IgK  # Immunoglobulin kappa light chain signal for secretion
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: VEGFA
+              id: TNF_alpha
               source: uniprot
-          - cleavage_peptide: P2A  # Self-cleaving 2A peptide for coordinated expression
+
+    # 2A self-cleaving peptide spacer
+    - spacer: 18  # T2A peptide sequence (18 bp encodes the minimal self-cleaving motif)
 
     - cistron:
-        label: therapeutic_2
+        label: therapeutic_protein_2
         expression: high
-        fused: true  # Fused via 2A peptide, but will separate post-translationally
+        fused: false
         chain:
-          - signal_peptide: IgK
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: FGF2
+              id: IL_6
               source: uniprot
 
-    - terminator: SV40_polyA
-```
+    - terminator: rrnB_T1

@@ -1,18 +1,23 @@
 construct:
-  name: "Bacillus_megaterium_mannitol_cellulase_secretion"
+  name: "Bacillus_megaterium_auto_inducible_cellulase_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
-    source: custom
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: PmtlA
+
     - cistron:
-        label: secreted_cellulase
+        label: cellulase
         expression: high
         chain:
-          - tag: WapA
+          - signal_peptide: WapA
           - gene:
-              id: cellulase
+              id: cellulase_proprietary
+              source: custom
           - tag: 6xHis
+
     - terminator: rrnB_T1

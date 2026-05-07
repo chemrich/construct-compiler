@@ -1,12 +1,14 @@
 construct:
-  name: "mammalian_EF1a_Target_Gene_X_Myc"
-  host: mammalian
+  name: "mammalian_Target_Gene_X_Myc"
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: neomycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
         label: target
         expression: high
@@ -15,7 +17,8 @@ construct:
               id: Target_Gene_X
               source: uniprot
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - tag: Myc
-    - terminator: SV40_pA
+
+    - terminator: rrnB_T1

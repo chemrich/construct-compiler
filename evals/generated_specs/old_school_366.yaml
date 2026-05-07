@@ -1,17 +1,22 @@
 construct:
-  name: "peptideD_periplasmic_expression"
+  name: "peptideD_periplasmic_secretion"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: lacUV5
+
     - cistron:
-        label: target
+        label: peptideD
         expression: high
         chain:
-          - tag: PelB
+          - signal_peptide: PelB
           - gene:
               id: peptideD
               source: uniprot
+
     - terminator: rrnB_T1

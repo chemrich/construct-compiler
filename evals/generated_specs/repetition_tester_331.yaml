@@ -1,53 +1,82 @@
 construct:
-  name: "yeast_logic_circuit_diverse"
+  name: "S_cerevisiae_complex_regulatory_circuit"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
 
   cassette:
-    - promoter: TDH3
-    - cistron:
-        label: tetR_repressor
-        expression: high
-        gene:
-          id: P03038
-          source: uniprot
-    - terminator: CYC1_term
-
-    - promoter: PGK1
-    - cistron:
-        label: lacI_repressor
-        expression: high
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: ADH1_term
-
-    - promoter: ENO2
-    - cistron:
-        label: gal80_repressor
-        expression: medium
-        gene:
-          id: P04387
-          source: uniprot
-    - terminator: ENO2_term
-
-    - promoter: TEF1
-    - cistron:
-        label: gal4_activator
-        expression: medium
-        gene:
-          id: P04386
-          source: uniprot
-    - terminator: PGK1_term
-
+    # === CASSETTE 1: Constitutive Repressor R1 ===
     - promoter: ADH1
+      label: "R1_expression"
+
     - cistron:
-        label: gcn4_activator
-        expression: low
-        gene:
-          id: P03069
-          source: uniprot
-    - terminator: TPS1_term
+        label: R1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: TetR
+              source: uniprot
+
+    - terminator: CYC1
+
+    # === CASSETTE 2: GAL4-driven Repressor R2 ===
+    - promoter: GAL4UAS
+      label: "R2_expression"
+
+    - cistron:
+        label: R2
+        expression: medium
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - terminator: ADH1_terminator
+
+    # === CASSETTE 3: GAL4-driven Repressor R3 ===
+    - promoter: GAL4UAS_variant
+      label: "R3_expression"
+
+    - cistron:
+        label: R3
+        expression: medium
+        chain:
+          - gene:
+              id: CI
+              source: uniprot
+
+    - terminator: PGK1
+
+    # === CASSETTE 4: Activator A1 (GAL4-independent, arabinose-inducible via synthetic pBAD-like promoter) ===
+    - promoter: ARabinose_responsive
+      label: "A1_expression"
+
+    - cistron:
+        label: A1
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: VP16
+              source: uniprot
+
+    - terminator: TPI1
+
+    # === CASSETTE 5: Activator A2 (constitutive, strong) ===
+    - promoter: TEF1
+      label: "A2_expression"
+
+    - cistron:
+        label: A2
+        expression: very_high
+        chain:
+          - gene:
+              id: Msn2
+              source: uniprot
+
+    - terminator: SV40polyA

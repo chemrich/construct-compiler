@@ -1,63 +1,81 @@
 construct:
-  name: "solubility_enhanced_five_enzyme_operon"
+  name: "five_enzyme_operon_solubility_tags"
   host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: kinase_unit
+        label: Kinase
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - gene:
               id: Kinase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: phosphatase_unit
+        label: Phosphatase
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: SUMO
-          - cleavage_site: 3C
           - gene:
               id: Phosphatase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: transferase_unit
+        label: Transferase
         expression: high
         fused: false
         chain:
-          - solubility_tag: GST
-          - cleavage_site: Thrombin
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
           - gene:
               id: Transferase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: oxidase_unit
+        label: Oxidase
         expression: high
         fused: false
         chain:
-          - solubility_tag: Trx
-          - cleavage_site: Enterokinase
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: SUMO
           - gene:
               id: Oxidase
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: reductase_unit
+        label: Reductase
         expression: high
         fused: false
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - gene:
               id: Reductase
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

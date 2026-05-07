@@ -1,20 +1,24 @@
-```yaml
 construct:
-  name: enhancer_trap_minimal_promoter_reporter
+  name: "enhancer_trap_reporter_HEK293"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: minimal_TATA  # Minimal promoter with low basal activity
+    - promoter: minimal_SV40
+      # Minimal SV40 promoter with minimal transcriptional activity unless adjacent to enhancer
 
     - cistron:
         label: reporter
-        expression: low  # Only active when near enhancers
-        gene:
-          id: mEGFP
-          source: fpbase
+        expression: low
+        chain:
+          - tag: NLS
+          - gene:
+              id: mNeonGreen
+              source: fpbase
 
     - terminator: SV40_polyA
-```

@@ -1,24 +1,46 @@
 construct:
-  name: "temporal_delay_circuit"
+  name: "temporal_delay_circuit_output_enzyme"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: relay_activator
+        label: delay_element_1
         expression: medium
-        gene:
-          id: T7pol
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ssrA_tag_degradation_target
+              source: uniprot
+        fused: false
+
+    - spacer: 25
+
+    - cistron:
+        label: delay_element_2
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: unstable_protein_intermediate
+              source: uniprot
+        fused: false
+
+    - spacer: 25
+
     - cistron:
         label: output_enzyme
         expression: high
-        gene:
-          id: lacZ
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: output_enzyme
+              source: uniprot
+        fused: false
+
+    - terminator: rrnB_T1

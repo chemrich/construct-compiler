@@ -1,25 +1,36 @@
 construct:
-  name: "CPP_PTEN_NonViral_Fusion"
+  name: "CPP_cargo_mammalian_expression"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Note: Included for bacterial propagation only; no mammalian ARG in cassette.
-    ori: pUC
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: EF1_alpha # Substitution: EF1_alpha (human) used instead of CMV to avoid viral elements.
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: CPP_cargo_fusion
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: Factor_Xa # Substitution: Factor_Xa (human factor) used instead of TEV to avoid viral elements.
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P02833 # Antennapedia (Penetratin) CPP
+              id: TAT_peptide
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P60484 # Human PTEN therapeutic cargo
+              id: cargo_protein
               source: uniprot
-    - terminator: bGH_pA # Substitution: bGH_pA is a standard non-viral mammalian terminator.
+          # Note: CPP (TAT peptide) fused N-terminal to cargo enables cell internalization.
+          # GS linkers provide spatial separation and flexibility for optimal CPP function.
+          # 6xHis tag allows affinity purification of the fusion complex.
+          # Consider that endosomal escape may require additional engineering (pH-sensitive elements or helper molecules not encoded here).
+
+    - terminator: rrnB_T1

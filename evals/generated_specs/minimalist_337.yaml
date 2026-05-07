@@ -1,22 +1,30 @@
 construct:
-  name: "targeting_T_with_guide"
-  host: e_coli_bl21_de3
+  name: "target_T_with_guide"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: nuclease
+        label: target_T
         expression: high
-        gene:
-          id: SpCas9
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: T
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: guide_rna
+        label: guide
         expression: high
-        fused: false # Expressed as a separate RNA feature within the polycistronic transcript
+        fused: false
         gene:
-          id: gRNA_target_T
-    - terminator: T7term
+          id: guide
+          source: uniprot
+    
+    - terminator: rrnB_T1

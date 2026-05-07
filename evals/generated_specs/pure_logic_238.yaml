@@ -1,22 +1,43 @@
 construct:
-  name: "pulse_generator_IFFL"
-  host: e_coli_bl21
+  name: "pulse_generator_circuit"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: tac  # Input_S responsive promoter (IPTG inducible)
+    - promoter: araBAD
+    
     - cistron:
-        label: Output_Z
+        label: input_sensor
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - spacer: 30
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: Repressor_X
+        label: pulse_generator
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: output_z
         expression: medium
-        fused: false  # Independently translated to allow delay in repression
-        gene:
-          id: TetR
-          source: uniprot
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gfp
+              source: fpbase
+    
     - terminator: rrnB_T1

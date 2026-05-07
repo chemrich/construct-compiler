@@ -1,18 +1,22 @@
 construct:
-  name: mammalian_cre_recombinase_driver
+  name: "mammalian_cre_toggle_switch"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: hygromycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: cre_recombinase
-        expression: medium
+        expression: high
         chain:
-          - tag: NLS
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P06956
+              id: P06954
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

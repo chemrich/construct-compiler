@@ -1,30 +1,49 @@
 construct:
-  name: "bistable_toggle_switch"
+  name: "two_state_genetic_machine_toggle_switch"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac # Repressed by LacI; induced by Signal 1 (IPTG)
+    - promoter: araBAD
+      # araBAD promoter: repressed by AraC in absence of arabinose (State 0, OFF)
+      # activated by AraC+arabinose complex (State 1, ON)
+
     - cistron:
-        label: state_1_repressor
-        gene:
-          id: tetR
-          source: uniprot
+        label: state_memory
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+      # AraC acts as both activator and repressor, providing bistable behavior
+
     - spacer: 30
+
     - cistron:
-        label: state_1_output
+        label: output_gene
         expression: high
         fused: false
         gene:
           id: GeneX
           source: uniprot
-    - terminator: rrnB_T1
-    - promoter: Ptet # Repressed by TetR; induced by Signal 2 (aTc)
+
+    - spacer: 30
+
     - cistron:
-        label: state_0_repressor
-        gene:
-          id: lacI
-          source: uniprot
-    - terminator: BBa_B0015
+        label: state_controller
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: araBAD_repressor
+              source: uniprot
+      # Signal1 (arabinose): activates araC, turns ON GeneX expression (State 0→1)
+      # Signal2 (removal of arabinose or introduction of antagonist): 
+      # deactivates araC, returns to OFF state (State 1→0)
+      # Feedback: araC maintains its own expression, creating memory
+
+    - terminator: rrnB_T1

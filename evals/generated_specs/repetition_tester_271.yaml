@@ -1,29 +1,37 @@
 construct:
-  name: "yeast_dual_secreted_protein_system"
+  name: "dual_secreted_proteins_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: TEF1
+
     - cistron:
-        label: secreted_A
+        label: secreted_protein_A
         expression: high
         chain:
-          - tag: alpha_factor_signal_peptide
+          - secretion_signal: alpha_factor
           - gene:
               id: SecretedProteinA
               source: uniprot
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: TDH3
+
+    - terminator: CYC1
+
+    - spacer: 25
+
+    - promoter: ADH1
+
     - cistron:
-        label: secreted_B
+        label: secreted_protein_B
         expression: high
         chain:
-          - tag: SUC2_signal_peptide
+          - secretion_signal: invertase_signal
           - gene:
               id: SecretedProteinB
               source: uniprot
-    - terminator: ADH1_term
+
+    - terminator: ADH1_terminator

@@ -1,15 +1,23 @@
 construct:
-  name: "PeptideP_Flag_CAG"
+  name: "PeptideP_Flag_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: target
+        label: PeptideP
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: PeptideP
-    - terminator: bgh_pa
+              source: uniprot
+
+    - terminator: rrnB_T1

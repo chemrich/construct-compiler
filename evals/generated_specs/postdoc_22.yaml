@@ -1,5 +1,5 @@
 construct:
-  name: bicistronic_proteinA_proteinB
+  name: "bacterial_bicistronic_A_Myc_B_Strep"
   host: e_coli
 
   backbone:
@@ -11,26 +11,24 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: protein_A
+        label: Protein_A
         expression: high
         chain:
-          - tag: Myc
+          - tag: HA
           - gene:
-              id: # Please specify UniProt ID for Protein A
+              id: proteinA
               source: uniprot
 
-    # Note: E. coli ribosomes cannot use IRES elements (eukaryotic mechanism)
-    # Using spacer + separate RBS for prokaryotic bicistronic expression
     - spacer: 30
 
     - cistron:
-        label: protein_B
+        label: Protein_B
         expression: high
         fused: false
         chain:
           - tag: Strep-II
           - gene:
-              id: # Please specify UniProt ID for Protein B
+              id: proteinB
               source: uniprot
 
     - terminator: rrnB_T1

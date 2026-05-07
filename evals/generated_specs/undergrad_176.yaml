@@ -1,21 +1,24 @@
 construct:
-  name: "his_myprotein_tandem_strep_fusion"
+  name: "MyProtein_His_Strep_tagged"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: tandem_fusion
+        label: MyProtein
         expression: high
         chain:
           - tag: 6xHis
-          - gene:
-              id: MyProtein
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 2
           - gene:
               id: MyProtein
+              source: uniprot
           - tag: Strep-II
-    - terminator: T7term
+
+    - terminator: rrnB_T1

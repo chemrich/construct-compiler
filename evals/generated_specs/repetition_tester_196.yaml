@@ -1,25 +1,33 @@
 construct:
-  name: "algal_dual_selection_recombination_safe"
+  name: "algae_dual_selectable_markers"
   host: algae
+
   backbone:
-    resistance: kanamycin
+    resistance: hygromycin
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: HSP70A_RBCS2
+    - promoter: rbcL
+
     - cistron:
         label: hygromycin_resistance
-        expression: medium
+        expression: high
         gene:
-          id: P00557
+          id: hpt
           source: uniprot
-    - terminator: RBCS2_term
-    - spacer: 100
-    - promoter: PSAD
+
+    - terminator: psaA_terminator
+
+    - spacer: 50
+
+    - promoter: atpA
+
     - cistron:
         label: paromomycin_resistance
-        expression: medium
+        expression: high
         gene:
-          id: P00551
+          id: aph
           source: uniprot
-    - terminator: PSAD_term
+
+    - terminator: rbcS_terminator

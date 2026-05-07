@@ -1,17 +1,18 @@
 construct:
-  name: "self_cleaving_intein_purification_system"
-  host: e_coli_bl21_de3
+  name: "E_coli_40kDa_protein_intein_purification"
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: Intein  # Intein provides self-cleavage triggered by pH or thiol shift, avoiding external proteases
+          - solubility_tag: SUMO
+          - intein: DnaB_split_intein
           - gene:
-              id: P60709
+              id: target_protein_40kDa
               source: uniprot
-    - terminator: T7term
+    - terminator: rrnB_T1

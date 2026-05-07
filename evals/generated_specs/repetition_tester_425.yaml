@@ -1,21 +1,24 @@
 construct:
-  name: "diverse_interface_cassette"
-  host: e_coli
+  name: "max_diversity_expression_cassette"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Selected for sequence diversity against common T7 systems
+    - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: short_GS
-              repeats: 1
+          - cleavage_site: TEV
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: rrnB_T1  # Strong terminator distinct from promoter and CDS elements
+              id: null
+              # User must provide their specific gene ID and source (uniprot or custom sequence reference)
+              # This ensures the CDS is distinct from UTR/regulatory sequences
+
+    - terminator: rrnB_T1

@@ -1,18 +1,21 @@
 construct:
-  name: mitochondrial_gene_therapy_OTC
+  name: "mitochondrial_targeting_gene_therapy"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Substituted for 'no ARG' request as standard plasmid selection requires an antibiotic marker; kanamycin is preferred for clinical-grade production over ampicillin.
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: therapeutic_cargo
+        label: therapeutic_protein
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS  # mitochondrial targeting sequence
           - gene:
-              id: OTC
+              id: therapeutic_protein
               source: uniprot
-    - terminator: bGH_pA
+              # User to specify actual protein ID; placeholder for gene therapy application
+
+    - terminator: SV40poly

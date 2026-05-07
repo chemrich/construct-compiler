@@ -1,20 +1,25 @@
 construct:
-  name: "P_pastoris_GAP_HSA_expression"
+  name: "Pichia_pastoris_GAP_HSA_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: HSA_cistron
+        label: HSA_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: signal_peptide_alpha_factor
           - tag: FLAG
           - cleavage_site: Enterokinase
           - gene:
-              id: P02768
+              id: HSA
               source: uniprot
-    - terminator: AOX1_term
+              codon_optimization: pichia_pastoris
+
+    - terminator: CYC1_TT

@@ -1,19 +1,23 @@
 construct:
-  name: "pichia_ost1_vaccine_antigen"
+  name: pichia_pastoris_secreted_vaccine_antigen
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: AOX1
-      cistron:
+
+    - cistron:
         label: vaccine_antigen
         expression: high
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - gene:
-              id: P03452
+              id: vaccine_antigen
               source: uniprot
           - tag: FLAG
-      terminator: AOX1_term
+
+    - terminator: rrnB_T1

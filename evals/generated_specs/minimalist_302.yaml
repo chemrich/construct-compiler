@@ -1,13 +1,19 @@
 construct:
-  name: "mammalian_gfp_expression"
+  name: "GFP_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV  # Defaulted to CMV as no specific sequence was provided in the prompt
+    - promoter: CMV
+
     - cistron:
-        label: target
+        label: GFP
+        expression: high
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

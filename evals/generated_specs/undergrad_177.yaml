@@ -1,24 +1,31 @@
 construct:
-  name: "mammalian_dual_localization_gfp_rfp"
+  name: cytoplasmic_GFP_nuclear_RFP
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cytoplasmic_gfp
+        label: cytoplasmic_GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30  # Spacer for bicistronic expression; in mammalian hosts, this implies IRES-mediated translation for the following cistron
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 30
+
     - cistron:
-        label: nuclear_rfp
+        label: nuclear_RFP
         expression: high
         fused: false
         chain:
           - tag: NLS
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

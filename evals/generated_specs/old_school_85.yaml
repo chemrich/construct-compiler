@@ -1,18 +1,23 @@
 construct:
-  name: "tac_GST_FactorXa_fusion"
+  name: "GST_fusion_with_FactorXa_cleavage"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: tac
+    
     - cistron:
-        label: gst_target_fusion
+        label: target_GST_fusion
         expression: high
         chain:
           - solubility_tag: GST
           - cleavage_site: Factor_Xa
           - gene:
-              id: target_protein
+              id: target
               source: uniprot
+    
     - terminator: T7term

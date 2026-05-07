@@ -1,21 +1,39 @@
 construct:
-  name: "pla_logic_gate_b_inducible"
-  host: e_coli_bl21_de3
+  name: "PLA_boolean_function_AND_OR_NOT"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: J23100
-    - cistron:
-        label: sensor_a
-        gene:
-          id: P0A6L1
-          source: uniprot
-    - terminator: BBa_B0015
     - promoter: T7lac
+    
     - cistron:
-        label: logic_output
+        label: input_A
         expression: high
         gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+          id: araC
+          source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: input_B
+        expression: high
+        gene:
+          id: lacI
+          source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1

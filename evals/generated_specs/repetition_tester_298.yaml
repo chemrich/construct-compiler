@@ -1,37 +1,22 @@
 construct:
-  name: "mammalian_split_gfp_ppi_k_l"
+  name: split_GFP_PPI_assay_ProteinK_GFP1-10
   host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
   cassette:
-    - promoter: CMV
-    - cistron:
-        label: proteink_fusion
-        expression: high
-        chain:
-          - gene:
-              id: ProteinK
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 4
-          - gene:
-              id: sfGFP1-10
-              source: fpbase
-    - terminator: SV40_polyA
-    - spacer: 60
-    - promoter: EF1_alpha
-    - cistron:
-        label: proteinl_fusion
-        expression: high
-        chain:
-          - gene:
-              id: ProteinL
-              source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 4
-          - gene:
-              id: sfGFP11
-              source: fpbase
-    - terminator: bGH_polyA
+  - promoter: EF1_alpha
+  - cistron:
+      label: ProteinK_GFP1-10
+      expression: high
+      chain:
+      - gene:
+          id: ProteinK
+          source: uniprot
+      - linker:
+          type: GS_flexible
+          repeats: 3
+      - gene:
+          id: GFP1-10_v1
+          source: fpbase
+  - terminator: SV40_polyA

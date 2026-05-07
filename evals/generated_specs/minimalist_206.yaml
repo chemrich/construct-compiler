@@ -1,23 +1,29 @@
 construct:
-  name: "gene1_gene2_operon"
-  host: e_coli_bl21_de3
+  name: Gene1_Gene2_operon
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: gene_1
+        label: Gene1
         expression: high
-        fused: false
         gene:
           id: Gene1
-    - spacer: 30
+          source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: gene_2
+        label: Gene2
         expression: very_low
-        fused: false
         gene:
           id: Gene2
-    - terminator: T7term
+          source: uniprot
+    
+    - terminator: rrnB_T1

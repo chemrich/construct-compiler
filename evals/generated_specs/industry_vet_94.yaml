@@ -1,16 +1,20 @@
 construct:
-  name: "HEK293_therapeutic_enzyme_production"
+  name: "HEK293_therapeutic_enzyme_high_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
         chain:
-          - tag: IgK_leader
           - gene:
-              id: ALPL
+              id: therapeutic_enzyme
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40_polyA

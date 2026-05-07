@@ -1,16 +1,23 @@
 construct:
-  name: "keyenzyme_stable_yeast_integration"
+  name: KeyEnzyme_genomic_integration_yeast
   host: yeast
+
   backbone:
-    resistance: G418
+    # Genomic integration vector for S. cerevisiae
+    # Uses homologous recombination flanking sequences
+    resistance: kanamycin
     ori: pUC
     source: addgene
+    integration_target: URA3  # Standard yeast integration locus
+
   cassette:
-    - promoter: TDH3
+    - promoter: TEF1  # Strong constitutive promoter for yeast (glycolysis enzyme 3-phosphoglycerate kinase alternative)
+
     - cistron:
-        label: target
+        label: KeyEnzyme
         expression: high
         gene:
           id: KeyEnzyme
           source: uniprot
-    - terminator: CYC1
+
+    - terminator: CYC1  # Yeast CYC1 terminator for strong stable expression

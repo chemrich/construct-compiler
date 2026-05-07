@@ -1,29 +1,34 @@
 construct:
-  name: "mammalian_triple_fusion_X_Y_Z"
+  name: "ProteinX_ProteinY_ProteinZ_triple_fusion_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: triple_fusion
         expression: high
         chain:
-          - tag: 8xHis
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ProteinX
               source: uniprot
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: custom_sequence
+              sequence: "APNPEDPNPE"
           - gene:
               id: ProteinY
               source: uniprot
           - linker:
-              type: rigid_EAAAK
-              repeats: 4
+              type: custom_sequence
+              sequence: "GKPPKDKSRG"
           - gene:
               id: ProteinZ
               source: uniprot
           - solubility_tag: MBP
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

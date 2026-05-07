@@ -1,15 +1,22 @@
 construct:
-  name: "Gene_Prime_Tandem_PolyA_Mammalian"
-  host: mammalian
+  name: "Gene_Prime_dual_polyA_mammalian"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: Gene_Prime
         expression: high
-        gene:
-          id: Gene_Prime
-          source: uniprot
-    - terminator: SV40_late_polyA
-    - terminator: bgh_polyA # Distinct bovine growth hormone polyadenylation signal to provide redundancy without sequence homology to SV40 late.
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Gene_Prime
+              source: uniprot
+
+    - terminator: SV40_late
+    
+    - terminator: BGH_poly_A

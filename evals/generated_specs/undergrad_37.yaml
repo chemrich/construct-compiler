@@ -1,18 +1,17 @@
-```yaml
 construct:
-  name: GAL4_DBD_bait_H_y2h
+  name: yeast_two_hybrid_bait_H_GAL4DBD
   host: yeast
 
   backbone:
-    resistance: ampicillin
-    ori: pBR322
+    resistance: TRP1
+    ori: 2_micron
     source: addgene
 
   cassette:
     - promoter: ADH1
-    
+
     - cistron:
-        label: bait_fusion
+        label: bait
         expression: high
         chain:
           - gene:
@@ -20,21 +19,9 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: H
               source: uniprot
-        
-    - terminator: ADH1
-    
-    - promoter: TRP1_promoter
-    
-    - cistron:
-        label: selection_marker
-        expression: medium
-        gene:
-          id: TRP1
-          source: uniprot
-          
-    - terminator: TRP1_terminator
-```
+
+    - terminator: CYC1

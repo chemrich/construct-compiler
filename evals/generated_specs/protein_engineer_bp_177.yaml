@@ -1,19 +1,24 @@
 construct:
-  name: "pAOX1_fungal_esterase_secretion"
+  name: pichia_pastoris_secreted_esterase
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: AOX1
+    - promoter: PAOX1
+
     - cistron:
         label: secreted_esterase
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - tag: 6xHis
           - gene:
-              id: fungal_esterase
+              id: novel_fungal_esterase
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1

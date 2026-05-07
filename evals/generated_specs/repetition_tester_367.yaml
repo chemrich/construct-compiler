@@ -1,22 +1,40 @@
 construct:
-  name: "dual_sgRNA_low_homology_mammalian"
+  name: "dual_sgRNA_CRISPR_mammalian"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    # pX330 is a standard dual-sgRNA CRISPR/Cas9 vector for mammalian cells
+
   cassette:
     - promoter: U6
+      # First sgRNA with optimized scaffold variant 1
+
     - cistron:
-        label: sgRNA_target_1
+        label: sgRNA_1
         expression: high
+        fused: false
         gene:
-          id: "sgRNA_scaffold_variant_F"
-          # Standard scaffold sequence optimized for stability
-    - spacer: 60  # Sufficient distance to prevent transcriptional interference
-    - promoter: 7SK  # Different Pol III promoter to minimize internal repeats and recombination
+          id: sgRNA_scaffold_v1
+          # Note: Guide sequence to be cloned separately
+          # Scaffold: GGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAA
+          # (mpknot-derived scaffold with optimized secondary structure)
+          source: uniprot
+
+    - spacer: 25
+
+    - promoter: U6
+      # Second sgRNA with distinct optimized scaffold variant 2
+
     - cistron:
-        label: sgRNA_target_2
+        label: sgRNA_2
         expression: high
+        fused: false
         gene:
-          id: "sgRNA_scaffold_variant_E"
-          # Variant E scaffold used to minimize homology with variant F
-    - terminator: poly_T  # Standard Pol III termination signal (6+ Thymidines)
+          id: sgRNA_scaffold_v2
+          # Note: Guide sequence to be cloned separately
+          # Scaffold: GGTTTTAGAGCTAGAAATAGCAGGTGAAATAAGGCTAGTCCGTTATCAACTTGAAAA
+          # (Modified scaffold with altered internal stem-loop to minimize cross-repeat)
+          source: uniprot
+
+    - terminator: rrnB_T1

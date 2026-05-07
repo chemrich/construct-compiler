@@ -1,29 +1,39 @@
 construct:
-  name: "CRISPR_CBE_dCas9_APOBEC1_UGI"
+  name: "mammalian_CRISPR_base_editor_dCas9_deaminase_inhibitor"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: base_editor
+        label: base_editor_fusion
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: dCas9
+              id: dCas9_mammalian_codon_optimized
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 6
-          - gene:
-              id: APOBEC1
-              source: uniprot
+              notes: "catalytically impaired Cas9 (D10A, H840A mutations)"
           - linker:
               type: rigid_EAAAK
-              repeats: 4
+              repeats: 3
+              sequence_id: linker_1_EAAAK_x3
           - gene:
-              id: UGI
+              id: TadA_deaminase_mammalian_variant
               source: uniprot
-          - tag: NLS
-    - terminator: bGH_pA
+              notes: "adenosine deaminase domain, mammalian codon-optimized"
+          - linker:
+              type: GS_flexible
+              repeats: 4
+              sequence_id: linker_2_GS_flexible_x4
+          - gene:
+              id: Cas9_inhibitor_mammalian
+              source: uniprot
+              notes: "anti-CRISPR protein Inhibitor, mammalian codon-optimized"
+          - tag: 6xHis
+
+    - terminator: SV40_polyA

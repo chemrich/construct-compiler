@@ -1,26 +1,43 @@
 construct:
-  name: "orthogonal_conditional_expression_system"
-  host: e_coli
+  name: "conditional_expression_system_ecoli"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23106  # Strong constitutive promoter for repressor expression
+    - promoter: T7lac
+      comment: "Constitutive expression of repressor"
+
     - cistron:
-        label: phlf_repressor
-        expression: medium
-        gene:
-          id: P0A2L0  # PhlF transcriptional repressor
-          source: uniprot
-    - terminator: BBa_B0015  # Bidirectional terminator to isolate transcriptional units
-    - spacer: 50
-    - promoter: pPhlF  # Orthogonal promoter repressed by PhlF
-    - cistron:
-        label: controlled_goi
+        label: Repressor_Protein
         expression: high
-        fused: false  # Ensures independent translation with its own RBS
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: rrnB_T1  # Distinct terminator to maintain sequence diversity
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+              codon_optimization: ecoli_rare_codon_optimized
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: custom_operator_promoter
+      comment: "Repressible promoter with custom operator sequence unique to this repressor variant"
+      operator: custom_unique_operator_1
+
+    - cistron:
+        label: Controlled_GOI
+        expression: medium
+        chain:
+          - tag: 8xHis
+          - gene:
+              id: gfp
+              source: fpbase
+              codon_optimization: ecoli_high_diversity_codon_set
+              comment: "Codon-optimized for maximum sequence diversity from standard variants"
+
+    - terminator: T7term

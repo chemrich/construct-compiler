@@ -1,42 +1,76 @@
 construct:
-  name: drug_metabolism_inducible_module
+  name: "drug_metabolism_module_tet_inducible"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pTRE3G"
+    resistance: puromycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: TRE
+    - promoter: TRE  # Tetracycline Response Element (Doxycycline-inducible)
+
     - cistron:
-        label: enzyme_1
-        gene:
-          id: DrugMet_1
-          source: uniprot
-    - cistron:
-        label: enzyme_2
-        fused: true
+        label: DrugMet_1
+        expression: high
         chain:
-          - linker:
-              type: P2A
+          - gene:
+              id: DrugMet_1
+              source: uniprot
+
+    - cistron:
+        label: P2A_peptide
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P2A
+              source: uniprot
+
+    - cistron:
+        label: DrugMet_2
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: DrugMet_2
               source: uniprot
+
     - cistron:
-        label: enzyme_3
-        fused: true
+        label: P2A_peptide_2
+        expression: high
+        fused: false
         chain:
-          - linker:
-              type: T2A
+          - gene:
+              id: P2A
+              source: uniprot
+
+    - cistron:
+        label: DrugMet_3
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: DrugMet_3
               source: uniprot
+
     - cistron:
-        label: enzyme_4
-        fused: true
+        label: P2A_peptide_3
+        expression: high
+        fused: false
         chain:
-          - linker:
-              type: E2A
+          - gene:
+              id: P2A
+              source: uniprot
+
+    - cistron:
+        label: DrugMet_4
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: DrugMet_4
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: SV40polyA

@@ -1,26 +1,40 @@
 construct:
-  name: inducible_nonviral_cytotoxic_system
+  name: "inducible_cytotoxic_therapeutic_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: custom
+
   cassette:
-    - promoter: EF1_alpha  # Human promoter used to avoid viral elements like CMV
+    - promoter: CMV
+      label: rtTA_expression
+
     - cistron:
-        label: tet_on_regulator
-        expression: medium
-        gene:
-          id: rtTA3
-          source: uniprot
-    - terminator: hGH_pA  # Human growth hormone polyadenylation signal
-    - promoter: TRE3G  # Tet-responsive promoter for tight inducible control
+        label: rtTA
+        expression: high
+        chain:
+          - gene:
+              id: rtTA2S_M2
+              source: uniprot
+              # rtTA2S-M2: reverse tetracycline-controlled transactivator, improved variant
+
+    - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: TRE_tight
+      label: therapeutic_protein_inducible
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P00588  # Diphtheria toxin fragment A (DTA)
+              id: therapeutic_cds
               source: uniprot
-    - terminator: bGH_pA  # Bovine growth hormone polyadenylation signal
+
+    - terminator: SV40_polyA
+      comment: "SV40 polyA signal for 3' end processing and mRNA stability"

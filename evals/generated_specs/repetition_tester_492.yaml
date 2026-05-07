@@ -1,29 +1,46 @@
 construct:
-  name: "mammalian_multiplex_gRNA_array"
+  name: "triple_gRNA_array_mammalian_CRISPR"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pX330"
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: gRNA_target_1
+      cistron:
+        label: gRNA1
         expression: high
-        gene:
-          id: sgRNA_scaffold_v1
-    - spacer: 35
+        chain:
+          - gene:
+              id: gRNA1_U6_variant1
+              source: custom
+        # Note: gRNA1 scaffold uses canonical sgRNA scaffold sequence
+
+    - spacer: 25
+
     - promoter: H1
-    - cistron:
-        label: gRNA_target_2
+      cistron:
+        label: gRNA2
         expression: high
-        gene:
-          id: sgRNA_scaffold_v2_diversified
-    - spacer: 35
-    - promoter: 7SK
-    - cistron:
-        label: gRNA_target_3
+        chain:
+          - gene:
+              id: gRNA2_H1_variant2
+              source: custom
+        # Note: gRNA2 scaffold uses synonymous variant of sgRNA scaffold to prevent recombination
+
+    - spacer: 25
+
+    - promoter: U6alt
+      cistron:
+        label: gRNA3
         expression: high
-        gene:
-          id: sgRNA_scaffold_v3_diversified
-    - terminator: PolyT
+        chain:
+          - gene:
+              id: gRNA3_U6alt_variant3
+              source: custom
+        # Note: gRNA3 scaffold uses highly diversified scaffold sequence distinct from gRNA1 and gRNA2
+
+    - terminator: rrnB_T1

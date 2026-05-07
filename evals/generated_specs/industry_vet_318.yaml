@@ -1,23 +1,38 @@
 construct:
-  name: "yeast_bicistronic_2A_metabolic_expression"
+  name: "yeast_bicistronic_2A_pathway"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: metabolic_unit
+        label: enzyme1
         expression: high
         chain:
           - gene:
-              id: ERG10
+              id: enzyme1
               source: uniprot
           - tag: FLAG
-          - linker:
-              type: P2A
-          - gene:
-              id: ERG13
-              source: uniprot
-    - terminator: CYC1
+
+    - cistron:
+        label: 2A_peptide
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - cistron:
+        label: enzyme2
+        expression: high
+        fused: false
+        gene:
+          id: enzyme2
+          source: uniprot
+
+    - terminator: rrnB_T1

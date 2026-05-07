@@ -1,19 +1,29 @@
 construct:
-  name: "dual_cleavable_antigen_expression_system"
+  name: "dual_tag_antigen_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: tricky_antigen
+        label: antigen
         expression: high
         chain:
-          - tag: Twin-Strep
-          - cleavage_site: TEV
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: 6xHis
-          - cleavage_site: 3C
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: TEV
           - gene:
-              id: P0DTC2
+              id: uniprot_query
               source: uniprot
-    - terminator: bGH_pA
+              # User should specify the actual UniProt ID or gene name
+
+    - terminator: SV40_polyA

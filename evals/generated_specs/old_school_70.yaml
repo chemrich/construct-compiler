@@ -1,23 +1,31 @@
 construct:
-  name: "mammalian_CAG_bicistronic_IRES_luciferase"
+  name: "constitutive_gene_IRES_luciferase"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: hygromycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: target
+        label: target_gene
         expression: high
-        gene:
-          id: target_gene
-    - spacer: 580 # IRES sequence for independent translation of the downstream cistron
+        chain:
+          - gene:
+              id: unknown
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: IRES_luciferase
+        expression: high
         fused: false
-        gene:
-          id: luciferase
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+
+    - terminator: SV40poly

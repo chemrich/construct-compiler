@@ -1,40 +1,50 @@
 construct:
-  name: "Binding_Peptide_X_5x_Divergent_Fusion"
-  host: mammalian
+  name: "mammalian_5xBinding_Peptide_X_synonymous_diverged"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: divergent_tandem_repeat
+        label: fusion_protein
         expression: high
-        # Note: Compiler should use maximal codon diversification for each 'Binding_Peptide_X' instance to prevent recombination.
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Binding_Peptide_X
-              source: uniprot
+              id: Binding_Peptide_X_variant1
+              source: custom
+              note: "First repeat, codon-optimized set A"
           - linker:
               type: GS_flexible
               repeats: 1
           - gene:
-              id: Binding_Peptide_X
-              source: uniprot
+              id: Binding_Peptide_X_variant2
+              source: custom
+              note: "Second repeat, synonymous codons set B"
           - linker:
               type: rigid_EAAAK
               repeats: 1
           - gene:
-              id: Binding_Peptide_X
-              source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 2
-          - gene:
-              id: Binding_Peptide_X
-              source: uniprot
+              id: Binding_Peptide_X_variant3
+              source: custom
+              note: "Third repeat, synonymous codons set C"
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: Binding_Peptide_X
-              source: uniprot
-    - terminator: bGH_PA
+              id: Binding_Peptide_X_variant4
+              source: custom
+              note: "Fourth repeat, synonymous codons set D"
+          - linker:
+              type: short_GS
+          - gene:
+              id: Binding_Peptide_X_variant5
+              source: custom
+              note: "Fifth repeat, synonymous codons set E"
+
+    - terminator: rrnB_T1

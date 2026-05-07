@@ -1,16 +1,20 @@
 construct:
-  name: "Mammalian_Secretion_Construct"
+  name: "secreted_protein_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: IgK_leader  # Signal peptide for secretion into medium
+          - tag: signal_peptide_IgG  # N-terminal signal peptide for ER-mediated secretion
           - gene:
               id: Secreted_Protein
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40_polyA

@@ -1,18 +1,22 @@
 construct:
-  name: n_his_tagged_antibody_fragment
-  host: e_coli_bl21_de3  # T7 promoter requires a DE3 lysogen for T7 RNA polymerase expression
+  name: "antibody_fragment_6xHis"
+  host: e_coli_bl21
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_antibody
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: trastuzumab_scFv
+              id: antibody_fragment
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

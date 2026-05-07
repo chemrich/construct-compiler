@@ -1,31 +1,111 @@
 construct:
-  name: "non_homologous_quad_gRNA_array"
+  name: "E_coli_CRISPR_array_quad_gRNA_diverse"
   host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gRNA_unit_1
-        expression: medium
+        label: gRNA1
+        expression: high
         gene:
-          id: gRNA1_orthogonal_scaffold_A_spacer1
-    - spacer: 30 # Non-homologous sequence spacer
+          id: crRNA_spacer_1_Streptococcus_pyogenes_derived
+          source: synthetic
+        chain:
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: scaffold_SpCas9_canonical
+              source: synthetic
+
+    - spacer: 35
+
     - cistron:
-        label: gRNA_unit_2
-        expression: medium
+        label: repeat_1
+        expression: high
         gene:
-          id: gRNA2_orthogonal_scaffold_B_spacer2
-    - spacer: 30 # Non-homologous sequence spacer
+          id: CRISPR_repeat_Streptococcus_thermophilus_CRISPR3
+          source: synthetic
+
+    - spacer: 28
+
     - cistron:
-        label: gRNA_unit_3
-        expression: medium
+        label: gRNA2
+        expression: high
         gene:
-          id: gRNA3_orthogonal_scaffold_C_spacer3
-    - spacer: 30 # Non-homologous sequence spacer
+          id: crRNA_spacer_2_Neisseria_meningitidis_derived
+          source: synthetic
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: scaffold_NmCas9_variant
+              source: synthetic
+
+    - spacer: 32
+
     - cistron:
-        label: gRNA_unit_4
-        expression: medium
+        label: repeat_2
+        expression: high
         gene:
-          id: gRNA4_orthogonal_scaffold_D_spacer4
-    - terminator: T7term
+          id: CRISPR_repeat_Lactobacillus_salivarius
+          source: synthetic
+
+    - spacer: 25
+
+    - cistron:
+        label: gRNA3
+        expression: high
+        gene:
+          id: crRNA_spacer_3_Campylobacter_jejuni_derived
+          source: synthetic
+        chain:
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: scaffold_CjCas9_optimized
+              source: synthetic
+
+    - spacer: 38
+
+    - cistron:
+        label: repeat_3
+        expression: high
+        gene:
+          id: CRISPR_repeat_Prevotella_intermedia
+          source: synthetic
+
+    - spacer: 30
+
+    - cistron:
+        label: gRNA4
+        expression: high
+        gene:
+          id: crRNA_spacer_4_Corynebacterium_diphthheriae_derived
+          source: synthetic
+        chain:
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: scaffold_CdCas9_engineered
+              source: synthetic
+
+    - spacer: 27
+
+    - cistron:
+        label: repeat_4
+        expression: high
+        gene:
+          id: CRISPR_repeat_Cutibacterium_acnes
+          source: synthetic
+
+    - terminator: rrnB_T1

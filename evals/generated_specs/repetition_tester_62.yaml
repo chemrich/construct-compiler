@@ -1,23 +1,46 @@
 construct:
-  name: "yeast_recombination_resistant_2A_polycistron"
+  name: "yeast_tricistronic_GeneA_GeneB_GeneC"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: diversified_ABC_payload
+        label: GeneA
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: GeneA
               source: uniprot
-          - cleavage_site: P2A  # Porcine teschovirus-1 2A peptide
+
+    # 2A peptide variant 1 (P2A - porcine teschovirus)
+    - p2a_variant: P2A
+
+    - cistron:
+        label: GeneB
+        expression: high
+        chain:
+          - tag: Strep-II
           - gene:
               id: GeneB
               source: uniprot
-          - cleavage_site: T2A  # Thosea asigna virus 2A peptide (distinct sequence)
+
+    # 2A peptide variant 2 (T2A - thosea asigna virus)
+    - p2a_variant: T2A
+
+    - cistron:
+        label: GeneC
+        expression: high
+        chain:
+          - tag: FLAG
           - gene:
               id: GeneC
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

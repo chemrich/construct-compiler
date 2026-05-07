@@ -1,25 +1,41 @@
 construct:
-  name: "bicistronic_chaperonin_coexpression_system"
-  host: e_coli_bl21
+  name: "bicistronic_chaperonin_difficult_protein"
+  host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: chaperonin_groEL
+        label: chaperonin
         expression: high
-        gene:
-          id: P0A6F5
-          source: uniprot
-    - spacer: 40
-    - cistron:
-        label: target_protein_ifnb1
-        expression: medium
-        fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P01574
+              id: groEL
               source: uniprot
-    - terminator: T7term
+              codon_optimization: standard_e_coli
+
+    - spacer: 35
+
+    - cistron:
+        label: difficult_protein
+        expression: medium
+        fused: false
+        chain:
+          - tag: 8xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: target_protein
+              source: uniprot
+              codon_optimization: rare_codon_enriched
+
+    - terminator: rrnB_T1

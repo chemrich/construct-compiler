@@ -1,33 +1,31 @@
-```yaml
 construct:
-  name: dual_expression_constitutive_and_inducible
-  host: e_coli_bl21_de3
+  name: "dual_expression_constitutive_inducible"
+  host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: J23100  # Constitutive expression
-
-    - cistron:
+    - promoter: araBAD
+      cistron:
         label: protein_A
         expression: medium
         gene:
-          id: A  # Replace with actual protein ID
+          id: protein_A
           source: uniprot
 
     - terminator: rrnB_T1
 
-    - promoter: T7lac  # IPTG-inducible
-
-    - cistron:
+    - promoter: T7lac
+      cistron:
         label: protein_B
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: B  # Replace with actual protein ID
+              id: protein_B
               source: uniprot
 
     - terminator: rrnB_T1
-```

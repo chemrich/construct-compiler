@@ -1,36 +1,46 @@
 construct:
-  name: "his_tagged_tri_enzyme_operon"
-  host: e_coli_bl21_de3
+  name: "triple_enzyme_operon"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: "enzyme_1"
-        expression: "high"
+        label: enzyme1
+        expression: high
         chain:
-          - tag: "6xHis"
+          - tag: 6xHis
           - gene:
-              id: "P0A9Q7"
-              source: "uniprot"
-    - spacer: 30 # IRES is for mammalian hosts; substituted with 30bp spacer and fused: false for E. coli operon translation
+              id: enzyme1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: "enzyme_2"
-        expression: "high"
+        label: enzyme2
+        expression: high
         fused: false
         chain:
-          - tag: "6xHis"
+          - tag: 6xHis
           - gene:
-              id: "P06106"
-              source: "uniprot"
-    - spacer: 30
+              id: enzyme2
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: "enzyme_3"
-        expression: "high"
+        label: enzyme3
+        expression: high
         fused: false
         chain:
-          - tag: "6xHis"
+          - tag: 6xHis
           - gene:
-              id: "P09373"
-              source: "uniprot"
-    - terminator: "T7term"
+              id: enzyme3
+              source: uniprot
+
+    - terminator: rrnB_T1

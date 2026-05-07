@@ -1,12 +1,13 @@
-```yaml
 construct:
-  name: therapeutic_enzyme_production
+  name: human_therapeutic_enzyme_production
   host: e_coli_bl21_de3
 
   backbone:
-    resistance: kanamycin  # Will be removed before final use
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+    # Note: pET-28b uses kanamycin resistance for selection during cloning.
+    # For final construct without antibiotic markers, this would be removed
+    # in downstream processing (e.g., via site-specific recombination or
+    # vector modification). This spec assumes selection phase only.
 
   cassette:
     - promoter: T7lac
@@ -20,10 +21,10 @@ construct:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P0DP24  # Human α-L-iduronidase (example therapeutic enzyme)
+              id: P12345
               source: uniprot
+              # Replace P12345 with actual human enzyme UniProt ID
 
     - terminator: rrnB_T1
-```

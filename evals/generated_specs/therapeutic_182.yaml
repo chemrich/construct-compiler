@@ -1,16 +1,34 @@
 construct:
-  name: "AntigenY_mRNA_vaccine_template"
+  name: "mRNA_vaccine_AntigenY_IVT"
   host: in_vitro
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7
+
+    - utr:
+        position: 5_prime
+        type: kozak_optimized
+        # Kozak consensus for enhanced translation initiation in mammalian cells
+
     - cistron:
-        label: antigen_payload
+        label: antigen
         expression: high
-        gene:
-          id: AntigenY
-          source: uniprot
+        chain:
+          - gene:
+              id: AntigenY
+              source: uniprot
+
+    - utr:
+        position: 3_prime
+        type: poly_A_signal
+        # Standard polyadenylation signal for mRNA stability
+
+    - poly_A_tract: 200
+        # Poly(A) tail enhances mRNA stability and translation in mammalian cells
+
     - terminator: T7term

@@ -1,13 +1,17 @@
 construct:
-  name: "EnzymeX_N_His_TEV_C_MBP_Fusion"
-  host: e_coli_bl21
+  name: "EnzymeX_His_TEV_MBP"
+  host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_fusion
+        label: EnzymeX_fusion
         expression: high
         chain:
           - tag: 6xHis
@@ -15,5 +19,6 @@ construct:
           - gene:
               id: EnzymeX
               source: uniprot
-          - solubility_tag: MBP  # Positioned at C-terminus as requested
-    - terminator: T7term # Standard terminator for T7 systems
+          - solubility_tag: MBP
+
+    - terminator: rrnB_T1

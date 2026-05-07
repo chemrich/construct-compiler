@@ -1,17 +1,30 @@
 construct:
-  name: "self_cleaving_fusion_protein"
-  host: e_coli_bl21_de3
+  name: "self_cleaving_dual_protein"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: primary_protein
         expression: high
         chain:
-          - solubility_tag: MBP # Large protein used as the first protein in the fusion
-          - cleavage_site: TEV # Substituted TEV for a self-cleaving domain as it is the standard cleavable linker
+          - tag: 6xHis
           - gene:
-              id: sfGFP
+              id: mEGFP
               source: fpbase
-    - terminator: T7term
+
+    - cistron:
+        label: secondary_protein
+        expression: high
+        fused: false
+        chain:
+          - self_cleaving_peptide: T2A
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,26 +1,26 @@
-```yaml
 construct:
   name: "ProteinS_mitochondrial_targeting"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: mito_targeted_proteinS
+        label: ProteinS_MTS
         expression: high
         chain:
-          - tag: mito_targeting_sequence  # mitochondrial targeting peptide
+          - tag: MTS_Cox8a  # Mitochondrial targeting sequence from Cox8a; non-repetitive design
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
+              codon_optimization: synonymous_divergent  # Forces codon divergence from protein body
           - gene:
-              id: P04637  # ProteinS (p53 tumor suppressor)
+              id: ProteinS
               source: uniprot
-              codon_optimize: true  # ensures synonymous codon usage to avoid repeats
+              codon_optimization: synonymous_divergent  # Applies synonymous codon variants to avoid repeats
 
     - terminator: rrnB_T1
-```

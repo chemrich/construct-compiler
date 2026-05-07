@@ -1,27 +1,33 @@
 construct:
-  name: therapeutic_fusion_solubility_optimized
-  host: e_coli_bl21
+  name: "therapeutic_fusion_protein_dual_domain"
+  host: e_coli_bl21_de3
+
   backbone:
-    # User requested no antibiotic resistance; substituting kanamycin as per rule 9 to ensure valid YAML schema.
-    resistance: kanamycin
+    resistance: null  # No antibiotic resistance
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac  # Non-viral bacterial hybrid promoter for robust expression without phage elements
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: P01275  # Glucagon-like peptide 1 (GLP-1)
+              id: domain_1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P09681  # Gastric inhibitory polypeptide (GIP)
+              id: domain_2
               source: uniprot
-    - terminator: rrnB_T1  # Bacterial terminator (non-viral)
+
+    - terminator: rrnB_T1

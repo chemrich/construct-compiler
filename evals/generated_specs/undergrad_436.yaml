@@ -1,16 +1,20 @@
 construct:
-  name: "SensitiveDetector_Ultra_Tight_Low_Expression"
-  host: e_coli
+  name: "tightly_regulated_SensitiveDetector"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: p15A # Low copy origin used to minimize basal expression/leakiness
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD # araBAD (L-arabinose inducible) provides exceptionally tight control with minimal leakiness
+    - promoter: T7lac
+
     - cistron:
-        label: detector
+        label: SensitiveDetector
         expression: very_low
-        gene:
-          id: SensitiveDetector
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: SensitiveDetector
+              source: uniprot
+
     - terminator: rrnB_T1

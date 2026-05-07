@@ -1,28 +1,37 @@
 construct:
-  name: "Pichia_coexpression_HC_PDI"
+  name: "Pichia_coexpression_heavy_chain_PDI"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ"
+    resistance: zeocin
     ori: pBR322
     source: addgene
-  cassette:
+
+  cassette_1:
     - promoter: AOX1
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor
           - gene:
-              id: IGHG1
+              id: heavy_chain
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1
+
+  cassette_2:
     - promoter: TEF1
+
     - cistron:
         label: PDI_chaperone
-        expression: medium
+        expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor
           - gene:
-              id: PDI1
+              id: P04786
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

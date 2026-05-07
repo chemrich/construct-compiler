@@ -1,16 +1,21 @@
 construct:
-  name: "metabolite_biosensor_araBAD_sfGFP"
+  name: metabolite_biosensor_no_resistance
   host: e_coli
+
   backbone:
-    resistance: kanamycin # Substitution: For environmental safety, auxotrophic markers or toxin-antitoxin systems are used; kanamycin is specified here to meet schema requirements.
-    ori: pUC
+    resistance: null  # No antibiotic resistance marker
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: araBAD  # Metabolite-responsive promoter (L-arabinose inducible)
+
     - cistron:
         label: reporter
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

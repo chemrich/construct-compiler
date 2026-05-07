@@ -1,42 +1,53 @@
 construct:
-  name: "glycolytic_bypass_operon"
+  name: "engineered_glycolytic_bypass_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23106
+    - promoter: tac
+
     - cistron:
-        label: xylA
-        expression: medium
+        label: xylose_isomerase
+        expression: high
+        fused: false
         gene:
-          id: P00944
+          id: xylA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: xylB
+        label: xylulokinase
         expression: medium
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: P09092
+              id: xylB
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: talB
+        label: transaldolase
         expression: medium
         fused: false
         gene:
-          id: P0A870
+          id: tal
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: tktA
-        expression: medium
+        label: transketolase
+        expression: low
         fused: false
         gene:
-          id: P0A8G6
+          id: tkt
           source: uniprot
+
     - terminator: rrnB_T1

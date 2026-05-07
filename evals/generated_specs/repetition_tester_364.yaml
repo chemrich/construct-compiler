@@ -1,23 +1,32 @@
 construct:
-  name: "ProteinH_sfGFP_fusion"
+  name: ProteinH_GFP_dual_linker
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_h_gfp
+        label: ProteinH_GFP
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: "P0A3V8"
+              id: ProteinH
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: "sfGFP"
+              id: sfGFP
               source: fpbase
           - linker:
-              type: short_GS
-    - terminator: T7term
+              type: rigid_EAAAK
+              repeats: 2
+
+    - terminator: rrnB_T1

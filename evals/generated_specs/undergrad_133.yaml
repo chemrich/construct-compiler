@@ -1,20 +1,22 @@
 construct:
-  name: "GST_Protein_L_T7_Expression"
+  name: high_expression_GST_ProteinL
   host: e_coli_bl21_de3
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: gst_protein_l
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P13744
+              id: ProteinL
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

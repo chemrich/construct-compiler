@@ -1,23 +1,39 @@
 construct:
-  name: tet_on_inducible_system_hek293
+  name: "TetOn_mammalian_expression_system"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTRE-tight"
+    resistance: ampicillin
+
   cassette:
-    - promoter: EF1_alpha
-    - cistron:
-        label: tet_transactivator
-        expression: medium
-        gene:
-          id: rtTA3
-          source: uniprot
-    - terminator: SV40_polyA
-    - spacer: 150
-    - promoter: TRE3G  # Inducible promoter responsive to rtTA + Doxycycline
+    - promoter: TRE_tight
+      # TRE (Tetracycline Response Element) - tight variant for low basal expression
+
     - cistron:
         label: target_gene
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bgh_polyA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EGFP
+              source: fpbase
+              # User should replace EGFP with their actual gene of interest
+
+    - terminator: SV40_poly_A
+
+    - spacer: 100
+
+    - promoter: CMV
+      # Second cassette for constitutive Tet-transactivator (rtTA or tTA) expression
+
+    - cistron:
+        label: tet_transactivator
+        expression: medium
+        chain:
+          - gene:
+              id: rtTA
+              source: uniprot
+              # rtTA (reverse Tet-transactivator) - responds to doxycycline addition
+
+    - terminator: SV40_poly_A

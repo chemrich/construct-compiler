@@ -1,16 +1,21 @@
 construct:
-  name: "Rubisco_SSU_Chloroplast_Expression"
-  host: algae  # Algae selected as the closest host for chloroplast-based expression systems
+  name: "chloroplast_Rubisco_small_subunit"
+  host: algae
+
   backbone:
     resistance: spectinomycin
-    ori: pUC
+    ori: psbA
     source: addgene
+
   cassette:
     - promoter: psbA
+
     - cistron:
-        label: rbcs
+        label: RbcS
         expression: high
-        gene:
-          id: P00839
-          source: uniprot
-    - terminator: psbA_term
+        chain:
+          - gene:
+              id: RbcS
+              source: uniprot
+
+    - terminator: rrnB_T1

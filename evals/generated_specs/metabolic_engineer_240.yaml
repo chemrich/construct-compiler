@@ -1,22 +1,28 @@
 construct:
-  name: "four_enzyme_metabolic_operon"
+  name: "four_enzyme_metabolic_pathway_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # constitutive promoter for balanced expression
+
     - cistron:
-        label: enzyme_a
+        label: EnzymeA
         expression: medium
         chain:
           - tag: 6xHis
           - gene:
               id: EnzymeA
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_b
+        label: EnzymeB
         expression: medium
         fused: false
         chain:
@@ -24,9 +30,11 @@ construct:
           - gene:
               id: EnzymeB
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_c
+        label: EnzymeC
         expression: medium
         fused: false
         chain:
@@ -34,9 +42,11 @@ construct:
           - gene:
               id: EnzymeC
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_d
+        label: EnzymeD
         expression: medium
         fused: false
         chain:
@@ -44,4 +54,5 @@ construct:
           - gene:
               id: EnzymeD
               source: uniprot
+
     - terminator: rrnB_T1

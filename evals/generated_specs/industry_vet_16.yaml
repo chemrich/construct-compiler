@@ -1,23 +1,21 @@
-```yaml
 construct:
-  name: Enhanced_Protein_M_CMV_WPRE
+  name: Enhanced_Protein_M_mammalian
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: Enhanced_Protein_M
+        label: target
         expression: high
-        gene:
-          id: Enhanced_Protein_M
-          source: uniprot
+        chain:
+          - gene:
+              id: Enhanced_Protein_M
+              source: uniprot
 
-    # WPRE represented as regulatory element
-    - regulatory_element: WPRE  # Woodchuck Hepatitis Post-transcriptional Regulatory Element
+    - regulatory_element: WPRE
 
-    - terminator: polyA_SV40
-```
+    - poly_A: SV40

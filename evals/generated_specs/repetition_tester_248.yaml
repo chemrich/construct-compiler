@@ -1,27 +1,54 @@
 construct:
-  name: "tandem_immunogenic_peptide_mammalian"
+  name: "mammalian_triple_immunogenic_peptide_codon_optimized"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: trivalent_fusion_protein
+        label: immunogenic_repeat_1
         expression: high
         chain:
-          - gene:
-              id: immunogenic_peptide_codon_v1 # Using distinct IDs to enforce synonymously unique codon usage
-              source: uniprot
+          - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: immunogenic_peptide_codon_v2 # Using distinct IDs to enforce synonymously unique codon usage
+              id: custom_immunogenic_peptide_v1
               source: uniprot
+              note: "Codon variant 1 - optimized for human expression pattern A"
+
+    - spacer: 24
+
+    - cistron:
+        label: immunogenic_repeat_2
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: custom_immunogenic_peptide_v2
+              source: uniprot
+              note: "Codon variant 2 - optimized for human expression pattern B"
+
+    - spacer: 28
+
+    - cistron:
+        label: immunogenic_repeat_3
+        expression: high
+        fused: false
+        chain:
           - linker:
               type: short_GS
-              repeats: 2
           - gene:
-              id: immunogenic_peptide_codon_v3 # Using distinct IDs to enforce synonymously unique codon usage
+              id: custom_immunogenic_peptide_v3
               source: uniprot
-    - terminator: bGH_polyA # Standard mammalian terminator for high-level expression in HEK293
+              note: "Codon variant 3 - optimized for human expression pattern C"
+          - cleavage_site: TEV
+
+    - terminator: rrnB_T1

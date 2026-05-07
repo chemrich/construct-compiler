@@ -1,16 +1,21 @@
 construct:
-  name: "AAV_NuclearProtein_NLS_Expression"
+  name: "AAV_NuclearProtein_NLS"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTwist AAV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: nuclear_target
         expression: high
         chain:
           - tag: NLS
           - gene:
               id: NuclearProtein
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

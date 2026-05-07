@@ -1,17 +1,20 @@
 construct:
-  name: "pichia_secretion_hsa_peptide_fusion"
+  name: "pichia_hsa_peptide_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: hsa_fusion_peptide
+        label: secreted_hsa_peptide
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
               id: P02768
               source: uniprot
@@ -19,6 +22,7 @@ construct:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P01275
+              id: target_peptide
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

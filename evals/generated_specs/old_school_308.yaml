@@ -1,16 +1,21 @@
 construct:
-  name: mammalian_luciferase_reporter_hygromycin
+  name: "mammalian_luciferase_constitutive"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: hygromycin
     ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: PGK  # PGK is a standard weak/moderate constitutive promoter for mammalian systems
+    - promoter: EF1_alpha
+
     - cistron:
-        label: reporter
-        expression: low
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: SV40_pA
+        label: luciferase
+        expression: medium
+        chain:
+          - gene:
+              id: Renilla_reniformis_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

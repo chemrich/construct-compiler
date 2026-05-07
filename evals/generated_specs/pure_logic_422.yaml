@@ -1,36 +1,46 @@
 construct:
-  name: "chemical_or_gate_amilCP"
-  host: e_coli
+  name: "OR_gate_dual_input_chromoprotein"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: output_alpha
+        label: input_sensor_1
         expression: medium
-        fused: false
         chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: input_sensor_2
+        expression: medium
+        chain:
+          - gene:
+              id: malT
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: chromoprotein_output
+        expression: high
+        chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: amilCP
-              source: uniprot
+              source: fpbase
+
     - terminator: rrnB_T1
-    - promoter: lacUV5
-    - cistron:
-        label: output_beta
-        expression: medium
-        fused: false
-        chain:
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: amilCP
-              source: uniprot
-    - terminator: BBa_B0015

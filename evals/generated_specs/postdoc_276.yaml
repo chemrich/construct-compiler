@@ -1,15 +1,16 @@
 construct:
-  name: "Protein_L_solubility_optimization"
-  host: e_coli_bl21
+  name: Protein_L_soluble_expression
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: lacUV5  # Selected lacUV5 for lower expression levels to improve solubility
+    - promoter: lacUV5
+
     - cistron:
-        label: target
-        expression: low
+        label: Protein_L_MBP
+        expression: medium
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
@@ -17,4 +18,5 @@ construct:
           - gene:
               id: Protein_L
               source: uniprot
+
     - terminator: rrnB_T1

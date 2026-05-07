@@ -1,25 +1,30 @@
 construct:
-  name: "yeast_aprotinin_stabilization_system"
-  host: yeast
+  name: "protein_aprotinin_coexpression"
+  host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: 2micron
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: pTEF1
+    - promoter: CMV
+
     - cistron:
         label: target_protein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: target_protein
+              id: your_protein
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: protease_inhibitor
+        label: aprotinin
         expression: high
         fused: false
         gene:
-          id: P00974
+          id: SPINK1
           source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

@@ -1,71 +1,74 @@
 construct:
-  name: "pha_production_pathway_p_pastoris"
+  name: PHA_pathway_six_gene_P_pastoris
   host: yeast
+
   backbone:
+    catalog_vector: "pPICZ_A"
     resistance: zeocin
-    ori: pUC
-    source: custom
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: GAPDH  # Strong constitutive yeast promoter
+    - promoter: GAPDH
 
     - cistron:
-        label: phaA_secreted
+        label: PHA_synthase
         expression: high
         chain:
-          - tag: Alpha_factor  # Secretion signal for P. pastoris
+          - tag: 6xHis
+          - secretion_signal: alpha_factor
           - gene:
-              id: P14611
+              id: phaCAB
               source: uniprot
 
-    - spacer: 30  # Note: Polycistronic expression in yeast typically requires 2A peptides or IRES; compiler will optimize based on host.
+    - spacer: 25
 
     - cistron:
-        label: phaB
+        label: acetyl_CoA_carboxylase
         expression: high
         fused: false
         gene:
-          id: P14697
+          id: ACC1
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: phaC
+        label: malonyl_CoA_reductase
         expression: high
         fused: false
         gene:
-          id: P13397
+          id: MCR
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: phaJ
-        expression: high
+        label: 3_ketoacyl_CoA_thiolase
+        expression: medium
         fused: false
         gene:
-          id: Q9LBQ4
+          id: THIO
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: phaP
-        expression: high
+        label: polyhydroxybutyrate_polymerase
+        expression: medium
         fused: false
         gene:
-          id: P45600
+          id: PHB_polymerase
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: phaR
-        expression: high
+        label: acetoacetyl_CoA_reductase
+        expression: medium
         fused: false
         gene:
-          id: Q05113
+          id: AACR
           source: uniprot
 
-    - terminator: CYC1_term
+    - terminator: CYC1_poly_A

@@ -1,17 +1,24 @@
 construct:
-  name: "inducible_t7lac_expression_vector"
-  host: e_coli_bl21_de3
+  name: "tet_inducible_goi_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: goi
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: ""
+              source: uniprot
+              # User should replace with their specific GOI UniProt ID or gene name
+
+    - terminator: rrnB_T1

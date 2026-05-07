@@ -1,16 +1,24 @@
 construct:
-  name: "chimeric_aav_capsid_expression"
-  host: e_coli_bl21_de3
+  name: "Chimeric_AAV_protein_codon_optimized_ecoli"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: chimeric_aav_protein
+        label: chimeric_AAV
         expression: high
+        codon_optimization: e_coli
         chain:
           - tag: 6xHis
           - gene:
-              id: P03135
+              id: chimeric_AAV_protein
               source: uniprot
-    - terminator: T7term
+              codon_optimize_for: e_coli
+
+    - terminator: rrnB_T1

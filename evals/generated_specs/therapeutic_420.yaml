@@ -1,20 +1,29 @@
 construct:
-  name: "therapeutic_hGH_solubility_optimized"
-  host: e_coli_bl21
+  name: "human_therapeutic_enzyme_soluble_expression"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance markers; implies non-antibiotic selection or transient system
-    ori: pUC
-    source: custom
+    resistance: null  # No antibiotic resistance marker
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac  # Bacterial promoter used to avoid viral components (like T7)
+    - promoter: T7lac
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: P01241
+              id: null
+              # User must provide UniProt ID for the specific human therapeutic enzyme
+              # Example: P00750 for human alkaline phosphatase
               source: uniprot
-    - terminator: rrnB_T1  # Bacterial terminator (E. coli rRNA operon)
+
+    - terminator: rrnB_T1

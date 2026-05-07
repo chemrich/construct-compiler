@@ -1,28 +1,57 @@
 construct:
-  name: "genetic_relaxation_oscillator"
-  host: e_coli
+  name: relaxation_oscillator_e_coli
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for autonomous expression without external induction
+    - promoter: araBAD
+
     - cistron:
-        label: S1
+        label: S1_repressor
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: S2_activator
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: GFP_monitor_S1
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: mEGFP
               source: fpbase
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: S2
-        expression: medium
-        fused: false  # Independent translation for the second protein in the operon
+        label: RFP_monitor_S2
+        expression: high
+        fused: false
         chain:
-          - tag: FLAG
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

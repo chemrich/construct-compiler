@@ -1,12 +1,15 @@
 construct:
-  name: polycistronic_therapeutic_expression_system
+  name: "dual_therapeutic_protein_coexpression"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin # Defaulted to kanamycin per rule 9; schema does not explicitly support non-antibiotic markers like infB/dapD.
-    ori: pUC
+    resistance: chloramphenicol
+    ori: p15A
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: therapeutic_protein_1
         expression: high
@@ -14,17 +17,20 @@ construct:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P01375 # TNF-alpha
+              id: P69905
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: therapeutic_protein_2
         expression: high
-        fused: false # Ensures independent translation with its own RBS
+        fused: false
         chain:
-          - tag: Strep-II
-          - cleavage_site: 3C
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P22301 # IL10
+              id: P12345
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

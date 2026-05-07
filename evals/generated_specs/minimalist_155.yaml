@@ -1,18 +1,23 @@
 construct:
-  name: "haloferax_volcanii_taq_expression"
-  host: haloferax_volcanii
+  name: "halophile_thermostable_enzyme"
+  host: halophile
+
   backbone:
-    resistance: kanamycin  # Defaulting to kanamycin per Rule 9; note that mevinolin is the standard selection marker for H. volcanii.
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_fdx  # High-strength ferredoxin promoter native to haloarchaea.
+    - promoter: T7lac
+
     - cistron:
-        label: taq_polymerase
+        label: thermostable_enzyme
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P19822
+              id: thermostable_protease
               source: uniprot
+
     - terminator: rrnB_T1

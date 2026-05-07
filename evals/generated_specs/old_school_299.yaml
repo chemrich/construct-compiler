@@ -1,30 +1,47 @@
 construct:
-  name: "ProteinR_ProteinS_Coexpression_SV40_IRES"
+  name: "ProteinR_ProteinS_mammalian_IRES"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: neomycin
+    ori: pUC
+
   cassette:
     - promoter: SV40
+
     - cistron:
-        label: cistron_R
+        label: ProteinR
+        expression: high
         chain:
           - tag: Myc
           - gene:
               id: ProteinR
               source: uniprot
-    - spacer: 585  # Length corresponds to a standard IRES sequence
+
+    - terminator: polyA_signal
+
+    # IRES for cap-independent translation of ProteinS
+    - spacer: 50
+    
     - cistron:
-        label: cistron_S
+        label: ProteinS
+        expression: high
         fused: false
         gene:
           id: ProteinS
           source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: polyA_signal
+
+    # Neomycin resistance cassette with separate promoter
     - promoter: CMV
+
     - cistron:
-        label: selection_marker
+        label: Neomycin_resistance
+        expression: high
         gene:
-          id: NeoR
+          id: neo
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: polyA_signal

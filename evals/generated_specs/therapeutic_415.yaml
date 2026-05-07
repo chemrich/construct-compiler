@@ -1,23 +1,32 @@
 construct:
-  name: "mammalian_therapeutic_hsa_fusion"
+  name: therapeutic_protein_stability_enhanced
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
         chain:
-          - tag: FLAG
-          - tag: IgK_leader
+          - tag: signal_peptide_SP  # N-terminal secretion signal for mammalian ER targeting
+          - solubility_tag: Fc  # Fc domain provides stability and extended half-life in vivo
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: 3C  # Protease cleavage site for tag removal if needed
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P02768
+              id: human_growth_hormone  # Example therapeutic protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P01241
-              source: uniprot
-    - terminator: bgh_polyA
+              repeats: 1
+          - tag: 6xHis  # C-terminal His tag for purification
+
+    - terminator: rrnB_T1

@@ -1,48 +1,58 @@
 construct:
-  name: "pseudomonas_putida_multi_enzyme_complex"
-  host: e_coli  # Pseudomonas putida not in schema; substituting with E. coli
+  name: "P_putida_5enzyme_complex_frameshifted"
+  host: pseudomonas_putida
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: gentamicin
+    ori: pBBR1
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: nptII  # Strong constitutive promoter for P. putida
+
     - cistron:
-        label: complex1
+        label: Complex1
         expression: high
-        fused: false
         gene:
           id: Complex1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: complex2
+        label: Complex2
         expression: high
-        fused: false
         gene:
           id: Complex2
           source: uniprot
-    - spacer: 20  # Programmed -1 ribosomal frameshift site
+
+    - frameshift:
+        type: minus_one
+        sequence: AAAAAAC  # Typical -1 frameshift motif (slippery site)
+
     - cistron:
-        label: complex3
+        label: Complex3
         expression: medium
-        fused: true
         gene:
           id: Complex3
           source: uniprot
-    - spacer: 20
+
+    - spacer: 25
+
     - cistron:
-        label: complex4
+        label: Complex4
         expression: medium
-        fused: true
         gene:
           id: Complex4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: complex5
+        label: Complex5
         expression: high
-        fused: false
         gene:
           id: Complex5
           source: uniprot
+
     - terminator: rrnB_T1

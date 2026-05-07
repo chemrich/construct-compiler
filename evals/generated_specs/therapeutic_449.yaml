@@ -1,36 +1,46 @@
 construct:
-  name: yeast_surface_display_bivalent_vaccine
+  name: "yeast_dual_surface_peptide_vaccine"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426" # Auxotrophic (URA3) shuttle vector selected to avoid antibiotic resistance markers
+    resistance: null
+    ori: 2-micron
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_unit_1
+        label: peptide1_surface_anchor
         expression: high
         chain:
+          - tag: NLS
           - gene:
-              id: P08431 # AGA2 anchor protein
-              source: uniprot
+              id: peptide1_epitope
+              source: custom
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P43357 # MAGE-A3 therapeutic cancer antigen
+              id: FLO1_anchor
               source: uniprot
-    - spacer: 30 # Minimum distance for independent initiation; compiler handles non-viral IRES or dual-promoter implementation for yeast
+
+    - spacer: 50
+
     - cistron:
-        label: display_unit_2
+        label: peptide2_surface_anchor
         expression: high
-        fused: false # Ensures independent translation for separate anchoring
+        fused: false
         chain:
+          - tag: NLS
           - gene:
-              id: P08431 # AGA2 anchor protein
-              source: uniprot
+              id: peptide2_epitope
+              source: custom
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P78358 # NY-ESO-1 therapeutic cancer antigen
+              id: AGA2_anchor
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: CYC1_poly_A

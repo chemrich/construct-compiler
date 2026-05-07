@@ -1,18 +1,23 @@
 construct:
-  name: "industrial_amylase_secretion_bacillus"
+  name: "Bacillus_amylase_secretion_industrial"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
         label: alpha_amylase
         expression: high
         chain:
           - secretion_signal: AmyQ
           - gene:
-              id: P00691
+              id: alpha_amylase
               source: uniprot
+              codon_optimization: bacillus_subtilis
+
     - terminator: rrnB_T1

@@ -1,41 +1,60 @@
-```yaml
 construct:
-  name: yeast_bandpass_filter_S_to_R
+  name: "yeast_bandpass_filter_S_to_R"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pRS426"
+    resistance: uracil
+    ori: 2_micron
     source: addgene
 
   cassette:
-    - promoter: GAL1  # S-inducible promoter (acts as high-pass)
+    - promoter: GAL1
 
     - cistron:
-        label: repressor
+        label: S_sensor_high_pass
         expression: high
         chain:
-          - tag: 6xHis
-          - solubility_tag: GST
           - gene:
-            id: P0A9E0  # LacI repressor
-            source: uniprot
+              id: GAL4_DBD_LexA
+              source: uniprot
 
-    - terminator: CYC1
-
-    - promoter: GAL1  # Same S-inducible promoter
+    - spacer: 25
 
     - cistron:
-        label: output_R
+        label: R_output_bandpass
         expression: medium
+        fused: false
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-            id: mScarlet
-            source: fpbase
+              id: mCherry
+              source: fpbase
 
-    - terminator: ADH1
-```
+    - spacer: 25
+
+    - cistron:
+        label: S_sensor_low_pass
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: GAL4_AD_mutant_repressor
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: metabolic_sink
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: invertase_SUC2
+              source: uniprot
+
+    - terminator: CYC1

@@ -1,22 +1,26 @@
 construct:
-  name: "peptideX_proteinY_fusion"
+  name: "Peptide_X_Protein_Y_fusion"
   host: e_coli
 
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: fusion_protein
+        label: fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: "peptideX"  # Replace with actual peptide/protein ID
+              id: peptide_X
+              source: uniprot
           - gene:
-              id: "proteinY"  # Replace with actual protein ID and source
-              # source: uniprot  # Add source when replacing with real ID
+              id: protein_Y
+              source: uniprot
 
     - terminator: rrnB_T1

@@ -1,41 +1,49 @@
 construct:
-  name: "three_level_reporter_expression_system"
+  name: "Reporter_Green_triple_expression_levels"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100 # High strength Anderson promoter
+    - promoter: T7lac
+
     - cistron:
-        label: high_expression_mEGFP
+        label: Reporter_Green_high
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: Reporter_Green
+              source: uniprot
+
     - terminator: rrnB_T1
 
-    - spacer: 40
+    - spacer: 30
 
-    - promoter: J23106 # Medium strength Anderson promoter
+    - promoter: lacUV5
+
     - cistron:
-        label: medium_expression_mEGFP
+        label: Reporter_Green_medium
         expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: Reporter_Green
+              source: uniprot
 
-    - spacer: 40
-
-    - promoter: J23114 # Low strength Anderson promoter
-    - cistron:
-        label: low_expression_mEGFP
-        expression: low
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
     - terminator: BBa_B0015
+
+    - spacer: 30
+
+    - promoter: araBAD
+
+    - cistron:
+        label: Reporter_Green_low
+        expression: low
+        chain:
+          - gene:
+              id: Reporter_Green
+              source: uniprot
+
+    - terminator: T7term

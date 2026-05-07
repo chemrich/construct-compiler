@@ -1,15 +1,22 @@
 construct:
-  name: PeptideC_Periplasmic_Expression
-  host: e_coli_bl21_de3
+  name: "PeptideC_periplasmic_secretion"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: PeptideC
         expression: high
         chain:
           - tag: pelB
           - gene:
               id: PeptideC
-    - terminator: T7term
+              source: uniprot
+
+    - terminator: rrnB_T1

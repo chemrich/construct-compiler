@@ -1,27 +1,23 @@
 construct:
-  name: HEK293_Spike_RBD_mNeonGreen_Surface_Display
-  host: HEK293
+  name: R_cell_boundary_anchor
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: CMV
+    - promoter: T7lac
     - cistron:
-        label: cell_surface_display_fusion
+        label: R_anchor
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0DTC2
+              id: R
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mNeonGreen
-              source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P09619
+              id: OmpA
               source: uniprot
-    - terminator: BGH_pA
+    - terminator: rrnB_T1

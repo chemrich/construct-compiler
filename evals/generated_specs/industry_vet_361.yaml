@@ -1,18 +1,22 @@
 construct:
-  name: "secreted_antibody_fragment_production"
+  name: "secreted_antibody_fragment_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_scFv
+        label: antibody_fragment
         expression: high
         chain:
-          - tag: IgK_leader
-          - tag: 8xHis
-          - cleavage_site: TEV
+          - tag: signal_peptide_IgG  # N-terminal secretion signal for mammalian secretion
           - gene:
-              id: Trastuzumab_scFv
+              id: antibody_fragment
               source: uniprot
-    - terminator: BGH_pA
+          - tag: 6xHis  # C-terminal His tag for Ni-NTA purification from supernatant
+
+    - terminator: SV40_polyA

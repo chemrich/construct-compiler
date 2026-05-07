@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_pylb_autoinduction_secretion"
+  name: bacillus_auto_induction_pylb_amyq_sumo
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pylb
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: AmyQ
+          - secretion_signal: AmyQ
           - solubility_tag: SUMO
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: target_protein
+              source: uniprot
+
     - terminator: rrnB_T1

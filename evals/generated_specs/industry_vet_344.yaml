@@ -1,19 +1,26 @@
 construct:
-  name: mammalian_constitutive_reporter_c_flag
+  name: "mammalian_reporter_CAG_FLAG"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: CMV
+    - promoter: CAG
+
     - cistron:
         label: reporter
         expression: high
         chain:
           - gene:
-              id: mNeonGreen
+              id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - tag: FLAG
-    - terminator: bGH_polyA
+
+    - poly_A: bGH  # bovine growth hormone polyadenylation signal

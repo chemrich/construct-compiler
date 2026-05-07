@@ -1,21 +1,35 @@
 construct:
-  name: "temperature_inducible_tempguy_reporter"
-  host: e_coli
+  name: "temperature_sensitive_TempGuy_GFP"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pL_lambda  # Standard temperature-sensitive promoter in E. coli (heat induction)
+    - promoter: araBAD
+      # Note: true temperature-sensitive promoters (e.g., λ pL/pR variants) are not standard in the schema.
+      # Using araBAD as a tunable promoter; for genuine temperature control, consider engineering a custom λ pL-based construct.
+
     - cistron:
-        label: target
-        gene:
-          id: TempGuy
-    - spacer: 30
+        label: TempGuy
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TempGuy
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: reporter
+        label: GFP_reporter
+        expression: medium
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

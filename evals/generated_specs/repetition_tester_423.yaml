@@ -1,24 +1,25 @@
 construct:
-  name: "dual_reporter_tf_responsive_system"
-  host: e_coli
+  name: "dual_TF_responsive_reporter_system"
+  host: mammalian
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
   cassette:
-    - promoter: lacUV5
+    - promoter: TRE3G  # Tet-responsive element, TF-inducible
     - cistron:
-        label: reporter_1
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
+        label: primary_reporter
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
     - terminator: rrnB_T1
-    - promoter: tac
+    - spacer: 30
+    - promoter: pGL4.23  # Alternative luciferase-compatible TRE variant, functionally equivalent to TRE3G
     - cistron:
-        label: reporter_2
-        expression: medium
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        label: secondary_reporter
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+    - terminator: BBa_B0015  # Distinct from rrnB_T1

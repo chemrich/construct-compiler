@@ -1,42 +1,49 @@
 construct:
-  name: "domain_z_pentamer_diverse_linkers"
-  host: e_coli_bl21_de3
+  name: "5x_DomainZ_tandem_diverse_linkers"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: z_pentamer
+        label: target
         expression: high
         chain:
           - gene:
-              id: Domain_Z
+              id: DomainZ
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: DomainZ
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: Domain_Z
+              id: DomainZ
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: DomainZ
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: DomainZ
               source: uniprot
           - linker:
               type: short_GS
               repeats: 1
-          - gene:
-              id: Domain_Z
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: Domain_Z
-              source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 2
-          - gene:
-              id: Domain_Z
-              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

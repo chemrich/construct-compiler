@@ -1,16 +1,23 @@
 construct:
-  name: "neuron_specific_secreted_mNeonGreen"
+  name: "tissue_specific_secreted_protein"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pAAV-MCS"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Syn1  # Tissue-specific promoter for neuronal expression
+    - promoter: hSPC_B  # human surfactant protein C promoter (lung-specific)
+
     - cistron:
-        label: secreted_protein
+        label: secreted_target
         expression: high
         chain:
-          - tag: IgK_leader  # N-terminal secretion signal peptide
+          - tag: SP_hIgG1  # human IgG1 signal peptide for secretion
           - gene:
-              id: mNeonGreen
-              source: fpbase
-    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal/terminator
+              id: "P01234"  # Replace with your secreted protein UniProt ID
+              source: uniprot
+
+    - terminator: rrnB_T1

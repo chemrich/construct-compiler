@@ -1,37 +1,39 @@
 construct:
-  name: "tri_color_diversified_mammalian_system"
+  name: "triple_FP_mammalian_expression"
   host: HEK293
-  backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
     - cistron:
-        label: blue_reporter
+        label: BlueFP
         expression: high
-        fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: bGH_polyA
-    - spacer: 50
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    - terminator: SV40_polyA
+
+  cassette_2:
     - promoter: EF1_alpha
     - cistron:
-        label: yellow_reporter
+        label: YellowFP
         expression: high
-        fused: false
-        gene:
-          id: mVenus
-          source: fpbase
-    - terminator: SV40_polyA
-    - spacer: 50
-    - promoter: UbC
+        chain:
+          - tag: HA
+          - gene:
+              id: mVenus
+              source: fpbase
+    - terminator: WPRE_polyA
+
+  cassette_3:
+    - promoter: PGK
     - cistron:
-        label: red_reporter
+        label: RedFP
         expression: high
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: hGH_polyA
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: mScarlet
+              source: fpbase
+    - terminator: BGH_polyA

@@ -1,22 +1,31 @@
 construct:
-  name: enzyme_z_bicistronic_gfp
-  host: mammalian
+  name: "bicistronic_EnzymeZ_GFP_mammalian"
+  host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic resistance genes
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+
   cassette:
-    - promoter: EF1_alpha # Non-viral strong constitutive promoter used to satisfy "no viral sequences"
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_enzyme
-        gene:
-          id: EnzymeZ
-          source: uniprot
-    - spacer: 500 # IRES sequence placeholder to link the two coding sequences in a single transcript
+        label: EnzymeZ
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeZ
+              source: uniprot
+
+    - IRES: EMCV  # Encephalomyocarditis virus IRES for cap-independent translation
+
     - cistron:
-        label: reporter
-        fused: false # Set to false to allow independent translation via the IRES
+        label: GFP
+        expression: high
+        fused: false
         gene:
-          id: GFP
+          id: sfGFP
           source: fpbase
-    - terminator: bGH_polyA # Bovine growth hormone polyadenylation signal (non-viral)
+
+    - terminator: polyA  # Poly(A) tail for mRNA stability in mammalian cells

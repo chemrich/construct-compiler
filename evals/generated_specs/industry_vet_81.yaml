@@ -1,17 +1,25 @@
 construct:
-  name: "secreted_hGH_production"
+  name: "secreted_human_growth_factor_mammalian_ivt"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: growth_factor
+        label: secreted_growth_factor
         expression: high
         chain:
-          - tag: IgK_leader
+          - signal_peptide: Kozak_secretion  # N-terminal signal for ER targeting and secretion
           - gene:
-              id: P01241
+              id: human_growth_factor
               source: uniprot
-          - tag: FLAG
-    - terminator: bGH_polyA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis  # C-terminal His tag for detection/purification
+
+    - terminator: polyA  # mammalian polyadenylation signal

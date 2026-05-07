@@ -1,22 +1,41 @@
 construct:
-  name: "t_flip_flop_recombinase_circuit"
+  name: "T_Flip_Flop_Genetic_Toggle"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Inducible promoter acting as the input pulse S
+    - promoter: araBAD
+
     - cistron:
-        label: signal_processor
+        label: toggle_switch_A
         expression: high
-        gene:
-          id: Bxb1  # Integrase that mediates the T-flip logic via DNA inversion
-          source: uniprot
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: output_T
+        label: toggle_switch_B
+        expression: high
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_reporter
         expression: medium
-        fused: false  # Independently translated reporter
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

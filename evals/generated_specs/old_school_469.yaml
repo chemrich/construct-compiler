@@ -1,18 +1,23 @@
 construct:
-  name: "HEK293_SEAP_Secreted_Reporter"
+  name: secreted_alkaline_phosphatase_reporter_293T
   host: HEK293
+
   backbone:
+    catalog_vector: pBabe_hygro
     resistance: hygromycin
-    ori: pBR322
+    ori: SV40
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: SEAP
+        label: secreted_alkaline_phosphatase
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_mammalian
           - gene:
-              id: P05187
+              id: ALPP
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40_polyA

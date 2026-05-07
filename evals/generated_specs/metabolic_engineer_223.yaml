@@ -1,30 +1,62 @@
 construct:
-  name: "human_multigene_synergy_construct"
+  name: "mammalian_quad_enzyme_P2A_cassette"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "synergistic_enzymes"
+        label: Kinase1
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: Kinase1
+              id: P06239
               source: uniprot
-          - linker:
-              type: P2A
+        notes: "Codon-optimized for mammalian expression"
+
+    - spacer: 21  # P2A peptide sequence (63 bp encoding GSGATNFSLLKQAGDVEENPGP)
+
+    - cistron:
+        label: Phosphatase2
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
           - gene:
-              id: Phosphatase2
+              id: P24522
               source: uniprot
-          - linker:
-              type: P2A
+        notes: "P2A self-cleaving peptide separates from Kinase1"
+
+    - spacer: 21  # F2A peptide sequence (63 bp encoding GSGATNFSLLKQAGDVEENPGP variant)
+
+    - cistron:
+        label: Transporter3
+        expression: high
+        fused: false
+        chain:
+          - tag: HA
           - gene:
-              id: Transporter3
+              id: P11166
               source: uniprot
-          - linker:
-              type: P2A
+        notes: "F2A self-cleaving peptide separates from Phosphatase2"
+
+    - spacer: 21  # P2A peptide sequence
+
+    - cistron:
+        label: Ligase4
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
           - gene:
-              id: Ligase4
+              id: Q13094
               source: uniprot
-    - terminator: bgh_polya
+        notes: "P2A self-cleaving peptide separates from Transporter3"
+
+    - terminator: rrnB_T1

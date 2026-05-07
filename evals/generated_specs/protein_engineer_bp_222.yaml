@@ -1,20 +1,25 @@
 construct:
-  name: "pGAP_alpha_factor_StrepII_IL2_Pichia"
+  name: "pichia_cytokine_constitutive"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: secreted_cytokine
+        label: cytokine
         expression: high
         chain:
           - tag: alpha-factor
           - tag: Strep-II
           - cleavage_site: Enterokinase
           - gene:
-              id: IL2_HUMAN
+              id: human_cytokine
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

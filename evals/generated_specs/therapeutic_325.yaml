@@ -1,14 +1,27 @@
 construct:
-  name: "HIF1a_Hypoxia_Responsive_Stabilized"
-  host: mammalian
+  name: "HIF1a_stabilized_hypoxia_responsive"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: HRE  # Hypoxia Response Element used for strictly controlled expression in hypoxic conditions
+    - promoter: HRE_minimal
+      # HRE (Hypoxia-Responsive Element) minimal promoter for oxygen-dependent control
+
     - cistron:
-        label: stabilized_HIF1a
+        label: HIF1a_stabilized
         expression: high
-        gene:
-          id: Q16665
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: HIF1A
+              source: uniprot
+              # Note: Using stabilized variant (P402A/P564A mutations) requires post-synthesis mutagenesis
+              # or source the pre-mutated sequence from literature (PMID: 12198140)
+
+    - terminator: rrnB_T1

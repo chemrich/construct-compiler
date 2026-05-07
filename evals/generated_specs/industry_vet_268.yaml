@@ -1,16 +1,23 @@
 construct:
-  name: "Tet_On_inducible_ProteinK_AAV"
+  name: "inducible_ProteinK_AAV_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pAAV-MCS"
     resistance: ampicillin
-    ori: pUC
     source: addgene
+
   cassette:
     - promoter: TRE3G
+
     - cistron:
-        label: target
+        label: ProteinK
         expression: high
-        gene:
-          id: ProteinK
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinK
+              source: uniprot
+
+    - terminator: SV40_polyA

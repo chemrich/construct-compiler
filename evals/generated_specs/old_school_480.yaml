@@ -1,18 +1,22 @@
 construct:
-  name: "wonder_protein_high_expression_system"
-  host: e_coli
+  name: "high_expression_wonder_protein"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac # Substituted tac for pTrc as they are functionally similar; note that tac is traditionally IPTG-inducible but often exhibits high basal expression
+    - promoter: tac
+
     - cistron:
-        label: target
+        label: wonder_protein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: WONDER_PROT # Placeholder ID for the user's protein
+              id: wonder_protein
               source: uniprot
+
     - terminator: rrnB_T1

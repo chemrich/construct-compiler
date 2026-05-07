@@ -1,19 +1,24 @@
 construct:
-  name: "pichia_secretion_amylase_myc"
+  name: "Pichia_secreted_engineered_amylase"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_B"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: amylase_target
+        label: amylase
         expression: high
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - gene:
-              id: P00693
+              id: engineered_amylase
               source: uniprot
           - tag: myc
+
     - terminator: AOX1

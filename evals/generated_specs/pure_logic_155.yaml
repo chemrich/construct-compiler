@@ -1,23 +1,54 @@
 construct:
-  name: "dual_edge_detector_iffm"
+  name: "genetic_edge_detector"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: araBAD  # SignalIn: induction by L-arabinose
+    - promoter: araBAD
+    
     - cistron:
-        label: signal_out
+        label: delay_protein
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - spacer: 25
+    
     - cistron:
-        label: delayed_inhibitor
+        label: repressor
         expression: high
-        fused: false  # Separate protein for delayed negative feedback (pulse generation)
-        gene:
-          id: lacI
-          source: uniprot
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: edge_detector_logic
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: output
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GFP
+              source: fpbase
+    
     - terminator: rrnB_T1

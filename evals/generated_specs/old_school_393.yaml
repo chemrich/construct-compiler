@@ -1,16 +1,22 @@
 construct:
-  name: "peptide_lambda_secretion"
+  name: "E_coli_secreted_Peptide_Lambda"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: lac
+    - promoter: lacUV5
+
     - cistron:
-        label: target
+        label: secreted_peptide
         expression: high
         chain:
-          - tag: PelB # Signal sequence for N-terminal export/secretion
+          - tag: pelB_signal_peptide
           - gene:
               id: Peptide_Lambda
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,21 +1,26 @@
 construct:
-  name: "Bacillus_subtilis_secreted_enzyme_complex"
-  host: bacillus_subtilis
+  name: "Bacillus_four_enzyme_secretion_operon"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_grac  # Standard inducible promoter for Bacillus subtilis
+    - promoter: xylose_inducible  # Inducible promoter suitable for Bacillus subtilis
+
     - cistron:
-        label: EnzX_secreted
+        label: EnzX
         expression: high
         chain:
-          - tag: AmyQ_signal_peptide
+          - secretion_signal: AmyQ_signal_peptide
           - gene:
               id: EnzX
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: EnzY
         expression: high
@@ -23,7 +28,9 @@ construct:
         gene:
           id: EnzY
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: EnzZ
         expression: high
@@ -31,7 +38,9 @@ construct:
         gene:
           id: EnzZ
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: EnzW
         expression: high
@@ -39,4 +48,5 @@ construct:
         gene:
           id: EnzW
           source: uniprot
+
     - terminator: rrnB_T1

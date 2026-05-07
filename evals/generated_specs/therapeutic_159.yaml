@@ -1,18 +1,24 @@
 construct:
-  name: "safe_mammalian_secreted_vaccine_antigen"
+  name: "mammalian_secreted_vaccine_antigen"
   host: HEK293
+
   backbone:
-    resistance: none # Note: User requested no antibiotic resistance; metabolic selection or alternative safety profile is implied.
+    catalog_vector: "pTwist CMV"
     ori: pUC
-    source: custom
+    # No antibiotic resistance marker for clinical safety
+
   cassette:
-    - promoter: EF1_alpha # Substituted human EF1-alpha for CMV to ensure construct is devoid of viral sequences.
+    - promoter: CMV
+
     - cistron:
-        label: secreted_antigen
+        label: antigen
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal peptide mandatory for extracellular localization.
+          - signal_peptide: IgE_leader  # Mammalian secretion signal
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: P0DTC2
+              id: SARS_CoV2_RBD
               source: uniprot
-    - terminator: hGH_polyA # Substituted human growth hormone polyadenylation signal for viral terminators (like SV40).
+
+    - terminator: BGH_polyA

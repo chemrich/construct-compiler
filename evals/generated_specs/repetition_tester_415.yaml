@@ -1,72 +1,76 @@
 construct:
-  name: divergent_metabolic_pathway_E1_E5
+  name: "five_enzyme_metabolic_pathway_divergent_codon_optimization"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_1
-        expression: medium
+        label: E1
+        expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - cleavage_site: TEV
           - gene:
-              id: E1
-              source: uniprot
-    - spacer: 30
+              id: E1_codon_variant_A
+              source: custom
+              note: "Synonymously codon-optimized variant A for maximum sequence divergence"
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
-        expression: medium
-        fused: false
-        chain:
-          - tag: FLAG
-          - linker:
-              type: rigid_EAAAK
-              repeats: 2
-          - gene:
-              id: E2
-              source: uniprot
-    - spacer: 31
-    - cistron:
-        label: enzyme_3
-        expression: medium
-        fused: false
+        label: E2
+        expression: high
         chain:
           - tag: Strep-II
-          - linker:
-              type: short_GS
-              repeats: 1
+          - cleavage_site: 3C
           - gene:
-              id: E3
-              source: uniprot
-    - spacer: 32
+              id: E2_codon_variant_B
+              source: custom
+              note: "Synonymously codon-optimized variant B, non-homologous to E1"
+
+    - spacer: 30
+
     - cistron:
-        label: enzyme_4
-        expression: medium
-        fused: false
+        label: E3
+        expression: high
+        chain:
+          - tag: FLAG
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: E3_codon_variant_C
+              source: custom
+              note: "Synonymously codon-optimized variant C, non-homologous to E1 and E2"
+
+    - spacer: 28
+
+    - cistron:
+        label: E4
+        expression: high
         chain:
           - tag: HA
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - cleavage_site: Thrombin
           - gene:
-              id: E4
-              source: uniprot
-    - spacer: 33
+              id: E4_codon_variant_D
+              source: custom
+              note: "Synonymously codon-optimized variant D, non-homologous to E1, E2, and E3"
+
+    - spacer: 32
+
     - cistron:
-        label: enzyme_5
-        expression: medium
-        fused: false
+        label: E5
+        expression: high
         chain:
           - tag: Twin-Strep
-          - linker:
-              type: rigid_EAAAK
-              repeats: 3
+          - cleavage_site: Enterokinase
           - gene:
-              id: E5
-              source: uniprot
+              id: E5_codon_variant_E
+              source: custom
+              note: "Synonymously codon-optimized variant E, non-homologous to all other variants"
+
     - terminator: rrnB_T1

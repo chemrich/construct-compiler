@@ -1,32 +1,54 @@
 construct:
-  name: "transcriptional_AND_gate_B_C"
-  host: e_coli
+  name: transcriptional_AND_gate
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Activated by Inducer_B (L-arabinose)
+    - promoter: araBAD
+      # araBAD is repressed by AraC; activated by arabinose (Inducer_B)
+
     - cistron:
-        label: input_b_split_t7_n
-        expression: medium
-        gene:
-          id: T7_RNAP_N_fragment
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: lacUV5  # Activated by Inducer_C (IPTG)
-    - cistron:
-        label: input_c_split_t7_c
-        expression: medium
-        gene:
-          id: T7_RNAP_C_fragment
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7  # Active only if both split-T7 fragments are present
-    - cistron:
-        label: reporter_z
+        label: AraC_TF
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: lacUV5
+      # lacUV5 is repressed by LacI; activated by IPTG (Inducer_C)
+
+    - cistron:
+        label: LacI_repressor
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: araBAD
+      # AND gate logic: araBAD output promoter activated by AraC+arabinose,
+      # but also controlled by LacI repression. Output only when both inducers present.
+
+    - cistron:
+        label: Reporter_Z
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

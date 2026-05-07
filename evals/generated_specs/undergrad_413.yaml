@@ -1,16 +1,20 @@
 construct:
-  name: "inducible_tuneprotein_dial_expression"
-  host: e_coli
+  name: "TuneProtein_inducible_expression"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # araBAD is used as a 'dial' for dose-dependent induction with L-arabinose
+    - promoter: araBAD  # arabinose-inducible; expression scales with L-arabinose concentration
+
     - cistron:
-        label: target
-        expression: high
-        gene:
-          id: TuneProtein
-          source: uniprot
+        label: TuneProtein
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TuneProtein
+              source: uniprot
+
     - terminator: rrnB_T1

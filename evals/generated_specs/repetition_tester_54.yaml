@@ -1,12 +1,16 @@
 construct:
-  name: "nuclear_shuttle_protein_fusion"
+  name: "NLS_NES_dual_localization_signal_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: target_protein
+        label: dual_localization
         expression: high
         chain:
           - tag: NLS
@@ -14,10 +18,12 @@ construct:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: mCherry
+              id: EGFP
               source: fpbase
           - linker:
               type: rigid_EAAAK
               repeats: 2
           - tag: NES
-    - terminator: bGH_polyA
+          - cleavage_site: 3C
+
+    - terminator: rrnB_T1

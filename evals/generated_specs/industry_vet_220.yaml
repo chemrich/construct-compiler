@@ -1,21 +1,21 @@
 construct:
-  name: "constitutive_egfp_expression"
-  host: e_coli
+  name: "EGFP_reporter_expression"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: EGFP
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
+
     - terminator: rrnB_T1

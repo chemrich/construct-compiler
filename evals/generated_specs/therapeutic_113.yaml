@@ -1,18 +1,30 @@
 construct:
-  name: "Non_Viral_Therapeutic_Receptor_HEK293"
+  name: "mammalian_cell_surface_receptor_therapeutic"
   host: HEK293
+
   backbone:
-    # Kanamycin included for E. coli propagation; for therapeutic use, alternative selection (e.g. minicircle) is recommended.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # pTwist CMV is a non-viral mammalian expression vector
+    # without antibiotic resistance markers; uses selection-free design
+
   cassette:
-    - promoter: EF1_alpha # Non-viral human-derived promoter
+    - promoter: CMV
+      # Strong constitutive mammalian promoter for therapeutic protein expression
+
     - cistron:
-        label: therapeutic_receptor
+        label: receptor
         expression: high
         chain:
+          - signal_peptide: alpha_factor_analog
+            # Signal peptide for ER translocation and N-terminal trafficking
           - gene:
-              id: P00533 # EGFR (Human Epidermal Growth Factor Receptor)
+              id: EGFR
               source: uniprot
-    - terminator: bGH_pA # Non-viral polyadenylation signal (Bovine Growth Hormone)
+            # Exemplar: Epidermal Growth Factor Receptor
+            # Replace with specific therapeutic receptor as needed (e.g., CD40, TNF-R, IL-2R)
+          - tag: FLAG
+            # C-terminal FLAG tag for detection and purification
+            # Minimal, non-immunogenic tag for therapeutic use
+
+    - terminator: SV40poly_A
+      # Mammalian polyadenylation signal for mRNA stability and export

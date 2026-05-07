@@ -1,15 +1,20 @@
 construct:
-  name: "chemical_inducible_high_gfp"
-  host: e_coli_bl21_de3
+  name: inducible_GFP_expression
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
-        label: gfp_expression_unit
+        label: GFP
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

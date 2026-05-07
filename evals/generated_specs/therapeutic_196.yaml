@@ -1,16 +1,23 @@
 construct:
-  name: "inducible_secreted_cytokine_c"
+  name: "inducible_CytokineC_secretion_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TRE3G  # Inducible promoter activated by Doxycycline/Tetracycline ligand
+    - promoter: TRE_tight
+      # TRE (Tetracycline Response Element) for ligand-inducible (doxycycline) control
+
     - cistron:
-        label: therapeutic_cytokine
+        label: CytokineC_secreted
         expression: high
         chain:
-          - tag: IgK_leader  # Standard mammalian secretion signal
+          - tag: signal_peptide_IgG_Fc
+            # Signal peptide for ER targeting and secretion
           - gene:
               id: CytokineC
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: poly_A_signal_BGH

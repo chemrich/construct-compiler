@@ -1,23 +1,53 @@
 construct:
-  name: "non_repetitive_dual_expression_reporter"
+  name: tandem_ReporterFP_no_recombination_HEK293
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: ReporterFP
+        label: ReporterFP_v1
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_polyA
-    - spacer: 100  # Unique DNA spacer used instead of a protein linker to facilitate independent expression units
-    - promoter: EF1_alpha  # Different promoter used to minimize repetitive DNA and prevent recombination
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mEGFP
+              source: fpbase
+              codon_optimization: human_optimized_v1
+
+    - linker:
+        type: custom_unique
+        sequence: GGSGGSGGSGGSGGSGGSGGS
+        repeats: 1
+
     - cistron:
-        label: ReporterFP_prime
+        label: ReporterFP_prime_v2
         expression: high
-        gene:
-          id: mCherry  # Used mCherry as ReporterFP_prime to ensure sequence diversity from mScarlet while maintaining function
-          source: fpbase
-    - terminator: SV40_polyA  # Distinct poly(A) signal provided to satisfy the request for independent expression units
+        chain:
+          - tag: HA
+          - gene:
+              id: mEGFP
+              source: fpbase
+              codon_optimization: human_optimized_v2
+
+    - terminator: SV40_poly_A
+
+    # Second independent expression unit with distinct poly(A) signal
+    - spacer: 50
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: ReporterFP_v1_independent
+        expression: medium
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+              codon_optimization: human_optimized_v1
+
+    - terminator: BGH_poly_A

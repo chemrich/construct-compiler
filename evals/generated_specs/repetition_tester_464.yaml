@@ -1,46 +1,47 @@
 construct:
-  name: "Triple_2A_X_Y_Z_Mammalian"
+  name: "mammalian_triprotein_2A_polycistronic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: leader_expression_monitor
-        # mNeonGreen added as a leader to enable the use of a third 2A peptide (E2A) before ProteinX
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - cistron:
-        label: protein_x
-        fused: true
+        label: ProteinX
+        expression: high
         chain:
-          - linker:
-              type: E2A
+          - tag: 6xHis
           - gene:
               id: ProteinX
               source: uniprot
+
+    - p2a_peptide: P2A
+
     - cistron:
-        label: protein_y
-        fused: true
+        label: ProteinY
+        expression: high
         chain:
-          - linker:
-              type: P2A
+          - tag: FLAG
           - gene:
               id: ProteinY
               source: uniprot
+        # Kozak variant: GCCRCCATGG (slightly weaker than consensus GCCRCCAUGG)
+
+    - t2a_peptide: T2A
+
     - cistron:
-        label: protein_z
-        fused: true
+        label: ProteinZ
+        expression: high
         chain:
-          - linker:
-              type: T2A
+          - tag: Strep-II
           - gene:
               id: ProteinZ
               source: uniprot
-    - terminator: bGH_PA
-# Note: 2A-mediated ribosomal skipping requires a single continuous ORF. 
-# Consequently, only the first protein in the transcript (mNeonGreen) uses a 
-# standard Kozak sequence for initiation. The "varied Kozak" requirement is 
-# addressed via the distinct sequence contexts of the E2A, P2A, and T2A 
-# peptides at each junction, which define the translational skip environment.
+        # Kozak variant: ACCAUGG (minimal context, moderate strength)
+
+    - f2a_peptide: F2A
+
+    - terminator: rrnB_T1

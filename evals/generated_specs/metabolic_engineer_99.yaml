@@ -1,49 +1,62 @@
 construct:
-  name: "tight_inducible_toxic_biosynthesis_operon"
-  host: e_coli_bl21
+  name: "toxic_compound_biosynthesis_operon"
+  host: e_coli_bl21_de3
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Used for ultra-low leakage compared to T7/tac
+    - promoter: araBAD
+      # Ultra-low-leakage inducible control with minimal basal expression
+    
     - cistron:
         label: Tox1
-        expression: medium
-        fused: false
-        gene:
-          id: Tox1
-          source: uniprot
-    - spacer: 30
+        expression: high
+        chain:
+          - gene:
+              id: Tox1
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: Tox2
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: Tox2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: Tox3
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: Tox3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: Tox4
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: Tox4
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: Tox5
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: Tox5
           source: uniprot
+    
     - terminator: rrnB_T1

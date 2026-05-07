@@ -1,56 +1,81 @@
 construct:
-  name: "non_homologous_constitutive_medium_library"
+  name: "medium_strength_promoter_library_e_coli"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23106  # Anderson synthetic medium-strength constitutive promoter
+    - promoter: J23106
+      # Medium-strength BioBrick promoter; consensus -35/-10 boxes
+      # Variant A: baseline sequence
+
     - cistron:
         label: reporter_1
         expression: medium
-        fused: false
         gene:
-          id: mEGFP
-          source: fpbase
+          id: lacZ_alpha
+          source: uniprot
+
     - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: pbla  # Beta-lactamase promoter, natural medium constitutive (non-homologous to Anderson)
+
+  cassette:
+    - promoter: trc
+      # Medium-strength Trc promoter; distinct -35/-10 architecture from J23106
+      # Variant B: divergent consensus
+
     - cistron:
         label: reporter_2
         expression: medium
-        fused: false
         gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
-    - spacer: 50
-    - promoter: proC  # proC metabolic promoter, natural medium constitutive
+          id: lacZ_alpha
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+  cassette:
+    - promoter: araBAD
+      # Medium-strength araBAD promoter without arabinose induction
+      # Variant C: araBAD half-site, constitutively active configuration
+      # Distinct -35/-10 positioning from Trc and J23106
+
     - cistron:
         label: reporter_3
         expression: medium
-        fused: false
         gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: BBa_B0015
-    - spacer: 50
-    - promoter: rpsL  # rpsL ribosomal promoter, natural medium constitutive
+          id: lacZ_alpha
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+  cassette:
+    - promoter: rrnA_P1
+      # Medium-strength rrn P1 promoter
+      # Variant D: bacterial rRNA operon promoter; minimal homology to synthetic/engineered promoters
+      # Distinct spacing and consensus from araBAD, Trc, J23106
+
     - cistron:
         label: reporter_4
         expression: medium
-        fused: false
         gene:
-          id: mCherry
-          source: fpbase
+          id: lacZ_alpha
+          source: uniprot
+
     - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: gapA  # gapA glycolytic promoter, natural medium constitutive
+
+  cassette:
+    - promoter: tacI
+      # Medium-strength TacI promoter variant
+      # Variant E: modified Tac with divergent -35 box from trc
+      # Orthogonal sequence space to all above; distinct consensus mutations
+
     - cistron:
         label: reporter_5
         expression: medium
-        fused: false
         gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: T7term
+          id: lacZ_alpha
+          source: uniprot
+
+    - terminator: rrnB_T1

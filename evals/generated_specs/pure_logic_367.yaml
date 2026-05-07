@@ -1,32 +1,68 @@
 construct:
-  name: "genetic_small_molecule_comparator"
-  host: e_coli
+  name: "genetic_comparator_small_molecule_detector"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Activated by Input A (e.g., Arabinose)
+    - promoter: T7lac
+
     - cistron:
-        label: High_A_Reporter
+        label: sensor_A
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+        # araC senses arabinose (Concentration_A input)
+
+    - spacer: 25
+
+    - cistron:
+        label: sensor_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: malT
+              source: uniprot
+        # malT senses maltose (Concentration_B input)
+
+    - spacer: 25
+
+    - cistron:
+        label: high_A_output
+        expression: medium
+        fused: false
         gene:
-          id: mScarlet
+          id: mCherry
           source: fpbase
-    - terminator: rrnB_T1
-    - promoter: tac     # Activated by Input B (e.g., IPTG)
+        # Expressed when araC >> malT (High_A_Reporter)
+
+    - spacer: 25
+
     - cistron:
-        label: High_B_Reporter
-        expression: high
+        label: high_B_output
+        expression: medium
+        fused: false
         gene:
           id: mNeonGreen
           source: fpbase
-    - terminator: T7term
-    - promoter: J23106  # Placeholder for 'Equal' logic; ideally would be an A AND B logic gate
+        # Expressed when malT >> araC (High_B_Reporter)
+
+    - spacer: 25
+
     - cistron:
-        label: Equal_Reporter
-        expression: low
+        label: equal_output
+        expression: medium
+        fused: false
         gene:
-          id: mTagBFP2
+          id: sfGFP
           source: fpbase
-    - terminator: BBa_B0015
+        # Expressed when araC ≈ malT (Equal_Reporter)
+
+    - terminator: rrnB_T1

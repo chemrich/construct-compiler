@@ -1,23 +1,28 @@
 construct:
-  name: "yeast_protein_j_cfp_fusion"
+  name: "Protein_J_CFP_fusion_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target_fusion
-        expression: medium
+        label: fusion
+        expression: high
         chain:
           - gene:
-              id: Protein_J
+              id: J
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: CFP
               source: fpbase
-    - terminator: CYC1_term
+
+    - terminator: CYC1

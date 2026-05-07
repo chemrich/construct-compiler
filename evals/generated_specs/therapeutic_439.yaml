@@ -1,18 +1,38 @@
 construct:
-  name: non_viral_stable_surface_display_receptor
-  host: mammalian
+  name: "mammalian_surface_display_therapeutic_receptor"
+  host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic resistance; note that this may hinder plasmid propagation in E. coli
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector with constitutive promoter
+    # Antibiotic resistance omitted as requested
+
   cassette:
-    - promoter: EF1_alpha # Strong constitutive human promoter used as a non-viral alternative to CMV
+    - promoter: EF1_alpha
+      # Strong constitutive mammalian promoter, superior to CMV for stable long-term expression
+
     - cistron:
         label: therapeutic_receptor
         expression: high
         chain:
-          - tag: 6xHis
+          - tag: FLAG
+            # N-terminal FLAG tag for monitoring expression and immunofluorescence
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: EGFR # Human EGFR contains natural signal peptide and transmembrane domain for surface display
+              id: IL2RA
               source: uniprot
-    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal (non-viral)
+              # IL-2 receptor alpha (CD25) as example therapeutic receptor
+              # User should substitute with their specific receptor protein ID
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+            # C-terminal His tag for purification monitoring
+          - transmembrane_domain: PDGFR_TMD
+            # Transmembrane domain for surface anchoring
+            # User may specify alternative TMD (e.g., from native protein or engineered)
+
+    - terminator: SV40_poly_A
+      # Mammalian polyadenylation signal for transcript stability

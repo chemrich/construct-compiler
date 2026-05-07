@@ -1,22 +1,27 @@
 construct:
-  name: "protein_mcherry_c_terminal_fusion"
+  name: "protein_mCherry_visualization"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: J23100
+    
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
           - gene:
-              id: target_protein
+              id: your_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: mCherry
               source: fpbase
+    
     - terminator: rrnB_T1

@@ -1,21 +1,25 @@
 construct:
-  name: "secreted_mammalian_custom_purification"
-  host: mammalian
+  name: "secreted_protein_unique_tag_construct"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: secreted_target
         expression: high
         chain:
-          - tag: BM40_signal
+          - tag: SP_Ang2  # Angiopoietin-2 signal peptide (non-standard alternative to IgG leader)
           - gene:
-              id: P01588
+              id: target_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - solubility_tag: MBP
-          - tag: Twin-Strep
-    - terminator: hGHR_polyA
+              repeats: 1
+          - solubility_tag: MBP_N_fragment  # N-terminal MBP fragment (residues 1-42) as unique fusion tag
+
+    - terminator: SV40_poly_A  # SV40 poly(A) signal (non-standard alternative to hGH or BGH)

@@ -1,40 +1,52 @@
 construct:
-  name: "four_enzyme_operon_co_purification_complex"
+  name: "four_enzyme_complex_operon"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_X1
+        label: X1
         expression: medium
         chain:
           - tag: Strep-II
           - gene:
               id: X1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_X2
+        label: X2
         expression: medium
         fused: false
         gene:
           id: X2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_X3
+        label: X3
         expression: medium
         fused: false
         gene:
           id: X3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_X4
+        label: X4
         expression: medium
         fused: false
         gene:
           id: X4
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

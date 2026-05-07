@@ -1,28 +1,28 @@
 construct:
-  name: "human_insulin_with_BiP_chaperone"
-  host: e_coli_bl21_de3
-
+  name: "HumanInsulin_with_BiP_chaperone"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
-
+  
   cassette:
     - promoter: T7
-
+    
     - cistron:
         label: insulin
-        expression: medium
+        expression: high
         gene:
-          id: P01308  # Human insulin
+          id: "P01308"
           source: uniprot
-
-    - spacer: 30  # Note: E. coli ribosomes don't recognize mammalian IRES, using spacer for polycistronic expression
-
+    
+    - spacer: 30
+    
     - cistron:
         label: chaperone
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: P11021  # BiP/GRP78 chaperone
+          id: "P29033"
           source: uniprot
-
+    
     - terminator: rrnB_T1

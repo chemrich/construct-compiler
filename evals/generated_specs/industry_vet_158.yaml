@@ -1,15 +1,20 @@
 construct:
-  name: TBG_mScarlet_hepatocyte_expression
-  host: mammalian
+  name: hepatocyte_specific_expression
+  host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: TBG
+      # TBG (Transthyretin Promoter with Beta-globin Poly(A)) provides hepatocyte-specific expression
+
     - cistron:
-        label: target_gene
+        label: target
+        expression: high
         gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_polyA
+          id: null
+          # User must specify the target gene ID and source (e.g., uniprot:P12345)
+
+    - terminator: WPRE
+      # WPRE (Woodchuck Posttranscriptional Regulatory Element) followed by SV40 polyA for mammalian expression

@@ -1,23 +1,23 @@
 construct:
-  name: "therapeutic_protein_degrader_mammalian"
+  name: "mammalian_protac_therapeutic"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    # Clean mammalian expression vector without antibiotic resistance
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
 
     - cistron:
-        label: therapeutic_degrader
-        expression: medium
+        label: protac_therapeutic
+        expression: high
         chain:
-          - tag: NLS
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - tag: FLAG
+          - cleavage_site: TEV
           - gene:
-              id: "PROTAC_E3_ligase_domain"  # Placeholder for therapeutic protein
+              id: custom_protac
               source: uniprot
+        nuclear_localization: true
 
-    - terminator: BGH_polyA
+    - terminator: bgh_poly_a

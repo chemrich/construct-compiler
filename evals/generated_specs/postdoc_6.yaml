@@ -1,6 +1,6 @@
 construct:
-  name: HumanKinase_His_expression
-  host: e_coli_bl21_de3
+  name: "HumanKinase_His6_E_coli"
+  host: e_coli_bl21
   
   backbone:
     resistance: ampicillin
@@ -11,11 +11,15 @@ construct:
     - promoter: T7
     
     - cistron:
-        label: target
+        label: HumanKinase
         expression: high
         chain:
           - gene:
-              id: HumanKinase  # User-provided codon-optimized sequence
+              id: HumanKinase
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: 6xHis
     
-    - terminator: rrnB_T1
+    - terminator: T7term

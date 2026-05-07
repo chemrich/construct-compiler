@@ -1,24 +1,46 @@
 construct:
-  name: "biofuel_negative_feedback_loop"
-  host: e_coli_bl21_de3
+  name: "biofuel_precursor_negative_feedback_loop"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
-        label: precursor_synthase
-        expression: high
+        label: transcriptional_repressor
+        expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: P0ADA1
+              id: lacI
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: feedback_regulator
-        expression: low
-        fused: false
-        gene:
-          id: P0ACJ8
-          source: uniprot
+        label: biofuel_precursor_enzyme
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ADH
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: biosensor_output_protein
+        expression: medium
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
     - terminator: rrnB_T1

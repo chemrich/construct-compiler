@@ -1,27 +1,22 @@
 construct:
-  name: "secretory_mNeonGreen_mScarlet_expression"
-  host: CHO
+  name: secreted_protein_F
+  host: e_coli
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: CMV
+    - promoter: T7lac
+
     - cistron:
-        label: mNeonGreen_secretory
+        label: secreted_F
         expression: high
         chain:
-          - tag: IgK_leader
-          - tag: 10xHis
+          - tag: 6xHis
           - solubility_tag: MBP
-          - cleavage_site: 3C
+          - cleavage_site: TEV
           - gene:
-              id: mNeonGreen
-              source: fpbase
-    - spacer: 30
-    - cistron:
-        label: reporter
-        expression: low
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_pA
+              id: F
+              source: uniprot
+
+    - terminator: rrnB_T1

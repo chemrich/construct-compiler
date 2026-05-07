@@ -1,29 +1,37 @@
 construct:
   name: "yeast_secreted_K_intracellular_L"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: protein_K
+        label: K_secreted
         expression: high
         chain:
-          - tag: alpha_factor  # Yeast signal peptide for secretion
           - tag: Strep-II
+          - secretion_signal: alpha-factor
           - gene:
               id: K
               source: uniprot
+
+    - terminator: CYC1
+
     - spacer: 30
+
     - cistron:
-        label: protein_L
+        label: L_intracellular
         expression: high
-        fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: L
               source: uniprot
-    - terminator: CYC1_terminator
+
+    - terminator: CYC1

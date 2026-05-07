@@ -1,28 +1,51 @@
 construct:
-  name: "divergent_dual_inducible_biosensor"
+  name: "dual_reporter_biosensor_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: ampicillin
 
   cassette:
-    - promoter: TRE3G  # High-efficiency Tet-On 3G response element with minimal CMV promoter
-    - cistron:
-        label: green_reporter
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+    - promoter: CMV
+      comment: "Primary CMV promoter drives first reporter"
 
-    - spacer: 100  # Separation to prevent transcriptional interference and maintain sequence divergence
-
-    - promoter: TRE_minTK  # Alternative Tet-response element using minimal Thymidine Kinase promoter for sequence divergence
     - cistron:
         label: luciferase_reporter
         expression: high
-        fused: false  # Independently translated transcription unit
-        gene:
-          id: P08659  # Firefly luciferase (Photinus pyralis)
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "Photinus_pyralis_luciferase_mammalian_codon_optimized"
+              source: uniprot
+              codon_optimization: mammalian_high_expression
+              sequence_variant: "synthetic_v1_maximum_dissimilarity"
 
-    - terminator: bGH_polyA  # Bovine growth hormone polyadenylation signal for stable mammalian expression
+    - terminator: bGH_poly_A
+
+    - promoter: SV40_early
+      comment: "Divergent SV40 promoter (entirely distinct from CMV) drives second reporter"
+      regulatory_elements:
+        enhancer: "synthetic_compact_enhancer_v2"
+        comment: "Non-homologous synthetic enhancer to minimize recombination risk"
+
+    - cistron:
+        label: gfp_reporter
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: "sfGFP_mammalian_codon_optimized"
+              source: fpbase
+              codon_optimization: mammalian_high_expression
+              sequence_variant: "synthetic_v2_maximum_dissimilarity"
+
+    - terminator: SV40_poly_A
+      comment: "Distinct polyadenylation signal from first reporter"
+
+  regulatory_logic:
+    response_element: "TRE_tetracycline_response_element"
+    transcription_factor: "rtTA_reverse_tetracycline_transactivator"
+    input_signal: "doxycycline"
+    mode: "inducible_on"
+    comment: "Both reporter promoters contain identical TRE sequences upstream to respond to same rtTA/doxycycline input while maintaining entirely divergent promoter architectures downstream of the response element"

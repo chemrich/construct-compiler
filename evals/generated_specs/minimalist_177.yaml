@@ -1,16 +1,20 @@
 construct:
-  name: "protein_l_minimal_expression"
-  host: e_coli
+  name: ProteinL_low_expression
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_l
-        expression: low
-        gene:
-          id: P18555
-          source: uniprot
+        label: ProteinL
+        expression: very_low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinL
+              source: uniprot
+
     - terminator: rrnB_T1

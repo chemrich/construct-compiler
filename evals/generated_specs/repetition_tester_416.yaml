@@ -1,26 +1,28 @@
 construct:
-  name: "mammalian_tm_fusion_dual_protease"
+  name: "mammalian_TM_protein_dual_protease_cleavage"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: tm_fusion
+        label: transmembrane_protein
         expression: high
         chain:
-          - tag: IgK_leader  # N-terminal secretion signal
+          - tag: signal_peptide_SP  # N-terminal secretion signal (ER targeting)
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-          - cleavage_site: TEV
+          - cleavage_site: TEV  # First protease site (post-fluorescent protein)
           - gene:
-              id: CD8A  # Human CD8 alpha used as the single-pass transmembrane domain
+              id: TMD_human_PDGFR  # Generic transmembrane domain reference
               source: uniprot
-          - cleavage_site: 3C   # HRV3C protease site (non-homologous to TEV)
-          - tag: FLAG
+          - cleavage_site: HRV3C  # Second protease site (post-transmembrane domain, non-homologous to TEV)
+          - tag: FLAG  # C-terminal epitope tag
 
-    - terminator: SV40_pA
+    - terminator: SV40_polyA

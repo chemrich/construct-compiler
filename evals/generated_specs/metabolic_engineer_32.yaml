@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: anaerobic_degradation_pathway_4enzyme
-  host: e_coli
+  name: "anaerobic_degradation_pathway_4enzymes"
+  host: e_coli_bl21
 
   backbone:
     resistance: kanamycin
@@ -9,46 +8,45 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: narG  # anaerobic-responsive promoter active under anoxic conditions
+    - promoter: fnr  # FNR (Fumarate and Nitrate Reduction) - oxygen-responsive anaerobic promoter
 
     - cistron:
         label: enzyme1
         expression: high
-        gene:
-          id: P0A6F1  # fumarate reductase subunit A
-          source: uniprot
+        chain:
+          - gene:
+              id: P0A9Q0  # Example: FrdA (Fumarate reductase)
+              source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: enzyme2
         expression: high
-        fused: false
         chain:
           - gene:
-              id: P69441  # nitrate reductase A
+              id: P0AFG8  # Example: NarG (Nitrate reductase)
               source: uniprot
           - tag: FLAG
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: enzyme3
         expression: high
-        fused: false
-        gene:
-          id: P0ABK2  # formate dehydrogenase-O major subunit
-          source: uniprot
+        chain:
+          - gene:
+              id: P69905  # Example: PdhA (Pyruvate dehydrogenase)
+              source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: enzyme4
         expression: high
-        fused: false
-        gene:
-          id: P0A9Q7  # pyruvate formate-lyase
-          source: uniprot
+        chain:
+          - gene:
+              id: P0A799  # Example: AdhE (Alcohol dehydrogenase)
+              source: uniprot
 
     - terminator: rrnB_T1
-```

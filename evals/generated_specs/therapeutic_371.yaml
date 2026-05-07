@@ -1,18 +1,23 @@
 construct:
-  name: "plant_apoplast_secretion_hsa"
-  host: nicotiana_benthamiana
+  name: "plant_apoplast_therapeutic_secretion"
+  host: plant
+
   backbone:
-    resistance: kanamycin # Necessary for E. coli propagation; assumed removed or excluded for non-GMO plant delivery
-    ori: pUC
+    resistance: null  # antibiotic-free design
+    ori: plant_autonomous_replication  # plant-specific autonomous replication element
     source: custom
+
   cassette:
-    - promoter: AtUbi10 # Arabidopsis thaliana Ubiquitin-10 constitutive promoter (non-viral)
+    - promoter: CaMV35S  # constitutive plant promoter
+
     - cistron:
         label: therapeutic_protein
         expression: high
         chain:
-          - tag: SP_PR1 # Signal peptide from N. tabacum Pathogenesis-Related Protein 1 for apoplast secretion
+          - signal_peptide: plant_secretion_signal  # N-terminal ER-targeting signal for apoplast localization
           - gene:
-              id: P02768 # Human Serum Albumin (HSA)
+              id: therapeutic_target
               source: uniprot
-    - terminator: AtHSP18.2 # Arabidopsis thaliana Heat Shock Protein 18.2 terminator (non-viral)
+          - c_tag: HDEL  # C-terminal ER retention signal (optional: use SEKDEL for apoplast accumulation instead)
+
+    - terminator: plant_polyA  # plant-specific polyadenylation signal

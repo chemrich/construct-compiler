@@ -1,34 +1,49 @@
 construct:
-  name: "quorum_sensing_secreted_effector_system"
+  name: quorum_sensing_secreted_effector_circuit
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100  # Constitutive promoter for quorum sensing machinery
+    - promoter: araBAD
+    
     - cistron:
-        label: luxI_synthase
-        expression: medium
-        gene:
-          id: P12746
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: luxR_regulator
-        expression: medium
-        fused: false
-        gene:
-          id: P12747
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: Plux  # Activated by LuxR-AHL complex at high cell density
-    - cistron:
-        label: effector_hGH
+        label: acyl_homoserine_lactone_synthase
         expression: high
         chain:
-          - tag: PelB  # N-terminal secretion signal for E. coli periplasmic export
           - gene:
-              id: P01241
+              id: luxI
               source: uniprot
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1
+    
+    - promoter: T7lac
+    
+    - cistron:
+        label: quorum_sensing_receptor
+        expression: medium
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - promoter: araBAD
+    
+    - cistron:
+        label: secreted_effector
+        expression: high
+        chain:
+          - tag: PelB
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - terminator: rrnB_T1

@@ -1,26 +1,22 @@
 construct:
-  name: yeast_GAL1_enzymeA_URA3
+  name: "yeast_enzymeA_GAL1_6xHis"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    resistance: URA3
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: enzymeA_target
+        label: enzymeA
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: enzymeA
               source: uniprot
-    - spacer: 40
-    - cistron:
-        label: selection_marker
-        expression: low
-        fused: false
-        gene:
-          id: URA3
-          source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

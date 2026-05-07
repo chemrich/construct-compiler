@@ -1,30 +1,38 @@
 construct:
-  name: "tet_off_nonviral_il10_secretion"
+  name: "inducible_IL10_secretion_mammalian"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Required for E. coli propagation; no mammalian selection marker is included in the cassette per request.
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    # Note: Removed antibiotic resistance per user request; mammalian vector uses selection via fluorescent marker if needed
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: TRE3G  # Tetracycline-responsive element (tet-off inducible)
+    
     - cistron:
-        label: transactivator
+        label: rtTA_transactivator
         expression: medium
-        gene:
-          id: "tTA_p65" # Substituted viral VP16 domain with human p65 activation domain to satisfy non-viral requirement.
-    - terminator: SV40_pA
-    - promoter: TRE3G # Tetracycline-responsive promoter for chemically controllable expression.
+        chain:
+          - gene:
+              id: rtTA3
+              source: uniprot  # Reverse tetracycline-controlled transactivator, non-immunogenic variant
+
+    - terminator: bGH_polyA
+
+    # Separate cassette element: second promoter for cytokine expression
+    - promoter: TRE3G  # Same TRE3G responsive to rtTA3 + doxycycline
+
     - cistron:
-        label: target_cytokine
+        label: IL10_secreted
         expression: high
         chain:
-          - tag: Igk_leader # Secretion signal for mammalian cell trafficking.
-          - tag: 6xHis
-          - cleavage_site: TEV
+          - tag: His6  # N-terminal His tag for purification
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - signal_peptide: IL2_signal  # Signal peptide for secretion from HEK293
           - gene:
-              id: P22301 # Human IL-10 (anti-inflammatory cytokine).
-              source: uniprot
-    - terminator: BGH_pA
+              id: IL10
+              source: uniprot  # Human interleukin-10, anti-inflammatory cytokine
+
+    - terminator: bGH_polyA

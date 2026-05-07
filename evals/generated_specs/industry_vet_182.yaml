@@ -1,14 +1,24 @@
 construct:
-  name: "CAG_driven_mammalian_protein_CHO"
+  name: "CHO_mammalian_protein_expression"
   host: CHO
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        gene:
-          id: P01133
-          source: uniprot
-    - terminator: BGH_pA
+        chain:
+          - gene:
+              id: null
+              note: "User to specify protein/gene ID"
+
+    - polya: BGH
+
+    - terminator: rrnB_T1

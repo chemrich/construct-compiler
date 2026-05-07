@@ -1,22 +1,24 @@
 construct:
-  name: "Pichia_GAP_Fc_Nanobody_Secretion"
+  name: pichia_pastoris_IgG1Fc_nanobody_GAP
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: nanobody_fusion
+        label: Fc_nanobody_fusion
         expression: high
         chain:
-          - tag: alpha-factor
-          - solubility_tag: Fc_IgG1
+          - tag: alpha_factor_signal
+          - solubility_tag: IgG1_Fc
           - cleavage_site: TEV
           - gene:
               id: nanobody
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

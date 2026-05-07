@@ -1,16 +1,25 @@
 construct:
-  name: GAL1_human_gene_X_yeast_expression
+  name: human_gene_X_yeast_expression
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
         label: target
         expression: high
-        gene:
-          id: X
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: X
+              source: uniprot
+              codon_optimization: humanized  # Preserves human codon usage while maintaining S. cerevisiae compatibility
+
     - terminator: CYC1

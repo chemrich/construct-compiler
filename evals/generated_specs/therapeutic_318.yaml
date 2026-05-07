@@ -1,23 +1,35 @@
 construct:
-  name: "dox_inducible_therapeutic_switch"
+  name: dox_inducible_therapeutic_switch
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: transactivator
+        label: rtTA_transactivator
         expression: medium
         chain:
-          - tag: NLS
+          - tag: HA
           - gene:
-              id: rtTA3
-    - spacer: 500
-    - promoter: TRE3G
+              id: rtTA
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: TRE_tight
+      # TRE (Tetracycline Response Element) provides doxycycline-dependent activation
+
     - cistron:
-        label: therapeutic_gene
+        label: therapeutic
         expression: high
-        gene:
-          id: P22301
-          source: uniprot
-    - terminator: bGH_PA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 2A
+          - gene:
+              id: IL12
+              source: uniprot
+
+    - terminator: rrnB_T1

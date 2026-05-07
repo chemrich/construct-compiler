@@ -1,48 +1,76 @@
 construct:
-  name: "mevalonate_pathway_ipp_operon"
-  host: e_coli_bl21
+  name: mevalonate_pathway_operon
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # strong constitutive promoter for balanced expression
+    
     - cistron:
-        label: mvaE
+        label: acetoacetyl_coa_thiophorase
         expression: high
+        rbs_strength: strong
         gene:
-          id: P95197
+          id: atoB
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: mvaS
+        label: hmg_coa_synthase
         expression: high
+        rbs_strength: medium
         fused: false
         gene:
-          id: Q9FD70
+          id: mvaS
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: mvaK1
-        expression: high
+        label: hmg_coa_reductase
+        expression: medium
+        rbs_strength: medium
         fused: false
         gene:
-          id: P46086
+          id: mvaE
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: mvaK2
-        expression: high
+        label: mevalonate_kinase
+        expression: medium
+        rbs_strength: weak
         fused: false
         gene:
-          id: Q9FD71
+          id: mvaK1
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: mvaD
-        expression: high
+        label: phosphomevalonate_kinase
+        expression: medium
+        rbs_strength: weak
         fused: false
         gene:
-          id: P46088
+          id: mvaK2
           source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: diphosphomevalonate_decarboxylase
+        expression: high
+        rbs_strength: strong
+        fused: false
+        gene:
+          id: idi
+          source: uniprot
+    
     - terminator: rrnB_T1

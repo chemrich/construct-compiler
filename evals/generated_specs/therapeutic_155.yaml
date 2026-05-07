@@ -1,27 +1,40 @@
 construct:
-  name: "therapeutic_bispecific_antibody_non_viral_vector"
+  name: bispecific_antibody_hc_lc_p2a
   host: HEK293
+
   backbone:
-    resistance: none # Antibiotic resistance excluded to meet therapeutic safety requirements
-    ori: pBR322      # Standard bacterial origin for propagation; non-viral
+    catalog_vector: "pTwist CMV"
+    # Mammalian expression vector without antibiotic resistance (therapeutic grade)
+    # Custom backbone option: use mammalian selection (e.g., DHFR, GS) instead of ABx resistance
+    resistance: null  # Therapeutic construct: no antibiotic resistance
+    ori: null  # Mammalian plasmids use episomal replication (EBNA1/OriP or SV40 OriP)
     source: custom
 
   cassette:
-    - promoter: EF1_alpha # Human promoter used instead of CMV to avoid viral sequences
+    - promoter: CMV
 
     - cistron:
-        label: antibody_expression_unit
+        label: heavy_chain
         expression: high
         chain:
-          - tag: IgK_leader # Signal peptide for heavy chain secretion
+          - tag: SP_IgG  # Signal peptide for mammalian secretion (IgG leader sequence)
           - gene:
-              id: heavy_chain
+              id: IGHG1_variable_constant  # Heavy chain: variable + constant domain
               source: uniprot
-          - linker:
-              type: P2A # Self-cleaving peptide for stoichiometric production from a single transcript
-          - tag: IgK_leader # Signal peptide for light chain secretion
-          - gene:
-              id: light_chain
-              source: uniprot
+              # User should provide actual VH + CH1-CH2-CH3 sequence or reference
 
-    - terminator: hGH_polyA # Human growth hormone polyadenylation signal; non-viral
+    - spacer: 21  # P2A self-cleaving peptide (viral-free alternative: GSG linker + ribosomal skipping not used)
+                   # NOTE: P2A is compact (~21 bp coding); represents "2A" self-cleaving peptide insertion
+
+    - cistron:
+        label: light_chain
+        expression: high
+        fused: false  # Independently translated after P2A cleavage
+        chain:
+          - tag: SP_Ig  # Signal peptide for mammalian secretion (immunoglobulin leader)
+          - gene:
+              id: IGKC_variable_constant  # Light chain: variable + constant kappa domain
+              source: uniprot
+              # User should provide actual VL + CL sequence or reference
+
+    - terminator: PolyA_SV40  # SV40 polyadenylation signal (mammalian standard, non-viral replication origin)

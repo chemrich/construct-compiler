@@ -1,21 +1,22 @@
 construct:
-  name: soluble_mbp_target_fusion
-  host: e_coli_bl21_de3
+  name: MBP_fusion_protein
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
-              id: P04637  # Placeholder UniProt ID for TP53, representing the target protein
+              id: target_protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

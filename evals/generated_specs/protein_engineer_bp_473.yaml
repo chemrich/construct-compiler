@@ -1,20 +1,25 @@
 construct:
-  name: "pichia_aox1_gst_esterase_secretion"
+  name: "Pichia_esterase_stable_secreted"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: secreted_esterase
+        label: esterase
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_secretion_signal
+          - cleavage_site: Signal_peptidase
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
               id: esterase
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

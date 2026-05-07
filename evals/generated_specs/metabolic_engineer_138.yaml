@@ -1,40 +1,53 @@
 construct:
   name: liver_specific_quad_enzyme_therapy
-  host: mammalian
+  host: HEK293
+
   backbone:
+    catalog_vector: pTwist CMV
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: ALB
+      # ALB (albumin) promoter for liver-specific expression
+
     - cistron:
-        label: enzyme_1
+        label: Enz_Hep1
         expression: high
         gene:
           id: Enz_Hep1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 50
+      # IRES1 equivalent spacing for ~0.8x relative expression
+
     - cistron:
-        label: enzyme_2
+        label: Enz_Hep2
         expression: high
         fused: false
         gene:
           id: Enz_Hep2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 50
+      # IRES2 equivalent spacing for ~0.6x relative expression
+
     - cistron:
-        label: enzyme_3
+        label: Enz_Hep3
         expression: medium
         fused: false
         gene:
           id: Enz_Hep3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 50
+      # IRES3 equivalent spacing for ~0.4x relative expression
+
     - cistron:
-        label: enzyme_4
+        label: Enz_Hep4
         expression: low
         fused: false
         gene:
           id: Enz_Hep4
           source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

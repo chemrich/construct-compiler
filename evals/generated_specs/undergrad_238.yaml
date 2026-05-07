@@ -1,27 +1,36 @@
 construct:
-  name: "dual_vibrant_fluorescence_system"
-  host: e_coli_bl21_de3
+  name: dual_fluorescent_vibrant_ecoli
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+    ori: pBR322
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: gfp_expression_unit
+        label: GFP
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
-    - spacer: 40
-    - promoter: T7lac
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 50
+    
+    - promoter: tac
+    
     - cistron:
-        label: rfp_expression_unit
+        label: RFP
         expression: high
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+    
     - terminator: rrnB_T1

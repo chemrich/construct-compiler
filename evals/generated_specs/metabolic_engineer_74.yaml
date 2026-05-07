@@ -1,75 +1,88 @@
 construct:
-  name: pharmaceutical_intermediate_biosynthesis_operon
+  name: pharmaceutical_intermediate_6enzyme_operon
   host: e_coli
+
   backbone:
+    catalog_vector: pET-28b(+)
     resistance: kanamycin
     ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for constant expression without induction burden
+    - promoter: tac
+
     - cistron:
-        label: enzyme_1
+        label: enzyme1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme1
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme2
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme3
         expression: medium
         fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P12345
+              id: enzyme3
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
+        label: enzyme4
         expression: medium
         fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P12346
+              id: enzyme4
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_3
-        expression: medium
+        label: enzyme5
+        expression: low
         fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P12347
+              id: enzyme5
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_4
-        expression: medium
+        label: enzyme6
+        expression: low
         fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P12348
+              id: enzyme6
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_5
-        expression: medium
-        fused: false
-        chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
-          - gene:
-              id: P12349
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_6
-        expression: medium
-        fused: false
-        chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
-          - gene:
-              id: P12350
-              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,22 +1,30 @@
 construct:
-  name: "dual_color_inducible_human_cells"
+  name: dual_color_mammalian_reporter
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: constitutive_red_reporter
+        label: constitutive_red
         expression: high
         gene:
           id: mCherry
           source: fpbase
-    - terminator: SV40_pA
-    - promoter: TRE3G # Inducible Tet-on promoter to satisfy "turn on/off" request
+
+    - terminator: SV40_poly_A
+
+    - promoter: TRE_tight
+    # Comment: TRE (tetracycline response element) allows doxycycline-inducible control
+
     - cistron:
-        label: inducible_blue_reporter
+        label: inducible_blue
         expression: high
         gene:
           id: mTagBFP2
           source: fpbase
-    - terminator: SV40_pA
+
+    - terminator: SV40_poly_A

@@ -1,24 +1,73 @@
 construct:
-  name: "majority_logic_2_of_3_system"
+  name: "two_of_three_threshold_logic_gate"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac  # Proxy for logic gate output; activates above threshold
+    - promoter: araBAD
+
+    - cistron:
+        label: Input_1_sensor
+        expression: high
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Input_2_sensor
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Input_3_sensor
+        expression: high
+        chain:
+          - gene:
+              id: rhaSR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: logic_integrator
+        expression: high
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: Above_Threshold_Reporter
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
-    - spacer: 50  # Insulation between transcription units
-    - promoter: J23106  # Constitutive promoter; active below threshold/otherwise
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 30
+
     - cistron:
         label: Below_Threshold_Reporter
-        expression: low
+        expression: medium
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
     - terminator: rrnB_T1

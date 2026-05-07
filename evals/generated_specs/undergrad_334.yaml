@@ -1,14 +1,19 @@
 construct:
-  name: mammalian_shRNA_knockdown
-  host: mammalian
+  name: "shRNA_knockdown_construct"
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: H1
+
     - cistron:
-        label: shRNA_payload
+        label: shRNA
+        expression: high
         gene:
-          id: shRNA_sequence
-    - terminator: polyT  # Standard Pol III terminator for H1/U6 promoters
+          id: shRNA_custom
+          sequence: "GATCCCCGAATTCTAGAGCCACGAATTCAAGAATTCGTGGCTCTAGAATTCTTTTTGGAAA"
+
+    - terminator: rrnB_T1

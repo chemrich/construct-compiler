@@ -1,16 +1,20 @@
 construct:
-  name: "yeast_stress_reporter_hsp104"
+  name: "yeast_stress_reporter_GFP"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: HSP104
+    - promoter: HSP70  # Heat shock protein 70 promoter; activates under stress in S. cerevisiae
+
     - cistron:
-        label: reporter
+        label: stress_reporter
         expression: high
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

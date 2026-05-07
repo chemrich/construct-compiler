@@ -1,12 +1,23 @@
 construct:
-  name: "human_u6_gRNA_expression"
+  name: CRISPR_gRNA_U6_HEK293
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: guide_RNA
-        gene:
-          id: custom_sgRNA_sequence
-    - terminator: BBa_B0015
+        label: gRNA
+        expression: high
+        chain:
+          - gene:
+              id: CRISPR_gRNA
+              source: uniprot
+              # Note: User must provide specific gRNA sequence for cloning
+
+    - terminator: rrnB_T1

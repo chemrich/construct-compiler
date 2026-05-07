@@ -1,59 +1,65 @@
 construct:
-  name: "Bacillus_subtilis_tuned_carbon_utilization_operon"
-  host: b_subtilis
+  name: "bacillus_carbon_utilization_operon"
+  host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110  # Standard high-copy origin for B. subtilis
+    resistance: chloramphenicol
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: Pveg  # Strong constitutive promoter for B. subtilis
+    - promoter: Pveg
 
     - cistron:
         label: XylA
         expression: high
+        rbs_strength: strong
         gene:
           id: XylA
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: XylB
         expression: high
+        rbs_strength: medium_high
         fused: false
         gene:
           id: XylB
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: PckA
         expression: medium
+        rbs_strength: medium
         fused: false
         gene:
           id: PckA
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: PdhA
         expression: medium
+        rbs_strength: medium
         fused: false
         gene:
           id: PdhA
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: CdhB
-        expression: low
+        expression: medium
+        rbs_strength: medium
         fused: false
         gene:
           id: CdhB
           source: uniprot
 
-    - terminator: amyL_term  # Standard terminator for Bacillus subtilis expression systems
+    - terminator: rrnB_T1

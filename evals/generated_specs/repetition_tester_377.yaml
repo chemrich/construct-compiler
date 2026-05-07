@@ -1,43 +1,51 @@
 construct:
-  name: "yeast_synthetic_metabolic_pathway_TUVW"
+  name: "synthetic_metabolic_pathway_four_enzymes"
   host: yeast
-  backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
     - cistron:
-        label: enzyme_t
+        label: EnzymeT
         expression: high
         gene:
           id: EnzymeT
           source: uniprot
     - terminator: CYC1
-    - spacer: 50
-    - promoter: TEF1
+
+    - spacer: 25
+
+    - promoter: ADH1
     - cistron:
-        label: enzyme_u
+        label: EnzymeU
         expression: high
         gene:
           id: EnzymeU
           source: uniprot
-    - terminator: ADH1
-    - spacer: 50
-    - promoter: PGK1
+    - terminator: PGK1
+
+    - spacer: 25
+
+    - promoter: TEF1
     - cistron:
-        label: enzyme_v
+        label: EnzymeV
         expression: high
         gene:
           id: EnzymeV
           source: uniprot
-    - terminator: ENO2
-    - spacer: 50
-    - promoter: CCW12
+    - terminator: ADH1_terminator
+
+    - spacer: 25
+
+    - promoter: TPI1
     - cistron:
-        label: enzyme_w
+        label: EnzymeW
         expression: high
         gene:
           id: EnzymeW
           source: uniprot
-    - terminator: PDC1
+    - terminator: URA3_terminator
+
+  backbone:
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene

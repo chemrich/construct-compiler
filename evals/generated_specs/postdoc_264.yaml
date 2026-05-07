@@ -1,17 +1,22 @@
 construct:
-  name: "protein_k_ubiquitin_fusion_stabilization"
-  host: e_coli_bl21_de3
+  name: "ubiquitin_ProteinK_Strep_stabilization"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: Strep-II
-          - solubility_tag: Ubiquitin
+          - solubility_tag: ubiquitin
+          - cleavage_site: TEV
           - gene:
-              id: ProteinK
+              id: proteinK
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

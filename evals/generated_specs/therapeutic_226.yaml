@@ -1,15 +1,32 @@
 construct:
-  name: "IVT_mRNA_Vaccine_Antigen_Template"
+  name: "mRNA_vaccine_viral_antigen_IVT_template"
   host: in_vitro
+
   backbone:
-    resistance: none # Specified no antibiotic resistance genes for IVT template
-    source: custom
+    resistance: none
+    ori: none
+    source: synthetic
+
   cassette:
     - promoter: T7
+
+    - utr:
+        type: 5_prime
+        sequence: GCCACCAUGGCCAACUGUACCUACCAGGAGAGCCACCAUGGUACUGUACCUACCAGG
+        # Kozak consensus + extended 5' UTR for enhanced translation
+
     - cistron:
         label: viral_antigen
         expression: high
-        gene:
-          id: P0DTC2
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: SARS_CoV_2_spike_RBD
+              source: uniprot
+
+    - utr:
+        type: 3_prime
+        sequence: AAUAACAAUAAAGAUUCUCGACUACUGUACCUACCAGGAGAGCUGUACCUACCAGACAACAACAACAAC
+        # Modified 3' UTR with poly(A) tail binding sequence
+
     - terminator: T7term

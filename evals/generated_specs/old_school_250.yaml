@@ -1,25 +1,33 @@
 construct:
-  name: "tightly_regulated_tet_off_plasmid"
+  name: "tight_tet_OFF_system"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: SC101
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: Ptet
+      
     - cistron:
-        label: tet_repressor
-        # User requested expression when tetracycline is absent (Tet-Off).
-        # Standard TetR/Ptet systems are induced by tetracycline (Tet-On).
-        # To achieve "Off" in the presence of tetracycline, a reverse-TetR (revTetR) is typically used.
+        label: target
+        expression: high
+        gene:
+          id: lacZ
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: lacUV5
+      
+    - cistron:
+        label: tetR_repressor
+        expression: medium
         gene:
           id: tetR
           source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: Ptet
-    - cistron:
-        label: target_gene
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015

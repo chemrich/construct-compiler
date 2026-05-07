@@ -1,14 +1,20 @@
 construct:
-  name: "shRNA_M_knockdown_HEK293"
+  name: "shRNA_M_knockdown_U6"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: shRNA_payload
-        gene:
-          id: shRNA_M
-    - terminator: polyT # Standard RNA Pol III termination signal
+        label: shRNA_M
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_M
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: "secretion_of_protein_g_in_e_coli"
-  host: e_coli_bl21_de3
+  name: "ProteinG_secretion_ecoli"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: secreted_protein_g
+        label: ProteinG
         expression: high
         chain:
-          - tag: PelB
+          - tag: pelB_signal_peptide
           - gene:
-              id: P19909
+              id: ProteinG
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

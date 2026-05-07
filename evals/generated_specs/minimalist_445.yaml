@@ -1,14 +1,23 @@
 construct:
-  name: "inducible_ProteinF_expression"
-  host: e_coli
+  name: "inducible_ProteinF_ecoli"
+  host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: protein_f
+        label: ProteinF
         expression: high
-        gene:
-          id: ProteinF
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinF
+              source: uniprot
+    
+    - terminator: rrnB_T1

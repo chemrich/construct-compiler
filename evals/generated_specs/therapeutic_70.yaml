@@ -1,19 +1,22 @@
 construct:
-  name: "ER_retained_chaperone_clinical"
+  name: "ER_retained_chaperone_mammalian"
   host: HEK293
+
   backbone:
-    resistance: none # Requested omission of antibiotic resistance for clinical safety
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # No antibiotic resistance specified for clinical safety
+
   cassette:
-    - promoter: EF1_alpha # Human EF1-alpha used instead of CMV to ensure non-viral components
+    - promoter: CMV
+
     - cistron:
-        label: chaperone_PDI
+        label: chaperone
         expression: high
         chain:
-          - tag: secretion_signal
+          - tag: SP_BiP  # Signal peptide for ER targeting (BiP signal)
           - gene:
-              id: P4HB
+              id: HSP70
               source: uniprot
-          - tag: KDEL
-    - terminator: bGH_pA
+          - tag: KDEL  # ER retention signal (KDEL tetrapeptide)
+
+    - terminator: rrnB_T1

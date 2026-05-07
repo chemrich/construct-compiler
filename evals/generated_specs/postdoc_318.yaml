@@ -1,16 +1,20 @@
 construct:
-  name: "yeast_enzyme_expression"
+  name: yeast_enzyme_mammalian_polya
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: enzyme_cistron
+        label: enzyme
         expression: high
         gene:
-          id: PYK1
+          id: ADH1
           source: uniprot
-    - terminator: CYC1_term # Substituted requested mammalian polyA with the yeast-specific CYC1 terminator because yeast requires specific tripartite sequence elements for efficient termination and polyadenylation that mammalian signals lack.
+
+    - terminator: SV40_polyA

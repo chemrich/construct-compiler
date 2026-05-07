@@ -1,24 +1,34 @@
 construct:
-  name: "human_antibody_full_length_yeast_secretion"
+  name: "human_antibody_full_length_yeast_secreted"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - promoter: GAL1
+
     - cistron:
-        label: antibody_polyprotein
+        label: heavy_chain
         expression: high
         chain:
-          - tag: Human_Ig_Signal_Peptide # Mammalian signal peptide as requested; yeast can process some mammalian leaders although alpha-factor is typical
+          - tag: alpha_factor_signal_peptide
           - gene:
               id: IGHG1
               source: uniprot
-          - linker:
-              type: F2A
-          - tag: Human_Ig_Signal_Peptide
+
+    - spacer: 21
+
+    - cistron:
+        label: F2A_linker_light_chain
+        expression: high
+        chain:
+          - cleavage_site: F2A
+          - tag: alpha_factor_signal_peptide
           - gene:
               id: IGKC
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

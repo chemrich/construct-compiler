@@ -1,9 +1,12 @@
 construct:
-  name: "mammalian_optimized_with_ha_tag"
+  name: "mammalian_optimized_expression"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: CMV
@@ -13,9 +16,8 @@ construct:
         expression: high
         chain:
           - gene:
-              id: optimized_gene  # User-provided optimized sequence
+              id: target_gene
+              source: uniprot
           - tag: HA
 
-    - terminator: SV40_polyA
-
-# Note: Shine-Dalgarno sequences are prokaryotic ribosome binding sites and not used in mammalian systems. Mammalian ribosomes recognize the 5' cap structure and Kozak sequence instead. The CMV promoter and proper Kozak consensus will ensure efficient translation initiation.
+    - terminator: rrnB_T1

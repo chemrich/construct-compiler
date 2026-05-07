@@ -1,12 +1,15 @@
 construct:
-  name: "PPI_module_operon_IntABCDE"
+  name: "multi_enzyme_interaction_module_alt_rbs"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
         label: IntA
         expression: high
@@ -15,15 +18,20 @@ construct:
               id: IntA
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: IntB
-        expression: medium
-        fused: false # Synthetic IRES-like sequences approximated by independent RBS/translation initiation
+        label: IntB_alt_rbs
+        expression: high
+        fused: false
+        riboswitch: true  # Alternative translation initiation via riboswitch-derived secondary structure
         gene:
           id: IntB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: IntC
         expression: high
@@ -31,15 +39,20 @@ construct:
         gene:
           id: IntC
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: IntD
-        expression: medium
-        fused: false # Synthetic IRES-like sequences approximated by independent RBS/translation initiation
+        label: IntD_alt_rbs
+        expression: high
+        fused: false
+        riboswitch: true  # Alternative translation initiation via riboswitch-derived secondary structure
         gene:
           id: IntD
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: IntE
         expression: high
@@ -47,4 +60,5 @@ construct:
         gene:
           id: IntE
           source: uniprot
+
     - terminator: rrnB_T1

@@ -1,40 +1,86 @@
 construct:
-  name: "Yeast_Polycistronic_2A_Pathway"
+  name: "yeast_pathway_quad_2A_V5"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
+    ori: 2μm
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: pathway_polyprotein
+        label: protein_1
         expression: high
         chain:
           - tag: V5
           - gene:
-              id: ERG10
+              id: YEL023W
               source: uniprot
-          - linker:
-              type: P2A
-              repeats: 1
+
+    - spacer: 25
+
+    - cistron:
+        label: 2A_peptide_1
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: protein_2
+        expression: high
+        chain:
           - tag: V5
           - gene:
-              id: ERG13
+              id: YBR084C
               source: uniprot
-          - linker:
-              type: T2A
-              repeats: 1
+
+    - spacer: 25
+
+    - cistron:
+        label: 2A_peptide_2
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: protein_3
+        expression: high
+        chain:
           - tag: V5
           - gene:
-              id: HMG1
+              id: YDR429C
               source: uniprot
-          - linker:
-              type: E2A
-              repeats: 1
+
+    - spacer: 25
+
+    - cistron:
+        label: 2A_peptide_3
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: protein_4
+        expression: high
+        chain:
           - tag: V5
           - gene:
-              id: ERG12
+              id: YJL089W
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

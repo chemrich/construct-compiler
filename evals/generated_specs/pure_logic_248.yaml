@@ -1,14 +1,42 @@
 construct:
-  name: "logic_gate_K_and_not_L"
-  host: e_coli_bl21_de3
+  name: "AND_NOT_logic_gate_K_and_not_L"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac # Logic: Activated by T7 polymerase (Input K), repressed by LacI (Input L)
+    - promoter: araBAD
+
     - cistron:
-        label: output_J
+        label: K_sensor
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: L_repressor_binding_domain
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: J_output_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

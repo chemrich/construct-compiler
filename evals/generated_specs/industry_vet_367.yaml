@@ -1,20 +1,26 @@
 construct:
-  name: "mammalian_targeting_peptide_fusion"
+  name: "mammalian_nterm_peptide_protein_purification"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: engineered_protein
         expression: high
         chain:
-          - tag: FLAG
+          - gene:
+              id: engineered_targeting_peptide
+              source: custom
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: protein_of_interest
+              source: uniprot
           - tag: 6xHis
-    - terminator: bGH_pA_terminator # Standard mammalian polyA signal for high expression constructs.
+
+    - terminator: rrnB_T1

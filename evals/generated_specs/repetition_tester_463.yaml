@@ -1,27 +1,48 @@
 construct:
-  name: "tandem_amp_triplet"
-  host: e_coli_bl21_de3
+  name: "triple_AMP_tandem_codon_optimized"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: amp_fusion
+        label: AMP_copy1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: AMP_variant_1
+              source: custom
+              note: "codon-optimized variant 1 for E. coli"
+
+    - spacer: 20
+      note: "non-homologous recombination roadblock 1"
+
+    - cistron:
+        label: AMP_copy2
         expression: high
         chain:
           - gene:
-              id: P11006  # Magainin-2 antimicrobial peptide
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2  # ~30bp unique spacer to prevent recombination
+              id: AMP_variant_2
+              source: custom
+              note: "synonymously divergent codon-optimized variant 2"
+
+    - spacer: 20
+      note: "non-homologous recombination roadblock 2"
+
+    - cistron:
+        label: AMP_copy3
+        expression: high
+        chain:
           - gene:
-              id: P11006
-              source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 2  # Different linker sequence (non-homologous) to prevent recombination
-          - gene:
-              id: P11006
-              source: uniprot
-    - terminator: T7term
+              id: AMP_variant_3
+              source: custom
+              note: "synonymously divergent codon-optimized variant 3"
+
+    - terminator: rrnB_T1

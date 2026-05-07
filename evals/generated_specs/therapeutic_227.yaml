@@ -1,17 +1,24 @@
 construct:
-  name: "lung_epithelial_therapeutic_scFv_delivery"
+  name: "lung_epithelial_antibody_fragment"
   host: mammalian
+
   backbone:
-    resistance: none # Substitution: Antibiotic-free backbone used for clinical safety as requested
+    catalog_vector: "pTwist CMV"
+    resistance: null
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: SP-B # Strong, lung epithelial-specific Surfactant Protein B promoter
+    - promoter: CC10  # CC10 (Club cell protein 10) is a lung epithelial-specific promoter
+
     - cistron:
-        label: therapeutic_scFv
+        label: antibody_fragment
         expression: high
         chain:
+          - tag: signal_peptide_SP_B  # N-terminal secretion signal for lung epithelial secretion
           - gene:
-              id: scFv_anti_EGFR
+              id: scFv_therapeutic  # Single-chain variable fragment (antibody)
               source: uniprot
-    - terminator: bGH_pA
+          - tag: 6xHis  # C-terminal His tag for purification
+
+    - terminator: polyA_signal  # SV40 polyadenylation signal for mammalian expression

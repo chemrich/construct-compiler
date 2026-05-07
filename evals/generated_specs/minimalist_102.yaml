@@ -1,22 +1,32 @@
 construct:
-  name: "protein_a_protein_b_coexpression"
-  host: e_coli_bl21_de3
+  name: ProteinA_ProteinB_interaction_pair
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: protein_a
-        expression: medium
-        gene:
-          id: ProteinA
-          source: uniprot
+        label: ProteinA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinA
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: protein_b
-        expression: medium
+        label: ProteinB
+        expression: high
         fused: false
-        gene:
-          id: ProteinB
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: ProteinB
+              source: uniprot
+    
+    - terminator: rrnB_T1

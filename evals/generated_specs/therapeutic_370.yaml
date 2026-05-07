@@ -1,15 +1,22 @@
 construct:
-  name: non_viral_therapeutic_aptamer_expression_system
-  host: mammalian
+  name: "mammalian_RNA_aptamer_expression"
+  host: HEK293
+
   backbone:
-    resistance: none
-    ori: pUC
-    source: custom
+    resistance: null  # No antibiotic resistance - safe for therapeutic use
+    ori: pUC  # Minimal mammalian backbone
+    source: addgene
+
   cassette:
-    - promoter: U6
+    - promoter: U6  # Pol III promoter for RNA expression
+
     - cistron:
-        label: therapeutic_aptamer
+        label: aptamer
         expression: high
-        gene:
-          id: therapeutic_rna_aptamer
-    - terminator: PolyT
+        chain:
+          - gene:
+              id: SELEX_aptamer_sequence
+              source: custom
+              # User must provide aptamer sequence; U6 produces RNA, not protein
+
+    - terminator: U6_terminator  # Pol III termination signal (4 T's in sequence)

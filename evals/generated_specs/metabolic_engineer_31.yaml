@@ -1,82 +1,69 @@
-```yaml
 construct:
-  name: six_enzyme_assembly_line_operon
+  name: "protein_assembly_line_operon"
   host: e_coli_bl21_de3
-  
+
   backbone:
     catalog_vector: "pET-28b(+)"
-  
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
-    
+
     - cistron:
-        label: enzyme1
+        label: enzyme_1
+        expression: high
+        gene:
+          id: enzyme_1
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_2
         expression: high
         chain:
-          - tag: 6xHis
-          - gene:
-              id: P0A6F5  # example enzyme 1 - replace with actual target
-              source: uniprot
-    
-    - spacer: 25
-    
-    - cistron:
-        label: enzyme2_spytag
-        expression: medium
-        fused: false
-        chain:
           - tag: SpyTag
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P0ACJ8  # example enzyme 2 - replace with actual target
+              id: enzyme_2
               source: uniprot
-    
-    - spacer: 30
-    
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme3_spycatcher
-        expression: medium
-        fused: false
+        label: enzyme_3
+        expression: high
         chain:
           - tag: SpyCatcher
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P0A9P0  # example enzyme 3 - replace with actual target
+              id: enzyme_3
               source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
-        label: enzyme4
+        label: enzyme_4
+        expression: medium
+        gene:
+          id: enzyme_4
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_5
+        expression: medium
+        gene:
+          id: enzyme_5
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_6
         expression: low
-        fused: false
         gene:
-          id: P0AAI1  # example enzyme 4 - replace with actual target
+          id: enzyme_6
           source: uniprot
-    
-    - spacer: 25
-    
-    - cistron:
-        label: enzyme5
-        expression: low
-        fused: false
-        gene:
-          id: P0A6Y8  # example enzyme 5 - replace with actual target
-          source: uniprot
-    
-    - spacer: 25
-    
-    - cistron:
-        label: enzyme6
-        expression: very_low
-        fused: false
-        gene:
-          id: P0ABJ9  # example enzyme 6 - replace with actual target
-          source: uniprot
-    
+
     - terminator: rrnB_T1
-```

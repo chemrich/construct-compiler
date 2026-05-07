@@ -1,25 +1,44 @@
 construct:
-  name: "polycistronic_therapeutic_expression_system"
+  name: "dual_therapeutic_self_cleaving"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: hGH_cistron
+        label: therapeutic_1
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P01241
+              id: lysozyme
               source: uniprot
-    - spacer: 35  # bp spacer to facilitate independent translation of the second cistron
+
+    - spacer: 25
+
     - cistron:
-        label: IL2_cistron
-        expression: medium  # Stoichiometry control via relative RBS strength
-        fused: false  # Ensures independent translation with its own RBS/Start codon
-        gene:
-          id: P60568
-          source: uniprot
-    - terminator: T7term # Standard T7 terminator for E. coli T7-based expression systems
+        label: 2A_self_cleaving
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P2A
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: therapeutic_2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: catalase
+              source: uniprot
+
+    - terminator: rrnB_T1

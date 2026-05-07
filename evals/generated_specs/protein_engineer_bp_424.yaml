@@ -1,20 +1,24 @@
 construct:
-  name: "Pichia_AOX1_Secretion_Myc_10His"
+  name: pichia_pastoris_secretion_AOX1
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: secreted_target
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor_prepro
           - gene:
-              id: P01133
+              id: GFP
               source: uniprot
           - tag: Myc
           - tag: 10xHis
+
     - terminator: AOX1_term

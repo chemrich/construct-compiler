@@ -1,22 +1,28 @@
 construct:
-  name: "BactEnzyme_mNeonGreen_Yeast_Expression"
+  name: BactEnzyme_mNeonGreen_yeast
   host: yeast
+
   backbone:
-    resistance: ADE2  # Using ADE2 as requested for selection in yeast
-    ori: pUC
+    resistance: ADE2
+    ori: 2micron
+    source: addgene
+
   cassette:
-    - promoter: GPD  # Strong constitutive yeast promoter (TDH3)
+    - promoter: GAL1
+
     - cistron:
-        label: target_fusion
+        label: BactEnzyme_fusion
         expression: high
         chain:
           - gene:
               id: BactEnzyme
               source: uniprot
+              codon_optimization: yeast
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: mNeonGreen
               source: fpbase
+
     - terminator: CYC1

@@ -1,39 +1,50 @@
 construct:
-  name: "pollutant_degradation_operon_p_putida"
-  host: e_coli  # Substituted for Pseudomonas putida as it is not in the standard host list; P_alkB is a compatible Pseudomonas promoter.
+  name: "P_putida_pollutant_degradation_operon"
+  host: pseudomonas_putida
+
   backbone:
-    resistance: kanamycin
-    ori: p15A
+    resistance: gentamicin
+    ori: pBBR1
+    source: addgene
+
   cassette:
     - promoter: P_alkB
+
     - cistron:
         label: P_degrade1
         expression: high
         gene:
           id: P_degrade1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: P_degrade2
-        expression: high
+        expression: medium
         fused: false
         gene:
           id: P_degrade2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: P_degrade3
-        expression: high
+        expression: medium
         fused: false
         gene:
           id: P_degrade3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: P_degrade4
-        expression: high
+        expression: low
         fused: false
         gene:
           id: P_degrade4
           source: uniprot
+
     - terminator: rrnB_T1

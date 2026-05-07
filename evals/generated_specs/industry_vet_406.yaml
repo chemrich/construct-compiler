@@ -1,16 +1,20 @@
 construct:
-  name: "secreted_therapeutic_protein_model"
+  name: "secreted_therapeutic_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_protein
         expression: high
         chain:
-          - tag: IgK_leader  # Standard mammalian signal peptide for secretion
+          - tag: signal_peptide_IgG  # N-terminal secretion signal for mammalian cells
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal for high expression
+              id: therapeutic_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

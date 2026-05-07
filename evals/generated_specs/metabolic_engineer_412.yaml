@@ -1,13 +1,14 @@
 construct:
-  name: "Xenobiotic_Degradation_Operon"
-  host: p_putida
+  name: "P_putida_xenobiotic_degradation_operon"
+  host: pseudomonas_putida
+
   backbone:
-    resistance: kanamycin
-    ori: pBBR1  # Broad host range origin for Pseudomonas
+    resistance: gentamicin
+    ori: RK2
     source: addgene
 
   cassette:
-    - promoter: P_xyl # Strong substrate-inducible promoter (XylS/Pm system)
+    - promoter: P_xyl
 
     - cistron:
         label: DegA
@@ -16,19 +17,20 @@ construct:
           - gene:
               id: DegA
               source: uniprot
-          - tag: Strep-II  # C-terminal Strep-tag
+          - cleavage_site: Factor_Xa
+          - tag: Strep-II
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: DegB
         expression: high
-        fused: false  # Independent translation for polycistronic operon
+        fused: false
         gene:
           id: DegB
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: DegC
@@ -38,7 +40,7 @@ construct:
           id: DegC
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: DegD

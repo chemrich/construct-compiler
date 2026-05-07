@@ -1,16 +1,27 @@
 construct:
-  name: "membrane_anchored_reporter"
+  name: membrane_anchored_reporter
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: anchored_egfp
+        label: reporter
         expression: high
         chain:
+          - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
-          - tag: CAAX
-    - terminator: bGH_pA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: CAAX  # C-terminal CAAX motif for membrane anchoring
+
+    - terminator: rrnB_T1

@@ -1,27 +1,56 @@
 construct:
-  name: "nonviral_argfree_polyprotein_therapeutic"
+  name: "mammalian_tripartite_self_cleaving_therapeutic"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Schema requires selection; kanamycin used as proxy for ARG-free requirement
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: triple_therapeutic_domain
+        label: therapeutic_domain_1
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: IL2
+              id: IL6
               source: uniprot
-          - linker:
-              type: P2A
+
+    - cistron:
+        label: self_cleaving_peptide_1
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - cistron:
+        label: therapeutic_domain_2
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
           - gene:
-              id: IL10
+              id: TNF
               source: uniprot
-          - linker:
-              type: T2A
+
+    - cistron:
+        label: self_cleaving_peptide_2
+        expression: high
+        fused: false
+        gene:
+          id: T2A
+          source: uniprot
+
+    - cistron:
+        label: therapeutic_domain_3
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
           - gene:
-              id: IFNB1
+              id: IFNG
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

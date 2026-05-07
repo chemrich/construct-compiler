@@ -1,26 +1,31 @@
 construct:
   name: "dual_reporter_lacZ_CAT"
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: lacUV5
+    
     - cistron:
-        label: lacZ_constitutive
-        expression: medium
-        fused: false
+        label: lacZ
+        expression: high
         gene:
           id: lacZ
           source: uniprot
+    
     - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: T7lac
+    
+    - promoter: tac
+    
     - cistron:
-        label: CAT_inducible
+        label: CAT
         expression: high
-        fused: false
         gene:
-          id: cat
+          id: CAT
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

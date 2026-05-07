@@ -1,28 +1,46 @@
 construct:
-  name: "GeneOfInterest_HDR_Puro_Stable"
+  name: "mammalian_HDR_integration_GeneOfInterest_Flag_puro"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist HDR"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - spacer: 500  # Upstream homology arm for HDR
+    - element: homology_arm_5prime
+      type: genomic_dna
+      length: 500
+      label: "5prime_homology"
+
     - promoter: CAG
+
     - cistron:
-        label: target_expression
+        label: GeneOfInterest
         expression: high
         chain:
           - gene:
               id: GeneOfInterest
               source: uniprot
           - tag: FLAG
+
     - terminator: SV40_polyA
+
+    - element: spacer_internal
+      length: 50
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: selection_marker
+        label: puromycin_resistance
         expression: high
         gene:
-          id: pac
+          id: PuroR
           source: uniprot
-    - terminator: bGH_polyA
-    - spacer: 500  # Downstream homology arm for HDR
+
+    - terminator: SV40_polyA
+
+    - element: homology_arm_3prime
+      type: genomic_dna
+      length: 500
+      label: "3prime_homology"

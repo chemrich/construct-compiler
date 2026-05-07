@@ -1,21 +1,44 @@
 construct:
-  name: "threshold_detector_G"
+  name: threshold_detector_H_input
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Used as a threshold detector where input H is the inducer (e.g., L-arabinose)
+    - promoter: T7lac
+
+    - cistron:
+        label: input_sensor
+        expression: high
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: output_G
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P19909  # UniProt ID for Protein G
+              id: luxI
               source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: threshold_response
+        expression: medium
+        chain:
+          - gene:
+              id: gfp
+              source: fpbase
+
     - terminator: rrnB_T1

@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: therapeutic_receptor_surface_display
+  name: "mammalian_surface_receptor_display"
   host: HEK293
 
   backbone:
@@ -10,14 +9,17 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: therapeutic_receptor
+        label: surface_receptor
         expression: high
         chain:
-          - tag: signal_peptide
+          - tag: 6xHis
+          - secretion_signal: IgG_leader
           - gene:
-              id: CD19
+              id: EGFR_ectodomain
               source: uniprot
-          - tag: transmembrane_domain
+          - transmembrane_domain: PDGFR_TM
+          - gene:
+              id: CD3zeta_cytoplasmic
+              source: uniprot
 
-    - terminator: BGH_polyA
-```
+    - terminator: BGH_poly_A

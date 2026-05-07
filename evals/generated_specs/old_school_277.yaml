@@ -1,14 +1,21 @@
 construct:
-  name: "H1_shRNA_TargetGene_Zeo"
+  name: "shRNA_TargetGene_knockdown"
   host: HEK293
+
   backbone:
     resistance: zeocin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: H1
+
     - cistron:
-        label: shRNA_expression
-        gene:
-          id: TargetGene_shRNA
-    - terminator: polyT_5x
+        label: shRNA_TargetGene
+        expression: high
+        chain:
+          - gene:
+              id: TargetGene_shRNA
+              source: custom
+
+    - terminator: poly_T  # Pol III termination (TTTT)

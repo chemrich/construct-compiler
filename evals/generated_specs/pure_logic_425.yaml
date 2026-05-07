@@ -1,24 +1,45 @@
 construct:
-  name: "t7_positive_feedback_bistable_switch"
-  host: e_coli_bl21_de3
+  name: bistable_switch_positive_feedback
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: self_activator_driver
+        label: transcription_factor
         expression: high
-        gene:
-          id: P00573
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: activity_enzyme
+        label: enzyme_with_activity
         expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: P00813
+              id: araBAD_promoter_regulated_protease
               source: uniprot
-    - terminator: T7term
+
+    - spacer: 25
+
+    - cistron:
+        label: positive_feedback_regulator
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cI
+              source: uniprot
+
+    - terminator: rrnB_T1

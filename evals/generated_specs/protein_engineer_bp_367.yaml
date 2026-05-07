@@ -1,19 +1,24 @@
 construct:
-  name: "Pichia_pastoris_FLD1_enzyme_intracellular"
+  name: pichia_pastoris_FLD1_GST_enzyme
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: enzyme_cistron
+        label: enzyme
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: metabolic_enzyme
+              id: ADH1
               source: uniprot
+
     - terminator: CYC1

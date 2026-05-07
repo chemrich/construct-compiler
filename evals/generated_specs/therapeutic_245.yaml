@@ -1,16 +1,28 @@
 construct:
-  name: "mRNA_Therapeutic_ProteinK"
+  name: mRNA_Therapeutic_ProteinK
   host: in_vitro
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    # Linear DNA template for IVT; minimal backbone for T7 transcription
+    resistance: null
+    ori: null
+    source: synthetic
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: protein_k_payload
+        label: ProteinK_mRNA
         expression: high
-        gene:
-          id: ProteinK
-          source: uniprot
-    - terminator: polyA_120 # Standard 120bp poly-A tail for IVT mRNA stability and translation efficiency
+        chain:
+          - utr_5prime:
+              type: optimized_IVT  # Kozak-like sequence optimized for translation efficiency
+          - gene:
+              id: ProteinK
+              source: uniprot
+          - utr_3prime:
+              type: optimized_stability  # Includes structured elements for mRNA stability
+          - poly_A_tail:
+              length: 120  # nucleotides; standard for therapeutic mRNA
+
+    - terminator: T7term

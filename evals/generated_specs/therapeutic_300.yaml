@@ -1,18 +1,25 @@
 construct:
-  name: "soluble_human_therapeutic_production"
+  name: "human_therapeutic_soluble_tag_free"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: therapeutic_protein
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: P60568
+              id: human_therapeutic
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

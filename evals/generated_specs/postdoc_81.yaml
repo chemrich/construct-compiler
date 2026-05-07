@@ -1,19 +1,24 @@
 construct:
   name: "Fab_Z_secretion_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD # Strong constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: Fab_Z
         expression: high
         chain:
-          - tag: alpha_factor # Substituted mammalian signal peptide with yeast alpha-factor for reliable secretion per instruction 18
+          - tag: alpha_factor_signal  # Yeast-optimized signal peptide for ER secretion
           - gene:
-              id: Fab-Z
+              id: Fab_Z
               source: uniprot
-          - tag: c-Myc
-    - terminator: ADH1
+          - cleavage_site: 3C
+          - tag: c_Myc
+
+    - terminator: CYC1_poly_A

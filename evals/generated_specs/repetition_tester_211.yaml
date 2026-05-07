@@ -1,40 +1,62 @@
 construct:
-  name: "synthetic_operon_enz_abcd"
-  host: e_coli_bl21_de3
+  name: synthetic_four_enzyme_operon_E_coli
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enz_a
+        label: EnzA
         expression: high
         gene:
           id: EnzA
           source: uniprot
-    - spacer: 35
+        rbs_variant: custom_optimized_RBS_A
+        # Note: compiler will apply codon-optimization variant A with unique synonymous codons
+    
+    - spacer: 45
+      # Unique intergenic spacer 1 with non-homologous sequence
+      spacer_id: intergenic_spacer_A_to_B
+    
     - cistron:
-        label: enz_b
+        label: EnzB
         expression: high
-        fused: false
         gene:
           id: EnzB
           source: uniprot
-    - spacer: 42
+        rbs_variant: custom_optimized_RBS_B
+        # Note: compiler will apply codon-optimization variant B with distinct synonymous codons
+    
+    - spacer: 50
+      # Unique intergenic spacer 2 with non-homologous sequence
+      spacer_id: intergenic_spacer_B_to_C
+    
     - cistron:
-        label: enz_c
+        label: EnzC
         expression: high
-        fused: false
         gene:
           id: EnzC
           source: uniprot
-    - spacer: 29
+        rbs_variant: custom_optimized_RBS_C
+        # Note: compiler will apply codon-optimization variant C with distinct synonymous codons
+    
+    - spacer: 55
+      # Unique intergenic spacer 3 with non-homologous sequence
+      spacer_id: intergenic_spacer_C_to_D
+    
     - cistron:
-        label: enz_d
+        label: EnzD
         expression: high
-        fused: false
         gene:
           id: EnzD
           source: uniprot
-    - terminator: T7term
+        rbs_variant: custom_optimized_RBS_D
+        # Note: compiler will apply codon-optimization variant D with distinct synonymous codons
+    
+    - terminator: T7_echo_terminator
+      # Custom terminator distinct from rrnB_T1 and standard variants

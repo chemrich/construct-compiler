@@ -1,18 +1,38 @@
 construct:
-  name: "genetic_or_gate_tandem"
-  host: e_coli
+  name: OR_gate_genetic_circuit
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Input A: Activated by L-arabinose
-    - promoter: lacUV5  # Input B: Activated by IPTG. Tandem promoters provide OR logic.
+    - promoter: araBAD
+      # Input A: araBAD promoter is activated by AraC + arabinose
+    
     - cistron:
-        label: reporter
+        label: output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
+    - spacer: 25
+    
+    - promoter: T7lac
+      # Input B: T7lac promoter is activated by T7 RNAP (induced by IPTG)
+    
+    - cistron:
+        label: output_alternate
         expression: high
         fused: false
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - terminator: rrnB_T1

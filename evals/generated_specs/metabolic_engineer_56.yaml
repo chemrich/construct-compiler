@@ -1,45 +1,63 @@
 construct:
-  name: "anaerobic_nif_operon_ecoli"
+  name: nif_operon_synthetic_nitrogen_fixation
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Pfnr  # Oxygen-sensitive promoter regulated by FNR for anaerobic expression
+    - promoter: araBAD  # oxygen-sensitive alternative; ideally use a microaerobic/hypoxic promoter like fnr or similar
+      # Note: araBAD is used as a proxy for inducible control; for true oxygen-sensitivity, consider fnr promoter if available
+
     - cistron:
-        label: nifH
+        label: NifH
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P05342
+              id: nifH
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifD
+        label: NifD
+        expression: high
         fused: false
         gene:
-          id: P07328
+          id: nifD
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifK
+        label: NifK
+        expression: high
         fused: false
         gene:
-          id: P07329
+          id: nifK
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifB
+        label: NifB
+        expression: high
         fused: false
         gene:
-          id: P09823
+          id: nifB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifV
+        label: NifV
+        expression: high
         fused: false
         gene:
-          id: P09117
+          id: nifV
           source: uniprot
+
     - terminator: rrnB_T1

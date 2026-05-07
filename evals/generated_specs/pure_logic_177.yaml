@@ -1,25 +1,71 @@
 construct:
-  name: yeast_sequential_logic_state_machine
+  name: yeast_sequential_logic_gate
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GAL1 # Input S1: Drives expression of the transactivator
+    - promoter: GAL1
+
     - cistron:
-        label: s1_transactivator
-        expression: medium
-        gene:
-          id: LexA_VP16
-          source: uniprot
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: CUP1_LexA_hybrid # Input S2: Requires both Copper (S2) and LexA (S1) to activate
-    - cistron:
-        label: o_final
+        label: S1_sensor
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: ADH1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LexA_DBD_S1
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: GAL10
+
+    - cistron:
+        label: S1_responder
+        expression: high
+        chain:
+          - gene:
+              id: Gal4_AD_S1_dependent
+
+    - terminator: rrnB_T1
+
+    - promoter: GAL4_dependent
+
+    - cistron:
+        label: S2_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LexA_DBD_S2
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: GAL10
+
+    - cistron:
+        label: S2_responder
+        expression: medium
+        chain:
+          - gene:
+              id: Gal4_AD_S2_dependent
+
+    - terminator: rrnB_T1
+
+    - promoter: dual_promoter_S1_S2_dependent
+      # Requires both S1_responder AND S2_responder to be active
+
+    - cistron:
+        label: O_FINAL
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,19 +1,25 @@
 construct:
-  name: "bacillus_keratinase_secretion_system"
+  name: "bacillus_keratinase_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pspac
+
+    - rbs: strong  # strong RBS for Bacillus
+
     - cistron:
-        label: keratinase_production
+        label: keratinase_secreted
         expression: high
         chain:
-          - tag: Vpr_signal_peptide
+          - signal_peptide: Vpr  # Vpr signal peptide for Bacillus secretion
           - gene:
-              id: P39598
+              id: keratinase
               source: uniprot
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

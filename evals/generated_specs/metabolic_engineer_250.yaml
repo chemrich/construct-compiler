@@ -1,48 +1,58 @@
 construct:
-  name: "bacillus_subtilis_secretory_enzyme_operon"
-  host: b_subtilis
+  name: "Bacillus_secretory_operon_4enzymes"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: P_veg  # Strong constitutive promoter for B. subtilis
+    - promoter: J23100
+
     - cistron:
         label: SecretoryE1
-        expression: medium
+        expression: high
         chain:
-          - tag: AmyQ  # B. subtilis Alpha-amylase secretion signal peptide
+          - tag: AmyQ_signal_peptide
           - gene:
               id: SecretoryE1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: SecretoryE2
-        expression: medium
+        expression: high
         fused: false
         chain:
-          - tag: AmyQ
+          - tag: AmyQ_signal_peptide
           - gene:
               id: SecretoryE2
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: SecretoryE3
-        expression: medium
+        expression: high
         fused: false
         chain:
-          - tag: AmyQ
+          - tag: AmyQ_signal_peptide
           - gene:
               id: SecretoryE3
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: SecretoryE4
-        expression: medium
+        expression: high
         fused: false
         chain:
-          - tag: AmyQ
+          - tag: AmyQ_signal_peptide
           - gene:
               id: SecretoryE4
               source: uniprot
+
     - terminator: rrnB_T1

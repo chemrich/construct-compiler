@@ -1,59 +1,41 @@
-```yaml
 construct:
-  name: positive_feedback_amplifier_system
-  host: HEK293
+  name: positive_feedback_amplification_loop
+  host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: CMV
-    
+    - promoter: T7lac
+
     - cistron:
-        label: transcriptional_activator
+        label: activator
         expression: medium
         chain:
-          - signal_peptide: native  # For nuclear localization
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P65_AD_VP16  # Strong transcriptional activator domain
+              id: LuxR
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: GAL4_DBD  # DNA binding domain for feedback promoter
-              source: uniprot
+        # LuxR: acyl-homoserine lactone receptor that activates its own promoter (positive feedback)
 
-    - terminator: SV40_polyA
+    - terminator: rrnB_T1
 
-    - promoter: GAL4_UAS  # Upstream Activating Sequence responsive to GAL4
-    
+    - promoter: lux_pR
+      # lux_pR is activated by LuxR-AHL complex, creating feedback loop
+
     - cistron:
-        label: amplified_activator
+        label: growth_factor
         expression: high
         fused: false
         chain:
-          - gene:
-              id: P65_AD_VP16
-              source: uniprot
+          - tag: 6xHis
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: GAL4_DBD
+              id: FGF2
               source: uniprot
 
-    - spacer: 50
-
-    - cistron:
-        label: growth_factor_output
-        expression: high
-        fused: false
-        chain:
-          - signal_peptide: native  # For secretion
-          - gene:
-              id: PDGFB  # Platelet-derived growth factor
-              source: uniprot
-
-    - terminator: BGH_polyA
-```
+    - terminator: rrnB_T1

@@ -1,22 +1,30 @@
 construct:
-  name: "yeast_secreted_therapeutic_polyprotein"
+  name: "yeast_multidomain_therapeutic_secreted"
   host: yeast
+
   backbone:
-    resistance: ura3  # User requested no antibiotics; using yeast auxotrophic marker URA3
-    ori: 2micron
+    resistance: none
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - promoter: PGK1
+
     - cistron:
-        label: therapeutic_fusion
+        label: therapeutic_polyprotein
         expression: high
         chain:
-          - tag: alpha_factor_leader  # Standard yeast secretion signal
+          - tag: alpha_factor_signal
           - gene:
-              id: P01308
+              id: domain_1
               source: uniprot
-          - cleavage_site: Kex2        # Native yeast endoprotease for polyprotein processing
+          - cleavage_site: 3C
           - gene:
-              id: P01275
+              id: domain_2
               source: uniprot
-    - terminator: CYC1_term
+          - cleavage_site: TEV
+          - gene:
+              id: domain_3
+              source: uniprot
+
+    - terminator: CYC1

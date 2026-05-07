@@ -1,31 +1,34 @@
 construct:
-  name: "complex_multidomain_fusion_secretion"
-  host: e_coli_bl21_de3
+  name: "multi_domain_fusion_complex_secretion"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: multi_domain_fusion
         expression: high
         chain:
-          - gene:
-              id: P0A910  # OmpA secretion signal
-              source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - gene:
-              id: P62593  # TEM-1 enzyme domain
-              source: uniprot
+          - tag: pelB  # N-terminal secretion signal (Pectate lyase B)
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P12931  # Src (PPI domain source)
-              source: uniprot
+              id: lacZ
+              source: uniprot  # Beta-galactosidase as enzyme domain
           - linker:
               type: rigid_EAAAK
               repeats: 2
-          - solubility_tag: MBP
-    - terminator: T7term
+          - gene:
+              id: MBP  # Maltose binding protein as PPI domain
+              source: uniprot
+          - linker:
+              sequence: "GGSGGSGGS"  # Custom unique linker (distinct from GS_flexible repeats)
+          - solubility_tag: SUMO  # SUMO for maximal divergence from MBP
+
+    - terminator: rrnB_T1

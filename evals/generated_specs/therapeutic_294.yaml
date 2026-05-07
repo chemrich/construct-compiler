@@ -1,18 +1,25 @@
 construct:
-  name: "non_viral_nuclear_therapeutic_expression"
+  name: "mammalian_nuclear_therapeutic_expression"
   host: HEK293
+
   backbone:
-    resistance: none # User requested strict non-antibiotic resistance design
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-antibiotic resistance; uses auxotrophic selection or DHFR
+    ori: ColA
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha # Selected human EF1-alpha as a strong non-viral constitutive promoter
+    - promoter: EF1_alpha
+
     - cistron:
-        label: therapeutic_cargo
+        label: therapeutic
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: P04637
+              id: "therapeutic_protein"
               source: uniprot
-    - terminator: hGH_pA # Human growth hormone polyadenylation signal for mammalian termination/processing
+
+    - polyadenylation_signal: SV40_poly_A
+
+    - terminator: rrnB_T1

@@ -1,39 +1,62 @@
 construct:
-  name: "three_input_majority_gate"
-  host: e_coli_bl21
+  name: three_input_majority_gate
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+    
     - cistron:
-        label: sensor_A
+        label: majority_logic_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: majority_gate_logic_circuit
+              source: synthetic
+    
+    - spacer: 20
+    
+    - cistron:
+        label: input_sensor_A
         expression: medium
         fused: false
         gene:
-          id: araC
-          source: uniprot
-    - spacer: 30
+          id: input_A_sensor
+          source: synthetic
+    
+    - spacer: 20
+    
     - cistron:
-        label: sensor_B
+        label: input_sensor_B
         expression: medium
         fused: false
         gene:
-          id: luxR
-          source: uniprot
-    - spacer: 30
+          id: input_B_sensor
+          source: synthetic
+    
+    - spacer: 20
+    
     - cistron:
-        label: sensor_C
+        label: input_sensor_C
         expression: medium
         fused: false
         gene:
-          id: lacI
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac  # Proxy for majority gate logic promoter (A+B or A+C or B+C)
+          id: input_C_sensor
+          source: synthetic
+    
+    - spacer: 20
+    
     - cistron:
         label: output_Z
         expression: high
+        fused: false
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+          id: output_Z_reporter
+          source: synthetic
+    
+    - terminator: rrnB_T1

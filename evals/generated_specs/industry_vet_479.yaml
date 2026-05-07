@@ -1,19 +1,23 @@
 construct:
-  name: "my_protein_clean_intein_his"
+  name: MyProteinClean_intein_autocleavage
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
-          - gene:
-              id: Ssp_DnaB
-              source: uniprot
+          - intein: Mxe_GyrA  # N-terminal intein for auto-cleavage upon purification trigger
           - gene:
               id: MyProteinClean
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

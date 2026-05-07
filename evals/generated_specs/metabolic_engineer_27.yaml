@@ -1,67 +1,69 @@
-```yaml
 construct:
-  name: quorum_sensing_biodegradation_operon
+  name: "QS_regulated_biodegradation_operon"
   host: e_coli
-  
+
   backbone:
-    catalog_vector: pET-28b(+)
-  
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: luxI  # quorum sensing activated promoter
-    
+    - promoter: lux_pR  # QS-responsive promoter (LuxR-activated)
+
     - cistron:
-        label: enzyme1_reporter
+        label: enzyme1_GFP_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme1_biodegradation
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: sfGFP
               source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P0A9B2  # example biodegradation enzyme
-              source: uniprot
-    
-    - spacer: 25
-    
+
+    - spacer: 30
+
     - cistron:
         label: enzyme2
         expression: high
         fused: false
         gene:
-          id: P77173  # example biodegradation enzyme
+          id: enzyme2_biodegradation
           source: uniprot
-    
-    - spacer: 25
-    
+
+    - spacer: 30
+
     - cistron:
         label: enzyme3
         expression: high
         fused: false
         gene:
-          id: P23522  # example biodegradation enzyme
+          id: enzyme3_biodegradation
           source: uniprot
-    
-    - spacer: 25
-    
+
+    - spacer: 30
+
     - cistron:
         label: enzyme4
         expression: high
         fused: false
         gene:
-          id: P31658  # example biodegradation enzyme
+          id: enzyme4_biodegradation
           source: uniprot
-    
-    - spacer: 25
-    
+
+    - spacer: 30
+
     - cistron:
         label: enzyme5
         expression: high
         fused: false
         gene:
-          id: P0AC55  # example biodegradation enzyme
+          id: enzyme5_biodegradation
           source: uniprot
-    
+
     - terminator: rrnB_T1
-```

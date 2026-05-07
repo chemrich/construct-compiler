@@ -1,24 +1,74 @@
 construct:
-  name: "xor_apoptosis_logic_gate"
-  host: HEK293
+  name: "XOR_apoptosis_gate"
+  host: mammalian
+  
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  
   cassette:
-    - promoter: CMV  # Synthetic XOR-gated promoter responsive to trans-acting C1 and C2 factors
+    - promoter: CMV
+    
     - cistron:
-        label: apoptosis_effector
+        label: C1_repressor
         expression: high
         chain:
-          - tag: HA
           - gene:
-              id: BAX
+              id: "KRAB"
               source: uniprot
-    - spacer: 45  # Internal Ribosome Entry Site (IRES) for independent translation of reporter
+    
+    - spacer: 30
+    
     - cistron:
-        label: gate_reporter
-        expression: low
+        label: C2_repressor
+        expression: high
+        chain:
+          - gene:
+              id: "Krüppel-associated_box"
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: apoptosis_effector
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: "caspase_3"
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: C1_sensor
+        expression: high
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: "dCas9"
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: C2_sensor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: "split_TF_C2"
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: inhibitory_output
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: "BCL2"
+              source: uniprot
+    
+    - terminator: rrnB_T1

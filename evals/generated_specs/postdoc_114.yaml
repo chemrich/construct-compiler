@@ -1,27 +1,43 @@
 construct:
-  name: "mammalian_metabolic_pathway_transplant_yeast"
+  name: "mammalian_metabolic_pathway_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: GPD  # Mammalian promoters are incompatible with yeast; substituted with strong constitutive yeast GPD promoter
-    - cistron:
-        label: enzyme_1
+    - promoter: GAL1
+      cistron:
+        label: Enzyme1
+        expression: high
         gene:
           id: Enzyme1
           source: uniprot
-    - promoter: TEF1 # Mammalian promoters are incompatible with yeast; substituted with strong constitutive yeast TEF1 promoter
-    - cistron:
-        label: enzyme_2
+
+    - terminator: CYC1
+
+    - spacer: 50
+
+    - promoter: GAL10
+      cistron:
+        label: Enzyme2
+        expression: high
         gene:
           id: Enzyme2
           source: uniprot
-    - promoter: ADH1 # Mammalian promoters are incompatible with yeast; substituted with strong constitutive yeast ADH1 promoter
-    - cistron:
-        label: enzyme_3
+
+    - terminator: CYC1
+
+    - spacer: 50
+
+    - promoter: ADH1
+      cistron:
+        label: Enzyme3
+        expression: high
         gene:
           id: Enzyme3
           source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

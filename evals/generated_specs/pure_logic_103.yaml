@@ -1,14 +1,43 @@
 construct:
-  name: "genetic_nor_gate"
-  host: e_coli_bl21
+  name: NOR_logic_gate
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac  # Modified with tetO operators; repressed by LacI (InputX) OR TetR (InputY) to function as a NOR gate
+    - promoter: T7lac
+
     - cistron:
-        label: "OutputProduct"
+        label: repressor_X
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_Y
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lexA
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_product
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

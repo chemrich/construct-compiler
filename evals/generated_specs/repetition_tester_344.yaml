@@ -1,58 +1,31 @@
 construct:
-  name: "insect_bipartite_reporter_system"
-  host: sf9
+  name: "insect_bipartite_reporter_gal4_dbd_poi"
+  host: insect_sf9
+  
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: custom
-
+  
   cassette:
-    # --- Unit 1: Gal4-DBD fused to POI ---
     - promoter: OpIE2
+    
     - cistron:
-        label: bait_fusion
-        expression: medium
+        label: gal4_dbd_poi_fusion
+        expression: high
         chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: GAL4_DBD
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P03023 # LacI used as representative POI
-              source: uniprot
-    - terminator: OpIE2_term
-
-    - spacer: 100
-
-    # --- Unit 2: Gal4-AD fused to Activator (VP16) ---
-    # Using OpIE1 and p10 terminator to ensure no homology with Unit 1
-    - promoter: OpIE1
-    - cistron:
-        label: prey_fusion
-        expression: medium
-        chain:
-          - gene:
-              id: GAL4_AD
-              source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 3
-          - gene:
-              id: VP16
-              source: uniprot
-    - terminator: p10_term
-
-    - spacer: 100
-
-    # --- Unit 3: Gal4-UAS driving GFP ---
-    # 5x UAS sites with a minimal Hsp70 promoter
-    - promoter: 5xUAS_hsp70min
-    - cistron:
-        label: reporter
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40
+              id: POI_custom
+              source: user_provided
+    
+    - terminator: SV40_polyA

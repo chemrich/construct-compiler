@@ -1,20 +1,20 @@
 construct:
-  name: "SecretedFactor_Purification_System"
-  host: mammalian
+  name: SecretedFactor_mammalian
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_factor
         expression: high
         chain:
-          - tag: IgK_leader  # Signal peptide for mammalian secretion
           - tag: Strep-II
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: SecretedFactor
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

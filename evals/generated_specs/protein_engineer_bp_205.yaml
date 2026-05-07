@@ -1,28 +1,32 @@
 construct:
-  name: "IgG_production_Pichia_dual_expression"
+  name: pichia_dual_igG_expression
   host: yeast
-  backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: AOX1
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: P01857
+              id: human_IgG_heavy_chain
               source: uniprot
-    - terminator: AOX1_term
+    - terminator: AOX1_TT
+
+  cassette:
     - promoter: AOX1
     - cistron:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: P01834
+              id: human_IgG_light_chain
               source: uniprot
-    - terminator: AOX1_term
+    - terminator: AOX1_TT
+
+  backbone:
+    resistance: zeocin
+    ori: pPIC
+    source: addgene

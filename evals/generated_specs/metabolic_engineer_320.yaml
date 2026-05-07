@@ -1,39 +1,62 @@
 construct:
-  name: "equimolar_pathway_operon_p1_p4"
-  host: e_coli_bl21_de3
+  name: "metabolic_pathway_four_enzyme_operon"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: P1
-        expression: medium
-        fused: false
-        gene:
-          id: P1
-          source: uniprot
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P1
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: P2
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: P2
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P2
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: P3
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: P3
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P3
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: P4
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: P4
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P4
+              source: uniprot
+    
+    - terminator: rrnB_T1

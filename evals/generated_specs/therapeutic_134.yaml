@@ -1,20 +1,22 @@
 construct:
-  name: "periplasmic_cys_peptide_production"
-  host: e_coli_bl21_de3
+  name: "cysteine_rich_peptide_periplasmic_expression"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin # Schema requires a selection marker; Kanamycin used as a default for E. coli
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: therapeutic_peptide
         expression: high
         chain:
-          - tag: PelB # Signal peptide directing the peptide to the periplasm for disulfide bond formation
           - tag: 6xHis
           - cleavage_site: TEV
+          - secretion_signal: pelB
           - gene:
-              id: P81534 # Representative cysteine-rich therapeutic peptide (Human beta-defensin 3)
+              id: cysteine_rich_peptide
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

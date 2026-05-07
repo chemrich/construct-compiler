@@ -1,37 +1,48 @@
 construct:
-  name: "pathway_PQRST_operon"
-  host: e_coli
+  name: "five_enzyme_operon_IPTG_inducible"
+  host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_p
+        label: EnzymeP
         expression: medium
         chain:
           - gene:
               id: EnzymeP
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_q
+        label: EnzymeQ
         expression: medium
         fused: false
         gene:
           id: EnzymeQ
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_r
+        label: EnzymeR
         expression: medium
         fused: false
         gene:
           id: EnzymeR
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_s
+        label: EnzymeS
         expression: medium
         fused: false
         chain:
@@ -39,12 +50,15 @@ construct:
           - gene:
               id: EnzymeS
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_t
+        label: EnzymeT
         expression: medium
         fused: false
         gene:
           id: EnzymeT
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,18 +1,24 @@
 construct:
-  name: "secreted_human_GPCR_ADRB2"
+  name: "yeast_human_GPCR_secreted"
   host: yeast
+
   backbone:
-    catalog_vector: "pYES2"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: secreted_GPCR
         expression: high
         chain:
-          - tag: alpha_factor_signal  # Required for secretion in yeast
           - tag: 6xHis
-          - cleavage_site: TEV
+          - secretion_signal: alpha_factor
           - gene:
-              id: ADRB2_HUMAN
+              id: GPCR_human
               source: uniprot
-    - terminator: CYC1  # Standard yeast transcription terminator
+          - tag: HA
+
+    - terminator: CYC1

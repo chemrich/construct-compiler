@@ -1,35 +1,43 @@
 construct:
-  name: "yeast_orthogonal_4x_gRNA_array"
+  name: "yeast_quadruple_gRNA_array_pol3"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: SNR52
-    - cistron:
-        label: gRNA_1
-        gene:
-          id: gRNA_scaffold_target_1
-    - terminator: SNR52_terminator
-    - spacer: 40
-    - promoter: RPR1
-    - cistron:
-        label: gRNA_2
-        gene:
-          id: gRNA_scaffold_target_2
-    - terminator: RPR1_terminator
-    - spacer: 40
     - promoter: U6
-    - cistron:
+      cistron:
+        label: gRNA_1
+        expression: high
+        gene:
+          id: gRNA_1_scaffold
+          source: uniprot
+
+    - promoter: SNR52  # distinct Pol III promoter
+      cistron:
+        label: gRNA_2
+        expression: high
+        gene:
+          id: gRNA_2_scaffold
+          source: uniprot
+
+    - promoter: RPR1  # third distinct Pol III promoter
+      cistron:
         label: gRNA_3
+        expression: high
         gene:
-          id: gRNA_scaffold_target_3
-    - terminator: U6_terminator
-    - spacer: 40
-    - promoter: SCR1
-    - cistron:
+          id: gRNA_3_scaffold
+          source: uniprot
+
+    - promoter: SCR1  # fourth distinct Pol III promoter
+      cistron:
         label: gRNA_4
+        expression: high
         gene:
-          id: gRNA_scaffold_target_4
-    - terminator: SCR1_terminator
+          id: gRNA_4_scaffold
+          source: uniprot
+
+    - terminator: rrnB_T1

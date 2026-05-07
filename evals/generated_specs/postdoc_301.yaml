@@ -1,17 +1,22 @@
 construct:
-  name: "hGH_yeast_secretion_system"
+  name: "hGH_secreted_yeast"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: 2μ
+
   cassette:
-    - promoter: TEF1  # Mammalian promoter substituted with strong yeast TEF1 promoter for host compatibility
+    - promoter: AOX1
+
     - cistron:
-        label: hGH_secretion
+        label: hGH_secreted
         expression: high
         chain:
+          - tag: alpha_factor_signal
           - gene:
               id: P01241
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

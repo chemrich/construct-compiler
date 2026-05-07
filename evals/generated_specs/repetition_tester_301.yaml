@@ -1,27 +1,57 @@
 construct:
-  name: "triple_2A_therapeutic_ABC"
+  name: "mammalian_tricistronic_2A_peptides"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    # pTwist CMV uses SV40 polyA; we will use a distinct bGH polyA terminator
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_polyprotein
+        label: therapeutic_A
+        expression: high
         chain:
-          - gene:
-              id: therapeutic_protein_A
-              source: uniprot
-          - linker:
-              type: P2A
-          - gene:
-              id: therapeutic_protein_B
-              source: uniprot
-          - linker:
-              type: T2A
-          - gene:
-              id: therapeutic_protein_C
-              source: uniprot
-          - linker:
-              type: F2A
           - tag: 6xHis
-    - terminator: hGH_polyA
+          - cleavage_site: TEV
+          - gene:
+              id: therapeutic_A
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - custom_peptide: P2A
+              # Porcine teschovirus-1 2A; mediates ribosomal skipping
+
+    - cistron:
+        label: therapeutic_B
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: therapeutic_B
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - custom_peptide: T2A
+              # Thosea asigna virus 2A; alternative self-cleaving peptide
+
+    - cistron:
+        label: therapeutic_C
+        expression: high
+        fused: false
+        chain:
+          - tag: HA
+          - gene:
+              id: therapeutic_C
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - custom_peptide: F2A
+              # Foot-and-mouth disease virus 2A; third distinct variant
+
+    - terminator: bGH_polyA
+        # Bovine growth hormone polyA signal; genetically distinct from SV40 polyA in backbone

@@ -1,25 +1,39 @@
 construct:
-  name: dual_inducible_mammalian_expression
+  name: "dual_inducible_mammalian_GeneX_GeneY"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G  # Tet-On 3G inducible promoter (Tet-responsive element)
+    - promoter: TRE_tight
+      comment: "Tet-On inducible promoter for GeneX (requires rtTA transactivator)"
+
     - cistron:
-        label: genex_unit
+        label: GeneX
         expression: high
-        fused: false
-        gene:
-          id: GeneX
-          source: uniprot
-    - terminator: bGH_PA  # Bovine growth hormone polyadenylation signal
-    - spacer: 100  # Physical separation between expression cassettes
-    - promoter: pERV3  # Ecdysone-inducible promoter (Vp16-responsive element)
+        chain:
+          - tag: FLAG
+          - gene:
+              id: GeneX
+              source: uniprot
+
+    - terminator: SV40_poly_A
+
+    - spacer: 150
+      comment: "Spacer to prevent 3' UTR interference"
+
+    - promoter: EcR_VgEcR
+      comment: "Ecdysone-inducible promoter for GeneY (requires EcR/RXR + ecdysone analogue)"
+
     - cistron:
-        label: geney_unit
+        label: GeneY
         expression: high
-        fused: false
-        gene:
-          id: GeneY
-          source: uniprot
-    - terminator: SV40_polyA  # Simian Virus 40 polyadenylation signal (sequence distinct from bGH_PA)
+        chain:
+          - tag: HA
+          - gene:
+              id: GeneY
+              source: uniprot
+
+    - terminator: WPRE

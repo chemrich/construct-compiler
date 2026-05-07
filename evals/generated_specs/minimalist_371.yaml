@@ -1,32 +1,42 @@
 construct:
-  name: "polycistronic_gfp_mcherry_bfp"
-  host: e_coli
+  name: GFP_mCherry_BFP_polycistronic
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gfp
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: mcherry
+        label: mCherry
         expression: high
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: bfp
+        label: BFP
         expression: high
         fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
+        chain:
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+
     - terminator: rrnB_T1

@@ -1,17 +1,25 @@
 construct:
-  name: "RBD_Secreted_Vaccine_CHO"
+  name: "RBD_secreted_CHO_Strep"
   host: CHO
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: RBD_target
+        label: RBD_secreted
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_SP_D89
           - gene:
-              id: P0DTC2
+              id: RBD
               source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
           - tag: Strep-II
-    - terminator: bgh_polya
+
+    - terminator: rrnB_T1

@@ -1,15 +1,26 @@
 construct:
-  name: "shRNA_knockdown_mammalian_U6"
-  host: mammalian
+  name: "mammalian_shRNA_knockdown_U6"
+  host: HEK293
+
   backbone:
-    # User requested no antibiotic resistance; kanamycin included for E. coli propagation per Rule 9
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Note: Using mammalian expression vector; antibiotic resistance omitted per requirements
+    ori: ColA
+    source: addgene
+
   cassette:
     - promoter: U6
+      # U6 is a constitutive RNA Pol III promoter ideal for shRNA expression
+
     - cistron:
-        label: shRNA_effector
-        gene:
-          id: "shRNA_target_sequence"
-    - terminator: polyT
+        label: shRNA
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_target
+              # User should provide specific shRNA sequence targeting their gene of interest
+              # Format: 5'-[19bp sense]-TTCAAGAGA-[19bp antisense]-TTTT-3'
+              source: custom
+
+    - terminator: poly_T
+      # Poly(T) terminator required for Pol III transcription termination

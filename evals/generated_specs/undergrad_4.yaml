@@ -1,27 +1,31 @@
-```yaml
 construct:
-  name: dual_fluorescent_GFP_BFP
-  host: e_coli
+  name: dual_fluorescent_E_coli_GFP_BFP
+  host: e_coli_bl21
 
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
 
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: green_fluorescence
+        label: GFP
         expression: high
         gene:
           id: sfGFP
           source: fpbase
-    - spacer: 30
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
     - cistron:
-        label: blue_fluorescence
+        label: BFP
         expression: high
-        fused: false
         gene:
           id: mTagBFP2
           source: fpbase
+
     - terminator: rrnB_T1
-```

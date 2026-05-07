@@ -1,18 +1,22 @@
 construct:
-  name: "Bacillus_stress_induced_secreted_cutinase"
+  name: bacillus_stress_induced_cutinase_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pBR322  # Note: pBR322 is a placeholder; for Bacillus hosts, a compatible ori like pUB110 is typically used.
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: PsigmaB
+    - promoter: PsigmaB  # General stress response promoter for Bacillus subtilis
+
     - cistron:
-        label: secreted_cutinase
+        label: cutinase_secreted
         expression: high
         chain:
-          - tag: LipA  # B. subtilis LipA secretion signal peptide
+          - signal_peptide: LipA  # Bacillus lipase signal peptide for secretion
           - gene:
-              id: P52130
+              id: cutinase
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

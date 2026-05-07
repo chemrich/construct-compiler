@@ -1,18 +1,22 @@
 construct:
-  name: "AAV2_AAP_C_terminal_SUMO_His_fusion"
-  host: e_coli_bl21_de3
+  name: "AAV_internal_protein_SUMO_His"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: P0C0S1
+              id: AAV_internal_protein
               source: uniprot
           - cleavage_site: SUMO
           - solubility_tag: SUMO
           - tag: 6xHis
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

@@ -1,34 +1,68 @@
 construct:
-  name: "irreversible_single_event_counter"
+  name: single_event_counter_latch
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+      # INPUT: arabinose induction triggers EVENT_A detection
+
     - cistron:
-        label: trigger_sensor
-        expression: medium
-        fused: false
-        gene:
-          id: P00573
-          source: uniprot
-    - spacer: 40
-    - promoter: T7
-    - cistron:
-        label: latch_feedback
+        label: recombinase_Cre
         expression: high
-        fused: false
-        gene:
-          id: P00573
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cre_recombinase
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: count_one_output
+        label: loxP_flanked_repressor
         expression: high
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: lacI_repressor
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # SECOND CASSETTE: Output module with loxP sites flanking repressor
+    # Upon Cre-mediated excision, COUNT_ONE is constitutively expressed
+
+    - promoter: lacUV5
+      # Default OFF (repressed by LacI)
+
+    - cistron:
+        label: COUNT_ONE
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    # THIRD CASSETTE: Maintenance of memory
+    # After first EVENT_A: Cre excises lacI (flanked by loxP sites)
+    # Loss of LacI repression allows COUNT_ONE expression
+    # Cre is diluted out over time; latch is maintained by loss of repressor
+
+    - promoter: T7lac
+
+    - cistron:
+        label: memory_stabilizer
+        expression: low
+        chain:
+          - gene:
+              id: dnaB_helicase
+              source: uniprot
+        # Low constitutive expression maintains genome stability post-excision
+
+    - terminator: rrnB_T1

@@ -1,26 +1,34 @@
 construct:
-  name: "pichia_interferon_alpha2_pdi_secretion"
+  name: "interferon_PDI_coexpression_pichia"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: interferon_alpha2
+        label: interferon_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P01563
+              id: interferon_alpha_2b
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1
+
+  cassette:
     - promoter: GAP
+
     - cistron:
-        label: pdi_chaperone
+        label: PDI_intracellular
         expression: medium
         gene:
-          id: P26327
+          id: PDI
           source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

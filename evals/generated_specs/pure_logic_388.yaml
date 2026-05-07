@@ -1,39 +1,44 @@
 construct:
-  name: "cascaded_not_gates_delay_chain"
-  host: e_coli
+  name: cascaded_NOT_gate_chain
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100  # Constitutive input starts the cascade
+    - promoter: araBAD
+    
     - cistron:
-        label: inverter_1_lacI
-        gene:
-          id: lacI
-          source: uniprot
-    - terminator: BBa_B0015
-    - spacer: 40
-    - promoter: lacUV5  # Repressed by LacI
+        label: NOT_gate_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: inverter_2_tetR
-        gene:
-          id: tetR
-          source: uniprot
-    - terminator: BBa_B0015
-    - spacer: 40
-    - promoter: P_tet  # Repressed by TetR
+        label: NOT_gate_2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: inverter_3_cI
-        gene:
-          id: cI
-          source: uniprot
-    - terminator: BBa_B0015
-    - spacer: 40
-    - promoter: lambda_pR  # Repressed by cI
-    - cistron:
-        label: reporter_output
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        label: NOT_gate_3_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cI
+              source: uniprot
+    
+    - terminator: rrnB_T1

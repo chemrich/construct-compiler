@@ -1,19 +1,24 @@
 construct:
-  name: "Pichia_pastoris_GAP_secretion_GLP1"
+  name: "pichia_pastoris_secreted_therapeutic_peptide"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPIC9"
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: therapeutic_peptide
+        label: secreted_peptide
         expression: high
         chain:
-          - tag: Ost1
+          - tag: Ost1_signal_peptide
           - tag: HA
           - gene:
-              id: P01275
+              id: therapeutic_peptide
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

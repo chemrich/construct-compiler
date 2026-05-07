@@ -1,27 +1,38 @@
 construct:
-  name: "protein_z_triple_tag_recombination_resistant"
+  name: "ProteinZ_triple_tag_low_recombination"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: ProteinZ_with_triple_tags
         expression: high
         chain:
           - tag: 6xHis
+            codon_variant: variant_A
+          - linker:
+              type: GS_flexible
+              repeats: 1
+              codon_variant: variant_A
+          - tag: Strep-II
+            codon_variant: variant_B
+          - linker:
+              type: rigid_EAAAK
+              codon_variant: variant_B
+          - solubility_tag: GST
+            codon_variant: variant_C
           - linker:
               type: GS_flexible
               repeats: 2
-          - tag: Strep-II
-          - linker:
-              type: short_GS
-              repeats: 2
-          - solubility_tag: GST
-          - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              codon_variant: variant_C
           - gene:
               id: ProteinZ
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

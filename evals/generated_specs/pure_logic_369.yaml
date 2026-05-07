@@ -1,26 +1,48 @@
 construct:
   name: "quorum_sensing_amplifier"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pLux  # Quorum-sensing responsive promoter for positive feedback
+    - promoter: araBAD
+
     - cistron:
-        label: qs_synthetase
-        expression: high
-        gene:
-          id: LuxI
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: secreted_output
-        expression: high
-        fused: false
+        label: QS_synthase
+        expression: medium
         chain:
-          - tag: PelB  # Secretion signal for E. coli export
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Signal_Peptide_Output
+              id: luxI
               source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: QS_regulator
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: signal_peptide_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: Sec_signal_peptide
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,28 +1,34 @@
 construct:
-  name: "bacillus_multicistronic_protease_secretion"
+  name: Bacillus_dual_protease_secretion
   host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
         label: protease_A
         expression: high
         chain:
-          - tag: AprE_signal
+          - signal_peptide: AprE
           - gene:
-              id: P00782
+              id: aprE
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: protease_B
         expression: high
         fused: false
         chain:
-          - tag: Vpr_signal
+          - signal_peptide: Vpr
           - gene:
-              id: P19577
+              id: vpr
               source: uniprot
+
     - terminator: rrnB_T1

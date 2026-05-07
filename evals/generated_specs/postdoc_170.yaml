@@ -1,17 +1,22 @@
 construct:
-  name: "human_GLUT1_constitutive_expression"
-  host: e_coli
+  name: human_membrane_protein_Cterm_His
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter as requested
+    - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: P11166  # SLC2A1 (GLUT1), a representative human membrane protein
+              id: "UNIPROT:P00000"  # Replace with actual human membrane protein UniProt ID
               source: uniprot
-          - tag: 6xHis  # C-terminal His-tag as requested
+          - tag: 6xHis
+
     - terminator: rrnB_T1

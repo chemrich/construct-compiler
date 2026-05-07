@@ -1,16 +1,21 @@
 construct:
-  name: "RNAAptamerX"
+  name: RNAAptamerX
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: ADH1  # Constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: RNA_aptamer
         expression: high
-        gene:
-          id: RNAAptamerX
-          source: uniprot  # Assuming the name refers to a protein or the system requires an ID for resolution
-    - terminator: CYC1_term  # Standard yeast terminator
+        chain:
+          - gene:
+              id: RNAAptamerX
+              source: uniprot
+
+    - terminator: CYC1

@@ -1,28 +1,36 @@
 construct:
-  name: "pAOX1_Dual_mAb_Secretion"
+  name: "pichia_pastoris_dual_mAb_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: ampicillin
     ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: AOX1
+    - promoter: PAOX1
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P0DKX7
+              id: mAb_heavy_chain
               source: uniprot
-    - terminator: AOX1
-    - promoter: AOX1
+
+    - terminator: CYC1
+
+  cassette:
+    - promoter: PAOX1
+
     - cistron:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P0DOX5
+              id: mAb_light_chain
               source: uniprot
-    - terminator: AOX1
+
+    - terminator: CYC1

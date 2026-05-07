@@ -1,16 +1,21 @@
 construct:
-  name: "pBR322_subcloning_ampR"
+  name: simple_subcloning_vector
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: lacUV5
+
     - cistron:
-        label: mcs_reporter
+        label: polylinker
         expression: medium
-        gene:
-          id: lacZ_alpha
-          source: uniprot
-    - terminator: rrnB_T1
+        chain:
+          - gene:
+              id: MCS_EcoRI_BamHI_HindIII
+              source: addgene
+
+    - terminator: BBa_B0015

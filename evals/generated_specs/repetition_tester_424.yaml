@@ -1,25 +1,29 @@
 construct:
-  name: "tandem_n_terminal_tag_construct"
-  host: e_coli_bl21_de3
+  name: "dual_tag_proteolytic_cleavage"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: tandem_tagged_protein
+        label: target
         expression: high
         chain:
           - tag: Strep-II
           - cleavage_site: 3C
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: 6xHis
           - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
           - gene:
-              id: sfGFP
+              id: mEGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

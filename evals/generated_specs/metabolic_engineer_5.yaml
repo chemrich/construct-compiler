@@ -1,69 +1,85 @@
-```yaml
 construct:
-  name: Cglu_amino_acid_biosynthesis_operon_P2A
-  host: bacillus  # closest available host for Corynebacterium glutamicum
-  
+  name: "C_glutamicum_amino_acid_biosynthesis_operon"
+  host: bacillus  # C. glutamicum uses similar expression systems to Bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-  
+
   cassette:
-    - promoter: J23100  # strong constitutive promoter suitable for Corynebacterium
-    
+    - promoter: J23100  # Strong constitutive promoter suitable for C. glutamicum
+
     - cistron:
-        label: enzyme1_dehydratase
+        label: enzyme_1_dehydratase
         expression: high
         chain:
-          - solubility_tag: SUMO  # help prevent aggregation
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - tag: 6xHis
           - gene:
-              id: P9WQE3  # example dehydratase from Mycobacterium (related actinobacteria)
+              id: dehydratase_1
               source: uniprot
-          - cleavage_site: P2A  # P2A self-cleaving peptide for co-translational separation
-    
+
+    - spacer: 20
+
     - cistron:
-        label: enzyme2_transaminase
+        label: P2A_peptide_1
         expression: high
-        fused: true  # part of polycistronic transcript but P2A cleaves for separate folding
-        chain:
-          - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 1
-          - gene:
-              id: Q8NR74  # example transaminase
-              source: uniprot
-          - cleavage_site: P2A
-    
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 20
+
     - cistron:
-        label: enzyme3_dehydratase2
+        label: enzyme_2_transaminase
         expression: high
-        fused: true
         chain:
-          - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - tag: 6xHis
           - gene:
-              id: P9WQE5  # second dehydratase
+              id: transaminase_1
               source: uniprot
-          - cleavage_site: P2A
-    
+
+    - spacer: 20
+
     - cistron:
-        label: enzyme4_transaminase2
+        label: P2A_peptide_2
         expression: high
-        fused: true
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: enzyme_3_dehydratase
+        expression: high
         chain:
-          - solubility_tag: SUMO
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - tag: 6xHis
           - gene:
-              id: Q8NR75  # second transaminase
+              id: dehydratase_2
               source: uniprot
-    
+
+    - spacer: 20
+
+    - cistron:
+        label: P2A_peptide_3
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: enzyme_4_transaminase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: transaminase_2
+              source: uniprot
+
     - terminator: rrnB_T1
-```

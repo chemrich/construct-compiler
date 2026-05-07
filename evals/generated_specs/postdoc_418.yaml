@@ -1,16 +1,20 @@
 construct:
-  name: "toxic_protein_expression_system"
-  host: e_coli_bl21_de3
+  name: "toxic_protein_expression"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: toxic_target
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: toxic_protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

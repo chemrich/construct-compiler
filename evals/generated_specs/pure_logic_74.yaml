@@ -1,18 +1,50 @@
 construct:
-  name: "proportional_metabolic_feedback_controller"
+  name: "proportional_feedback_controller_metabolic"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # araBAD provides proportional (rheostatic) control relative to the inducer M
+    - promoter: araBAD
+
     - cistron:
-        label: enzyme_Y
+        label: sensor_regulator
         expression: medium
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0A9G6  # L-arabinose isomerase (araA), part of the metabolic feedback loop
+              id: LacI_variant
               source: uniprot
+        # LacI variant acts as metabolic sensor; repression inversely proportional to [M]
+
+    - spacer: 25
+
+    - cistron:
+        label: output_enzyme
+        expression: high
+        fused: false
+        chain:
+          - promoter: pLac
+          - gene:
+              id: Y_enzyme
+              source: uniprot
+        # Expression rate proportional to deviation: pLac repression weakens as [M] drops
+
+    - spacer: 25
+
+    - cistron:
+        label: intermediate_producer
+        expression: medium
+        fused: false
+        chain:
+          - promoter: pTac
+          - gene:
+              id: M_synthase
+              source: uniprot
+        # Constitutive M production establishes steady-state
+
     - terminator: rrnB_T1

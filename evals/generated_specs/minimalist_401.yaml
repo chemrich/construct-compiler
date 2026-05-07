@@ -1,16 +1,23 @@
 construct:
-  name: "yeast_xyzase_expression"
+  name: "XYZase_yeast_expression"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD  # Defaulting to constitutive GPD promoter for yeast high expression
+    - promoter: GAL1
+
     - cistron:
-        label: enzyme
+        label: XYZase
         expression: high
-        gene:
-          id: XYZase
-          source: uniprot
-    - terminator: CYC1_term  # Standard yeast terminator
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: XYZase
+              source: uniprot
+
+    - terminator: rrnB_T1

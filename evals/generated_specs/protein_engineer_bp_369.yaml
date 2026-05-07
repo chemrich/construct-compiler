@@ -1,21 +1,26 @@
 construct:
-  name: "pichia_secreted_nanobody_production"
+  name: pichia_secreted_nanobody
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: secreted_nanobody
+        label: nanobody_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_mating_factor
           - cleavage_site: Kex2
           - gene:
-              id: P0DPV1
+              id: nanobody
               source: uniprot
           - cleavage_site: TEV
           - tag: Twin-Strep
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

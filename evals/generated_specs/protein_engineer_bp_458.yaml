@@ -1,28 +1,40 @@
 construct:
-  name: pichia_metabolic_dual_enzyme_expression
+  name: Pichia_pastoris_dual_enzyme_metabolic
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pGAPZα"
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
-        label: enzyme_a_cistron
+        label: Enzyme_A
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: enzyme_A
+              id: P12345
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1
+
+  cassette:
     - promoter: PGAP
+
     - cistron:
-        label: enzyme_b_cistron
+        label: Enzyme_B
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: enzyme_B
+              id: P67890
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1

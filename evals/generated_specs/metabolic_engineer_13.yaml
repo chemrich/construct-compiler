@@ -1,29 +1,30 @@
-```yaml
 construct:
-  name: zymomonas_ethanol_production_cassette
-  host: e_coli
+  name: "Zymomonas_mobilis_ethanol_5enzyme_cascade"
+  host: bacillus
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: T7
+    - promoter: J23100
 
     - cistron:
-        label: pyruvate_decarboxylase
+        label: enzyme1_dehydrogenase
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: P06672  # Zymomonas mobilis pyruvate decarboxylase
+              id: ADH1
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: alcohol_dehydrogenase_1
+        label: enzyme2_dehydrogenase
         expression: high
         fused: false
         chain:
@@ -31,13 +32,13 @@ construct:
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: P0C0L2  # Zymomonas mobilis alcohol dehydrogenase I
+              id: ADH2
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: alcohol_dehydrogenase_2
+        label: enzyme3_dehydrogenase
         expression: high
         fused: false
         chain:
@@ -45,13 +46,13 @@ construct:
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: P0C0L3  # Zymomonas mobilis alcohol dehydrogenase II
+              id: ALDH
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: glucose_fructose_oxidoreductase
+        label: enzyme4_dehydrogenase
         expression: high
         fused: false
         chain:
@@ -59,13 +60,13 @@ construct:
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: P33120  # Zymomonas mobilis glucose-fructose oxidoreductase
+              id: PDH
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: aldehyde_dehydrogenase
+        label: enzyme5_dehydrogenase
         expression: high
         fused: false
         chain:
@@ -73,8 +74,7 @@ construct:
           - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: A0A0H3JTL3  # Zymomonas mobilis aldehyde dehydrogenase
+              id: NADH_oxidase
               source: uniprot
 
     - terminator: rrnB_T1
-```

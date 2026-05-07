@@ -1,20 +1,40 @@
 construct:
-  name: "HEK293_Strep_GOI_P2A_NanoLuc"
+  name: "GOI_Renilla_luciferase_reporter"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_reporter_link
+        label: GOI
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: GOI
+              id: custom_GOI
               source: uniprot
-          - cleavage_site: P2A
-          - gene:
-              id: NanoLuc
-              source: uniprot
-    - terminator: bGH_pA
+
+    - spacer: 21
+
+    - cistron:
+        label: P2A_peptide
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 21
+
+    - cistron:
+        label: luciferase_reporter
+        expression: high
+        fused: false
+        gene:
+          id: Renilla_luciferase
+          source: uniprot
+
+    - terminator: rrnB_T1

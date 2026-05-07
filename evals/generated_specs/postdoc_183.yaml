@@ -1,24 +1,32 @@
 construct:
-  name: "yeast_p2a_strep_coexpression"
+  name: YeastProtein1_P2A_YeastProtein2
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: p2a_polycistronic_fusion
+        label: YeastProtein1
         expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: YeastProtein1
               source: uniprot
-          - linker:
-              type: P2A
-              repeats: 1
-          - gene:
-              id: YeastProtein2
-              source: uniprot
-    - terminator: CYC1
+
+    - spacer: 22  # P2A self-cleaving peptide sequence
+
+    - cistron:
+        label: YeastProtein2
+        expression: high
+        fused: false
+        gene:
+          id: YeastProtein2
+          source: uniprot
+
+    - terminator: rrnB_T1

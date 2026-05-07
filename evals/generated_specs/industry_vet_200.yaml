@@ -1,14 +1,22 @@
 construct:
-  name: "bacterial_expression_of_GOI"
-  host: e_coli_bl21_de3
+  name: "simple_ecoli_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: goi
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GOI
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,11 +1,10 @@
-```yaml
 construct:
-  name: heterodimeric_protein_coexpression
+  name: "pichia_heterodimer_secreted"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2micron
     source: addgene
 
   cassette:
@@ -15,26 +14,26 @@ construct:
         label: subunit_A
         expression: high
         chain:
-          - secretion_signal: alpha_factor
           - tag: 6xHis
+          - secretion_signal: alpha_factor
           - gene:
               id: subunit_A
               source: uniprot
 
     - terminator: rrnB_T1
 
+    - spacer: 30
+
     - promoter: AOX1
 
     - cistron:
         label: subunit_B
         expression: high
-        fused: false
         chain:
-          - secretion_signal: alpha_factor
           - tag: Strep-II
+          - secretion_signal: alpha_factor
           - gene:
               id: subunit_B
               source: uniprot
 
     - terminator: rrnB_T1
-```

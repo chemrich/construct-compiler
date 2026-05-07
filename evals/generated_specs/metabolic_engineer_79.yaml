@@ -1,52 +1,64 @@
 construct:
-  name: "enzyme_consortia_tet_operon"
+  name: "five_enzyme_consortium_operon_tet_inducible"
   host: e_coli
+
   backbone:
-    resistance: chloramphenicol
-    ori: p15A
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Ptet  # Tetracycline-inducible promoter for tight control
+    - promoter: tetR  # tetracycline-inducible (tight OFF, induced ON)
+
     - cistron:
         label: enzyme_1
-        expression: medium
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A6C8
+              id: lacZ
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_2
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: P0A6C4
+          id: araB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_3
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: P0A6C1
+          id: araA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_4
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: P0A9K1
+          id: araD
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_5
-        expression: medium
+        expression: high
         fused: false
         chain:
           - gene:
-              id: P0A9K4
+              id: araE
               source: uniprot
           - tag: FLAG
+
     - terminator: rrnB_T1

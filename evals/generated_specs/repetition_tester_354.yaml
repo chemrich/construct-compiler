@@ -1,34 +1,44 @@
 construct:
-  name: "triple_aptamer_expression_system"
-  host: e_coli_bl21_de3
+  name: "triple_aptamer_expression_ribozyme_flanked"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: rna_aptamer_array
+        label: aptamer_expression_unit
         expression: high
-        # Elements are placed in a single chain to ensure a single transcript without internal RBS sequences
         chain:
           - gene:
-              id: Hammerhead_Rz_Type_I
+              id: hammerhead_aptamer1_HDV_cassette
+              description: "Hammerhead ribozyme (5' flank) - Aptamer1 (streptomycin-binding) - HDV ribozyme (3' flank) for self-cleavage. Aptamer sequences: streptomycin aptamer (GGGAGACCGACGACCAGAG...). Ribozymes: Hammerhead (self-cleaving hatchet ribozyme, ~50 nt) and HDV (hepatitis delta virus ribozyme, ~85 nt) flanking aptamer."
+              source: custom
+
+    - spacer: 25
+
+    - cistron:
+        label: aptamer_expression_unit_2
+        expression: high
+        chain:
           - gene:
-              id: Spinach
-              source: fpbase
+              id: twister_aptamer2_pistol_cassette
+              description: "Twister ribozyme (5' flank) - Aptamer2 (theophylline-binding) - Pistol ribozyme (3' flank) for self-cleavage. Aptamer sequences: theophylline aptamer (distinct sequence, no homology to Aptamer1). Ribozymes: Twister (~60 nt, different cleavage specificity from Hammerhead/HDV) and Pistol (~70 nt)."
+              source: custom
+
+    - spacer: 25
+
+    - cistron:
+        label: aptamer_expression_unit_3
+        expression: high
+        chain:
           - gene:
-              id: HDV_Rz_Genomic
-          - gene:
-              id: Hammerhead_Rz_Type_III
-          - gene:
-              id: Broccoli
-              source: fpbase
-          - gene:
-              id: HDV_Rz_Antigenomic
-          - gene:
-              id: Twister_Rz_P1
-          - gene:
-              id: Mango_III
-              source: fpbase
-          - gene:
-              id: Twister_Rz_env22
-    - terminator: T7term
+              id: hatchet_aptamer3_varkud_cassette
+              description: "Hatchet ribozyme (5' flank) - Aptamer3 (malachite-green-binding) - Varkud satellite ribozyme (3' flank) for self-cleavage. Aptamer sequences: malachite-green aptamer (unique sequence, orthogonal to Aptamers 1 and 2). Ribozymes: Hatchet (~70 nt, distinct cleavage mechanism) and Varkud (~90 nt)."
+              source: custom
+
+    - terminator: rrnB_T1

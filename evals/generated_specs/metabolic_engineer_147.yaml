@@ -1,38 +1,54 @@
 construct:
-  name: "four_enzyme_metabolic_operon_flux_balance"
-  host: e_coli_bl21
+  name: "central_metabolic_operon_EnzA_EnzB_EnzC_EnzD"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: EnzA
-        expression: medium
+        expression: high
+        rbs_strength: strong
         gene:
           id: EnzA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: EnzB
-        expression: low
+        expression: medium
+        rbs_strength: weak
         fused: false
         gene:
           id: EnzB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: EnzC
-        expression: low
+        expression: medium
+        rbs_strength: weak
         fused: false
         gene:
           id: EnzC
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: EnzD
-        expression: high
+        expression: very_high
+        rbs_strength: very_strong
         fused: false
         gene:
           id: EnzD
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

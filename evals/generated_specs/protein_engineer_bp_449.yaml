@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_vpr_nanobody_secretion"
+  name: "bacillus_nanobody_secretion_amyQ"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PamyQ
+
     - cistron:
-        label: target
+        label: nanobody_secreted
         expression: high
         chain:
-          - tag: Vpr_signal_peptide
+          - secretion_signal: Vpr
           - gene:
-              id: P0DPK4
+              id: nanobody
               source: uniprot
           - tag: Myc
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

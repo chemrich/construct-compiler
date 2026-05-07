@@ -1,17 +1,35 @@
 construct:
-  name: "intein_mediated_protein_r_splicing"
-  host: e_coli_bl21_de3
+  name: intein_mediated_protein_splicing_R
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: splicing_fusion
+        label: protein_R_N_terminal
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: Ssp_DnaB_intein
+          - cleavage_site: TEV
           - gene:
               id: protein_R
               source: uniprot
-    - terminator: T7term
+          - gene:
+              id: DnaB_intein_N
+              source: uniprot
+
+    - cistron:
+        label: protein_R_C_terminal
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: DnaB_intein_C
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

@@ -1,8 +1,11 @@
 construct:
-  name: "ABC_Transporter_Mammalian_Expression"
+  name: "bacterial_ABC_transporter_trisubunit_HEK293"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: SV40
     - cistron:
@@ -11,9 +14,9 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: abcA
+              id: ABC_transporter_subunit_A
               source: uniprot
-    - terminator: SV40_polyA
+
     - promoter: SV40
     - cistron:
         label: subunit_B
@@ -21,9 +24,9 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: abcB
+              id: ABC_transporter_subunit_B
               source: uniprot
-    - terminator: SV40_polyA
+
     - promoter: SV40
     - cistron:
         label: subunit_C
@@ -31,6 +34,7 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: abcC
+              id: ABC_transporter_subunit_C
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: poly_A  # SV40 poly-A signal for mRNA stability in mammalian cells

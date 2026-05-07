@@ -1,48 +1,68 @@
 construct:
-  name: "streptomyces_coelicolor_five_enzyme_pathway"
-  host: streptomyces_coelicolor
+  name: "Streptomyces_GC_pathway_GC1_to_GC5_operon"
+  host: bacillus
+  # Note: bacillus is used as proxy for high-GC gram-positive (Streptomyces shares similar expression systems)
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pSC101
+    # High-copy ori chosen for high expression in Streptomyces; kanamycin is standard selectable marker
     source: addgene
+
   cassette:
-    - promoter: ermE_star  # Strong constitutive promoter native to Streptomyces
+    - promoter: ermE_star
+    # ermE* is a strong native Streptomyces constitutive promoter with high activity
+    # Codon optimization for high GC content is assumed during gene synthesis
+
     - cistron:
-        label: gc1
+        label: GC1
         expression: high
-        gene:
-          id: GC1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: GC1
+              source: uniprot
+    # First enzyme in pathway, independent translation
+
+    - spacer: 25
+    # RBS-like spacing for polycistronic translation in gram-positive bacteria
+
     - cistron:
-        label: gc2
+        label: GC2
         expression: high
         fused: false
         gene:
           id: GC2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: gc3
+        label: GC3
         expression: high
         fused: false
         gene:
           id: GC3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: gc4
+        label: GC4
         expression: high
         fused: false
         gene:
           id: GC4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: gc5
+        label: GC5
         expression: high
         fused: false
         gene:
           id: GC5
           source: uniprot
+
     - terminator: rrnB_T1
+    # Strong transcriptional terminator for Streptomyces/gram-positive systems

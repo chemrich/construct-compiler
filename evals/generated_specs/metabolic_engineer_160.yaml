@@ -1,40 +1,52 @@
 construct:
-  name: "metabolic_intermediate_operon"
-  host: e_coli_bl21_de3
+  name: "metabolic_pathway_operon_E1234"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enzyme_1
+        label: E1
         expression: medium
         chain:
           - tag: 6xHis
           - gene:
               id: E1
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_2
+        label: E2
         expression: medium
         fused: false
         gene:
           id: E2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_3
+        label: E3
         expression: medium
         fused: false
         gene:
           id: E3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_4
+        label: E4
         expression: medium
         fused: false
         gene:
           id: E4
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

@@ -1,23 +1,28 @@
 construct:
-  name: yeast_scfv_surface_display
+  name: scFv_Aga2p_surface_display
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: scFv_display
         expression: high
         chain:
-          - tag: alpha_factor  # Secretion signal required for surface display (Rule 18)
-          - solubility_tag: AGA2
-          - linker:
-              type: GS_flexible
-              repeats: 3
           - gene:
               id: scFv
               source: uniprot
-          - tag: c-Myc
-    - terminator: CYC1  # Standard yeast terminator
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: Aga2p
+              source: uniprot
+          - tag: c_Myc
+
+    - terminator: CYC1

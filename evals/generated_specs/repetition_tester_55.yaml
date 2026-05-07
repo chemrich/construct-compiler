@@ -1,19 +1,57 @@
 construct:
-  name: "dual_rnat_divergent_expression_system"
-  host: e_coli_bl21_de3
+  name: "dual_RNA_thermometer_GFP_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
-    # The 5' UTR of this cistron is designed to contain two functionally equivalent 
-    # but sequence-divergent RNA thermometers (RNATs) in tandem. 
-    # The DNA sequences are optimized for maximum divergence to prevent 
-    # homologous recombination while maintaining identical thermal response profiles.
+
     - cistron:
-        label: temperature_regulated_reporter
+        label: thermometer_element_1
         expression: high
         chain:
           - gene:
-              id: mScarlet
+              id: ROSE_thermometer_variant_A
+              source: uniprot
+              # ROSE (Repression Of heat Shock gene Expression) responds to ~43°C
+              # Variant A: codon-optimized sequence set 1
+
+    - spacer: 25
+
+    - cistron:
+        label: thermometer_element_2
+        expression: high
+        chain:
+          - gene:
+              id: ROSE_thermometer_variant_B
+              source: uniprot
+              # ROSE Variant B: synonymous codon set 2, highly divergent from Variant A
+              # Same secondary structure and temperature response (~43°C)
+
+    - spacer: 30
+
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
               source: fpbase
-    - terminator: T7term
+
+    - spacer: 25
+
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: rrnB_T1

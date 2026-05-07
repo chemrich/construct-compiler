@@ -1,14 +1,21 @@
 construct:
-  name: "iptg_inducible_megfp"
+  name: "IPTG_inducible_GFP"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

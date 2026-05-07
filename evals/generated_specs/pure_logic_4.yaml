@@ -1,22 +1,56 @@
-```yaml
 construct:
-  name: bistable_toggle_switch_NLS
+  name: "bistable_toggle_switch"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
-    
+
     - cistron:
-        label: repressor1_output
+        label: state_A_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: state_B_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # Second construct in system (represented as separate entry for clarity)
+  # In practice, this would be on a second plasmid or a second cassette with independent promoter control
+  # For bistable toggle switch, typically requires two separate expression units with mutually repressive regulation
+
+construct_2:
+  name: "bistable_toggle_switch_output_A"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
+  cassette:
+    - promoter: tac  # Repressed by lacI from first construct
+
+    - cistron:
+        label: state_A_output
         expression: high
         chain:
           - tag: NLS
-          - gene:
-              id: TetR
-              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 1
@@ -24,37 +58,29 @@ construct:
               id: mEGFP
               source: fpbase
 
-    - spacer: 200
+    - terminator: rrnB_T1
 
-    - promoter: tetO  # tetracycline operator, repressed by TetR
-    
+construct_3:
+  name: "bistable_toggle_switch_output_B"
+  host: HEK293
+
+  backbone:
+    catalog_vector: "pTwist CMV"
+    resistance: chloramphenicol
+
+  cassette:
+    - promoter: araBAD  # Repressed by tetR from first construct
+
     - cistron:
-        label: repressor2_output  
+        label: state_B_output
         expression: high
-        fused: false
         chain:
           - tag: NLS
-          - gene:
-              id: LacI
-              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 1
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
 
-    - spacer: 200
-
-    - promoter: lacO  # lac operator, repressed by LacI (completes the mutual repression loop)
-    
-    - cistron:
-        label: feedback_repressor
-        expression: high
-        fused: false
-        gene:
-          id: TetR
-          source: uniprot
-
     - terminator: rrnB_T1
-```

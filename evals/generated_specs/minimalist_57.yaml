@@ -1,14 +1,20 @@
 construct:
-  name: "VP_protein_expression_insect"
+  name: "insect_VP_expression"
   host: insect
+
   backbone:
-    catalog_vector: "pFastBac1"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: Polh
-      cistron:
-        label: target
+    - promoter: p10
+
+    - cistron:
+        label: VP
         expression: high
         gene:
           id: VP
           source: uniprot
-      terminator: SV40
+
+    - terminator: SV40_polyA

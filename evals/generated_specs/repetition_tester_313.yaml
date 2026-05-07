@@ -1,27 +1,57 @@
 construct:
-  name: "stability_optimized_large_vector"
+  name: "dual_origin_stability_plasmid"
   host: e_coli
+  
   backbone:
-    # Note: Dual origins (e.g., pBR322 and p15A) are often used for stability in large plasmids.
-    # The current schema allows for one 'ori' definition; pBR322 is selected for its 
-    # superior structural stability over pUC-derived high-copy origins.
     resistance: kanamycin
     ori: pBR322
     source: addgene
+    # Note: Primary ori is pBR322 (low-copy). Secondary ori will be represented in cassette.
+    # For true dual-ori stability with distinct sequences, a custom backbone is recommended.
+    # This spec represents the primary backbone; secondary ori module follows in cassette.
+
   cassette:
+    # Unique spacer fingerprint 1 (non-coding, unique sequence)
+    - spacer: 60  # bp unique fingerprint spacer
+
+    # Primary ori region (pBR322-derived, implicit in backbone)
+    # Represented here as structural element with comment
     - promoter: T7lac
+
     - cistron:
-        label: target_gene
-        expression: high
+        label: safety_marker_1
+        expression: medium
         gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 100  # Large unique non-coding spacer to serve as a genetic fingerprint and prevent recombination
+          id: aph
+          source: uniprot
+        # Kanamycin resistance for primary selection
+
+    # Unique spacer fingerprint 2 (distinct from spacer 1)
+    - spacer: 75  # bp unique fingerprint spacer
+
+    # Secondary ori module (ColA-derived, distinct from primary)
+    # Represented as a low-expression genetic element to maintain without recombination
     - cistron:
-        label: monitoring_reporter
+        label: secondary_ori_control
+        expression: very_low
+        gene:
+          id: repE
+          source: uniprot
+        # RepE protein maintains secondary ColA-derived origin independently
+
+    # Unique spacer fingerprint 3 (third distinct fingerprint)
+    - spacer: 55  # bp unique fingerprint spacer
+
+    # Stability cassette with marker for secondary ori
+    - cistron:
+        label: secondary_selection
         expression: low
-        fused: false
         gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: BBa_B0015
+          id: cat
+          source: uniprot
+        # Chloramphenicol resistance for dual-selection verification
+
+    # Unique spacer fingerprint 4 (final distinct fingerprint)
+    - spacer: 80  # bp unique fingerprint spacer
+
+    - terminator: rrnB_T1

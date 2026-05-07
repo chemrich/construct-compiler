@@ -1,40 +1,42 @@
 construct:
   name: "yeast_three_enzyme_pathway"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: kanMX  # yeast selectable marker
+    ori: 2-micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: enzyme_1
-        expression: medium
+        label: Enzyme1
+        expression: high
         gene:
           id: Enzyme1
           source: uniprot
+
     - terminator: CYC1
-    - promoter: TEF1
+
+    - promoter: GAL10
+
     - cistron:
-        label: enzyme_2
-        expression: medium
+        label: Enzyme2
+        expression: high
         gene:
           id: Enzyme2
           source: uniprot
+
     - terminator: ADH1
-    - promoter: ADH1
+
+    - promoter: TEF1
+
     - cistron:
-        label: enzyme_3
-        expression: medium
+        label: Enzyme3
+        expression: high
         gene:
           id: Enzyme3
           source: uniprot
-    - terminator: TEF1
-    - promoter: PGK1
-    - cistron:
-        label: selectable_marker
-        expression: medium
-        gene:
-          id: URA3
-          source: uniprot
-    - terminator: ENO2
+
+    - terminator: CYC1

@@ -1,26 +1,30 @@
 construct:
-  name: "human_gpcr_tracking_yeast"
+  name: human_GPCR_GFP_yeast
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2/NT C"
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: gpcr_fusion
+        label: GPCR
         expression: high
         chain:
+          - tag: DL
+            # DL (DIPEPTIDE LEADER) for yeast ER-targeting
           - gene:
-              id: P01149
+              id: P08100
               source: uniprot
-          - gene:
-              id: ADRB2
-              source: uniprot
+              # Human adenosine A1 receptor (ADORA1) as exemplar GPCR
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mEGFP
-              source: fpbase
+              repeats: 1
+          - tag: GFP
+            # C-terminal GFP for fluorescent tracking
+
     - terminator: CYC1

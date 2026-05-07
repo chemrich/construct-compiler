@@ -1,26 +1,35 @@
 construct:
-  name: "dual_reporter_plant_constitutive_heat_inducible"
-  host: mammalian # Substituted for plant; regulatory elements are universal eukaryotic or specific plant-derived ones.
+  name: mCherry_Luciferase_dual_promoter_plant
+  host: algae
+
   backbone:
-    resistance: kanamycin
+    resistance: spectinomycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: CaMV35S # Strong constitutive plant promoter
+    - promoter: CaMV_35S
+      label: constitutive_strong
+
     - cistron:
-        label: constitutive_mCherry
+        label: mCherry
         expression: high
         gene:
           id: mCherry
           source: fpbase
-    - terminator: tNOS # Nopaline synthase terminator (non-homologous to 35S term)
-    - spacer: 60
-    - promoter: HSP70 # Heat-inducible promoter
+
+    - terminator: Arabidopsis_rbcS_polyA
+      label: terminator_1
+
+    - promoter: Arabidopsis_HSP70_promoter
+      label: heat_inducible
+
     - cistron:
-        label: inducible_luciferase
-        expression: medium
-        fused: false # Independent translation unit
+        label: Luciferase
+        expression: high
         gene:
-          id: P08659 # Firefly luciferase
+          id: Luciferase
           source: uniprot
-    - terminator: 35S_term # CaMV 35S terminator (distinct from tNOS)
+
+    - terminator: Pea_rbcS_3C_polyA
+      label: terminator_2

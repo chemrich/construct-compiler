@@ -1,16 +1,25 @@
 construct:
-  name: "soluble_receptor_secretion_glycosylated"
-  host: HEK293 # Substituted E. coli with HEK293 because E. coli cannot perform the requested human N-linked glycosylation or properly process native human signal peptides.
+  name: "soluble_receptor_secretion_ecoli"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: CMV
+    - promoter: T7lac
+
     - cistron:
-        label: target_receptor
+        label: soluble_receptor
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: SolubleR
               source: uniprot
-    - terminator: bGH_polyA
+        # NOTE: Native human signal peptide included in SolubleR sequence for periplasmic secretion.
+        # E. coli lacks N-linked glycosylation machinery (OST and oligosaccharyl transferase).
+        # For proper glycosylation, consider engineered strains (e.g., E. coli with eukaryotic N-glycosylation pathway)
+        # or alternative hosts (yeast, mammalian, insect cells). This construct will produce
+        # non-glycosylated but secreted soluble receptor.
+
+    - terminator: rrnB_T1

@@ -1,21 +1,30 @@
 construct:
-  name: "mammalian_tracking_fusion_reporter"
+  name: GOI_GFP_fusion_reporter
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: goi_reporter_fusion
+        label: GOI_GFP
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: ACTB_HUMAN
+              id: GOI
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

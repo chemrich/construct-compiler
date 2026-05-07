@@ -1,21 +1,21 @@
 construct:
-  name: "cytoplasmic_soluble_protein_gst"
-  host: e_coli
+  name: "soluble_cytoplasmic_protein_gst_purification"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: J23100
+
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: sfGFP
-              source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 2
+              id: your_protein_name
+              source: uniprot
           - solubility_tag: GST
+
     - terminator: rrnB_T1

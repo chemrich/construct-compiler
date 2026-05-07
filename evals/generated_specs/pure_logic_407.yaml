@@ -1,34 +1,58 @@
 construct:
-  name: "iff_loop_edge_detector"
+  name: edge_detector_incoherent_ffl
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD # Responsive to Arabinose (Input)
+    - promoter: T7lac
+
     - cistron:
-        label: activator
+        label: input_sensor
         expression: high
-        fused: false
-        gene:
-          id: P12746
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LuxR
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: repressor
+        label: fast_activator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CI_repressor
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: slow_repressor
         expression: medium
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac # Placeholder for hybrid LuxR-activated/TetR-repressed promoter to implement IFFL logic
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CII_repressor
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: output_signal
+        label: output
         expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,20 +1,29 @@
 construct:
-  name: "HEK293_Membrane_Receptor_Purification"
+  name: "mammalian_transmembrane_receptor"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: receptor_target
-        expression: high
+        label: transmembrane_receptor
+        expression: medium
         chain:
-          - tag: FLAG  # Extracellular tag for surface detection and purification
-          - cleavage_site: TEV
+          - tag: HA
+          - gene:
+              id: transmembrane_receptor_ectodomain
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: EGFR # Human Epidermal Growth Factor Receptor (UniProt P00533)
+              id: transmembrane_domain
               source: uniprot
-    - terminator: bGH_polyA # Standard mammalian polyadenylation signal/terminator
+          - gene:
+              id: intracellular_domain
+              source: uniprot
+
+    - terminator: rrnB_T1

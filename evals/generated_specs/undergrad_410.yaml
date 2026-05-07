@@ -1,20 +1,33 @@
 construct:
-  name: "ProteinX_ProteinY_Polycistronic_Mammalian"
+  name: "dual_protein_mammalian_IRES"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: ProteinX
-        gene:
-          id: ProteinX
-          source: uniprot
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinX
+              source: uniprot
+
     - spacer: 30
+
+    # IRES (Internal Ribosome Entry Site) enables cap-independent translation of second protein
     - cistron:
         label: ProteinY
-        fused: false  # Enables independent translation initiation (e.g., via IRES for mammalian)
-        gene:
-          id: ProteinY
-          source: uniprot
-    - terminator: bGH_pA
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinY
+              source: uniprot
+
+    - terminator: rrnB_T1

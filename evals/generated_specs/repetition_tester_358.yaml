@@ -1,23 +1,30 @@
 construct:
-  name: "insect_membrane_protein_dual_tag"
-  host: Sf9  # Standard insect cell line for protein expression
+  name: insect_membrane_protein_expression
+  host: insect_sf9
+
   backbone:
-    catalog_vector: "pFastBac1"
+    catalog_vector: "pIEX-4"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: polyhedrin
+
     - cistron:
-        label: target_membrane_protein
+        label: membrane_target
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: SLC2A1
+              id: codon_optimized_membrane_protein
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - tag: V5
-    - terminator: SV40
+
+    - terminator: SV40_poly_A

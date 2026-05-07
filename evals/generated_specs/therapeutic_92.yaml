@@ -1,18 +1,23 @@
 construct:
-  name: "yeast_secreted_AMP_production"
+  name: "secreted_antimicrobial_peptide_yeast"
   host: yeast
+
   backbone:
-    resistance: ura3 # Replaced antibiotic resistance with auxotrophic marker per safety requirement
+    resistance: none
     ori: 2_micron
+    source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: secreted_AMP
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: LL-37
+              id: engineered_antimicrobial_peptide
               source: uniprot
-          - tag: FLAG
-    - terminator: CYC1_term
+          - tag: HA
+
+    - terminator: CYC1_terminator

@@ -1,17 +1,22 @@
 construct:
-  name: "MBP_TEV_ProteinZ_fusion"
+  name: MBP_proteinZ_fusion
   host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: mbp_z_protein
+        label: MBP_proteinZ
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: P22891
+              id: proteinZ
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

@@ -1,26 +1,34 @@
 construct:
-  name: "tandem_repeat_protein_expression"
-  host: e_coli_bl21_de3
+  name: "tandem_repeat_dual_his_tag"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_copy_1
+        label: copy_1
         expression: high
         chain:
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: target_protein
+              source: uniprot
           - tag: 6xHis
-    - spacer: 40
+
+    - spacer: 50
+
     - cistron:
-        label: target_copy_2
+        label: copy_2
         expression: high
         fused: false
         chain:
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: target_protein
+              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

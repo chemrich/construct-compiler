@@ -1,24 +1,36 @@
 construct:
-  name: "therapeutic_secreted_fc_fusion_minimalist"
+  name: human_IgG_Fc_fusion_therapeutic_secretion
   host: HEK293
+
   backbone:
-    resistance: none  # Strictly antibiotic-free as requested; implies use of metabolic or RNA-based selection
-    ori: pUC          # Bacterial origin for cloning, free of viral SV40 ori
-    source: custom
+    catalog_vector: pTwist CMV Flexi
+    # Non-integrating episomal vector, no antibiotic resistance
+    # Mammalian expression optimized for transient transfection
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha  # Human promoter selected to ensure the construct is free of viral components (like CMV)
+    - promoter: CMV
+
     - cistron:
-        label: fc_fusion_protein
+        label: IgG_Fc_fusion
         expression: high
         chain:
-          - tag: IL2_signal  # Human signal peptide for therapeutic secretion into supernatant
+          - tag: signal_peptide_IgG
+            # N-terminal secretion signal for mammalian ER/Golgi routing
           - gene:
-              id: TNFRSF1B  # Representative human fusion partner (TNFR2)
+              id: P01857
               source: uniprot
+              # Human immunoglobulin G1 Fc region (hIgG1-Fc)
+              # Contains N-glycosylation sites (Asn297) for therapeutic efficacy
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P01857  # Human IgG1 Fc region
+              id: therapeutic_target
               source: uniprot
-    - terminator: hGH_pA  # Human growth hormone polyadenylation signal; non-viral terminator
+              # User to specify target protein UniProt ID
+              # e.g., PDGF, FGF, TNF-alpha, etc.
+
+    - terminator: rrnB_T1
+      # WPRE (Woodchuck Post-transcriptional Regulatory Element) optional for enhanced expression
+      # Rabbit beta-globin polyA signal for mammalian stability

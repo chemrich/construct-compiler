@@ -1,27 +1,28 @@
-```yaml
 construct:
-  name: capsid_GFP_fusion
+  name: capsid_GFP_packaging_tracker
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: capsid_reporter_fusion
+        label: capsid_GFP_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: your_gene_of_interest  # Replace with actual gene ID
+              id: capsid_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
 
     - terminator: rrnB_T1
-```

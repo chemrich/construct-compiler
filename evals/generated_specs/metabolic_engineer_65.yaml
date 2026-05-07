@@ -1,30 +1,38 @@
 construct:
-  name: "cofactor_regeneration_operon"
-  host: e_coli_bl21
+  name: cofactor_regeneration_operon
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
         label: enzyme_1
         expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: P07664
+              id: NAD_kinase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_2
         expression: medium
         fused: false
         chain:
           - gene:
-              id: P0C271
+              id: phosphopantetheine_adenylyltransferase
               source: uniprot
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_3
         expression: medium
@@ -32,19 +40,23 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: P00330
+              id: pantothenate_synthetase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_4
         expression: medium
         fused: false
         chain:
           - gene:
-              id: P06149
+              id: thiamine_phosphate_synthase
               source: uniprot
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_5
         expression: medium
@@ -52,16 +64,19 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: P00367
+              id: riboflavin_synthase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_6
         expression: medium
         fused: false
         chain:
           - gene:
-              id: P07244
+              id: FAD_synthetase
               source: uniprot
           - tag: Strep-II
+
     - terminator: rrnB_T1

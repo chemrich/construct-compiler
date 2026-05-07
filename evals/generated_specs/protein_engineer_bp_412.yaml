@@ -1,20 +1,31 @@
 construct:
-  name: "Pichia_AOX1_alphaFactor_HSA_IL2_Fusion"
+  name: IL2_HSA_secretion_Pichia
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: IL2_secretion_target
+        label: IL2_HSA_fusion
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - solubility_tag: HSA
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - cleavage_site: Enterokinase
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P60568
+              id: IL2
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

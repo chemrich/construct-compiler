@@ -1,12 +1,16 @@
 construct:
-  name: "Human_PrtABCD_2A_Assembly"
-  host: mammalian
+  name: "mammalian_4protein_2A_polycistronic"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: quad_protein_system
+        label: PrtA
         expression: high
         chain:
           - tag: 6xHis
@@ -14,25 +18,44 @@ construct:
           - gene:
               id: PrtA
               source: uniprot
-          - linker:
-              type: P2A
+
+    - spacer: 21  # 2A peptide sequence (T2A, ~21 bp)
+
+    - cistron:
+        label: PrtB
+        expression: high
+        fused: false
+        chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: PrtB
               source: uniprot
-          - linker:
-              type: T2A
+
+    - spacer: 21  # 2A peptide sequence
+
+    - cistron:
+        label: PrtC
+        expression: high
+        fused: false
+        chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: PrtC
               source: uniprot
-          - linker:
-              type: E2A
+
+    - spacer: 21  # 2A peptide sequence
+
+    - cistron:
+        label: PrtD
+        expression: high
+        fused: false
+        chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: PrtD
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: polyA  # poly(A) signal for mammalian mRNA stability and translation

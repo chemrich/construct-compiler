@@ -1,10 +1,9 @@
-```yaml
 construct:
-  name: "therapeutic_protein_tandem_dimer"
-  host: e_coli
+  name: "dual_subunit_therapeutic_linker"
+  host: e_coli_bl21
 
   backbone:
-    resistance: none
+    resistance: null
     ori: pBR322
     source: addgene
 
@@ -12,20 +11,19 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: tandem_dimer
+        label: dual_subunit
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P01308  # human insulin as example therapeutic protein
+              id: therapeutic_protein_subunit_1
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P01308  # second identical subunit
+              id: therapeutic_protein_subunit_1
               source: uniprot
 
     - terminator: rrnB_T1
-```

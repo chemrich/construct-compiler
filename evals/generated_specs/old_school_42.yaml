@@ -1,11 +1,12 @@
-```yaml
 construct:
-  name: mammalian_stable_expression
-  host: mammalian
+  name: mammalian_stable_expression_sv40
+  host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
+    resistance: neomycin
+    ori: pUC
+    source: addgene
 
   cassette:
     - promoter: SV40_early
@@ -13,23 +14,20 @@ construct:
     - cistron:
         label: target
         expression: high
-        gene:
-          id: target_gene
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: target_gene
+              source: uniprot
 
     - terminator: SV40_polyA
-
-    - spacer: 30
-
-    - promoter: SV40_early
 
     - cistron:
-        label: selection
-        expression: medium
+        label: selection_marker
+        expression: high
         fused: false
         gene:
-          id: neo
+          id: neomycin_phosphotransferase
           source: uniprot
 
     - terminator: SV40_polyA
-```

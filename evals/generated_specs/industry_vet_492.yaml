@@ -1,22 +1,31 @@
 construct:
-  name: "bicistronic_IRES_ProteinL_ProteinM"
+  name: "mammalian_dual_protein_IRES"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_L
+        label: ProteinL
         expression: high
         gene:
           id: ProteinL
           source: uniprot
-    - spacer: 585 # The 585 bp spacer represents an EMCV IRES element for mammalian internal initiation
+
+    - spacer: 30
+
     - cistron:
-        label: protein_M
+        label: IRES_ProteinM
         expression: high
-        fused: false # false indicates independent translation, which in a mammalian polycistronic mRNA requires an IRES or 2A
-        gene:
-          id: ProteinM
-          source: uniprot
-    - terminator: bGH_polyA
+        fused: false
+        chain:
+          - gene:
+              id: ProteinM
+              source: uniprot
+        # Note: IRES (Internal Ribosome Entry Site) inserted upstream of this cistron
+        # to enable cap-independent translation of ProteinM from the same mRNA
+
+    - terminator: rrnB_T1

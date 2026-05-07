@@ -1,24 +1,30 @@
 construct:
-  name: "exosome_cargo_s_cd63_fusion"
-  host: HEK293T
+  name: "HEK293T_ExosomeCargoS_CD63_expression"
+  host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # No antibiotic resistance for transient transfection
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: cargo_fusion
+        label: ExosomeCargoS_CD63
         expression: high
         chain:
           - tag: 6xHis
-          - gene:
-              id: CD63
-              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: ExosomeCargoS
               source: uniprot
-    - terminator: BGH_polyA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD63
+              source: uniprot
+
+    - terminator: rrnB_T1

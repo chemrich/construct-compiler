@@ -1,14 +1,21 @@
 construct:
-  name: "human_ReceptorM_native_expression"
-  host: e_coli_bl21
+  name: ReceptorM_native_ecoli
+  host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: ReceptorM
-        expression: high
-        gene:
-          id: ReceptorM
-          source: uniprot
-    - terminator: T7term
+        expression: medium
+        chain:
+          - gene:
+              id: ReceptorM
+              source: uniprot
+    
+    - terminator: rrnB_T1

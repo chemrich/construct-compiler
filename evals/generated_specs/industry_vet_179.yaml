@@ -1,16 +1,20 @@
 construct:
-  name: "autocatalytic_proenzyme_expression"
+  name: "His_tagged_proenzyme_autocleaving"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: proenzyme_target
+        label: proenzyme
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P03132 # AAV2 Rep78 chosen to model requested self-processing mechanism
+              id: proenzyme
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

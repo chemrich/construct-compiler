@@ -1,25 +1,27 @@
 construct:
-  name: tet_on_inducible_expression_system
+  name: "Tet_on_inducible_GOI_system"
   host: HEK293
-  backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TRE3G
-    - cistron:
-        label: target_gene
+    - promoter: CMV
+      cistron:
+        label: tTA
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BGH_pA
-    - spacer: 50
-    - promoter: CMV
-    - cistron:
-        label: tet_transactivator
-        expression: medium
-        gene:
-          id: rtTA3
+          id: tTA
           source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: SV40_poly_A
+
+  cassette:
+    - promoter: TRE
+      cistron:
+        label: GOI
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: SV40_poly_A

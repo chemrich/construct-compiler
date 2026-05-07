@@ -1,19 +1,26 @@
 construct:
-  name: "YeastTherapy_Secretory_Expression"
+  name: "yeast_secreted_therapy_peptide"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2mu
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: therapeutic_peptide
+        label: secreted_therapy
         expression: high
         chain:
-          - secretion_signal: alpha_mating_factor
-          - tag: HA
+          - tag: alpha_factor_signal
           - gene:
               id: YeastTherapy
               source: uniprot
+          - tag: HA
+          - tag: KDEL
+            # KDEL ensures proper ER retention/secretion pathway localization
+
     - terminator: CYC1

@@ -1,18 +1,23 @@
 construct:
-  name: "NuclearEnzyme_Nuclear_Localization_Yeast"
+  name: NuclearEnzyme_yeast
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: TEF1  # Standard high-expression yeast promoter substituted for default
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: NuclearEnzyme
         expression: high
         chain:
-          - tag: NLS
           - gene:
               id: NuclearEnzyme
               source: uniprot
+          - tag: NLS
           - tag: FLAG
-    - terminator: CYC1  # Standard yeast terminator
+
+    - terminator: CYC1

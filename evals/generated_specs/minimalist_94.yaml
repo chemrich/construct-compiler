@@ -1,20 +1,27 @@
 construct:
-  name: "cpp_tat_megfp_fusion"
-  host: e_coli_bl21_de3
+  name: "CPP_cargo_fusion"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: fusion_protein
+        label: cpp_cargo
         expression: high
         chain:
           - tag: 6xHis
-          - tag: TAT
+          - cleavage_site: TEV
+          - gene:
+              id: TAT
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

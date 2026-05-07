@@ -1,17 +1,46 @@
 construct:
-  name: "piggybac_therapeutic_f9_integration"
+  name: "PiggyBac_therapeutic_integration"
   host: HEK293
+
   backbone:
-    # The cassette is flanked by 5' and 3' PiggyBac ITRs for transposase-mediated integration
-    resistance: kanamycin
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
     ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: EF1_alpha
+    - element: ITR_piggyBac
+      type: 5_prime
+      # 5' inverted terminal repeat for PiggyBac transposon
+
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: IL_10  # Example therapeutic cytokine
+              source: uniprot
+
+    - terminator: SV40poly
+
+    - element: ITR_piggyBac
+      type: 3_prime
+      # 3' inverted terminal repeat for PiggyBac transposon; essential for transposition
+
+    - spacer: 100
+      # Spacing between transposon cassette and selection marker
+
+    - promoter: SV40
+
+    - cistron:
+        label: selection
         expression: high
         gene:
-          id: P00740
+          id: puromycin_N_acetyltransferase
           source: uniprot
-    - terminator: bGH_PA
+      # PAC gene for puromycin selection in mammalian cells
+
+    - terminator: SV40poly

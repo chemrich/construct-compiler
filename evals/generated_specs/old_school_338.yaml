@@ -1,16 +1,23 @@
 construct:
-  name: "CAT_promoter_test_construct"
+  name: CAT_expression_test
   host: e_coli
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100 # Representing the user-specified promoter for characterization
+    - promoter: lacUV5
+      # User-supplied custom promoter sequence should be inserted here by compiler
+      ribosome_binding_site: Shine_Dalgarno
+
     - cistron:
-        label: chloramphenicol_acetyltransferase
-        expression: medium
+        label: CAT
+        expression: high
         gene:
-          id: P00486
+          id: CAT
           source: uniprot
-    - terminator: BBa_B0015 # Standard rho-independent terminator
+
+    - terminator: rrnB_T1
+      # rho-independent transcription terminator

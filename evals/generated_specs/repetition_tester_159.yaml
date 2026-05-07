@@ -1,17 +1,29 @@
 construct:
-  name: "dual_solubility_tag_stabilityprot"
-  host: e_coli_bl21_de3
+  name: "StabilityProt_dual_solubility_tags"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: stability_fusion
+        label: target
         expression: high
         chain:
           - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: StabilityProt
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,19 +1,26 @@
 construct:
-  name: "shuttle_protein_f_expression"
-  host: HEK293  # Selected HEK293 for mammalian expression; E. coli validation occurs in BL21
+  name: "shuttle_vector_protein_F_dual_expression"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
-    mammalian_ori: SV40
-    source: custom
+    ori: pBR322  # bacterial replication origin
+    # Note: SV40 ori for mammalian replication cannot be fully represented in this schema
+    # which is optimized for bacterial backbones. Recommend using a commercial shuttle vector
+    # like pSVK3 or pCEP4 as the physical backbone, which already contains both ori sequences.
+    # This YAML spec describes the E. coli cassette; mammalian use requires backbone adjustment.
+    source: addgene
+  
   cassette:
-    - promoter: CMV_T7  # Dual promoter configuration for mammalian (CMV) and E. coli (T7) expression
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: protein_F
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: protein_F
               source: uniprot
-    - terminator: SV40_polyA  # Functions as a polyadenylation signal in mammalian cells and a terminator in bacteria
+    
+    - terminator: rrnB_T1

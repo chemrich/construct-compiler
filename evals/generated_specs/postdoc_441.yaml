@@ -1,23 +1,26 @@
 construct:
-  name: yeast_kinase_expression_adh1
+  name: "yeast_kinase_FLAG_His6"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: kinase_target
+        label: kinase
         expression: high
         chain:
           - gene:
-              id: CDC28
+              id: kinase
               source: uniprot
-          # Note: Intron-mediated expression enhancement is handled by the 'expression: high' setting as the current schema doesn't support internal intron positioning.
-          - tag: FLAG
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - tag: FLAG
           - tag: 6xHis
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

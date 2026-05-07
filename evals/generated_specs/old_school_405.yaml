@@ -1,16 +1,23 @@
 construct:
-  name: "lacZ_custom_promoter_validation"
+  name: "custom_promoter_lacZ_test"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pUC
-    source: custom
+    source: addgene
+  
   cassette:
-    - promoter: custom_promoter
+    - promoter: custom
+      custom_sequence: "PLACEHOLDER_INSERT_YOUR_PROMOTER_SEQUENCE_HERE"
+    
+    - rbs: RBS1
+    
     - cistron:
-        label: lacZ_reporter
+        label: lacZ
         expression: high
         gene:
           id: lacZ
           source: uniprot
+    
     - terminator: rrnB_T1

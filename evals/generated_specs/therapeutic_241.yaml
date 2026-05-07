@@ -1,18 +1,24 @@
 construct:
-  name: "CHO_HighExpression_CytokineAnalogA"
+  name: "CHO_CytokineAnalogA_secretion_expression"
   host: CHO
+
   backbone:
-    resistance: none
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    ori: null
+    resistance: null
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: target
+        label: CytokineAnalogA_secreted
         expression: high
         chain:
-          - tag: IgK_leader
+          - signal_peptide: mouse_IgG2a_leader
           - gene:
               id: CytokineAnalogA
               source: uniprot
-    - terminator: BGH_pA
+          - tag: His6
+          - polyadenylation: SV40_polyA
+
+    - terminator: rrnB_T1

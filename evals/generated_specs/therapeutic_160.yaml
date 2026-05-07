@@ -1,24 +1,29 @@
 construct:
-  name: "therapeutic_human_growth_factor_production"
-  host: e_coli_bl21
+  name: "hGF_high_yield_therapeutic"
+  host: e_coli_bl21_de3
+
   backbone:
-    # Note: Kanamycin resistance included for initial plasmid selection; clinical-grade antibiotic-free systems (e.g., pFAR/pMINI) must be used for final therapeutic vector production.
-    resistance: kanamycin
-    ori: pUC
+    resistance: null  # Antibiotic-free backbone; selection via auxotrophic complementation or counter-selection
+    ori: pBR322
     source: addgene
+    # Note: Use an antibiotic-free plasmid variant (e.g., pET-28b derivative with no resistance marker)
+    # or a plasmid with removable resistance cassette for GMP compliance
+
   cassette:
-    - promoter: araBAD # AraBAD is a purely bacterial promoter, satisfying the "no viral sequences" requirement while allowing high-yield induction.
+    - promoter: T7lac
+
     - cistron:
-        label: target_factor
+        label: growth_factor
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
-          - cleavage_site: TEV # TEV allows for precise removal of purification/solubility tags to yield a clean therapeutic protein.
+              repeats: 1
           - gene:
-              id: P01241
+              id: HGF
               source: uniprot
-    - terminator: rrnB_T1 # Standard bacterial terminator to avoid viral T7 sequences.
+
+    - terminator: rrnB_T1

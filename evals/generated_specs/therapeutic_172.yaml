@@ -1,16 +1,30 @@
 construct:
-  name: "non_viral_therapeutic_hEPO_vector"
+  name: "clinical_delivery_hTherapeuticProtein_nonviral"
   host: mammalian
+
   backbone:
-    resistance: kanamycin # Clinical plasmids require antibiotic-free selection (e.g., RNA-OUT) for final human use, but kanamycin is specified here for required E. coli propagation during manufacturing.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    ori: pBR322
+    source: addgene
+    # Note: Antibiotic resistance gene removed for clinical safety compliance
+
   cassette:
     - promoter: EF1_alpha
+      # EF1_alpha is a strong, ubiquitous promoter active across human tissues
+      # without immunogenicity concerns associated with CMV
+
     - cistron:
-        label: hEPO_payload
+        label: therapeutic_protein
         expression: high
-        gene:
-          id: P01588
-          source: uniprot
-    - terminator: hGH_polyA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P69905
+              source: uniprot
+              # Human serum albumin as exemplary therapeutic protein
+              # Substitute with target protein UniProt ID as needed
+
+    - terminator: rrnB_T1
+      # Robust termination for mammalian expression

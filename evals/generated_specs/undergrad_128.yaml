@@ -1,15 +1,16 @@
 construct:
-  name: "mCherry_Protein_E_Fusion_Mammalian"
-  host: mammalian
+  name: "mCherry_ProteinE_visualization"
+  host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: RFP_ProteinE_Fusion
+        label: fusion
         expression: high
         chain:
           - gene:
@@ -17,9 +18,9 @@ construct:
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: Protein_E
+              id: ProteinE
               source: uniprot
 
-    - terminator: bGH_pA  # Standard mammalian poly-A tail for strong expression vectors
+    - terminator: polyA

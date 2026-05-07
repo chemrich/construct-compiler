@@ -1,18 +1,32 @@
 construct:
-  name: "therapeutic_aggregation_prone_fusion"
-  host: e_coli_bl21
+  name: "multi_domain_therapeutic_solubility_purification"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
-        expression: high
+        label: therapeutic_protein
+        expression: medium
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: TEV
-          - gene:
-              id: P01375
-              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: therapeutic_domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 8xHis
+
+    - terminator: rrnB_T1

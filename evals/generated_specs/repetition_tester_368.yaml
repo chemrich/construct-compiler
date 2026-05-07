@@ -1,15 +1,25 @@
 construct:
-  name: "protein_j_orthogonal_tight_expression"
+  name: "ProteinJ_tight_rhamnose_expression"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Ptet  # Chosen for high orthogonality to Lac/Ara systems and tight regulation to prevent leaky expression of toxic ProteinJ
+    - promoter: rhaPBAD
+      # rhaPBAD (L-rhamnose-inducible) uses completely orthogonal operator sequences
+      # distinct from lac/ara systems, minimizing cross-talk and cryptic binding
+
     - cistron:
-        label: target
+        label: ProteinJ
         expression: high
-        gene:
-          id: ProteinJ
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinJ
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,18 +1,22 @@
 construct:
-  name: "halo_tagged_low_copy_expression"
-  host: e_coli_bl21_de3
+  name: "T7_HaloTag_expression"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: p15A
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: halo_fusion
-        expression: low
+        label: target
+        expression: high
         chain:
           - tag: HaloTag
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: target_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

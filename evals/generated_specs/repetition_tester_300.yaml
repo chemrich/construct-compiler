@@ -1,10 +1,15 @@
 construct:
-  name: "strep_his_tev_protein_x_expression"
+  name: "E_coli_StrepHis_TEV_ProteinX"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
@@ -12,13 +17,17 @@ construct:
           - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: 6xHis
+              repeats: 1
+          - tag: 8xHis
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - cleavage_site: TEV
           - linker:
               type: short_GS
-              repeats: 2
-          - cleavage_site: TEV
+              repeats: 1
           - gene:
-              id: protein_X
+              id: X
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,10 +1,9 @@
-```yaml
 construct:
-  name: therapeutic_fusion_protein_AB
-  host: e_coli
+  name: "therapeutic_fusion_AB_His"
+  host: e_coli_bl21
 
   backbone:
-    resistance: kanamycin
+    resistance: null
     ori: pBR322
     source: addgene
 
@@ -12,19 +11,18 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: fusion_protein
+        label: fusion_AB
         expression: high
         chain:
           - gene:
               id: domain_A
-              # Note: Replace with actual UniProt ID for domain A
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
               id: domain_B
-              # Note: Replace with actual UniProt ID for domain B
+              source: uniprot
           - tag: 6xHis
 
     - terminator: rrnB_T1
-```

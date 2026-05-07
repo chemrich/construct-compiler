@@ -1,23 +1,27 @@
 construct:
-  name: "tet_on_inducible_mNeonGreen_system"
+  name: "TetOn_inducible_mammalian_system"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTRE3G"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: TRE3G  # High-induction, low-leakage tet-responsive promoter
+    - promoter: TRE3G
+      # TRE3G (Tet-responsive element with tight control, minimal leakiness)
+
     - cistron:
-        label: target_goi
+        label: target
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: bGH_polyA
-    - promoter: EF1_alpha  # Constitutive promoter to drive the transactivator
-    - cistron:
-        label: transactivator
-        expression: medium
-        fused: false
-        gene:
-          id: rtTA3
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: target_protein
+              source: uniprot
+              # User should specify their protein of interest (UniProt ID)
+
     - terminator: SV40_polyA
+      # SV40 poly(A) signal for robust 3' end formation in mammalian cells

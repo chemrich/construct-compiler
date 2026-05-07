@@ -1,15 +1,35 @@
 construct:
-  name: "blue_light_inducible_photoenzyme_yeast"
+  name: "light_activated_photoenzyme_circuit"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2μ
     source: addgene
+
   cassette:
-    - promoter: C120  # VP16-EL222 responsive promoter for blue-light induction
+    - promoter: GAL1
+
     - cistron:
-        label: target_enzyme
+        label: blue_light_sensor
         expression: high
-        gene:
-          id: PhotoEnzyme
-    - terminator: CYC1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "CRY2"
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: photoenzyme_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "PhotoEnzyme"
+              source: uniprot
+
+    - terminator: rrnB_T1

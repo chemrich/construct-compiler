@@ -1,26 +1,30 @@
 construct:
-  name: "lacI_constitutive_and_GeneX_inducible"
+  name: lacI_GeneX_inducible
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
-    - cistron:
-        label: lacI_repressor
-        expression: medium
-        fused: false
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: T7lac
-    - cistron:
-        label: GeneX_target
+    - promoter: lacUV5
+      cistron:
+        label: lacI
         expression: high
-        fused: false
+        gene:
+          id: lacI
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: lacUV5
+      cistron:
+        label: GeneX
+        expression: high
         gene:
           id: GeneX
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,16 +1,20 @@
 construct:
-  name: "SecretedFactor_HEK293_Expression"
+  name: secreted_factor_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_factor
         expression: high
         chain:
-          - tag: Ig_kappa_leader
+          - tag: signal_peptide_IgG  # IgG signal peptide for mammalian secretion
           - gene:
               id: SecretedFactor
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40_polyA

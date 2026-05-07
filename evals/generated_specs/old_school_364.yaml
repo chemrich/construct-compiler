@@ -1,12 +1,15 @@
 construct:
-  name: "subunitA_subunitB_operon"
-  host: e_coli_bl21_de3
+  name: "dual_subunit_operon_T7"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
         label: subunitA
         expression: high
@@ -15,7 +18,9 @@ construct:
           - gene:
               id: subunitA
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: subunitB
         expression: high
@@ -23,4 +28,5 @@ construct:
         gene:
           id: subunitB
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

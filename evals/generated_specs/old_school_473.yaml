@@ -1,16 +1,23 @@
 construct:
-  name: "lac_inducible_amp_cloning_vector"
+  name: "workhorse_expression_plasmid"
   host: e_coli
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: lacUV5
+
     - cistron:
-        label: target_gene
+        label: target
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: MCS
+              sequence: "GAATTCGCTAGCGGTACCGAGCTCGGATCCTCTAGAGTCGACCTGCAGGCATGCAAGCTT"
+
     - terminator: rrnB_T1

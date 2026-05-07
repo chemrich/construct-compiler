@@ -1,14 +1,48 @@
 construct:
-  name: "precise_threshold_detector"
-  host: e_coli_bl21_de3
+  name: "threshold_detector_molecular_switch"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
-        label: reporter
+        label: sensor_kinase
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnvZ
+              source: uniprot
+        # EnvZ detects osmotic pressure; can be engineered for small molecule sensing
+
+    - spacer: 25
+
+    - cistron:
+        label: response_regulator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: OmpR
+              source: uniprot
+        # OmpR is phosphorylated by EnvZ; acts as transcriptional switch
+
+    - spacer: 25
+
+    - cistron:
+        label: output_protein
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+        # Output is driven by OmpR-controlled promoter (P_ompC or engineered variant)
+        # Sharp ON/OFF transition occurs at threshold phosphorylation level
+
+    - terminator: rrnB_T1

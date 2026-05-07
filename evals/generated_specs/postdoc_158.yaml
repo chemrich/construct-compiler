@@ -1,16 +1,25 @@
 construct:
-  name: "tightly_regulated_protein_O_expression"
+  name: "tight_control_protein_O_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    # pET-28b(+) includes lacI repressor gene and lac operator at T7 promoter
+    # This provides the tight control required for toxic protein expression
+
   cassette:
     - promoter: T7lac
+      # T7lac combines T7 RNA polymerase specificity with lac operator repression
+      # Requires IPTG induction; minimal basal transcription
+
     - cistron:
-        label: protein_o_target
+        label: protein_O
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: protein_O
               source: uniprot
-    - terminator: T7term
+              # Replace with actual UniProt ID if available
+
+    - terminator: rrnB_T1

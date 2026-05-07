@@ -1,18 +1,22 @@
 construct:
-  name: "bacillus_tat_pathway_reporter"
+  name: "bacillus_tat_pathway_phod_gfp"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: HpaII
+
     - cistron:
         label: tat_reporter
         expression: high
         chain:
-          - tag: PhoD
+          - signal_peptide: PhoD  # Tat signal peptide for Bacillus secretion
           - gene:
-              id: GFP
+              id: sfGFP
               source: fpbase
+
     - terminator: rrnB_T1

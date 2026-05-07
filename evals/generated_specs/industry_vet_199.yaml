@@ -1,22 +1,36 @@
 construct:
-  name: "HEK293_P1_P2_2A_bicistronic"
+  name: "HEK293_P1_2A_P2_dual_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: bicistronic_ORF
+        label: P1
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: P1
               source: uniprot
-          - linker:
-              type: P2A
+
+    - spacer: 30
+
+    - cistron:
+        label: P2_2A_fusion
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: T2A
+              source: uniprot
           - gene:
               id: P2
               source: uniprot
           - tag: 6xHis
-    - terminator: BGH_pA
+
+    - terminator: BGH_polyA

@@ -1,19 +1,23 @@
 construct:
-  name: "pichia_egfp_secretion_monitor"
+  name: "Pichia_AOX1_secretion_monitor"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: secretion_reporter
+        label: secreted_eGFP
         expression: high
         chain:
-          - secretion_signal: alpha_factor
+          - tag: alpha_factor_prepro
           - gene:
               id: eGFP
               source: fpbase
           - tag: 8xHis
-    - terminator: AOX1_TT
+
+    - terminator: CYC1

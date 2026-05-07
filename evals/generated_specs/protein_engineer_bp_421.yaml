@@ -1,20 +1,24 @@
 construct:
-  name: "bacillus_secreted_amylase"
+  name: bacillus_amylase_secretion_cassette
   host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: chloramphenicol
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: target_amylase
+        label: amylase_secreted
         expression: high
         chain:
-          - tag: AmyE
           - tag: FLAG
           - cleavage_site: Enterokinase
+          - solubility_tag: AmyE
           - gene:
               id: amyE
               source: uniprot
+
     - terminator: rrnB_T1

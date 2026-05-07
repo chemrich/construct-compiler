@@ -1,14 +1,20 @@
 construct:
-  name: "mammalian_transient_expression_payload"
+  name: "mammalian_transient_GOI_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: GOI
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BGH_polyA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GOI
+              source: uniprot
+
+    - terminator: polyA

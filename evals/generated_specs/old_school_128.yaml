@@ -1,16 +1,22 @@
 construct:
-  name: "promoterE_GFP_reporter"
+  name: promoterE_GFP_reporter
   host: e_coli
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: promoterE
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - rbs: RBS_B0034
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

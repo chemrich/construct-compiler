@@ -1,16 +1,21 @@
 construct:
-  name: "MyCoreProtein_His_TEV_Purification"
+  name: MyCoreProtein_mammalian_His_TEV
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: purification_target
+        label: MyCoreProtein
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: MyCoreProtein
-    - terminator: bGH_pA
+              source: uniprot
+
+    - terminator: rrnB_T1

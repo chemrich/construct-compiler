@@ -1,12 +1,30 @@
 construct:
-  name: "toxin_a_biosensing_and_degradation_system"
-  host: e_coli
+  name: toxin_biosensor_and_degradation_system
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Used as a placeholder for a toxin-inducible sensing promoter
+    - promoter: araBAD
+
+    - cistron:
+        label: toxin_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ToxinA_sensor
+              source: uniprot
+        # This sensor protein detects ToxinA and acts as a transcriptional activator
+
+    - spacer: 25
+
+    - promoter: lacUV5
+      # Regulated by ToxinA_sensor; activated upon ToxinA detection
+
     - cistron:
         label: degradase
         expression: high
@@ -16,12 +34,16 @@ construct:
           - gene:
               id: DegradaseA
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: reporter
         expression: medium
-        fused: false  # Independently translated reporter
-        gene:
-          id: mScarlet
-          source: fpbase
+        fused: false
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
     - terminator: rrnB_T1

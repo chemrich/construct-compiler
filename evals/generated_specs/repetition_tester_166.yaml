@@ -1,21 +1,16 @@
 construct:
-  name: "integrase_yeast_v1_attsite1"
+  name: Integrase_AttSite1_construct
   host: yeast
   backbone:
-    # Variant 1 of 3: Using ampicillin resistance and pUC origin for E. coli maintenance
-    # Subsequent variants (v2, v3) should use kanamycin/pBR322 and chloramphenicol/p15A to ensure no common sequences
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
-
   cassette:
-    - promoter: TDH3  # Unique promoter for v1 (use TEF1 for v2, PGK1 for v3)
-
-    - cistron:
-        label: phiC31_integrase_v1
-        expression: high
-        gene:
-          id: P0CK46
-          source: uniprot
-
-    - terminator: ADH1_term  # Unique terminator for v1 (use CYC1 for v2, ENO1 for v3)
+  - promoter: GAL1
+  - cistron:
+      label: Integrase_v1
+      expression: high
+      gene:
+        id: Integrase_codon_opt_v1
+        source: uniprot
+  - terminator: CYC1

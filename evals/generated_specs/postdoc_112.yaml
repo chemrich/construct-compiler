@@ -1,20 +1,29 @@
 construct:
-  name: "yeast_binding_protein_strep_mcherry"
+  name: "BindingProtein_Strep_mCherry_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2micron
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: target_fusion
+        label: BindingProtein_fusion
         expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: BindingProtein
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

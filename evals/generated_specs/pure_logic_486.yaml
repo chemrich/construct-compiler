@@ -1,25 +1,53 @@
 construct:
-  name: "mammalian_signal_amplification_growth_factor"
+  name: "mammalian_signal_amplification_circuit"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: SV40  # Weak promoter to drive the initial input signal
+    - promoter: CMV
+
     - cistron:
-        label: input_activator
-        expression: low
-        gene:
-          id: tTA  # Tetracycline-controlled transactivator for stage 1
-          source: uniprot
-    - terminator: SV40_polyA
-    - spacer: 50
-    - promoter: TRE  # Tet-Responsive Element promoter for amplified output
-    - cistron:
-        label: amplified_growth_factor
+        label: InputSignal_sensor
         expression: high
         chain:
-          - tag: IgK_leader  # Secretion signal for mammalian export
+          - tag: FLAG
+          - gene:
+              id: dCas9_VP64
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: U6
+
+    - cistron:
+        label: gRNA_amplifier
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_GrowthFactorY_promoter
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: CMV
+
+    - cistron:
+        label: GrowthFactorY_output
+        expression: very_high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: GrowthFactorY
               source: uniprot
-    - terminator: bGH_PA  # Standard strong mammalian polyA terminator
+
+    - terminator: rrnB_T1

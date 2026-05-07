@@ -1,19 +1,23 @@
 construct:
-  name: "pichia_ost1_glycoprotein_expression"
+  name: "pichia_glycoprotein_er_target"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: PTEF1
+    - promoter: pTEF1
+
     - cistron:
-        label: target_glycoprotein
+        label: glycoprotein
         expression: high
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - gene:
-              id: glycoprotein_target
+              id: target
               source: uniprot
           - tag: Strep-II
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

@@ -1,22 +1,27 @@
 construct:
-  name: "TargetProt_GFP_localization_fusion"
-  host: e_coli
+  name: TargetProt_GFP_fusion
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
-        expression: medium
+        label: target_gfp_fusion
+        expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: TargetProt
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

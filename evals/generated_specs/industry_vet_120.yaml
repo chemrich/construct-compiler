@@ -1,14 +1,21 @@
 construct:
-  name: "high_titer_therapeutic_mammalian_expression"
+  name: "mammalian_therapeutic_expression_high_titer"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
-        gene:
-          id: P01588
-          source: uniprot
-    - terminator: bGH_PA # Robust mammalian polyadenylation signal for high transcript stability
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: IFN_beta_human
+              source: uniprot
+
+    - terminator: SV40_poly_A

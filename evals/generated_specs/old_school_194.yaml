@@ -1,16 +1,22 @@
 construct:
-  name: "periplasmic_taq_enzyme_expression"
-  host: e_coli_bl21_de3
+  name: "Taq_enzyme_periplasmic_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: target_enzyme
+        label: Taq_enzyme
         expression: high
         chain:
-          - tag: ompA
+          - signal_peptide: ompA
           - gene:
-              id: P08594
+              id: "Thermus_aquaticus_enzyme"
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

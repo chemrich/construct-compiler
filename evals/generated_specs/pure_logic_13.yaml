@@ -1,33 +1,56 @@
-```yaml
 construct:
-  name: triple_NOR_gate_system
-  host: e_coli
+  name: "three_parallel_NOR_gates_multi_color"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
         label: NOR_gate_1
-        expression: medium
+        expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
+              id: mScarlet
               source: fpbase
+
     - spacer: 30
+
     - cistron:
         label: NOR_gate_2
-        expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mVenus
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
         label: NOR_gate_3
-        expression: medium
-        fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mCerulean
+              source: fpbase
+
     - terminator: rrnB_T1
-```
+
+  # Design note: Each NOR gate is implemented as a polycistronic cassette where:
+  # - Input 1 and Input 2 are regulatory RNAs or proteins that repress output expression
+  # - Gate 1 outputs mScarlet (red) when both inputs are absent
+  # - Gate 2 outputs mVenus (yellow) when both inputs are absent
+  # - Gate 3 outputs mCerulean (cyan) when both inputs are absent
+  # The araBAD promoter allows titratable control of expression levels.
+  # Additional regulatory cassettes (not shown) would contain:
+  # - Input-sensing repressors (e.g., tetR, lacI variants, or sRNA targets)
+  # - Inducible expression of repressor proteins/sRNAs for each condition
+  # This enables multi-condition monitoring through distinct fluorescence readouts.

@@ -1,16 +1,22 @@
 construct:
-  name: "mammalian_gpcr_yeast_expression"
+  name: mammalian_GPCR_yeast_expression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: gpcr_target
-        expression: high
-        gene:
-          id: P07550
-          source: uniprot
-    - terminator: CYC1_term
+        label: GPCR
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: UNIPROT_ID_HERE
+              source: uniprot
+
+    - terminator: rrnB_T1

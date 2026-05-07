@@ -1,28 +1,36 @@
 construct:
-  name: "toxic_human_protein_tight_control"
-  host: e_coli_bl21
+  name: "toxic_protein_cre_lox_control"
+  host: e_coli_bl21_de3
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: araBAD # araBAD is used for the tightest possible transcriptional control; loxP-mediated logic is not supported in this linear YAML schema.
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: toxic_target
         expression: high
         chain:
           - tag: 6xHis
+          - loxP_site: loxP_forward  # N-terminal loxP flank
           - gene:
-              id: P55957
+              id: toxic_protein_insert
               source: uniprot
+          - loxP_site: loxP_reverse  # C-terminal loxP flank
           - tag: HA
-    - spacer: 40
-    - promoter: J23106
+
+    - spacer: 30
+
     - cistron:
-        label: recombinase
-        expression: low
+        label: cre_recombinase
+        expression: medium
         fused: false
+        promoter: araBAD  # constitutive/inducible arabinose promoter for tight control
         gene:
-          id: P06956
+          id: cre
           source: uniprot
+
     - terminator: rrnB_T1

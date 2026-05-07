@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_subtilis_lipa_secretion_system"
+  name: bacillus_secretion_enzyme
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: LipA
+
     - cistron:
-        label: tagless_enzyme
+        label: secreted_enzyme
         expression: high
         chain:
-          - tag: LipA_signal
+          - tag: LipA_signal_peptide
           - cleavage_site: TEV
           - gene:
-              id: P00691
+              id: enzyme
               source: uniprot
+
     - terminator: rrnB_T1

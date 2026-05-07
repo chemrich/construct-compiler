@@ -1,23 +1,33 @@
 construct:
-  name: "staggered_cleavage_quad_domain_fusion"
-  host: e_coli_bl21_de3
+  name: "four_domain_array_with_distinct_protease_sites"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: "fusion_protein"
+        label: four_domain_fusion
         expression: high
         chain:
-          - gene:
-              id: Domain1
+          - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: Domain2
+              id: Domain1
+              source: uniprot
           - cleavage_site: 3C
           - gene:
-              id: Domain3
+              id: Domain2
+              source: uniprot
           - cleavage_site: Factor_Xa
           - gene:
+              id: Domain3
+              source: uniprot
+          - cleavage_site: Thrombin
+          - gene:
               id: Domain4
-    - terminator: T7term
+              source: uniprot
+
+    - terminator: rrnB_T1

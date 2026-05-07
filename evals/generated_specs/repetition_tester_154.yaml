@@ -1,25 +1,49 @@
 construct:
-  name: "SpacerProt_NonHomologous_Fusion"
+  name: "SpacerProt_dual_spacer_variants"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: SpacerProt_variant_A
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: DomainF
               source: uniprot
           - linker:
-              # GS_flexible and short_GS provide non-homologous sequences with similar flexible properties
               type: GS_flexible
-              repeats: 4
-          - linker:
-              type: short_GS
-              repeats: 4
+              repeats: 3
           - gene:
               id: DomainG
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+
+    - spacer: 100
+    
+    - cistron:
+        label: SpacerProt_variant_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: DomainF
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
+          - gene:
+              id: DomainG
+              source: uniprot
+    
+    - terminator: rrnB_T1

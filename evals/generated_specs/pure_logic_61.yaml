@@ -1,37 +1,53 @@
 construct:
-  name: "transcriptional_and_gate_hrpRS"
+  name: "two_input_transcriptional_AND_gate"
   host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: araBAD  # Input A: Activated by L-arabinose
+    - promoter: lacUV5
+      # AND gate logic: dual repression architecture
+      # Input A represses via TetR, Input B represses via CI
+      # Output Z (mGFP) only expressed when both repressors are absent
+    
     - cistron:
-        label: input_A_regulator
-        expression: medium
-        gene:
-          id: P13271  # HrpR transcriptional regulator
-          source: uniprot
-    - terminator: rrnB_T1
-
-    - promoter: lacUV5  # Input B: Activated by IPTG
-    - cistron:
-        label: input_B_regulator
-        expression: medium
-        gene:
-          id: P13272  # HrpS transcriptional regulator
-          source: uniprot
-    - terminator: rrnB_T1
-
-    - promoter: phrpL  # AND gate: phrpL is only active when both HrpR and HrpS are present
-    - cistron:
-        label: and_gate_output
+        label: output_Z
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 1
           - gene:
-              id: mNeonGreen
+              id: mEGFP
               source: fpbase
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 50
+    
+    - promoter: J23106
+      # Constitutive production of TetR (repressor for input A)
+    
+    - cistron:
+        label: repressor_A
+        expression: medium
+        fused: false
+        gene:
+          id: tetR
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 50
+    
+    - promoter: J23100
+      # Constitutive production of CI (repressor for input B)
+    
+    - cistron:
+        label: repressor_B
+        expression: medium
+        fused: false
+        gene:
+          id: cI
+          source: uniprot
+    
+    - terminator: rrnB_T1

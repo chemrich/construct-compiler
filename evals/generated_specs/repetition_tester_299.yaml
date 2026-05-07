@@ -1,14 +1,25 @@
 construct:
-  name: "aav2_rep_rec_resistant"
+  name: "AAV_Rep_mammalian_production"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: EF1_alpha  # EF1-alpha is used to provide high expression while avoiding sequence homology with common CMV-driven AAV helper components.
+    - promoter: EF1_alpha  # Novel choice for AAV Rep: avoids CMV/SV40 commonly used in helper plasmids
+
     - cistron:
-        label: rep_protein
+        label: Rep
         expression: high
-        gene:
-          id: P03132
-          source: uniprot
-    - terminator: hGH_polyA  # Utilizing the human Growth Hormone polyadenylation signal as a unique alternative to standard bGH or SV40 signals to minimize homology.
+        chain:
+          - gene:
+              id: "Rep_codon_optimized_synonymous_diversified"
+              source: uniprot
+              # Note: Sequence should be human codon-optimized with maximal synonymous variation
+              # to eliminate homology windows with ITRs and helper plasmid sequences.
+              # Recommend synthesis with algorithm-driven codon shuffling (e.g., IDT OptimizationEngine).
+
+    - terminator: polyA_unique  # Custom polyA signal distinct from SV40/BGH
+      # Recommendation: Use synthetic polyA derived from different viral source
+      # or designed de novo to avoid ITR recombination hotspots.

@@ -1,13 +1,18 @@
 construct:
-  name: "mammalian_sgRNA_guide_expression"
+  name: sgRNA_Guide_Cas9_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: U6 # U6 promoter is used for RNA polymerase III transcription of sgRNA in mammalian cells
+    - promoter: U6
+
     - cistron:
-        label: guide_RNA
+        label: sgRNA
         expression: high
         gene:
           id: sgRNA_Guide
-    - terminator: U6_terminator
+          source: uniprot
+
+    - terminator: rrnB_T1

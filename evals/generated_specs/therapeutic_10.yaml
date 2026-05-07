@@ -1,21 +1,27 @@
-```yaml
 construct:
-  name: "shRNA_knockdown_vector"
+  name: "mammalian_shRNA_silencing_construct"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: U6  # RNA Pol III promoter for shRNA expression
+    - promoter: U6
+      # U6 is a Pol III promoter for robust shRNA expression in mammalian cells
 
     - cistron:
-        label: shRNA_hairpin
+        label: shRNA
         expression: high
-        gene:
-          id: "custom_shRNA"
-          # shRNA hairpin structure will be designed by compiler
-          # targeting sequence and loop structure optimized for RNAi
+        chain:
+          - gene:
+              id: shRNA_GFP
+              sequence: >
+                GATCCCCGGTGAACGTGGAGACTTTCGTTTCAAGAGAACGAAAGUCUCCACGUUCACCTTTTTTA
+              source: custom
+      # shRNA sequence targeting GFP; user should replace with target gene sequence
 
-    - terminator: U6_terminator  # Pol III terminator (polyT tract)
-```
+    - terminator: poly_T
+      # Pol III terminator (4 consecutive T's signal transcription termination)

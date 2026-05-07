@@ -1,21 +1,30 @@
 construct:
-  name: "therapeutic_cpp_non_viral_expression"
+  name: "mammalian_therapeutic_CPP_delivery"
   host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic resistance markers for therapeutic application
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Human promoter used as a non-viral alternative to CMV
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: therapeutic_CPP_fusion
         expression: high
         chain:
-          - tag: Poly-Arg # Synthetic cell-penetrating peptide (non-viral)
+          - tag: 6xHis
+          - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P04637 # Human TP53 (Tumor protein p53)
+              id: TAT_CPP
               source: uniprot
-    - terminator: hGH_pA # Human growth hormone polyadenylation signal (non-viral)
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: human_growth_hormone
+              source: uniprot
+
+    - terminator: rrnB_T1

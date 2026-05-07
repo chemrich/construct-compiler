@@ -1,19 +1,24 @@
 construct:
-  name: "TheraProt_E_coli_Expression"
-  # The user requested two separate constructs; per rule 14, only one YAML document is provided.
-  # This specification describes the E. coli construct. To generate the S. cerevisiae 
-  # version, change host to 'yeast', promoter to 'TDH3', and terminator to 'CYC1_term'.
+  name: "TheraProt_E_coli_expression"
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100  # Strong constitutive bacterial promoter
+    - promoter: T7lac
+    
     - cistron:
-        label: TheraProt_production
+        label: TheraProt_bacterial
         expression: high
-        gene:
-          id: TheraProt
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: TheraProt
+              source: uniprot
+              codon_optimization: e_coli
+    
     - terminator: rrnB_T1

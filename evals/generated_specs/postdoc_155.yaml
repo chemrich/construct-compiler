@@ -1,19 +1,25 @@
 construct:
-  name: protein_L_met_removal_expression
+  name: "L_protein_Met_removal_His_tag"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100 # Strong constitutive promoter as requested
+    - promoter: tac
+
     - cistron:
-        label: target
+        label: L
         expression: high
         chain:
-          - solubility_tag: SUMO # SUMO fusion allows for precise N-terminal methionine removal via Ulp1 protease cleavage
           - gene:
               id: L
               source: uniprot
-          - tag: 6xHis # C-terminal purification tag
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+
     - terminator: rrnB_T1

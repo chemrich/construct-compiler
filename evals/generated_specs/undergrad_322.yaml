@@ -1,16 +1,20 @@
 construct:
-  name: "awesome_protein_purification"
+  name: AwesomeProtein_His_tag_expression
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: AwesomeProtein
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
               id: AwesomeProtein
-    - terminator: T7term
+              source: uniprot
+
+    - terminator: rrnB_T1

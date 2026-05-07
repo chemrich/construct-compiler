@@ -1,16 +1,22 @@
 construct:
-  name: "ProteinT_high_expression_diagnostic"
+  name: "ProteinT_diagnostic_expression"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: ProteinT
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: ProteinT
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

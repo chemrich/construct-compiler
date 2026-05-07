@@ -1,57 +1,67 @@
 construct:
-  name: "arginine_pathway_constitutive_operon"
+  name: "arginine_biosynthesis_pathway_operon"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # strong constitutive promoter (BioBrick)
+    
     - cistron:
         label: arg1
         expression: high
         gene:
           id: arg1
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: arg2
-        expression: medium
-        fused: false
+        expression: low
         gene:
           id: arg2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: arg3
         expression: medium
-        fused: false
         gene:
           id: arg3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: arg4
-        expression: low
-        fused: false
+        expression: very_low
         chain:
           - gene:
               id: arg4
               source: uniprot
-          - tag: LVA
-    - spacer: 30
+          - tag: LVA  # C-terminal LVA degradation tag for rapid turnover
+    
+    - spacer: 25
+    
     - cistron:
         label: arg5
-        expression: medium
-        fused: false
+        expression: low
         gene:
           id: arg5
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: arg6
         expression: high
-        fused: false
         gene:
           id: arg6
           source: uniprot
+    
     - terminator: rrnB_T1

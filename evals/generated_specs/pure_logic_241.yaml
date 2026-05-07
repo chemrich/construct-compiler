@@ -1,32 +1,42 @@
 construct:
-  name: "two_input_and_gate_split_t7"
+  name: "two_input_AND_gate"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: gate_input_a_t7_pol_n
-        expression: medium
-        gene:
-          id: P00573
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac
-    - cistron:
-        label: gate_input_b_t7_pol_c
-        expression: medium
-        gene:
-          id: P00573
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7
-    - cistron:
-        label: output_z_mEGFP
+        label: input_A_sensor
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: input_B_sensor
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: AND_gate_output_Z
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

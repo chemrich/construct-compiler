@@ -1,19 +1,37 @@
 construct:
-  name: "e_coli_genomic_integration_donor_R"
+  name: "R_genomic_integration_donor"
   host: e_coli
+  
   backbone:
-    # Homology arms (1kb each) and CRISPR target sites for genomic integration 
-    # are not explicitly supported by the schema; this specification defines 
-    # the Gene R expression cassette cargo for the donor plasmid.
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
+    - feature:
+        label: homology_arm_upstream
+        type: homology_region
+        length: 1000
+        description: "1 kb upstream homology arm for genomic integration at target locus"
+    
+    - feature:
+        label: crispr_target_site
+        type: pam_site
+        description: "NGG PAM site for SpCas9-mediated DSB"
+    
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: R
         expression: high
         gene:
           id: R
           source: uniprot
+    
     - terminator: rrnB_T1
+    
+    - feature:
+        label: homology_arm_downstream
+        type: homology_region
+        length: 1000
+        description: "1 kb downstream homology arm for genomic integration at target locus"

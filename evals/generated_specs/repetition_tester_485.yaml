@@ -1,30 +1,31 @@
 construct:
-  name: "orthogonal_tet_ara_dual_expression"
+  name: "dual_inducible_gene_red_gene_blue"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    # First expression unit: Tet-inducible Gene_Red
-    - promoter: tetA
-    - cistron:
-        label: gene_red_unit
-        expression: medium
-        fused: false
-        gene:
-          id: Gene_Red
-          source: uniprot
+    - promoter: tetR_promoter
+      operator: tetO
+      repressor_gene: tetR
+      expression: high
+      chain:
+        - gene:
+            id: Gene_Red
+            source: uniprot
+
     - terminator: rrnB_T1
 
-    # Second expression unit: Ara-inducible Gene_Blue
-    # Using a distinct promoter and terminator to ensure no sequence homology
+    - spacer: 100
+
     - promoter: araBAD
-    - cistron:
-        label: gene_blue_unit
-        expression: medium
-        fused: false
-        gene:
-          id: Gene_Blue
-          source: uniprot
-    - terminator: T7term
+      expression: high
+      chain:
+        - gene:
+            id: Gene_Blue
+            source: uniprot
+
+    - terminator: rrnB_T1

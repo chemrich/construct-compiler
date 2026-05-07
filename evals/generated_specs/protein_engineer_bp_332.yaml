@@ -1,33 +1,47 @@
 construct:
-  name: "pichia_split_intein_system"
+  name: split_intein_multidomain_pichia
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: n_terminal_fragment
+        label: domain_A_N_intein
         expression: high
         chain:
           - gene:
-              id: target_domain_a
+              id: target_domain_A
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: n_intein
+              id: N_intein
               source: uniprot
-    - terminator: AOX1_TT
-    - spacer: 50
+
+    - terminator: CYC1
+
+    - spacer: 30
+
     - promoter: AOX1
+
     - cistron:
-        label: c_terminal_fragment
+        label: C_intein_domain_B
         expression: high
         chain:
           - gene:
-              id: c_intein
+              id: C_intein
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: target_domain_b
+              id: target_domain_B
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1

@@ -1,14 +1,22 @@
 construct:
-  name: "muscle_specific_protein_pi_expression"
+  name: muscle_specific_protein_pi
   host: mammalian
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CKM  # Muscle-specific Creatine Kinase promoter
+    - promoter: MCK  # Muscle Creatine Kinase promoter - muscle-specific
+
     - cistron:
-        label: target
+        label: protein_pi
         expression: high
-        gene:
-          id: PI
-          source: uniprot
-    - terminator: BGH_polyA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P09493
+              source: uniprot
+
+    - terminator: rrnB_T1

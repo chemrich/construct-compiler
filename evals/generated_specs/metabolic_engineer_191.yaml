@@ -1,62 +1,78 @@
 construct:
-  name: "yeast_mitochondrial_metabolic_pathway"
+  name: "yeast_mitochondrial_pathway_5enzymes"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: TPI1
+
     - cistron:
-        label: mito_enz1
+        label: MitoEnz1
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS_ScOxa1
           - gene:
               id: MitoEnz1
-              source: uniprot
+              codon_optimize: yeast
+
     - terminator: CYC1
 
-    - promoter: TEF1
+  cassette_2:
+    - promoter: PGK1
+
     - cistron:
-        label: mito_enz2
+        label: MitoEnz2
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS_ScSu04
           - gene:
               id: MitoEnz2
-              source: uniprot
-    - terminator: ADH1
+              codon_optimize: yeast
 
-    - promoter: PGK1
+    - terminator: CYC1
+
+  cassette_3:
+    - promoter: GAL1
+
     - cistron:
-        label: mito_enz3
+        label: MitoEnz3
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS_ScCox4
           - gene:
               id: MitoEnz3
-              source: uniprot
-    - terminator: TEF1
+              codon_optimize: yeast
 
+    - terminator: CYC1
+
+  cassette_4:
     - promoter: ADH1
+
     - cistron:
-        label: mito_enz4
+        label: MitoEnz4
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS_ScCox8
           - gene:
               id: MitoEnz4
-              source: uniprot
-    - terminator: ENO2
+              codon_optimize: yeast
 
-    - promoter: ENO2
+    - terminator: CYC1
+
+  cassette_5:
+    - promoter: TEF1
+
     - cistron:
-        label: mito_enz5
+        label: MitoEnz5
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS_ScCox5a
           - gene:
               id: MitoEnz5
-              source: uniprot
-    - terminator: TPI1
+              codon_optimize: yeast
+
+    - terminator: CYC1

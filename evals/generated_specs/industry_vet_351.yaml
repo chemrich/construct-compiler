@@ -1,16 +1,24 @@
 construct:
-  name: "aav_rep_fragment_expression"
-  host: e_coli_bl21_de3
+  name: "AAV_Rep_fragment_bacterial_expression"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: rep_fragment
+        label: AAV_Rep
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P03132
+              id: AAV_Rep
               source: uniprot
-    - terminator: T7term
+              codon_optimized: true
+              organism: e_coli
+    
+    - terminator: rrnB_T1

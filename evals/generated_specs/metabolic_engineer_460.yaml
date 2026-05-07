@@ -1,42 +1,52 @@
 construct:
-  name: "four_enzyme_pathway_balanced_operon"
+  name: "four_enzyme_pathway_A_B_C_D"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for high-level pathway expression
+    - promoter: J23100
+    
     - cistron:
         label: enzyme_A
         expression: high
         chain:
           - gene:
-              id: enzyme_A
+              id: enzymeA
               source: uniprot
-          - tag: 6xHis  # C-terminal His-tag on Enzyme A
-    - spacer: 30
+          - tag: 6xHis
+    
+    - spacer: 25
+    
     - cistron:
         label: enzyme_B
         expression: high
         fused: false
         gene:
-          id: enzyme_B
+          id: enzymeB
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: enzyme_C
-        expression: high
+        expression: medium
         fused: false
         gene:
-          id: enzyme_C
+          id: enzymeC
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: enzyme_D
-        expression: high
+        expression: medium
         fused: false
         gene:
-          id: enzyme_D
+          id: enzymeD
           source: uniprot
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

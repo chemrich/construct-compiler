@@ -1,16 +1,35 @@
 construct:
-  name: "Non_Viral_Human_CD19_CAR_T_Cell"
-  host: mammalian
+  name: "CAR_T_cell_transient_single_chain"
+  host: HEK293
+
   backbone:
-    resistance: kanamycin # Rule 9: Defaulting to kanamycin. User requested no antibiotic marker; in clinical settings, minicircle or auxotrophic selection would be employed.
-    ori: pUC
+    resistance: null  # No antibiotic resistance marker for safety
+    ori: pUC  # Mammalian-compatible origin for transient expression
     source: custom
+
   cassette:
-    - promoter: EF1_alpha # Human promoter selected to comply with the prohibition of viral components (like CMV).
+    - promoter: EF1_alpha  # Constitutive expression in human cells
+
     - cistron:
-        label: CD19_CAR_FMC63
+        label: CAR_single_chain
         expression: high
-        gene:
-          id: CD19_CAR_FMC63_CD8_CD28_CD3z
-          source: uniprot # Sequence contains leader signal peptide and signaling domains.
-    - terminator: hGH_polyA # Human growth hormone polyadenylation signal used to avoid viral terminators.
+        chain:
+          - tag: signal_peptide_CD8a  # Leader sequence for surface trafficking
+          - cleavage_site: signal_peptidase  # Native signal peptide cleavage
+          - gene:
+              id: scFv_anti_CD19  # Single-chain Fv targeting CD19
+              source: custom  # User to provide validated scFv sequence
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: transmembrane_CD8a  # CD8-alpha transmembrane domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: intracellular_4-1BB_CD3zeta  # 4-1BB co-stimulatory + CD3-zeta signaling domain
+              source: uniprot
+
+    - terminator: WPRE  # Woodchuck Posttranscriptional Regulatory Element for enhanced expression

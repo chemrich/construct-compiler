@@ -1,28 +1,36 @@
 construct:
-  name: "pichia_mab_expression_system"
-  host: yeast
+  name: "pichia_mAb_bicistronic"
+  host: pichia_pastoris
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: light_chain
         expression: high
         chain:
           - tag: alpha_factor
           - gene:
-              id: light_chain
+              id: mAb_light_chain
               source: uniprot
+
     - terminator: CYC1
+
     - promoter: AOX1
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
           - tag: alpha_factor
           - gene:
-              id: heavy_chain
+              id: mAb_heavy_chain
               source: uniprot
+
     - terminator: AOX1

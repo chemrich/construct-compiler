@@ -1,26 +1,34 @@
 construct:
-  name: "mammalian_bicistronic_ires_expression"
+  name: "bicistronic_AAV_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: payload_one
+        label: payload_1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mNeonGreen
+              id: mEGFP
               source: fpbase
-    - spacer: 580  # IRES (Internal Ribosome Entry Site) sequence for bicistronic translation
+
+    # IRES element for independent translation of second cistron from same promoter
+    - spacer: 50  # IRES sequence placeholder; actual IRES (e.g., EMCV or EIF4G) ~600bp
+
     - cistron:
-        label: payload_two
-        expression: medium
-        fused: false  # Separate translation via IRES
+        label: payload_2
+        expression: high
+        fused: false
         chain:
           - tag: FLAG
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: BBa_B0015  # Standard terminator sequence
+
+    - terminator: rrnB_T1

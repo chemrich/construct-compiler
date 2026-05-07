@@ -1,10 +1,9 @@
-```yaml
 construct:
-  name: "pichia_secreted_mcherry_scfv_reporter"
+  name: "Pichia_secreted_reporter_scFv"
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
 
@@ -12,20 +11,19 @@ construct:
     - promoter: AOX1
 
     - cistron:
-        label: secreted_reporter
+        label: secreted_fusion
         expression: high
         chain:
-          - tag: alpha_factor  # secretion signal for yeast
+          - tag: alpha_factor_signal
           - gene:
               id: mCherry
               source: fpbase
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 1
           - gene:
-              id: scFv_target
+              id: scFv
               source: uniprot
           - tag: 6xHis
 
-    - terminator: AOX1_TT
-```
+    - terminator: rrnB_T1

@@ -1,56 +1,80 @@
 construct:
-  name: "ph_inducible_clostridium_cytotoxic_operon"
-  host: clostridium
+  name: "Clostridium_cytotoxic_operon_pH_regulated"
+  host: bacillus
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: chloramphenicol
+    ori: p15A
     source: addgene
+
   cassette:
-    - promoter: pH_inducible
+    - promoter: pH_inducible_acidic
+      # pH-responsive promoter active below pH 6.0; Clostridium-optimized variant
+      inducible: true
+      inducer: low_pH
+      threshold_pH: 6.0
+
     - cistron:
-        label: cyto1
+        label: Cyto1
         expression: medium
+        codon_optimization: Clostridium_AT_rich
         gene:
           id: Cyto1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cyto2
+        label: Cyto2
         expression: medium
         fused: false
+        codon_optimization: Clostridium_AT_rich
         gene:
           id: Cyto2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cyto3
+        label: Cyto3
         expression: medium
         fused: false
+        codon_optimization: Clostridium_AT_rich
         gene:
           id: Cyto3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cyto4
+        label: Cyto4
         expression: medium
         fused: false
+        codon_optimization: Clostridium_AT_rich
         gene:
           id: Cyto4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cyto5
+        label: Cyto5
         expression: medium
         fused: false
+        codon_optimization: Clostridium_AT_rich
         gene:
           id: Cyto5
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cyto6
+        label: Cyto6
         expression: medium
         fused: false
+        codon_optimization: Clostridium_AT_rich
         gene:
           id: Cyto6
           source: uniprot
+
     - terminator: rrnB_T1

@@ -1,42 +1,40 @@
-```yaml
 construct:
-  name: genetic_NAND_gate
-  host: e_coli
-  
+  name: "fluorescent_NAND_gate"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-  
+
   cassette:
-    - promoter: T7lac
-    
+    - promoter: araBAD
+
     - cistron:
-        label: repressor_X
+        label: input_X_repressor
         expression: medium
         gene:
-          id: P0451  # LacI repressor
+          id: tetR
           source: uniprot
-    
-    - spacer: 30
-    
+
+    - spacer: 25
+
     - cistron:
-        label: repressor_Y
+        label: input_Y_repressor
         expression: medium
-        fused: false
         gene:
-          id: P03023  # TetR repressor
+          id: cI
           source: uniprot
-    
-    - spacer: 30
-    
+
+    - spacer: 25
+
     - cistron:
-        label: fluorescent_output
+        label: reporter
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mGFP
+              source: fpbase
+
     - terminator: rrnB_T1
-```

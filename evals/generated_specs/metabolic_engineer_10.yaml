@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: aspergillus_pectin_degradation_pathway
-  host: aspergillus
+  name: "Aspergillus_niger_pectin_degradation_pathway"
+  host: aspergillus_niger
 
   backbone:
     resistance: hygromycin
@@ -9,94 +8,93 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: gpdA  # strong constitutive promoter from A. nidulans
+    - promoter: PgpdA  # Strong constitutive promoter for Aspergillus
 
     - cistron:
-        label: polygalacturonase
+        label: pectinase_1
         expression: high
         chain:
-          - secretion_signal: AmyA  # A. niger amylase signal peptide
+          - signal_peptide: alpha_factor_Aspergillus
           - gene:
-              id: P07528  # polygalacturonase
+              id: pectinase_A
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: eGFP
               source: fpbase
 
-    - spacer: 50
+    - spacer: 30
 
     - cistron:
-        label: pectate_lyase
-        expression: high
-        fused: false
-        chain:
-          - secretion_signal: AmyA
-          - gene:
-              id: P55327  # pectate lyase
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: mEGFP
-              source: fpbase
-
-    - spacer: 50
-
-    - cistron:
-        label: pectin_methylesterase
+        label: pectinase_2
         expression: high
         fused: false
         chain:
-          - secretion_signal: AmyA
+          - signal_peptide: alpha_factor_Aspergillus
           - gene:
-              id: P56216  # pectin methylesterase
+              id: pectinase_B
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: eGFP
               source: fpbase
 
-    - spacer: 50
+    - spacer: 30
 
     - cistron:
-        label: rhamnogalacturonan_lyase
+        label: pectinase_3
         expression: high
         fused: false
         chain:
-          - secretion_signal: AmyA
+          - signal_peptide: alpha_factor_Aspergillus
           - gene:
-              id: Q00023  # rhamnogalacturonan lyase
+              id: pectinase_C
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: eGFP
               source: fpbase
 
-    - spacer: 50
+    - spacer: 30
 
     - cistron:
-        label: exopolygalacturonase
+        label: pectinase_4
         expression: high
         fused: false
         chain:
-          - secretion_signal: AmyA
+          - signal_peptide: alpha_factor_Aspergillus
           - gene:
-              id: P26215  # exopolygalacturonase
+              id: pectinase_D
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: eGFP
               source: fpbase
 
-    - terminator: trpC
-```
+    - spacer: 30
+
+    - cistron:
+        label: pectinase_5
+        expression: high
+        fused: false
+        chain:
+          - signal_peptide: alpha_factor_Aspergillus
+          - gene:
+              id: pectinase_E
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: eGFP
+              source: fpbase
+
+    - terminator: Aspergillus_terminator

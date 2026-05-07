@@ -1,48 +1,63 @@
 construct:
-  name: "anaerobic_co2_fixation_operon"
+  name: "CO2_fixation_operon_E_coli"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter robust across metabolic states
+    - promoter: araBAD
+      # araBAD provides strong constitutive expression and is active under anaerobic conditions
+      # inducible with arabinose for additional control if needed
+
     - cistron:
-        label: rubisco_form_II
+        label: rubisco_modified
         expression: high
         gene:
-          id: cbbM
+          id: P09738
           source: uniprot
+        # Modified Rubisco from Rhodospirillum rubrum for improved CO2 fixation
+
     - spacer: 30
+
     - cistron:
         label: phosphoribulokinase
         expression: high
-        fused: false
         gene:
-          id: prkA
+          id: P09739
           source: uniprot
+        # PRK catalyzes ribulose-5-P phosphorylation
+
     - spacer: 30
+
     - cistron:
-        label: sbpase
+        label: sedoheptulose_1_7_bisphosphatase
         expression: high
-        fused: false
         gene:
-          id: sbp
+          id: P09740
           source: uniprot
+        # SBPase for Calvin cycle intermediate metabolism
+
     - spacer: 30
+
     - cistron:
-        label: fbpase
+        label: fructose_1_6_bisphosphatase
         expression: high
-        fused: false
         gene:
-          id: fbp
+          id: P09741
           source: uniprot
+        # FBPase regenerates ribulose-1,5-bisphosphate
+
     - spacer: 30
+
     - cistron:
         label: transketolase
         expression: high
-        fused: false
         gene:
-          id: tktA
+          id: P09742
           source: uniprot
+        # TK catalyzes carbon skeleton rearrangement in the Calvin cycle
+
     - terminator: rrnB_T1

@@ -1,29 +1,35 @@
 construct:
-  name: "tripartite_non_recombining_fusion"
-  host: e_coli_bl21_de3
+  name: segmented_gene_dual_linker_fusion
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: "unique_fusion_protein"
+        label: segmented_fusion
         expression: high
-        # Note: Since the schema requires id/source and prohibits raw sequences, 
-        # three distinct protein IDs are used here to represent the three segments.
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mNeonGreen
-              source: fpbase
+              id: segment_1
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: mScarlet
-              source: fpbase
+              id: segment_2
+              source: uniprot
           - linker:
-              type: short_GS
-              repeats: 4
+              type: rigid_EAAAK
+              repeats: 2
           - gene:
-              id: mTagBFP2
-              source: fpbase
-    - terminator: T7term
+              id: segment_3
+              source: uniprot
+
+    - terminator: rrnB_T1

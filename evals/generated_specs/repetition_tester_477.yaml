@@ -1,16 +1,42 @@
 construct:
-  name: "divergent_mammalian_hr_cassette"
+  name: "mammalian_HR_cassette_divergent"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: CMV  # Viral promoter used to minimize homology with endogenous mammalian sequences
+    # Left homology arm (800bp) - user-supplied genomic sequence
+    - homology_arm:
+        label: left_HR
+        length: 800
+        # Sequence to be provided by user (matches target locus)
+
+    # Promoter: using synthetic, non-mammalian promoter to avoid endogenous recombination
+    - promoter: J23100
+      # Rationale: BioBrick promoter; minimal homology to mammalian genome or standard vectors
+
+    # CDS with codon optimization for mammalian expression + synthetic UTRs
     - cistron:
-        label: divergent_reporter
+        label: selection_marker
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase  # Lancelet-derived fluorescent protein is maximally divergent from mammalian proteins
-    - terminator: bGH_polyA  # Bovine growth hormone poly-A signal used to avoid human genomic sequences
+        chain:
+          - gene:
+              id: hsvtk
+              source: uniprot
+              # Herpes simplex virus thymidine kinase: foreign origin minimizes HR risk
+
+    # Synthetic poly-A signal (non-standard sequence)
+    - poly_a_signal: synthetic_divergent
+      # Use non-canonical AAUAAA variant to reduce off-target recombination
+
+    # Right homology arm (800bp) - user-supplied genomic sequence
+    - homology_arm:
+        label: right_HR
+        length: 800
+        # Sequence to be provided by user (matches target locus)
+
+    # Minimal terminator from non-mammalian source
+    - terminator: rrnB_T1
+      # Rationale: bacterial terminator; no mammalian homology

@@ -1,18 +1,24 @@
 construct:
-  name: "HSA_Pichia_GAP_Expression"
+  name: "HSA_Pichia_mutS_optimized"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: HSA_secretion
+        label: HSA
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: P02768
+              id: HSA
               source: uniprot
+              codon_optimized: pichia_pastoris
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: CYC1

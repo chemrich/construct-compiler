@@ -1,14 +1,17 @@
 construct:
-  name: "scfv_pichia_aox1_secretion_construct"
+  name: "Pichia_scFv_AOX1_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: custom
+    resistance: zeocin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: scfv_target
+        label: scFv_secreted
         expression: high
         chain:
           - tag: synthetic_secretion_signal
@@ -17,4 +20,5 @@ construct:
               id: scFv
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

@@ -1,22 +1,62 @@
 construct:
-  name: "positive_feedback_amplifier"
+  name: "positive_feedback_amplifier_with_safeguard"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Plux  # This promoter is activated by the LuxR protein in the presence of AHL (the 'WEAK_INPUT' signal).
+    - promoter: araBAD
+      # araBAD is activated by arabinose (WEAK_INPUT); provides tunable baseline
+
     - cistron:
-        label: AMPLIFIED_OUT
-        expression: medium  # Medium expression level chosen to prevent uncontrolled metabolic runaway and maintain stability.
-        gene:
-          id: LuxR
-          source: uniprot
-    - spacer: 35
-    - cistron:
-        label: reporter
+        label: amplifier_protein
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: WEAK_INPUT_sensor
+              source: uniprot
+              # User must supply UniProt ID for input-sensing protein
+
+    - spacer: 25
+
+    - cistron:
+        label: amplified_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: AMPLIFIED_OUT
+              source: uniprot
+              # This protein both produces signal AND binds its own promoter (positive feedback)
+
+    - spacer: 25
+
+    - cistron:
+        label: negative_regulator
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: repressor_protein
+              source: uniprot
+              # Runaway prevention: repressor is constitutively expressed at lower level
+              # and is activated by high AMPLIFIED_OUT levels to provide negative feedback
+
+    - spacer: 25
+
+    - cistron:
+        label: activity_monitor
+        expression: low
         fused: false
         gene:
           id: mNeonGreen
           source: fpbase
-    - terminator: T7term
+          # Fluorescent reporter for system state visualization
+
+    - terminator: rrnB_T1

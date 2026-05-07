@@ -1,17 +1,42 @@
 construct:
-  name: "genetic_or_gate_ara_iptg"
-  host: e_coli
+  name: "OR_gate_genetic_circuit"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
-    - promoter: lacUV5
+
+    - cistron:
+        label: repressor_A
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_B
+        expression: medium
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: output_Z
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
     - terminator: rrnB_T1

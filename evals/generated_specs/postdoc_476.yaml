@@ -1,19 +1,25 @@
 construct:
-  name: "TestProtein_A_Shuttle_Vector"
-  host: yeast
+  name: "TestProtein_A_shuttle_vector"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+    # Note: This is a simplified E. coli-optimized backbone.
+    # For true S. cerevisiae shuttle capability, add a yeast origin (2μ or CEN/ARS) 
+    # and yeast selection marker (URA3, LEU2, or HIS3) in addition to bacterial elements.
+  
   cassette:
-    - promoter: T7lac # Dual-host expression: T7lac for E. coli BL21(DE3)
-    - promoter: GAL1  # Dual-host expression: GAL1 for S. cerevisiae
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: TestProtein_A
         expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: TestProtein_A
               source: uniprot
-    - terminator: CYC1 # Yeast terminator compatible with shuttle vector requirements
+    
+    - terminator: rrnB_T1

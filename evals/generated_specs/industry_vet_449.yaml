@@ -1,17 +1,29 @@
 construct:
-  name: viral_assembly_factor_tandem_purification
-  host: e_coli_bl21
+  name: viral_assembly_factor_dual_tag
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: assembly_factor
+        label: viral_assembly_factor
         expression: high
         chain:
           - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: TEV
+          - solubility_tag: MBP
           - gene:
               id: viral_assembly_factor
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

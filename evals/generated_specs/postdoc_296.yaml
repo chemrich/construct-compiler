@@ -1,15 +1,20 @@
 construct:
-  name: "protein_S_yeast_expression"
+  name: "S_cerevisiae_protein_S_expression"
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
     ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TEF1  # Standard constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
         label: protein_S
+        expression: medium
         gene:
-          id: P0DTC2  # SARS-CoV-2 Spike (Protein S), a well-known transmembrane protein
+          id: protein_S
           source: uniprot
-    - terminator: CYC1_term  # Standard yeast terminator
+
+    - terminator: CYC1

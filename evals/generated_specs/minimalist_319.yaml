@@ -1,20 +1,34 @@
 construct:
-  name: "bacterial_self_cleaving_x_y"
+  name: "protein_X_2A_protein_Y_bacterial"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: "cleavable_fusion"
+        label: protein_X
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: "protein_x"
+              id: protein_X
               source: uniprot
-          - linker:
-              type: P2A # Note: 2A self-cleaving peptides are primarily eukaryotic; in E. coli, polycistronic spacers are more efficient for dual expression.
+
+    - spacer: 30
+
+    - cistron:
+        label: protein_Y
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
           - gene:
-              id: "protein_y"
+              id: protein_Y
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

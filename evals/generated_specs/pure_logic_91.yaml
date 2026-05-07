@@ -1,14 +1,45 @@
 construct:
-  name: "yeast_xor_logic_gate_reporter"
+  name: "yeast_XOR_gate_fluorescent"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: "pXOR_A_B_synthetic" # Synthetic promoter integrated to activate only when (A OR B) and NOT (A AND B) are present
+    - promoter: GAL1
+
     - cistron:
-        label: "output_E"
+        label: input_A_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: GAL80
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: input_B_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: MIG1
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: XOR_output
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: "CYC1"
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1

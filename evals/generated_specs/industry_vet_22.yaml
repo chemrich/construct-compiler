@@ -1,10 +1,10 @@
-```yaml
 construct:
   name: yeast_secreted_protein_expression
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pBR322
     source: addgene
 
@@ -15,10 +15,9 @@ construct:
         label: secreted_target
         expression: high
         chain:
-          - tag: alpha_factor_signal  # yeast secretion signal
+          - signal_peptide: alpha_factor
           - gene:
-              id: P01308  # human insulin as example secreted protein
+              id: your_protein_id
               source: uniprot
 
-    - terminator: CYC1
-```
+    - terminator: CYC1_terminator

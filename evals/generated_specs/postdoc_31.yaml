@@ -1,25 +1,22 @@
 construct:
-  name: mammalian_protein_GST_fusion_yeast
+  name: "GST_fusion_insoluble_mammalian_protein_yeast"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: GAL1
 
     - cistron:
-        label: target
+        label: GST_fusion
         expression: high
         chain:
           - solubility_tag: GST
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: PRNP  # example mammalian protein - replace with actual target
+              id: insoluble_mammalian_protein
               source: uniprot
 
-    - terminator: CYC1
+    - terminator: T7term

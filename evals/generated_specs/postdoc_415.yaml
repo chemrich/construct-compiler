@@ -1,47 +1,55 @@
 construct:
-  name: yeast_four_subunit_complex_expression
+  name: "yeast_four_subunit_complex"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3 # Strong constitutive yeast promoter (GPD)
-    - cistron:
-        label: subunit_alpha
+    - promoter: GAL1
+      cistron:
+        label: subunit_A
         expression: high
-        fused: false
         gene:
-          id: subunit_alpha_placeholder
+          id: subunit_A
           source: uniprot
+
     - terminator: CYC1
 
-    - promoter: TEF1 # Strong constitutive yeast promoter
-    - cistron:
-        label: subunit_beta
-        expression: high
-        fused: false
-        gene:
-          id: subunit_beta_placeholder
-          source: uniprot
-    - terminator: ADH1
+    - spacer: 50
 
-    - promoter: PGK1 # Strong constitutive yeast promoter
-    - cistron:
-        label: subunit_gamma
+    - promoter: GAL1
+      cistron:
+        label: subunit_B
         expression: high
-        fused: false
         gene:
-          id: subunit_gamma_placeholder
+          id: subunit_B
           source: uniprot
-    - terminator: ENO1
 
-    - promoter: PYK1 # Strong constitutive yeast promoter
-    - cistron:
-        label: subunit_delta
+    - terminator: CYC1
+
+    - spacer: 50
+
+    - promoter: GAL1
+      cistron:
+        label: subunit_C
         expression: high
-        fused: false
         gene:
-          id: subunit_delta_placeholder
+          id: subunit_C
           source: uniprot
-    - terminator: TPI1
+
+    - terminator: CYC1
+
+    - spacer: 50
+
+    - promoter: GAL1
+      cistron:
+        label: subunit_D
+        expression: high
+        gene:
+          id: subunit_D
+          source: uniprot
+
+    - terminator: CYC1

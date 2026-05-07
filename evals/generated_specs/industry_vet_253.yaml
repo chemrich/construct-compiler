@@ -1,16 +1,20 @@
 construct:
-  name: "AAV_Rep52_40_Mammalian_Expression"
-  host: mammalian
+  name: AAV_Rep52_40_mammalian
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: SV40
+    - promoter: SV40  # SV40 early promoter for strong mammalian expression
+
     - cistron:
         label: Rep52_40
         expression: high
-        gene:
-          id: P03133
-          source: uniprot
-    - terminator: SV40_polyA
+        chain:
+          - gene:
+              id: P03135
+              source: uniprot  # AAV2 Rep52/40 (UniProt entry for AAV rep protein)
+
+    - terminator: SV40_polyA  # SV40 polyadenylation signal

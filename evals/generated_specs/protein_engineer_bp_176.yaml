@@ -1,18 +1,23 @@
 construct:
   name: "bacillus_chaperone_overexpression"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
         label: chaperone
         expression: high
         chain:
           - gene:
-              id: GroEL
+              id: groES
               source: uniprot
+          - cleavage_site: Thrombin
           - tag: HA
+
     - terminator: rrnB_T1

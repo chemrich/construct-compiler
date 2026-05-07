@@ -1,19 +1,25 @@
 construct:
-  name: yeast_secreted_cytokine_myc
+  name: secreted_cytokine_yeast_expression
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2µ
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: cytokine_expression
+        label: cytokine
         expression: high
         chain:
-          - tag: IgK_leader  # Mammalian signal peptide as requested; yeast alpha-factor is usually preferred for S. cerevisiae
+          - signal_peptide: alpha_factor  # yeast native signal peptide, not mammalian (mammalian peptides don't process correctly in yeast ER)
           - gene:
               id: IL2
               source: uniprot
+          - cleavage_site: 3C
           - tag: Myc
-    - terminator: CYC1_terminator
+
+    - terminator: CYC1

@@ -1,26 +1,66 @@
 construct:
-  name: "genetic_or_gate_ara_iptg"
-  host: e_coli
+  name: two_input_OR_gate
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Input A: Inducible by L-arabinose
+    - promoter: araBAD
+      label: Input_A_promoter
+    
     - cistron:
-        label: output_z_a
+        label: repressor_B
         expression: high
-        fused: false
         gene:
-          id: mEGFP
-          source: fpbase
+          id: tetR
+          source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: tac     # Input B: Inducible by IPTG
+    
+    - spacer: 30
+    
+    - promoter: T7lac
+      label: Input_B_promoter
+    
     - cistron:
-        label: output_z_b
+        label: repressor_A
+        expression: high
+        gene:
+          id: lacI
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: araBAD
+      label: OR_output_promoter_1
+    
+    - cistron:
+        label: Output_Z
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: T7lac
+      label: OR_output_promoter_2
+    
+    - cistron:
+        label: Output_Z_alt
         expression: high
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

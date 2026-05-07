@@ -1,18 +1,23 @@
 construct:
-  name: yeast_secreted_oph_bioremediation
+  name: "yeast_secreted_therapeutic_enzyme"
   host: yeast
+
   backbone:
-    resistance: URA3  # Nutritional marker used instead of antibiotic resistance for biosafety and environmental compliance
-    ori: 2_micron
+    resistance: none
+    ori: 2-micron
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: target_enzyme
+        label: secreted_enzyme
         expression: high
         chain:
-          - tag: alpha_factor  # Yeast alpha-mating factor secretion signal
+          - tag: signal_peptide_alpha_factor
           - gene:
-              id: P0A434
+              id: P69063
               source: uniprot
-    - terminator: CYC1
+          - tag: 6xHis
+
+    - terminator: CYC1_poly_A

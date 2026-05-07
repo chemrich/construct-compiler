@@ -1,20 +1,20 @@
-```yaml
 construct:
-  name: hepatocyte_luciferase_reporter
+  name: "hepatocyte_luciferase_reporter"
   host: HEK293
-
+  
   backbone:
     catalog_vector: "pTwist CMV"
-
+    resistance: ampicillin
+  
   cassette:
-    - promoter: hepatocyte_specific  # synthetic liver-specific promoter for hepatocyte targeting
-
+    - promoter: "hAlb"  # human Albumin promoter, hepatocyte-specific
+    
     - cistron:
-        label: reporter
+        label: luciferase
         expression: high
-        gene:
-          id: P08659  # Firefly luciferase
-          source: uniprot
-
-    - terminator: SV40_polyA  # SV40 polyadenylation signal
-```
+        chain:
+          - gene:
+              id: "Renilla_luciferase"
+              source: "uniprot"
+    
+    - terminator: "SV40_polyA"

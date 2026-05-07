@@ -1,39 +1,43 @@
 construct:
-  name: nand_gate_split_repressor_HTS
-  host: e_coli_bl21
+  name: "two_input_NAND_gate"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23106  # Constitutive output promoter; assumed to contain TetO operator sites for repression
+    - promoter: araBAD
+
     - cistron:
-        label: output_z
-        expression: high
+        label: repressor_CI
+        expression: medium
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - gene:
+              id: CI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_TetR
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_Z
+        expression: high
+        chain:
           - gene:
               id: mNeonGreen
               source: fpbase
+
     - terminator: rrnB_T1
-    - promoter: araBAD  # Input I1: Arabinose-inducible promoter
-    - cistron:
-        label: i1_split_tetr_n
-        expression: medium
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: T7term
-    - promoter: lacUV5  # Input I2: IPTG-inducible promoter
-    - cistron:
-        label: i2_split_tetr_c
-        expression: medium
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: BBa_B0015

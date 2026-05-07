@@ -1,24 +1,31 @@
 construct:
-  name: "non_viral_secreted_cytokine_cpp_fusion"
+  name: "secreted_cytokine_CPP_fusion"
   host: HEK293
+
   backbone:
-    resistance: none # Note: Vector designed for antibiotic-free selection (e.g., minicircle or nanoplasmid)
+    catalog_vector: "pTwist CMV"
     ori: pUC
-    source: custom
+    source: addgene
+    # No resistance marker for biosafety compliance
+
   cassette:
-    - promoter: EF1_alpha # Efficient non-viral mammalian promoter substituted for CMV
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: secreted_fusion
         expression: high
         chain:
-          - tag: IL2_Secretion_Signal # Directs protein to the secretory pathway
+          - signal_peptide: SP_IL2  # Signal peptide for ER-mediated secretion
           - gene:
-              id: IL2 # Human Interleukin-2 cytokine
+              id: "IL-2"
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: Antp # Penetratin cell-penetrating peptide derived from Antennapedia
+              id: "TAT_CPP"
               source: uniprot
-    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal (non-viral)
+
+    - polyadenylation_signal: SV40_pA
+
+    - terminator: rrnB_T1

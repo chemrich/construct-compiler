@@ -1,16 +1,23 @@
 construct:
-  name: yeast_constitutive_goi_expression
+  name: "yeast_GOI_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        gene:
-          id: GOI
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GOI
+              source: uniprot
+
+    - terminator: CYC1

@@ -1,20 +1,25 @@
 construct:
-  name: "chloroplast_metabolite_production"
-  host: algae  # Algae selected as the closest host for chloroplast-targeted/plastome engineering
+  name: "chloroplast_HighValueMetabolite_producer"
+  host: algae
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    resistance: spectinomycin
+    ori: plastid_homologous_recombination
+    source: synthetic
+
   cassette:
-    - promoter: psbA  # Standard photosynthesis-driven constitutive chloroplast promoter
+    - promoter: Prrn  # plastid ribosomal RNA promoter for high constitutive expression in chloroplasts
+
     - cistron:
-        label: enzyme_target
+        label: HighValueMetabolite
         expression: high
         chain:
-          - tag: Twin-Strep  # High-affinity purification tag effective in plant/algal systems
-          - cleavage_site: TEV
-          - solubility_tag: MBP
+          - tag: His6  # plant-compatible purification tag
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: HighValueMetabolite
               source: uniprot
-    - terminator: rrnB_T1  # Robust terminator for plastid expression systems
+
+    - terminator: rrnB_T1  # plastid-optimized terminator

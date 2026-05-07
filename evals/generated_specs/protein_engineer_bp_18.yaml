@@ -1,26 +1,24 @@
-```yaml
 construct:
-  name: "ubiquitin_kinase_stability_test"
+  name: "pichia_ubiquitin_kinase_ha"
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: GAP
 
     - cistron:
-        label: target_kinase
+        label: ubiquitin_kinase_ha
         expression: high
         chain:
           - tag: Ubiquitin
-          - cleavage_site: Ubp1  # deubiquitinase cleavage site
+          - cleavage_site: USP2
           - gene:
-              id: P06493  # CDK1 human kinase
+              id: S6K1
               source: uniprot
           - tag: HA
 
-    - terminator: CYC1
-```
+    - terminator: rrnB_T1

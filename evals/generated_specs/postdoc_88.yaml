@@ -1,17 +1,22 @@
 construct:
-  name: "NewEnzyme_Purification_High_Expression"
+  name: "NewEnzyme_Twin_Strep_TEV_His"
   host: e_coli_bl21_de3
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: target
+        label: NewEnzyme
         expression: high
         chain:
           - tag: Twin-Strep
           - cleavage_site: TEV
           - gene:
               id: NewEnzyme
+              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

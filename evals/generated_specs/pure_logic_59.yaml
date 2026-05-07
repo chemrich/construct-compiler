@@ -1,16 +1,26 @@
 construct:
-  name: "environmental_niche_self_destruct"
-  host: HEK293
+  name: "environmental_kill_switch_apoptosis"
+  host: mammalian
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV  # Represents the constitutive expression logic triggered by the niche-sensing circuit
+    - promoter: CMV
+
     - cistron:
         label: apoptosis_inducer
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: P55957  # Human BAX (Apoptosis regulator BAX)
+              id: BAX
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1
+
+  control_logic:
+    condition: "NOT nutrient_N AND stressor_S"
+    action: "constitutive_expression_of_BAX"
+    note: "Environmental niche absence triggers cell death. BAX with NLS ensures mitochondrial and nuclear apoptotic signaling. Integration with nutrient/stressor biosensors required via separate regulatory constructs."

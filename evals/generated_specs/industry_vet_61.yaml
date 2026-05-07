@@ -1,16 +1,22 @@
 construct:
-  name: "mammalian_CAG_strep_expression"
+  name: mammalian_protein_expression_AAV_style
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CAG
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: mCherry
+              id: EGFP
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: polyA_BGHpA

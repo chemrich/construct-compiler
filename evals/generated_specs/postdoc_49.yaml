@@ -1,10 +1,11 @@
-```yaml
 construct:
-  name: secreted_antibody_fragment_FLAG
+  name: "CHO_secreted_antibody_fragment_FLAG"
   host: CHO
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
 
   cassette:
     - promoter: CMV
@@ -13,11 +14,10 @@ construct:
         label: antibody_fragment
         expression: high
         chain:
-          - tag: signal_peptide  # CHO secretion signal
           - tag: FLAG
+          - secretion_signal: SP_Kozak  # mammalian secretion signal peptide
           - gene:
-              id: scFv_anti_CD20  # example single-chain variable fragment
+              id: Fab_fragment
               source: uniprot
 
     - terminator: rrnB_T1
-```

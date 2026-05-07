@@ -1,23 +1,32 @@
 construct:
-  name: "rfp_mcherry_coexpression"
-  host: e_coli
+  name: RFP_mCherry
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: rfp
-        expression: medium
-        gene:
-          id: mRFP1
-          source: fpbase
+        label: RFP
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: RFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: mcherry
-        expression: medium
+        label: mCherry
+        expression: high
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
     - terminator: rrnB_T1

@@ -1,18 +1,22 @@
 construct:
-  name: "toxic_protein_V_solubility_fusion"
-  host: e_coli_bl21_de3
+  name: "Protein_V_low_copy_inducible"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: p15A  # Selected low-copy origin to manage protein toxicity
+    ori: p15A
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: protein_V
         expression: low
         chain:
           - solubility_tag: Trx
           - gene:
               id: protein_V
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

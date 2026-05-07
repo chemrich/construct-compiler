@@ -1,28 +1,56 @@
 construct:
-  name: yeast_OR_gate_secretion_signalX_signalY
+  name: "yeast_OR_gate_therapeutic"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2micron
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GAL1  # Inducible by SignalX (Galactose); yeast-specific promoter substituted for schema examples
+    - promoter: GAL1
+      label: "SignalX_sensing"
+
     - cistron:
-        label: therapeutic_unit_x
+        label: "TranscriptionFactor_X"
+        expression: medium
+        chain:
+          - gene:
+              id: "GAL4_DBD"
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: GAL4
+      label: "SignalY_sensing"
+
+    - cistron:
+        label: "TranscriptionFactor_Y"
+        expression: medium
+        chain:
+          - gene:
+              id: "LexA_DBD"
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: GAL4_UAS_LexA_operator
+      label: "OR_output_promoter"
+
+    - cistron:
+        label: "therapeutic_output"
         expression: high
         chain:
-          - tag: alpha_factor  # Yeast secretion signal (MF-alpha1 leader)
+          - tag: "alpha_factor_signal"
+          - linker:
+              type: "GS_flexible"
+              repeats: 1
           - gene:
-              id: TherapeuticProtein
+              id: "TherapeuticProtein"
               source: uniprot
-    - terminator: CYC1_terminator
-    - promoter: CUP1  # Inducible by SignalY (Copper); minimal crosstalk with GAL pathway
-    - cistron:
-        label: therapeutic_unit_y
-        expression: high
-        chain:
-          - tag: alpha_factor
-          - gene:
-              id: TherapeuticProtein
-              source: uniprot
-    - terminator: ADH1_terminator
+
+    - terminator: rrnB_T1

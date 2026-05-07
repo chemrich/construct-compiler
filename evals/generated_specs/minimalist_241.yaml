@@ -1,16 +1,21 @@
 construct:
-  name: "his_gfp_fusion"
-  host: e_coli
+  name: "His_GFP_fusion"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: His_GFP
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

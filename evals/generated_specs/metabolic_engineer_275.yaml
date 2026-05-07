@@ -1,39 +1,51 @@
 construct:
-  name: "nadp_regeneration_operon"
-  host: e_coli_bl21
+  name: "NADPH_regeneration_operon"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: g6pd
+        label: G6PD
         expression: high
+        fused: false
         gene:
           id: zwf
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: 6pgd
+        label: 6PGD
         expression: high
         fused: false
         gene:
           id: gnd
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: malic_enzyme
         expression: high
         fused: false
         gene:
-          id: maeB
+          id: maeA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: transhydrogenase
         expression: high
         fused: false
         gene:
-          id: udhA
+          id: pntA
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

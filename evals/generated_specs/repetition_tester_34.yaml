@@ -1,32 +1,38 @@
-```yaml
 construct:
   name: divergent_two_enzyme_pathway
   host: e_coli_bl21
-  
+
   backbone:
-    catalog_vector: "pET-28b(+)"
-  
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
-    
+
     - cistron:
         label: EnzA
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0A6F5  # E. coli lacZ (beta-galactosidase) as EnzA
+              id: EnzA
+              sequence: MKTAYIAKQRQISFVKSHFSRQLEERLGLIEVQAPILSRVGDGTQDNLSGAEKAVQVKVKALPDAQFEVV
               source: uniprot
-    
-    - spacer: 127  # Odd number, highly divergent sequence to avoid palindromes
-    
+
+    - spacer: 47
+
     - cistron:
-        label: EnzB
+        label: linker_EnzB
         expression: high
-        fused: false  # Independent translation with separate RBS
-        gene:
-          id: P31677  # E. coli galK (galactokinase) as EnzB
-          source: uniprot
-    
-    - terminator: T7term
-```
+        fused: false
+        chain:
+          - tag: 8xHis
+          - cleavage_site: 3C
+          - gene:
+              id: EnzB
+              sequence: MVHLTPEEKS AVTALWGKVN VDEVGGEALG RLLVVYPWTQ RFFESFGDLS TPDAVMGNPK VKAHGKKVLG
+              source: uniprot
+
+    - terminator: rrnB_T1

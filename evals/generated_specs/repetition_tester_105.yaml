@@ -1,24 +1,53 @@
 construct:
-  name: "mammalian_triple_gRNA_array"
+  name: "CRISPR_Cas9_triple_gRNA_array_mammalian"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+      # Pol III promoter for robust, non-repetitive small RNA expression
+
     - cistron:
-        label: target_1
-        gene:
-          id: sgRNA_scaffold_variant_A
-    - spacer: 32 # Unique non-homologous spacer/linker 1
+        label: gRNA_1
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: "guide_RNA_target_gene_1"
+              source: custom
+              # 20bp spacer sequence + canonical SVN (GTTTAAGAGCTAAGCTGGAA) scaffold
+
+    - spacer: 75
+      # Non-homologous linker (tevopreQ1 aptamer derivative or synthetic GC-rich separator)
+      # Prevents recombination and ensures independent processing
+
     - cistron:
-        label: target_2
-        fused: false # Independent functional unit
-        gene:
-          id: sgRNA_scaffold_variant_B
-    - spacer: 45 # Unique non-homologous spacer/linker 2
+        label: gRNA_2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: "guide_RNA_target_gene_2"
+              source: custom
+              # 20bp spacer sequence + alternate SVN variant scaffold (GTTTAAGAGCTAAGCTGGAA with 2bp wobble at position 15-16)
+
+    - spacer: 75
+      # Distinct GC-rich synthetic linker (non-repetitive poly-T resistant)
+
     - cistron:
-        label: target_3
-        fused: false # Independent functional unit
-        gene:
-          id: sgRNA_scaffold_variant_C
-    - terminator: BBa_B0015 # Generic terminator for Pol III transcript termination
+        label: gRNA_3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: "guide_RNA_target_gene_3"
+              source: custom
+              # 20bp spacer sequence + canonical SVN scaffold
+
+    - terminator: "polyT_U6"
+      # Pol III termination (4x T)

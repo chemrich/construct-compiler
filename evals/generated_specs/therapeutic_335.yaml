@@ -1,16 +1,35 @@
 construct:
-  name: "probiotic_metabolite_biosensor_sfGFP"
+  name: "metabolite_biosensor_reporter_system"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Selected as a representative metabolite-responsive promoter
+    - promoter: araBAD
+    
+    - cistron:
+        label: biosensor_transcription_factor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: AraC
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: reporter
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        expression: high
+        fused: false
+        chain:
+          - promoter: araBAD
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1

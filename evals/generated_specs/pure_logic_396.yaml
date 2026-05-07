@@ -1,22 +1,64 @@
 construct:
-  name: "master_enable_gated_outputs"
-  host: e_coli_bl21_de3
+  name: conditional_activation_system_enable_gate
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac  # T7lac serves as the 'Enable' switch, requiring IPTG-induced T7 RNA Polymerase from the BL21(DE3) host
+    - promoter: T7lac
+
     - cistron:
-        label: output_X
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
+        label: Enable_regulator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: output_Y
+        label: Output_X_activator
         expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Output_Y_activator
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: malT
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Output_X_protein
+        expression: low
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: Output_Y_protein
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1

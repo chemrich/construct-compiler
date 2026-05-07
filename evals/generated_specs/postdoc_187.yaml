@@ -1,12 +1,16 @@
 construct:
-  name: "inducible_yeast_expression_awesomeprotein"
+  name: AwesomeYeastProtein_Myc_HA
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TRE  # Tet-Responsive Element for Dox-inducible expression in yeast
+    - promoter: tetO_TRP1
+      # Doxycycline-inducible promoter for S. cerevisiae with TRP1 marker
+
     - cistron:
         label: target
         expression: high
@@ -20,4 +24,5 @@ construct:
           - gene:
               id: AwesomeYeastProtein
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

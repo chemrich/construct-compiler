@@ -1,48 +1,58 @@
 construct:
-  name: "phycocyanin_lyase_operon_synechocystis"
-  host: algae  # Synechocystis PCC 6803 is a photosynthetic cyanobacterium, categorized under algae in this schema
+  name: "Synechocystis_phycobilin_assembly_system"
+  host: cyanobacteria
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: spectinomycin
+    ori: pSC101
     source: addgene
+
   cassette:
-    - promoter: psbA2  # Standard light-inducible promoter in Synechocystis PCC 6803
+    - promoter: Pcpc560  # Light-inducible promoter for cyanobacteria
+
     - cistron:
-        label: lyase_a
+        label: PhycocyaninLyaseA
         expression: medium
         chain:
-          - tag: Thylakoid_Signal
+          - tag: thylakoid_transit_peptide_A
           - gene:
               id: PhycocyaninLyaseA
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: lyase_b
+        label: PhycocyaninLyaseB
         expression: medium
         fused: false
         chain:
-          - tag: Thylakoid_Signal
+          - tag: thylakoid_transit_peptide_B
           - gene:
               id: PhycocyaninLyaseB
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: lyase_c
+        label: PhycocyaninLyaseC
         expression: medium
         fused: false
         chain:
-          - tag: Thylakoid_Signal
+          - tag: thylakoid_transit_peptide_C
           - gene:
               id: PhycocyaninLyaseC
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: lyase_d
+        label: PhycocyaninLyaseD
         expression: medium
         fused: false
         chain:
-          - tag: Thylakoid_Signal
+          - tag: thylakoid_transit_peptide_D
           - gene:
               id: PhycocyaninLyaseD
               source: uniprot
-    - terminator: rrnB_T1
+
+    - terminator: cyanobacterial_terminator

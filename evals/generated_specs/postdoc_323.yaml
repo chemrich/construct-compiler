@@ -1,19 +1,24 @@
 construct:
-  name: "GroEL_GroES_Coexpression"
-  host: e_coli_bl21
+  name: GroEL_GroES_dual_expression
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: GroEL
         expression: high
         chain:
           - tag: Twin-Strep
           - gene:
-              id: P0A6F5
+              id: groEL
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: GroES
         expression: high
@@ -21,6 +26,7 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A6F9
+              id: groES
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

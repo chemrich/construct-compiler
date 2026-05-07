@@ -1,23 +1,33 @@
 construct:
-  name: dual_iptg_inducible_genef_expression
-  host: e_coli_bl21_de3
+  name: "dual_inducible_GeneF_control"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
-        label: genef_copy_1
+        label: GeneF_1
         expression: high
         gene:
           id: GeneF
           source: uniprot
+
+    - terminator: rrnB_T1
+
     - spacer: 50
-    - promoter: tac
+
+    - promoter: araBp
+
     - cistron:
-        label: genef_copy_2
+        label: GeneF_2
         expression: high
-        fused: false
         gene:
           id: GeneF
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,20 +1,25 @@
 construct:
-  name: "Yeast_Secretion_Vaccine_Antigen_P0DTC2"
+  name: "yeast_viral_envelope_vaccine_antigen"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GAPDH
+    - promoter: GAL1
+
     - cistron:
         label: secreted_antigen
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: 6xHis
-          - cleavage_site: TEV
+          - cleavage_site: 3C
+          - secretion_tag: alpha_factor
           - gene:
               id: P0DTC2
               source: uniprot
+          - tag: Strep-II
+
     - terminator: CYC1

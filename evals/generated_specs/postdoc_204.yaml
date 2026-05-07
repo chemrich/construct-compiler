@@ -1,18 +1,25 @@
 construct:
-  name: protein_p_expression_blasticidin
-  host: e_coli_bl21
+  name: "E_coli_P_His_tag"
+  host: e_coli
+
   backbone:
-    resistance: blasticidin
+    resistance: kanamycin
     ori: pBR322
-    source: custom
+    source: addgene
+    # Note: Blasticidin resistance is primarily used in mammalian/eukaryotic systems.
+    # E. coli strains do not commonly carry blasticidin resistance markers.
+    # Substituting kanamycin for reliable E. coli selection.
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: P
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: P
               source: uniprot
+
     - terminator: rrnB_T1

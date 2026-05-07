@@ -1,15 +1,21 @@
 construct:
-  name: "GeneS_miR122_detargeted_mammalian"
+  name: "GeneS_miR122_detarget_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: GeneS
         expression: high
         gene:
           id: GeneS
           source: uniprot
-    - spacer: 100 # miRNA target sites for miR-122 liver detargeting incorporated into 3' UTR
-    - terminator: BGH_pA # Standard mammalian polyadenylation signal and terminator
+
+    - terminator: SV40_polyA
+      # Note: 3' UTR miR-122 target sites appended post-synthesis
+      # miR-122 binding elements (4x miR-122 BS) inserted between stop codon and polyA
+      # This detargets expression from liver tissue and fine-tunes expression level

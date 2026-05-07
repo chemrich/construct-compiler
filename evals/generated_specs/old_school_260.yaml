@@ -1,16 +1,21 @@
 construct:
-  name: "MyProtein_High_Expression_Vector"
-  host: e_coli
+  name: "MyProtein_expression_iptg_inducible"
+  host: e_coli_bl21
+  
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: MyProtein
         expression: high
-        gene:
-          id: MyProtein
-          source: uniprot
+        chain:
+          - gene:
+              id: MyProtein
+              source: uniprot
+    
     - terminator: rrnB_T1

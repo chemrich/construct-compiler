@@ -1,10 +1,13 @@
 construct:
-  name: "five_enzyme_operon_with_groel_chaperone"
+  name: "five_enzyme_pathway_E3_chaperone"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
         label: E1
         expression: high
@@ -13,7 +16,9 @@ construct:
           - gene:
               id: E1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: E2
         expression: high
@@ -21,23 +26,30 @@ construct:
         gene:
           id: E2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: E3
+        label: E3_with_chaperone
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: E3
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: GroEL
         expression: high
         fused: false
         gene:
-          id: E3
+          id: GroEL
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: GroEL
-        expression: medium
-        fused: false
-        gene:
-          id: P0A6F5
-          source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: E4
         expression: high
@@ -45,7 +57,9 @@ construct:
         gene:
           id: E4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: E5
         expression: high
@@ -55,4 +69,5 @@ construct:
           - gene:
               id: E5
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,17 +1,21 @@
 construct:
-  name: "MBP_fused_AAV_peptide"
+  name: MBP_peptide_linker_fusion
   host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: fusion_protein
+        label: fusion
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P03135 # UniProt ID for AAV2 VP1 capsid protein used as a representative AAV sequence
+              id: AAV_peptide
               source: uniprot
-    - terminator: T7term
+    - terminator: rrnB_T1

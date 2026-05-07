@@ -1,17 +1,22 @@
 construct:
-  name: "TrickyProtein_SUMO_Solubility_Optimization"
+  name: TrickyProtein_SUMO_His
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: target
+        label: TrickyProtein
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: SUMO
           - gene:
               id: TrickyProtein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

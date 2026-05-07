@@ -1,22 +1,21 @@
 construct:
-  name: secreted_peptidase_s
+  name: "ecoli_secreted_peptidase_S"
   host: e_coli
-  
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
-  
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
-    
+
     - cistron:
-        label: peptidase_s
+        label: secreted_peptidase_S
         expression: high
         chain:
-          - tag: pelB  # signal peptide for periplasmic export
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P00777  # example subtilisin/peptidase S
+              id: P07486
               source: uniprot
-    
+
     - terminator: rrnB_T1

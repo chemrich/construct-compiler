@@ -1,14 +1,22 @@
 construct:
-  name: "iptg_inducible_switch"
-  host: e_coli_bl21_de3
+  name: chemical_inducible_fluorescent_switch
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+      # araBAD promoter is repressed by AraC in absence of L-arabinose (OFF state)
+      # and activated in presence of L-arabinose (ON state)
+
     - cistron:
         label: reporter
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

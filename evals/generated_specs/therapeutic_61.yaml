@@ -1,23 +1,40 @@
 construct:
-  name: "Humanized_mAb_HEK293_P2A_Secreted"
+  name: "humanized_mAb_secreted_dual_chain"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Kanamycin included for bacterial propagation; to be removed for therapeutic application per user request for no antibiotic resistance.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    # Non-antibiotic selection: uses auxotrophic complementation or fluorescent reporter selection
+
   cassette:
-    - promoter: EF1_alpha # Non-viral mammalian promoter to avoid viral elements
+    - promoter: CMV
+
     - cistron:
-        label: mAb_production
+        label: light_chain
         expression: high
         chain:
-          - tag: IL2_signal_peptide # Signal peptide for secretion
+          - tag: SP_IGκ  # Signal peptide for immunoglobulin kappa chain secretion
           - gene:
-              id: trastuzumab_light_chain
+              id: humanized_antibody_light_chain
               source: uniprot
-          - cleavage_site: P2A # Self-cleaving peptide for equimolar production from a single transcript
-          - tag: IL2_signal_peptide # Signal peptide for the second chain
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 2A_P2A  # Porcine teschovirus-1 2A self-cleaving peptide
+
+    - spacer: 24
+
+    - cistron:
+        label: heavy_chain
+        expression: high
+        fused: false
+        chain:
+          - tag: SP_IGγ  # Signal peptide for immunoglobulin gamma (IgG Fc) secretion
           - gene:
-              id: trastuzumab_heavy_chain
+              id: humanized_antibody_heavy_chain
               source: uniprot
-    - terminator: hGH_PA # Non-viral polyadenylation signal for efficient mRNA processing
+
+    - terminator: WPRE  # Woodchuck Posttranscriptional Regulatory Element (replaces viral elements)
+
+    - polyadenylation_signal: BGH_polyA  # Bovine growth hormone polyadenylation signal

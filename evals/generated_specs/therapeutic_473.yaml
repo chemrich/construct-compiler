@@ -1,22 +1,27 @@
 construct:
-  name: "yeast_secretory_scaffold_production"
+  name: yeast_secreted_scaffold_protein
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2-micron
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: scaffold_secretion
+        label: scaffold
         expression: high
         chain:
-          - tag: Alpha_MF
+          - secretion_signal: alpha_factor
           - gene:
-              id: P41671
+              id: scaffold_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: 6xHis
-    - terminator: CYC1
+
+    - terminator: CYC1_poly_A

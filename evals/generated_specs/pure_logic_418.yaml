@@ -1,32 +1,98 @@
 construct:
-  name: genetic_toggle_memory_latch
+  name: "synthetic_memory_latch_sr_flipflop"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: P_LtetO-1  # TetR-repressed promoter; derepressed by SET pulse (aTc)
+    - promoter: araBAD
+      # araBAD is inducible; INPUT_SET (L-arabinose) activates this promoter
+    
     - cistron:
-        label: repressor_lacI
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 35
+        label: SET_input_sensor
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+              # AraC protein acts as transcriptional regulator for araBAD and araBAD2
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: lacUV5
+      # lacUV5 drives constitutive but moderate expression of the first repressor
+    
     - cistron:
-        label: state_output
+        label: repressor_A
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+              # TetR represses promoter_B; repressed by tetracycline analog
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: J23106
+      # J23106 is a constitutive BioBrick promoter
+    
+    - cistron:
+        label: OUTPUT_A
         expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+              # sfGFP serves as visual output when repressor_A is OFF
+    
     - terminator: rrnB_T1
-    - promoter: lacUV5  # LacI-repressed promoter; derepressed by RESET pulse (IPTG)
+    
+    - spacer: 30
+    
+    - promoter: trc
+      # trc promoter is repressed by TetR (repressor_A)
+    
     - cistron:
-        label: repressor_tetR
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: BBa_B0015
+        label: repressor_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+              # LacI represses promoter_A; repressed by IPTG (INPUT_RESET)
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: lacUV5
+      # lacUV5 drives expression when LacI is OFF
+    
+    - cistron:
+        label: OUTPUT_B
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+              # mCherry serves as visual output when repressor_B is OFF
+    
+    - terminator: rrnB_T1
+
+# DESIGN LOGIC:
+# - INPUT_SET (L-arabinose): induces araBAD → araC production → activates araBAD2 promoter (not shown but would drive high repressor_A)
+# - When repressor_A (TetR) is high: blocks trc promoter → repressor_B (LacI) is OFF → OUTPUT_B (mCherry) is ON
+# - INPUT_RESET (IPTG): represses lacUV5 → repressor_B (LacI) goes OFF → allows trc promoter → repressor_A (TetR) production increases
+# - When repressor_B (LacI) is high: blocks araBAD2 promoter → repressor_A (TetR) is OFF → OUTPUT_A (sfGFP) is ON
+# - The system forms a mutual repression toggle switch (SR latch) with bistable states

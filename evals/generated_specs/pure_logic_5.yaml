@@ -1,56 +1,53 @@
-```yaml
 construct:
-  name: repressilator_oscillator
-  host: e_coli
+  name: "Repressilator_oscillator_60min_ecoli"
+  host: e_coli_bl21
   
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
   
   cassette:
-    - promoter: lacI
+    - promoter: lacUV5
     
     - cistron:
         label: tetR_repressor
         expression: medium
-        gene:
-          id: P0040  # TetR repressor
-          source: biobrick
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
     
-    - spacer: 25
-    
-    - promoter: tetR
+    - spacer: 50
     
     - cistron:
         label: cI_repressor
         expression: medium
-        gene:
-          id: C0051  # CI repressor (lambda)
-          source: biobrick
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
     
-    - spacer: 25
-    
-    - promoter: cI
-    
-    - cistron:
-        label: lacI_repressor
-        expression: medium
-        gene:
-          id: C0012  # LacI repressor
-          source: biobrick
-    
-    - spacer: 30
+    - spacer: 50
     
     - cistron:
-        label: reporter
+        label: araC_repressor
         expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 50
+    
+    - cistron:
+        label: reporter_output
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
+              id: mNeonGreen
               source: fpbase
     
     - terminator: rrnB_T1
-```

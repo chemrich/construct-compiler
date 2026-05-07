@@ -1,34 +1,78 @@
 construct:
-  name: "multivalent_vaccine_polycistronic_system"
-  host: e_coli_bl21
+  name: "polyepitope_vaccine_immunogen"
+  host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: antigen_unit_1
+        label: epitope_1_TB
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P03468
+              id: TB_ESAT6_epitope
               source: uniprot
-    - spacer: 35
+
+    - spacer: 25
+
     - cistron:
-        label: antigen_unit_2
+        label: epitope_2_RSV
         expression: high
         fused: false
         chain:
-          - tag: Strep-II
-          - solubility_tag: SUMO
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P0DTC2
+              id: RSV_F_epitope
               source: uniprot
-    - terminator: T7term
+          - linker:
+              type: GS_flexible
+              repeats: 3
+
+    - spacer: 25
+
+    - cistron:
+        label: epitope_3_influenza
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: influenza_M2e_epitope
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+
+    - spacer: 25
+
+    - cistron:
+        label: epitope_4_coronavirus
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: SARS_CoV2_RBD_epitope
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+
+    - terminator: rrnB_T1

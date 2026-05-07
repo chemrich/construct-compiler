@@ -1,17 +1,20 @@
 construct:
-  name: "special_human_gene_mammalian_expression_vector"
-  host: mammalian
+  name: "mammalian_special_human_gene_expression"
+  host: HEK293
+
   backbone:
-    # User requested no bacterial parts; using SV40 origin for mammalian propagation and Neomycin for selection
     resistance: neomycin
     ori: SV40
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: special_human_gene
         expression: high
         gene:
-          id: Special_Human_Gene
+          id: special_human_gene
           source: uniprot
+
     - terminator: SV40_polyA

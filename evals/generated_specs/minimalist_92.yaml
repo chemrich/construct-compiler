@@ -1,22 +1,31 @@
 construct:
-  name: "mammalian_bicistronic_P_Q"
+  name: "bicistronic_P_Q_IRES_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: gene_P
-        expression: medium
+        expression: high
         gene:
           id: P
           source: uniprot
-    - spacer: 500  # IRES element for bicistronic expression
+
+    # IRES enables cap-independent translation of the downstream cistron in mammalian cells
+    - spacer: 50
+
     - cistron:
         label: gene_Q
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: Q
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

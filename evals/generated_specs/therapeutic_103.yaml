@@ -1,24 +1,35 @@
 construct:
-  name: "yeast_industrial_therapeutic_coexpression"
+  name: "yeast_dual_protein_bioproduction"
   host: yeast
+
   backbone:
-    resistance: URA3 # Non-antibiotic auxotrophic marker for industrial fermentation stability
-    ori: 2_micron
+    resistance: auxotrophic_marker  # URA3 or HIS3 for non-antibiotic selection
+    ori: 2_micron  # high-copy plasmid for yeast
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1  # Inducible, strong promoter for yeast
+
     - cistron:
-        label: protein_a
+        label: protein_A
         expression: high
-        gene:
-          id: PROTEIN_A
-          source: uniprot
-    - spacer: 50
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: protein_A
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: protein_b
+        label: protein_B
         expression: high
-        fused: false # Ensures independent translation of the second protein
-        gene:
-          id: PROTEIN_B
-          source: uniprot
-    - terminator: CYC1_term
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: protein_B
+              source: uniprot
+
+    - terminator: rrnB_T1

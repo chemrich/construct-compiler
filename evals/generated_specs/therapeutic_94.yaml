@@ -1,18 +1,40 @@
 construct:
-  name: "Human_CD19_CAR_T_NonViral"
-  host: mammalian
+  name: CAR_T_cell_expression_vector
+  host: HEK293
+
   backbone:
-    resistance: kanamycin # Required for bacterial amplification; selection-free systems are used for final clinical product.
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+    ori: null
+    resistance: null
+
   cassette:
-    - promoter: EF1_alpha # Strong non-viral constitutive promoter for T-cells
+    - promoter: EF1_alpha
+
     - cistron:
-        label: anti_CD19_CAR
+        label: CAR
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal peptide for surface expression
+          - tag: signal_peptide_CD8a
           - gene:
-              id: CD19_CAR_FMC63_41BB_CD3z # Synthetic fusion protein: scFv, CD8 hinge/TM, 4-1BB, CD3z
+              id: scFv_binding_domain
               source: uniprot
-    - terminator: bGH_pA # Polyadenylation signal essential for mammalian expression
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD8a_transmembrane
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD28_costimulatory_domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD3zeta_signaling_domain
+              source: uniprot
+
+    - terminator: WPRE_polyA

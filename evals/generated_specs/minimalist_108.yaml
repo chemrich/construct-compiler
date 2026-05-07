@@ -1,24 +1,31 @@
 construct:
-  name: yeast_mcherry_scaffold_expression
+  name: mCherry_ScaffoldProtein_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Common constitutive promoter for high expression in yeast
+    - promoter: GAL1
+
     - cistron:
-        label: reporter
+        label: mCherry
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: scaffold
-        expression: medium
-        fused: false  # Independent translation for the second protein
+        label: ScaffoldProtein
+        expression: high
+        fused: false
         gene:
           id: ScaffoldProtein
           source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

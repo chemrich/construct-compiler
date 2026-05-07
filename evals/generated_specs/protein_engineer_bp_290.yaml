@@ -1,29 +1,36 @@
 construct:
-  name: pichia_coexpression_kar2_cutinase
+  name: "Pichia_Kar2_Cutinase_coexpression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: chaperone
+        label: Kar2_chaperone
         expression: high
         chain:
           - tag: alpha_factor
           - gene:
-              id: P09121
+              id: Kar2
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1
+
     - promoter: TEF1
+
     - cistron:
-        label: target
+        label: cutinase
         expression: high
         chain:
           - tag: alpha_factor
           - gene:
-              id: P00590
+              id: cutinase
               source: uniprot
           - tag: 6xHis
-    - terminator: CYC1_TT
+
+    - terminator: CYC1

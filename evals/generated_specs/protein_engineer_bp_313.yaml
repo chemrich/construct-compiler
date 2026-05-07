@@ -1,19 +1,24 @@
 construct:
-  name: "pichia_methanol_free_cutinase_secretion"
+  name: "Pichia_UPIC_cutinase"
   host: yeast
+
   backbone:
     resistance: zeocin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: UPIC
+
     - cistron:
-        label: cutinase_secretion
+        label: cutinase
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: 6xHis
           - cleavage_site: Factor_Xa
+          - signal_peptide: alpha_factor
           - gene:
               id: cutinase
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1

@@ -1,17 +1,23 @@
 construct:
-  name: "ProteinP_mammalian_expression"
+  name: "ProteinP_Flag_His"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
-      cistron:
-        label: ProteinP_fusion
+
+    - cistron:
+        label: ProteinP
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: ProteinP
               source: uniprot
-          - tag: 6xHis
-      terminator: bGH_polyA
+              codon_optimize: true
+          - tag: 8xHis
+
+    - terminator: rrnB_T1

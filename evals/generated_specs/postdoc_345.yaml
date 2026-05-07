@@ -1,18 +1,21 @@
 construct:
-  name: "MyProtein_mEGFP_C_terminal_His_fusion"
-  host: e_coli_bl21
+  name: MyProtein_GFP_fusion
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: MyProtein
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
@@ -20,4 +23,5 @@ construct:
               id: mEGFP
               source: fpbase
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

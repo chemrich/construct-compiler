@@ -1,20 +1,21 @@
 construct:
-  name: "mammalian_promoter_characterization_mcherry"
+  name: mammalian_tissue_specific_promoter_test
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV
+    - promoter: custom_tissue_specific
+      # User can replace this with their specific promoter sequence/name
+
     - cistron:
-        label: reporter_purification
+        label: reporter
         expression: high
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - tag: FLAG
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: SV40_polyA

@@ -1,21 +1,63 @@
 construct:
-  name: "toxin_t_responsive_bioremediation_loop"
+  name: "self_regulating_bioremediation_toxin_T"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Responsive promoter acting as the Toxin_T sensor; induction ceases upon toxin degradation
-      cistron:
-        label: enzyme_effector
+    - promoter: araBAD
+      # araBAD is inducible by L-arabinose; will be repressed by AraC when toxin is degraded
+
+    - cistron:
+        label: sensor_regulator
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+              # araC acts as both sensor and repressor in feedback loop
+
+    - spacer: 25
+
+    - cistron:
+        label: toxin_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: toxT_sensor
+              source: uniprot
+              # Hypothetical toxin T-binding protein that sequesters AraC when toxin present
+
+    - spacer: 25
+
+    - promoter: araBAD
+      # Second araBAD promoter for the degrading enzyme
+
+    - cistron:
+        label: degrading_enzyme
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: DegradingEnzyme_E
               source: uniprot
-      terminator: rrnB_T1
+              # Produces enzyme when toxin-toxT_sensor complex is present
+              # araC repression is relieved while toxin levels are high
+
+    - spacer: 25
+
+    - cistron:
+        label: feedback_repressor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+              # lacI expression increases as toxin degrades
+              # lacI then represses DegradingEnzyme_E when toxin is cleared
+
+    - terminator: rrnB_T1

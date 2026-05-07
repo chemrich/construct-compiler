@@ -1,16 +1,21 @@
 construct:
-  name: "High_Yield_Constitutive_AMP_Expression"
-  host: e_coli
+  name: "Antimicrobial_Peptide_high_expression"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100  # Strongest constitutive Anderson promoter for maximum expression
+    - promoter: T7
+
     - cistron:
-        label: amp_target
+        label: AMP
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: Antimicrobial_Peptide
               source: uniprot
+
     - terminator: rrnB_T1

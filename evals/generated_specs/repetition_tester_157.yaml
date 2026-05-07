@@ -1,22 +1,35 @@
 construct:
-  name: "dual_locus_diverse_sgRNA_HEK293"
+  name: "dual_sgRNA_CRISPR_mammalian"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    # pX330 is a standard mammalian CRISPR/Cas9 delivery vector
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: locus1_sgRNA
+        label: sgRNA_Locus1
         expression: high
         gene:
-          id: sgRNA_Locus1_Scaffold_V1
-    - terminator: BBa_B0015
-    - spacer: 50
-    - promoter: H1 # H1 used instead of a second U6 to provide promoter diversity and avoid repetitive sequences
+          id: sgRNA_Locus1_scaffold_variant_A
+          # Custom sgRNA targeting Locus1 with scaffold variant A
+          # Variant A uses codon-optimized scaffold maintaining secondary structure
+          source: custom
+
+    - spacer: 30
+
+    - promoter: U6
+
     - cistron:
-        label: locus2_sgRNA
+        label: sgRNA_Locus2
         expression: high
-        fused: false
         gene:
-          id: sgRNA_Locus2_Scaffold_V2 # Sequence-diverse scaffold variant to prevent DNA recombination
+          id: sgRNA_Locus2_scaffold_variant_B
+          # Custom sgRNA targeting Locus2 with scaffold variant B
+          # Variant B uses alternative codon usage and wobble positions
+          # maintaining critical stem-loop and tetraloop while diverging at silent sites
+          source: custom
+
     - terminator: BBa_B0015

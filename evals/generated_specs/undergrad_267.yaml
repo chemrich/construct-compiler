@@ -1,13 +1,22 @@
 construct:
-  name: "gRNA_GeneX_expression_human"
+  name: gRNA_GeneX_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: GeneX_gRNA
+        label: gRNA_GeneX
         expression: high
-        gene:
-          id: GeneX_gRNA_scaffold
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: gRNA_GeneX
+              sequence: "GCTAGCTAGCTAGCTAGCTA"
+
+    - terminator: U6_term

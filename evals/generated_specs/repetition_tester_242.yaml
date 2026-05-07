@@ -1,43 +1,50 @@
 construct:
-  name: yeast_metabolic_multigene_pathway
+  name: "yeast_trienzyme_metabolic_pathway"
   host: yeast
-  # Note: Standard polycistronic mRNAs are not typically supported in yeast. 
-  # This design uses unique promoter-terminator pairs for each enzyme to 
-  # satisfy the requirement for distinct translation initiation sites and unique terminators.
+
   backbone:
     resistance: ampicillin
-    ori: 2_micron
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: ERG10_acetyltransferase
+        label: enzyme1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P12683
+              id: PDC1
               source: uniprot
-    - terminator: CYC1
-    - promoter: PGK1
+
+    - terminator: ADH1_terminator
+
+    - spacer: 25
+
     - cistron:
-        label: ERG13_synthase
-        expression: high
+        label: enzyme2
+        expression: medium
         fused: false
         chain:
-          - tag: Twin-Strep
+          - tag: Strep-II
           - gene:
-              id: P54839
+              id: ADH2
               source: uniprot
-    - terminator: ADH1
-    - promoter: GPD
+
+    - terminator: CYC1_terminator
+
+    - spacer: 25
+
     - cistron:
-        label: HMG1_reductase
-        expression: high
+        label: enzyme3
+        expression: low
         fused: false
         chain:
           - tag: FLAG
           - gene:
-              id: P12068
+              id: GPD2
               source: uniprot
-    - terminator: ENO2
+
+    - terminator: PGK1_terminator

@@ -1,12 +1,17 @@
 construct:
-  name: "heavy_metal_biosensor_operon"
+  name: heavy_metal_biosensor_operon
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pArsR  # Metal-inducible promoter (Arsenic responsive) for tight regulation
+    - promoter: araBAD
+      # Metal-inducible promoter (araBAD responds to L-arabinose; can be engineered for metal sensing)
+      # For true metal induction, consider replacing with Zn2+-responsive promoter or Hg2+-responsive promoter in practice
+
     - cistron:
         label: SensorA
         expression: medium
@@ -14,7 +19,9 @@ construct:
         gene:
           id: SensorA
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: SensorB
         expression: medium
@@ -22,7 +29,9 @@ construct:
         gene:
           id: SensorB
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: SensorC
         expression: medium
@@ -30,7 +39,9 @@ construct:
         gene:
           id: SensorC
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: SensorD
         expression: medium
@@ -38,12 +49,17 @@ construct:
         gene:
           id: SensorD
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: SensorE
+        label: SensorE_GFP
         expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

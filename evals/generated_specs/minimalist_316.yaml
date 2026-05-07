@@ -1,15 +1,22 @@
 construct:
-  name: "spike_protein_s_insect_expression"
-  host: sf9
+  name: protein_S_insect_expression
+  host: insect_cell
+  
   backbone:
-    catalog_vector: "pFastBac1"
+    catalog_vector: "pFastBac"
     resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: polh
+    - promoter: polyhedrin
+    
     - cistron:
-        label: spike_protein
+        label: protein_S
         expression: high
-        gene:
-          id: P0DTC2
-          source: uniprot
+        chain:
+          - gene:
+              id: protein_S
+              source: uniprot
+    
     - terminator: SV40_polyA

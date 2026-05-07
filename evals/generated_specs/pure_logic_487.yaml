@@ -1,16 +1,36 @@
 construct:
-  name: "metabolite_m_threshold_detector"
-  host: e_coli
+  name: metaboliteM_threshold_detector
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Responsive to metabolite induction; selected to represent MetaboliteM sensing
+    - promoter: araBAD
+
     - cistron:
-        label: reporter_yellow
+        label: sensor
         expression: high
-        gene:
-          id: mVenus
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PsrA
+              source: uniprot
+        # PsrA is a metabolite-sensing transcriptional regulator with sharp threshold behavior
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+        # Repressed by PsrA below threshold; derepressed above threshold
+
+    - cistron:
+        label: reporter
+        expression: high
+        chain:
+          - gene:
+              id: mVenus
+              source: fpbase
+
     - terminator: rrnB_T1

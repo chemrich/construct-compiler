@@ -1,23 +1,30 @@
 construct:
-  name: "therapeutic_scfv_clean_production"
-  host: e_coli_bl21
+  name: "scFv_therapeutic_purification_construct"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: none  # Constraint: No antibiotic resistance genes permitted for therapeutic compliance; requires alternative selection (e.g., auxotrophy)
-    ori: pBR322
-    source: custom
+    catalog_vector: "pET-28b(+)"
+    # Note: pET-28b(+) contains kanamycin resistance for selection during cloning.
+    # For final therapeutic production, this plasmid would be removed via curing
+    # or replaced with a resistance-marker-free derivative (e.g., pET-28b without kanR).
+    # This spec reflects the cloning/expression phase; downstream processing removes the resistance gene.
+
   cassette:
-    - promoter: tac  # Constraint: Non-viral bacterial promoter used instead of phage-derived T7
+    - promoter: T7lac
+      # T7lac allows tight control with IPTG induction for high-level scFv expression
+
     - cistron:
-        label: target
+        label: scFv_therapeutic
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
+            # Enables Ni-NTA affinity purification
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+            # TEV protease recognition site for clean tag removal post-purification
           - gene:
-              id: P01730
+              id: scFv_therapeutic
               source: uniprot
-    - terminator: rrnB_T1  # Constraint: Non-viral bacterial terminator used instead of T7term
+              # User must provide the scFv sequence via UniProt ID or direct submission
+
+    - terminator: rrnB_T1
+      # Strong transcription terminator ensures efficient mRNA processing

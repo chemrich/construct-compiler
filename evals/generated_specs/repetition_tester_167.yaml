@@ -1,31 +1,36 @@
 construct:
-  name: "SensorProtein_Modular_Insect"
-  host: mammalian # Substitution: 'mammalian' used as 'insect' is not in the supported host list; CMV and mammalian components typically function in insect cell lines like Sf9.
+  name: SensorProtein_insect_cells
+  host: insect
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: modular_sensor_fusion
+        label: SensorProtein
         expression: high
         chain:
+          - tag: signal_peptide_insect
           - gene:
-              id: P01588 # SignalPeptide (IL-2 leader)
-              source: uniprot
-          - gene:
-              id: P01732 # BindingDomain (CD8 alpha extracellular domain)
-              source: uniprot
+              id: BindingDomain
+              source: custom
           - linker:
-              type: GS_flexible # FlexibleLinker1
+              type: GS_flexible
               repeats: 3
+              label: FlexibleLinker1
           - gene:
-              id: P10912 # TransmembraneDomain (Growth Hormone Receptor TM)
-              source: uniprot
+              id: TransmembraneDomain
+              source: custom
           - linker:
-              type: short_GS # FlexibleLinker2 (Unique DNA sequence)
-              repeats: 2
+              type: GS_flexible
+              repeats: 3
+              label: FlexibleLinker2
           - gene:
-              id: mEGFP # IntracellularReporterDomain
-              source: fpbase
-    - terminator: BBa_B0015
+              id: IntracellularReporterDomain
+              source: custom
+
+    - terminator: rrnB_T1

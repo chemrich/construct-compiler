@@ -1,18 +1,29 @@
 construct:
-  name: "TherapeuticProteinR_PEST_Expression_Vector"
+  name: "mammalian_TherapeuticProteinR_degron"
   host: HEK293
+
   backbone:
-    resistance: none  # User requested no antibiotic markers for transient use
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    # Note: pTwist CMV is a mammalian expression vector without antibiotic markers,
+    # suitable for transient transfection
+
   cassette:
-    - promoter: NFkB  # Conditional non-viral promoter responding to cellular signaling
+    - promoter: CMV
+      # CMV is a strong constitutive mammalian promoter; for conditional expression,
+      # consider adding doxycycline-responsive elements or replacing with Tet-On promoter if needed
+
     - cistron:
-        label: target
+        label: TherapeuticProteinR
         expression: high
         chain:
+          - tag: FLAG
+          - cleavage_site: 3C
           - gene:
               id: TherapeuticProteinR
               source: uniprot
-          - tag: PEST  # C-terminal mammalian degradation tag
-    - terminator: bGH_pA
+          - tag: PEST
+            # PEST sequence (Pro-Glu-Ser-Thr rich) targets protein for rapid proteasomal degradation
+            # upon cellular signal (e.g., calcium influx, stress pathways)
+
+    - terminator: rrnB_T1

@@ -1,19 +1,27 @@
 construct:
-  name: "proteinK_MBP_C_terminal_fusion"
+  name: proteinK_MBP_fusion
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
-        label: target
+        label: proteinK_MBP
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: Enterokinase
           - gene:
               id: proteinK
               source: uniprot
-          - cleavage_site: Enterokinase
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - solubility_tag: MBP
+    
     - terminator: rrnB_T1

@@ -1,48 +1,58 @@
 construct:
-  name: "PHA_production_operon"
+  name: "E_coli_PHA_operon_high_yield"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: phaA_thiolase
+        label: beta_ketothiolase
         expression: high
         gene:
-          id: P14611
+          id: fadA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: phaB_reductase
+        label: acetoacetyl_CoA_reductase
         expression: high
-        fused: false
         gene:
-          id: P14697
+          id: atoB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: phaC_synthase
+        label: precursor_enzyme_1
         expression: high
-        fused: false
+        gene:
+          id: eutE
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: precursor_enzyme_2
+        expression: high
+        gene:
+          id: paaI
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: PHA_synthase
+        expression: high
         chain:
           - gene:
-              id: P11762
+              id: phaCAb
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
-    - cistron:
-        label: phaJ_hydratase
-        expression: high
-        fused: false
-        gene:
-          id: Q51373
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: bktB_thiolase
-        expression: high
-        fused: false
-        gene:
-          id: P14612
-          source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

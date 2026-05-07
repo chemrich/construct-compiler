@@ -1,30 +1,41 @@
 construct:
-  name: "HEK293_TargetGene_mEGFP_Blasticidin"
+  name: "HEK293_TargetGene_GFP_BlasticidinR"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: blasticidin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         gene:
           id: TargetGene
           source: uniprot
-    - terminator: bGH_pA
-    - promoter: CMV
+
+    - terminator: SV40pA
+
+    - promoter: EF1_alpha
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: GFP
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: SV40_pA
+
+    - terminator: SV40pA
+
     - promoter: SV40
+
     - cistron:
-        label: selection
-        expression: low
+        label: BlasticidinR
+        expression: high
         gene:
-          id: bsr
+          id: BSD
           source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: SV40pA

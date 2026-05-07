@@ -1,22 +1,37 @@
 construct:
-  name: "genes_dual_kozak_stability"
+  name: GeneS_dual_UTR_dual_Kozak_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_genes
-        expression: high # Utilizes first unique Kozak sequence variant
-        gene:
-          id: GeneS
-          source: uniprot
-    - spacer: 60 # Acts as the first non-homologous 3' UTR stability element
+        label: GeneS_variant1
+        expression: high
+        chain:
+          - gene:
+              id: GeneS
+              source: uniprot
+        kozak_variant: gccrccATG  # Strong Kozak (GCC instead of GCC consensus)
+        utr_3p:
+          - type: ARE_AU_rich
+            variant: class_I_canonical
+
+    - spacer: 30
+
     - cistron:
-        label: reporter
-        expression: medium # Utilizes second, non-homologous Kozak sequence
-        fused: false # Required for independent translation initiation
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: bGH_polyA # Acts as the second non-homologous 3' UTR stability element/terminator
+        label: GeneS_variant2
+        expression: medium
+        chain:
+          - gene:
+              id: GeneS
+              source: uniprot
+        kozak_variant: GCCRCCATG  # Alternative strong Kozak (uppercase variant)
+        utr_3p:
+          - type: polyA_signal
+            variant: AATAAA_downstream_element
+
+    - terminator: polyA_signal

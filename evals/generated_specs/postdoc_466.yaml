@@ -1,16 +1,20 @@
 construct:
-  name: "FoldingChallengingProtein_Periplasmic"
-  host: e_coli_bl21_de3
+  name: FoldingChallengingProtein_periplasmic_expression
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: PelB # Substituted mammalian signal with bacterial PelB; mammalian secretory signals are generally not recognized by E. coli translocation machinery.
           - tag: 6xHis
           - gene:
               id: FoldingChallengingProtein
-    - terminator: T7term
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,16 +1,24 @@
 construct:
-  name: "u6_rna_aptamer_expression_hek293"
+  name: "intracellular_RNA_aptamer_expression"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: rna_aptamer
+        label: RNA_aptamer
         expression: high
-        gene:
-          id: Spinach2
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: RNA_aptamer_scaffold
+              source: uniprot
+              # Note: This represents a generic aptamer expression unit
+              # User should specify the actual aptamer sequence or ID
+
+    - terminator: rrnB_T1

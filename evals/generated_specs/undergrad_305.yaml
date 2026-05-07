@@ -1,22 +1,30 @@
 construct:
-  name: mammalian_dual_color_skip_2A
+  name: dual_fluorophore_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: green_reporter
+        label: green
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 66  # 22aa P2A self-cleaving "skip" sequence
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    # 2A peptide enables stoichiometric production of two separate proteins from one promoter
+    - spacer: 18  # 2A peptide sequence (GSGATNFSLLKQAGDVEENPFT)
+
     - cistron:
-        label: red_reporter
+        label: red
         expression: high
         fused: false
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

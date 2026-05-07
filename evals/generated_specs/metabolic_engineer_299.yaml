@@ -1,13 +1,17 @@
 construct:
-  name: anaerobic_pathway_operon
+  name: "anaerobic_pathway_operon"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: narG  # Strong anaerobic promoter in E. coli (nitrate reductase promoter)
+    - promoter: fnr  # Fumarate and Nitrate Reduction regulator - strong anaerobic promoter
+    
     - cistron:
-        label: ana1_2_fusion
+        label: ana1_ana2_fusion
         expression: high
         chain:
           - gene:
@@ -15,22 +19,26 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
               id: ana2
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: ana3
         expression: high
-        fused: false  # Independent translation with its own RBS
+        fused: false
         chain:
           - gene:
               id: ana3
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: ana4
         expression: high
@@ -40,7 +48,9 @@ construct:
               id: ana4
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: ana5
         expression: high
@@ -50,4 +60,5 @@ construct:
               id: ana5
               source: uniprot
           - tag: 6xHis
+    
     - terminator: rrnB_T1

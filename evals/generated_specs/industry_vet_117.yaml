@@ -1,21 +1,27 @@
 construct:
-  name: "TMP_AAV_Rep_Fusion_Design"
+  name: "E_coli_TMP_SUMO_His_expression"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: tmp_domain
+        label: TMP_construct
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: SUMO
           - cleavage_site: TEV
+          - solubility_tag: SUMO
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P03132
+              id: transmembrane_protein_domain
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

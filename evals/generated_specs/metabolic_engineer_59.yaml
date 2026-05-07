@@ -1,64 +1,71 @@
 construct:
-  name: "algae_lipid_pathway_ecoli_proxy"
+  name: algae_lipid_synthesis_pathway_ecoli
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive promoter for E. coli
+    - promoter: araBAD
+
     - cistron:
         label: ACP
-        expression: medium
-        fused: false
+        expression: high
         chain:
-          - solubility_tag: MBP # Simulated chloroplast targeting/solubility tag
+          - tag: NLS
           - gene:
-              id: P12711
+              id: ACP
               source: uniprot
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: KAS
-        expression: medium
-        fused: false
+        expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: NLS
           - gene:
-              id: Q42557
+              id: KAS
               source: uniprot
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: KAR
-        expression: medium
-        fused: false
+        expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: NLS
           - gene:
-              id: Q42553
+              id: KAR
               source: uniprot
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: DH
-        expression: medium
-        fused: false
+        expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: NLS
           - gene:
-              id: Q9ZP20
+              id: DH
               source: uniprot
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ER
-        expression: medium
-        fused: false
+        expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: NLS
           - gene:
-              id: Q42550
+              id: ER
               source: uniprot
           - tag: Strep-II
+
     - terminator: rrnB_T1

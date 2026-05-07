@@ -1,19 +1,23 @@
 construct:
-  name: "yeast_metabolic_enzyme_production_ADH1"
+  name: metabolic_enzyme_yeast
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: metabolic_enzyme
+        label: enzyme
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P00330
+              id: ADH1
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

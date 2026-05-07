@@ -1,16 +1,24 @@
 construct:
-  name: "human_insulin_yeast_expression"
+  name: human_insulin_yeast
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Selected TEF1 as a standard constitutive yeast promoter
+    - promoter: AOX1
+
     - cistron:
-        label: human_insulin
+        label: insulin
         expression: high
-        gene:
-          id: P01308
-          source: uniprot
-    - terminator: CYC1_term  # Standard yeast terminator
+        chain:
+          - tag: 6xHis
+          - secretion_signal: alpha_factor
+          - gene:
+              id: P01308
+              source: uniprot
+
+    - terminator: rrnB_T1

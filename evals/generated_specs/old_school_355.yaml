@@ -1,15 +1,21 @@
 construct:
-  name: "SuperProtein_Max_Expression"
+  name: "SuperProtein_T7_maximal_expression"
   host: e_coli_bl21_de3
+  
   backbone:
     resistance: chloramphenicol
-    ori: pUC
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: target
+        label: SuperProtein
         expression: high
-        gene:
-          id: SuperProtein
-          source: uniprot
+        chain:
+          - gene:
+              id: SuperProtein
+              source: uniprot
+    
     - terminator: T7term

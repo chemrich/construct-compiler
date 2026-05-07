@@ -1,19 +1,23 @@
 construct:
-  name: "secretory_cutinase_bacillus"
+  name: "bacillus_secretory_cutinase_10xhis"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: sacB
-      cistron:
-        label: target
+
+    - cistron:
+        label: secretory_cutinase
         expression: high
         chain:
-          - tag: SacB_signal
+          - signal_peptide: AmyE
           - gene:
-              id: P00590
+              id: cutinase
               source: uniprot
           - tag: 10xHis
-      terminator: BBa_B0015
+
+    - terminator: rrnB_T1

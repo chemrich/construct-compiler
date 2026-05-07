@@ -1,16 +1,20 @@
 construct:
-  name: yeast_robust_ptm_study_expression
+  name: "yeast_constitutive_protein_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD  # Strong constitutive yeast promoter (TDH3)
+    - promoter: GAL1
+
     - cistron:
-        label: ptm_target
+        label: target
         expression: high
         gene:
-          id: mCherry
-          source: fpbase
-    - terminator: CYC1 # Standard yeast terminator
+          id: YFG1
+          source: uniprot
+
+    - terminator: CYC1

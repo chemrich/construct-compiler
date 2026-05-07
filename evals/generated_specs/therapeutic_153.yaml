@@ -1,16 +1,23 @@
 construct:
-  name: "yeast_industrial_human_enzyme_cytosolic"
+  name: "yeast_human_enzyme_cytosolic"
   host: yeast
+
   backbone:
-    resistance: none # Using URA3 auxotrophic marker instead of antibiotic resistance for bioprocessing safety
-    ori: 2micron
+    resistance: null
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: human_gapdh_enzyme
+        label: human_enzyme
         expression: high
-        gene:
-          id: P04406
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: uniprot_placeholder
+              source: uniprot
+
     - terminator: CYC1

@@ -1,14 +1,31 @@
 construct:
-  name: "AAV_LiverSpecific_FIX_Therapy"
-  host: HEK293
+  name: "AAV_therapeutic_compact_construct"
+  host: mammalian
+
   backbone:
-    catalog_vector: "pAAV-MCS"
+    catalog_vector: "pAAV-CMV"
+    # AAV backbone with inverted terminal repeats (ITRs) for packaging
+    # CMV promoter for broad mammalian expression
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: HCR-hAAT # Liver-specific promoter assembly to restrict expression to hepatocytes
+    - promoter: CMV
+      # Compact CMV variant to minimize size
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_gene
         expression: high
-        gene:
-          id: P00740
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+            # Minimal His-tag for purification if needed
+          - cleavage_site: 2A
+            # Self-cleaving peptide for clean separation from tag
+          - gene:
+              id: SERPINA1
+              # Alpha-1 antitrypsin as example therapeutic
+              source: uniprot
+
+    - terminator: SV40poly
+      # Compact polyadenylation signal

@@ -1,18 +1,25 @@
 construct:
-  name: "bacillus_subtilis_pveg_gfp_ha_integration"
+  name: "bacillus_gfp_ha_integration_cassette"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: p15A
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: gfp_reporter
+        label: gfp_ha
         expression: high
         chain:
           - gene:
-              id: GFP
+              id: sfGFP
               source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: HA
+
     - terminator: rrnB_T1

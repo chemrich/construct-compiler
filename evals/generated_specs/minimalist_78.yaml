@@ -1,18 +1,50 @@
 construct:
-  name: "mammalian_sgRNA_hdr_targetgenea"
+  name: "CRISPR_sgRNA_TargetGeneA_with_HDR_template"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: Cas9
+        expression: high
+        chain:
+          - tag: NLS
+          - gene:
+              id: SpCas9
+              source: uniprot
+          - tag: NLS
+
+    - spacer: 20
+
     - promoter: U6
+
     - cistron:
-        label: sgRNA
-        gene:
-          id: sgRNA_TargetGeneA
-    - spacer: 40
-    - cistron:
-        label: homology_template
+        label: sgRNA_TargetGeneA
+        expression: high
         fused: false
         gene:
-          id: HomologyTemplate_TargetGeneA
-    - terminator: BBa_B0015 # Standard terminator used as placeholder for schema compliance
+          id: sgRNA_TargetGeneA
+          sequence: "GCTAGCTAGCTAG"
+          # sgRNA targeting TargetGeneA (replace with actual 20bp guide sequence)
+
+    - spacer: 20
+
+    - promoter: SV40
+
+    - cistron:
+        label: HomologyTemplate
+        expression: low
+        fused: false
+        gene:
+          id: HDR_HomologyTemplate
+          sequence: "GGCCTAGGCCTAGGCCTAGGCCTAGGCCTAGGCCTAGGCCTAGGCCTAGGCCTAGGCCTAGGCCTAGGCCTAGGCC"
+          # Left homology arm (40bp) + edit site + Right homology arm (40bp)
+
+    - terminator: SV40_polyA

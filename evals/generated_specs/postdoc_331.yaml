@@ -1,18 +1,22 @@
 construct:
-  name: yeast_his_tp53_expression
+  name: human_gene_yeast_expression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD # CMV is mammalian; substituted with GPD (TDH3) for strong constitutive expression in yeast
+    - promoter: GAL1  # Strong constitutive yeast promoter (CMV is mammalian-specific; GAL1 is the yeast equivalent for strong constitutive expression)
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P04637
+              id: human_gene
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

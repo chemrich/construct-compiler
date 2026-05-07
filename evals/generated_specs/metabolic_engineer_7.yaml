@@ -1,73 +1,73 @@
-```yaml
 construct:
-  name: xylose_utilization_pathway_mitochondrial
+  name: "K_lactis_mitochondrial_xylose_utilization_pathway"
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pKLAC1"
+    resistance: ampicillin
     ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
 
     - cistron:
         label: xylose_reductase
         expression: high
         chain:
-          - tag: mito_targeting_sequence
+          - tag: MTS_Sc_Cox4
           - gene:
               id: XYL1
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: xylitol_dehydrogenase
         expression: high
         fused: false
         chain:
-          - tag: mito_targeting_sequence
+          - tag: MTS_Sc_Cox4
           - gene:
               id: XYL2
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: xylulokinase
+        label: xylulose_kinase_FLAG
         expression: high
         fused: false
         chain:
-          - tag: mito_targeting_sequence
-          - tag: FLAG
+          - tag: MTS_Sc_Cox4
           - gene:
               id: XYL3
               source: uniprot
+          - tag: FLAG
+          - cleavage_site: TEV
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: ribulose_5_phosphate_3_epimerase
+        label: pentose_phosphate_enzyme_4
         expression: high
         fused: false
         chain:
-          - tag: mito_targeting_sequence
+          - tag: MTS_Sc_Cox4
           - gene:
-              id: RPE1
+              id: XKS1
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: ribose_5_phosphate_ketol_isomerase
+        label: pentose_phosphate_enzyme_5
         expression: high
         fused: false
         chain:
-          - tag: mito_targeting_sequence
+          - tag: MTS_Sc_Cox4
           - gene:
-              id: RKI1
+              id: TAL1
               source: uniprot
 
     - terminator: CYC1_terminator
-```

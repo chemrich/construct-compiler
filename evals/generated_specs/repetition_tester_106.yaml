@@ -1,22 +1,26 @@
 construct:
-  name: "secreted_sfgfp_constitutive_expression"
-  host: e_coli
+  name: secreted_protein_ecoli_periplasm
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100 # Strong synthetic constitutive promoter, non-homologous to E. coli genome
+    - promoter: trc  # strong constitutive promoter, distinct from T7/araBAD
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: PelB # Signal peptide from Pectobacterium carotovorum for efficient secretion, heterologous to E. coli
+          - signal_peptide: pelB  # N-terminal periplasmic signal peptide (highly efficient, non-homologous to cytoplasmic sequences)
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: "PLACEHOLDER_GOI"  # Replace with actual gene ID
+              source: uniprot
           - linker:
-              type: GS_flexible # GS linker used; schema-compliant non-repetitive alternative not available
-              repeats: 2
-          - tag: 6xHis
-    - terminator: BBa_B0015 # Synthetic non-homologous terminator to avoid recombination issues
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis  # C-terminal His-tag for purification
+
+    - terminator: rrnB_T1

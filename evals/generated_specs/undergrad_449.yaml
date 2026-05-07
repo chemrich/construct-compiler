@@ -1,14 +1,20 @@
 construct:
-  name: "constitutive_luciferase_mammalian_reporter"
+  name: "constitutive_luciferase_reporter"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: firefly_luciferase
+        label: luciferase
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: HA
+          - gene:
+              id: Renilla_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

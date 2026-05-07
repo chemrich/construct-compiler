@@ -1,18 +1,24 @@
 construct:
-  name: "EnzY_Tet_on_Inducible_Yeast"
+  name: "yeast_EnzY_Tet_on_FLAG"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TRE  # Tetracycline Response Element for Tet-on induction in yeast
+    - promoter: tetO_minimal
+      # Tet-on system: requires tTA or rtTA transactivator (typically on a separate plasmid in yeast)
+
     - cistron:
-        label: target
+        label: EnzY
         expression: high
         chain:
           - gene:
               id: EnzY
               source: uniprot
-          - tag: FLAG  # C-terminal FLAG-tag
-    - terminator: CYC1  # Standard yeast poly-A signal/terminator
+          - tag: FLAG
+
+    - terminator: SV40_polyA
+      # SV40 polyA is functional in yeast for mRNA stability

@@ -1,21 +1,25 @@
 construct:
-  name: "SuperProteinX_High_Yield_Production"
+  name: SuperProteinX_His_TEV_solubility
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: production_cistron
+        label: SuperProteinX
         expression: high
         chain:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: SuperProteinX
               source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

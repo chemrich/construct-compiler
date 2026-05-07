@@ -1,21 +1,23 @@
 construct:
-  name: "yeast_surface_display_protein_d"
+  name: "yeast_surface_display_protein_D"
   host: yeast
+
   backbone:
-    catalog_vector: "pCTcon2"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: display
         expression: high
         chain:
+          - tag: alpha_factor_signal
           - gene:
-              id: AGA2
+              id: P12345
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: Protein_D
-              source: uniprot
+          - tag: Aga1_anchor
+
     - terminator: CYC1

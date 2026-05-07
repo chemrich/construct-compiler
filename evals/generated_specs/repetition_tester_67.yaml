@@ -1,33 +1,20 @@
 construct:
-  name: "proteinp_secretion_optimization"
+  name: SP1_ProteinP_HEK293
   host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
   cassette:
-    - promoter: CMV
-    - cistron:
-        label: SP1_ProteinP
-        expression: high
-        chain:
-          - tag: IgK_leader
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: ProteinP
-              source: uniprot
-    - terminator: SV40_polyA
-    - spacer: 100
-    - promoter: EF1_alpha
-    - cistron:
-        label: SP2_ProteinP
-        expression: high
-        chain:
-          - tag: BM40_signal_peptide
-          - linker:
-              type: rigid_EAAAK
-              repeats: 3
-          - gene:
-              id: ProteinP
-              source: uniprot
-    - terminator: BGH_pA
+  - promoter: EF1_alpha
+  - cistron:
+      label: secreted_protein_SP1
+      expression: high
+      chain:
+      - signal_peptide: SP1_mammalian
+      - linker:
+          type: GS_flexible
+          repeats: 1
+      - gene:
+          id: ProteinP
+          source: uniprot
+  - terminator: rrnB_T1

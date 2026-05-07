@@ -1,58 +1,70 @@
 construct:
-  name: "bacillus_subtilis_extracellular_hydrolase_operon"
-  host: b_subtilis
+  name: "bacillus_hydrolase_cocktail_secretion"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pxyl  # Xylose-inducible promoter for Bacillus subtilis
+    - promoter: araBAD  # xylose-inducible (arabinose promoter as xylose-inducible analog in Bacillus)
+
     - cistron:
-        label: hydrolase_1
+        label: Hydrolase1
         expression: high
         chain:
-          - tag: SP_amyE # Robust alpha-amylase secretion signal peptide
+          - secretion_signal: SP_amyE  # Bacillus AmyE signal peptide for robust secretion
           - gene:
               id: Hydrolase1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: hydrolase_2
+        label: Hydrolase2
         expression: high
-        fused: false # Independent translation with its own RBS
+        fused: false
         chain:
-          - tag: SP_amyE
+          - secretion_signal: SP_amyE
           - gene:
               id: Hydrolase2
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: hydrolase_3
+        label: Hydrolase3
         expression: high
         fused: false
         chain:
-          - tag: SP_amyE
+          - secretion_signal: SP_amyE
           - gene:
               id: Hydrolase3
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: hydrolase_4
+        label: Hydrolase4
         expression: high
         fused: false
         chain:
-          - tag: SP_amyE
+          - secretion_signal: SP_amyE
           - gene:
               id: Hydrolase4
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: hydrolase_5
+        label: Hydrolase5
         expression: high
         fused: false
         chain:
-          - tag: SP_amyE
+          - secretion_signal: SP_amyE
           - gene:
               id: Hydrolase5
               source: uniprot
-    - terminator: BBa_B0015 # Standard double terminator for efficient transcriptional stop
+
+    - terminator: rrnB_T1

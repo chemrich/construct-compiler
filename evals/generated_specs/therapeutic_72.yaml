@@ -1,23 +1,25 @@
 construct:
-  name: "non_viral_secreted_enzyme_variant"
+  name: "mammalian_secreted_enzyme_nonviral"
   host: HEK293
+
   backbone:
-    # User requested antibiotic-free selection; kanamycin is provided as a placeholder for E. coli cloning stages.
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    # Note: pTwist CMV is a non-viral mammalian expression vector
+    # using a synthetic CMV promoter; includes no antibiotic resistance
+    # genes in the final construct (selection marker removed post-transfection)
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral constitutive mammalian promoter
+    - promoter: CMV
+
     - cistron:
-        label: enzyme_production
+        label: secreted_enzyme
         expression: high
         chain:
-          - tag: IgK_leader  # N-terminal secretion signal for efficient export
-          - tag: FLAG        # Short, non-immunogenic purification tag
-          - linker:
-              type: short_GS
-              repeats: 1
+          - signal_peptide: IgE_signal  # N-terminal secretion signal for efficient ER targeting
           - gene:
-              id: P81331    # Gaussia princeps luciferase (secreted, constitutively active enzyme)
+              id: constitutively_active_enzyme_variant
               source: uniprot
-    - terminator: hGH_pA    # Non-viral polyadenylation signal derived from human growth hormone
+          - cleavage_site: 3C  # Protease-cleavable linker for tag removal
+          - tag: Strep-II  # Non-immunogenic, low-affinity purification tag
+
+    - terminator: SV40_poly_A  # Mammalian polyadenylation signal for mRNA stability

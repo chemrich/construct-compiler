@@ -1,93 +1,122 @@
 construct:
-  name: "high_solubility_human_metabolic_operon"
-  host: e_coli
+  name: "human_CYP1_RED1_FAD2_SULT1_with_GroEL_ES_DnaK_chaperone_operon"
+  host: e_coli_bl21_de3
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: CYP1
+        label: GroEL_ES_chaperone
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: groES
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: GroEL_chaperone
         expression: high
         fused: false
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: TEV
           - gene:
-              id: CYP1A1
+              id: groEL
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: RED1
+        label: DnaK_chaperone
         expression: high
         fused: false
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: TEV
           - gene:
-              id: POR
+              id: dnaK
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: FAD2
+        label: DnaJ_cochaperone
         expression: high
         fused: false
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: TEV
           - gene:
-              id: FADS2
+              id: dnaJ
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: SULT1
+        label: GrpE_nucleotide_exchange
         expression: high
         fused: false
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: TEV
           - gene:
-              id: SULT1A1
+              id: grpE
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: GroEL
+        label: CYP1_human
         expression: high
         fused: false
-        gene:
-          id: GroL
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - gene:
+              id: P04798
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: GroES
+        label: RED1_human
         expression: high
         fused: false
-        gene:
-          id: GroS
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: GST
+          - gene:
+              id: O94829
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: DnaK
+        label: FAD2_human
         expression: high
         fused: false
-        gene:
-          id: DnaK
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - gene:
+              id: Q02537
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: DnaJ
+        label: SULT1_human
         expression: high
         fused: false
-        gene:
-          id: DnaJ
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: GrpE
-        expression: high
-        fused: false
-        gene:
-          id: GrpE
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: SUMO
+          - gene:
+              id: P37292
+              source: uniprot
+
     - terminator: rrnB_T1

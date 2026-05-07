@@ -1,18 +1,23 @@
 construct:
-  name: "bacillus_wapA_secretion_cutinase"
+  name: "Bacillus_WapA_secreted_cutinase"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: WapA
+
     - cistron:
-        label: cutinase_secretion
+        label: secreted_cutinase
+        expression: high
         chain:
-          - tag: WapA_signal
           - tag: 6xHis
           - gene:
-              id: IsPETase
+              id: PET_degrading_cutinase
               source: uniprot
-    - terminator: BBa_B0015
+              # Note: WapA signal sequence is N-terminal and will direct secretion in Bacillus
+
+    - terminator: rrnB_T1

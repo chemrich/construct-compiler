@@ -1,32 +1,57 @@
 construct:
-  name: "dual_signal_s_counter_system"
+  name: "dual_signal_counter_two_S_activation"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Signal S
+    - promoter: T7lac
+
     - cistron:
-        label: state_manager
+        label: counter_state_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+
+    - cistron:
+        label: signal_sensor_and_logic
         expression: high
         chain:
           - gene:
-              id: P0CF67  # BxB1 Integrase for state counting logic
+              id: TetR
               source: uniprot
-    - spacer: 30
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
     - cistron:
-        label: activation_reporter
+        label: counter_reset_enzyme
         expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FLP
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+
     - cistron:
-        label: reset_protease
-        expression: low
-        fused: false
+        label: reporter_GFP
+        expression: high
         chain:
           - gene:
-              id: P04517  # TEV Protease to facilitate system reset
-              source: uniprot
-    - terminator: T7term
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

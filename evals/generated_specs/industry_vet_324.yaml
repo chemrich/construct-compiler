@@ -1,18 +1,33 @@
 construct:
-  name: "TetOn_Inducible_6xHis_POI"
+  name: "Tet_on_POI_His_tag"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TRE3G  # Standard Tetracycline Response Element for Tet-On systems
+    - promoter: CMV
+
     - cistron:
-        label: target_poi
+        label: tTA
+        expression: high
+        chain:
+          - gene:
+              id: tTA
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: TRE
+
+    - cistron:
+        label: POI
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P01133
+              id: POI
               source: uniprot
-    - terminator: bGH_polyA  # Standard mammalian terminator for AAV/plasmid expression
+
+    - terminator: rrnB_T1

@@ -1,24 +1,33 @@
 construct:
-  name: "yeast_dual_reporter_GAL1_ADH1"
+  name: "dual_reporter_yeast_GAL1_ADH1"
   host: yeast
+
   backbone:
-    resistance: HIS3_LEU2
-    ori: 2_micron
+    resistance: HIS3
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: lacZ_reporter
+        label: beta_galactosidase
         expression: high
         gene:
-          id: P00722
+          id: lacZ
           source: uniprot
+
     - terminator: CYC1
+
     - promoter: ADH1
+
     - cistron:
-        label: renilla_luciferase_reporter
-        expression: medium
+        label: renilla_luciferase
+        expression: high
         gene:
-          id: P27652
+          id: Renilla_luciferase
           source: uniprot
-    - terminator: ADH1_term
+
+    - terminator: CYC1
+
+    - resistance_marker: LEU2

@@ -1,19 +1,23 @@
 construct:
-  name: "peptide_Y_periplasmic_secretion"
+  name: "peptide_Y_periplasmic_export"
   host: e_coli
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: lac
+    - promoter: lacUV5
+
     - cistron:
-        label: target
+        label: peptide_Y
         expression: high
         chain:
           - tag: pelB
-          - cleavage_site: TEV
+          - cleavage_site: Signal_Peptidase
           - gene:
-              id: PYY
+              id: peptide_Y
               source: uniprot
+
     - terminator: rrnB_T1

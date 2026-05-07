@@ -1,18 +1,23 @@
 construct:
-  name: "therapeutic_scfv_periplasmic_expression"
-  host: e_coli_bl21
+  name: "scFv_periplasmic_expression_no_resistance"
+  host: e_coli
+  
   backbone:
-    resistance: kanamycin # User requested no antibiotic resistance; substituted with kanamycin to comply with tool schema constraints.
+    resistance: null  # No antibiotic resistance marker
     ori: pBR322
-    source: addgene
+    source: custom
+  
   cassette:
-    - promoter: araBAD # Tightly regulated bacterial promoter, chosen to avoid viral T7 sequences
+    - promoter: T7lac
+    
     - cistron:
-        label: scfv_production
+        label: scFv
         expression: high
         chain:
-          - tag: PelB # Signal peptide for N-terminal periplasmic translocation to support disulfide bond formation
+          - tag: pelB_signal_peptide  # Bacterial signal peptide for periplasmic targeting
           - gene:
-              id: scFv_anti_HER2
+              id: scFv_antibody
               source: uniprot
-    - terminator: rrnB_T1 # Native E. coli transcriptional terminator, free of viral sequences
+              # User must provide the specific scFv sequence via UniProt ID or custom input
+    
+    - terminator: rrnB_T1

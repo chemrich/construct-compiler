@@ -1,22 +1,27 @@
 construct:
-  name: "HEK293_Strep_SLC2A1_mEGFP_Fusion"
+  name: "HEK293T_membrane_protein_GFP_StrepTag"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: target_fusion
+        label: membrane_protein
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: SLC2A1
+              id: YFP  # placeholder - replace with your actual membrane protein ID
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: SV40_polyA
+
+    - terminator: SV40poly

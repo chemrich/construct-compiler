@@ -1,46 +1,56 @@
-```yaml
 construct:
-  name: positive_feedback_amplifier
-  host: e_coli_bl21_de3
-  
+  name: positive_feedback_amplifier_H_to_I
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
-  
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Input H controls this promoter
-    
+    - promoter: lacUV5
+      # Input-responsive promoter: responds to weak H signal
+
     - cistron:
-        label: transcriptional_activator
-        expression: medium
+        label: H_sensor
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A9E2  # AraC transcriptional activator
+              id: araC
               source: uniprot
-    
+              # AraC acts as transcriptional regulator; will sense input H
+
+    - terminator: rrnB_T1
+
     - spacer: 30
-    
+
+    - promoter: araBAD
+      # Positive feedback: araBAD is activated by AraC in presence of arabinose (H signal)
+
     - cistron:
-        label: output_enzyme
+        label: I_output
         expression: high
-        fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P00634  # Beta-galactosidase (highly active enzyme)
+              id: lacZ
               source: uniprot
-    
+              # Beta-galactosidase: highly active enzyme with strong output
+
     - spacer: 30
-    
+
     - cistron:
-        label: feedback_activator
-        expression: medium
+        label: feedback_amplifier
+        expression: high
         fused: false
         chain:
           - gene:
-              id: P0A9E2  # Second copy of AraC for positive feedback
+              id: araC
               source: uniprot
-    
+              # Second AraC copy: creates positive feedback loop
+              # As H signal activates araBAD promoter, more AraC is produced,
+              # further amplifying activation of araBAD and output I
+
     - terminator: rrnB_T1
-```

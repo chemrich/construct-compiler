@@ -1,27 +1,33 @@
 construct:
-  name: "tandem_anchor_surface_display"
-  host: e_coli_bl21_de3
+  name: "dual_anchor_cell_surface_display"
+  host: mammalian
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: T7lac
+    - promoter: CMV
+
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Lpp
-              source: uniprot
+              id: mEGFP
+              source: fpbase
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: OmpA
+              id: GPI_anchor_domain
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 2
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: TM_anchor_domain
+              source: uniprot
+
+    - terminator: rrnB_T1

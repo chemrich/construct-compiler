@@ -1,29 +1,39 @@
 construct:
-  name: "proteinx_yeast_genomic_integration_set_a"
+  name: "S_cerevisiae_integration_ProteinX_locus1"
   host: yeast
 
   backbone:
-    # pRS406 is a standard yeast integration vector featuring the URA3 selection marker.
-    # To ensure distinct integration from future requests, the HO-locus or specialized 
-    # non-repetitive landing pads are recommended.
-    catalog_vector: "pRS406"
+    resistance: G418  # Dominant selectable marker for yeast (Kanamycin B phosphotransferase)
+    ori: 2_micron    # Yeast episomal; ignored during genomic integration
+    source: custom
 
   cassette:
-    # Robust constitutive promoter for high-level expression in S. cerevisiae
-    - promoter: TDH3
+    - homology_arm_left:
+        locus: "intergenic_region_chromosome_5_left"
+        length_bp: 500
+        repeat_filter: "no_repeats_gt_4bp"
+        sequence_id: "Ha_L_locus1_chr5"
+
+    - promoter: GPD  # Strong constitutive glyceraldehyde-3-phosphate dehydrogenase promoter
 
     - cistron:
-        label: target_protein
+        label: ProteinX
         expression: high
-        chain:
-          - gene:
-              id: ProteinX
-              source: uniprot
+        gene:
+          id: ProteinX
+          source: uniprot
 
-    # Robust terminator for mRNA stability
-    - terminator: CYC1
+    - terminator: CYC1_term  # Robust yeast transcription terminator from CYC1
 
-# Note: The request for non-repetitive homology arms (LHA/RHA) flanking the cassette 
-# is handled during the sequence synthesis phase. The compiler is instructed 
-# to generate 500bp homology arms with <4bp internal repeats and 0% identity 
-# to standard pRS vector backbones to prevent unwanted recombination.
+    - homology_arm_right:
+        locus: "intergenic_region_chromosome_5_right"
+        length_bp: 500
+        repeat_filter: "no_repeats_gt_4bp"
+        sequence_id: "Ha_R_locus1_chr5"
+        distinct_from: "any_subsequent_integrations"
+
+  integration_notes:
+    selection_marker: "KanMX4_S288C"
+    target_locus: "chromosome_5_intergenic"
+    recombination_risk: "minimized_by_unique_homology_arms"
+    strategy: "CRITICAL: For any future integration construct, use a different chromosomal locus (e.g., chromosome_7, chromosome_10) and regenerate homology arms de novo to ensure no cross-homology between constructs."

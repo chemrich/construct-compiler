@@ -1,24 +1,29 @@
 construct:
-  name: tandem_his_strep_purification
+  name: "tandem_purification_difficult_protein_ecoli"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: target_dual_affinity
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - tag: Strep-II
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
-          - cleavage_site: TEV
+              sequence: AAAGGG
+              comment: "Non-homologous rigid linker (purine-rich, distinct from GS repeats) to prevent internal recombination"
           - gene:
-              id: P00533
+              id: target_protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

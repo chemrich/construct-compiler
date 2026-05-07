@@ -1,23 +1,44 @@
 construct:
-  name: mammalian_c1_ffl_circuit
+  name: type1_feedforward_loop_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: TRE3G
+    - promoter: CMV
+
     - cistron:
-        label: activator_x
-        expression: medium
-        gene:
-          id: GAL4_VP16
-          source: uniprot
-    - terminator: SV40_pA
-    - spacer: 50
-    - promoter: TRE3G_UAS
-    - cistron:
-        label: reporter_y
+        label: inducer_Z
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - tag: FLAG
+          - gene:
+              id: dCas9_VP64
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Activator_X
+        expression: high
+        fused: false
+        chain:
+          - tag: HA
+          - gene:
+              id: tTA_codon_optimized
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Reporter_Y
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

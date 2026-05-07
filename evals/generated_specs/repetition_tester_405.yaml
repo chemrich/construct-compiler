@@ -1,23 +1,42 @@
 construct:
-  name: "Arabidopsis_Enzyme_P_Divergent_Tandem_Fusion"
-  host: Arabidopsis_thaliana # Arabidopsis specified for plant expression
+  name: "Arabidopsis_Enzyme_P_tandem_duplication_codon_optimized"
+  host: plant
+
   backbone:
-    resistance: kanamycin # Standard selection marker for plant transformation (e.g., in pCAMBIA)
-    ori: pBR322
-    source: custom
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+    # Note: Plant transformation typically uses Agrobacterium-based vectors;
+    # this backbone is compatible with binary vector integration into Arabidopsis.
+
   cassette:
-    - promoter: CaMV35S # Constitutive promoter for high-level expression in dicots
+    - promoter: CaMV_35S
+      # CaMV 35S is the standard constitutive promoter for plant nuclear expression
+
     - cistron:
-        label: tandem_enzyme_p
+        label: Enzyme_P_copy1
         expression: high
         chain:
           - gene:
-              id: Enzyme_P
-              source: uniprot
-          - linker:
-              type: GS_flexible # Unique GS linker used to separate the two domains
-              repeats: 2
+              id: Enzyme_P_variant_A
+              # Variant A: codon-optimized for maximum divergence from copy2
+              # This should be manually designed with synonymous substitutions
+              # to minimize sequence identity while maintaining protein identity
+              source: custom
+
+    - spacer: 45
+      # Non-homologous linker region (45 bp); should be designed de novo
+      # to avoid self-complementarity and internal repeats
+
+    - cistron:
+        label: Enzyme_P_copy2
+        expression: high
+        chain:
           - gene:
-              id: Enzyme_P # Note: Backend compiler must apply maximal synonymous sequence divergence for this second instance to prevent recombination
-              source: uniprot
-    - terminator: NOS_term # Nopaline synthase terminator for stable expression in plants
+              id: Enzyme_P_variant_B
+              # Variant B: independently codon-optimized for maximum divergence from copy1
+              # Synonymous mutations redistribute to minimize homology
+              source: custom
+
+    - terminator: Nos_poly_A
+      # Agrobacterium nopaline synthase poly(A) signal; standard for plant vectors

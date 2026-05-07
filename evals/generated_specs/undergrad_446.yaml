@@ -1,25 +1,27 @@
 construct:
-  name: "gamma_nusA_egfp_fusion"
+  name: "Gamma_NusA_GFP_fusion"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gamma_fusion
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: NusA
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P01579
+              id: Gamma
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,22 +1,33 @@
 construct:
-  name: yeast_p2a_bicistronic_expression
+  name: "yeast_dual_ORF_P2A"
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: p2a_polyprotein
+        label: gene_A
         expression: high
         chain:
           - gene:
-              id: Gene_A
+              id: gene_A
               source: uniprot
-          - linker:
-              type: P2A
-          - gene:
-              id: Gene_B
-              source: uniprot
-    - terminator: CYC1
+
+    - linker:
+        type: P2A_peptide
+        repeats: 1
+
+    - cistron:
+        label: gene_B
+        expression: high
+        fused: false
+        gene:
+          id: gene_B
+          source: uniprot
+
+    - terminator: CYC1_poly_A

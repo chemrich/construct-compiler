@@ -1,22 +1,46 @@
 construct:
-  name: blue_light_inducible_switch
-  host: e_coli
+  name: "blue_light_inducible_GFP_switch"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: activator
-        expression: medium
-        gene:
-          id: EL222
-          source: uniprot
-    - terminator: BBa_B0015
-    - promoter: pEL222  # EL222-responsive promoter, activated by blue light
-    - cistron:
-        label: blue_gfp_reporter
+        label: light_sensor
         expression: high
-        gene:
-          id: mTagBFP2
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: YtvA
+              source: uniprot
+        # YtvA is the blue-light photoreceptor domain from Bacillus subtilis
+
+    - spacer: 25
+
+    - cistron:
+        label: transcription_factor
+        expression: high
+        chain:
+          - gene:
+              id: EL222
+              source: uniprot
+        # EL222 is a light-activated transcription factor that responds to YtvA activation
+
+    - spacer: 25
+
+    - cistron:
+        label: BLUE_GFP_reporter
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - terminator: rrnB_T1

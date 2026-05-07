@@ -1,16 +1,25 @@
 construct:
-  name: "secreted_antibody_fragment_AAV_payload"
+  name: "secreted_antibody_fragment_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: SP_IgE  # Signal peptide for secretion
           - gene:
-              id: scFv
+              id: scFv_example
               source: uniprot
-    - terminator: WPRE_bGH_polyA
+          - tag: 6xHis
+
+    - element: WPRE  # Woodchuck Posttranscriptional Regulatory Element
+
+    - element: polyA_signal  # SV40 or bGH polyA

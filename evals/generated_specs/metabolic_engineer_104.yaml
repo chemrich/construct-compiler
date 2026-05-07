@@ -1,10 +1,16 @@
 construct:
-  name: "mammalian_five_enzyme_pathway"
+  name: "five_enzyme_pathway_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: enzyme_1
         expression: high
@@ -13,8 +19,11 @@ construct:
               id: P12345
               source: uniprot
           - tag: 6xHis
-    - terminator: hGH_polyA
+
+    - terminator: bGH_polyA
+
     - promoter: CMV
+
     - cistron:
         label: enzyme_2
         expression: high
@@ -23,19 +32,25 @@ construct:
               id: P23456
               source: uniprot
           - tag: 6xHis
-    - terminator: hGH_polyA
+
+    - terminator: bGH_polyA
+
     - promoter: CMV
+
     - cistron:
-        label: enzyme_3
+        label: enzyme_3_ires_coupling
         expression: high
         chain:
           - gene:
               id: P34567
               source: uniprot
           - tag: 6xHis
-    - terminator: hGH_polyA
+        # Note: IRES element inserted after this cassette terminator in vector design
+
+    - terminator: bGH_polyA
+
     - promoter: CMV
-    # Note: To incorporate the requested IRES for co-translation, enzyme_4 and enzyme_5 are arranged bicistronically under the fourth CMV promoter.
+
     - cistron:
         label: enzyme_4
         expression: high
@@ -44,14 +59,18 @@ construct:
               id: P45678
               source: uniprot
           - tag: 6xHis
-    - spacer: 585  # Internal Ribosome Entry Site (EMCV IRES)
+
+    - terminator: bGH_polyA
+
+    - promoter: CMV
+
     - cistron:
         label: enzyme_5
         expression: high
-        fused: false  # Independent translation initiation via IRES
         chain:
           - gene:
               id: P56789
               source: uniprot
           - tag: 6xHis
-    - terminator: hGH_polyA
+
+    - terminator: bGH_polyA

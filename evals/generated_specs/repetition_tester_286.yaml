@@ -1,31 +1,18 @@
 construct:
-  name: plant_therapeutic_y_secretion_study
+  name: TherapeuticProteinY_secreted_apoplast
   host: plant
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
   cassette:
-    - promoter: CaMV_35S
-    - cistron:
-        label: apoplast_secreted_variant_A
-        expression: high
-        chain:
-          - tag: SP_apoplast  # N-terminal signal peptide for apoplastic secretion
-          - gene:
-              id: TherapeuticProteinY
-              source: uniprot
-    - terminator: NOS_term
-    - spacer: 60  # Minimum 20bp required between expression units
-    - promoter: Ubi10
-    - cistron:
-        label: cytoplasmic_soluble_variant_B
-        expression: high
-        fused: false  # Independent translation unit
-        gene:
-          id: TherapeuticProteinY
-          source: uniprot
-    - terminator: 35S_term  # Distinct terminator to maximize sequence divergence
-# Note: Using distinct promoters (CaMV_35S, Ubi10) and terminators (NOS_term, 35S_term), 
-# and distinct cistron labels (A and B) to facilitate synonymous codon differentiation 
-# and maximize sequence divergence between the two expression units.
+  - promoter: CaMV_35S
+  - cistron:
+      label: TherapeuticProteinY_secreted
+      expression: high
+      chain:
+      - tag: signal_peptide_apoplast
+      - gene:
+          id: TherapeuticProteinY_codon_variant_1
+          source: custom
+  - terminator: Ocs_polyA

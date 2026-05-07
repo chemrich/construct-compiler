@@ -1,18 +1,21 @@
 construct:
-  name: "Lysosomal_Enzyme_Targeting_V5"
-  host: mammalian
+  name: LysosomalEnzyme_lysosomal_targeting
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: lysosomal_target
+        label: lysosomal_enzyme
         expression: high
         chain:
-          - tag: SignalPeptide  # Required for ER translocation and subsequent lysosomal trafficking
           - gene:
               id: LysosomalEnzyme
               source: uniprot
-          - tag: V5             # C-terminal V5 tag for detection
-    - terminator: bGH_polyA
+          - tag: V5
+          - signal: KFERQ  # C-terminal lysosomal targeting signal (chaperone-mediated autophagy)
+
+    - terminator: rrnB_T1

@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_p43_yncm_xylanase_strep"
+  name: bacillus_xylanase_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
-        label: xylanase_secretion
+        label: xylanase
         expression: high
         chain:
-          - tag: YncM
+          - signal_peptide: YncM
           - gene:
-              id: P00694
+              id: xynA
               source: uniprot
           - tag: Strep-II
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

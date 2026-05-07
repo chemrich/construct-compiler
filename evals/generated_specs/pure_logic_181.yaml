@@ -1,24 +1,45 @@
 construct:
-  name: "tunable_not_gate_logic"
-  host: e_coli
+  name: tunable_NOT_gate_therapeutic
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: pET-28b(+)
+  
   cassette:
     - promoter: araBAD
+      # araBAD provides titratable expression control via L-arabinose
+    
     - cistron:
-        label: tet_repressor
+        label: repressor_protein
         expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: Ptet
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+              # TetR repressor: inversely controlled by araBAD arabinose levels
+    
+    - spacer: 30
+    
     - cistron:
-        label: therapeutic_output
+        label: therapeutic_protein
         expression: high
+        fused: false
+        # Independent translation; repressed by tetR binding to operator sequences
         gene:
-          id: P01579
+          id: insulin
           source: uniprot
-    - terminator: BBa_B0015
+          # Insulin as example therapeutic; user may substitute with any therapeutic protein
+    
+    - spacer: 25
+    
+    - cistron:
+        label: operator_binding_cassette
+        expression: very_low
+        fused: false
+        # Minimal expression; primarily serves as tetO operator binding site
+        gene:
+          id: tetO
+          source: uniprot
+    
+    - terminator: rrnB_T1

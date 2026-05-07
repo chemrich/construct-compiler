@@ -1,72 +1,71 @@
-```yaml
 construct:
-  name: streptomyces_biosynthesis_operon
-  host: bacillus  # closest available host to Streptomyces
+  name: "S_coelicolor_6enzyme_NPK_operon"
+  host: bacillus  # Streptomyces is a Gram-positive bacterium; bacillus is the closest available host profile
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
-    - promoter: T7  # strong promoter for high expression
+    - promoter: trc  # trc is a strong constitutive promoter suitable for Streptomyces high-level expression
 
     - cistron:
-        label: enzyme1
+        label: enzyme_1
         expression: high
-        gene:
-          id: P0A6F5  # example biosynthetic enzyme
-          source: uniprot
+        chain:
+          - gene:
+              id: STR_E1
+              source: uniprot
 
-    - spacer: 30
-
-    - cistron:
-        label: enzyme2
-        expression: high
-        fused: false
-        gene:
-          id: P0A6G1
-          source: uniprot
-
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: enzyme3
+        label: enzyme_2
         expression: high
         fused: false
         gene:
-          id: P0A6H2
+          id: STR_E2
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: enzyme4
+        label: enzyme_3
         expression: high
         fused: false
         gene:
-          id: P0A6I3
+          id: STR_E3
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: enzyme5
+        label: enzyme_4
         expression: high
         fused: false
         gene:
-          id: P0A6J4
+          id: STR_E4
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: enzyme6
+        label: enzyme_5
         expression: high
         fused: false
         gene:
-          id: P0A6K5
+          id: STR_E5
           source: uniprot
 
-    - terminator: BBa_B0015  # robust double terminator
-```
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_6
+        expression: high
+        fused: false
+        gene:
+          id: STR_E6
+          source: uniprot
+
+    - terminator: rrnB_T1

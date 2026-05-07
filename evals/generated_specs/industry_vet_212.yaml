@@ -1,16 +1,26 @@
 construct:
-  name: "nuclear_localized_mEGFP"
+  name: "nuclear_localized_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
           - tag: NLS
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

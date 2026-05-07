@@ -1,12 +1,15 @@
 construct:
-  name: peptide_screening_plasmid_no_selection
-  host: e_coli
+  name: peptide_library_expression_plasmid
+  host: e_coli_bl21
+
   backbone:
-    resistance: none # User requested no antibiotic resistance; implementation requires auxotrophic markers (e.g., thyA, pyrF) or toxin-antitoxin systems
-    ori: pUC
-    source: custom
+    resistance: chloramphenicol
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac # E. coli derived promoter used as a non-viral alternative to T7
+    - promoter: T7lac
+
     - cistron:
         label: peptide_variant_1
         expression: high
@@ -14,17 +17,43 @@ construct:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P81447
+              id: variant_peptide_1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: peptide_variant_2
         expression: high
-        fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P81448
+              id: variant_peptide_2
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator, avoids viral T7 terminator sequences
+
+    - spacer: 25
+
+    - cistron:
+        label: peptide_variant_3
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: variant_peptide_3
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: peptide_variant_4
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: variant_peptide_4
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,42 +1,49 @@
-```yaml
 construct:
-  name: therapeutic_pathway_polycistronic
-  host: e_coli_bl21_de3
+  name: synthetic_metabolic_pathway_three_enzyme
+  host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
 
     - cistron:
-        label: enzyme1
+        label: enzyme_1
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0A9P0
+              id: P09671
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: enzyme2
+        label: enzyme_2
         expression: high
         fused: false
-        gene:
-          id: P0ABJ9
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P12345
+              source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: enzyme3
+        label: enzyme_3
         expression: high
         fused: false
-        gene:
-          id: P0A6F5
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P67890
+              source: uniprot
 
     - terminator: rrnB_T1
-```

@@ -1,54 +1,69 @@
 construct:
-  name: "polyketide_synthase_6_gene_operon"
-  host: e_coli_bl21
+  name: "polyketide_synthase_operon_six_gene"
+  host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: pks1_enzyme
+        label: PKS1
         expression: high
-        fused: false
         chain:
+          - tag: 6xHis
           - solubility_tag: SUMO
           - gene:
               id: PKS1
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: pks2_enzyme
+        label: PKS2
         expression: high
         fused: false
         gene:
           id: PKS2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: acp_protein
+        label: ACP
         expression: medium
         fused: false
         gene:
           id: ACP
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: kr_reductase
+        label: KR
         expression: medium
         fused: false
         gene:
           id: KR
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: dh_dehydratase
+        label: DH
         expression: low
         fused: false
         gene:
           id: DH
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: er_enoyl_reductase
+        label: ER
         expression: low
         fused: false
         chain:
@@ -56,4 +71,5 @@ construct:
               id: ER
               source: uniprot
           - tag: LVA
+    
     - terminator: rrnB_T1

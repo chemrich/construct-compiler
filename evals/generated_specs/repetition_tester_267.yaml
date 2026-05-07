@@ -1,29 +1,36 @@
 construct:
-  name: "yeast_orthogonal_triple_sgrna_array"
+  name: "triple_sgRNA_yeast_CRISPR"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: CEN/ARS
     source: addgene
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: sgrna_target_1
-        expression: high
-        gene:
-          id: sgRNA_scaffold_variant_1
-    - spacer: 50
+      # First sgRNA unit with standard U6 promoter
+    - gene:
+        id: sgRNA_target1
+        source: uniprot
+      label: sgRNA_1
+
+    - spacer: 25
+
     - promoter: SNR52
-    - cistron:
-        label: sgrna_target_2
-        expression: high
-        gene:
-          id: sgRNA_scaffold_variant_2
-    - spacer: 50
+      # Second sgRNA unit with SNR52 promoter (yeast Pol III, distinct from U6)
+    - gene:
+        id: sgRNA_target2
+        source: uniprot
+      label: sgRNA_2
+
+    - spacer: 25
+
     - promoter: RPR1
-    - cistron:
-        label: sgrna_target_3
-        expression: high
-        gene:
-          id: sgRNA_scaffold_variant_3
-    - terminator: BBa_B0015
+      # Third sgRNA unit with RPR1 promoter (yeast Pol III, distinct from U6 and SNR52)
+    - gene:
+        id: sgRNA_target3
+        source: uniprot
+      label: sgRNA_3
+
+    - terminator: yeast_polyA

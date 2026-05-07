@@ -1,43 +1,58 @@
 construct:
-  name: "bacterial_two_hybrid_proteinX_proteinY"
+  name: "bacterial_two_hybrid_proteinX_LexA"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+    
     - cistron:
-        label: bait_fusion
-        expression: medium
+        label: ProteinX_LexA_DBD
+        expression: high
         chain:
-          - solubility_tag: lambda_cI
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ProteinX
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: prey_fusion
-        expression: medium
-        fused: false
-        chain:
-          - solubility_tag: rpoA
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
+          - gene:
+              id: LexA_DBD
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: ProteinY_B42_AD
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ProteinY
               source: uniprot
-    - spacer: 40
-    - promoter: lacUV5  # Reporter promoter modified for bait/prey recruitment
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: B42_activation_domain
+              source: uniprot
+    
+    - spacer: 30
+    
     - cistron:
-        label: reporter
-        expression: low
+        label: lacZ_reporter
+        expression: medium
         fused: false
         gene:
           id: lacZ
           source: uniprot
+    
     - terminator: rrnB_T1

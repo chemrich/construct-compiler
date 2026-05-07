@@ -1,22 +1,32 @@
 construct:
-  name: "inducible_proteinN_TetOn_HEK293"
+  name: "Tet_On_proteinN_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G
+    - promoter: TRE
+    
     - cistron:
-        label: inducible_target
+        label: proteinN
         expression: high
         gene:
-          id: "proteinN"
+          id: proteinN
           source: uniprot
-    - terminator: bGH_polyA
-    - promoter: CMV
-    - cistron:
-        label: rtTA_activator
-        expression: medium
-        gene:
-          id: "rtTA"
-          source: uniprot
+    
     - terminator: SV40_polyA
+
+    - spacer: 100
+
+    - promoter: CMV
+    
+    - cistron:
+        label: rtTA
+        expression: high
+        gene:
+          id: rtTA
+          source: uniprot
+    
+    - terminator: WPRE_polyA

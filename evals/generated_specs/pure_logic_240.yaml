@@ -1,24 +1,33 @@
 construct:
-  name: "genetic_not_gate_x_inhibits_y"
+  name: genetic_NOT_gate_X_inhibits_Y
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+      
     - cistron:
-        label: repressor_x
+        label: repressor_X
         expression: medium
         gene:
-          id: P03023
+          id: lacI
           source: uniprot
+    
     - terminator: rrnB_T1
+    
+    - spacer: 30
+    
     - promoter: lacUV5
+      
     - cistron:
-        label: output_y
+        label: output_Y
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

@@ -1,23 +1,22 @@
 construct:
-  name: "tightly_regulated_toxic_protein_expression"
-  host: e_coli
+  name: "toxic_protein_tight_control"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: ampicillin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Chosen for very tight regulation to prevent leaky expression of toxic proteins
+    - promoter: T7lac
+
     - cistron:
-        label: toxic_target
-        expression: high
+        label: target
+        expression: low
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: rep
+              id: target_protein
               source: uniprot
+
     - terminator: rrnB_T1

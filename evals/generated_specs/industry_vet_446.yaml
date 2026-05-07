@@ -1,20 +1,24 @@
 construct:
-  name: "nuclear_targeted_gene_editor_purification"
-  host: in_vitro  # Per Rule 16, as the user specified 'in vitro expressed'
+  name: "nuclear_localized_gene_editing_enzyme"
+  host: in_vitro
+
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: "cas9_editor"
+        label: editor
         expression: high
         chain:
-          - tag: 6xHis          # For purification of the protein
-          - cleavage_site: TEV  # To remove the purification tag
-          - tag: NLS            # Nuclear Localization Signal to ensure nuclear entry post-delivery
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: Cas9
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

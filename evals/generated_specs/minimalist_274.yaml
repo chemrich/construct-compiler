@@ -1,18 +1,22 @@
 construct:
-  name: "protein_p_short_half_life_degradation"
-  host: e_coli_bl21_de3
+  name: "protein_P_quick_degradation"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - degron: ssrA  # C-terminal ssrA tag for rapid ClpXP-mediated degradation
           - gene:
               id: P
               source: uniprot
-          - tag: SsrA  # Added SsrA tag to C-terminus for rapid proteolysis in E. coli
-    - terminator: T7term
+
+    - terminator: rrnB_T1

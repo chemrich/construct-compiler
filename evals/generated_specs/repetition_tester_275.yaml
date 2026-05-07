@@ -1,19 +1,28 @@
 construct:
-  name: "ProteinX_NonHomologous_Solubility_Fusion"
+  name: "ProteinX_GST_TEV_FactorXa_His"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: ProteinX_expression
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - cleavage_site: TEV
           - gene:
               id: ProteinX
               source: uniprot
           - cleavage_site: Factor_Xa
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,26 +1,47 @@
 construct:
-  name: "yeast_k_threshold_detector"
+  name: "K_threshold_detector_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: ADH1
+    - promoter: GAL1
+
     - cistron:
-        label: corepressor_sensor
+        label: K_sensor
         expression: medium
         chain:
-          - tag: NLS
+          - tag: 6xHis
           - gene:
-              id: trpR
+              id: GAL80
               source: uniprot
-    - terminator: CYC1_term
-    - promoter: TEF1_TrpO # Engineered promoter containing TrpR operator sites for threshold-dependent corepression by input K
+
+    - terminator: rrnB_T1
+
+    - promoter: GAL1
+
+    - cistron:
+        label: repressor_tunable
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MIG1
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: CYC1
+
     - cistron:
         label: colorimetric_reporter
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: ADH1_term
+        chain:
+          - gene:
+              id: lacZ
+              source: uniprot
+
+    - terminator: rrnB_T1

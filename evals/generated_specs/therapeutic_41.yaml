@@ -1,23 +1,27 @@
-```yaml
 construct:
-  name: "hGH_variant_secretion_CHO"
+  name: hGH_variant_CHO_secretion
   host: CHO
 
   backbone:
     catalog_vector: "pTwist CMV"
+    ori: ColA
+    source: addgene
+    # No antibiotic resistance marker specified for mammalian CHO expression
+    # Selectable marker omitted per requirements
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: hGH_variant
+        label: hGH_secreted
         expression: high
         chain:
-          - signal_peptide: tPA  # tissue plasminogen activator signal for mammalian secretion
+          - tag: signal_peptide_hGH
+            # N-terminal human GH signal peptide for ER-mediated secretion
           - gene:
-              id: P01241  # human growth hormone
+              id: "GH1"
               source: uniprot
           - tag: Strep-II
+            # C-terminal Strep-tag for affinity purification
 
     - terminator: SV40_polyA
-```

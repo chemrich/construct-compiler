@@ -1,18 +1,22 @@
 construct:
-  name: "pichia_pastoris_gap_metabolic_enzyme"
+  name: "pichia_pastoris_metabolic_enzyme"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    resistance: zeocin
+    ori: pPIC9
+    source: addgene
+
   cassette:
     - promoter: GAP
-      cistron:
-        label: enzyme_target
+
+    - cistron:
+        label: metabolic_enzyme
         expression: high
         chain:
           - gene:
-              id: P12345
+              id: metabolic_enzyme_codon_optimized
               source: uniprot
           - tag: 6xHis
-      terminator: AOX1_term
+
+    - terminator: rrnB_T1

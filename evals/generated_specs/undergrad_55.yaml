@@ -1,32 +1,39 @@
 construct:
-  name: "mammalian_polycistronic_ires_P1_P2_P3"
+  name: "mammalian_polycistronic_P1_P2_P3_IRES"
   host: HEK293
+
   backbone:
-    resistance: kanamycin  # KanR gene provides neomycin/G418 resistance in mammalian cells
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: neomycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_1
+        label: P1
         expression: high
         gene:
           id: P1
           source: uniprot
-    - spacer: 500  # IRES sequence (approx 500bp) for internal ribosome entry
+
+    - spacer: 50
+      # IRES sequence will be inserted here for cap-independent translation of P2
+
     - cistron:
-        label: protein_2
+        label: P2
         expression: high
-        fused: false  # Independently translated via IRES
         gene:
           id: P2
           source: uniprot
-    - spacer: 500  # IRES sequence (approx 500bp) for internal ribosome entry
+
+    - spacer: 50
+      # Second IRES sequence for cap-independent translation of P3
+
     - cistron:
-        label: protein_3
+        label: P3
         expression: high
-        fused: false  # Independently translated via IRES
         gene:
           id: P3
           source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

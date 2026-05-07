@@ -1,22 +1,32 @@
 construct:
-  name: "gfp_mcherry_coexpression"
-  host: e_coli_bl21_de3
+  name: GFP_mCherry
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gfp_reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: mcherry_reporter
+        label: mCherry
         expression: high
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,20 +1,28 @@
 construct:
-  name: yeast_FabF_secretion_production
+  name: "yeast_FabF_secreted_purification"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GAL1
+    - promoter: AOX1
+
     - cistron:
-        label: FabF_target
+        label: FabF
         expression: high
         chain:
-          - tag: Alpha_factor  # Yeast secretion signal for export to media
-          - tag: 6xHis
-          - cleavage_site: TEV
+          - tag: alpha_factor_signal
           - gene:
               id: FabF
               source: uniprot
-    - terminator: CYC1_term
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa
+
+    - terminator: rrnB_T1

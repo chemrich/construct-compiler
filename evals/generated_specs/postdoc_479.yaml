@@ -1,19 +1,22 @@
 construct:
-  name: "human_RPLP0_HA_yeast_expression"
+  name: "yeast_RPLP0_ribosomal_protein"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1 # Constitutive promoter for high-level yeast expression
+    - promoter: GAL1
+
     - cistron:
-        label: RPLP0_fusion
+        label: RPLP0
         expression: high
         chain:
           - tag: HA
           - gene:
-              id: P05388 # Human RPLP0 UniProt ID
+              id: RPLP0
               source: uniprot
-    - terminator: CYC1_term # Standard yeast terminator
-# Ribosomal integration of RPLP0 is mediated by its endogenous protein-protein interaction domains; no specific ribosomal targeting tag is required.
+
+    - terminator: rrnB_T1

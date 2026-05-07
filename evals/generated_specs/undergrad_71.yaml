@@ -1,31 +1,38 @@
 construct:
-  name: "ProteinS_IRES_ProteinR_mEGFP"
+  name: "ProteinS_IRES_ProteinR_GFP"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: ProteinS_target
+        label: ProteinS
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: ProteinS
               source: uniprot
-    - spacer: 500 # Spacer represents the IRES element for polycistronic mammalian expression
+
+    # IRES element represented as a spacer with comment
+    - spacer: 600  # IRES_EMCV or similar internal ribosome entry site
+
     - cistron:
-        label: ProteinR_reporter
+        label: ProteinR_GFP
         expression: high
-        fused: false # Indicates independent translation initiation (via IRES)
         chain:
           - gene:
               id: ProteinR
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

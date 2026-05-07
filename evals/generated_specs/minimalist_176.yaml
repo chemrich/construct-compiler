@@ -1,12 +1,20 @@
 construct:
-  name: "shRNA_GeneX_Mammalian_Expression"
+  name: shRNA_GeneX_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: U6  # Pol III promoter preferred for shRNA expression
+    - promoter: U6
+
     - cistron:
-        label: shRNA_cassette
-        gene:
-          id: shRNA_GeneX
-    - terminator: bGH_PA
+        label: shRNA_GeneX
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_GeneX
+              source: uniprot
+
+    - terminator: BBa_B0015

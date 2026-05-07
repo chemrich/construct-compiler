@@ -1,19 +1,23 @@
 construct:
-  name: "MBP_TEV_fusion_solubility_construct"
-  host: e_coli_bl21_de3
+  name: "MBP_fusion_solubility_ecoli"
+  host: e_coli_bl21
+
   backbone:
     resistance: chloramphenicol
     ori: pBR322
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: mEGFP # mEGFP used as a representative placeholder for 'my gene'
-              source: fpbase
-    - terminator: T7term
+              id: your_gene
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,25 +1,35 @@
 construct:
-  name: "mammalian_gRNA_puromycin_expression"
+  name: "mammalian_gRNA_U6_PuroR"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: puromycin
+    ori: pUC
+    source: addgene
 
   cassette:
     - promoter: U6
-    - cistron:
-        label: gRNA_expression
-        gene:
-          id: sgRNA_scaffold
-    - terminator: Poly_T  # Standard Pol III termination for U6/gRNA constructs
 
-    - spacer: 50
-
-    - promoter: CMV
     - cistron:
-        label: puromycin_selection
+        label: gRNA
         expression: high
         gene:
-          id: pac
+          id: gRNA_scaffold
           source: uniprot
-    - terminator: bGH_polyA  # Standard poly-A signal for the Pol II puromycin transcript
+
+    - terminator: U6term
+
+    - spacer: 100
+
+    - promoter: CMV
+
+    - cistron:
+        label: PuroR
+        expression: high
+        chain:
+          - gene:
+              id: puromycin_N_acetyltransferase
+              source: uniprot
+
+    - terminator: rrnB_T1

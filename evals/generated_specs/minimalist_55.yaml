@@ -1,27 +1,38 @@
 construct:
-  name: "operon_X_Y_Z_expression"
+  name: "XYZ_operon"
   host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
     - cistron:
-        label: protein_X
+        label: gene_X
+        expression: high
         gene:
-          id: gene_X
+          id: X
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 20
+    
     - cistron:
-        label: protein_Y
+        label: gene_Y
+        expression: high
         fused: false
         gene:
-          id: gene_Y
+          id: Y
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 20
+    
     - cistron:
-        label: protein_Z
+        label: gene_Z
+        expression: high
         fused: false
         gene:
-          id: gene_Z
+          id: Z
           source: uniprot
+    
     - terminator: rrnB_T1

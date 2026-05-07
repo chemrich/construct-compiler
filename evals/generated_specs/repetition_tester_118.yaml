@@ -1,21 +1,25 @@
 construct:
-  name: yeast_cterminal_purification_construct
+  name: yeast_protein_Cterminal_purification
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - gene:
-              id: mNeonGreen
-              source: fpbase
+              id: ""
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - tag: 8xHis
-    - terminator: ADH1
+
+    - terminator: CYC1

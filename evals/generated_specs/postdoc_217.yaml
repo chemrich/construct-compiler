@@ -1,14 +1,17 @@
 construct:
-  name: "nuclear_protein_O_mEGFP_fusion_yeast"
+  name: protein_O_nuclear_localization_yeast
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive promoter for yeast
+    - promoter: GAL1
+
     - cistron:
-        label: NLS_O_GFP_fusion
+        label: protein_O_NLS_GFP
         expression: high
         chain:
           - tag: NLS
@@ -17,8 +20,9 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: CYC1_term  # Standard yeast terminator
+
+    - terminator: rrnB_T1

@@ -1,27 +1,42 @@
 construct:
-  name: "triple_polIII_shRNA_array"
+  name: "triple_shrna_mammalian_polIII"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: ampicillin
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: shRNA_target_1
+      cistron:
+        label: shrna_1
+        expression: high
         gene:
-          id: shRNA_luciferase
-    - terminator: PolyT_6
-    - spacer: 40
+          id: shrna_target_1
+          source: custom
+
+    - terminator: U6_terminator
+
+    - spacer: 50
+
     - promoter: H1
-    - cistron:
-        label: shRNA_target_2
+      cistron:
+        label: shrna_2
+        expression: high
         gene:
-          id: shRNA_GFP
-    - terminator: PolyT_7
-    - spacer: 40
+          id: shrna_target_2
+          source: custom
+
+    - terminator: poly_T_terminator
+
+    - spacer: 50
+
     - promoter: 7SK
-    - cistron:
-        label: shRNA_target_3
+      cistron:
+        label: shrna_3
+        expression: high
         gene:
-          id: shRNA_LaminAC
-    - terminator: PolyT_8
+          id: shrna_target_3
+          source: custom
+
+    - terminator: 7SK_terminator

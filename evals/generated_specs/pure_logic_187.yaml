@@ -1,24 +1,45 @@
 construct:
-  name: "sequential_pulse_logic_circuit"
+  name: sequential_activation_A_then_B
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: product_a_repressor
-        fused: false
+        label: Product_A
+        expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P04483  # TetR repressor
+              id: ssrA_degron_fusion
               source: uniprot
-          - tag: SsrA   # C-terminal degradation tag for temporal clearing
-    - spacer: 40
-    - promoter: J23106  # Constitutive promoter (TetR-repressible in this context)
+          # ssrA tag targets protein for rapid degradation via ClpXP
+
+    - spacer: 25
+
     - cistron:
-        label: product_b_target
+        label: antitermination_factor
+        expression: high
         fused: false
         gene:
-          id: mEGFP
+          id: N_antitermination_protein
+          source: uniprot
+          # N protein from phage lambda; expressed only after Product_A is made and degraded
+          # Its presence relieves transcriptional termination of Product_B
+
+    - spacer: 25
+
+    - cistron:
+        label: Product_B
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
           source: fpbase
+          # Expression depends on antitermination activity from Product_A degradation signal
+
     - terminator: rrnB_T1

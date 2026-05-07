@@ -1,18 +1,22 @@
 construct:
-  name: "HEK293_hGH_ClinicallyCompliant_Secretion"
+  name: "hGF_secretion_HEK293_clinical"
   host: HEK293
+
   backbone:
-    resistance: none # Clinical compliance: no antibiotic resistance genes as requested
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha # Human-derived promoter for constitutive, non-viral expression
+    - promoter: CMV
+
     - cistron:
-        label: secreted_hGH
+        label: hGF_secreted
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal peptide for efficient extracellular transport
+          - tag: signal_peptide_IgG
           - gene:
-              id: P01241
+              id: "HGF"
               source: uniprot
-    - terminator: bGH_polyA # Standard mammalian terminator for transcript stability
+
+    - terminator: SV40_polyA

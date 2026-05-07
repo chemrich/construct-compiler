@@ -1,40 +1,51 @@
 construct:
-  name: "product_x_pathway_operon"
+  name: "product_X_pathway_operon_ABCD"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # Strong constitutive promoter for balanced expression
+
     - cistron:
         label: enzyme_A
         expression: high
-        gene:
-          id: enzyme_A
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: enzyme_A
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_B
         expression: high
-        fused: false
-        gene:
-          id: enzyme_B
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: enzyme_B
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_C
         expression: high
-        fused: false
-        gene:
-          id: enzyme_C
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: enzyme_C
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_D
         expression: high
-        fused: false
-        gene:
-          id: enzyme_D
-          source: uniprot
+        chain:
+          - gene:
+              id: enzyme_D
+              source: uniprot
+
     - terminator: rrnB_T1

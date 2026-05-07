@@ -1,47 +1,58 @@
 construct:
-  name: "pseudomonas_putida_plastic_degradation_operon"
-  host: e_coli  # e_coli selected as host for synthesis; construct compatible with P. putida via broad-host-range ori
+  name: "Pp_plastic_degradation_operon"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pBBR1 # Broad-host-range origin for Pseudomonas compatibility
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100 # Strong constitutive promoter
+    - promoter: PpuC
+
     - cistron:
-        label: depoly1
+        label: Depoly1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: Depoly1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: depoly2
+        label: Depoly2
         expression: high
         fused: false
         gene:
           id: Depoly2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: depoly3
+        label: Depoly3
         expression: high
         fused: false
         gene:
           id: Depoly3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: depoly4
+        label: Depoly4
         expression: high
         fused: false
         gene:
           id: Depoly4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: depoly5
+        label: Depoly5
         expression: high
         fused: false
         chain:
@@ -49,4 +60,5 @@ construct:
           - gene:
               id: Depoly5
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

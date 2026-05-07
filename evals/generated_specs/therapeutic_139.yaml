@@ -1,36 +1,37 @@
 construct:
-  name: "non_viral_bispecific_antibody_expression"
+  name: "mammalian_bispecific_antibody"
   host: HEK293
 
   backbone:
-    resistance: none  # User requested no ARGs (Antibiotic Resistance Genes)
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    ori: null
+    source: mammalian
 
   cassette:
-    - promoter: EF1_alpha  # Non-viral mammalian promoter
+    - promoter: CMV
 
     - cistron:
-        label: antibody_heavy_chain
+        label: scFv_A
         expression: high
         chain:
-          - tag: IgK_leader  # Secretion signal for mammalian systems
+          - tag: 6xHis
+          - solubility_tag: Fc
           - gene:
-              id: P01857  # Human IgG1 heavy chain constant region
+              id: scFv_A
               source: uniprot
-          - tag: 6xHis      # Common purification tag
 
     - spacer: 30
 
     - cistron:
-        label: antibody_light_chain
+        label: scFv_B
         expression: high
-        fused: false  # Independent translation for the second chain
+        fused: false
         chain:
-          - tag: IgK_leader  # Secretion signal for mammalian systems
-          - gene:
-              id: P01834  # Human Ig kappa light chain constant region
-              source: uniprot
           - tag: 6xHis
+          - solubility_tag: Fc
+          - gene:
+              id: scFv_B
+              source: uniprot
 
-    - terminator: bGH_PA  # Non-viral bovine growth hormone polyadenylation signal systems
+    - terminator: polyA

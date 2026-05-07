@@ -1,15 +1,23 @@
 construct:
-  name: "human_optimized_target_expression"
+  name: codon_optimized_mammalian_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: target_gene
+              id: target_gene_codon_optimized_human
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

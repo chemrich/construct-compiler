@@ -1,23 +1,27 @@
 construct:
-  name: "tet_on_inducible_human_gene_system"
+  name: "Tet_On_human_gene_expression_system"
   host: HEK293
-  backbone:
-    resistance: hygromycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
-    - cistron:
-        label: rtTA_constitutive
+      cistron:
+        label: rtTA
+        expression: high
         gene:
-          id: rtTA3
+          id: rtTA
           source: uniprot
-    - terminator: bGH_pA
-    - spacer: 100
-    - promoter: TRE3G
-    - cistron:
+      terminator: SV40_polyA
+
+    - spacer: 30
+
+    - promoter: P_TRE
+      cistron:
         label: target_human_gene
-        gene:
-          id: TP53
-          source: uniprot
-    - terminator: SV40_pA
+        expression: high
+      terminator: SV40_polyA
+
+  backbone:
+    catalog_vector: "pTRE-tight"
+    resistance: hygromycin
+    ori: pBR322
+    source: addgene

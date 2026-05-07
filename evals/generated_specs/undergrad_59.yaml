@@ -1,24 +1,30 @@
 construct:
-  name: "bacterial_ligand_biosensor"
-  host: e_coli
+  name: bacterial_biosensor_gfp
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+    
     - cistron:
-        label: "sensor_receptor"
-        expression: medium
+        label: sensor_receptor
+        expression: high
         gene:
-          id: "araC"
+          id: luxR
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: "reporter"
+        label: gfp_reporter
         expression: high
         fused: false
         gene:
-          id: "mEGFP"
+          id: mGFP
           source: fpbase
+    
     - terminator: rrnB_T1

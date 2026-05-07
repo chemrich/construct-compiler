@@ -1,19 +1,29 @@
 construct:
-  name: "toxic_therapeutic_solubility_express"
-  host: e_coli
+  name: toxic_protein_inducible_expression
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Note: Included to satisfy tool requirements; actual production would utilize an auxotrophic selection system to avoid antibiotic resistance genes.
+    resistance: null
     ori: pBR322
     source: addgene
+    # Comment: Custom backbone without antibiotic resistance as requested
+
   cassette:
-    - promoter: araBAD # Tight inducible control (non-viral) to prevent leaky expression of toxic product during growth phase.
+    - promoter: T7lac
+      # Comment: T7lac provides tight basal repression with IPTG induction for toxic protein control
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_protein
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
-          - cleavage_site: Factor_Xa # Non-viral protease site used to satisfy 'no viral elements' constraint.
+            # Comment: MBP (Maltose Binding Protein) provides robust solubility for toxic proteins
+          - cleavage_site: TEV
+            # Comment: TEV protease allows clean tag removal post-expression
           - gene:
-              id: P55957 # Human Bcl-2-like protein 11 (Bim), a pro-apoptotic therapeutic protein highly toxic to expression hosts.
-              source: uniprot
+              id: null
+              # Comment: User must specify the therapeutic protein gene ID and source (uniprot or fpbase)
+
     - terminator: rrnB_T1
+      # Comment: Strong terminator to prevent read-through transcription

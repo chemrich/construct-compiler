@@ -1,16 +1,21 @@
 construct:
-  name: "lacZ_transcriptional_fusion_test"
+  name: promoter_test_lacZ_fusion
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pUC
+    source: addgene
+  
   cassette:
-    - promoter: T7lac # Defaulted to T7lac per instructions; replace with custom promoter sequence for synthesis
+    - promoter: lacUV5
+      # User's custom promoter element would be inserted here
+    
     - cistron:
-        label: lacZ_reporter
+        label: lacZ
         expression: high
-        fused: false # Ensures the gene has its own ribosome binding site as requested
         gene:
-          id: P00722
+          id: lacZ
           source: uniprot
-    - terminator: rrnB_T1
+    
+    - terminator: BBa_B0015

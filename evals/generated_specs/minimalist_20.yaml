@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: "GFP_expression"
-  host: e_coli
+  name: "ecoli_gfp_expression"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -10,11 +9,12 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: gfp
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
 
     - terminator: rrnB_T1
-```

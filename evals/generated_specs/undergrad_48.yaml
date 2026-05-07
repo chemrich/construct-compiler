@@ -1,26 +1,34 @@
-```yaml
 construct:
-  name: "metabolic_pathway_enzymeX_enzymeY"
+  name: "dual_enzyme_pathway_high_expression"
   host: e_coli
+  
   backbone:
     resistance: tetracycline
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enzymeX
+        label: enzyme_x
         expression: high
-        gene:
-          id: enzymeX  # Replace with actual gene ID/name
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: enzyme_x
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: enzymeY
+        label: enzyme_y
         expression: high
         fused: false
-        gene:
-          id: enzymeY  # Replace with actual gene ID/name
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: enzyme_y
+              source: uniprot
+    
     - terminator: rrnB_T1
-```

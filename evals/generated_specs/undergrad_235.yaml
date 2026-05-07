@@ -1,21 +1,30 @@
 construct:
-  name: "protein_g_sfgfp1_10_fusion"
+  name: "ProteinG_splitGFP1_10_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: pG_gfp1_10_fusion
+        label: ProteinG_splitGFP
         expression: high
         chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P06654
+              id: ProteinG
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: sfGFP1-10
+              id: sfGFP_1_10
               source: fpbase
-    - terminator: BGH_pA
+              # N-terminal fragment of split GFP for complementation assays
+
+    - terminator: rrnB_T1

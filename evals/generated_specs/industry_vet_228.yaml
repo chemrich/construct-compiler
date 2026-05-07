@@ -1,20 +1,30 @@
 construct:
-  name: "CapsidFragment_P2A_mEGFP"
+  name: "CapsidFragment_EGFP_2A_release"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: self_cleaving_capsid_reporter
+        label: CapsidFragment
         expression: high
         chain:
+          - tag: FLAG
           - gene:
               id: CapsidFragment
               source: uniprot
-          - linker:
-              type: P2A
+
+    - cistron:
+        label: EGFP_released
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: 2A_P2A  # Self-cleaving peptide for post-translational release
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

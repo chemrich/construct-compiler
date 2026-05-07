@@ -1,16 +1,18 @@
 construct:
-  name: "sgRNA_U6_Hygro_HEK293"
+  name: sgRNA_expression_U6
   host: HEK293
+
   backbone:
+    catalog_vector: pTwist CMV
     resistance: hygromycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: sgRNA_guide_scaffold
-        expression: high
-        gene:
-          id: sgRNA_scaffold
-          source: addgene
-    - terminator: BBa_B0015
+
+    - gene:
+        id: sgRNA_scaffold
+        source: uniprot
+
+    - terminator: rrnB_T1

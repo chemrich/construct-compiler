@@ -1,12 +1,15 @@
 construct:
-  name: "therapeutic_peptide_solubility_fusion"
-  host: e_coli_bl21
+  name: "therapeutic_peptide_carrier_fusion"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
@@ -14,8 +17,15 @@ construct:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P01270
+              id: therapeutic_peptide
               source: uniprot
-    - terminator: T7term
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: carrier_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

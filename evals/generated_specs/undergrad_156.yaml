@@ -1,16 +1,28 @@
 construct:
-  name: "GeneY_KO_NatR"
+  name: GeneY_knockout_NatR
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: nourseothricin
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - sequence:
+        id: GeneY_5prime_homology_arm
+        length: 500
+        description: 5' homology arm flanking GeneY
+
     - cistron:
-        label: NatR_selection_marker
-        expression: medium
+        label: selection_marker
+        expression: high
         gene:
-          id: nat1
+          id: NatR
           source: uniprot
-    - terminator: CYC1_term
+
+    - sequence:
+        id: GeneY_3prime_homology_arm
+        length: 500
+        description: 3' homology arm flanking GeneY
+
+    - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: "araBAD_inducible_GOI_expression"
+  name: "arabinose_inducible_GOI"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: generic_GOI
+              source: uniprot
+
     - terminator: rrnB_T1

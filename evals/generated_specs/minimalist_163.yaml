@@ -1,22 +1,32 @@
 construct:
-  name: "polycistronic_egfp_mcherry"
-  host: e_coli_bl21_de3
+  name: eGFP_mCherry_polycistronic
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: egfp
+        label: eGFP
         expression: high
-        gene:
-          id: eGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: eGFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: mcherry
+        label: mCherry
         expression: high
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

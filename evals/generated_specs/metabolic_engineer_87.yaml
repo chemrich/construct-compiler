@@ -1,55 +1,76 @@
 construct:
-  name: "six_enzyme_transient_stable_operon"
-  host: e_coli_bl21_de3
+  name: "six_enzyme_operon_with_degradation_tags"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_C1
+        label: C1
         expression: high
-        fused: false
         chain:
+          - tag: ssrA
           - gene:
               id: C1
-          - tag: SsrA
-    - spacer: 30
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_C2
+        label: C2
         expression: high
         fused: false
         chain:
+          - tag: ssrA
           - gene:
               id: C2
-          - tag: SsrA
-    - spacer: 30
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_C3
+        label: C3
         expression: high
         fused: false
         chain:
+          - tag: ssrA
           - gene:
               id: C3
-          - tag: SsrA
-    - spacer: 30
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_C4
-        expression: medium
+        label: C4
+        expression: high
         fused: false
         gene:
           id: C4
-    - spacer: 30
+          source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_C5
-        expression: medium
+        label: C5
+        expression: high
         fused: false
         gene:
           id: C5
-    - spacer: 30
+          source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_C6
-        expression: medium
+        label: C6
+        expression: high
         fused: false
         gene:
           id: C6
-    - terminator: T7term
+          source: uniprot
+
+    - terminator: rrnB_T1

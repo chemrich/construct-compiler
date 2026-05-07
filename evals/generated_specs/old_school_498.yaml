@@ -1,21 +1,28 @@
 construct:
-  name: "shRNA_knockdown_GFP_reporter"
+  name: "shRNA_knockdown_GFP_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: U6
     - cistron:
-        label: knockdown_shRNA
+        label: shRNA_target
+        expression: high
         gene:
           id: shRNA_target
+          source: uniprot
+
+    - terminator: U6_terminator
+
     - promoter: CAG
     - cistron:
-        label: reporter
-        expression: medium
+        label: GFP_tracker
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: bGH_PA
+
+    - terminator: WPRE

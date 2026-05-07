@@ -1,14 +1,20 @@
 construct:
-  name: "constitutive_hGH_secretion_mammalian"
+  name: constitutive_hGH_secretion
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: hGH
         expression: high
-        gene:
-          id: P01241
-          source: uniprot
-    - terminator: bGH_PA
+        chain:
+          - tag: signal_peptide_hGH
+          - gene:
+              id: P01241
+              source: uniprot
+
+    - terminator: SV40_polyA

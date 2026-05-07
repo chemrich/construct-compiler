@@ -1,23 +1,33 @@
 construct:
   name: "quorum_sensing_receiver_module"
-  host: e_coli
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23106
+    - promoter: araBAD
+
     - cistron:
-        label: receiver_protein
-        expression: medium
-        gene:
-          id: P12746
-          source: uniprot
-    - terminator: BBa_B0015
-    - promoter: luxI
-    - cistron:
-        label: activated_output
+        label: luxR_receiver
         expression: high
-        gene:
-          id: Output_T
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_T
+        expression: high
+        fused: false
+        chain:
+          - promoter: luxPR
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
     - terminator: rrnB_T1

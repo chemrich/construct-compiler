@@ -1,23 +1,30 @@
 construct:
-  name: "divergent_tagged_mammalian_expression_vector"
-  host: mammalian
+  name: mammalian_dual_tag_expression_vector
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
+    # Note: pTwist CMV includes standard SV40 polyA; we'll add distinct polyA in cassette
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: divergent_fusion_protein
+        label: target_protein
         expression: high
         chain:
-          - tag: Twin-Strep
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01106
+              id: unspecified_target
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: mNeonGreen
               source: fpbase
-    - terminator: SV40_polyA # Selected SV40 polyA to provide divergence from the standard BGH polyA often found in CMV-driven backbones
+
+    - terminator: BGH_polyA

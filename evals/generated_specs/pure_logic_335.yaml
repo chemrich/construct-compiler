@@ -1,26 +1,35 @@
 construct:
-  name: "chemical_g_analog_to_digital_switch"
+  name: "analog_to_digital_signal_converter_G_to_H"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: receptor_g
-        expression: medium
+        label: G_receptor
+        expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: araC
+              id: luxR
               source: uniprot
-    - spacer: 50
-    - promoter: araBAD
+        # luxR acts as the analog sensor: binds acyl-homoserine lactone (proxy for G)
+        # Conformational change upon G binding acts as threshold detector
+
+    - spacer: 25
+
     - cistron:
-        label: output_h
-        expression: high
+        label: output_H
+        expression: medium
+        fused: false
+        # H output protein; expression controlled by luxR-regulated Plux promoter
+        # This represents the digital output controlled by the G-sensing circuit
         gene:
-          id: mScarlet
+          id: mCherry
           source: fpbase
+
     - terminator: rrnB_T1

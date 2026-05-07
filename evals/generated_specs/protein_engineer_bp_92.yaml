@@ -1,23 +1,36 @@
 construct:
-  name: "pichia_scfv_expression_with_zeo_marker"
+  name: "Pichia_scFv_Zeocin_expression"
   host: yeast
+
   backbone:
     resistance: zeocin
-    ori: pUC
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: TEF1
+
     - cistron:
-        label: zeo_resistance
+        label: zeocin_resistance
+        expression: high
         gene:
           id: ZeoR
-    - terminator: EM7  # User requested EM7 as terminator; note EM7 is typically a bacterial promoter
+          source: uniprot
+
+    - terminator: EM7
+
+    - spacer: 40
+
     - promoter: GAP
+
     - cistron:
-        label: scfv_target
+        label: target_scFv
+        expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor
           - gene:
               id: scFv
+              source: uniprot
           - tag: HA
-    - terminator: AOX1
+
+    - terminator: rrnB_T1

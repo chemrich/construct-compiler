@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_phytase_secretion_system"
+  name: phytase_secretion_bacillus
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac01
+
     - cistron:
-        label: phytase_expression
+        label: phytase
         expression: high
         chain:
-          - tag: AmyQ_signal_peptide
+          - signal_peptide: AmyQ
           - gene:
-              id: P42094
+              id: phytase
               source: uniprot
           - tag: Strep-II
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

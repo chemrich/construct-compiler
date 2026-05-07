@@ -1,16 +1,21 @@
 construct:
-  name: "yeast_tet_inducible_gfp_reporter"
+  name: yeast_gfp_reporter_tet_inducible
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: G418
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TetO7
+    - promoter: tTA_responsive
+    
     - cistron:
-        label: reporter
+        label: gfp_reporter
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: CYC1_term
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: CYC1

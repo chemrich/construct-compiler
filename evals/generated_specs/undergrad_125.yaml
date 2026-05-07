@@ -1,13 +1,18 @@
 construct:
   name: "mammalian_gRNA_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: gRNA_expression_unit
-        expression: high
-        gene:
-          id: sgRNA_target_sequence
-    - terminator: polyT
+
+    - gene:
+        id: gRNA_scaffold
+        source: uniprot
+
+    - terminator: rrnB_T1

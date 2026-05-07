@@ -1,20 +1,24 @@
 construct:
-  name: "pH_Sensitive_Therapeutic_Yeast_Construct"
+  name: "yeast_pH_sensitive_secreted_therapeutic"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426" # High-copy yeast shuttle vector with URA3 auxotrophic marker
-    resistance: ampicillin  # For selection in E. coli
+    resistance: URA3  # auxotrophic marker for S. cerevisiae selection
+    ori: 2micron      # high-copy yeast plasmid origin
+    source: addgene
+
   cassette:
-    - promoter: PHO5 # pH-regulated/phosphate-inducible yeast promoter
+    - promoter: PHO5  # pH-responsive promoter; activated under low-phosphate/acidic conditions
+
     - cistron:
-        label: secreted_therapeutic
+        label: pH_sensitive_therapeutic
         expression: high
         chain:
-          - gene:
-              id: MF-alpha1 # Standard Saccharomyces cerevisiae alpha-factor secretion signal
-              source: uniprot
+          - tag: alpha_factor_signal  # yeast secretion signal peptide (N-terminal)
           - gene:
               id: pH_SensitiveProteinV
               source: uniprot
-          - tag: 6xHis # C-terminal purification tag
-    - terminator: CYC1 # Standard yeast terminator
+          - cleavage_site: Kex2  # yeast-compatible protease cleavage to remove signal peptide
+          - tag: 6xHis  # C-terminal His tag for purification
+
+    - terminator: CYC1  # S. cerevisiae transcription terminator

@@ -1,20 +1,28 @@
 construct:
-  name: "chimeric_AAV_capsid_solubility_optimized"
+  name: mammalian_AAV_capsid_soluble
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: capsid_protein
+        label: AAV_capsid
         expression: high
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: VP1
+              id: AAV_capsid_component
               source: uniprot
-    - terminator: bGH_pA # Standard mammalian polyadenylation signal for high-level expression
+
+    - terminator: rrnB_T1

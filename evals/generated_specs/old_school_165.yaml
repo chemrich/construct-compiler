@@ -1,17 +1,23 @@
 construct:
-  name: "gst_thrombin_enzyme_purification_construct"
+  name: "GST_enzyme_thrombin_cleavable"
   host: e_coli
+
   backbone:
     resistance: chloramphenicol
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
-        label: target_purification
+        label: enzyme
         expression: high
         chain:
           - solubility_tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: target_enzyme
+              id: enzyme
+              source: uniprot
+
     - terminator: rrnB_T1

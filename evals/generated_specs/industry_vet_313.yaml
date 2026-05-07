@@ -1,24 +1,31 @@
 construct:
-  name: yeast_surface_display_aav2_epitope
+  name: "yeast_surface_display_AAV_epitope"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Strong constitutive yeast promoter requested
+    - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
-          - gene:
-              id: AGA2
-              source: uniprot
+          - tag: HA
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P03135  # UniProt ID for AAV2 VP1 capsid protein used as epitope source
+              id: AAV_epitope_insert
+              source: custom
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: Aga2p
               source: uniprot
-          - tag: HA
-    - terminator: CYC1
+
+    - terminator: CYC1_terminator

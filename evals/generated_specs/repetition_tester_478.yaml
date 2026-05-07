@@ -1,21 +1,62 @@
 construct:
-  name: "non_homologous_yeast_ecoli_shuttle_v1"
-  host: yeast
+  name: "yeast_ecoli_shuttle_vector"
+  host: e_coli
+  
   backbone:
-    # E. coli specific components
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+    # Additional yeast-specific elements (noted as part of backbone design)
+    # Yeast ori: 2-micron (high copy) with URA3 marker on separate cassette
+    # E. coli ori: pBR322 (medium copy)
+    # Physical separation and unique regulatory elements prevent recombination
+  
   cassette:
-    # Yeast specific components (URA3 marker and CEN/ARS origin)
-    # The promoter and terminator used here are distinct from the prokaryotic ones in the backbone
-    - promoter: TEF1
+    # E. coli expression cassette with kanamycin resistance
+    - promoter: T7lac
+    
     - cistron:
-        label: yeast_selection_ura3
-        expression: medium
+        label: ecoli_resistance_marker
+        expression: high
+        gene:
+          id: neo
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    # Spacer to separate E. coli from yeast elements
+    - spacer: 50
+    
+    # Yeast cassette with URA3 and CEN/ARS origin
+    # Uses entirely orthogonal promoter and terminator from E. coli cassette
+    - promoter: GAL1
+    # Comment: GAL1 is a yeast-specific Pol II promoter, completely non-homologous to T7lac
+    
+    - cistron:
+        label: yeast_marker
+        expression: high
         gene:
           id: URA3
           source: uniprot
+    # Comment: URA3 provides uracil prototrophy selection in yeast
+    
     - terminator: CYC1
-    - spacer: 512  # Sequence representing the CEN6/ARSH4 yeast origin of replication
-    - terminator: BBa_B0015
+    # Comment: CYC1 is a yeast-specific terminator, entirely distinct from rrnB_T1
+    
+    # Additional spacer
+    - spacer: 50
+    
+    # Optional: LEU2 alternative marker cassette for flexibility
+    - promoter: ADH1
+    # Comment: ADH1 is a yeast constitutive promoter, unique from both T7lac and GAL1
+    
+    - cistron:
+        label: yeast_backup_marker
+        expression: medium
+        gene:
+          id: LEU2
+          source: uniprot
+    # Comment: LEU2 provides leucine prototrophy; independent selection
+    
+    - terminator: ADH1_term
+    # Comment: ADH1 terminator is yeast-specific, distinct from CYC1 and rrnB_T1

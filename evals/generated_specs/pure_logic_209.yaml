@@ -1,22 +1,36 @@
 construct:
-  name: "positive_feedback_signal_amplification_loop"
+  name: "C1_positive_feedback_amplifier"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Responds to input 'C1' (Arabinose) to trigger initial synthesis of Protein_Y
+    - promoter: T7lac
+
     - cistron:
-        label: Protein_Y_trigger
-        expression: low
-        gene:
-          id: LuxR
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: pLux    # Strong positive feedback promoter activated by the presence of Protein_Y (LuxR)
+        label: C1_sensor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: C1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: Protein_Y_autoactivation
+        label: Protein_Y_autoactivator
         expression: high
-        gene:
-          id: LuxR
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Protein_Y
+              source: uniprot
+        # Note: Protein_Y includes an N-terminal DNA-binding domain (DBD) 
+        # that recognizes and activates its own promoter region upstream.
+        # In vivo positive feedback: C1 input → low initial Protein_Y expression →
+        # Protein_Y binds its own promoter → rapid auto-amplification to high levels.
+
+    - terminator: rrnB_T1

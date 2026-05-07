@@ -1,22 +1,20 @@
 construct:
-  name: "secreted_protein_export"
+  name: secreted_secret_protein
   host: e_coli
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: secreted_target
+        label: target
         expression: high
         chain:
-          - signal_peptide: pelB  # pelB signal peptide for periplasmic export
+          - tag: pelB_signal_peptide
           - gene:
-              id: "Secret_Protein"  # Replace with actual protein ID
-              source: uniprot       # Or appropriate source
+              id: Secret_Protein
+              source: uniprot
 
     - terminator: rrnB_T1

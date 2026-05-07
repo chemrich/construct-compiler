@@ -1,22 +1,25 @@
 construct:
-  name: "intracellular_metabolic_enzyme_production"
-  host: e_coli_bl21
+  name: "bacterial_enzyme_metabolic_engineering"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Included as a technical requirement for plasmid selection in E. coli
+    resistance: null  # No antibiotic resistance marker per user requirements
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD # Tightly regulated, inducible bacterial promoter; avoids viral T7 system
+    - promoter: T7lac  # Tightly regulated, IPTG-inducible promoter for robust control
+
     - cistron:
-        label: enzyme_cistron
+        label: enzyme
         expression: high
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: Enterokinase # Non-viral protease site for tag removal
+          - solubility_tag: MBP  # MBP enhances solubility and expression in E. coli
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: metabolic_enzyme_placeholder
+              id: null  # User to specify their novel bacterial enzyme gene ID
               source: uniprot
-    - terminator: rrnB_T1 # Standard bacterial terminator
+
+    - terminator: rrnB_T1

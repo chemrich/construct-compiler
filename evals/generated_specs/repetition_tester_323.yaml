@@ -1,42 +1,48 @@
 construct:
-  name: "yeast_multicistronic_mevalonate_pathway"
+  name: "S_cerevisiae_trienzyme_pathway"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
 
   cassette:
-    - promoter: GAL1  # Strong inducible promoter for S. cerevisiae
+    - promoter: GAL1
 
     - cistron:
-        label: erg10
+        label: enzyme_1
         expression: high
-        gene:
-          id: P41338
-          source: uniprot
-
-    - cistron:
-        label: erg13
-        expression: high
-        fused: true  # Joined in a single ORF for self-cleaving 2A peptide expression
         chain:
-          - linker:
-              type: P2A  # Porcine teschovirus-1 2A peptide
+          - tag: 6xHis
           - gene:
-              id: P10918
+              id: enzyme_1
               source: uniprot
 
+    - comment: "2A_peptide_variant_1_P2A"
+      spacer: 15
+
     - cistron:
-        label: hmg1
+        label: enzyme_2
         expression: high
-        fused: true
+        fused: false
         chain:
-          - linker:
-              type: T2A  # Thosea asigna virus 2A peptide (different variant to avoid repeats)
+          - tag: 6xHis
           - gene:
-              id: P12683
+              id: enzyme_2
+              source: uniprot
+
+    - comment: "2A_peptide_variant_2_T2A"
+      spacer: 15
+
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: enzyme_3
               source: uniprot
 
     - terminator: CYC1

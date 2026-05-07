@@ -1,21 +1,22 @@
 construct:
-  name: "Ad5_E1A_MBP_Fusion"
-  host: e_coli_bl21_de3
+  name: "AAV_helper_factor_bacterial_expression"
+  host: in_vitro
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: helper_factor
+        label: AAV_helper
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: short_GS
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
-              id: P03255
+              id: adenovirus_early_gene_product
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

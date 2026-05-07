@@ -1,25 +1,31 @@
 construct:
-  name: "divergent_phage_promoter_cloning_vector"
-  host: e_coli_bl21_de3  # Chosen for T7/SP6 polymerase compatibility
+  name: "divergent_promoter_cloning_vector"
+  host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
-    source: custom
+    source: addgene
+
   cassette:
+    - promoter: T7lac
+      direction: forward
+
+    - spacer: 50
+
+    - mcs:
+        sites:
+          - EcoRI
+          - BamHI
+          - HindIII
+          - XbaI
+          - SalI
+          - PstI
+        cloning_strategy: directional
+
+    - spacer: 50
+
     - promoter: T7
-    - cistron:
-        label: forward_insert_test
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 50  # Multiple Cloning Site (MCS) region for orientation testing
-    - promoter: SP6  # Divergent phage promoter; orientation assumed opposite in physical map
-    - cistron:
-        label: reverse_insert_test
-        expression: high
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+      direction: reverse
+
+    - terminator: rrnB_T1

@@ -1,19 +1,24 @@
 construct:
-  name: "Bacillus_subtilis_lipase_secretion_construct"
+  name: "Bacillus_lipase_secretion_high_yield"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: secretory_lipase
+        label: secreted_lipase
         expression: high
         chain:
-          - tag: AmyE
+          - secretion_tag: AmyE
           - gene:
-              id: P00561
+              id: lipase
               source: uniprot
+              codon_optimization: bacillus_subtilis
           - tag: 6xHis
+
     - terminator: rrnB_T1

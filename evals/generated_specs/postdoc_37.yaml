@@ -1,23 +1,23 @@
 construct:
-  name: human_mito_protein_yeast_expression
+  name: "yeast_mitochondrial_protein_COX8MTS"
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
-    - promoter: T7lac
+    - promoter: GAL1
 
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: COX8_MTS  # mitochondrial targeting sequence from COX8
           - tag: Strep-II
+          - mts: COX8
           - gene:
-              id: P12345  # replace with actual UniProt ID
+              id: P12345
               source: uniprot
 
     - terminator: rrnB_T1

@@ -1,54 +1,97 @@
 construct:
-  name: "aav_six_subunit_enzyme_complex"
-  host: mammalian
+  name: "AAV_six_subunit_enzyme_complex"
+  host: HEK293
+  
   backbone:
-    catalog_vector: "pAAV-MCS"
+    catalog_vector: "pAAV-CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "subunit_1"
+        label: subunit_1
         expression: high
-        gene:
-          id: "SUBUNIT_1"
-          source: uniprot
-    - spacer: 585
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P12345"
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: "subunit_2"
+        label: IRES_element
         expression: high
         fused: false
+        # IRES sequence for cap-independent translation of subunit_2
         gene:
-          id: "SUBUNIT_2"
+          id: "EMCV_IRES"
           source: uniprot
-    - terminator: bGH_pA
-    - promoter: EF1_alpha
+
+    - spacer: 25
+
     - cistron:
-        label: "subunit_3"
-        expression: medium
-        gene:
-          id: "SUBUNIT_3"
-          source: uniprot
-    - terminator: SV40_pA
-    - promoter: EF1_alpha
+        label: subunit_2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P23456"
+              source: uniprot
+
+    - terminator: bGH_polyA
+
+    - promoter: CMV
+
     - cistron:
-        label: "subunit_4"
-        expression: medium
-        gene:
-          id: "SUBUNIT_4"
-          source: uniprot
-    - terminator: SV40_pA
-    - promoter: EF1_alpha
+        label: subunit_3
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P34567"
+              source: uniprot
+
+    - terminator: bGH_polyA
+
+    - promoter: CMV
+
     - cistron:
-        label: "subunit_5"
-        expression: medium
-        gene:
-          id: "SUBUNIT_5"
-          source: uniprot
-    - terminator: SV40_pA
-    - promoter: EF1_alpha
+        label: subunit_4
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P45678"
+              source: uniprot
+
+    - terminator: bGH_polyA
+
+    - promoter: CMV
+
     - cistron:
-        label: "subunit_6"
-        expression: medium
-        gene:
-          id: "SUBUNIT_6"
-          source: uniprot
-    - terminator: SV40_pA
+        label: subunit_5
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P56789"
+              source: uniprot
+
+    - terminator: bGH_polyA
+
+    - promoter: CMV
+
+    - cistron:
+        label: subunit_6
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P67890"
+              source: uniprot
+
+    - terminator: bGH_polyA

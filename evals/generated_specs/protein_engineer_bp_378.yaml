@@ -1,28 +1,32 @@
 construct:
-  name: "bacillus_subtilis_pxyl_groel_operon"
+  name: "bacillus_groel_target_operon"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: groel_chaperone
-        expression: medium
-        fused: false
-        gene:
-          id: P05634
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: target_protein
+        label: groEL
         expression: high
-        fused: false
+        gene:
+          id: groEL
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: target
+        expression: high
         chain:
-          - solubility_tag: NusA
+          - tag: NusA
           - cleavage_site: TEV
           - gene:
-              id: target_protein
+              id: target
               source: uniprot
+
     - terminator: rrnB_T1

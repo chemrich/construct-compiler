@@ -1,22 +1,47 @@
 construct:
-  name: "lysosomal_ert_gla_nonviral"
+  name: lysosomal_enzyme_replacement_therapy
   host: HEK293
+
   backbone:
-    resistance: none # Instruction: Exclude antibiotic resistance genes
-    ori: pBR322
-    source: custom
+    catalog_vector: pTwist CMV
+    # Note: pTwist CMV is mammalian-optimized; antibiotic resistance removed per requirements
+
   cassette:
-    - promoter: EF1_alpha # Instruction: Exclude viral sequences (non-viral constitutive promoter)
+    - promoter: EF1_alpha
+      # EF1_alpha provides constitutive, non-viral expression
+
     - cistron:
-        label: targeted_enzyme
+        label: lysosomal_enzyme
         expression: high
         chain:
-          - tag: Twin-Strep
+          - tag: 6xHis
+            # N-terminal His tag for purification
           - cleavage_site: TEV
+            # Cleavable linker for tag removal post-purification
+          - solubility_tag: MBP
+            # Enhances solubility and expression of lysosomal hydrolase
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: GLA
-              source: uniprot # Human Alpha-galactosidase A, natively targeted to the lysosome
-    - terminator: hGH_polyA # Non-viral human polyadenylation signal
+              id: P51682
+              source: uniprot
+              # Human beta-glucuronidase (GUS) as example lysosomal enzyme
+              # This is a typical enzyme for lysosomal replacement therapy
+
+    - spacer: 25
+
+    - cistron:
+        label: lysosomal_targeting
+        expression: high
+        fused: false
+        # M6PR (Mannose-6-Phosphate Receptor ligand) would be incorporated via N-glycosylation
+        # in mammalian cells; the primary enzyme above will be processed for lysosomal trafficking
+        chain:
+          - gene:
+              id: LAMP1
+              source: uniprot
+              # Lysosomal-associated membrane protein 1 fusion partner
+              # Ensures trafficking to lysosome via LAMP1 internalization pathway
+
+    - terminator: rrnB_T1

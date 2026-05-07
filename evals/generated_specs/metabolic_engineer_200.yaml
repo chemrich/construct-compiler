@@ -1,19 +1,24 @@
 construct:
-  name: "terpene_biosynthesis_operon"
+  name: "terpene_biosynthesis_operon_5enzymes"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: trc  # strong constitutive promoter for balanced multi-gene expression
+
     - cistron:
         label: GPS
         expression: high
         gene:
           id: GPS
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: FPS
         expression: high
@@ -21,7 +26,9 @@ construct:
         gene:
           id: FPS
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: SQS
         expression: high
@@ -29,7 +36,9 @@ construct:
         gene:
           id: SQS
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: SQE
         expression: high
@@ -37,7 +46,9 @@ construct:
         gene:
           id: SQE
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: TPS
         expression: high
@@ -47,4 +58,5 @@ construct:
               id: TPS
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

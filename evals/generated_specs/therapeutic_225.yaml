@@ -1,27 +1,34 @@
 construct:
-  name: "soluble_therapeutic_targeted_enzyme_fusion"
-  host: e_coli
+  name: "therapeutic_fusion_protein_soluble"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: none
-    ori: pUC
-    source: custom
+    resistance: null
+    # Non-antibiotic selection: using pBR322 ori with chloramphenicol-free vector
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: targeted_enzyme_fusion
+        label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
-          - cleavage_site: Factor_Xa
-          - gene:
-              id: P01133
-              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
-          - cleavage_site: Enterokinase
           - gene:
-              id: P00805
+              id: "targeting_ligand"
               source: uniprot
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: "therapeutic_enzyme"
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,14 +1,18 @@
 construct:
-  name: "CRISPR_sgRNA_targeting_gene_X"
-  host: mammalian
+  name: CRISPR_sgRNA_geneX_mammalian
+  host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: pX330
+
   cassette:
-    - promoter: U6  # Standard Pol III promoter for sgRNA expression in mammalian cells
+    - promoter: U6
+
     - cistron:
         label: sgRNA
+        expression: high
         gene:
-          id: gene_x_sgRNA
-    - terminator: BBa_B0015
+          id: geneX_sgRNA
+          source: uniprot
+
+    - terminator: U6term

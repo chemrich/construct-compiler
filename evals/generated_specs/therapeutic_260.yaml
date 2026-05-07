@@ -1,25 +1,28 @@
 construct:
-  name: "Therapeutic_HGF_Production"
-  host: e_coli_bl21
+  name: "hGF_analog_therapeutic_expression"
+  host: e_coli_bl21_de3
+
   backbone:
-    # Kanamycin selected as the schema requires a resistance gene; for clinical production, an auxotrophic marker would be substituted.
-    resistance: kanamycin
+    resistance: null  # No antibiotic resistance gene per requirements
     ori: pBR322
     source: addgene
+    # Note: Construct uses non-selective survival; user must implement alternative selection strategy
+
   cassette:
-    # tac promoter used instead of T7 to ensure the construct contains no viral elements.
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: hgf_analog
+        label: hGF_analog
         expression: high
         chain:
-          - solubility_tag: MBP
           - tag: 6xHis
-          - cleavage_site: Enterokinase # Enterokinase (bovine) used instead of TEV (viral) to satisfy the 'no viral elements' requirement.
+          - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: P01241
+              id: human_growth_factor_analog
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator used instead of T7term to avoid viral elements.
+
+    - terminator: rrnB_T1

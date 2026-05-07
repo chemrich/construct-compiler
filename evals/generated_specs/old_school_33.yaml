@@ -1,35 +1,33 @@
-```yaml
 construct:
-  name: ToxicT_arabinose_inducible
+  name: "ToxicT_araBAD_regulated"
   host: e_coli
-
+  
   backbone:
     resistance: kanamycin
-    ori: p15A  # pACYC-derived
+    ori: p15A
     source: addgene
-
+    # Note: pACYC origin (CloDF13) requested; using p15A as closest compatible alternative in standard vectors
+  
   cassette:
     - promoter: araBAD
     
     - cistron:
-        label: target
+        label: AraC_regulator
         expression: medium
-        gene:
-          id: ToxicT
-          source: uniprot
-    
-    - terminator: T7term
-    
-    - spacer: 50
-    
-    - promoter: araC_promoter  # constitutive promoter for AraC regulator
-    
-    - cistron:
-        label: regulator
-        expression: low
         gene:
           id: araC
           source: uniprot
     
     - terminator: rrnB_T1
-```
+    
+    - promoter: araBAD
+    
+    - cistron:
+        label: ToxicT
+        expression: high
+        chain:
+          - gene:
+              id: ToxicT
+              source: uniprot
+    
+    - terminator: T7term

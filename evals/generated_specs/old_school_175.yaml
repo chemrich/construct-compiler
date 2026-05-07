@@ -1,16 +1,21 @@
 construct:
-  name: "bacillus_subtilis_constitutive_expression"
-  host: b_subtilis
+  name: "bacillus_subtilis_expression"
+  host: bacillus
+
   backbone:
     resistance: erythromycin
-    ori: pUB110
+    ori: pBE195
     source: addgene
+
   cassette:
-    - promoter: Pveg  # Strong constitutive promoter for Bacillus subtilis
+    - promoter: sigA_promoter
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        gene:
-          id: gene_of_interest
-          source: uniprot
-    - terminator: amyL_terminator  # Bacillus-specific terminator from the alpha-amylase gene
+        chain:
+          - gene:
+              id: 
+              source: uniprot
+
+    - terminator: rrnB_T1

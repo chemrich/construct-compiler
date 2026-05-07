@@ -1,25 +1,59 @@
 construct:
-  name: "dual_input_inhibitory_gate"
-  host: e_coli_bl21
+  name: "two_input_two_output_logic_gate"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: "Plac_araO" # Induced by I1 (IPTG), repressed by I2 (Arabinose)
+    - promoter: araBAD
+      label: input_1_promoter
+    
     - cistron:
-        label: O1
+        label: I1_repressor
         expression: medium
         gene:
-          id: mEGFP
-          source: fpbase
+          id: tetR
+          source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: "Para_lacO" # Induced by I2 (Arabinose), repressed by I1 (IPTG)
+    
+    - promoter: T7lac
+      label: output_1_promoter
+    
     - cistron:
-        label: O2
+        label: O1_output
+        expression: high
+        chain:
+          - gene:
+              id: mGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1
+    
+    - promoter: araBAD
+      label: input_2_promoter
+    
+    - cistron:
+        label: I2_repressor
         expression: medium
-        fused: false
         gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: BBa_B0015
+          id: lacI
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - promoter: T7lac
+      label: output_2_promoter
+    
+    - cistron:
+        label: O2_output
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - terminator: rrnB_T1

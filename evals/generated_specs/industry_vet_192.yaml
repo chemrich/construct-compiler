@@ -1,27 +1,45 @@
 construct:
-  name: "HEK293_TetOn_Inducible_Target_Expression"
+  name: "HEK293_TetOn_inducible_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
+
   cassette:
     - promoter: CMV
+      label: transactivator_cassette
+
     - cistron:
-        label: rtTA_transactivator
-        expression: medium
-        gene:
-          id: rtTA3
-          source: uniprot
-    - spacer: 40
-    - promoter: TRE3G  # Tet-responsive promoter for drug-inducible expression
+        label: rtTA
+        expression: high
+        chain:
+          - gene:
+              id: rtTA
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+    - spacer: 100
+
+    - promoter: TRE
+      label: inducible_cassette
+      comment: "TRE (Tetracycline Response Element) drives expression only in presence of doxycycline with rtTA"
+
     - cistron:
         label: target_protein
         expression: high
-        fused: false
         chain:
           - gene:
-              id: mEGFP
-              source: fpbase
-          - tag: 6xHis
+              id: target_protein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: FLAG
-    - terminator: bGH_pA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+
+    - terminator: SV40_polyA

@@ -1,26 +1,44 @@
 construct:
-  name: "yeast_non_recombining_evolution_library"
+  name: "directed_evolution_library_yeast"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: geneticin
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+      # Constitutive yeast promoter for directed evolution target
+
     - cistron:
         label: target_enzyme
         expression: high
-        gene:
-          id: P00330
-          source: uniprot
+        chain:
+          - gene:
+              id: target_enzyme
+              source: uniprot
+              # Placeholder: user will supply specific enzyme UniProt ID
+              # Mutagenesis library will be applied to this gene
+
     - terminator: CYC1
+      # First terminator: CYC1 is a robust yeast terminator
+
     - spacer: 50
+      # Sequence buffer to ensure complete separation between cassettes
+
     - promoter: TEF1
+      # Constitutive TEF1 promoter for selection marker (completely distinct from GAL1)
+
     - cistron:
         label: selection_marker
-        expression: medium
-        fused: false
-        gene:
-          id: P04150
-          source: uniprot
-    - terminator: ENO2
+        expression: high
+        chain:
+          - gene:
+              id: kanMX
+              source: uniprot
+              # kanMX encodes neomycin phosphotransferase; robust selection marker
+              # Distinct from target enzyme to prevent cross-mutagenesis
+
+    - terminator: ADH1
+      # Second terminator: ADH1 (completely non-identical to CYC1)

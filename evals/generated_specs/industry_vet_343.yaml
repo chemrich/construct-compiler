@@ -1,27 +1,34 @@
 construct:
-  name: polycistronic_dual_cterminal_his_expression
-  host: e_coli
+  name: "dual_protein_his_tags_ecoli"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_a
+        label: protein_A
         expression: high
         chain:
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: proteinA
+              source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
     - cistron:
-        label: protein_b
+        label: protein_B
         expression: high
-        fused: false
         chain:
           - gene:
-              id: mCherry
-              source: fpbase
+              id: proteinB
+              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

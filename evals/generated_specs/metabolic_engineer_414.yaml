@@ -1,72 +1,88 @@
 construct:
-  name: "methionine_synthesis_pathway_yeast_er_cytoplasmic"
+  name: "S_cerevisiae_methionine_synthesis_pathway"
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
 
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
         label: MetA
         expression: high
-        gene:
-          id: MetA
-          source: uniprot
+        chain:
+          - gene:
+              id: MetA
+              source: uniprot
+
     - terminator: CYC1
 
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
         label: MetB
         expression: high
-        gene:
-          id: MetB
-          source: uniprot
-    - terminator: ADH1
+        chain:
+          - gene:
+              id: MetB
+              source: uniprot
 
-    - promoter: ADH1
+    - terminator: CYC1
+
+    - promoter: GAL1
+
     - cistron:
         label: MetC
         expression: high
-        gene:
-          id: MetC
-          source: uniprot
-    - terminator: ENO2
+        chain:
+          - gene:
+              id: MetC
+              source: uniprot
 
-    - promoter: PGK1
+    - terminator: CYC1
+
+    - promoter: GAL1
+
     - cistron:
-        label: MetD
+        label: MetD_ER
         expression: high
         chain:
-          - tag: Kar2_signal_peptide
+          - tag: signal_peptide_alpha_factor
           - gene:
               id: MetD
               source: uniprot
-          - tag: HDEL
-    - terminator: PGK1
+          - tag: KDEL
 
-    - promoter: ENO2
+    - terminator: CYC1
+
+    - promoter: GAL1
+
     - cistron:
-        label: MetE
+        label: MetE_ER
         expression: high
         chain:
-          - tag: Kar2_signal_peptide
+          - tag: signal_peptide_alpha_factor
           - gene:
               id: MetE
               source: uniprot
-          - tag: HDEL
-    - terminator: TPS1
+          - tag: KDEL
 
-    - promoter: PYK1
+    - terminator: CYC1
+
+    - promoter: GAL1
+
     - cistron:
-        label: MetF
+        label: MetF_ER
         expression: high
         chain:
-          - tag: Kar2_signal_peptide
+          - tag: signal_peptide_alpha_factor
           - gene:
               id: MetF
               source: uniprot
-          - tag: HDEL
-    - terminator: TDH2
+          - tag: KDEL
+
+    - terminator: CYC1

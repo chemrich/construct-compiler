@@ -1,18 +1,73 @@
 construct:
-  name: "divergent_dual_ori_low_copy_system"
+  name: "dual_ori_dual_marker_low_copy_stable"
   host: e_coli
+  
   backbone:
-    # Primary low-copy origin SC101 is used. The schema supports only one origin in the backbone; 
-    # the second required pMB1 variant would be treated as an additional modular component.
+    # Primary ORI (pMB1/pBR322 family - medium/high copy)
+    ori: pBR322
+    # Secondary ORI (SC101 - low copy, stringent)
+    secondary_ori: SC101
+    
+    # Primary selectable marker
     resistance: kanamycin
-    ori: SC101
-    source: addgene
+    
+    # Secondary selectable marker (independent cassette)
+    secondary_resistance: chloramphenicol
+    
+    source: custom
+    
+    # Note: The construct_compiler will synthesize highly divergent
+    # flanking sequences around each ORI and within each marker cassette
+    # to minimize sequence identity and prevent cryptic recombination.
+    # Each resistance gene uses codon-optimized variants with distinct
+    # regulatory sequences and termination contexts.
+    
+    design_notes: |
+      Two completely independent replication systems:
+      - pBR322 ORI (medium/high copy control, ColE1-type)
+      - SC101 ORI (low-copy, stringent control, P15A-type)
+      
+      Two independent selectable markers:
+      - Kanamycin resistance (APH(3')-II)
+      - Chloramphenicol resistance (CAT variant)
+      
+      All non-coding regions (promoters, terminators, spacers, 
+      linker sequences) use maximally divergent DNA sequences 
+      to eliminate homology and prevent unintended recombination.
+      
+      This dual-system design allows:
+      1. Selection flexibility (use either or both markers)
+      2. Plasmid stability via dual replication control
+      3. Segregational stability under either copy-number regime
+      4. Resistance to loss-of-function mutations in single systems
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+      label: "ORI_pBR322_cassette"
+      # This section represents the primary ORI cassette
+      # with its own dedicated marker and regulatory elements
+    
     - cistron:
-        label: "secondary_marker"
-        expression: medium
+        label: kanamycin_resistance
+        expression: high
         gene:
-          id: "cat"
+          id: APH3
           source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 100
+      # Large divergent spacer to prevent cryptic recombination
+    
+    - promoter: araBAD
+      label: "ORI_SC101_cassette"
+      # Secondary ORI cassette with completely independent regulation
+    
+    - cistron:
+        label: chloramphenicol_resistance
+        expression: high
+        gene:
+          id: CAT
+          source: uniprot
+    
     - terminator: BBa_B0015

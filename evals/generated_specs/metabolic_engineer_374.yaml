@@ -1,40 +1,53 @@
 construct:
-  name: "tightly_regulated_toxic_metabolic_pathway"
-  host: e_coli
+  name: "tetA_lacI_metabolic_pathway_T1T2T3T4"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_LtetO_lacO  # Custom hybrid promoter: aTc inducible with LacI operators for tight repression
+    - promoter: tetA_lacI
+      # Dual-control: aTc-inducible (pTet) with LacI repressor for tight OFF-state
+
     - cistron:
-        label: enzyme_T1
-        expression: medium
-        gene:
-          id: T1
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_T2
+        label: T1_enzyme
         expression: high
-        fused: false  # Independent translation for polycistronic operon
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: T1
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: T2_enzyme
+        expression: high
+        fused: false
         gene:
           id: T2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_T3
-        expression: high
+        label: T3_enzyme
+        expression: medium
         fused: false
         gene:
           id: T3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_T4
-        expression: high
+        label: T4_enzyme
+        expression: medium
         fused: false
         gene:
           id: T4
           source: uniprot
+
     - terminator: rrnB_T1

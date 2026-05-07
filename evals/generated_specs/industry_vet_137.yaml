@@ -1,15 +1,22 @@
 construct:
-  name: "minimal_gene_x_aav_cassette"
+  name: "minimal_Gene_X_AAV"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pTwist AAV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: CMV
+    - promoter: U6
+      # U6 is minimal Pol III promoter (~300 bp) vs CMV (~600+ bp)
+
     - cistron:
-        label: gene_x
+        label: Gene_X
         expression: high
-        gene:
-          id: Gene_X
-          source: uniprot
-    - terminator: SV40_polyA # Chosen for its minimal footprint in AAV packaging constraints
+        chain:
+          - gene:
+              id: Gene_X
+              source: uniprot
+
+    - terminator: polyA_min
+      # Minimal poly(A) signal (~30-50 bp) instead of full SV40 polyA

@@ -1,25 +1,28 @@
 construct:
-  name: "tightly_regulated_therapeutic_enzyme"
-  host: e_coli_bl21
+  name: "toxic_cancer_therapy_enzyme_tight_inducible"
+  host: e_coli_bl21_de3
+
   backbone:
-    # Rule 12: User requested no antibiotic resistance; kanamycin is included as a necessary placeholder 
-    # for plasmid selection during cloning, to be replaced by auxotrophic markers for therapeutic use.
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+    # Note: pET-28b(+) includes kanamycin resistance by default in standard catalogs.
+    # For antibiotic-free selection, this would require a custom backbone with alternative
+    # selection (e.g., auxotrophic complementation). Using pET-28b(+) as specified but
+    # flagging that true antibiotic-free requires custom backbone substitution.
+
   cassette:
-    - promoter: araBAD  # Tightly regulated by arabinose/glucose to minimize basal toxicity
+    - promoter: T7lac
+      # T7lac provides tight basal repression via LacI and inducible control via IPTG
+
     - cistron:
-        label: therapeutic_toxin
+        label: toxic_enzyme
         expression: high
         chain:
-          - solubility_tag: MBP
           - tag: 6xHis
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
-              id: P00805
+              id: toxic_enzyme
               source: uniprot
+              # User must specify actual UniProt ID; placeholder indicates custom/proprietary enzyme
+
     - terminator: rrnB_T1

@@ -1,56 +1,71 @@
 construct:
-  name: "vibrio_fischeri_autoinducible_qs_operon"
-  host: e_coli
+  name: vibrio_fischeri_QS_operon_six_gene
+  host: bacillus
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: luxp  # Autoinducible promoter activated by LuxR-AHL complex
+    - promoter: araBAD
+    
     - cistron:
-        label: QS1
+        label: QS1_LuxI
         expression: high
+        fused: false
         gene:
-          id: P12746  # LuxI: Acyl-homoserine-lactone synthase
+          id: luxI
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: QS2
+        label: QS2_LuxR
+        expression: high
+        fused: false
+        gene:
+          id: luxR
+          source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: QS3_LuxAB
+        expression: high
+        fused: false
+        gene:
+          id: luxA
+          source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: QS4_LuxB
+        expression: high
+        fused: false
+        gene:
+          id: luxB
+          source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: QS5_LuxC
         expression: medium
         fused: false
         gene:
-          id: P12747  # LuxC: Fatty acid reductase acid-reductase subunit
+          id: luxC
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: QS3
+        label: QS6_LuxD
         expression: medium
         fused: false
         gene:
-          id: P12748  # LuxD: Fatty acid transferase
+          id: luxD
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: QS4
-        expression: medium
-        fused: false
-        gene:
-          id: P12742  # LuxA: Alkanal monooxygenase alpha chain
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: QS5
-        expression: medium
-        fused: false
-        gene:
-          id: P12743  # LuxB: Alkanal monooxygenase beta chain
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: QS6
-        expression: medium
-        fused: false
-        gene:
-          id: P12749  # LuxE: Fatty acid-reductase acyl-protein synthetase subunit
-          source: uniprot
+    
     - terminator: rrnB_T1

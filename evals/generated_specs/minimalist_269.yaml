@@ -1,16 +1,20 @@
 construct:
-  name: "iptg_inducible_t7_rnap"
-  host: e_coli
+  name: T7_RNAP_inducible_expression
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: lacUV5
+    - promoter: T7lac
+
     - cistron:
-        label: t7_polymerase
+        label: T7_RNAP
         expression: high
-        gene:
-          id: P00573
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: T7_RNAP
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,18 +1,20 @@
 construct:
-  name: "nuclear_therapeutic_nonviral_minimal"
+  name: nuclear_localized_therapeutic_protein
   host: HEK293
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral, high-expression human promoter
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: P04637  # Human TP53 (Tumor protein p53)
+              id: IL10
               source: uniprot
-    - terminator: bGH_pA  # Standard mammalian polyadenylation signal/terminator
+
+    - terminator: rrnB_T1

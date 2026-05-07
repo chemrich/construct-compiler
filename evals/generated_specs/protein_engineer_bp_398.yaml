@@ -1,19 +1,25 @@
 construct:
-  name: "industrial_cellulase_bacillus_expression"
+  name: bacillus_industrial_cellulase_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
+    - rbs: optimal_bacillus
+
     - cistron:
-        label: cellulase_production
+        label: cellulase_secreted
         expression: high
         chain:
-          - tag: AmyE
+          - tag: AmyE_signal_peptide
           - gene:
-              id: celA
+              id: cellulase_codon_optimized
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

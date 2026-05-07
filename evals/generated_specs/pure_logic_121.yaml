@@ -1,25 +1,34 @@
 construct:
-  name: "genetic_not_gate_arabinose_lacI"
-  host: e_coli
+  name: NOT_gate_genetic_logic
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: repressor_lacI
+        label: repressor
         expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 40
-    - promoter: tac
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: reporter_output
+        label: output
         expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - promoter: lacUV5
+          - gene:
+              id: mGFP
+              source: fpbase
+
     - terminator: rrnB_T1

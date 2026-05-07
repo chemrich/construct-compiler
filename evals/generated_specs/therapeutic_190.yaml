@@ -1,30 +1,45 @@
 construct:
-  name: "mammalian_reprogramming_factors"
+  name: "mammalian_reprogramming_TF_polycistronic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: TF1
         expression: high
+        fused: false
         gene:
           id: TF1
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: TF2
+        label: P2A_TF2
         expression: high
         fused: false
-        gene:
-          id: TF2
-          source: uniprot
+        chain:
+          - cleavage_site: P2A
+          - gene:
+              id: TF2
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: TF3
+        label: P2A_TF3
         expression: high
         fused: false
-        gene:
-          id: TF3
-          source: uniprot
-    - terminator: BGH_PA
+        chain:
+          - cleavage_site: P2A
+          - gene:
+              id: TF3
+              source: uniprot
+
+    - terminator: rrnB_T1

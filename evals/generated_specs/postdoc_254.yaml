@@ -1,21 +1,21 @@
 construct:
-  name: "ivt_screening_high_expression"
+  name: "cell_free_expression_his_tag"
   host: in_vitro
+
   backbone:
-    # A backbone is required for a valid spec; using pUC/Kanamycin as a standard template
-    resistance: kanamycin
-    ori: pUC
+    resistance: none
+    ori: none
+
   cassette:
     - promoter: T7
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: mEGFP
-              source: fpbase
-          - linker:
-              type: short_GS
-              repeats: 1
+              id: target_gene
+              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

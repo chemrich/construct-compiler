@@ -1,27 +1,48 @@
-```yaml
 construct:
-  name: TF_reporter_diversified_binding_sites
+  name: "mammalian_divergent_TF_reporter_5x_luciferase"
   host: HEK293
-  
+
   backbone:
     catalog_vector: "pTwist CMV"
-  
+
   cassette:
-    - promoter: 
-        type: custom
-        elements:
-          - binding_sites:
-              count: 5
-              factor: transcription_factor
-              sequences: diversified  # Each of 5 sites uses different synonymous sequence
-          - minimal_promoter: TATA_box
-    
+    - promoter: minimal_SV40
+      # Minimal SV40 promoter (TATA-box only, ~40bp)
+
+    - element: binding_site
+      label: TF_BS_1
+      sequence: "GCCN4GGC"
+      # Canonical motif variant 1
+
+    - element: binding_site
+      label: TF_BS_2
+      sequence: "GCCN5GGC"
+      # Synonymous variant: extended spacer (N=any base)
+
+    - element: binding_site
+      label: TF_BS_3
+      sequence: "GGCN4GCC"
+      # Reverse complement orientation
+
+    - element: binding_site
+      label: TF_BS_4
+      sequence: "GCCN3GGC"
+      # Compressed spacer variant
+
+    - element: binding_site
+      label: TF_BS_5
+      sequence: "GCCN6GGC"
+      # Extended spacer variant 2
+
+    - spacer: 25
+      # Minimal spacing before promoter-proximal region
+
     - cistron:
-        label: reporter
-        expression: high
-        gene:
-          id: firefly_luciferase
-          source: uniprot
-    
-    - terminator: SV40_polyA
-```
+        label: luciferase_reporter
+        expression: medium
+        chain:
+          - gene:
+              id: Renilla_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

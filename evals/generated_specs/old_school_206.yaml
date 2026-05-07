@@ -1,17 +1,22 @@
 construct:
-  name: "periplasmic_POI_expression_T7"
-  host: e_coli_bl21_de3
+  name: "periplasmic_secretion_pelB_target"
+  host: e_coli_bl21
+
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: secreted_target
+        label: target
         expression: high
         chain:
-          - tag: pelB  # Periplasmic leader sequence for secretion
+          - signal_peptide: pelB
           - gene:
-              id: POI  # Placeholder for the user's target gene
+              id: target
               source: uniprot
+
     - terminator: T7term

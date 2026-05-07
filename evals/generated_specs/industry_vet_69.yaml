@@ -1,16 +1,26 @@
 construct:
-  name: "mammalian_high_expression_flag_wpre"
+  name: "mammalian_CMV_WPRE_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_pA  # WPRE element requested: integrated into the 3' UTR prior to the polyadenylation signal for mRNA stabilization.
+              id: null
+              source: uniprot
+
+    - terminator: rrnB_T1
+    
+    # WPRE (Woodchuck Hepatitis Post-transcriptional Regulatory Element) 
+    # included in pTwist CMV backbone for enhanced expression

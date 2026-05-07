@@ -1,15 +1,19 @@
 construct:
-  name: "Tet_On_Inducible_Controlled_Expression"
+  name: "Tet_On_ControlledProtein"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: ampicillin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TRE3G
+    - promoter: TRE  # Tet-responsive element (tetracycline-controlled)
+
     - cistron:
-        label: target
+        label: ControlledProtein
         expression: high
         gene:
           id: ControlledProtein
-    - terminator: bGH_polyA
+          source: uniprot
+
+    - terminator: SV40_polyA  # robust polyadenylation signal for mammalian cells

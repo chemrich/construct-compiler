@@ -1,45 +1,62 @@
 construct:
-  name: "blue_repressilator_oscillator"
+  name: "e_coli_self_sustained_oscillator"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pL_lambda  # Repressed by cI protein; substituted standard promoter for repressilator logic
-    - cistron:
-        label: lacI_repressor
-        expression: high
-        fused: false
-        gene:
-          id: P03023
-          source: uniprot
+    - promoter: araBAD
 
-    - promoter: tac  # Repressed by lacI protein; standard IPTG-inducible/LacI-repressible promoter
     - cistron:
-        label: tetR_repressor
-        expression: high
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
+        label: repressor_LacI
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
 
-    - promoter: pTet  # Repressed by tetR protein; substituted standard promoter for repressilator logic
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
     - cistron:
-        label: cI_repressor
+        label: activator_AraC
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 35
+
+    - promoter: araBAD
+
+    - cistron:
+        label: reporter_fluorescent
         expression: high
-        fused: false
-        gene:
-          id: P03034
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+
+    - terminator: rrnB_T1
 
     - spacer: 30
+
+    - promoter: lacUV5
+
     - cistron:
-        label: blue_reporter
-        expression: high
-        fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
+        label: oscillator_integrase
+        expression: medium
+        chain:
+          - gene:
+              id: phiC31_integrase
+              source: uniprot
 
     - terminator: rrnB_T1

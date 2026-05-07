@@ -1,16 +1,24 @@
 construct:
-  name: "anti_PD1_scFv_secretion_CHO"
+  name: "CHO_scFv_PD1_secreted"
   host: CHO
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "pd1_scfv_expression"
+        label: scFv_PD1
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal signal peptide for secretion
           - gene:
-              id: nivolumab_scFv
-          - tag: 6xHis
-    - terminator: bGH_pA
+              id: scFv_PD1
+              source: uniprot
+          - tag: 6xHis  # C-terminal His tag for purification
+          - tag: KDEL  # ER retention signal (optional, for enhanced secretion)
+
+    - terminator: SV40_polyA

@@ -1,14 +1,22 @@
 construct:
-  name: "human_insulin_mammalian_expression"
+  name: human_insulin_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: insulin
         expression: high
-        gene:
-          id: P01308
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: "P01308"
+              source: uniprot
+
+    - terminator: rrnB_T1

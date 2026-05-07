@@ -1,23 +1,27 @@
 construct:
-  name: bait_lacZ_interaction_fusion
+  name: "bait_lacZ_interaction_reporter"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
-    source: custom
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: lambda_PL
+    - promoter: PL_lambda
+
     - cistron:
-        label: bait_fusion
+        label: bait_lacZ_fusion
         expression: high
         chain:
           - gene:
-              id: bait
+              id: lacZ
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: lacZ
+              id: bait
               source: uniprot
+
     - terminator: rrnB_T1

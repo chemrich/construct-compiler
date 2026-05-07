@@ -1,15 +1,30 @@
 construct:
-  name: "yeast_TRP1_integration_PGK1_mEGFP"
+  name: "yeast_TRP1_stable_integration"
   host: yeast
+
   backbone:
     resistance: LEU2
-    source: "TRP1_homology_arms"
+    ori: null
+    source: genomic_integration
+
   cassette:
+    - homology_arm:
+        locus: TRP1
+        position: upstream
+        length: 500
+
     - promoter: PGK1
+
     - cistron:
-        label: stable_expression_gene
+        label: target
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: CYC1_term # Standard yeast terminator for stable expression systems
+          id: Stable_Expression_Gene
+          source: uniprot
+
+    - terminator: PGK1_terminator
+
+    - homology_arm:
+        locus: TRP1
+        position: downstream
+        length: 500

@@ -1,14 +1,20 @@
 construct:
-  name: "therapro_mammalian_expression"
-  host: mammalian
+  name: TheraPro_mammalian_expression
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapro_target
+        label: TheraPro
         expression: high
-        gene:
-          id: TheraPro
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TheraPro
+              source: uniprot
+
+    - terminator: rrnB_T1

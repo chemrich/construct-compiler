@@ -1,41 +1,51 @@
 construct:
-  name: "bistable_toggle_switch_lacI_tetR"
-  host: e_coli
+  name: "bistable_toggle_switch"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: PL_lacO1  # Repressed by LacI, induced by IPTG (Input R)
+    - promoter: lacUV5
+
     - cistron:
-        label: tetR_repressor
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
+        label: repressor_A
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: egfp_reporter
+        label: repressor_B
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_reporter_1
         expression: medium
-        fused: false  # Separate RBS for reporter
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: output_reporter_2
+        expression: medium
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: PL_tetO1  # Repressed by TetR, induced by aTc (Input S)
-    - cistron:
-        label: lacI_repressor
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: mscarlet_reporter
-        expression: medium
-        fused: false  # Separate RBS for reporter
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term

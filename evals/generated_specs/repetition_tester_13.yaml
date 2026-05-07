@@ -1,40 +1,35 @@
-```yaml
 construct:
-  name: Gateway_dual_destination_vector
+  name: Gateway_destination_dual_attR_ccdB
   host: e_coli
   
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+    # Custom backbone with dual Gateway attR sites and codon-optimized ccdB
+    features:
+      - att_site:
+          type: attR1.1
+          variant: Gateway_recombination_site_1
+          position: upstream
+      - ccdB_variant:
+          id: ccdB_ec_codon_optimized
+          source: custom
+          description: "E. coli-optimized ccdB for enhanced counter-selection"
+      - att_site:
+          type: attR2.2
+          variant: Gateway_recombination_site_2
+          position: downstream
   
   cassette:
-    - promoter: lacUV5
+    - promoter: T7lac
     
     - cistron:
-        label: attR1_1_site
-        expression: very_low
-        gene:
-          id: attR1.1_recombination_site
-          # Gateway attR1.1 variant for first cloning site
-    
-    - spacer: 50
-    
-    - cistron:
-        label: ccdB_counter_selection
+        label: destination_cassette
         expression: medium
-        gene:
-          id: ccdB_codon_optimized
-          # Codon-optimized ccdB for negative selection against empty vector
-    
-    - spacer: 50
-    
-    - cistron:
-        label: attR2_2_site
-        expression: very_low
-        gene:
-          id: attR2.2_recombination_site
-          # Gateway attR2.2 variant for second cloning site - distinct from attR1.1
+        chain:
+          - gene:
+              id: ccdB_ec_codon_optimized
+              source: custom
     
     - terminator: rrnB_T1
-```

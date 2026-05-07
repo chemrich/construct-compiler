@@ -1,16 +1,47 @@
 construct:
-  name: "ivt_template_therapeutic_il2"
+  name: "IVT_mRNA_immunomodulatory_therapeutic"
   host: in_vitro
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance for therapeutic application
-    ori: pUC
-    source: custom
+    resistance: none
+    ori: none
+    source: synthetic
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: immunomodulator
+        label: 5_utr
+        expression: medium
+        chain:
+          - gene:
+              id: kozak_consensus_5utr
+              source: synthetic
+
+    - cistron:
+        label: immunomodulatory_protein
         expression: high
-        gene:
-          id: P60568
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: IL_12p35
+              source: uniprot
+
+    - cistron:
+        label: 3_utr_stability
+        expression: medium
+        chain:
+          - gene:
+              id: PABP_binding_element_3utr
+              source: synthetic
+
+    - cistron:
+        label: poly_a_tail
+        expression: low
+        chain:
+          - gene:
+              id: synthetic_poly_a_150nt
+              source: synthetic
+
     - terminator: T7term

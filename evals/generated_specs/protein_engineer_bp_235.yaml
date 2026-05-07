@@ -1,23 +1,24 @@
 construct:
-  name: "bacillus_amyq_phoA_intein"
+  name: "tag_free_alkaline_phosphatase_bacillus"
   host: bacillus
 
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
 
   cassette:
     - promoter: AmyQ
 
     - cistron:
-        label: secreted_target
+        label: secreted_alkaline_phosphatase
         expression: high
         chain:
-          - tag: AmyQ_signal_peptide
-          - tag: intein
+          - signal_peptide: AmyQ
+          - intein:
+              type: self_cleaving
           - gene:
-              id: P19405
+              id: alkaline_phosphatase
               source: uniprot
 
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1

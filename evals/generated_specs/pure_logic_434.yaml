@@ -1,19 +1,47 @@
 construct:
-  name: "pulse_activated_memory_counter"
+  name: "molecular_event_counter"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Inducible promoter acting as the sensor for input molecule pulses
+    - promoter: araBAD
+
     - cistron:
-        label: memory_reporter
+        label: sensor
         expression: high
         chain:
-          - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: sfGFP
+              id: LacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: memory_protein
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mCherry
               source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: accumulator
+        expression: high
+        chain:
+          - gene:
+              id: GCN4
+              source: uniprot
+
     - terminator: rrnB_T1
+
+  # Configuration note: araBAD promoter responds to L-arabinose pulses.
+  # LacI acts as a molecular switch/sensor for discrete input events.
+  # mCherry serves as the memory protein (fluorescent readout accumulates with expression).
+  # GCN4 provides transcriptional feedback to amplify memory accumulation.
+  # 6xHis-TEV-mCherry allows purification and detection of accumulated memory events.

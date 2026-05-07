@@ -1,39 +1,58 @@
 construct:
-  name: viral_packaging_poly_cistron
-  host: HEK293T
+  name: "HEK293T_viral_packaging_quad"
+  host: HEK293
+  
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: CMV
+    
     - cistron:
-        label: gag
+        label: Gag
+        expression: high
+        chain:
+          - gene:
+              id: "HIV_Gag"
+              source: uniprot
+    
+    - spacer: 50
+    
+    - cistron:
+        label: Pol
         expression: high
         fused: false
-        gene:
-          id: P03367
-          source: uniprot
-    - spacer: 580  # IRES element for independent translation
+        chain:
+          - gene:
+              id: "HIV_Pol"
+              source: uniprot
+    
+    - spacer: 50
+    
     - cistron:
-        label: pol
+        label: Env
         expression: high
         fused: false
-        gene:
-          id: P03366
-          source: uniprot
-    - spacer: 580  # IRES element for independent translation
+        chain:
+          - gene:
+              id: "HIV_Env"
+              source: uniprot
+    
+    - spacer: 50
+    
     - cistron:
-        label: env
-        expression: high
-        fused: false
-        gene:
-          id: P04578
-          source: uniprot
-    - spacer: 580  # IRES element for independent translation
-    - cistron:
-        label: rev
+        label: Rev
         expression: medium
         fused: false
-        gene:
-          id: P04618
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - gene:
+              id: "HIV_Rev"
+              source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    # Polyadenylation signal for mRNA stability in mammalian cells
+    - polyadenylation: AATAAA

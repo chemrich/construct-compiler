@@ -1,11 +1,11 @@
-```yaml
 construct:
-  name: "pichia_secreted_GFP_his"
+  name: "Pichia_pastoris_GFP_secreted"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pPICZ"
+    resistance: zeocin
+    ori: ColA
     source: addgene
 
   cassette:
@@ -15,12 +15,10 @@ construct:
         label: secreted_GFP
         expression: high
         chain:
-          - secretion_signal: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: sfGFP
-              source: fpbase
-              codon_optimization: pichia_pastoris
+              id: GFP_codon_optimized_Pichia
+              source: uniprot
           - tag: 6xHis
 
     - terminator: AOX1_TT
-```

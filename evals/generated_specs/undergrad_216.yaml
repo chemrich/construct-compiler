@@ -1,28 +1,40 @@
 construct:
-  name: "ribozyme_polycistronic_e_coli"
+  name: "polycistronic_ribozyme_separator"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: gene_1
-        expression: medium
+        label: gene1
+        expression: high
         gene:
           id: Gene1
-    - spacer: 75 # RiboJ ribozyme for insulating the first intergenic region
+          source: uniprot
+
+    - ribozyme: twister_sister
+
     - cistron:
-        label: gene_2
-        expression: medium
+        label: gene2
+        expression: high
         fused: false
         gene:
           id: Gene2
-    - spacer: 75 # RiboJ ribozyme for insulating the second intergenic region
+          source: uniprot
+
+    - ribozyme: twister_sister
+
     - cistron:
-        label: gene_3
-        expression: medium
+        label: gene3
+        expression: high
         fused: false
         gene:
           id: Gene3
+          source: uniprot
+
     - terminator: rrnB_T1

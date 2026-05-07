@@ -1,15 +1,27 @@
 construct:
-  name: "diversified_repetitive_viral_protein"
+  name: viral_protein_mammalian_codon_optimized_repeat_diversified
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: repetitive_target
+        label: viral_protein
         expression: high
-        gene:
-          id: P03211 # Epstein-Barr nuclear antigen 1 (EBNA1) containing high-frequency GA repeats
-          source: uniprot
-        # Optimization requirement: Synonymous codon diversification for all repetitive regions to maximize genetic stability
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: viral_protein_codon_optimized_repeat_diversified
+              source: uniprot
+              codon_optimization:
+                algorithm: mammalian_high_expression
+                repeat_diversification: aggressive
+                # Synonymous codon variants applied across repeat regions
+                # to maximize sequence divergence while maintaining protein identity
+                strategy: break_homologous_repeats
+
+    - terminator: rrnB_T1

@@ -1,16 +1,56 @@
 construct:
-  name: "mammalian_noise_filter_output_Y"
+  name: mammalian_noise_filter_threshold_detector
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV  # In a threshold circuit, this promoter would be engineered to be responsive to signal S
+    - promoter: CMV
+
+    - cistron:
+        label: input_sensor
+        expression: high
+        chain:
+          - gene:
+              id: tetR_VP16
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mTurquoise2
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: threshold_filter
+        expression: high
+        chain:
+          - gene:
+              id: Hes1_degron
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 30
+
     - cistron:
         label: output_Y
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: mVenus
+              id: mEGFP
               source: fpbase
-    - terminator: BGH_pA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NLS
+
+    - terminator: rrnB_T1

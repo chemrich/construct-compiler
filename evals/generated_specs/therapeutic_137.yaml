@@ -1,27 +1,30 @@
 construct:
-  name: exosome_targeted_il2_fusion
+  name: exosome_therapeutic_scFv_mammalian
   host: HEK293
+
   backbone:
-    # A standard mammalian backbone is used. Kanamycin resistance is included for E. coli cloning 
-    # as per schema requirements, but no mammalian antibiotic resistance gene (ARG) is included 
-    # in the expression cassette.
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: pTwist CMV
+    resistance: null
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_scFv_exosomal
         expression: high
         chain:
-          - tag: FLAG
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P08962 # CD63 (Exosome-targeting tetraspanin)
+              id: scFv_anti_PD1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 1
+          - tag: PDGF_signal_peptide
           - gene:
-              id: P60568 # IL-2 (Therapeutic cytokine)
+              id: CD63_exosomal_targeting
               source: uniprot
-    - terminator: bgh_polyA
+          - tag: HA
+
+    - terminator: SV40poly_A

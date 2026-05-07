@@ -1,32 +1,33 @@
 construct:
-  name: "load_balancer_circuit"
+  name: load_balancer_circuit
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # High-level constitutive promoter for baseline
+    - promoter: lacUV5
+      # Constitutive baseline for OutputA; will be modulated by INPUT
+    
     - cistron:
-        label: output_A_baseline
+        label: OutputA
         expression: high
         gene:
-          id: mCherry
+          id: mNeonGreen
           source: fpbase
+    
     - terminator: rrnB_T1
-    - promoter: tac  # Inducible INPUT promoter (e.g., via IPTG)
+    
+    - promoter: araBAD
+      # INPUT-dependent promoter for OutputB (only active when INPUT/L-arabinose present)
+    
     - cistron:
-        label: output_A_amplified
-        expression: high
+        label: OutputB
+        expression: medium
         gene:
           id: mCherry
           source: fpbase
-    - spacer: 30
-    - cistron:
-        label: output_B_inducible
-        expression: high
-        fused: false  # Independent translation for Output B
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

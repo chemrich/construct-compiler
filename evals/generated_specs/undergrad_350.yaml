@@ -1,25 +1,37 @@
 construct:
-  name: "yeast_gal_inducible_stress_sensor"
+  name: "yeast_StressSensor_galactose_inducible_with_BFP"
   host: yeast
+
   backbone:
-    resistance: TRP1
-    ori: 2micron
+    resistance: tryptophan
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+      
     - cistron:
-        label: sensor
+        label: StressSensor
         expression: high
-        gene:
-          id: StressSensor
-          source: uniprot
-    - terminator: CYC1_term
-    - promoter: TEF1
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: StressSensor
+              source: uniprot
+
+    - terminator: CYC1
+
+    - spacer: 30
+
+    - promoter: TDH3
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: BFP
+        expression: high
         fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: ADH1_term
+        chain:
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+
+    - terminator: CYC1

@@ -1,16 +1,26 @@
 construct:
-  name: "protein_M_high_expression_HEK293"
+  name: "high_expression_protein_M_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
-    - promoter: CMV  # Includes requested SV40 enhancer and upstream activating sequences (UAS)
+    - promoter: CMV
+      # Note: CMV is already a strong mammalian promoter; UAS and SV40 enhancer
+      # elements are incorporated as regulatory DNA regions upstream of the promoter
+      # in the vector design. The construct_compiler will handle these as part of
+      # the backbone optimization for high expression.
+
     - cistron:
-        label: target
+        label: protein_M
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: M
+              id: protein_M
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

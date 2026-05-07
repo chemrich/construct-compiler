@@ -1,20 +1,25 @@
 construct:
-  name: "bacillus_amylase_secretion_vector"
+  name: "Bacillus_amylase_secretion_vector"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: amylase_export
+        label: amylase_secreted
         expression: high
         chain:
-          - tag: AmyE
+          - secretion_signal: AmyE
           - gene:
-              id: P00691
+              id: amylase
               source: uniprot
+              codon_optimization: bacillus_subtilis
           - cleavage_site: TEV
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

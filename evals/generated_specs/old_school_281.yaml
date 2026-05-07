@@ -1,18 +1,23 @@
 construct:
-  name: "GeneY_high_expression_T7"
-  host: e_coli_bl21_de3
+  name: "GeneY_GST_thrombin_T7_BL21"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: target
+        label: GeneY
         expression: high
         chain:
           - gene:
               id: GeneY
               source: uniprot
           - cleavage_site: Thrombin
-          - tag: GST
+          - solubility_tag: GST
+
     - terminator: T7term

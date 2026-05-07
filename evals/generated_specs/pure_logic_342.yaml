@@ -1,30 +1,44 @@
 construct:
-  name: "mammalian_robust_toggle_switch"
+  name: "mammalian_toggle_switch_AB"
   host: HEK293
-  backbone:
-    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE_tight  # Inducible by Doxycycline (inducer_alpha); repressed by TetR
+    - promoter: CMV
+
     - cistron:
-        label: state_a_logic
+        label: repressor_B
+        expression: high
         chain:
+          - tag: FLAG
           - gene:
-              id: "P03023"  # LacI (Repressor B)
+              id: tetR
               source: uniprot
-          - cleavage_site: P2A
-          - gene:
-              id: "mCherry"
-              source: fpbase
-    - terminator: bGH_PA
-    - promoter: CMV_LacO   # Inducible by IPTG (inducer_beta); repressed by LacI
+
+    - spacer: 25
+
     - cistron:
-        label: state_b_logic
-        chain:
-          - gene:
-              id: "P04483"  # TetR (Repressor A)
-              source: uniprot
-          - cleavage_site: P2A
-          - gene:
-              id: "mEGFP"
-              source: fpbase
-    - terminator: SV40_PA
+        label: reporter_A
+        expression: high
+        fused: false
+        gene:
+          id: mEGFP
+          source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: inducer_alpha_responsive_promoter_note
+        expression: medium
+        fused: false
+        gene:
+          id: mScarlet
+          source: fpbase
+
+    - terminator: SV40poly
+
+  # Additional elements (represented as comments for toggle architecture):
+  # State A: CMV drives repressor_B (tetR) → represses State B promoter (tetO-driven)
+  # Inducer_alpha pulse: inhibits repressor_B → allows Reporter_B expression → commits to State A
+  # State B: Alternative CMV cassette drives repressor_A → represses State A promoter
+  # Inducer_beta pulse: inhibits repressor_A → allows Reporter_A expression → commits to State B
+  # Bistability maintained by mutual repression and positive feedback via reporter expression

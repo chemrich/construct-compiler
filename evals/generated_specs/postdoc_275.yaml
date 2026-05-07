@@ -1,29 +1,35 @@
 construct:
-  name: yeast_secretion_of_mammalian_domains
+  name: "yeast_secreted_domain_A_domain_B"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: secreted_domain_a
+        label: domain_A
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: mammalian_signal_peptide_1
           - gene:
-              id: MAMMALIAN_DOMAIN_A
+              id: domain_A
               source: uniprot
-    - spacer: 40
+
+    - spacer: 30
+
     - cistron:
-        label: secreted_domain_b
+        label: domain_B
         expression: high
         fused: false
         chain:
-          - tag: IgK_leader
-          - tag: FLAG
+          - tag: mammalian_signal_peptide_2
           - gene:
-              id: MAMMALIAN_DOMAIN_B
+              id: domain_B
               source: uniprot
-    - terminator: CYC1_term
+          - tag: FLAG
+
+    - terminator: rrnB_T1

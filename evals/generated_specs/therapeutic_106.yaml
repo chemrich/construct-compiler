@@ -1,16 +1,22 @@
 construct:
-  name: non_viral_liver_specific_factor_IX
+  name: "hepatocyte_coagulation_factor_therapy"
   host: mammalian
+
   backbone:
-    resistance: kanamycin # Kanamycin used for industrial plasmid production; clinical construct is designed as a minicircle to remove antibiotic resistance genes post-production.
-    ori: pUC
+    resistance: null  # antibiotic-free design for therapeutic use
+    ori: pUC  # minimal non-viral origin
     source: custom
+
   cassette:
-    - promoter: hAAT # Human alpha-1-antitrypsin promoter for hepatocyte-specific expression
+    - promoter: HNF1_alpha  # hepatocyte-specific promoter
+
     - cistron:
-        label: coagulation_factor_IX
+        label: coagulation_factor
         expression: high
-        gene:
-          id: P00740
-          source: uniprot
-    - terminator: hGH_polyA # Human growth hormone polyadenylation signal (non-viral)
+        chain:
+          - tag: signal_peptide_alpha_factor  # secretion signal for hepatocyte export
+          - gene:
+              id: F9  # Factor IX (Christmas factor) - therapeutic coagulation protein
+              source: uniprot
+
+    - terminator: SV40_polyA  # mammalian polyadenylation (non-viral backbone)

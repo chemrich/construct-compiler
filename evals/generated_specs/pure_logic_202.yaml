@@ -1,28 +1,60 @@
 construct:
-  name: "light_inducible_or_gate_therap"
-  host: e_coli
+  name: "light_OR_gate_TheraP_production"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_EL222  # Light_A sensor: Blue light inducible promoter
+    - promoter: araBAD
+      comment: "Light-responsive promoter controlled by dual light-sensing inputs"
+
     - cistron:
-        label: production_unit_a
+        label: light_sensor_A
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: TheraP
+              id: YtvA
               source: uniprot
+        comment: "Blue light sensor (YtvA from Bacillus subtilis)"
+
+    - spacer: 30
+
+    - cistron:
+        label: light_sensor_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Cph1
+              source: uniprot
+        comment: "Red light sensor (Cph1 from Synechocystis)"
+
+    - spacer: 30
+
+    - cistron:
+        label: OR_logic_integrator
+        expression: high
+        chain:
+          - gene:
+              id: AraC
+              source: uniprot
+        comment: "Transcriptional integrator for OR logic (responds to either sensor)"
+
+    - spacer: 30
+
+    - cistron:
+        label: TheraP
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P12345
+              source: uniprot
+        comment: "Therapeutic protein; replace P12345 with actual UniProt ID"
+
     - terminator: rrnB_T1
-    - promoter: P_FixK2  # Light_B sensor: Red light/anaerobic inducible promoter
-    - cistron:
-        label: production_unit_b
-        expression: high
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: TheraP
-              source: uniprot
-    - terminator: BBa_B0015

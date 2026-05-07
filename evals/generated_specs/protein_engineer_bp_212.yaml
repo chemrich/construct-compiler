@@ -1,23 +1,27 @@
 construct:
-  name: "bacillus_spore_display_cotb_spike"
+  name: "cotB_spike_domain_spore_display"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: CotB
+    - promoter: PcotB  # Native Bacillus cotB sporulation-specific promoter
+
     - cistron:
-        label: spore_surface_fusion
+        label: spike_display
         expression: high
         chain:
           - gene:
-              id: P06547
+              id: cotB
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P0DTC2
+              id: spike_domain
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

@@ -1,24 +1,33 @@
 construct:
-  name: "yeast_dual_inducible_expression_system"
+  name: "dual_inducible_yeast_gal_ctr"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GAL1  # Galactose-inducible promoter
+    - promoter: GAL1
+      
     - cistron:
-        label: GFP_expression
+        label: gene1
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: CYC1_term
-    - promoter: CUP1  # Copper-inducible promoter (non-homologous to GAL1)
+          id: P25311
+          source: uniprot
+
+    - terminator: CYC1
+
+    - spacer: 50
+
+    - promoter: CUP1
+
     - cistron:
-        label: RFP_expression
+        label: gene2
         expression: high
         gene:
-          id: mCherry
-          source: fpbase
-    - terminator: ADH1_term
+          id: P38086
+          source: uniprot
+
+    - terminator: PGK1

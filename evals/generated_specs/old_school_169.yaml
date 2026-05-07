@@ -1,22 +1,27 @@
 construct:
-  name: mammalian_intracellular_localization_mEGFP
+  name: "mammalian_protein_GFP_localization"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: neomycin
-    source: addgene
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: target_GFP_fusion
         expression: high
         chain:
           - gene:
-              id: ACTB # Using Human Beta-actin as the representative target protein for localization
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
               id: mEGFP
               source: fpbase
-    - terminator: bGH_polyA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: protein_of_interest
+              source: uniprot
+
+    - terminator: rrnB_T1

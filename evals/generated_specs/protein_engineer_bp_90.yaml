@@ -1,19 +1,22 @@
 construct:
-  name: "AOX1_Ost1_Cel7A_eGFP_TwinStrep"
+  name: "pichia_cellulase_secretion_monitor"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: secretion_monitor
+        label: cellulase_reporter
         expression: high
         chain:
-          - tag: Ost1
+          - tag: signal_peptide_Ost1
           - gene:
-              id: P07981
+              id: cellulase
               source: uniprot
           - linker:
               type: rigid_EAAAK
@@ -22,4 +25,5 @@ construct:
               id: eGFP
               source: fpbase
           - tag: Twin-Strep
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

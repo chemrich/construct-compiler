@@ -1,29 +1,46 @@
 construct:
-  name: "triple_shRNA_nonhomologous_HEK293"
+  name: "triple_shRNA_H1_mammalian_knockdown"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: H1
     - cistron:
-        label: shRNA_1
+        label: shRNA_target1
         expression: high
-        gene:
-          id: "Target_1_shRNA"
-    - terminator: polyT_5
-    - spacer: 33 # Unique spacer length to minimize homology
+        chain:
+          - gene:
+              id: shRNA_KRAS_v1
+              source: uniprot
+    - terminator: rrnB_T1
+
+    - spacer: 85
+      # Non-homologous linker sequence 1 (GC-rich, unique)
+
     - promoter: H1
     - cistron:
-        label: shRNA_2
+        label: shRNA_target2
         expression: high
-        gene:
-          id: "Target_2_shRNA"
-    - terminator: polyT_6 # Distinct terminator sequence length
-    - spacer: 51 # Unique spacer length to prevent recombination
+        chain:
+          - gene:
+              id: shRNA_TP53_v1
+              source: uniprot
+    - terminator: BBa_B0015
+      # Distinct terminator from rrnB_T1
+
+    - spacer: 92
+      # Non-homologous linker sequence 2 (AT-rich, unique)
+
     - promoter: H1
     - cistron:
-        label: shRNA_3
+        label: shRNA_target3
         expression: high
-        gene:
-          id: "Target_3_shRNA"
-    - terminator: polyT_7 # Distinct terminator sequence length
+        chain:
+          - gene:
+              id: shRNA_PTEN_v1
+              source: uniprot
+    - terminator: T7term
+      # Third unique terminator variant

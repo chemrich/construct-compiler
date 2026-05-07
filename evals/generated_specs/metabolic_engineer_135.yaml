@@ -1,31 +1,62 @@
 construct:
-  name: "HEK293_four_enzyme_2A_construct"
+  name: four_enzyme_HEK293_2A_construct
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: multi_enzyme_polyprotein
+        label: HEK1
         expression: high
         chain:
           - tag: HA
           - gene:
               id: HEK1
               source: uniprot
-          - cleavage_site: P2A
+              codon_optimization: mammalian
+
+    - spacer: 21
+
+    - cistron:
+        label: HEK2
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: HEK2
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+              codon_optimization: mammalian
+
+    - spacer: 21
+
+    - cistron:
+        label: HEK3
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: HEK3
               source: uniprot
+              codon_optimization: mammalian
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - tag: FLAG
-          - cleavage_site: T2A
+
+    - spacer: 21
+
+    - cistron:
+        label: HEK4
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: HEK4
               source: uniprot
-    - terminator: bGH_pA
+              codon_optimization: mammalian
+
+    - terminator: SV40_poly_A

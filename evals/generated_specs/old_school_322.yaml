@@ -1,29 +1,36 @@
 construct:
-  name: "HeLa_SV40_expression_with_neo"
+  name: "SV40_gene_du_jour_HeLa_neo_selection"
   host: HeLa
 
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pTwist CMV"
+    resistance: neomycin
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: SV40  # SV40 early promoter requested for constitutive expression in HeLa
+    - promoter: SV40_early
 
     - cistron:
-        label: target
+        label: gene_du_jour
         expression: high
-        gene:
-          id: gene_du_jour
-          source: uniprot
+        chain:
+          - gene:
+              id: gene_du_jour
+              source: uniprot
+
+    - terminator: SV40_poly_A
 
     - spacer: 30
 
+    - promoter: SV40_early
+
     - cistron:
-        label: selection
-        fused: false  # neo gene for G418 resistance
+        label: neo_selection
+        expression: high
+        fused: false
         gene:
           id: neo
           source: uniprot
 
-    - terminator: SV40_pA  # Poly-A tail for mammalian expression stability
+    - terminator: SV40_poly_A

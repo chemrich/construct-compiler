@@ -1,25 +1,52 @@
 construct:
-  name: "heavy_metal_threshold_detector"
-  host: e_coli
+  name: "E_coli_heavy_metal_threshold_detector"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: pZntA  # Metal-responsive promoter (Pb2+, Cd2+, Zn2+) acting as the primary sensor
+    - promoter: T7lac
+    
     - cistron:
-        label: threshold_activator
+        label: metal_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MerR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: threshold_switch
         expression: medium
-        gene:
-          id: P00552
-          source: uniprot  # T7 RNA Polymerase (activator for switch-like amplification)
-    - spacer: 40
-    - promoter: T7  # High-affinity T7 promoter provides the digital/switch-like threshold response
+        chain:
+          - gene:
+              id: lexA
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: reporter
         expression: high
-        fused: false  # Independently translated to produce the reporter protein only when threshold is met
-        gene:
-          id: sfGFP
-          source: fpbase
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    
     - terminator: rrnB_T1
+
+  # Design rationale:
+  # MerR acts as metal-dependent transcriptional regulator: binds operator DNA in presence of Hg2+/Pb2+/etc
+  # lexA produces repressor protein that maintains reporter OFF state in absence of metal
+  # When metal_ion_X concentration exceeds threshold, MerR undergoes conformational change
+  # MerR-metal complex activates SOS response cascade, leading to lexA auto-cleavage and RecA-mediated degradation
+  # Sharp depletion of lexA repressor causes rapid ON switching of reporter gene
+  # Result: steep threshold with minimal leakage (digital switch behavior)

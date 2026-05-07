@@ -1,40 +1,49 @@
 construct:
-  name: "E_coli_B_subtilis_shuttle_E1_E2_E3_E4"
-  host: e_coli
+  name: "shuttle_vector_4enzyme_cascade"
+  host: bacillus
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100 # Strong constitutive promoter often used for broad-host-range expression
+    - promoter: J23100
+    
     - cistron:
         label: E1_E2_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: E1
               source: uniprot
           - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: E2
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: E3_cistron
+        label: E3
         expression: medium
-        fused: false # Ensures independent translation with its own RBS
+        fused: false
         gene:
           id: E3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: E4_cistron
+        label: E4
         expression: medium
         fused: false
         gene:
           id: E4
           source: uniprot
+    
     - terminator: rrnB_T1

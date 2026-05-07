@@ -1,16 +1,21 @@
 construct:
-  name: "scFv_TargetX_HEK293_Secretion"
+  name: "scFv_TargetX_secreted_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: scFv_TargetX
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal secretion signal
           - gene:
               id: scFv_TargetX
-          - tag: 6xHis
-    - terminator: bGH_PA
+              source: uniprot
+          - tag: 6xHis  # C-terminal His-tag for purification from media
+
+    - terminator: SV40_poly_A

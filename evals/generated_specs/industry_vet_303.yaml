@@ -1,17 +1,24 @@
 construct:
-  name: "AAV2_AAP_MBP_Solubility_Fusion"
-  host: e_coli_bl21_de3
+  name: "AAV_protein_GST_solubility"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: AAP_expression
+        label: AAV_protein_soluble
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
+          - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
-              id: P0DW41
+              id: AAV_capsid
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

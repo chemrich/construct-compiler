@@ -1,19 +1,26 @@
 construct:
-  name: "secreted_therapeutic_scfv_system"
+  name: "mammalian_secreted_scFv_expression"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: neomycin
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: scfv_cistron
+        label: scFv
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_SP_IGκ
           - gene:
-              id: scFv_anti_CD19
+              id: scFv_VH_VL
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: 6xHis
-    - terminator: bGH_pA
+          - tag: AAYT
+
+    - polyadenylation_signal: SV40

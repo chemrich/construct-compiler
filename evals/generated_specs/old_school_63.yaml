@@ -1,23 +1,32 @@
 construct:
-  name: "HEK293_CMV_GOI_SV40_NeoR"
+  name: mammalian_CMV_FLAG_neomycin
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: neomycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: GOI
-    - terminator: bGH_polyA
+              id: null
+              source: uniprot
+        polya: SV40
+
     - promoter: SV40
+
     - cistron:
         label: selection
         expression: medium
         gene:
-          id: NeoR
+          id: neomycin_phosphotransferase
           source: uniprot
-    - terminator: SV40_polyA
+        polya: SV40
+
+    - terminator: SV40

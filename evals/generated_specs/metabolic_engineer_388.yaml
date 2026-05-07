@@ -1,49 +1,56 @@
 construct:
-  name: "ProdX_Biosynthetic_Operon"
-  host: e_coli_bl21_de3
+  name: "ProdX_pathway_quartet_operon"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: prodX_A_fusion
-        expression: medium
+        label: ProdX_A_RFP
+        expression: high
         chain:
           - gene:
               id: ProdX_A
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: prodX_B
+        label: ProdX_B
         expression: high
         fused: false
-        gene:
-          id: ProdX_B
-          source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: prodX_C
-        expression: medium
-        fused: false
+        label: ProdX_C
+        expression: high
         chain:
           - gene:
               id: ProdX_C
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: prodX_D
-        expression: low
-        fused: false
+        label: ProdX_D
+        expression: medium
         chain:
           - tag: Strep-II
           - gene:
               id: ProdX_D
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

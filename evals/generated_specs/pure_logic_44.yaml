@@ -1,47 +1,55 @@
-```yaml
 construct:
-  name: "P_negative_feedback_loop"
+  name: "negative_feedback_P_concentration_control"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: activator_A
-        expression: medium
+        label: activator
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A9E0  # AraC transcriptional activator
+              id: araC
               source: uniprot
 
     - spacer: 30
 
     - cistron:
-        label: product_P
+        label: product_P_synthase
         expression: high
-        fused: false
         chain:
-          - tag: FLAG
+          - tag: 6xHis
           - gene:
-              id: P0ACB0  # LacI repressor (serves as product P with dual function)
+              id: fbiC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: P_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: P_responsive_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC_variant
               source: uniprot
 
     - terminator: rrnB_T1
-
-    - promoter: araBAD  # Activated by AraC (activator A), repressed by LacI (product P)
-
-    - cistron:
-        label: feedback_target
-        expression: medium
-        fused: false
-        chain:
-          - gene:
-              id: mGFP
-              source: fpbase
-
-    - terminator: T7term
-```

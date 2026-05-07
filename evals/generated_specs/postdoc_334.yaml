@@ -1,17 +1,18 @@
 construct:
-  name: "rare_eukaryotic_enzyme_high_yield"
+  name: rare_eukaryotic_enzyme_ecoli_his
   host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: enzyme
         expression: high
         chain:
           - gene:
-              id: rare_eukaryotic_enzyme
-              source: uniprot
+              id: unspecified_eukaryotic_enzyme
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: 6xHis
-    - terminator: T7term
+    - terminator: rrnB_T1

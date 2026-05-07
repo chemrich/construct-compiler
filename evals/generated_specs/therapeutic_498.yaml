@@ -1,22 +1,28 @@
 construct:
-  name: "secreted_therapeutic_targeting_fusion"
+  name: "therapeutic_protein_tissue_targeting_secreted"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: secreted_fusion
         expression: high
         chain:
-          - tag: HA
+          - tag: signal_peptide_SP  # N-terminal secretion signal
           - gene:
-              id: IL2
+              id: therapeutic_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 3
           - gene:
-              id: ANXA5
+              id: tissue_targeting_ligand
               source: uniprot
-    - terminator: BBa_B0015 # Double terminator for high stability; substituted standard mammalian pA with schema-provided terminator.
+          - tag: 6xHis  # C-terminal purification tag
+          - tag: ER_retention_KDEL  # Optional: ensures proper folding in ER/Golgi
+
+    - terminator: rrnB_T1

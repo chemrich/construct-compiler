@@ -1,42 +1,53 @@
 construct:
-  name: yeast_recombination_proof_enzyme_operon
+  name: "recombination_proof_enzyme_operon_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2_micron
+    ori: pUC
     source: addgene
 
-  # Yeast does not naturally support bacterial-style polycistronic operons with RBS; 
-  # however, this spec uses fused:false and spacers to fulfill the user's design 
-  # for independent translation units under a single transcript.
   cassette:
-    - promoter: TDH3  # Strong constitutive GPD promoter for high expression in yeast
+    - promoter: GAL1
 
     - cistron:
-        label: enzyme_a
+        label: EnzymeA
         expression: high
-        gene:
-          id: EnzymeA
-          source: uniprot
+        rbs: GCGAGACCC
+        codon_optimization: high_gc_bias
+        chain:
+          - gene:
+              id: EnzymeA
+              source: uniprot
 
-    - spacer: 40  # Distinct spacer to separate translation units
+    - terminator: CYC1
+
+    - spacer: 25
 
     - cistron:
-        label: enzyme_b
+        label: EnzymeB
         expression: high
-        fused: false  # Triggers the compiler to insert a distinct independent translation initiation site
-        gene:
-          id: EnzymeB
-          source: uniprot
-
-    - spacer: 45
-
-    - cistron:
-        label: enzyme_c
-        expression: high
+        rbs: AAAGAACC
+        codon_optimization: high_gc_bias
         fused: false
-        gene:
-          id: EnzymeC
-          source: uniprot
+        chain:
+          - gene:
+              id: EnzymeB
+              source: uniprot
 
-    - terminator: CYC1  # Note: To maintain a "single strong promoter" transcript, a single terminator is used at the end.
+    - terminator: PGK1
+
+    - spacer: 25
+
+    - cistron:
+        label: EnzymeC
+        expression: high
+        rbs: GAGATCTG
+        codon_optimization: standard
+        fused: false
+        chain:
+          - gene:
+              id: EnzymeC
+              source: uniprot
+
+    - terminator: ADH1

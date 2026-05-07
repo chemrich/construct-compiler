@@ -1,18 +1,22 @@
 construct:
-  name: "protein_r_expression_c_term_tev"
+  name: "protein_R_with_TEV_site"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_r
+        label: protein_R
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: R
+              id: protein_R
               source: uniprot
           - cleavage_site: TEV
+
     - terminator: rrnB_T1

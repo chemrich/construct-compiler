@@ -1,23 +1,28 @@
 construct:
-  name: "polycistronic_enzymes_A_B"
+  name: "dual_enzyme_ab_polycistronic"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enzyme_A
-        chain:
-          - gene:
-              id: enzyme_A
-              source: uniprot
-    - spacer: 30
+        label: enzyme_a
+        expression: high
+        gene:
+          id: enzyme_a
+    
+    - spacer: 20
+    
     - cistron:
-        label: enzyme_B
+        label: enzyme_b
+        expression: high
         fused: false
-        chain:
-          - gene:
-              id: enzyme_B
-              source: uniprot
+        gene:
+          id: enzyme_b
+    
     - terminator: rrnB_T1

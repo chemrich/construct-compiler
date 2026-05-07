@@ -1,14 +1,22 @@
 construct:
-  name: robust_termination_reporter_system
-  host: e_coli_bl21_de3
+  name: ReporterG_dual_terminator
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: reporter
+        expression: high
         gene:
           id: ReporterG
           source: uniprot
+    
+    - terminator: rrnB_T1
+    
     - terminator: T7term
-    - terminator: rrnB_T1 # Added second non-homologous terminator for robust termination as requested

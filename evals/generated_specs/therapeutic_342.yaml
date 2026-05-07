@@ -1,28 +1,37 @@
 construct:
-  name: yeast_secretory_fab_expression_system
+  name: yeast_Fab_secretion
   host: yeast
+
   backbone:
-    resistance: ura3 # Substituted auxotrophic marker for antibiotic resistance as requested for yeast host
+    resistance: none
     ori: 2_micron
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: TDH3 # Strong constitutive yeast promoter (GPD)
+    - promoter: PGK1
+
     - cistron:
-        label: fab_heavy_chain
+        label: Fab_heavy
         expression: high
         chain:
-          - tag: alpha_mating_factor # Yeast secretion signal (pre-pro leader)
+          - signal_peptide: alpha_factor
           - gene:
-              id: P01857 # Human IgG1 heavy chain constant region
+              id: Fab_heavy
               source: uniprot
-    - spacer: 40
+          - linker:
+              type: GS_flexible
+              repeats: 1
+
+    - spacer: 25
+
     - cistron:
-        label: fab_light_chain
+        label: Fab_light
         expression: high
-        fused: false # Independent translation for separate protein chain
+        fused: false
         chain:
-          - tag: alpha_mating_factor # Necessary for co-secretion/folding in the ER
+          - signal_peptide: alpha_factor
           - gene:
-              id: P01834 # Human Ig kappa chain C region
+              id: Fab_light
               source: uniprot
+
     - terminator: CYC1

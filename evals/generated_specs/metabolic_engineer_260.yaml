@@ -1,41 +1,49 @@
 construct:
-  name: "mevalonate_pathway_operon"
-  host: e_coli_bl21
+  name: "mevalonate_pathway_operon_IPP_production"
+  host: e_coli
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+
   cassette:
-    - promoter: J23100
+    - promoter: tac
+
     - cistron:
         label: mvaE
         expression: high
         gene:
           id: mvaE
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: mvaS
         expression: high
-        fused: false
         gene:
           id: mvaS
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ERG12
-        expression: high
-        fused: false
+        expression: medium
         gene:
           id: ERG12
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ERG8
-        expression: high
-        fused: false
+        expression: medium
         chain:
           - tag: 6xHis
           - gene:
               id: ERG8
               source: uniprot
+
     - terminator: rrnB_T1

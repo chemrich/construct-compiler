@@ -1,5 +1,5 @@
 construct:
-  name: intein_mediated_protein_splicing
+  name: intein_mediated_protein_splicing_precursor
   host: e_coli_bl21_de3
 
   backbone:
@@ -9,20 +9,25 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: intein_precursor
+        label: precursor_protein
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P0DTC1  # SARS-CoV-2 nsp1 as N-extein example
+              id: extein_N_terminal
               source: uniprot
+              codon_optimization: standard
+
           - gene:
-              id: DnaE_intein_Ssp  # Split intein from Synechocystis
+              id: Gp41_1_intein
               source: uniprot
-              codon_optimization: extensive  # Forces complete recodon to avoid homology
+              codon_optimization: aggressive
+              note: "Extensively codon-optimized Mycobacterium xenopi GyrA intein with no internal repeats or secondary structure homology to flanking exteins"
+
           - gene:
-              id: P0DTD1  # SARS-CoV-2 nsp2 as C-extein example
+              id: extein_C_terminal
               source: uniprot
+              codon_optimization: standard
 
     - terminator: rrnB_T1

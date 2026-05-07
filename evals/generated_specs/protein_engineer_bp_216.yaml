@@ -1,16 +1,22 @@
 construct:
-  name: "bacillus_stress_reporter_pctc_mcherry"
+  name: Bacillus_stress_reporter_mCherry
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pctc
+
     - cistron:
         label: stress_reporter
-        expression: medium
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BBa_B0015
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

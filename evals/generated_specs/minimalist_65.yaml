@@ -1,16 +1,21 @@
 construct:
-  name: "Secreted_Protein_Expression_HEK293"
+  name: "HEK293_secreted_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal signal peptide for ER secretion
           - gene:
               id: SecretedProtein
               source: uniprot
-    - terminator: bGH_PA
+          - tag: 6xHis  # C-terminal His tag for purification after secretion
+
+    - terminator: rrnB_T1

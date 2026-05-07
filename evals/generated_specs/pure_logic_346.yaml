@@ -1,30 +1,67 @@
 construct:
-  name: "yeast_nor_gate_metabolite_production"
+  name: yeast_NOR_gate_metabolite_producer
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    resistance: G418  # kanamycin analog for yeast
+    ori: 2_micron    # high-copy plasmid for yeast
+    source: addgene
+
   cassette:
-    - promoter: "pADH2"
+    - promoter: GAL1
+      label: "constitutive_metabolite_production"
+
     - cistron:
-        label: "sensor_gas_x"
-        expression: "low"
-        gene:
-          id: "P04483"
-          source: "uniprot"
-    - terminator: "ADH1_term"
-    - promoter: "pGAL1"
+        label: metabolite_synthase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P40871
+              source: uniprot  # Example: alcohol dehydrogenase (ADH1) or other bioproduction enzyme
+        fused: false
+
+    - spacer: 50
+
+    - promoter: ADH2
+      label: "inducible_repressor_X"
+
     - cistron:
-        label: "sensor_nutrient_depletion"
-        expression: "low"
-        gene:
-          id: "P03023"
-          source: "uniprot"
-    - terminator: "TEF1_term"
-    - promoter: "pTEF1_TetO_LacO"  # Repressed by TetR (Sensor X) and LacI (Sensor Y) to form a NOR gate
+        label: repressor_X
+        expression: medium
+        chain:
+          - gene:
+              id: P25048
+              source: uniprot  # MIG1 or equivalent repressor protein
+        fused: false
+
+    - spacer: 50
+
+    - promoter: HXK2
+      label: "nutrient_depletion_repressor_Y"
+
     - cistron:
-        label: "stilbene_synthase"
-        expression: "high"
-        gene:
-          id: "Q0E4H4"
-          source: "uniprot"
-    - terminator: "CYC1_term"
+        label: repressor_Y
+        expression: medium
+        chain:
+          - gene:
+              id: P04807
+              source: uniprot  # SNF1 kinase or glucose-sensing repressor
+        fused: false
+
+    - spacer: 50
+
+    - promoter: CYC1
+      label: "NOR_gate_logic_controller"
+      comment: "This promoter is repressed by either repressor_X OR repressor_Y to implement NOR logic"
+
+    - cistron:
+        label: metabolite_production_controller
+        expression: high
+        chain:
+          - gene:
+              id: P39857
+              source: uniprot  # GCN4 or equivalent transcription factor for NOR output
+        fused: false
+
+    - terminator: CYC1_terminator

@@ -1,16 +1,30 @@
 construct:
-  name: "inducible_unique_plant_expression_system"
-  host: mammalian # Plant host not explicitly in schema; mammalian used as eukaryotic proxy
+  name: "inducible_plant_expression_unique_regulatory"
+  host: algae
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: XVE_inducible_system # Estradiol-inducible unique promoter system for plants
+    - promoter: dexamethasone_inducible
+      # Unique synthetic inducible system: GVG transactivator (glucocorticoid-inducible)
+      # non-homologous to endogenous plant promoters; requires dexamethasone treatment
+    
     - cistron:
-        label: target_gene
+        label: target
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: NOS_plus_VTC2_tandem_UTR # Dual non-homologous 3' UTRs for robust termination
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gfp_a206k
+              source: uniprot
+    
+    - terminator: nos_3utr_synthetic1
+      # First 3' UTR: synthetic design derived from nopaline synthase terminator
+      # with engineered polyadenylation signals
+    
+    - terminator: ocs_3utr_synthetic2
+      # Second 3' UTR: octopine synthase derived synthetic terminator
+      # dual termination ensures robust transcript stability and prevents read-through

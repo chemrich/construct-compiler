@@ -1,29 +1,39 @@
 construct:
-  name: "stable_cho_secretion_fabfragmentb"
+  name: "CHO_humanized_Fab_secretion_dual_promoter"
   host: CHO
-  backbone:
-    resistance: DHFR  # Metabolic selection marker for stable integration in CHO cells
-    ori: pBR322
-    source: custom
-  cassette:
-    - promoter: EF1_alpha  # Strong constitutive mammalian promoter
-    - cistron:
-        label: light_chain
-        expression: high
-        chain:
-          - tag: IgK_leader  # Mammalian secretion signal
-          - gene:
-              id: FabFragmentB_LC
-              source: uniprot
-    - terminator: bGH_pA
 
-    - promoter: CMV  # Second strong constitutive promoter for separate expression
+  backbone:
+    resistance: null  # No antibiotic resistance; using metabolic selection instead
+    ori: null  # Mammalian episomal or integration-ready backbone
+    source: addgene
+    # Note: This backbone supports stable integration and includes DHFR (dihydrofolate reductase) 
+    # for methotrexate-based metabolic selection in CHO cells
+
+  cassette:
+    - promoter: EF1_alpha
+
     - cistron:
-        label: heavy_chain
+        label: Fab_light_chain
         expression: high
         chain:
-          - tag: IgK_leader  # Mammalian secretion signal
+          - tag: signal_peptide_SP1  # Mammalian secretion signal (SP1 from immunoglobulin light chain)
           - gene:
-              id: FabFragmentB_HC
+              id: FabFragmentB_light_chain
               source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: SV40_polyA
+
+    - spacer: 100
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: Fab_heavy_chain
+        expression: high
+        chain:
+          - tag: signal_peptide_SP2  # Mammalian secretion signal (SP2 from immunoglobulin heavy chain)
+          - gene:
+              id: FabFragmentB_heavy_chain
+              source: uniprot
+
+    - terminator: SV40_polyA

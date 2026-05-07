@@ -1,18 +1,23 @@
 construct:
-  name: "hGH_yeast_secretion_pYep"
+  name: hGH_secretion_yeast
   host: yeast
+
   backbone:
+    catalog_vector: pYEp24
     resistance: kanamycin
     ori: 2_micron
-    source: pYep
+    source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: hGH_secretion
+        label: hGH_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
               id: P01241
               source: uniprot
-    - terminator: ADH1_term
+
+    - terminator: CYC1

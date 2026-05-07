@@ -1,19 +1,22 @@
 construct:
-  name: protein_d_sumo_solubility_fusion
-  host: e_coli_bl21_de3
+  name: "Protein_D_SUMO_expression"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: Protein_D
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: P06120
+              id: Protein_D
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

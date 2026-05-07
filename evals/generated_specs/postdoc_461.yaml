@@ -1,29 +1,23 @@
 construct:
-  name: "yeast_secreted_fab_production"
+  name: "yeast_secreted_Fab_His"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Common strong constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: light_chain
+        label: secreted_Fab
         expression: high
         chain:
-          - tag: Alpha-MF  # Yeast-standard signal peptide (Alpha-mating factor leader) for ER translocation
+          - tag: signal_peptide_ER
           - gene:
-              id: P01834
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: heavy_chain
-        expression: high
-        fused: false  # Allows independent translation of the second chain
-        chain:
-          - tag: Alpha-MF
-          - gene:
-              id: P01857
+              id: Fab_fragment
               source: uniprot
           - tag: 6xHis
+
     - terminator: CYC1

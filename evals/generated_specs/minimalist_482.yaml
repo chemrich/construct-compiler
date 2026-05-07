@@ -1,18 +1,23 @@
 construct:
-  name: "human_insulin_secretion_ecoli"
-  host: e_coli_bl21_de3
+  name: human_insulin_secretion
+  host: mammalian
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: CMV
+    
     - cistron:
-        label: proinsulin
+        label: insulin
         expression: high
         chain:
-          - tag: PelB
-          - tag: 6xHis
-          - cleavage_site: TEV
+          - tag: signal_peptide_insulin
           - gene:
               id: P01308
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: SV40poly

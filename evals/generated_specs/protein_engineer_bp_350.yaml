@@ -1,24 +1,29 @@
 construct:
-  name: "AOX1_AlphaFactor_Therapeutic_HSA_Fusion"
+  name: "Pichia_secreted_therapeutic_HSA_fusion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
-      cistron:
-        label: secreted_fusion_protein
+
+    - cistron:
+        label: secreted_therapeutic
         expression: high
         chain:
-          - tag: alpha-factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: therapeutic_polypeptide
+              id: therapeutic_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P02768  # Human Serum Albumin (HSA)
+              id: P02768
               source: uniprot
-      terminator: AOX1_TT
+              description: Human_Serum_Albumin
+
+    - terminator: CYC1

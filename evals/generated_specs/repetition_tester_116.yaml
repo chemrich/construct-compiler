@@ -1,27 +1,31 @@
 construct:
-  name: "bacterial_expression_his_tev_sfgfp_mbp"
-  host: e_coli_bl21
+  name: "dual_tag_solubility_construct"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: tagged_protein
+        label: target_with_tags
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - cleavage_site: TEV
           - linker:
-              type: short_GS
+              type: rigid_EAAAK
               repeats: 1
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: target_orf
+              source: uniprot
           - linker:
-              type: GS_flexible
-              repeats: 4
-          - solubility_tag: MBP
-    - terminator: T7term
+              type: short_GS
+              repeats: 2
+          - solubility_tag: SUMO
+
+    - terminator: rrnB_T1

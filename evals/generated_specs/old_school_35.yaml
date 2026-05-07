@@ -1,32 +1,22 @@
-```yaml
 construct:
-  name: KinaseK_RSV_puromycin_expression
+  name: "mammalian_KinaseK_expression"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: ampicillin
+    resistance: puromycin
+    ori: pUC
+    source: addgene
 
   cassette:
-    - promoter: RSV
+    - promoter: RSV_LTR
 
     - cistron:
-        label: target
+        label: KinaseK
         expression: high
-        gene:
-          id: KinaseK
-          source: uniprot
+        chain:
+          - gene:
+              id: KinaseK
+              source: uniprot
 
-    - terminator: hGH_polyA
-
-    - promoter: CMV
-
-    - cistron:
-        label: selection
-        expression: medium
-        gene:
-          id: puromycin_resistance
-          source: uniprot
-
-    - terminator: SV40_polyA
-```
+    - polya: hGH_polyA

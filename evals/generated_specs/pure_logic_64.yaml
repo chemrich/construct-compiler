@@ -1,50 +1,70 @@
 construct:
-  name: "repressilator_oscillatory_circuit"
-  host: e_coli
+  name: repressilator_oscillatory_circuit
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pSC101
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pL_lambda
+    - promoter: araBAD
+    
     - cistron:
-        label: repressor_lacI
+        label: repressor_1_LacI
         expression: medium
-        fused: false
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P03023
+              id: lacI
               source: uniprot
-          - tag: SsrA
+
     - terminator: rrnB_T1
+
+    - spacer: 30
+
     - promoter: lacUV5
+
     - cistron:
-        label: repressor_tetR
+        label: repressor_2_TetR
         expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: tac
+
+    - cistron:
+        label: repressor_3_CI
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: cI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: J23100
+
+    - cistron:
+        label: output_fluorophore
+        expression: high
         fused: false
         chain:
           - gene:
-              id: P04483
-              source: uniprot
-          - tag: SsrA
+              id: mCherry
+              source: fpbase
+
     - terminator: rrnB_T1
-    - promoter: pTet
-    - cistron:
-        label: repressor_cI
-        expression: medium
-        fused: false
-        chain:
-          - gene:
-              id: P03034
-              source: uniprot
-          - tag: SsrA
-    - terminator: rrnB_T1
-    - promoter: pTet
-    - cistron:
-        label: reporter_gfp
-        expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015

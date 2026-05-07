@@ -1,25 +1,30 @@
 construct:
-  name: Tet_On_HEK293_mEGFP_system
+  name: "Tet_On_inducible_expression_system"
   host: HEK293
+
+  cassette:
+    - promoter: CMV
+      cistron:
+        label: rtTA
+        expression: high
+        gene:
+          id: rtTA
+          source: uniprot
+
+    - terminator: SV40_polyA
+
+    - promoter: TRE
+      cistron:
+        label: gene_of_interest
+        expression: high
+        chain:
+          - gene:
+              id: placeholder_gene
+              source: uniprot
+
+    - terminator: SV40_polyA
+
   backbone:
     resistance: puromycin
     ori: pUC
     source: addgene
-  cassette:
-    - promoter: TRE3G
-    - cistron:
-        label: target
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_polyA
-    - spacer: 50
-    - promoter: CMV
-    - cistron:
-        label: transactivator
-        expression: medium
-        gene:
-          id: rtTA
-          source: uniprot
-    - terminator: SV40_polyA

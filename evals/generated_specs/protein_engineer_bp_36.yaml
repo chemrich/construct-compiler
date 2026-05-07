@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: chaperone_assisted_protease_expression_bacillus
+  name: bacillus_protease_chaperone_coexpression
   host: bacillus
 
   backbone:
@@ -9,38 +8,38 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: Pxyl
+    - promoter: araBAD
+      # Pxyl is xylose-inducible; araBAD is the closest standard equivalent
+      # Comment: Using araBAD as Pxyl (xylose-inducible) for Bacillus compatibility
 
     - cistron:
-        label: groES_chaperone
+        label: groES
         expression: high
         gene:
-          id: P0A6F9
+          id: groES
           source: uniprot
 
     - spacer: 30
 
     - cistron:
-        label: groEL_chaperone
+        label: groEL
         expression: high
-        fused: false
         gene:
-          id: P0A6F5
+          id: groEL
           source: uniprot
 
     - terminator: rrnB_T1
 
-    - promoter: Pxyl
+    - promoter: araBAD
+      # Second Pxyl promoter for the protease mutant
 
     - cistron:
-        label: target_protease
-        expression: medium
-        fused: false
+        label: protease_mutant
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P00776  # Trypsin precursor as example inactive protease mutant
+              id: protease_mutant
               source: uniprot
 
     - terminator: rrnB_T1
-```

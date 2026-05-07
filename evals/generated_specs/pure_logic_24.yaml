@@ -1,51 +1,58 @@
-```yaml
 construct:
-  name: bistable_toggle_switch_mammalian
+  name: mammalian_bistable_toggle_switch
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
-    
+
     - cistron:
-        label: tetR_repressor
-        expression: medium
-        gene:
-          id: P04483  # TetR from E. coli
-          source: uniprot
-    
-    - spacer: 30
-    
-    - cistron:
-        label: mCherry_output_state1
-        expression: medium
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    
+        label: repressor_A
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
     - terminator: rrnB_T1
-    
-    - promoter: CMV  # Second cassette for the reciprocal repressor
-    
+
+    - promoter: TRE3G
+      # TRE3G is tetracycline response element (signal X inducible)
+
     - cistron:
-        label: lacI_repressor
-        expression: medium
-        gene:
-          id: P03023  # LacI from E. coli
-          source: uniprot
-    
-    - spacer: 30
-    
-    - cistron:
-        label: mEGFP_output_state2
-        expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    
+        label: mCherry_state1
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
     - terminator: rrnB_T1
-```
+
+    - promoter: CMV
+
+    - cistron:
+        label: repressor_B
+        expression: high
+        chain:
+          - gene:
+              id: tTA
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: tetO
+      # tetO (tet operator) sequence repressed by tTA; de-repressed by signal Y (doxycycline)
+
+    - cistron:
+        label: mNeonGreen_state2
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,23 +1,42 @@
 construct:
-  name: "mammalian_stoichiometric_A_B_P2A"
+  name: "mammalian_A_P2A_B_expression"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: blasticidin
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: stoichiometric_expression
+        label: protein_A
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: "Protein_A"
+              id: protein_A
               source: uniprot
-          - linker:
-              type: P2A
-              repeats: 1
+
+    - cistron:
+        label: P2A_linker
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: "Protein_B"
+              id: P2A
               source: uniprot
-    - terminator: bGH_polyA
+
+    - cistron:
+        label: protein_B
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: protein_B
+              source: uniprot
+
+    - terminator: rrnB_T1

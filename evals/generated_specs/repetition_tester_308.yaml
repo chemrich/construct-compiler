@@ -1,25 +1,31 @@
 construct:
-  name: "dual_promoter_puro_peptide_mammalian"
+  name: "mammalian_dual_promoter_puro_resistance"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: puromycin
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: selection_marker
+        label: puromycin_resistance
+        expression: high
         gene:
-          id: P13249
+          id: PuroR
           source: uniprot
-    - terminator: bGH_polyA
-    - spacer: 50
+
+    - terminator: rrnB_T1
+
+    # Internal mini-promoter cassette (distinct genetic element)
     - promoter: U6
+
     - cistron:
-        label: internal_peptide
-        chain:
-          - tag: NLS
-          - gene:
-              id: mTagBFP2
-              source: fpbase
-    - terminator: SV40_polyA
+        label: short_peptide
+        expression: medium
+        gene:
+          id: custom_peptide
+          source: uniprot
+
+    - terminator: BBa_B0015

@@ -1,37 +1,57 @@
 construct:
-  name: "orthogonal_triple_fluorescent_reporter"
-  host: e_coli_bl21_de3
+  name: "tri_fluorescent_orthogonal_expression"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7
+    - promoter: T7lac
+    
     - cistron:
-        label: gfp_unit
+        label: gfp_module
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
-    - spacer: 30
-    - promoter: tac
-    - cistron:
-        label: mcherry_unit
-        expression: high
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+              codon_opt: ecoli_max_divergent
+    
     - terminator: rrnB_T1
-    - spacer: 30
+    
+    - spacer: 50
+    
     - promoter: araBAD
+    
     - cistron:
-        label: bfp_unit
+        label: cherry_module
         expression: high
         fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
+        chain:
+          - tag: 8xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+              codon_opt: ecoli_max_divergent
+    
     - terminator: BBa_B0015
+    
+    - spacer: 50
+    
+    - promoter: lacUV5
+    
+    - cistron:
+        label: bfp_module
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+              codon_opt: ecoli_max_divergent
+    
+    - terminator: T7term

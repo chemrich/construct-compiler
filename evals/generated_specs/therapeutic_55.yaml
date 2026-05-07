@@ -1,20 +1,29 @@
 construct:
-  name: "yeast_vacuolar_mCherry_V5_markerless"
+  name: yeast_vacuolar_protein_expression
   host: yeast
+
   backbone:
-    resistance: URA3 # Auxotrophic marker used to satisfy request for no antibiotic resistance
-    ori: 2_micron
+    resistance: auxotrophic_marker  # URA3 or LEU2 (no antibiotic resistance)
+    ori: 2_micron  # High-copy for S. cerevisiae
     source: addgene
 
   cassette:
-    - promoter: TDH3 # Strong constitutive native yeast promoter (non-viral)
+    - promoter: GAL1  # Inducible promoter for controlled expression in yeast
+
     - cistron:
-        label: vacuolar_reporter
+        label: vacuolar_protein
         expression: high
         chain:
-          - tag: CPY_leader # N-terminal vacuolar targeting signal from Saccharomyces cerevisiae Carboxypeptidase Y
+          - tag: vps10_signal  # N-terminal vacuolar targeting signal (VSS)
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mCherry
-              source: fpbase
-          - tag: V5 # Requested epitope tag (derived from SV5, though rest of construct is non-viral)
-    - terminator: CYC1 # Native yeast terminator (non-viral)
+              id: target_protein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: V5  # C-terminal detection tag
+
+    - terminator: CYC1  # Yeast terminator (strong, efficient)

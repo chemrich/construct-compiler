@@ -1,18 +1,24 @@
 construct:
-  name: "Aggregase_Solubility_Fusion"
-  host: e_coli_bl21_de3
+  name: "Aggregase_NusA_TEV_fusion"
+  host: e_coli_bl21
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: Aggregase_fusion
         expression: high
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
+          - solubility_tag: NusA
           - cleavage_site: TEV
           - gene:
               id: Aggregase
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

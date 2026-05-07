@@ -1,24 +1,29 @@
 construct:
-  name: "SuperProteinA_FluorTagGreen_Fusion"
-  host: e_coli
+  name: "SuperProteinA_FluorTagGreen_fusion"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: fusion_protein
+        label: fusion
         expression: high
         chain:
+          - tag: 8xHis
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: P02976
+              id: SuperProteinA
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 5
+              repeats: 2
           - gene:
-              id: mEGFP
+              id: FluorTagGreen
               source: fpbase
-          - tag: 8xHis
+
     - terminator: rrnB_T1

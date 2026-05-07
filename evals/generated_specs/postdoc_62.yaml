@@ -1,10 +1,13 @@
 construct:
-  name: "ProteinA_ProteinB_Polycistronic_Expression"
+  name: "ProteinA_ProteinB_polycistronic_IRES"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: ProteinA
         expression: high
@@ -13,14 +16,33 @@ construct:
           - gene:
               id: ProteinA
               source: uniprot
-    - spacer: 30 # IRES is substituted with a standard bacterial spacer; IRES/P2A are eukaryotic mechanisms and not functional in E. coli.
+
+    - spacer: 50
+
+    # IRES element for polycistrotic expression in E. coli
+    - cistron:
+        label: ProteinA_IRES
+        expression: high
+        chain:
+          - gene:
+              id: IRES_Kozak
+              source: uniprot
+              # Note: IRES elements are typically viral (e.g., EMCV IRES) or synthetic
+              # This represents the IRES sequence that enables cap-independent translation
+
+    - spacer: 30
+
     - cistron:
         label: ProteinB
         expression: high
-        fused: false # Enables independent translation via an internal RBS for the second cistron.
         chain:
           - tag: 6xHis
           - gene:
               id: ProteinB
               source: uniprot
-    - terminator: T7term
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: P2A
+
+    - terminator: rrnB_T1

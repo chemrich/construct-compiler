@@ -1,21 +1,34 @@
 construct:
-  name: "ppi_fusion_with_removable_tag"
-  host: e_coli_bl21
+  name: "protein_interaction_fusion_removable_tag"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_binder
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: target_protein
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: binding_partner
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: binding_partner_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

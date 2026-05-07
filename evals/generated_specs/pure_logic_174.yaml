@@ -1,17 +1,47 @@
 construct:
-  name: "cancer_specific_ligand_inducible_therapeutic_expression"
+  name: "ligand_cancer_cell_conditional_therapeutic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: hTERT_TRE  # Cancer-specific hTERT promoter with TRE for ligand-inducible control
+    - promoter: CMV
+
+    - cistron:
+        label: ligand_sensor
+        expression: high
+        chain:
+          - gene:
+              id: NOTCH1_ECD
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: therapeutic_protein
-        expression: high
+        expression: medium
         chain:
           - tag: NLS
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P04637
+              id: TP53
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1
+
+  # Comment: This design uses a ligand-binding Notch extracellular domain (ECD) 
+  # as a sensor upstream of the therapeutic gene. In practice, implement a 
+  # cancer-specific promoter (e.g., PSA, HER2, or EPCAM-driven) by replacing 
+  # the CMV promoter with a tissue-specific or tumor-associated promoter. 
+  # The ligand L would trigger Notch signaling, which activates downstream 
+  # transcription factors. For robust conditional control, use a dual 
+  # transgenic approach: one allele with cancer cell-specific promoter + 
+  # inducible transcription factor; second allele with ligand-responsive 
+  # reporter controlling the therapeutic gene. The NLS ensures nuclear 
+  # localization; MBP provides solubility. Consider adding an ER signal 
+  # peptide if secretion is desired.

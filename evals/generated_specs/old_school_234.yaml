@@ -1,37 +1,56 @@
 construct:
-  name: "yeast_knockout_URA3_loxP_TRP1"
+  name: "S_cerevisiae_URA3_knockout_loxP_geneX"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: trp1
+    ori: CEN6
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: "plasmid_selection_marker"
-        expression: medium
+        label: homology_arm_5prime
+        expression: very_low
         gene:
-          id: TRP1
+          id: geneX_5arm
           source: uniprot
-    - terminator: ADH1
-    - spacer: 40
+
+    - spacer: 30
+
     - cistron:
-        label: "upstream_homology_arm"
+        label: loxP_site_upstream
+        expression: very_low
         gene:
-          id: gene_X_5p_homology
-    - promoter: TEF1
+          id: loxP
+          source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: "floxed_knockout_marker"
+        label: URA3_marker
         expression: high
-        chain:
-          - tag: loxP
-          - gene:
-              id: URA3
-              source: uniprot
-          - tag: loxP
-    - terminator: CYC1
-    - cistron:
-        label: "downstream_homology_arm"
         gene:
-          id: gene_X_3p_homology
-    - terminator: BBa_B0015
+          id: URA3
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: loxP_site_downstream
+        expression: very_low
+        gene:
+          id: loxP
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: homology_arm_3prime
+        expression: very_low
+        gene:
+          id: geneX_3arm
+          source: uniprot
+
+    - terminator: rrnB_T1

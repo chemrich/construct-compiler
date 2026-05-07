@@ -1,55 +1,57 @@
-```yaml
 construct:
-  name: glucose_pathway_4enzyme_graded_expression
+  name: "glucose_pathway_tuned_cascade"
   host: e_coli_bl21_de3
-  
+
   backbone:
     catalog_vector: "pET-28b(+)"
-    
+
   cassette:
-    - promoter: T7
-    
+    - promoter: T7lac
+
     - cistron:
         label: enzyme1
-        expression: high  # highest expression level (4x ratio)
+        expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0A6F5  # example glucose-6-phosphate isomerase
+              id: glucose_6_phosphatase
               source: uniprot
-              
+
     - spacer: 25
-    
+
     - cistron:
         label: enzyme2
-        expression: medium  # 3x ratio level
+        expression: high
         fused: false
         chain:
+          - rbs: RBS_strong
           - gene:
-              id: P0A9B2  # example 6-phosphofructokinase
+              id: phosphoglucose_isomerase
               source: uniprot
-              
-    - spacer: 30
-    
+
+    - spacer: 25
+
     - cistron:
         label: enzyme3
-        expression: low  # 2x ratio level
+        expression: medium
         fused: false
         chain:
+          - rbs: RBS_medium
           - gene:
-              id: P0A796  # example fructose-bisphosphate aldolase
+              id: phosphofructokinase
               source: uniprot
-              
-    - spacer: 35
-    
+
+    - spacer: 25
+
     - cistron:
         label: enzyme4
-        expression: very_low  # 1x ratio level (lowest)
+        expression: low
         fused: false
         chain:
+          - rbs: RBS_weak
           - gene:
-              id: P0A9C5  # example triose-phosphate isomerase
+              id: aldolase
               source: uniprot
-              
-    - terminator: T7term
-```
+
+    - terminator: rrnB_T1

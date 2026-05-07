@@ -1,14 +1,37 @@
 construct:
-  name: "mammalian_dual_enhancer_tet_inducible_mEGFP"
+  name: "tet_inducible_dual_enhancer_HEK293"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTRE3G"
+    resistance: kanamycin
+
   cassette:
-    - promoter: "CMVenh_SyntheticInsulator_SV40enh_TRE3G"  # Enhancer 1 - Insulator - Enhancer 2 - Inducible Promoter
+    - enhancer:
+        id: CMV_enhancer
+        type: CMV
+        position: upstream
+
+    - insulator:
+        id: synthetic_insulator_001
+        type: synthetic_divergent
+        length: 250
+
+    - enhancer:
+        id: SV40_enhancer
+        type: SV40
+        position: upstream
+
+    - promoter: TRE3G  # Tetracycline-responsive element (tTA/rtTA-dependent)
+
     - cistron:
-        label: target_gene
+        label: gene_of_interest
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_polyA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: null  # User to specify their GOI
+              source: uniprot
+
+    - terminator: SV40_poly_A

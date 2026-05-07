@@ -1,14 +1,24 @@
 construct:
-  name: "protein_y_mammalian_expression"
-  host: mammalian
+  name: mammalian_protein_Y_expression
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_y
+        label: protein_Y
         expression: high
-        gene:
-          id: protein_Y
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: protein_Y
+              source: uniprot
+
+    - terminator: rrnB_T1

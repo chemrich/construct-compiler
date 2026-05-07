@@ -1,23 +1,27 @@
 construct:
-  name: "phage_display_pIII_fusion"
+  name: peptide_phage_coat_display
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
         label: display_fusion
-        expression: medium
+        expression: high
         chain:
-          - tag: pelB
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: target_peptide
+              id: M13_major_coat_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P69168
+              id: target_peptide
               source: uniprot
+
     - terminator: rrnB_T1

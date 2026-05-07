@@ -1,23 +1,28 @@
 construct:
-  name: "proteinY_EGFP_fusion_HEK293"
+  name: proteinY_EGFP_CMV_HEK293
   host: HEK293
+
   backbone:
+    catalog_vector: pTwist CMV
     resistance: puromycin
     ori: pUC
-    source: custom
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: fusion_construct
+        label: proteinY_EGFP
         expression: high
         chain:
+          - kozak: GCCRCCATGG
           - gene:
               id: proteinY
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: EGFP
               source: fpbase
-    - terminator: BGH_pA
+
+    - terminator: rrnB_T1

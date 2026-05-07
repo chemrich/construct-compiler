@@ -1,18 +1,23 @@
 construct:
-  name: "bacillus_vpr_gfp_secretion"
+  name: "bacillus_secretion_reporter"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: reporter
+        label: secreted_GFP
         expression: high
         chain:
-          - tag: Vpr
+          - secretion_signal: Vpr
           - gene:
-              id: sfGFP
+              id: GFP
               source: fpbase
           - tag: 6xHis
+
     - terminator: rrnB_T1

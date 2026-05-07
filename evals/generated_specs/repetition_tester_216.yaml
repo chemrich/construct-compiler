@@ -1,36 +1,54 @@
 construct:
-  name: "dual_optogenetic_mammalian_effector_system"
+  name: "dual_optogenetic_LSD_effector_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: LSD1_fusion
+        label: LSD1_EffectorD
         expression: high
         chain:
           - gene:
-              id: CRY2
-              source: uniprot
+              id: LSD1_human_codon_optimized_v1
+              source: custom
+              description: "Human codon-optimized light-sensitive domain 1, synonymously diversified variant 1"
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
+              sequence: "GGTGGCAGCGGTGGCAGCGGTGG"
+              description: "LinkerA - custom non-homologous sequence unique to LSD1 construct"
           - gene:
-              id: RELA
-              source: uniprot
+              id: EffectorD_human_codon_optimized_v1
+              source: custom
+              description: "Human codon-optimized effector domain, synonymously diversified variant 1"
+
     - terminator: SV40_polyA
-    - promoter: CMV
+
+    - spacer: 50
+
+    - promoter: EF1_alpha
+
     - cistron:
-        label: LSD2_fusion
+        label: LSD2_EffectorD
         expression: high
         chain:
           - gene:
-              id: CIB1
-              source: uniprot
+              id: LSD2_human_codon_optimized_v2
+              source: custom
+              description: "Human codon-optimized light-sensitive domain 2, synonymously diversified variant 2"
           - linker:
-              type: rigid_EAAAK
-              repeats: 3
+              type: GS_flexible
+              repeats: 1
+              sequence: "AGCGGCAGCAGCGGCAGCAGC"
+              description: "LinkerB - custom non-homologous sequence unique to LSD2 construct, structurally distinct from LinkerA"
           - gene:
-              id: RELA
-              source: uniprot
-    - terminator: bGH_polyA
+              id: EffectorD_human_codon_optimized_v2
+              source: custom
+              description: "Human codon-optimized effector domain, synonymously diversified variant 2, distinct from v1"
+
+    - terminator: WPRE_polyA

@@ -1,49 +1,59 @@
 construct:
-  name: "bacillus_subtilis_cellulase_operon"
-  host: b_subtilis  # Host set to Bacillus subtilis as requested
+  name: "bacillus_cellulase_cocktail_operon"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pveg  # Strong constitutive Bacillus promoter
+    - promoter: veg  # Strong constitutive B. subtilis promoter
+
     - cistron:
         label: endoglucanaseA
         expression: high
         chain:
-          - tag: AmyE_signal
+          - signal_peptide: amyE  # Bacillus secretion signal
           - tag: FLAG
           - gene:
               id: endoglucanaseA
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: exoglucanaseB
         expression: high
-        fused: false  # Independent translation for polycistronic operon
+        fused: false
         chain:
-          - tag: AmyE_signal
+          - signal_peptide: amyE
           - gene:
               id: exoglucanaseB
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: beta_glucosidaseC
         expression: high
         fused: false
         chain:
-          - tag: AmyE_signal
+          - signal_peptide: amyE
           - gene:
-              id: beta-glucosidaseC
+              id: beta_glucosidaseC
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: xylanaseD
         expression: high
         fused: false
         chain:
-          - tag: AmyE_signal
+          - signal_peptide: amyE
           - gene:
               id: xylanaseD
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

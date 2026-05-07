@@ -1,21 +1,21 @@
 construct:
-  name: "hUNG_inducible_complementation_system"
-  host: e_coli
+  name: "human_DNA_repair_enzyme_complementation"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Rule 12: User requested no resistance, but selection is required for plasmid stability; used kanamycin as default (Rule 9).
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD # Rule 12: Bacterial inducible promoter used to avoid viral-derived sequences like T7.
+    - promoter: T7lac
+
     - cistron:
-        label: human_dna_repair_enzyme
+        label: DNA_repair_enzyme
         expression: high
         chain:
-          - tag: 6xHis # N-terminal purification tag
+          - tag: 6xHis
           - gene:
-              id: P13051
+              id: XPA
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - solubility_tag: MBP # C-terminal solubility tag
-    - terminator: rrnB_T1 # Bacterial terminator to avoid viral-derived T7term.
+          - solubility_tag: MBP
+
+    - terminator: rrnB_T1

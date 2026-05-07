@@ -1,18 +1,41 @@
 construct:
-  name: "HighLevel_Secretion_EPO_NonViral"
+  name: mammalian_secreted_therapeutic_expression_plasmid
   host: HEK293
+
   backbone:
-    resistance: none # Requested no antibiotic markers; alternative selection or minicircle approach assumed
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+    # Non-viral, non-integrating mammalian expression plasmid
+    # No antibiotic resistance markers included
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha # Robust, non-viral, human constitutive promoter
+    - promoter: CMV
+      # Strong constitutive mammalian promoter for high-level expression
+
     - cistron:
-        label: therapeutic_protein
+        label: secreted_therapeutic
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal peptide for efficient export
+          - tag: signal_peptide_sp_d4
+            # N-terminal secretion signal for ER targeting and signal peptidase cleavage
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01588 # Human Erythropoietin
+              id: IFN_beta_human
               source: uniprot
-    - terminator: hGH_polyA # Human Growth Hormone polyadenylation signal (non-viral)
+              # Example: human interferon-beta as therapeutic cargo
+              # User can substitute with any secretable therapeutic protein (IFN-gamma, TNF-alpha, growth factors, cytokines, etc.)
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 8xHis
+            # C-terminal purification tag for downstream isolation and quality control
+
+    - terminator: SV40_polyA
+      # Strong mammalian polyadenylation signal for transcript stability and expression
+
+    # Note: This construct uses pTwist CMV, a non-viral plasmid backbone with no antibiotic
+    # resistance markers, making it suitable for therapeutic development and regulatory approval.
+    # For transient expression, standard transfection methods apply. For stable lines, consider
+    # episomal retention elements or transient transfection followed by protein harvesting.

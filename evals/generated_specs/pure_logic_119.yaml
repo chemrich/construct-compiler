@@ -1,16 +1,51 @@
 construct:
-  name: "light_synchronized_circadian_oscillator"
-  host: e_coli_bl21_de3
+  name: circadian_light_entrained_reporter
+  host: mammalian
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pTwist CMV
+  
   cassette:
-    - promoter: pDawn  # Blue-light responsive promoter for external LightCycle synchronization
+    - promoter: CMV
+    
     - cistron:
-        label: "CircadianReporter"
+        label: circadian_reporter
         expression: medium
         chain:
+          - tag: degron_d2
           - gene:
-              id: "sfGFP"
-              source: "fpbase"
-          - tag: "LVA"  # Standard E. coli degradation tag for rapid protein turnover
-    - terminator: "rrnB_T1"
+              id: PER2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    
+    - spacer: 30
+    
+    - cistron:
+        label: light_sensor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: CRY1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: HA
+    
+    - spacer: 30
+    
+    - cistron:
+        label: circadian_clock
+        expression: low
+        fused: false
+        gene:
+          id: BMAL1
+          source: uniprot
+    
+    - terminator: rrnB_T1

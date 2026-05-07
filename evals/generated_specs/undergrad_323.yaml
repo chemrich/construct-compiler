@@ -1,14 +1,20 @@
 construct:
-  name: "mammalian_egfp_expression"
+  name: mammalian_GFP_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

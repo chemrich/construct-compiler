@@ -1,23 +1,41 @@
 construct:
-  name: "clinical_nonviral_bicistronic_P2A"
+  name: "dual_therapeutic_2A_mammalian"
   host: HEK293
+
   backbone:
-    resistance: none  # Clinical requirement: antibiotic-free selection (e.g., RNA-out or sucrose-based)
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    ori: null
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral mammalian promoter suitable for clinical applications
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_payload
+        label: Protein_X
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Protein_X
+              id: protein_x_therapeutic
               source: uniprot
-          - linker:
-              type: P2A  # Self-cleaving 2A peptide for stoichiometric co-expression
-              repeats: 1
+
+    - spacer: 21
+
+    - element: P2A_self_cleaving_peptide
+      # Self-cleaving 2A sequence (e.g., Porcine Teschovirus-1 2A) inserted here
+      # This enables ribosomal skipping, releasing Protein X
+      # No additional RBS needed; ribosomal skipping produces stoichiometric amounts
+
+    - cistron:
+        label: Protein_Y
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Protein_Y
+              id: protein_y_therapeutic
               source: uniprot
-    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal
+
+    - terminator: rrnB_T1

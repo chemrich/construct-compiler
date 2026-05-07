@@ -1,18 +1,59 @@
 construct:
-  name: "antibody_comparator_system"
-  host: e_coli_bl21_de3
+  name: "A_B_comparator_antibody_output"
+  host: mammalian
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: tac  # Acts as a biochemical comparator: output is activated when Input A (IPTG/inducer) concentration overcomes the repression of Input B (LacI repressor)
+    - promoter: CMV
+
     - cistron:
-        label: "antibody_output"
+        label: comparator_sensor
         expression: high
         chain:
-          - tag: "PelB"  # Secretion signal for periplasmic export in E. coli
           - gene:
-              id: "P04259"
-              source: "uniprot"
-          - cleavage_site: "TEV"
-          - tag: "6xHis"
-    - terminator: "T7term"
+              id: "intein_split_TF_A_sensor"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "dCas9_VP64"
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: input_response_unit
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: "TetR_degron"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "intein_split_TF_B_repressor"
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: antibody_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: FLAG
+          - cleavage_site: TEV
+          - gene:
+              id: "scFv_human"
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_das1_cellulase_secretion"
+  name: "Pichia_DAS1_cellulase_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: DAS1
-      cistron:
-        label: cellulase_expression
+
+    - cistron:
+        label: cellulase
         expression: medium
         chain:
-          - tag: alpha_factor
           - tag: 8xHis
           - cleavage_site: TEV
+          - secretion_signal: alpha_factor
           - gene:
-              id: P62694
+              id: cel7a
               source: uniprot
-      terminator: AOX1_term
+
+    - terminator: rrnB_T1

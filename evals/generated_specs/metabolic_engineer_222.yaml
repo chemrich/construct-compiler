@@ -1,29 +1,36 @@
 construct:
-  name: "toxic_pollutant_degradation_pathway"
-  host: e_coli_bl21
+  name: "pollutant_degradation_pathway_6enzyme"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: lacUV5  # Chosen for controlled, moderate levels in E. coli
+    - promoter: tac
+    
     - cistron:
-        label: DegA
+        label: DegA_periplasmic
         expression: medium
         chain:
-          - tag: PelB  # N-terminal secretion signal for periplasmic export
+          - signal_peptide: Tat  # Twin-Arginine Translocase signal for periplasmic export
           - gene:
               id: DegA
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: DegB
         expression: medium
-        fused: false  # Independent translation within the operon
+        fused: false
         gene:
           id: DegB
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: DegC
         expression: medium
@@ -31,7 +38,9 @@ construct:
         gene:
           id: DegC
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: DegD
         expression: medium
@@ -39,7 +48,9 @@ construct:
         gene:
           id: DegD
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: DegE
         expression: medium
@@ -47,7 +58,9 @@ construct:
         gene:
           id: DegE
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: DegF
         expression: medium
@@ -55,4 +68,5 @@ construct:
         gene:
           id: DegF
           source: uniprot
+    
     - terminator: rrnB_T1

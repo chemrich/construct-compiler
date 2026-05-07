@@ -1,14 +1,20 @@
 construct:
-  name: "mammalian_constitutive_expression"
+  name: mammalian_goi_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_gene
+        label: GOI
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase # Placeholder for the user's Gene of Interest (GOI)
-    - terminator: SV40_pA # Standard strong polyadenylation signal for mammalian termination
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GOI
+              source: uniprot
+
+    - terminator: WPRE

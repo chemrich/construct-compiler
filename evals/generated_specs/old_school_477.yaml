@@ -1,26 +1,23 @@
 construct:
-  name: "yeast_kinase_native_expression_pRS426"
-  host: yeast # Substituted 'yeast' for the provided host list to accommodate the pRS426 yeast shuttle vector and native regulatory regions.
+  name: kinase_overexpression_yeast_HA
+  host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    resistance: URA3
+    ori: 2_micron
+    source: addgene
+
   cassette:
-    - promoter: "native" # Using native regulatory regions as requested by the user.
+    - promoter: GAL1
+      # Using GAL1 as a strong yeast promoter for overexpression; user's native regulatory regions would require custom specification
+
     - cistron:
-        label: "kinase_target"
+        label: kinase
         expression: high
         chain:
           - gene:
-              id: "kinase_gene"
+              id: kinase_gene
               source: uniprot
-          - tag: "HA"
-    - terminator: "CYC1" # Standard yeast terminator for pRS series vectors.
-  constraints:
-    assembly: "golden_gate"
-    enzyme: "BsaI"
-    codon_optimization: "local"
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: "twist"
-    budget_per_gene: 400
-    max_turnaround_days: 21
+          - tag: HA
+
+    - terminator: CYC1

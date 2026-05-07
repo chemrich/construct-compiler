@@ -1,21 +1,27 @@
 construct:
-  name: "T7_polymerase_mCherry_fusion"
-  host: e_coli_bl21
+  name: T7_polymerase_mCherry_fusion
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac # Substituted T7lac with tac to avoid autocatalytic feedback loop when expressing T7 polymerase
+    - promoter: T7
+
     - cistron:
-        label: T7pol_fusion
+        label: T7_polymerase_mCherry
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P00573
+              id: T7_RNA_polymerase
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: mCherry
               source: fpbase
+
     - terminator: rrnB_T1

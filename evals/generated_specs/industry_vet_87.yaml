@@ -1,16 +1,21 @@
 construct:
-  name: "inducible_cytotoxic_protein_expression"
+  name: "inducible_cytotoxic_protein_ecoli"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: cytotoxic_payload
+        label: cytotoxic_protein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: ccdB
+              id: toxin_A
               source: uniprot
-    - terminator: T7term
+        rbs: strong
+
+    - terminator: rrnB_T1

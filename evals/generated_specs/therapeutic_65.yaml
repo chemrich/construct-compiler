@@ -1,19 +1,27 @@
 construct:
-  name: "Pichia_Secreted_hEPO"
+  name: "Pichia_pastoris_secreted_therapeutic_glycoprotein"
   host: yeast
+
   backbone:
-    resistance: HIS4 # Using auxotrophic selection (HIS4) instead of antibiotic resistance to meet requirement
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: therapeutic_protein
+        label: secreted_therapeutic
         expression: high
         chain:
-          - tag: alpha_factor # Strong secretion signal for Pichia pastoris
+          - tag: alpha_factor_signal
           - gene:
-              id: P01588 # Human Erythropoietin (EPO), a highly glycosylated human therapeutic
+              id: human_therapeutic_protein
               source: uniprot
-          - tag: 8xHis # C-terminal purification tag
-    - terminator: AOX1_TT
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+
+    - terminator: CYC1

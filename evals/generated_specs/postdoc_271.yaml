@@ -1,19 +1,25 @@
 construct:
-  name: "GST_TEV_Protein_P_yeast_expression"
+  name: "GST_TEV_ProteinP_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
-              id: Protein_P
+              id: ProteinP
               source: uniprot
-    - terminator: CYC1_term
+              codon_optimization: yeast
+
+    - terminator: rrnB_T1

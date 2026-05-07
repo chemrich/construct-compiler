@@ -1,20 +1,24 @@
 construct:
-  name: "yeast_secreted_vaccine_antigen"
+  name: "yeast_secreted_vaccine_antigen_hisTag"
   host: yeast
+
   backbone:
-    resistance: none # Using auxotrophic selection (e.g., URA3) to satisfy requirement for no antibiotic resistance genes.
+    catalog_vector: "pYES2"
     ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: antigen
+        label: vaccine_antigen
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal_peptide
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P04133
+              id: vaccine_antigen
               source: uniprot
-    - terminator: CYC1
+              codon_optimization: yeast
+
+    - terminator: CYC1_terminator

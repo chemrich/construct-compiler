@@ -1,18 +1,22 @@
 construct:
-  name: "protein_g_inducible_yeast"
+  name: "protein_G_myc_inducible_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: GAL1 # GAL1 is a standard galactose-inducible promoter for yeast
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: protein_G
         expression: high
         chain:
           - tag: Myc
           - gene:
-              id: P06654
+              id: protein_G
               source: uniprot
-    - terminator: CYC1 # CYC1 is a standard terminator for S. cerevisiae
+
+    - terminator: CYC1

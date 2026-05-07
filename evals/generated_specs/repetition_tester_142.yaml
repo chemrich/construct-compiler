@@ -1,29 +1,47 @@
 construct:
-  name: "ScaffoldZ_Tandem_Repeat"
+  name: "ScaffoldZ_DomainA_tandem_repeats_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: GPD  # Strong constitutive promoter for Saccharomyces cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: scaffold_z
+        label: ScaffoldZ_DomainA_repeat1
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: DomainA
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+              id: DomainA_codon_variant_1
+              source: custom
+              note: "First DomainA repeat with optimized codon usage for S. cerevisiae"
+
+    - spacer: 30
+
+    - cistron:
+        label: ScaffoldZ_DomainA_repeat2
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: DomainA  # Each instance of DomainA will be codon-optimized with distinct synonymous DNA sequences
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+              id: DomainA_codon_variant_2
+              source: custom
+              note: "Second DomainA repeat with alternate synonymous codons, identical protein sequence"
+
+    - spacer: 30
+
+    - cistron:
+        label: ScaffoldZ_DomainA_repeat3
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: DomainA
-              source: uniprot
-    - terminator: CYC1_term
+              id: DomainA_codon_variant_3
+              source: custom
+              note: "Third DomainA repeat with third codon variant, identical protein sequence"
+
+    - terminator: CYC1

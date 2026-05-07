@@ -1,24 +1,12 @@
 construct:
-  name: "yeast_ecoli_shuttle_pBR322_URA3"
-  host: yeast
+  name: "shuttle_vector_ecoli_yeast"
+  host: e_coli
+  
   backbone:
     resistance: ampicillin
-    ori: pBR322            # Note: Shuttle vector requires both pBR322 and yeast ARS/CEN origins
+    ori: pBR322
     source: addgene
-  cassette:
-    - promoter: TEF1       # Standard constitutive yeast promoter for the selection marker
-    - cistron:
-        label: selection_marker
-        expression: medium
-        gene:
-          id: URA3
-          source: uniprot
-    - spacer: 40           # Spacer between selection marker and the multi-cloning site/target gene
-    - cistron:
-        label: MCS_target
-        expression: high
-        fused: false       # Independently translated target cistron
-        gene:
-          id: mEGFP        # Placeholder gene for the multi-cloning site (MCS)
-          source: fpbase
-    - terminator: CYC1_term # Standard yeast terminator for transcription termination
+    # Additional backbone elements for yeast compatibility
+    yeast_ori: CEN4
+    yeast_marker: URA3
+    mcs: true

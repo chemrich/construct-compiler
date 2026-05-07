@@ -1,20 +1,24 @@
 construct:
-  name: "bacillus_tat_phoD_mbp_reductase"
+  name: "Bacillus_Tat_reductase_MBP"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: enzyme_export_chain
+        label: target
         expression: high
         chain:
-          - tag: PhoD  # Tat-specific signal peptide for Bacillus subtilis
+          - tag: PhoD_signal_peptide
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
               id: reductase
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

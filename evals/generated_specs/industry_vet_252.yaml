@@ -1,14 +1,20 @@
 construct:
-  name: "GFP_High_Expression_Screen"
-  host: e_coli_bl21_de3
+  name: "eGFP_highexpr_AAV_titer_screen"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: target_gfp
+        label: eGFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
     - terminator: T7term

@@ -1,14 +1,29 @@
 construct:
-  name: "therapeutic_intracellular_enzyme_high_expression"
-  host: HEK293
+  name: "tissue_specific_enzyme_mammalian_ivt"
+  host: in_vitro
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: EF1_alpha  # EF1_alpha provides high-level, stable expression in mammalian cells often used in AAV applications
+    - promoter: CMV
+      # Note: For true tissue-specific expression in vivo (e.g., liver-specific via HBV or kidney-specific via claudin),
+      # substitute CMV with the appropriate AAV-compatible promoter (e.g., TBG for liver, hSPC-B for lung).
+      # CMV used here for maximum in vitro expression during cell-free testing.
+
     - cistron:
-        label: enzyme_target
+        label: therapeutic_enzyme
         expression: high
-        gene:
-          id: P04062
-          source: uniprot
-    - terminator: hGH_pA  # Human growth hormone polyadenylation signal for mRNA stability and efficient termination
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: "enzyme_of_interest"
+              source: uniprot
+              # User should specify the actual UniProt ID or gene name
+
+    - terminator: rrnB_T1
+      # Note: For enhanced mRNA stability in mammalian cells, consider adding a 5' cap and 3' poly(A) tail
+      # during in vitro transcription (IVT). The rrnB_T1 terminator provides efficient transcription termination.
+      # Post-transcriptional modifications (cap, poly-A) are typically handled by the IVT system separately.

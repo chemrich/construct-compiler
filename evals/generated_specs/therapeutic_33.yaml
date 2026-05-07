@@ -1,34 +1,40 @@
 construct:
-  name: dual_therapeutic_peptide_expression
-  host: e_coli_bl21_de3
-  
+  name: dual_therapeutic_peptide_IRES_expression
+  host: e_coli_bl21
+
   backbone:
-    resistance: none
+    resistance: null  # No antibiotic resistance marker
     ori: pBR322
     source: addgene
-  
+
   cassette:
     - promoter: T7lac
-    
+
     - cistron:
-        label: peptide1
+        label: peptide_1
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P10145  # Example therapeutic peptide from uniprot
+              id: therapeutic_peptide_1
               source: uniprot
-    
-    - spacer: 50  # Extended spacer to accommodate ribosome binding
-    
+
+    # IRES-like element represented as spacer with structural RNA component
+    # Note: In E. coli, true IRES function is limited; this design uses
+    # a strong RBS + Kozak-like sequence for the second cistron to enable
+    # independent translation from the same mRNA
+    - spacer: 50  # Extended spacer to accommodate IRES-equivalent regulatory element
+
     - cistron:
-        label: peptide2
-        expression: high
-        fused: false  # Independent translation via internal RBS
+        label: peptide_2
+        expression: medium
+        fused: false  # Independent translation initiation
         chain:
           - tag: Strep-II
+          - cleavage_site: 3C
           - gene:
-              id: P01308  # Example therapeutic peptide from uniprot
+              id: therapeutic_peptide_2
               source: uniprot
-    
+
     - terminator: rrnB_T1

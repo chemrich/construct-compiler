@@ -1,22 +1,30 @@
 construct:
-  name: "engineered_tcr_alpha_beta_p2a_expression"
+  name: "engineered_TCR_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: tcr_alpha
+        label: TCR_alpha_beta
         expression: high
-        gene:
-          id: TRA
-          source: uniprot
-    - spacer: 66
-    - cistron:
-        label: tcr_beta
-        expression: high
-        fused: false
-        gene:
-          id: TRB
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: TCR_alpha_engineered
+              source: uniprot
+          - cleavage_site: P2A
+          - gene:
+              id: TCR_beta_engineered
+              source: uniprot
+
+    - terminator: WPRE_polyA

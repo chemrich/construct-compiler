@@ -1,39 +1,47 @@
 construct:
-  name: yeast_dual_anchor_display_system
+  name: yeast_dual_wall_anchor_display
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+    
     - cistron:
-        label: aga2_anchor_fusion
+        label: anchor1_fusion
         expression: high
         chain:
           - gene:
-              id: P02829
+              id: target_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: Aga2p_N_fragment
+              source: uniprot
+
     - terminator: CYC1
+
     - spacer: 50
-    - promoter: TEF1
+
+    - promoter: ADH1
+
     - cistron:
-        label: sed1_anchor_fusion
+        label: anchor2_fusion
         expression: high
         chain:
           - gene:
-              id: P38288
+              id: target_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mScarlet
-              source: fpbase
-    - terminator: ADH1
+              id: Aga2p_C_fragment
+              source: uniprot
+
+    - terminator: PGK1

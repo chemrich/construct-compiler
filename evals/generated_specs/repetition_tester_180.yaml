@@ -1,38 +1,49 @@
 construct:
-  name: "triple_divergent_gene_x_expression"
+  name: "triple_X_divergent_no_recombination"
   host: e_coli
-  # Note: Each copy of P0AEE5 (Gene X) must be codon-optimized to be maximally 
-  # divergent from the other copies to prevent homologous recombination.
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100 # Strong constitutive promoter
+    - promoter: J23100
+      
     - cistron:
-        label: gene_x_variant_1
+        label: X_copy1
         expression: high
-        fused: false
         gene:
-          id: P0AEE5
+          id: X
           source: uniprot
+          codon_optimization: e_coli_variant1
+    
     - terminator: rrnB_T1
-    - spacer: 45
-    - promoter: J23102 # Similar strength constitutive promoter
+
+    - spacer: 50
+
+    - promoter: J23106
+      
     - cistron:
-        label: gene_x_variant_2
+        label: X_copy2
         expression: high
-        fused: false
         gene:
-          id: P0AEE5
+          id: X
           source: uniprot
+          codon_optimization: e_coli_variant2
+    
     - terminator: BBa_B0015
-    - spacer: 55
-    - promoter: J23104 # Similar strength constitutive promoter
+
+    - spacer: 50
+
+    - promoter: lacUV5
+      
     - cistron:
-        label: gene_x_variant_3
+        label: X_copy3
         expression: high
-        fused: false
         gene:
-          id: P0AEE5
+          id: X
           source: uniprot
+          codon_optimization: e_coli_variant3
+    
     - terminator: T7term

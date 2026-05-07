@@ -1,17 +1,23 @@
 construct:
-  name: protein_r_his_flag_expression
-  host: e_coli
+  name: "protein_R_with_His_Flag"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: protein_R
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: protein_r
+              id: protein_R
               source: uniprot
           - tag: FLAG
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

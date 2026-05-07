@@ -1,17 +1,24 @@
 construct:
-  name: "yeast_secreted_therapeutic_insulin"
+  name: "yeast_secreted_therapeutic_His"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: therapeutic_protein
+        label: secreted_therapeutic
         expression: high
         chain:
-          - tag: Alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: P01308
+              id: therapeutic_protein
               source: uniprot
           - tag: 6xHis
+
     - terminator: CYC1

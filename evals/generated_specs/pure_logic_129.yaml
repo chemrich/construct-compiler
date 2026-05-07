@@ -1,37 +1,69 @@
 construct:
-  name: "Soluble_Logic_Logic_Array_A_NOT_B_OR_C"
+  name: "logic_array_A_AND_NOT_B_OR_C"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
-  cassette:
-    - promoter: araBAD  # Logic Input A (Inducer: Arabinose). NOT B is handled by catabolite repression if B=Glucose.
-      cistron:
-        label: output_gate_1
-        expression: high
-        chain:
-          - tag: 6xHis
-          - solubility_tag: MBP
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: mEGFP
-              source: fpbase
-      terminator: rrnB_T1
 
-    - promoter: T7lac  # Logic Input C (Inducer: IPTG). OR gate functionality via independent cassette.
-      cistron:
-        label: output_gate_2
+  cassette:
+    - promoter: T7lac
+
+    - cistron:
+        label: input_A
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - gene:
+              id: lacI
+              source: uniprot
+              # Repressor protein for input A control
+
+    - spacer: 30
+
+    - cistron:
+        label: input_B
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - solubility_tag: GST
+          - gene:
+              id: tetR
+              source: uniprot
+              # Repressor protein for input B control
+
+    - spacer: 30
+
+    - cistron:
+        label: input_C
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - solubility_tag: SUMO
+          - gene:
+              id: araC
+              source: uniprot
+              # Activator protein for input C control
+
+    - spacer: 30
+
+    - cistron:
+        label: output_logic
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-      terminator: T7term
+              # Output reporter: fluorescent readout of logic state
+
+    - terminator: rrnB_T1

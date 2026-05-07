@@ -1,15 +1,22 @@
 construct:
-  name: "secreted_pep_secretion_construct"
-  host: e_coli_bl21_de3
+  name: "E_coli_secreted_pep_high_expression"
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: secreted_target
+        label: secreted_pep
         expression: high
         chain:
-          - tag: pelB
+          - tag: pelB_signal_peptide
           - gene:
               id: SecretedPep
-    - terminator: T7term
+              source: uniprot
+
+    - terminator: rrnB_T1

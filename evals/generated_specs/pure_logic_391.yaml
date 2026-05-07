@@ -1,30 +1,22 @@
 construct:
-  name: "multiplexer_2to1_logic_gate"
-  host: e_coli_bl21_de3
+  name: "multiplexer_2to1_logic"
+  host: "in_vitro"
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: "kanamycin"
+    ori: "pBR322"
+    source: "addgene"
+  
   cassette:
-    - promoter: T7lac
+    - promoter: "T7"
+    
     - cistron:
-        label: "gate_output"
-        expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - spacer: 30
-    - cistron:
-        label: "select_logic_repressor"
-        expression: medium
-        fused: false
-        gene:
-          id: P03034
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: "data_logic_repressor"
-        expression: medium
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: T7term
+        label: "mux_logic"
+        expression: "high"
+        chain:
+          - tag: "6xHis"
+          - gene:
+              id: "TetR_multiplexer"
+              source: "uniprot"
+    
+    - terminator: "rrnB_T1"

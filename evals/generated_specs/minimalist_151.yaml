@@ -1,18 +1,22 @@
 construct:
-  name: "bacillus_subtilis_amylase_secretion"
-  host: b_subtilis
+  name: "B_subtilis_secreted_amylase"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pgrac
+    - promoter: araBAD
+
     - cistron:
         label: secreted_amylase
         expression: high
         chain:
-          - tag: AmyL_SP
+          - secretion_signal: AmyE
           - gene:
-              id: P00691
+              id: amyE
               source: uniprot
+
     - terminator: rrnB_T1

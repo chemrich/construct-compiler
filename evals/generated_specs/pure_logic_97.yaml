@@ -1,43 +1,59 @@
 construct:
-  name: "chemically_inducible_repressilator"
-  host: e_coli
+  name: chemically_inducible_repressilator
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
+    # Gene 1: TetR repressor (represses PRmVenus promoter) - under araBAD control
     - promoter: araBAD
+    
     - cistron:
-        label: trigger_lacI
+        label: tetr
+        expression: medium
         gene:
-          id: P03023
+          id: tetR
           source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: lac
+    
+    # Gene 2: LacI repressor (represses Ptet promoter) - constitutive
+    - promoter: lacUV5
+    
     - cistron:
-        label: loop_node_cI
+        label: laci
+        expression: medium
         gene:
-          id: P03034
+          id: lacI
           source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: lambda_P_R
+    
+    # Gene 3: CI/lambda repressor (represses Plac promoter) - under TetR-repressible Ptet
+    - promoter: Ptet
+      # Repressed by TetR in absence of aTc; derepressed when aTc added
+    
     - cistron:
-        label: loop_node_tetR
-        gene:
-          id: P04483
-          source: uniprot
+        label: ci_reporter
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    
     - terminator: rrnB_T1
-    - promoter: tet
+    
+    # Additional control: araBAD-inducible helper gene for fine-tuning oscillation onset
+    - promoter: araBAD
+    
     - cistron:
-        label: loop_node_lacI
+        label: oscillation_timer
+        expression: low
         gene:
-          id: P03023
+          id: ssrA_degradation_tag
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: oscillation_reporter
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

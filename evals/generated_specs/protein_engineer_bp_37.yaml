@@ -1,10 +1,10 @@
-```yaml
 construct:
-  name: pichia_affibody_secretion_screen
+  name: "pichia_secretion_screen_mcherry_affibody"
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ"
+    resistance: zeocin
     ori: pBR322
     source: addgene
 
@@ -15,16 +15,15 @@ construct:
         label: secreted_fusion
         expression: high
         chain:
-          - tag: alpha_factor  # secretion signal for yeast
+          - tag: alpha_factor_signal
           - gene:
               id: mCherry
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: affibody
               source: uniprot
 
-    - terminator: CYC1_term
-```
+    - terminator: rrnB_T1

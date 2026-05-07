@@ -1,22 +1,36 @@
 construct:
-  name: "yeast_nucleoprotein_localization_study"
+  name: NucleoProtein_GFP_His_NLS
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GAL1  # Standard inducible yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: target
-        expression: medium
+        label: NucleoProtein_tagged
+        expression: high
         chain:
           - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: NucleoProtein
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: CYC1_term  # Standard yeast terminator
+
+    - terminator: CYC1

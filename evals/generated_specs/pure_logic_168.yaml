@@ -1,14 +1,94 @@
 construct:
-  name: mammalian_majority_vote_circuit
+  name: "mammalian_majority_vote_circuit"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: Synthetic_Majority_Logic_P # Logic: Output ON if at least 2 of 3 inputs (I1, I2, I3) are present
+    - promoter: CMV
+
     - cistron:
-        label: O_MAJORITY
+        label: input_sensor_I1
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: BGH_polyA
+        chain:
+          - gene:
+              id: rtTA_I1
+              source: uniprot
+        # rtTA (reverse tetracycline transactivator) for I1 detection
+
+    - spacer: 30
+
+    - cistron:
+        label: input_sensor_I2
+        expression: high
+        chain:
+          - gene:
+              id: rtTA_I2
+              source: uniprot
+        # rtTA variant for I2 detection
+
+    - spacer: 30
+
+    - cistron:
+        label: input_sensor_I3
+        expression: high
+        chain:
+          - gene:
+              id: rtTA_I3
+              source: uniprot
+        # rtTA variant for I3 detection
+
+    - terminator: rrnB_T1
+
+  # Second promoter cassette for majority logic output
+  # In mammalian cells, majority voting is achieved via:
+  # - Three parallel TRE promoters (tetracycline response element) each responsive to two of the three inputs
+  # - Each TRE drives the same output (mVenus fluorescent protein)
+  # - Output activates when ANY of the three TRE combinations is satisfied (2-of-3 logic)
+
+  cassette:
+    - promoter: TRE
+      # TRE responsive to I1 AND I2 (activated by rtTA_I1 AND rtTA_I2)
+
+    - cistron:
+        label: majority_output_12
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mVenus
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  cassette:
+    - promoter: TRE
+      # TRE responsive to I1 AND I3 (activated by rtTA_I1 AND rtTA_I3)
+
+    - cistron:
+        label: majority_output_13
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mVenus
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  cassette:
+    - promoter: TRE
+      # TRE responsive to I2 AND I3 (activated by rtTA_I2 AND rtTA_I3)
+
+    - cistron:
+        label: majority_output_23
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mVenus
+              source: fpbase
+
+    - terminator: rrnB_T1

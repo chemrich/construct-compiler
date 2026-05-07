@@ -1,25 +1,39 @@
 construct:
-  name: "coli_protein_phosphorylation_coexpression"
+  name: "egfp_with_kinase_coexpression"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pETDuet-1"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target_protein
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P0A7E5
-              source: uniprot
-    - spacer: 30
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    # Second MCS for kinase co-expression
+    - promoter: T7lac
+
     - cistron:
-        label: src_kinase
+        label: kinase
         expression: medium
-        fused: false
-        gene:
-          id: P12931
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P06241
+              source: uniprot
+        # UniProt ID for human protein kinase A (PKA) catalytic subunit alpha
+        # Adjust ID based on your preferred kinase
+
+    - terminator: rrnB_T1

@@ -1,24 +1,29 @@
 construct:
-  name: "bifunctional_targeting_therapeutic_fusion"
+  name: "bifunctional_fusion_targeting_ligand_therapeutic_peptide"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_therapeutic_fusion
+        label: bifunctional_fusion
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: P02976
+              id: targeting_ligand
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P81534
+              id: therapeutic_peptide
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

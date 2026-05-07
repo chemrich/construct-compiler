@@ -1,27 +1,33 @@
 construct:
-  name: "distinct_linked_tri_domain_fusion"
+  name: "multi_domain_protein_three_distinct_linkers"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: tri_domain_fusion
+        label: multi_domain
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P03030
+              id: DNA_binding_domain
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 1
           - gene:
-              id: P06492
+              id: activation_domain
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 2
           - gene:
-              id: P03023
+              id: dimerization_domain
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

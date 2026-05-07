@@ -1,18 +1,25 @@
 construct:
-  name: "yeast_secretion_high_constitutive"
+  name: "yeast_secreted_enzyme_constitutive"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Substituted strong constitutive TDH3 for P_GAL1 as user requested a constitutive high-expression promoter
+    - promoter: TPI1
+      # TPI1 is a strong constitutive promoter in S. cerevisiae
+      # (GAL1 is inducible; TPI1 provides constitutive high expression)
+
     - cistron:
         label: secreted_enzyme
         expression: high
         chain:
-          - tag: HSA_SP  # Human Serum Albumin signal peptide as requested
+          - tag: SP_human_preproinsulin
+            # Human signal peptide for robust secretion from S. cerevisiae
           - gene:
-              id: enzyme_x
-              source: uniprot
-    - terminator: CYC1
+              id: your_enzyme
+              # Replace with actual enzyme UniProt ID or gene identifier
+
+    - terminator: CYC1_terminator

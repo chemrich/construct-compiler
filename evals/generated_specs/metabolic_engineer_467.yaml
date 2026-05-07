@@ -1,48 +1,56 @@
 construct:
-  name: "sec_periplasmic_operon"
+  name: "sec_pentacistronic_operon"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: secA
+        label: SecA
         expression: high
         gene:
-          id: SecA
+          id: secA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: secB
+        label: SecB
         expression: high
-        fused: false
         chain:
-          - tag: PelB
+          - signal_peptide: PelB
           - gene:
-              id: SecB
+              id: secB
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: secC
+        label: SecC
         expression: high
-        fused: false
         gene:
-          id: SecC
+          id: secC
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: secD
+        label: SecD
         expression: high
-        fused: false
         gene:
-          id: SecD
+          id: secD
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: secE
+        label: SecE
         expression: high
-        fused: false
         gene:
-          id: SecE
+          id: secE
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

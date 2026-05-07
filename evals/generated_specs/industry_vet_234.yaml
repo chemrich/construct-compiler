@@ -1,21 +1,24 @@
 construct:
-  name: "AAV_Accessory_Factor_TetOn"
+  name: AAV_accessory_factor_TetOn_inducible
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TRE3G  # Tetracycline Response Element for Doxycycline-inducible (Tet-On) expression
+    - promoter: TRE3G
+      # TRE3G (Tet-Responsive Element) requires co-expression of rtTA (reverse Tet-transactivator)
+      # Doxycycline binding to rtTA activates transcription from TRE3G
+
     - cistron:
-        label: AAV_accessory_factor
+        label: accessory_factor
         expression: high
         chain:
-          - tag: FLAG
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: AAP
+              id: AAV_rep52
               source: uniprot
-    - terminator: SV40_polyA  # Standard mammalian termination/polyadenylation signal
+
+    - terminator: SV40poly

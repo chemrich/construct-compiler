@@ -1,17 +1,24 @@
 construct:
-  name: "protease_cleavage_reporter"
-  host: e_coli_bl21_de3
+  name: protease_cleavage_biosensor
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: cleavage_substrate
+        label: biosensor
         expression: high
         chain:
-          - solubility_tag: MBP # ProteinX placeholder for solubility and detectable mass shift
+          - tag: 6xHis
+          - gene:
+              id: ProteinX
+              source: uniprot
           - cleavage_site: TEV
           - gene:
               id: sfGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

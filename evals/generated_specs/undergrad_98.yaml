@@ -1,24 +1,31 @@
 construct:
-  name: "dual_inducible_ara_iptg_system"
+  name: "dual_inducible_ProteinA_ProteinB"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
-        label: protein_a
-        expression: medium
+        label: ProteinA
+        expression: high
         gene:
-          id: P00001
+          id: ProteinA
           source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: tac
+    
+    - promoter: T7lac
+    
     - cistron:
-        label: protein_b
-        expression: medium
+        label: ProteinB
+        expression: high
         gene:
-          id: P00002
+          id: ProteinB
           source: uniprot
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

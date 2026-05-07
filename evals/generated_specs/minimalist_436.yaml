@@ -1,17 +1,22 @@
 construct:
-  name: "inducible_degradation_protein_P"
+  name: "protein_P_degron_tag"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: P
               source: uniprot
-          - tag: AID # Auxin-inducible degron; assumed host machinery (e.g., TIR1) is present
-    - terminator: T7term
+          - tag: ssrA  # C-terminal ssrA (SsrA) degron tag for protease-mediated degradation
+
+    - terminator: rrnB_T1

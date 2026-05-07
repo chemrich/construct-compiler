@@ -1,16 +1,20 @@
 construct:
-  name: "mitochondrial_targeting_of_protein_P"
-  host: mammalian
+  name: "mitochondrial_targeting_P"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS  # Mitochondrial Targeting Signal (N-terminal)
           - gene:
               id: P
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

@@ -1,21 +1,30 @@
 construct:
-  name: "domain_a_b_fusion"
-  host: e_coli
+  name: DomainA_DomainB_GS3_linker
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: DomainA
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3 # Optimized for unique synonymous codon usage
+              repeats: 3
+              codon_optimization: max_entropy
           - gene:
               id: DomainB
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

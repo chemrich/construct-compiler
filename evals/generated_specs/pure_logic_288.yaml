@@ -1,27 +1,54 @@
 construct:
-  name: "integrase_logic_memory_unit"
-  host: e_coli_bl21_de3
+  name: "genetic_memory_unit_integrase_switch"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: Reporter1
-        gene:
-          id: mCerulean
-          source: fpbase
-    - spacer: 40  # Spacer for insertion of recombinase target sites (e.g., loxP or attB/P)
+        label: input_integrase
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Bxb1_integrase
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: Reporter2
-        fused: false  # Independently translated to allow expression after DNA rearrangement
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
-    - promoter: araBAD  # Inducible promoter to simulate the transient pulse of integrase
+        label: memory_unit_state_off
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    # loxP sites flanking Reporter1 for Cre-mediated inversion/excision
+    - promoter: T7lac
+
     - cistron:
-        label: X_integrase
+        label: memory_unit_state_on
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: recombinase_expression_control
+        expression: low
+        fused: false
         gene:
-          id: P06956  # Cre recombinase (UniProt P06956) used as the site-specific integrase
+          id: araBAD_inducible_recombinase_activator
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

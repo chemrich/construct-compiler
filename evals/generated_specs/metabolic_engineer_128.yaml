@@ -1,39 +1,51 @@
 construct:
-  name: "tet_inducible_metabolic_shunt_operon"
+  name: "four_enzyme_metabolic_shunt_tet_inducible"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: pTet
+    
     - cistron:
-        label: shunt_a
+        label: ShuntA
         expression: high
+        rbs_strength: strong
         gene:
           id: ShuntA
           source: uniprot
-    - spacer: 35
+    
+    - spacer: 25
+    
     - cistron:
-        label: shunt_b
-        expression: medium
-        fused: false
+        label: ShuntB
+        expression: high
+        rbs_strength: medium
         gene:
           id: ShuntB
           source: uniprot
-    - spacer: 35
+    
+    - spacer: 25
+    
     - cistron:
-        label: shunt_c
-        expression: low
-        fused: false
+        label: ShuntC
+        expression: medium
+        rbs_strength: weak
         gene:
           id: ShuntC
           source: uniprot
-    - spacer: 35
+    
+    - spacer: 25
+    
     - cistron:
-        label: shunt_d
-        expression: very_low
-        fused: false
+        label: ShuntD
+        expression: low
+        rbs_strength: very_weak
         gene:
           id: ShuntD
           source: uniprot
+    
     - terminator: rrnB_T1

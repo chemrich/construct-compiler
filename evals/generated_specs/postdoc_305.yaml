@@ -1,19 +1,22 @@
 construct:
-  name: "MBP_TEV_fusion_enzyme"
-  host: e_coli
+  name: "MBP_fusion_TEV_cleavable"
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: MBP_enzyme_fusion
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: bacterial_enzyme
+              id: your_enzyme_id  # Replace with actual UniProt ID or gene name
               source: uniprot
+    
     - terminator: rrnB_T1

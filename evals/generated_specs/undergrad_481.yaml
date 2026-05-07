@@ -1,19 +1,21 @@
 construct:
-  name: "AwesomeP_Secretion_HEK293"
+  name: AwesomeP_secreted_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: AwesomeP
         expression: high
         chain:
-          - tag: IgK_leader
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - secretion_signal: Signal_Peptide_SP
           - gene:
               id: AwesomeP
-    - terminator: BGH_polyA
+              source: uniprot
+
+    - terminator: SV40_polyA

@@ -1,33 +1,31 @@
-```yaml
 construct:
-  name: proteinA_proteinB_coexpression
+  name: "yeast_coexpress_A_B"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: GAL1
-    
+
     - cistron:
-        label: proteinA
+        label: protein_A
         expression: high
         gene:
-          id: proteinA
+          id: protein_A
           source: uniprot
-    
-    - linker:
-        type: GS_flexible
-        repeats: 3
-    
+
+    - spacer: 25
+
     - cistron:
-        label: proteinB
+        label: protein_B
         expression: high
+        fused: false
         gene:
-          id: proteinB
+          id: protein_B
           source: uniprot
-    
-    - terminator: CYC1
-```
+
+    - terminator: rrnB_T1

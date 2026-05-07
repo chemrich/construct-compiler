@@ -1,26 +1,39 @@
 construct:
-  name: "Pichia_ER_stress_mitigation_mAb_PDI"
+  name: "Pichia_dual_promoter_mAb_PDI_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: antibody_fragment
+        label: mAb_fragment
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor
           - gene:
-              id: mAb_Fab_HeavyChain
+              id: scFv
               source: uniprot
-    - terminator: CYC1_terminator
+        fused: false
+
+    - terminator: CYC1
+
+    - spacer: 30
+
     - promoter: GAP
+
     - cistron:
         label: PDI_chaperone
         expression: medium
-        gene:
-          id: PDI1
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - tag: alpha_factor
+          - gene:
+              id: PDI
+              source: uniprot
+        fused: false
+
+    - terminator: CYC1

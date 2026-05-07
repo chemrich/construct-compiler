@@ -1,33 +1,33 @@
 construct:
-  name: "mammalian_bicistronic_ires_puro"
+  name: mammalian_dual_gene_IRES
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin  # Bacterial selection; PuroR is included in the cassette for mammalian selection
+    catalog_vector: pTwist CMV
+    resistance: puromycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: gene_A
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 574  # Approx length of IRES2 element for bicistronic expression
+          id: null
+          source: custom
+        # User must specify actual gene A sequence or ID
+
+    # IRES element for cap-independent translation of downstream gene
+    - spacer: 50  # IRES is typically ~300-600 bp; represented here as spacer marker
+
     - cistron:
-        label: gene_B_puroR
-        expression: medium
-        fused: false  # IRES-mediated independent translation
+        label: gene_B
+        expression: high
+        fused: false
         gene:
-          id: PAC
-          source: uniprot
-    - terminator: BBa_B0015
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+          id: null
+          source: custom
+        # User must specify actual gene B sequence or ID
+        # This cistron represents the post-IRES translated protein
+
+    - terminator: rrnB_T1

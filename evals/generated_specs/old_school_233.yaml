@@ -1,38 +1,46 @@
 construct:
-  name: "FKBP_FRB_dimerization_switch"
+  name: "GFP_FKBP_RFP_FRB_dimerization_switch"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: lacUV5
+
     - cistron:
         label: GFP_FKBP
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: mEGFP
+              id: GFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P62942
+              id: FKBP
               source: uniprot
-    - spacer: 30
+
+    - spacer: 50
+
     - cistron:
         label: RFP_FRB
         expression: high
         fused: false
         chain:
+          - tag: 6xHis
           - gene:
               id: mCherry
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P42345
+              id: FRB
               source: uniprot
+
     - terminator: rrnB_T1

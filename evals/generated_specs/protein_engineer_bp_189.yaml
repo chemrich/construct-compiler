@@ -1,20 +1,24 @@
 construct:
-  name: "Pichia_FLD1_Nanobody_Secretion"
+  name: pichia_FLD1_nanobody_secretion
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: therapeutic_nanobody
+        label: nanobody
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_preproseq
           - cleavage_site: Kex2
           - gene:
               id: nanobody
               source: uniprot
-          - tag: Strep-II
-    - terminator: AOX1_term
+          - tag: Strep_II
+
+    - terminator: TT_Pichia

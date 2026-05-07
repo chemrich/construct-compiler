@@ -1,22 +1,26 @@
 construct:
-  name: "Pichia_GAP_surface_display_nanobody_Sed1"
+  name: "pichia_surface_display_nanobody"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: target_nanobody
+              id: nanobody
               source: uniprot
           - tag: Myc
           - gene:
-              id: SED1
+              id: Sed1_anchor
               source: uniprot
+
     - terminator: CYC1

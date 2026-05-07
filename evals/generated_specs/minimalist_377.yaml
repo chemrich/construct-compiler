@@ -1,22 +1,31 @@
 construct:
-  name: "CMV_ProteinC_2A_ProteinD"
+  name: CMV_ProteinC_2A_ProteinD
   host: HEK293
+  
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist_CMV
+  
   cassette:
     - promoter: CMV
+    
     - cistron:
         label: ProteinC
         expression: high
-        gene:
-          id: ProteinC
-          source: uniprot
-    - spacer: 66 # DNA sequence encoding the 2A self-cleaving peptide (approx 22aa)
+        chain:
+          - gene:
+              id: ProteinC
+              source: uniprot
+    
     - cistron:
         label: ProteinD
         expression: high
-        fused: false # Indicates independent protein products via 2A ribosomal skipping
-        gene:
-          id: ProteinD
-          source: uniprot
-    - terminator: BGH_pA
+        fused: false
+        chain:
+          - gene:
+              id: P2A
+              source: uniprot
+          - gene:
+              id: ProteinD
+              source: uniprot
+    
+    - terminator: rrnB_T1

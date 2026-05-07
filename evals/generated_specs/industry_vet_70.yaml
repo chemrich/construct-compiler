@@ -1,17 +1,21 @@
 construct:
-  name: Secreted_HisTagged_mEGFP
+  name: "secreted_protein_AAV"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - secretion_signal: IgK_leader
+          - tag: SP_IgG  # IgG signal peptide for secretion from mammalian cells
           - gene:
-              id: mEGFP
-              source: fpbase
-          - tag: 6xHis
-    - terminator: bGH_polyA
+              id: target_protein
+              source: uniprot
+          - tag: 6xHis  # C-terminal His-tag for purification from media
+
+    - terminator: rrnB_T1

@@ -1,33 +1,38 @@
 construct:
-  name: "dual_expression_genel_genek"
-  host: e_coli_bl21_de3
+  name: "GeneL_GeneK_dual_expression"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: gene_l_production
+        label: GeneL
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: GeneL
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+    
     - promoter: tac
+    
     - cistron:
-        label: gene_k_production
+        label: GeneK
         expression: high
         chain:
           - gene:
-              id: sfGFP
-              source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
               id: GeneK
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - solubility_tag: GFP
+    
     - terminator: rrnB_T1

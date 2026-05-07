@@ -1,18 +1,28 @@
 construct:
-  name: "mammalian_non_viral_episomal_therapeutic_vector"
+  name: "mammalian_episomal_therapeutic_expression"
   host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic resistance genes for safety
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral, episomal backbone; no antibiotic resistance for clinical safety
+    # pTwist CMV supports transient episomal replication via EBNA-1 origin
+    ori: EBNA1
+    resistance: none
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+      # Strong constitutive mammalian promoter for high-level transient expression
+
     - cistron:
-        label: therapeutic_target
+        label: therapeutic_protein
         expression: high
         chain:
           - tag: 6xHis
+            # C-terminal His-tag for purification; can be removed post-expression
           - gene:
-              id: P00740 # Human Factor IX as a model therapeutic protein
+              id: IL10
+              # Example: Interleukin-10 therapeutic; substitute with target protein ID
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: BGH_polyA
+      # Bovine growth hormone polyadenylation signal for efficient mRNA 3' end processing

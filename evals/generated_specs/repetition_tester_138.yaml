@@ -1,24 +1,38 @@
 construct:
-  name: "dual_mammalian_reporter_recombination_resistant"
+  name: dual_reporter_mammalian_distinct_elements
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+      # CMV promoter (distinct from subsequent promoters)
+
     - cistron:
         label: ReporterA
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+              codon_usage: human_optimized_variant_A
+
+    - terminator: SV40_polyA
+      # SV40 polyadenylation signal (distinct from subsequent)
+
     - promoter: EF1_alpha
+      # EF1-alpha promoter (non-homologous to CMV)
+
     - cistron:
         label: ReporterB
         expression: high
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: SV40_polyA
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+              codon_usage: human_optimized_variant_B
+
+    - terminator: bGH_polyA
+      # bGH polyadenylation signal (non-homologous to SV40)

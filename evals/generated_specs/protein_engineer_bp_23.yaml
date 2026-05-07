@@ -1,10 +1,10 @@
-```yaml
 construct:
-  name: HSA_expression_pichia_GAP
+  name: pichia_HSA_constitutive
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
     ori: pBR322
     source: addgene
 
@@ -12,13 +12,14 @@ construct:
     - promoter: GAP
 
     - cistron:
-        label: HSA_secreted
+        label: HSA
         expression: high
         chain:
+          - secretion_signal: HSA_signal_peptide
           - gene:
-              id: P02768
+              id: HSA
               source: uniprot
+              codon_optimized: true
           - tag: 6xHis
 
     - terminator: rrnB_T1
-```

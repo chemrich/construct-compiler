@@ -1,14 +1,22 @@
 construct:
-  name: "mCherry_IPTG_inducible_reporter"
-  host: e_coli_bl21_de3
+  name: "IPTG_inducible_mCherry_reporter"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: reporter
+        label: mCherry_reporter
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,17 +1,21 @@
 construct:
-  name: "TheraProt_Secretion_HEK293"
+  name: "TheraProt_secreted_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: TheraProt
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal secretion signal
           - gene:
               id: TheraProt
               source: uniprot
-          - tag: 6xHis
-    - terminator: bGH_pA
+          - tag: 6xHis  # C-terminal purification tag
+
+    - terminator: SV40_polyA

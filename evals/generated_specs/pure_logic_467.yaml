@@ -1,23 +1,80 @@
 construct:
-  name: "xor_gate_mscarlet"
+  name: XOR_gate_dual_input_red_reporter
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: araBAD  # Input X logic arm: configured to be repressed by Input Y (LacI) in XOR circuits
+    - promoter: araBAD
+
     - cistron:
-        label: x_only_active
-        expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
+        label: repressor_X
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
     - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: lacUV5  # Input Y logic arm: configured to be repressed by Input X (AraC) in XOR circuits
+
+    - promoter: T7lac
+
     - cistron:
-        label: y_only_active
+        label: repressor_Y
+        expression: medium
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+
+    - cistron:
+        label: NOT_gate_1
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD
+
+    - cistron:
+        label: NOT_gate_2
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+
+    - cistron:
+        label: OR_gate
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD
+
+    - cistron:
+        label: mScarlet_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1

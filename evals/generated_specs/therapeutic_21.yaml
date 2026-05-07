@@ -1,22 +1,25 @@
-```yaml
 construct:
-  name: "secreted_antibody_fragment_mammalian"
-  host: CHO
+  name: "mammalian_secreted_scFv_expression"
+  host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    # Note: pTwist CMV is a mammalian expression vector without antibiotic resistance markers
+    # suitable for stable transfection and selection-free approaches
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
 
     - cistron:
-        label: antibody_fragment
+        label: secreted_scFv
         expression: high
         chain:
-          - signal_peptide: IgG_kappa  # secretion signal for mammalian cells
+          - tag: signal_peptide_IgG  # N-terminal secretion signal (IgG kappa or lambda leader)
           - gene:
-              id: P01834  # human immunoglobulin kappa light chain variable region
+              id: scFv_engineered
               source: uniprot
+              # User must provide the actual scFv sequence or UniProt ID
+          - tag: 6xHis  # C-terminal His tag for detection and purification
+          - tag: KDEL  # Optional ER retention signal; remove if secretion to media is preferred
 
-    - terminator: BGH_pA
-```
+    - terminator: SV40_polyA

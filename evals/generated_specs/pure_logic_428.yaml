@@ -1,20 +1,34 @@
 construct:
-  name: "threshold_detox_detector"
-  host: e_coli_bl21_de3
+  name: threshold_detector_detoxification
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: detoxifier
+        label: threshold_sensor
         expression: high
         chain:
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: detoxifying_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
           - solubility_tag: MBP
-          - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P0A433
+              id: CYP2E1
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

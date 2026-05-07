@@ -1,24 +1,26 @@
 construct:
-  name: tet_tunable_proteiny_expression
-  host: e_coli
+  name: "ProteinY_tetracycline_inducible"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive promoter to drive the TetR repressor
+    - promoter: tetO_promoter
+      # tetO (tetracycline operator) sequences upstream of minimal promoter
+      # In presence of doxycycline + TetR repressor: Tet-off (repressed)
+      # Without doxycycline: Tet-on (derepressed, expressed)
+      # Expression level tuned by doxycycline concentration
+
     - cistron:
-        label: tet_repressor
-        expression: medium
-        gene:
-          id: TetR
-          source: uniprot
-    - spacer: 50
-    - promoter: Ptet    # Tet-inducible promoter (tunable via aTc/Tetracycline)
-    - cistron:
-        label: target
+        label: ProteinY
         expression: high
-        gene:
-          id: ProteinY
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinY
+              source: uniprot
+
     - terminator: rrnB_T1

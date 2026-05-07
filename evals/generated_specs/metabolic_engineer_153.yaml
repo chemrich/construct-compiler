@@ -1,18 +1,24 @@
 construct:
-  name: "four_enzyme_cleavable_operon"
-  host: e_coli_bl21_de3
+  name: four_enzyme_operon_with_tev_cleavage
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: E_start
         expression: high
-        fused: false
         gene:
           id: E_start
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: E_mid1
         expression: high
@@ -20,11 +26,12 @@ construct:
         gene:
           id: E_mid1
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: E_mid2_E_end_fusion
+        label: E_mid2_and_E_end
         expression: high
-        fused: false
         chain:
           - gene:
               id: E_mid2
@@ -33,4 +40,5 @@ construct:
           - gene:
               id: E_end
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

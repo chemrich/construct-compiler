@@ -1,16 +1,21 @@
 construct:
-  name: "doxycycline_inducible_growthfactorx"
+  name: dox_inducible_GrowthFactorX
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: neomycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TRE3G  # Doxycycline-inducible (Tet-On) promoter
+    - promoter: TRE_tight
+    
     - cistron:
-        label: target
+        label: GrowthFactorX
         expression: high
-        gene:
-          id: GrowthFactorX
-          source: uniprot
-    - terminator: SV40_polyA  # Standard mammalian polyadenylation signal
+        chain:
+          - tag: Kozak
+          - gene:
+              id: GrowthFactorX
+              source: uniprot
+    
+    - terminator: polyA

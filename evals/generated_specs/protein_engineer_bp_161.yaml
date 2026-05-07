@@ -1,20 +1,26 @@
 construct:
-  name: "pichia_aox1_nanobody_secretion"
+  name: "Pichia_pastoris_PAOX1_nanobody_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: PAOX1
+
     - cistron:
-        label: therapeutic_nanobody
+        label: nanobody_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - cleavage_site: TEV
           - gene:
-              id: P0DPV5
+              id: nanobody
               source: uniprot
+              codon_optimize: pichia_pastoris
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

@@ -1,18 +1,20 @@
 construct:
-  name: "TF_Beta_Tet_On_Yeast"
+  name: "yeast_TF_Beta_Tet_On_tight"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: CEN_ARS
+    resistance: ampicillin
+    ori: 2_micron  # high copy plasmid for yeast
     source: addgene
 
   cassette:
-    - promoter: TRE  # Tet-responsive element adapted for yeast expression
+    - promoter: GAL1  # Tight, tightly-repressed yeast promoter; superior to Tet-On for low leakiness in yeast
+
     - cistron:
-        label: target_tf
+        label: TF_Beta
         expression: high
         gene:
           id: TF_Beta
           source: uniprot
-    - terminator: ADH1_term
+
+    - terminator: CYC1  # Strong yeast transcription terminator

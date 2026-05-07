@@ -1,30 +1,64 @@
 construct:
-  name: "analog_to_digital_switch"
-  host: e_coli
+  name: "analog_to_digital_converter_circuit"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: araBAD
+      # Input-sensing promoter: repressed by AraC protein when arabinose (M proxy) is low
+      # When M is LOW: araBAD is ON → Reporter A (mGFP) is expressed
+
     - cistron:
-        label: reporter_B_high_signal
+        label: reporter_A_low_state
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - spacer: 40
+
+    - promoter: araBAD
+      # Second araBAD promoter with inverted logic via repressor protein
+      # Regulated by TetR repressor: when M is HIGH, tetR is ON → Reporter B is ON
+
     - cistron:
-        label: inverter_lacI
-        expression: high
-        fused: false
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: rrnB_T1
+        label: tetR_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 40
+
     - promoter: lacUV5
+      # Constitutively repressed by TetR when M is HIGH
+      # When M is HIGH: TetR binds operator → Reporter B (mCherry) is expressed via derepression cascade
+
     - cistron:
-        label: reporter_A_low_signal
+        label: reporter_B_high_state
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: araC_regulator
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1

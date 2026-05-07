@@ -1,16 +1,22 @@
 construct:
-  name: "mypromoter_lacz_strength_test"
+  name: "MyPromoter_lacZ_test"
   host: e_coli
+  
   backbone:
     resistance: tetracycline
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: "MyPromoter" # Custom promoter as requested by user
+    - promoter: MyPromoter
+    
+    - ribosome_binding_site: Shine_Dalgarno
+    
     - cistron:
-        label: "lacZ_reporter"
+        label: lacZ
         expression: high
-        chain:
-          - gene:
-              id: "lacZ"
-              source: uniprot
-    - terminator: "rrnB_T1"
+        gene:
+          id: lacZ
+          source: uniprot
+    
+    - terminator: rrnB_T1

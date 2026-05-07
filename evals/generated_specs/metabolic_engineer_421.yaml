@@ -1,50 +1,65 @@
 construct:
-  name: "five_step_metabolic_pathway_Y"
-  host: e_coli_bl21_de3
+  name: "five_enzyme_pathway_operon_Y"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: Enz1
-        expression: high
+        expression: medium
         chain:
           - tag: Strep-II
           - gene:
               id: Enz1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Enz2
-        expression: high
+        expression: medium
         fused: false
         gene:
           id: Enz2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Enz3
-        expression: high
+        expression: medium
         fused: false
         gene:
           id: Enz3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Enz4
-        expression: high
+        expression: medium
         fused: false
         gene:
           id: Enz4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Enz5
-        expression: high
+        expression: medium
         fused: false
         chain:
           - gene:
               id: Enz5
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

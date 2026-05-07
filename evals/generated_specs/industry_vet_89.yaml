@@ -1,21 +1,28 @@
 construct:
-  name: "human_protein_purification_construct"
+  name: human_protein_cryo_em
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P62993
-              source: uniprot
-    - terminator: T7term
+              id: human_protein
+              # Note: Replace 'human_protein' with actual UniProt ID or gene name when known
+
+    - terminator: rrnB_T1

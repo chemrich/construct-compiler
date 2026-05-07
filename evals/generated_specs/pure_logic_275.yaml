@@ -1,14 +1,68 @@
 construct:
-  name: "mammalian_analog_to_digital_switch"
+  name: "mammalian_threshold_detector_R_to_Q"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G  # High-cooperativity Tet-responsive promoter for sharp digital-like induction
+    - promoter: CMV
+
+    - cistron:
+        label: input_sensor
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: "dCas9"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "VPR"
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: threshold_logic
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: "MS2_coat_protein"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "p65_activation_domain"
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: output_Q
-        expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: bGH_polyA
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: "mNeonGreen"
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: cooperativity_enhancer
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: "oligomerization_domain"
+              source: uniprot
+
+    - terminator: rrnB_T1

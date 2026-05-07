@@ -1,14 +1,22 @@
 construct:
-  name: "lactase_high_expression_system"
-  host: e_coli_bl21_de3
+  name: "lactase_production"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: lactase
         expression: high
-        gene:
-          id: P00722
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P00720
+              source: uniprot
+    
+    - terminator: rrnB_T1

@@ -1,18 +1,24 @@
 construct:
-  name: "GST_FactorXa_proteinB_fusion"
+  name: "GST_proteinB_tac"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: tac
+    
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: Factor_Xa
           - gene:
               id: proteinB
               source: uniprot
+    
     - terminator: rrnB_T1

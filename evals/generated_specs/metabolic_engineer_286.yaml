@@ -1,65 +1,75 @@
 construct:
-  name: "yeast_fungal_cellulase_secretion_system"
+  name: "yeast_secreted_cellulase_quartet"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: cel1_cbh1
+        label: cel1_secreted
         expression: high
-        fused: false
         chain:
-          - tag: alpha_factor
           - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - secretion_signal: alpha_factor
           - gene:
-              id: P00725
+              id: cel1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cel2_cbh2
+        label: cel2_secreted
         expression: high
         fused: false
         chain:
-          - tag: alpha_factor
           - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - secretion_signal: alpha_factor
           - gene:
-              id: P07987
+              id: cel2
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cel3_eg1
+        label: cel3_secreted
         expression: high
         fused: false
         chain:
-          - tag: alpha_factor
           - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - secretion_signal: alpha_factor
           - gene:
-              id: P07981
+              id: cel3
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cel4_eg2
+        label: cel4_secreted
         expression: high
         fused: false
         chain:
-          - tag: alpha_factor
           - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - secretion_signal: alpha_factor
           - gene:
-              id: P07982
+              id: cel4
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: CYC1_poly_A

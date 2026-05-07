@@ -1,16 +1,21 @@
 construct:
-  name: "EnzymeM_yeast_high_expression"
+  name: "yeast_EnzymeM_cytoplasmic_expression"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3 # High constitutive expression in S. cerevisiae
+    - promoter: EF1_alpha
+
     - cistron:
-        label: target
+        label: EnzymeM
         expression: high
         gene:
           id: EnzymeM
           source: uniprot
-    - terminator: CYC1_term
+          codon_optimization: yeast
+
+    - terminator: rrnB_T1

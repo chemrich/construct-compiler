@@ -1,12 +1,15 @@
 construct:
-  name: "human_therapeutic_complex_ABC"
-  host: e_coli_bl21
+  name: human_ABC_complex_therapeutic_operon
+  host: e_coli_bl21_de3
+  
   backbone:
-    resistance: none # User requested no antibiotic resistance; requires alternative selection like auxotrophy
-    ori: pUC
-    source: custom
+    resistance: null  # No antibiotic resistance as specified
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: tac # Substituted T7 with tac to avoid bacteriophage components while maintaining high yield
+    - promoter: T7
+    
     - cistron:
         label: subunit_A
         expression: high
@@ -14,28 +17,33 @@ construct:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P69905
+              id: subunit_A
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: subunit_B
         expression: high
         fused: false
         chain:
-          - tag: Twin-Strep
+          - tag: Strep-II
           - cleavage_site: 3C
           - gene:
-              id: P68871
+              id: subunit_B
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: subunit_C
         expression: high
         fused: false
         chain:
-          - tag: FLAG
-          - cleavage_site: Thrombin
+          - tag: 8xHis
+          - cleavage_site: Factor_Xa
           - gene:
-              id: P69891
+              id: subunit_C
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator; avoids bacteriophage-derived T7term
+    
+    - terminator: rrnB_T1

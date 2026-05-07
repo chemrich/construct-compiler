@@ -1,10 +1,10 @@
-```yaml
 construct:
-  name: "triple_protein_P2A_T2A_expression"
+  name: "mammalian_triprotein_P2A_T2A"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CAG
@@ -15,30 +15,33 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: "protein_A"  # Replace with actual protein ID
+              id: protein_A
               source: uniprot
-          - cleavage_site: P2A  # P2A self-cleaving peptide
+
+    - spacer: 22
 
     - cistron:
-        label: protein_B
+        label: P2A_cleavage
         expression: high
-        fused: true  # Part of polycistronic transcript
+        fused: false
         chain:
+          - tag: P2A
+          - gene:
+              id: protein_B
+              source: uniprot
           - tag: Myc
-          - gene:
-              id: "protein_B"  # Replace with actual protein ID
-              source: uniprot
-          - cleavage_site: T2A  # T2A self-cleaving peptide
+
+    - spacer: 22
 
     - cistron:
-        label: protein_C
+        label: T2A_cleavage
         expression: high
-        fused: true  # Part of polycistronic transcript
+        fused: false
         chain:
-          - tag: FLAG
+          - tag: T2A
           - gene:
-              id: "protein_C"  # Replace with actual protein ID
+              id: protein_C
               source: uniprot
+          - tag: FLAG
 
-    - terminator: BBa_B0015
-```
+    - terminator: rrnB_T1

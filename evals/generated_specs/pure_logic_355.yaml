@@ -1,14 +1,61 @@
 construct:
-  name: "pH_responsive_bandpass_filter"
-  host: e_coli_bl21
+  name: "pH_bandpass_filter_mEGFP"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac # tac promoter substituted for pH-logic; a functional band-pass requires a dual-input logic gate (e.g., CadR activator and Asr repressor)
+    - promoter: T7lac
+
     - cistron:
-        label: reporter_output
+        label: pH_sensor_low
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: "pHluorin"
+              source: uniprot
+        # pHluorin: GFP variant with pKa ~7.1; fluorescent below pH 7.5, dim above
+
+    - spacer: 30
+
+    - cistron:
+        label: pH_sensor_high
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: "pHluorin2"
+              source: uniprot
+        # pHluorin2: GFP variant with pKa ~6.5; fluorescent above pH 6.5, dim below
+
+    - spacer: 30
+
+    - cistron:
+        label: logic_AND_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+        # Reporter: only on when both sensors are fluorescent (pH 6.5–7.5)
+
+    - spacer: 30
+
+    - cistron:
+        label: pH_level_input
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: "PhaA"
+              source: uniprot
+        # PhaA (putative pH-responsive transcription factor) as tunable input
+
     - terminator: rrnB_T1

@@ -1,16 +1,43 @@
 construct:
-  name: and_not_gate_secreted_enzyme
-  host: e_coli_bl21_de3
+  name: AND_NOT_gate_enzyme_output
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac  # Functions as an AND-NOT gate: requires T7 Polymerase (Activator) AND NOT LacI (Inhibitor)
+    - promoter: T7lac
+
+    - cistron:
+        label: ActivatorInput
+        expression: high
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: InhibitorInput
+        expression: high
+        chain:
+          - gene:
+              id: TetR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: OutputActivity
         expression: high
         chain:
-          - tag: pelB  # Signal peptide for periplasmic enzyme secretion
+          - tag: 6xHis
           - gene:
-              id: P00634  # Alkaline phosphatase (PhoA), a periplasmic enzyme
+              id: MalE
               source: uniprot
-    - terminator: T7term
+        # MalE includes an N-terminal signal peptide for periplasmic secretion in E. coli
+
+    - terminator: rrnB_T1

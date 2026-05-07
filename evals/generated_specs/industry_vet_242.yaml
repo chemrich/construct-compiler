@@ -1,20 +1,40 @@
 construct:
-  name: "mammalian_bicistronic_p2a_expression"
+  name: "dual_GOI_P2A_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: multicomponent_cleavable
+        label: GOI1
         expression: high
         chain:
           - gene:
               id: GOI1
               source: uniprot
-          - linker:
-              type: P2A
+
+    - spacer: 21
+
+    - cistron:
+        label: P2A_peptide
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 21
+
+    - cistron:
+        label: GOI2
+        expression: high
+        chain:
           - gene:
               id: GOI2
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: polyA

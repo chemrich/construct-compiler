@@ -1,17 +1,14 @@
 construct:
-  name: "shuttle_pBR322_amp_CMV"
-  host: mammalian
+  name: basic_shuttle_backbone
+  host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: CMV
-    - cistron:
-        label: cloning_site
-        # User requested 'driving nothing', but schema requires a gene. 
-        # Using mEGFP as a placeholder for future insertion.
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_polyA # Standard mammalian poly-A terminator as requested
+      # Mammalian expression element; no coding sequence yet
+    - terminator: SV40_polyA
+      # SV40 poly(A) signal for mammalian transcript stability and polyadenylation

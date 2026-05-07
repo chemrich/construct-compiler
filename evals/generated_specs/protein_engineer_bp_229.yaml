@@ -1,18 +1,23 @@
 construct:
-  name: "cutinase_secretion_optimization"
+  name: "B_subtilis_cutinase_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110  # Standard Bacillus plasmid origin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
-        label: cutinase_secretion
+        label: cutinase_secreted
         expression: high
         chain:
-          - tag: WapA  # Bacillus subtilis secretion signal
+          - signal_peptide: WapA
           - gene:
-              id: P0C0L0
+              id: cutinase
               source: uniprot
           - tag: Myc
-    - terminator: BBa_B0015  # Structured stem-loop terminator (double terminator)
+
+    - terminator: rrnB_T1

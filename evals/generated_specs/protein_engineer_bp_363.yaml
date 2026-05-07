@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_constitutive_phytase_secretion"
+  name: "pichia_pastoris_phytase_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: phytase_expression
+        label: phytase
         expression: high
         chain:
-          - tag: Ost1
+          - tag: signal_peptide_Ost1
           - tag: FLAG
           - cleavage_site: Enterokinase
           - gene:
-              id: P07102
+              id: phytase
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

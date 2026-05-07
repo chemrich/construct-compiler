@@ -1,28 +1,36 @@
 construct:
-  name: "bacillus_pathway_pxyl_expression"
+  name: "bacillus_two_enzyme_pathway"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: enzyme_a
+        label: enzyme_A
         expression: high
         chain:
-          - gene:
-              id: P00350
-              source: uniprot
           - tag: 6xHis
+          - gene:
+              id: enzyme_A
+              source: uniprot
+              codon_optimization: bacillus
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_b
+        label: enzyme_B
         expression: high
         fused: false
         chain:
-          - gene:
-              id: P00360
-              source: uniprot
           - tag: FLAG
-    - terminator: BBa_B0015
+          - gene:
+              id: enzyme_B
+              source: uniprot
+              codon_optimization: bacillus
+
+    - terminator: rrnB_T1

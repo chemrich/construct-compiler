@@ -1,25 +1,25 @@
-```yaml
 construct:
-  name: conditional_degradation_system
+  name: conditional_degradation_dual_tag_ecoli
   host: e_coli
-  
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-  
+
   cassette:
     - promoter: J23100
-    
+
     - cistron:
-        label: target_with_dual_degrons
-        expression: medium
+        label: target_with_degradation
+        expression: high
         chain:
-          - tag: ClpXP_ssrA_N  # N-terminal ClpXP recognition sequence (codon-optimized variant 1)
+          - tag: degron_N_variant1
+            # N-terminal degron (first codon-optimized variant for TEV/ssrA recognition)
           - gene:
               id: mEGFP
               source: fpbase
-          - tag: ClpXP_ssrA_C  # C-terminal ClpXP recognition sequence (codon-optimized variant 2)
-    
+          - tag: degron_C_variant2
+            # C-terminal degron (second codon-optimized variant for same protease recognition)
+
     - terminator: rrnB_T1
-```

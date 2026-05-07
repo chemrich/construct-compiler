@@ -1,23 +1,32 @@
 construct:
-  name: "yeast_ProteinZ_expression_mCherry_reporter"
+  name: "S_cerevisiae_ProteinZ_mCherry"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: target_protein
-        gene:
-          id: ProteinZ
-          source: uniprot
+        label: ProteinZ
+        expression: high
+        chain:
+          - gene:
+              id: ProteinZ
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: reporter
-        fused: false
         expression: medium
+        fused: false
         gene:
           id: mCherry
           source: fpbase
+
     - terminator: CYC1

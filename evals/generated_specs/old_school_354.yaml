@@ -1,14 +1,17 @@
 construct:
-  name: "U6_gRNA_mammalian_expression"
-  host: mammalian
+  name: "U6_gRNA_expression"
+  host: HEK293
+
   backbone:
     resistance: blasticidin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: sgRNA
-        gene:
-          id: guide_RNA_scaffold
-    - terminator: PolyT  # Standard Pol III (U6) terminator consisting of a cluster of Thymidines
+
+    - gene:
+        id: gRNA_scaffold
+        source: uniprot
+
+    - terminator: U6_poly_T

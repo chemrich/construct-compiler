@@ -1,35 +1,46 @@
 construct:
-  name: "bacillus_polycistronic_complex_operon"
+  name: "bacillus_multisubunit_complex_operon"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac01
+
     - cistron:
-        label: subunit_1
+        label: subunit_A
         expression: high
+        rbs: optimized_bacillus
         fused: false
         gene:
-          id: P0C070
+          id: subunitA
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: subunit_2
+        label: subunit_B
         expression: high
+        rbs: optimized_bacillus
         fused: false
         gene:
-          id: P21144
+          id: subunitB
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: subunit_3
+        label: subunit_C
         expression: high
+        rbs: optimized_bacillus
         fused: false
         chain:
           - tag: Twin-Strep
           - gene:
-              id: P21145
+              id: subunitC
               source: uniprot
+
     - terminator: rrnB_T1

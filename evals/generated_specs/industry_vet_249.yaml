@@ -1,20 +1,25 @@
 construct:
-  name: "AAV_Packaging_High_Yield_GOI"
+  name: "high_yield_mammalian_GOI_Flag"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_GOI
+        label: target
         expression: high
         chain:
-          - kozak: true
+          - kozak_sequence: GCCRCCATGG
           - gene:
-              id: GOI
-              source: uniprot
+              id: null
+              source: custom
           - linker:
               type: short_GS
               repeats: 1
           - tag: FLAG
+
     - terminator: bGH_polyA

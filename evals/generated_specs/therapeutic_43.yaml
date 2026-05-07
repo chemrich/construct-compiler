@@ -1,25 +1,27 @@
-```yaml
 construct:
   name: MBP_HRV3C_therapeutic_peptide
-  host: e_coli
-
+  host: e_coli_bl21_de3
+  
   backbone:
-    resistance: kanamycin
+    resistance: chloramphenicol
     ori: pBR322
     source: addgene
-
+  
   cassette:
-    - promoter: araBAD
-
+    - promoter: T7lac
+    
     - cistron:
-        label: therapeutic_peptide
-        expression: medium
+        label: therapeutic_fusion
+        expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: 3C
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01308  # human insulin as example therapeutic peptide
-              source: uniprot
-
+              id: therapeutic_peptide
+              sequence: MKTAYIAKQRQISFVKSHFSRQLEERLGLIEVQAPILSRVGDGTQDNLSGAEKAVQVKVKALPDAQFEVVHSLAKWKRQTLGQHDFSAGEGLYTHMKALRPDEDRLSPLHSVYVDQWDWERVMGDGERQFSTLKSTVEAIVAGVYSAKNKTVGVQDTISGTGALRPDGDPRPDGDPRPDGDPRPDGDPRPDGDPRPDGDPRPDGDPRPDGDPVPWPTLVTTFSYGVQCFSRYPYDVPDYAG
+    
     - terminator: rrnB_T1
-```

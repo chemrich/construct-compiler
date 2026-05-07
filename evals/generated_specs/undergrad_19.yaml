@@ -1,22 +1,25 @@
-```yaml
 construct:
-  name: "dox_inducible_therapeutic_protein"
+  name: "Tet_on_therapeutic_protein"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
-    - promoter: TRE3GS  # Tet-responsive element with strong induction
+    - promoter: TRE_tight
+      # TRE (tetracycline response element) requires rtTA transactivator
+      # Dox-dependent activation of tight TRE promoter
 
     - cistron:
         label: therapeutic_protein
         expression: high
         chain:
-          - signal_peptide: IL2_SP  # secretion signal for therapeutic delivery
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: P01308  # human insulin, replace with actual therapeutic protein
+              id: THERAPEUTIC_PROTEIN
+              # Note: replace with actual UniProt ID or protein name
               source: uniprot
 
     - terminator: SV40_polyA
-```

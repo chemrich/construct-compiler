@@ -1,15 +1,23 @@
 construct:
-  name: "ProteinH_membrane_attachment"
-  host: e_coli_bl21_de3
+  name: ProteinH_membrane_anchor
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: ProteinH
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P03606 # Pilot protein H from phage phiX174, known for E. coli membrane association
+              id: ProteinH
               source: uniprot
-    - terminator: T7term
+          - membrane_anchor: OmpA_CTD
+
+    - terminator: rrnB_T1

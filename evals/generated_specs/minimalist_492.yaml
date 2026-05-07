@@ -1,16 +1,21 @@
 construct:
-  name: "alcohol_dehydrogenase_yeast_overexpression"
+  name: yeast_ADH_overexpression
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: J23100
+
     - cistron:
-        label: adh_target
+        label: ADH
         expression: high
-        gene:
-          id: P00330
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - gene:
+              id: P00330
+              source: uniprot
+
+    - terminator: rrnB_T1

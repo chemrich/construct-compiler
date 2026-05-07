@@ -1,33 +1,37 @@
 construct:
-  name: "e_coli_and_gate_dual_repressor"
+  name: "AND_gate_dual_inducers_GFP"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: araBAD
+      comment: "Responsive to InducerA (L-arabinose); repressed by AraC in absence of inducer"
+
     - cistron:
-        label: lacI_repressor
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 40
-    - promoter: J23100
-    - cistron:
-        label: tetR_repressor
-        expression: medium
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
-    - spacer: 40
-    - promoter: tac  # Substituting tac for a dual-repressible LacO/TetO promoter as requested for the AND gate logic
-    - cistron:
-        label: gfp_output
+        label: repressor_B
         expression: high
-        fused: false
         gene:
-          id: mEGFP
-          source: fpbase
+          id: tetR
+          source: uniprot
+      comment: "TetR repressor protein; expressed constitutively from araBAD promoter"
+
+    - terminator: rrnB_T1
+
+    - promoter: J23100
+      comment: "Constitutive baseline; modulated by TetR repression"
+
+    - cistron:
+        label: reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+      comment: "GFP output; transcription requires both araBAD ON (InducerA present) AND tetR OFF (InducerB present to inactivate TetR via tetO operator upstream)"
+
     - terminator: rrnB_T1

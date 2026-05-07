@@ -1,14 +1,20 @@
 construct:
-  name: "GeneA_high_expression_mammalian"
-  host: mammalian
+  name: "mammalian_GeneA_high_expression"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: GeneA
         expression: high
-        gene:
-          id: GeneA
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneA
+              source: uniprot
+
+    - terminator: rrnB_T1

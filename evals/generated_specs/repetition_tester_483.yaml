@@ -1,32 +1,42 @@
 construct:
-  name: "three_enzyme_pathway_sequence_diversity"
-  host: e_coli_bl21_de3
+  name: "three_enzyme_pathway_Enz_A_B_C"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
-    - cistron:
+      rbs: RBS1
+      cistron:
         label: Enz_A
         expression: high
         gene:
           id: Enz_A
           source: uniprot
+
     - terminator: rrnB_T1
-    - spacer: 50
+
     - promoter: tac
-    - cistron:
+      rbs: RBS2
+      cistron:
         label: Enz_B
-        expression: medium
+        expression: high
         gene:
           id: Enz_B
           source: uniprot
+
     - terminator: T7term
-    - spacer: 50
+
     - promoter: araBAD
-    - cistron:
+      rbs: RBS3
+      cistron:
         label: Enz_C
-        expression: low
+        expression: high
         gene:
           id: Enz_C
           source: uniprot
+
     - terminator: BBa_B0015

@@ -1,18 +1,23 @@
 construct:
-  name: "secreted_his_sfgfp_pbr322"
+  name: "secreted_protein_pelB_his"
   host: e_coli
+  
   backbone:
     resistance: tetracycline
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
           - signal_peptide: pelB
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: target_protein
+              source: uniprot
           - tag: 6xHis
+    
     - terminator: rrnB_T1

@@ -1,15 +1,32 @@
 construct:
-  name: "analog_rheostat_control_system"
-  host: e_coli
+  name: "analog_control_TargetGene_rheostat"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # araBAD is selected to provide analog (rheostat) control in response to L-arabinose concentration
+    - promoter: araBAD
+
+    - cistron:
+        label: regulatory_protein
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: target
-        expression: medium
-        gene:
-          id: TargetGene
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: TargetGene
+              source: uniprot
+
     - terminator: rrnB_T1

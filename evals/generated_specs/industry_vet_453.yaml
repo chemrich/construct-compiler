@@ -1,21 +1,25 @@
 construct:
-  name: "AAV2_VP1_Solubility_Enhanced"
-  host: e_coli_bl21
+  name: "stable_AAV_capsid"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: AAV2_VP1_fusion
+        label: AAV_capsid
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P19839
+              id: AAV2_capsid
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

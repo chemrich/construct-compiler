@@ -1,16 +1,18 @@
 construct:
-  name: "rho_sRNA_expression"
+  name: "Rho_RNA_expression"
   host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
-    - cistron:
-        label: rho_transcript
-        # Note: Rho is typically a protein-coding gene in E. coli; 
-        # expressing it as a non-coding RNA is handled here by omitting 
-        # translational tags and solubility markers.
-        gene:
-          id: rho
-          source: uniprot
-    - terminator: T7term
+    
+    - rna:
+        label: Rho
+        id: rho
+        source: uniprot
+    
+    - terminator: rrnB_T1

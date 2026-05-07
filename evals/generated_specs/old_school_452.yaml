@@ -1,17 +1,22 @@
 construct:
-  name: "periplasmic_protein_expression_t7"
-  host: e_coli_bl21_de3
+  name: "periplasmic_expression_pelb"
+  host: e_coli_bl21
+
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: periplasmic_target
+        label: target
         expression: high
         chain:
-          - tag: PelB
+          - signal_peptide: PelB
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: target_protein
+              source: uniprot
+
     - terminator: T7term

@@ -1,14 +1,19 @@
 construct:
-  name: "mammalian_secretion_peptide_hormone"
-  host: mammalian
+  name: "mammalian_peptide_hormone_secretion"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: hormone_product
+        label: peptide_hormone
         expression: high
-        gene:
-          id: PeptideHormone
-          source: uniprot
-    - terminator: SV40_pA
+        chain:
+          - gene:
+              id: PeptideHormone
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,29 +1,68 @@
 construct:
-  name: "yeast_synthetic_logic_router"
+  name: yeast_logic_router_S1_S2_S3
   host: yeast
 
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: FUS1_GAL1  # Synthetic hybrid promoter requiring S1 (pheromone) and S2 (internal state)
+    - promoter: GAL1
+
     - cistron:
-        label: signal_s3_output
+        label: S1_receptor
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: 6xHis
           - gene:
-              id: MF-alpha1
+              id: STE2
               source: uniprot
-    - terminator: rrnB_T1
 
-    - promoter: GAL1       # Promoter reflecting internal state S2
+    - spacer: 25
+
     - cistron:
-        label: reporter_s2
+        label: S2_state_sensor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: AND_gate_integrase
         expression: medium
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BBa_B0015
+        fused: false
+        chain:
+          - gene:
+              id: Cre
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: S3_signal_transmitter
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: AGA2
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: S2_internal_state_reporter
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1

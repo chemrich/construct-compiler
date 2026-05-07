@@ -1,28 +1,36 @@
 construct:
-  name: yeast_dual_constitutive_coexpression
+  name: yeast_two_protein_interaction_test
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: bait_protein
+        label: protein_A
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: protein_A
-              source: uniprot
+              id: YFP
+              source: fpbase
+
     - terminator: CYC1
-    - promoter: TEF1
+
+  cassette:
+    - promoter: ADH1
+
     - cistron:
-        label: prey_protein
+        label: protein_B
         expression: high
         chain:
           - tag: HA
           - gene:
-              id: protein_B
-              source: uniprot
-    - terminator: ADH1
+              id: mCherry
+              source: fpbase
+
+    - terminator: CYC1

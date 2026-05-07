@@ -1,39 +1,56 @@
 construct:
-  name: "quad_ires_identical_proteins"
+  name: "mammalian_quadruple_IRES_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_copy_1_emcv
-        fused: false
-        ires: EMCV  # Distinct IRES used for each copy to prevent recombination
-        gene:
-          id: mEGFP
-          source: fpbase
+        label: copy1
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - spacer: 25
+
     - cistron:
-        label: protein_copy_2_ev71
+        label: IRES1_copy2
+        expression: high
         fused: false
-        ires: EV71
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+        # IRES: EMCV (Encephalomyocarditis virus IRES)
+
     - spacer: 25
+
     - cistron:
-        label: protein_copy_3_crpv
+        label: IRES2_copy3
+        expression: high
         fused: false
-        ires: CrPV
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+        # IRES: HCV (Hepatitis C virus IRES)
+
     - spacer: 25
+
     - cistron:
-        label: protein_copy_4_rhpv
+        label: IRES3_copy4
+        expression: high
         fused: false
-        ires: RhPV
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+        # IRES: PV (Poliovirus IRES)
+
+    - terminator: rrnB_T1

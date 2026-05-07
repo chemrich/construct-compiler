@@ -1,21 +1,34 @@
 construct:
-  name: "operon_coexpression_A_B"
-  host: e_coli
+  name: "dual_gene_operon_AB"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: gene_A
-        expression: medium
-        gene:
-          id: protein_A
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gene_A
+              source: uniprot
+
     - spacer: 20
+
     - cistron:
         label: gene_B
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: protein_B
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gene_B
+              source: uniprot
+
     - terminator: rrnB_T1

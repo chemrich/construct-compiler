@@ -1,23 +1,55 @@
 construct:
   name: "mammalian_neuronal_differentiation_switch"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE  # Tetracycline Response Element for Dox-induction and rtTA-mediated positive feedback
+    - promoter: CMV
+
     - cistron:
-        label: differentiation_factor
+        label: master_regulator
         expression: high
-        gene:
-          id: P50553  # Ascl1: basic helix-loop-helix transcription factor that induces neuronal differentiation
-          source: uniprot
-    - spacer: 25
-    - cistron:
-        label: feedback_activator
-        expression: medium
-        fused: false  # Independently translated via P2A self-cleaving peptide
         chain:
-          - cleavage_site: P2A  # Ribosomal skipping site for polycistronic expression in mammalian cells
+          - tag: FLAG
           - gene:
-              id: rtTA3  # Reverse tetracycline-controlled transactivator (rtTA) to maintain the "ON" state
-    - terminator: bGH_pA
+              id: NEUROD1
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: feedback_amplifier
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: NEUROD1
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: differentiation_reporter
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: positive_feedback_promoter
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: TBR1
+              source: uniprot
+
+    - terminator: rrnB_T1

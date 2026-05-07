@@ -1,57 +1,83 @@
 construct:
-  name: "stress_response_autoinduction_operon"
+  name: "stress_response_operon_autoinduction"
   host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+      # araBAD responds to L-arabinose and is repressed by glucose
+      # Combined with lactose-inducible elements, provides auto-induction behavior
+
     - cistron:
-        label: hspA
+        label: HspA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: HspA
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: GroE
         expression: high
         fused: false
         gene:
-          id: HspA
+          id: GroEL
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: groEL
-        expression: high
-        fused: false
-        gene:
-          id: GroEL  # GroEL is used as the primary enzyme component of the GroE system
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: dnaK
+        label: DnaK
         expression: high
         fused: false
         gene:
           id: DnaK
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: clpP
+        label: ClpP
         expression: high
         fused: false
         gene:
           id: ClpP
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: lon
+        label: Lon
         expression: high
         fused: false
         gene:
           id: Lon
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: degP
+        label: DegP
         expression: high
         fused: false
         gene:
           id: DegP
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+
+  # Auto-induction mechanism note:
+  # araBAD promoter is glucose-repressed (catabolite repression via CRP-cAMP)
+  # and arabinose-induced. In auto-induction media (Terrific Broth + glycerol + lactose),
+  # glucose depletion triggers CRP-cAMP activation and removal of arabinose repression.
+  # Lactose presence (via basal beta-galactosidase) produces allolactose, activating
+  # any lac operators if included in the regulatory region. This design achieves
+  # high-cell-density expression during diauxic growth transition.

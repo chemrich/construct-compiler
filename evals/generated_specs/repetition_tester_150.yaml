@@ -1,25 +1,41 @@
 construct:
-  name: "tandem_peptide_p_high_expression"
+  name: "PeptideP_triplicates_codon_shuffled_highexpr"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: triple_peptide_p
+        label: PeptideP_v1
         expression: high
-        # Note: Compiler will handle codon shuffling for the redundant PeptideP entries to minimize repetitive sequence identity.
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: PeptideP
-          - linker:
-              type: short_GS
-              repeats: 1
-          - gene:
-              id: PeptideP
-          - linker:
-              type: short_GS
-              repeats: 1
-          - gene:
-              id: PeptideP
-    - terminator: T7term
+              id: PeptideP_codon_variant_1
+              source: custom
+
+    - spacer: 20
+
+    - cistron:
+        label: PeptideP_v2
+        expression: high
+        fused: false
+        gene:
+          id: PeptideP_codon_variant_2
+          source: custom
+
+    - spacer: 20
+
+    - cistron:
+        label: PeptideP_v3
+        expression: high
+        fused: false
+        gene:
+          id: PeptideP_codon_variant_3
+          source: custom
+
+    - terminator: rrnB_T1

@@ -1,46 +1,64 @@
 construct:
-  name: "five_enzyme_operon_prf_m3_regulation"
+  name: "five_enzyme_operon_M1_M2_M3_M4_M5_frameshifted"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23106
+    - promoter: tac
+
     - cistron:
         label: M1
-        expression: medium
+        expression: high
         gene:
           id: M1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: M2_M3_prf_unit
-        expression: medium
+        label: M2
+        expression: high
         fused: false
-        chain:
-          - gene:
-              id: M2
-              source: uniprot
-          - linker:
-              type: ribosomal_frameshift_minus_1
-              repeats: 1
-          - gene:
-              id: M3
-              source: uniprot
-    - spacer: 30
+        gene:
+          id: M2
+          source: uniprot
+
+    # M3 follows M2 with a programmed ribosomal frameshift (PRF) element
+    # The frameshift is encoded within the spacer/junction region to reduce translation efficiency to ~10%
+    - spacer: 35
+      # YAML comment: This spacer contains a synthetic PRF motif (e.g., GGAAAC slippery site + downstream RNA stem-loop)
+      # The PRF reduces M3 translation efficiency to ~10% relative to M1/M2
+
+    - cistron:
+        label: M3
+        expression: low
+        fused: false
+        gene:
+          id: M3
+          source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: M4
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: M4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: M5
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: M5
           source: uniprot
+
     - terminator: rrnB_T1

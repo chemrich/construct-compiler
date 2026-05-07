@@ -1,26 +1,34 @@
 construct:
-  name: "dual_subunit_coexpression_his_tagged"
+  name: "protein_complex_dual_subunit_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: subunit_alpha
+        label: subunit_A
         expression: high
         chain:
           - gene:
-              id: "SUBUNIT_A"
+              id: subunit_A
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: subunit_beta
+        label: subunit_B
         expression: high
         fused: false
         chain:
           - gene:
-              id: "SUBUNIT_B"
+              id: subunit_B
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,22 +1,22 @@
 construct:
-  name: "secreted_cytokine_yeast"
+  name: "yeast_secreted_cytokine"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
 
   cassette:
-    - promoter: TEF1  # constitutive yeast promoter, equivalent to CMV for yeast
+    - promoter: GAL1
 
     - cistron:
         label: cytokine
         expression: high
         chain:
-          - tag: alpha_factor_signal  # yeast secretion signal
+          - tag: signal_peptide_alpha_factor
           - gene:
-              id: your_cytokine_id  # replace with actual cytokine UniProt ID
+              id: cytokine
               source: uniprot
 
-    - terminator: CYC1
+    - terminator: CYC1_terminator

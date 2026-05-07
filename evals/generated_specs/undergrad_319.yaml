@@ -1,15 +1,21 @@
 construct:
-  name: "yeast_mating_response_reporter"
+  name: yeast_pheromone_pathway_reporter
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: FUS1 # Standard yeast pheromone-inducible promoter
+    - promoter: FUS1  # FUS1 is a pheromone-responsive promoter in S. cerevisiae
+
     - cistron:
         label: reporter
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: CYC1 # Standard yeast terminator
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

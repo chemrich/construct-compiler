@@ -1,21 +1,28 @@
 construct:
-  name: "Phage_Display_pIII_Fusion"
-  host: e_coli_bl21_de3
+  name: phage_display_pIII_fusion
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: pIII_peptide_fusion
+        label: peptide_variant
         expression: high
         chain:
-          - tag: pelB
-          - tag: target_peptide
-          - linker:
-              type: rigid_EAAAK
-              repeats: 3
           - gene:
-              id: P03630
+              id: PEPTIDE_VARIANT
+              source: custom
+          - linker:
+              type: GS_flexible
+              repeats: 1
+              sequence: "GGAGCGGTGGATCAGGTGGATCA"
+          - gene:
+              id: pIII
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

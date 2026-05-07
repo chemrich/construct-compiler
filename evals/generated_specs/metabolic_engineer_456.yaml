@@ -1,48 +1,77 @@
 construct:
-  name: "Light_Inducible_5_Enzyme_Operon"
+  name: Light_on_5enzyme_operon
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pDawn # Blue-light inducible promoter system for E. coli
+    - promoter: cph8_light_inducible
+      # Red/far-red light-inducible promoter system for temporal control
+
     - cistron:
         label: Light_on1
         expression: high
-        gene:
-          id: Light_on1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Light_on1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Light_on2
         expression: high
         fused: false
-        gene:
-          id: Light_on2
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Light_on2
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Light_on3
         expression: high
         fused: false
-        gene:
-          id: Light_on3
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Light_on3
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Light_on4
         expression: high
         fused: false
-        gene:
-          id: Light_on4
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Light_on4
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Light_on5
         expression: high
         fused: false
-        gene:
-          id: Light_on5
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Light_on5
+              source: uniprot
+
+    - terminator: rrnB_T1T2
+      # Double terminator for robust transcription termination and prevention of read-through

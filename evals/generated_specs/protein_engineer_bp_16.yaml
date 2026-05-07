@@ -1,10 +1,10 @@
-```yaml
 construct:
-  name: commercial_phytase_pichia
+  name: Pichia_phytase_commercial_scale
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
 
@@ -12,13 +12,20 @@ construct:
     - promoter: FLD1
 
     - cistron:
-        label: secreted_phytase
+        label: secretion_leader
         expression: high
         chain:
-          - secretion_signal: alpha_mating_factor_engineered  # includes Kex2 cleavage site
           - gene:
-              id: P16499  # Aspergillus niger phytase
+              id: alpha_mating_factor_Kex2
               source: uniprot
+          - cleavage_site: Kex2
 
-    - terminator: CYC1
-```
+    - cistron:
+        label: phytase
+        expression: high
+        fused: false
+        gene:
+          id: phytase
+          source: uniprot
+
+    - terminator: rrnB_T1

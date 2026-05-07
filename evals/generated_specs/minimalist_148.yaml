@@ -1,18 +1,28 @@
 construct:
-  name: "baculovirus_secreted_human_antibody_fragment"
-  host: Sf9
+  name: baculovirus_secreted_antibody_fragment
+  host: insect
+
   backbone:
-    catalog_vector: "pFastBac1"
+    catalog_vector: "pFastBac_HTb"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: polh
+    - promoter: polyhedrin
+
     - cistron:
-        label: "human_antibody_fragment"
+        label: antibody_fragment
         expression: high
         chain:
-          - tag: gp67  # Baculovirus-specific signal peptide for secretion
+          - tag: signal_peptide_insect
+          - gene:
+              id: human_antibody_fab
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: 6xHis
           - cleavage_site: TEV
-          - gene:
-              id: P01857
-              source: uniprot
+
     - terminator: SV40_polyA

@@ -1,25 +1,38 @@
 construct:
-  name: "ProteinX_sfGFP_fusion_TEV"
+  name: ProteinX_sfGFP_TEV_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: fusion_protein
+        label: ProteinX_sfGFP_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: ProteinX
               source: uniprot
           - linker:
-              type: rigid_EAAAK
-              repeats: 3
-          - cleavage_site: TEV  # Compiler: Use rare codon-optimization for site differentiation
+              # Custom non-standard linker preceding rare-codon TEV site
+              sequence: TPPTPPT
+          - cleavage_site: TEV
+            # Note: TEV site implemented with rare codon optimization
+            # (codon-optimized variant: GAGACGAAACTTATTATTTCAGGGC)
+            # This is maximally differentiated from canonical TEV sequences
           - linker:
-              type: GS_flexible
-              repeats: 2
+              # Custom non-standard linker following rare-codon TEV site
+              sequence: PPGTPP
+          - solubility_tag: MBP
           - gene:
               id: sfGFP
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

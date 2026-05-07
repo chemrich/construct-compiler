@@ -1,16 +1,23 @@
 construct:
-  name: "HEK293_constitutive_therapeutic_protein_FLAG"
+  name: "HEK293_constitutive_TherapeuticProtein_FLAG"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: therapeutic_protein
+        label: TherapeuticProtein
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: P01241  # Using Human Growth Hormone (hGH) as a representative therapeutic protein
+              id: TherapeuticProtein
               source: uniprot
-    - terminator: SV40_polyA  # Standard polyadenylation signal for mammalian expression
+
+    - terminator: rrnB_T1

@@ -1,20 +1,22 @@
 construct:
-  name: "GST_Thrombin_Viral_Enzyme_Myc_Expression"
+  name: "viral_enzyme_GST_Myc"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100  # Substituted J23100 (constitutive E. coli promoter) for requested mammalian promoter to ensure expression in E. coli host.
+    - promoter: T7lac
+
     - cistron:
-        label: target_enzyme
+        label: viral_enzyme
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: Thrombin
           - gene:
               id: viral_enzyme
               source: uniprot
           - tag: Myc
+
     - terminator: rrnB_T1

@@ -1,16 +1,24 @@
 construct:
-  name: "AAV_CAG_TherapeuticGene_V5"
-  host: HEK293
+  name: AAV_TherapeuticGene_V5
+  host: mammalian
+
   backbone:
-    catalog_vector: "pAAV-MCS"  # Standard AAV vector backbone containing ITRs
+    catalog_vector: pAAV
+
   cassette:
+    - itr: AAV2_5prime
+
     - promoter: CAG
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic
         expression: high
         chain:
           - gene:
               id: TherapeuticGene
               source: uniprot
           - tag: V5
-    - terminator: bGH_polyA
+
+    - terminator: SV40_poly_A
+
+    - itr: AAV2_3prime

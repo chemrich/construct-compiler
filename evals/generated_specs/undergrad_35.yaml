@@ -1,22 +1,21 @@
-```yaml
 construct:
-  name: "Dox_inducible_Strep_geneF_mammalian"
+  name: doxycycline_inducible_F_expression
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: neomycin
 
   cassette:
-    - promoter: TRE  # Tet-responsive element, requires rtTA for dox induction
-    
+    - promoter: TRE3G  # Tetracycline Response Element for doxycycline induction
+
     - cistron:
-        label: target
+        label: F
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: F  # User-specified gene F
-              # Note: source omitted as this appears to be a custom gene
-    
-    - terminator: rrnB_T1
-```
+              id: F
+              source: uniprot
+
+    - terminator: bGH_polyA

@@ -1,23 +1,23 @@
-```yaml
 construct:
-  name: secreted_protein_baculovirus_expression
+  name: "insect_cell_high_yield_secreted_GOI"
   host: insect_cells
 
   backbone:
     catalog_vector: "pFastBac1"
     resistance: ampicillin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: polyhedrin
 
     - cistron:
-        label: secreted_target
+        label: secreted_protein
         expression: high
         chain:
-          - signal_peptide: gp67  # baculovirus envelope glycoprotein signal for secretion
+          - tag: signal_peptide_honeybee_melittin
           - gene:
-              id: your_gene_of_interest
-              source: uniprot  # replace with actual gene ID
+              id: gene_of_interest
+              source: uniprot
 
-    - terminator: polyhedrin_terminator
-```
+    - terminator: SV40_polyA

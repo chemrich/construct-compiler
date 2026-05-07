@@ -1,16 +1,28 @@
 construct:
-  name: "liver_specific_human_pah_gene_therapy"
+  name: "gene_therapy_payload_lipid_nanoparticle"
   host: mammalian
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: custom
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Albumin  # Liver-specific promoter for targeted expression
+    - promoter: EF1_alpha
+      # Tissue-specific mammalian promoter; EF1_alpha provides constitutive expression
+      # Alternative: use tissue-specific promoter if targeting specific tissue
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_gene
         expression: high
-        gene:
-          id: PAH  # Human Phenylalanine Hydroxylase
-          source: uniprot
-    - terminator: bGH_pA  # Bovine growth hormone polyadenylation signal for mammalian stability
+        chain:
+          - gene:
+              id: HEXA
+              source: uniprot
+              # HEXA (hexosaminidase subunit alpha) as exemplar human therapeutic gene
+              # User should replace with their target gene ID
+
+    - terminator: polyA_signal
+      # bGH polyadenylation signal for mammalian expression and mRNA stability
+      # Critical for non-viral LNP delivery to ensure mRNA stability and translation efficiency

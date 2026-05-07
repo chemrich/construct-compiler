@@ -1,16 +1,22 @@
 construct:
-  name: "yeast_biosynthetic_enzyme_expression"
+  name: "S_cerevisiae_bacterial_enzyme_biosynthesis"
   host: yeast
+
   backbone:
-    resistance: URA3  # Substituted antibiotic resistance with yeast URA3 auxotrophic marker per user requirement
-    ori: 2_micron
+    resistance: none  # no antibiotic resistance per requirements
+    ori: 2_micron    # S. cerevisiae autonomous replication sequence
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1  # strong, inducible yeast promoter
+
     - cistron:
-        label: biosynthetic_enzyme
+        label: bacterial_enzyme
         expression: high
-        gene:
-          id: P0A6C5
-          source: uniprot
-    - terminator: CYC1
+        chain:
+          - gene:
+              id: bacterial_enzyme_codon_optimized
+              source: uniprot
+              codon_optimization: saccharomyces_cerevisiae
+
+    - terminator: CYC1  # strong S. cerevisiae transcription terminator

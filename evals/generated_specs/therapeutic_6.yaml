@@ -1,23 +1,27 @@
-```yaml
 construct:
-  name: bacterial_metabolite_biosensor
-  host: e_coli
+  name: "bacterial_metabolite_biosensor"
+  host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: araBAD  # arabinose-inducible promoter for metabolite sensing
+    - promoter: araBAD
+      # araBAD promoter is repressed by glucose and induced by L-arabinose
+      # This allows metabolite-dependent induction via araBAD regulation
 
     - cistron:
-        label: secreted_reporter
+        label: signal_peptide_reporter
         expression: high
         chain:
-          - signal_peptide: pelB  # periplasmic export signal
-          - tag: 6xHis
+          - tag: OmpA_signal_peptide
+            # OmpA signal peptide enables secretion to periplasm in E. coli
           - gene:
-              id: lacZ  # beta-galactosidase produces blue color with X-gal substrate
+              id: lacZ_alpha
+              # LacZ α-peptide acts as enzymatic reporter
+              # Changes color with CPRG or X-gal substrate
               source: uniprot
 
     - terminator: rrnB_T1
-```

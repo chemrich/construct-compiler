@@ -1,22 +1,50 @@
 construct:
-  name: "sharp_threshold_detector"
+  name: sharp_threshold_detector
   host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: J23106
+    - promoter: T7lac
+    
     - cistron:
-        label: sensor_activator
-        expression: medium
-        gene:
-          id: P12746
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: luxI  # LuxR-AHL responsive promoter with high cooperativity for sharp thresholding
-    - cistron:
-        label: detector_output
+        label: sensor_kinase
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxI
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: acyl_homoserine_lactone_synthase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxS
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: output_protein
+        expression: very_low
+        fused: false
         gene:
-          id: mEGFP
+          id: mNeonGreen
           source: fpbase
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1
+
+# Design rationale:
+# The sharp threshold is achieved through cooperative transcriptional regulation.
+# luxI (INPUT) produces acyl-homoserine lactone (AHL) in response to sensed signal.
+# luxS amplifies AHL production, creating positive feedback.
+# The luxR-AHL complex exhibits Hill coefficient > 1 at the mNeonGreen promoter,
+# producing sharp ON/OFF switching at a tunable AHL concentration threshold.
+# Expression level of luxI/luxS tunes the activation threshold.
+# Very low expression of output ensures sharp digital behavior.

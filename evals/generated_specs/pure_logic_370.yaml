@@ -1,17 +1,32 @@
 construct:
-  name: "blue_light_inducible_therap_p"
+  name: "blue_light_inducible_Therap_P"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: pEL222 # Blue light-inducible promoter (EL222-responsive)
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: light_sensor
         expression: high
+        chain:
+          - gene:
+              id: YtvA
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Therap_P
+        expression: high
+        fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: Therap_P
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

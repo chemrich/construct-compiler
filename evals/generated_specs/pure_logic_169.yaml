@@ -1,32 +1,43 @@
 construct:
-  name: "yeast_sensitive_not_gate_membrane_output"
+  name: "yeast_NOT_gate_repressible"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    resistance: ampicillin
+    ori: pUC
     source: addgene
 
   cassette:
-    # First transcriptional unit: Input promoter driving the repressor
-    - promoter: P_REPRESS  # The user-specified input promoter
-    - cistron:
-        label: gate_repressor
-        expression: high
-        gene:
-          id: TetR
-          source: uniprot
-    - terminator: ADH1_term
+    - promoter: GAL1
 
-    - spacer: 50
-
-    # Second transcriptional unit: Highly sensitive repressible promoter driving the membrane-anchored output
-    - promoter: TetO7_CYC1  # Highly sensitive repressible promoter (repressed by TetR)
     - cistron:
-        label: membrane_anchored_output
+        label: output
         expression: high
         chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mEGFP
-              source: fpbase
-          - tag: CAAX  # C-terminal prenylation signal for membrane anchoring in yeast
-    - terminator: CYC1_term
+              id: Fen1
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: TM_anchor_Saccharomyces_cerevisiae
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: MIG1
+              source: uniprot
+
+    - terminator: rrnB_T1

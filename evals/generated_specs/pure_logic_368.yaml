@@ -1,32 +1,63 @@
 construct:
-  name: "sequential_logic_circuit"
+  name: two_step_sequential_logic_circuit
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Event1_Input (Arabinose inducible)
+    - promoter: araBAD
+
     - cistron:
-        label: Step1_Reporter
+        label: Event1_sensor
         expression: high
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Step1_reporter
+        expression: medium
+        fused: false
         gene:
-          id: mNeonGreen
+          id: mEGFP
           source: fpbase
-    - spacer: 30
-    - promoter: tac     # Event2_Input (IPTG inducible; functional AND logic with Step 1 assumed via molecular mechanism)
+
+    - spacer: 25
+
     - cistron:
-        label: Step2_Reporter
+        label: Event2_sensor
         expression: high
+        fused: false
+        chain:
+          - gene:
+              id: TetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Step2_reporter
+        expression: medium
+        fused: false
         gene:
           id: mScarlet
           source: fpbase
-    - spacer: 30
-    - promoter: tet     # Reset_Input (Anhydrotetracycline inducible)
+
+    - spacer: 25
+
     - cistron:
-        label: Reset_Mechanism
-        expression: medium
-        gene:
-          id: P06956    # Cre recombinase for circuit reset/excision
-          source: uniprot
+        label: Reset_function
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Cre
+              source: uniprot
+
     - terminator: rrnB_T1

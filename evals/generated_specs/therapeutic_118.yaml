@@ -1,18 +1,28 @@
 construct:
-  name: "Mitochondrial_Therapeutic_SOD2_NonViral"
+  name: mitochondrial_therapeutic_protein_expression
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Rule 12: Substituted for a non-antibiotic selection system (e.g. pFAR or minicircle) to satisfy schema requirements.
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Non-viral mammalian promoter substituted for CMV to meet requirement.
+    - promoter: CMV
+
     - cistron:
         label: mitochondrial_therapeutic
         expression: high
         chain:
-          - tag: MTS # Mitochondrial Targeting Signal for efficient organelle localization.
+          - tag: MTS
+            # Mitochondrial Targeting Sequence (N-terminal)
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P04179 # Human SOD2 (Superoxide Dismutase 2, mitochondrial)
+              id: therapeutic_protein
+              # User must specify the actual therapeutic protein ID and source
+              # Examples: uniprot for natural proteins (e.g., SOD2, CAT, IDH2)
               source: uniprot
-    - terminator: bGH_polyA # Non-viral mammalian terminator.
+
+    - terminator: rrnB_T1

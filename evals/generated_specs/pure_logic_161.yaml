@@ -1,24 +1,38 @@
 construct:
-  name: "mammalian_not_gate_nuclear_egfp"
+  name: "mammalian_NOT_gate"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # Represents the 'P_NOT' input signal promoter
+    - promoter: CMV
+
     - cistron:
-        label: repressor_input
+        label: repressor
         expression: high
-        gene:
-          id: TetR
-          source: uniprot
-    - terminator: SV40_PA
-    - promoter: CMV_TetO  # Tet-repressible promoter for NOT gate logic
+        chain:
+          - tag: FLAG
+          - gene:
+              id: KRAB
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ZBTB10
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: reporter_output
+        label: reporter
         expression: high
+        fused: false
         chain:
           - tag: NLS
           - gene:
-              id: mEGFP
+              id: mNeonGreen
               source: fpbase
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

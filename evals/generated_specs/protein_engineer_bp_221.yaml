@@ -1,18 +1,22 @@
 construct:
-  name: "Bacillus_lipase_secretion_system"
+  name: bacillus_secreted_lipase
   host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: lipase_secretion_unit
+        label: secreted_lipase
         expression: high
         chain:
-          - tag: AmyE
+          - tag: AmyE_signal_peptide
           - gene:
-              id: lipA
+              id: lipase_bacillus_codon_optimized
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1_T2  # double terminator for enhanced transcript stability

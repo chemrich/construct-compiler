@@ -1,19 +1,25 @@
 construct:
-  name: "pichia_aox1_secreted_biosensor"
+  name: pichia_pastoris_secreted_biosensor
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: biosensor_target
+        label: secreted_biosensor
         expression: high
         chain:
-          - tag: Ost1
+          - tag: signal_sequence_Ost1
           - gene:
               id: biosensor
-          - cleavage_site: 3C
+              source: uniprot
+          - cleavage_site: PreScission
           - tag: Strep-II
+
     - terminator: CYC1

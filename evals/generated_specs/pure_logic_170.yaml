@@ -1,24 +1,51 @@
 construct:
-  name: "edge_detector_iffl_pulse_circuit"
+  name: edge_detector_circuit
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: pulse_output
+        label: integrase
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: sfGFP
-              source: fpbase
-    - spacer: 40
+              id: P1_integrase
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: delayed_repressor
+        label: fast_degrading_reporter
+        expression: high
+        chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ssrA_tag
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: integrase_inhibitor
         expression: medium
         fused: false
         gene:
-          id: P04483
+          id: fimE_recombinase_inhibitor
           source: uniprot
+
     - terminator: rrnB_T1

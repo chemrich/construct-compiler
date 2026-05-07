@@ -1,16 +1,20 @@
 construct:
-  name: "KillerProtein_Low_Constitutive"
+  name: "KillerProtein_low_expression"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23106  # Substituted mammalian promoter with low-strength constitutive E. coli promoter as mammalian promoters are non-functional in E. coli.
+    - promoter: lacUV5  # Weaker than T7/T7lac; provides low basal expression without induction
+    
     - cistron:
-        label: target
-        expression: low
+        label: KillerProtein
+        expression: very_low
         gene:
           id: KillerProtein
           source: uniprot
+    
     - terminator: rrnB_T1

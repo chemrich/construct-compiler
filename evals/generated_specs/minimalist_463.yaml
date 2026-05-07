@@ -1,15 +1,16 @@
 construct:
-  name: tiny_peptide_expression
-  host: e_coli_bl21_de3
+  name: tiny_peptide_MKYAWG
+  host: e_coli_bl21
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
         label: tiny_peptide
         expression: high
-        gene:
-          id: MKYAWG
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MKYAWG
+              sequence: atgaaatacgcatggggc
+    - terminator: rrnB_T1

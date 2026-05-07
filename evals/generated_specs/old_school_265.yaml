@@ -1,19 +1,21 @@
 construct:
-  name: "GST_FactorXa_InsolubleProtein_Fusion"
+  name: InsolubleProtein_GST_cleavable
   host: e_coli
+  
   backbone:
+    catalog_vector: "pGEX-4T-1"
     resistance: ampicillin
-    ori: pBR322
-    source: addgene
+  
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: InsolubleProtein_GST
         expression: high
         chain:
           - solubility_tag: GST
           - cleavage_site: Factor_Xa
           - gene:
               id: InsolubleProtein
-              source: uniprot
+    
     - terminator: rrnB_T1

@@ -1,21 +1,23 @@
 construct:
-  name: "hGH_yeast_secretion_C_FLAG"
+  name: hGH_secretion_yeast
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: secreted_hGH
+        label: hGH_secreted
         expression: high
         chain:
+          - tag: alpha_factor_signal
           - gene:
-              id: MF_alpha1
-              source: uniprot
-          - gene:
-              id: GH1
+              id: P01241
               source: uniprot
           - tag: FLAG
+
     - terminator: CYC1

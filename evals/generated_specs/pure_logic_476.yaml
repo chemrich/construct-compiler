@@ -1,23 +1,62 @@
 construct:
-  name: "biocontainment_mazF_logic_gate"
-  host: e_coli_bl21_de3
+  name: biocontainment_kill_switch_module
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
+  
   cassette:
-    - promoter: J23106  # Weak constitutive promoter ensures constant low-level toxin presence
+    - promoter: araBAD
+    
     - cistron:
-        label: toxin_mazF
-        expression: low
-        gene:
-          id: P0AE70
-          source: uniprot
-    - spacer: 50
-    - promoter: araBAD  # Activated by the presence of arabinose (the environment-specific nutrient)
-    - cistron:
-        label: antitoxin_mazE
+        label: toxin_antitoxin_toxin
         expression: high
-        fused: false  # Independent translation with its own RBS
-        gene:
-          id: P0AE72
-          source: uniprot
-    - terminator: BBa_B0015  # Robust double terminator to prevent transcriptional read-through
+        chain:
+          - gene:
+              id: mazF
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: nutrient_sensor
+        expression: high
+        chain:
+          - gene:
+              id: gyrA
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: antitoxin_conditional
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mazE
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: protease_activator
+        expression: medium
+        chain:
+          - gene:
+              id: clpX
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: irreversible_dna_damage
+        expression: low
+        chain:
+          - gene:
+              id: colicin_E1
+              source: uniprot
+    
+    - terminator: rrnB_T1

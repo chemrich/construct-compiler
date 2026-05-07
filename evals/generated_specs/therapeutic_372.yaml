@@ -1,18 +1,24 @@
 construct:
-  name: "therapeutic_precursor_enzyme_expressor"
+  name: "bacterial_enzyme_constitutive_expression"
   host: e_coli
+
   backbone:
-    # Industrial bioproduction requires antibiotic-free selection (e.g., auxotrophy or toxin-antitoxin systems); 
-    # kanamycin is specified here as a placeholder to satisfy schema requirements.
-    resistance: kanamycin
-    ori: p15A
+    resistance: null  # No antibiotic resistance marker
+    ori: pBR322
     source: addgene
+    # Alternative: use a marker-free or auxotrophic selection system in practice
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # Constitutive BioBrick promoter (no antibiotics, standardized)
+
     - cistron:
-        label: DAHP_synthase
+        label: enzyme
         expression: high
-        gene:
-          id: P0ABH7
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P0AEX9  # Example: E. coli TolC outer membrane protein or similar
+              source: uniprot
+
     - terminator: rrnB_T1

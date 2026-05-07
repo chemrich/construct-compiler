@@ -1,19 +1,63 @@
 construct:
-  name: "NonViral_CD19_CAR_T_Clinical_Vector"
-  host: mammalian
+  name: "CAR_T_cell_clinical_construct"
+  host: HEK293
+
   backbone:
-    # Kanamycin is used for initial cloning in E. coli; 
-    # for clinical delivery, ARB-free minicircle technology or mRNA is assumed.
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: custom
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral, human elongation factor 1-alpha promoter for high expression in T-cells
+    - promoter: CMV
+
     - cistron:
-        label: CAR_CD19
+        label: CAR
         expression: high
         chain:
+          - tag: HA
           - gene:
-              id: CD19_CAR_FMC63_CD8h_41BB_CD3zeta
+              id: "signal_peptide_CD8a"
               source: uniprot
-    - terminator: BBa_B0015  # Using standard terminator as placeholder for mammalian hGH_polyA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "scFv_tumor_antigen"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "CD8a_hinge_domain"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "CD28_transmembrane"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "CD28_costimulatory_domain"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "CD3zeta_signaling_domain"
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: safety_switch
+        expression: medium
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: "iCasp9_inducible_caspase9"
+              source: uniprot
+
+    - terminator: rrnB_T1

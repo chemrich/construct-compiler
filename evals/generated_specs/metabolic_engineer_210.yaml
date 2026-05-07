@@ -1,35 +1,63 @@
 construct:
-  name: "Neuron_Signaling_Cascade_2A_Stoichiometric"
-  host: mammalian
+  name: brain_enzyme_cascade_5enzyme_2A
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: hSyn  # Neuron-specific human Synapsin 1 promoter
+    - promoter: SynI  # Synapsin I promoter for neuron-specific expression
+
     - cistron:
-        label: signaling_enzymes
+        label: EnzymeX
         expression: high
         chain:
           - gene:
               id: EnzymeX
               source: uniprot
-          - linker:
-              type: P2A
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_EnzymeY
+        expression: high
+        chain:
+          - cleavage_site: P2A  # 2A self-cleaving peptide for stoichiometric production
           - gene:
               id: EnzymeY
               source: uniprot
-          - linker:
-              type: T2A
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_EnzymeZ
+        expression: high
+        chain:
+          - cleavage_site: P2A
           - gene:
               id: EnzymeZ
               source: uniprot
-          - linker:
-              type: E2A
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_EnzymeW
+        expression: high
+        chain:
+          - cleavage_site: P2A
           - gene:
               id: EnzymeW
               source: uniprot
-          - linker:
-              type: F2A
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_EnzymeV
+        expression: high
+        chain:
+          - cleavage_site: P2A
           - gene:
               id: EnzymeV
               source: uniprot
-    - terminator: WPRE_BGH_pA  # WPRE for mRNA stability/nuclear export + BGH polyA signal
+
+    - terminator: rrnB_T1  # rrnB_T1 provides high mRNA stability

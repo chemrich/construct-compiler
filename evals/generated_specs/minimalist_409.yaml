@@ -1,16 +1,22 @@
 construct:
-  name: "algae_biofuel_enzyme_expression"
+  name: "BiofuelEnzyme"
   host: algae
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: RBCS2 # Common constitutive promoter for algal expression (e.g., C. reinhardtii)
+    - promoter: J23100
+
     - cistron:
-        label: target
+        label: BiofuelEnzyme
         expression: high
-        gene:
-          id: BiofuelEnzyme
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: BiofuelEnzyme
+              source: uniprot
+
     - terminator: rrnB_T1

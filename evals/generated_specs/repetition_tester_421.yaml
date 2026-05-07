@@ -1,29 +1,71 @@
 construct:
-  name: "tandem_synonymous_peptide_repeats"
+  name: "tandem_peptide_repeats_low_homology"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: peptide_pentamer
+        label: peptide_repeat_1
         expression: high
         chain:
-          # Five synonymous copies of Magainin-2 (P05441)
-          # Requirement: Each coding sequence must possess <70% nucleotide identity to neighbors
+          - tag: 6xHis
           - gene:
-              id: P05441
+              id: custom_peptide_v1
               source: uniprot
+              description: "First codon-optimized variant of target peptide"
+
+    - spacer: 35
+
+    - cistron:
+        label: peptide_repeat_2
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: P05441
+              id: custom_peptide_v2
               source: uniprot
+              description: "Second synonymous variant (<70% nt identity to v1)"
+
+    - spacer: 35
+
+    - cistron:
+        label: peptide_repeat_3
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: P05441
+              id: custom_peptide_v3
               source: uniprot
+              description: "Third synonymous variant (<70% nt identity to v2)"
+
+    - spacer: 35
+
+    - cistron:
+        label: peptide_repeat_4
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: P05441
+              id: custom_peptide_v4
               source: uniprot
+              description: "Fourth synonymous variant (<70% nt identity to v3)"
+
+    - spacer: 35
+
+    - cistron:
+        label: peptide_repeat_5
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: P05441
+              id: custom_peptide_v5
               source: uniprot
-    - terminator: T7term
+              description: "Fifth synonymous variant (<70% nt identity to v4)"
+
+    - terminator: rrnB_T1

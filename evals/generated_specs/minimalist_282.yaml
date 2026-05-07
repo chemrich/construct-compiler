@@ -1,14 +1,21 @@
 construct:
-  name: "inducible_protein_y_expression"
+  name: "inducible_protein_Y_mammalian"
   host: HEK293
+  
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+  
   cassette:
-    - promoter: TRE3G  # Tet-responsive element for inducible mammalian expression
+    - promoter: CMV
+    
     - cistron:
-        label: target
+        label: protein_Y
         expression: high
-        gene:
-          id: Protein_Y
-          source: uniprot
-    - terminator: bGH_PA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_Y
+              source: uniprot
+    
+    - terminator: rrnB_T1

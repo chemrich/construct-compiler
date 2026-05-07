@@ -1,19 +1,24 @@
 construct:
-  name: "Secreted_Yeast_Protein_Production"
+  name: "SecretedYeastProtein_FLAG"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter chosen for industrial production levels
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: secreted_protein
         expression: high
         chain:
-          - tag: alpha_factor  # Substituted mammalian signal with yeast-appropriate alpha-factor for secretion per rule 18
+          - tag: alpha_factor_signal
           - gene:
               id: SecretedYeastProtein
               source: uniprot
           - tag: FLAG
-    - terminator: CYC1_term
+
+    - terminator: CYC1_terminator

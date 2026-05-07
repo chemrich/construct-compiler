@@ -1,21 +1,24 @@
 construct:
-  name: "TherapX_High_Expression_HEK293"
+  name: "TherapX_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: TherapX
         expression: high
         chain:
-          - tag: 6xHis
-          - solubility_tag: MBP
-          - cleavage_site: TEV
+          - tag: 8xHis
+          - solubility_tag: SUMO
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: TherapX
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

@@ -1,14 +1,19 @@
 construct:
-  name: "constant_mah_expression"
-  host: e_coli
+  name: "MAH_peptide_constant_expression"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100  # Constitutive promoter for constant expression in E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: mah_peptide
+        label: MAH_peptide
         expression: high
-        gene:
-          id: "met_ala_his"  # The sequence 'Met-Ala-His' must be defined in the compiler's database as MAH
+        chain:
+          - gene:
+              id: MAH
+              sequence: "ATGGCCCAC"
+
     - terminator: rrnB_T1

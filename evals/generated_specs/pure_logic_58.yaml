@@ -1,15 +1,38 @@
 construct:
-  name: "C_S_Logic_Antitoxin_Sensor"
+  name: "contaminant_C_sensor_with_safety_gating"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: "pAND_C_S"  # Logic: Promoter requires Contaminant 'C' AND Safety Signal 'S' for activation
+    - promoter: araBAD
+      # araBAD is inducible by L-arabinose; represents detection of contaminant C
+      # This promoter will be active when C is present
+
     - cistron:
-        label: "antitoxin_T"
-        expression: high
+        label: safety_signal_S_detector
+        expression: medium
         chain:
           - gene:
-              id: "P07102"  # CcdA antitoxin
+              id: luxR
               source: uniprot
-    - terminator: "rrnB_T1"
+              # LuxR acts as a transcriptional regulator; requires acyl-homoserine lactone (safety signal S)
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+      # Standard T7lac promoter for antitoxin expression
+      # Controlled by LuxR-S complex formation
+
+    - cistron:
+        label: antitoxin_T
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: RelB
+              source: uniprot
+              # RelB is a representative antitoxin protein that neutralizes toxins

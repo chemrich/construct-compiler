@@ -1,25 +1,26 @@
-```yaml
 construct:
-  name: GrowthFactorZ_mammalian_expression
-  host: mammalian
+  name: "mammalian_GrowthFactorZ_CMV"
+  host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
     resistance: ampicillin
     ori: ColE1
-    source: twist_bioscience
+    source: addgene
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: growth_factor
+        label: GrowthFactorZ
         expression: high
         chain:
-          - signal_peptide: native  # for secretion
           - gene:
               id: GrowthFactorZ
               source: uniprot
 
     - terminator: SV40_polyA
-```
+
+  features:
+    - name: SV40_ori
+      type: origin
+      description: SV40 origin for episomal replication in permissive mammalian cell lines

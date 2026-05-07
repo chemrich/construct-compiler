@@ -1,15 +1,24 @@
 construct:
-  name: "U6_sgRNA_GeneTargetX"
-  host: mammalian
+  name: "gRNA_GeneTargetX_mammalian"
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: sgRNA
+        label: gRNA
         expression: high
-        gene:
-          id: sgRNA_GeneTargetX
-    - terminator: BBa_B0015 # Standard terminator used here; Pol III usually terminates at a poly-T stretch.
+        chain:
+          - gene:
+              id: GeneTargetX_gRNA
+              source: custom
+              # User must provide the 20bp guide sequence targeting GeneTargetX
+              # Standard gRNA scaffold will be appended by compiler
+
+    - terminator: rrnB_T1

@@ -1,19 +1,30 @@
 construct:
-  name: "TAT_p53_Intracellular_Delivery"
+  name: "therapeutic_CPP_fusion_cleavable"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "therapeutic_fusion"
+        label: therapeutic_CPP
         expression: high
         chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: TAT
+              id: BDNF
               source: uniprot
-          - cleavage_site: Furin  # Endogenous mammalian protease site for post-translational processing
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: 3C
           - gene:
-              id: P04637 # p53 tumor suppressor protein
+              id: TAT_CPP
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

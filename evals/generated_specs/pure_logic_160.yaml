@@ -1,33 +1,47 @@
 construct:
-  name: "genetic_and_gate_hrpRS_system"
+  name: genetic_AND_gate_dual_input
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac # Input signal A (IPTG)
+    - promoter: T7lac
+
     - cistron:
-        label: input_activator_hrpR
+        label: regulator_A
         expression: medium
-        gene:
-          id: Q4L2G0
-          source: uniprot
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: araBAD # Input signal B (L-Arabinose)
+
+    - promoter: araBAD
+
     - cistron:
-        label: input_activator_hrpS
+        label: regulator_B
         expression: medium
-        gene:
-          id: Q4L2G1
-          source: uniprot
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: J23100 # Substitution for pHrpL promoter, which is activated only when HrpR and HrpS are both present
+
+    - promoter: T7lac
+      # AND gate logic: P_A (lactose) represses lacI; P_B (arabinose) activates araC
+      # Both must be present: araC protein (from P_B) + absence of lacI repression (from P_A)
+
     - cistron:
-        label: output_protein_oz
+        label: output
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
+
     - terminator: rrnB_T1

@@ -1,22 +1,28 @@
 construct:
-  name: "scFv_cytoplasmic_high_yield"
+  name: "scFv_cytoplasmic_expression_E_coli"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
-    resistance: kanamycin # Standard selection marker for pET-28b(+)
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: scFv
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: scFv_anti_EGFR
+              id: scFv_generic
               source: uniprot
-    - terminator: T7term
+              # User should supply actual scFv sequence; using placeholder ID
+
+    - terminator: rrnB_T1

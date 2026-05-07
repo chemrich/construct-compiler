@@ -1,23 +1,28 @@
 construct:
-  name: "synthetic_metabolic_bypass_atc_inducible"
+  name: "synthetic_metabolic_bypass_glycolase_ABCD"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Ptet  # anhydrotetracycline (aTc) inducible promoter
+    - promoter: tetR  # aTc-inducible (anhydrotetracycline-responsive) promoter
+
     - cistron:
-        label: glycolase_a
+        label: Glycolase_A
         expression: medium
         chain:
           - tag: 6xHis
           - gene:
               id: Glycolase_A
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: glycolase_b
+        label: Glycolase_B
         expression: high
         fused: false
         chain:
@@ -25,9 +30,11 @@ construct:
           - gene:
               id: Glycolase_B
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: glycolase_c
+        label: Glycolase_C
         expression: high
         fused: false
         chain:
@@ -35,9 +42,11 @@ construct:
           - gene:
               id: Glycolase_C
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: glycolase_d
+        label: Glycolase_D
         expression: medium
         fused: false
         chain:
@@ -45,4 +54,5 @@ construct:
           - gene:
               id: Glycolase_D
               source: uniprot
+
     - terminator: rrnB_T1

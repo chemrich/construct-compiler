@@ -1,14 +1,19 @@
 construct:
-  name: "MySecretProtein_Mammalian_Expression"
+  name: "MySecretProtein_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: MySecretProtein
         expression: high
-        gene:
-          id: MySecretProtein
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: MySecretProtein
+              source: uniprot
+
+    - terminator: SV40_polyA

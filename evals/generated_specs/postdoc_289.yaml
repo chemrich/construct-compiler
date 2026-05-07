@@ -1,18 +1,24 @@
 construct:
-  name: "Protein_J_MBP_Fusion_Construct"
-  host: e_coli_bl21_de3
+  name: "Protein_J_MBP_His_TEV"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: protein_J
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: Protein_J
+              id: protein_J
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

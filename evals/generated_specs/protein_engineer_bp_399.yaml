@@ -1,17 +1,20 @@
 construct:
-  name: "pichia_scfv_mcherry_secretion"
+  name: "pichia_secreted_scFv_mCherry"
   host: yeast
+  
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pAO815
     source: addgene
+  
   cassette:
     - promoter: YPT1
-      cistron:
-        label: scfv_fusion
-        expression: medium
+    
+    - cistron:
+        label: secreted_fusion
+        expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor_prepro
           - gene:
               id: scFv
               source: uniprot
@@ -21,4 +24,5 @@ construct:
           - gene:
               id: mCherry
               source: fpbase
-      terminator: CYC1_term
+    
+    - terminator: rrnB_T1

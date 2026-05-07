@@ -1,18 +1,28 @@
 construct:
-  name: "high_level_human_enzyme_production"
+  name: human_enzyme_soluble_production
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_enzyme
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P00338
+              id: P12345
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,24 +1,32 @@
 construct:
-  name: "LuxR_RhlR_Activity_Monitor"
+  name: LuxR_RhlR_activity_dual_reporter
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: PluxI  # Responsive to LuxR-AHL complex
+    - promoter: T7lac
+
     - cistron:
         label: LuxR_reporter
-        expression: medium
-        gene:
-          id: Venus
-          source: fpbase
-    - terminator: rrnB_T1
-    - promoter: PrhlI  # Responsive to RhlR-BHL complex
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Venus
+              source: fpbase
+
+    - spacer: 30
+
     - cistron:
         label: RhlR_reporter
-        expression: medium
-        gene:
-          id: Cerulean
-          source: fpbase
-    - terminator: T7term
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Cerulean
+              source: fpbase
+
+    - terminator: rrnB_T1

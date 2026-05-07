@@ -1,24 +1,32 @@
 construct:
-  name: "trp_sd_comparison_luc_mcherry"
+  name: "trp_luciferase_SD_strong_vs_mCherry_SD_weak"
   host: e_coli
+  
   backbone:
     resistance: chloramphenicol
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: trp
+    
     - cistron:
-        label: luciferase_strong_sd
+        label: luciferase_SD_strong
         expression: high
+        ribosome_binding_site: SD_strong
         gene:
-          id: luciferase
+          id: luc
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: mcherry_weak_sd
+        label: mCherry_SD_weak
         expression: low
         fused: false
+        ribosome_binding_site: SD_weak
         gene:
           id: mCherry
           source: fpbase
+    
     - terminator: rrnB_T1

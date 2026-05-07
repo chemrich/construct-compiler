@@ -1,15 +1,21 @@
 construct:
-  name: "protein_a_protein_b_fusion"
-  host: e_coli
+  name: ProteinA_linker_ProteinB
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ProteinA
               source: uniprot
@@ -19,4 +25,5 @@ construct:
           - gene:
               id: ProteinB
               source: uniprot
+
     - terminator: rrnB_T1

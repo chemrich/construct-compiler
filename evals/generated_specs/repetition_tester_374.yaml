@@ -1,26 +1,34 @@
 construct:
-  name: "dual_periplasmic_secretion_P_Q"
-  host: e_coli_bl21_de3
+  name: "dual_signal_peptide_periplasmic_secretion"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: ProteinP_secretion
         expression: high
         chain:
-          - tag: pelB
+          - signal_peptide: pelB
           - gene:
               id: ProteinP
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: ProteinQ_secretion
         expression: high
         fused: false
         chain:
-          - tag: ompA
+          - signal_peptide: ompA
           - gene:
               id: ProteinQ
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

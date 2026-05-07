@@ -1,22 +1,61 @@
 construct:
-  name: "sequential_pulse_counter"
-  host: e_coli_bl21
+  name: "sequential_counter_two_step"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Activated by InputPulse1 (Arabinose)
+    - promoter: araBAD
+
     - cistron:
-        label: output_1
-        expression: medium
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BBa_B0015
-    - promoter: lacUV5  # Activated by InputPulse2 (IPTG)
-    - cistron:
-        label: output_2
+        label: InputPulse1_sensor
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: LexA_repressor
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Output1_latch
+        expression: high
+        chain:
+          - gene:
+              id: CI_repressor
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: InputPulse2_sensor
+        expression: high
+        chain:
+          - gene:
+              id: TetR_repressor
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Output2_executor
+        expression: high
+        chain:
+          - gene:
+              id: cro_protein
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Output1_reset
+        expression: medium
+        chain:
+          - gene:
+              id: Cre_recombinase
+              source: uniprot
+
     - terminator: rrnB_T1

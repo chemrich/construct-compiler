@@ -1,23 +1,38 @@
 construct:
-  name: redundant_mammalian_dual_promoter_expression_system
+  name: "dual_promoter_redundant_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+    
     - cistron:
-        label: goi_copy_a
+        label: target_copy1
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_pA
-    - spacer: 60
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: null
+              # User must specify gene ID and source (fpbase or uniprot)
+
+    - terminator: BGH_polyA
+
+    - spacer: 100
+
     - promoter: UbC
+
     - cistron:
-        label: goi_copy_b
+        label: target_copy2
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_pA
+        chain:
+          - tag: 8xHis
+          - cleavage_site: 3C
+          - gene:
+              id: null
+              # User must specify gene ID and source (fpbase or uniprot)
+
+    - terminator: SV40_polyA

@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_mannitol_cutinase_secretion"
+  name: bacillus_auto_inducible_cutinase_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PmtlA
+
     - cistron:
-        label: target
+        label: secreted_cutinase
         expression: high
         chain:
-          - tag: WapA
+          - signal_peptide: WapA
           - gene:
-              id: P00590
+              id: cutinase
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

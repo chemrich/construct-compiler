@@ -1,20 +1,27 @@
 construct:
-  name: "antimicrobial_peptide_mbp_fusion"
-  host: e_coli
+  name: "AMP_carrier_fusion_therapeutic"
+  host: e_coli_bl21
+
   backbone:
-    # Note: Kanamycin selected as schema requires antibiotic resistance; recommend replacement with auxotrophic markers for production.
-    resistance: kanamycin
-    ori: pBR322
+    resistance: chloramphenicol
+    ori: p15A
     source: addgene
+
   cassette:
-    - promoter: tac # Non-viral hybrid bacterial promoter for high-level expression
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: AMP_fusion
         expression: high
         chain:
-          - solubility_tag: MBP # Large carrier protein to neutralize peptide toxicity and aid solubility
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - cleavage_site: TEV
           - gene:
-              id: MAG2_XENLA # Magainin-2 antimicrobial peptide
-              source: uniprot
+              id: generic_AMP
+              source: custom
+
     - terminator: rrnB_T1

@@ -1,28 +1,65 @@
 construct:
-  name: "bistable_memory_toggle_switch"
-  host: e_coli
+  name: bistable_memory_toggle
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: pTet  # Repressed by TetR; Signal H (aTc) induces to reset the system to OFF
+    - promoter: T7lac
+
     - cistron:
-        label: lacI_repressor
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: lacUV5  # Repressed by LacI; Signal G (IPTG) induces to trigger the system to ON
-    - cistron:
-        label: tetR_repressor
-        gene:
-          id: P04483
-          source: uniprot
+        label: repressor_A
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: state_reporter
-        fused: false  # Separate translation unit for independent reporter expression
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        label: repressor_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: memory_output_ON
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: inducible_protease_G
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: TEV_protease
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: inducible_protease_H
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: rhinovirus_3C_protease
+              source: uniprot
+
+    - terminator: rrnB_T1

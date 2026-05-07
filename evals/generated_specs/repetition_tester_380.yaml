@@ -1,15 +1,26 @@
 construct:
-  name: "strong_constitutive_geneA_expression"
-  host: e_coli
+  name: GeneA_high_expression_optimized
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: J23100
+      # Strong constitutive promoter (no T7 RNA polymerase dependency)
+      # Distinct regulatory logic from terminator
+
     - cistron:
-        label: target
+        label: GeneA
         expression: high
-        gene:
-          id: GeneA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: GeneA
+              source: uniprot
+              codon_optimize: true
+              # Removes internal repeats and rare codons for E. coli
+
     - terminator: BBa_B0015
+      # Distinct terminator (rho-independent, different sequence motifs)

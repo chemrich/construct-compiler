@@ -1,55 +1,33 @@
-```yaml
 construct:
-  name: three_input_genetic_decoder_yeast
+  name: "S_cerevisiae_3input_decoder_O1_O3_O5"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pRS415"
+    resistance: none
+    ori: CEN6
     source: addgene
 
   cassette:
-    # Output O1 - active when A=0, B=0, C=1
-    - promoter: GAL1  # activated by galactose (input C)
+    - promoter: GAL1
+
     - cistron:
-        label: output_O1
-        expression: medium
+        label: O1_decoder_001
+        expression: high
         chain:
           - gene:
-              id: mTagBFP2
+              id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 1
-          - tag: degron_CLN2  # degradation tag for S. cerevisiae
-    - terminator: CYC1
+          - tag: degron_PEST
 
-    # Spacer between cassettes
-    - spacer: 50
+    - spacer: 25
 
-    # Output O3 - active when A=0, B=1, C=1
-    - promoter: MET25  # repressed by methionine (input A absent) and activated by other conditions
     - cistron:
-        label: output_O3
-        expression: medium
-        chain:
-          - gene:
-              id: mNeonGreen
-              source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 1
-          - tag: degron_CLN2
-    - terminator: CYC1
-
-    # Spacer between cassettes
-    - spacer: 50
-
-    # Output O5 - active when A=1, B=0, C=1
-    - promoter: CUP1  # activated by copper (input A) with additional logic
-    - cistron:
-        label: output_O5
-        expression: medium
+        label: O3_decoder_011
+        expression: high
         chain:
           - gene:
               id: mScarlet
@@ -57,6 +35,20 @@ construct:
           - linker:
               type: GS_flexible
               repeats: 1
-          - tag: degron_CLN2
-    - terminator: CYC1
-```
+          - tag: degron_PEST
+
+    - spacer: 25
+
+    - cistron:
+        label: O5_decoder_101
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: degron_PEST
+
+    - terminator: T7term

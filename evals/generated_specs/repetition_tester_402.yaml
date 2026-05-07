@@ -1,37 +1,52 @@
 construct:
-  name: "yeast_orthogonal_inducible_expression_system"
+  name: three_orthogonal_inducible_promoters_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2um
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+      comment: "Galactose-inducible; ligand = galactose; orthogonal system 1"
+
     - cistron:
-        label: expression_unit_X
-        expression: medium
-        fused: false
+        label: gene_x
+        expression: high
         gene:
-          id: Gene_X
+          id: GENE_X
           source: uniprot
-    - terminator: CYC1
-    - spacer: 30
+
+    - terminator: PGK1_3UTR
+      comment: "Distinct 3' UTR: PGK1 polyadenylation signal"
+
+    - spacer: 50
+
     - promoter: CUP1
+      comment: "Copper-inducible; ligand = Cu2+; orthogonal system 2"
+
     - cistron:
-        label: expression_unit_Y
-        expression: medium
-        fused: false
+        label: gene_y
+        expression: high
         gene:
-          id: Gene_Y
+          id: GENE_Y
           source: uniprot
-    - terminator: ADH1
-    - spacer: 30
-    - promoter: Tet-On
+
+    - terminator: ADH1_3UTR
+      comment: "Distinct 3' UTR: ADH1 polyadenylation signal; prevents recombination with PGK1_3UTR"
+
+    - spacer: 50
+
+    - promoter: MET25
+      comment: "Methionine-repressible (inverse induction with Met depletion); ligand = methionine absence; orthogonal system 3"
+
     - cistron:
-        label: expression_unit_Z
-        expression: medium
-        fused: false
+        label: gene_z
+        expression: high
         gene:
-          id: Gene_Z
+          id: GENE_Z
           source: uniprot
-    - terminator: TEF1
+
+    - terminator: TPI1_3UTR
+      comment: "Distinct 3' UTR: TPI1 polyadenylation signal; structurally unrelated to PGK1 and ADH1 terminators"

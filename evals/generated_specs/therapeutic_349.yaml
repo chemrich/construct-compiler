@@ -1,24 +1,34 @@
 construct:
-  name: "Mammalian_NonViral_Dual_Reporter"
+  name: "mammalian_dual_reporter_IRES_transfection_monitor"
   host: HEK293
+
   backbone:
-    resistance: kanamycin  # Required for bacterial propagation; avoid viral SV40-driven selection markers
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
     ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: EF1_alpha  # Human elongation factor 1-alpha promoter used to avoid viral CMV or SV40 components
+    - promoter: CMV
+
     - cistron:
-        label: fluorescence_monitor
+        label: fluorescent_reporter
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - spacer: 100  # Spacer designed to accommodate a mammalian IRES for polycistronic expression
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    # IRES for cap-independent translation of second cistron
+    - spacer: 590  # Poliovirus IRES-like synthetic element (non-viral, mammalian-optimized)
+
     - cistron:
-        label: luciferase_monitor
+        label: luciferase_reporter
         expression: high
-        fused: false  # Enables independent translation initiation for the second reporter
-        gene:
-          id: P0DIX0
-          source: uniprot
-    - terminator: hGH_polyA  # Human growth hormone polyadenylation signal (non-viral)
+        fused: false
+        chain:
+          - gene:
+              id: Renilla_reniformis_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

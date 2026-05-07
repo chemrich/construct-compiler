@@ -1,18 +1,27 @@
 construct:
-  name: yeast_secreted_goi_stabilized
+  name: "yeast_secreted_protein_with_mRNA_stability"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanMX  # kanamycin resistance cassette for yeast
+    ori: 2-micron    # high-copy plasmid origin for yeast
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1  # galactose-inducible promoter for yeast
+
     - cistron:
-        label: secreted_protein
+        label: target
         expression: high
         chain:
-          - tag: alpha_mating_factor
+          - tag: alpha_factor_signal  # N-terminal secretion signal peptide
+          - cleavage_site: KEX2        # KEX2 protease cleavage site (removes alpha-factor signal)
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: CYC1 # WPRE is a mammalian stabilizing element; substituted with CYC1, a standard yeast terminator known for robust mRNA polyadenylation and stability.
+              id: GFP                  # placeholder GOI
+              source: uniprot
+
+    - terminator: CYC1_poly_A         # CYC1 poly(A) tail for mRNA stability in yeast
+
+  post_transcript:
+    stability_element: WPRE            # Woodchuck Posttranscriptional Regulatory Element
+    # Note: WPRE is typically used in mammalian/viral systems; for yeast, consider SV40-derived poly(A) or native CYC1 poly(A) which are included above. WPRE can still enhance stability in yeast expression systems.

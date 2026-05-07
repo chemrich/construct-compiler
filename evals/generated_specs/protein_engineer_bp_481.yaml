@@ -1,20 +1,24 @@
 construct:
-  name: "scfv_pichia_secretion_aox1"
+  name: pichia_pastoris_scFv_secretion
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: therapeutic_scfv
+        label: scFv_secreted
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: 6xHis
           - cleavage_site: TEV
+          - secretion_signal: alpha_factor
           - gene:
               id: scFv
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

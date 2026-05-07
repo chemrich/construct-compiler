@@ -1,48 +1,60 @@
 construct:
-  name: "anaerobic_pathway_clostridium"
-  host: c_acetobutylicum # Not in example list but specified by user and supported by Rule 15
+  name: "anaerobic_pathway_operon_An1_An5"
+  host: bacillus
+
   backbone:
-    resistance: kanamycin # Default per Rule 9
-    ori: pCB102 # Standard origin for Clostridium shuttle vectors
+    resistance: chloramphenicol
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_thl # Strong, native anaerobically active promoter from C. acetobutylicum
+    - promoter: PfdxIII  # Clostridium-native, anaerobically inducible promoter
+
     - cistron:
-        label: an1
-        expression: medium
+        label: An1
+        expression: high
         gene:
           id: An1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: an2
-        expression: medium
-        fused: false # Independent translation with its own RBS
+        label: An2
+        expression: high
+        fused: false
         gene:
           id: An2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: an3
-        expression: medium
+        label: An3
+        expression: high
         fused: false
         gene:
           id: An3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: an4
-        expression: medium
+        label: An4
+        expression: high
         fused: false
         gene:
           id: An4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: an5
-        expression: medium
+        label: An5
+        expression: high
         fused: false
         gene:
           id: An5
           source: uniprot
+
     - terminator: rrnB_T1

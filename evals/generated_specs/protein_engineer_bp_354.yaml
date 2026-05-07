@@ -1,23 +1,37 @@
 construct:
-  name: "pichia_secreted_fab_2a_system"
+  name: "Pichia_pastoris_secreted_Fab_2A_bicistronic"
   host: yeast
+
   backbone:
-    catalog_vector: "pPICZ_A"
+    catalog_vector: "pPICZalpha"
+    resistance: zeocin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: fab_bicistronic_orf
+        label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
               id: fab_light_chain
               source: uniprot
-          - linker:
-              type: P2A
-          - tag: alpha_factor
+
+    - spacer: 30
+
+    - cistron:
+        label: heavy_chain
+        expression: high
+        fused: false
+        chain:
+          - tag: P2A
+          - tag: alpha_factor_signal
           - gene:
               id: fab_heavy_chain
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

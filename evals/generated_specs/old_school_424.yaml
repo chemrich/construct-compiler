@@ -1,16 +1,22 @@
 construct:
-  name: "Protein_X_His6_Purification"
+  name: "ProteinX_His6_IPTG_inducible"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: lac
+    - promoter: T7lac
+
     - cistron:
-        label: target
-        expression: medium
+        label: ProteinX
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: Protein_X
+              id: ProteinX
+              source: uniprot
+
     - terminator: rrnB_T1

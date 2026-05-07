@@ -1,18 +1,22 @@
 construct:
-  name: yeast_secretory_protein_z
+  name: "yeast_secreted_protein_Z"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: TEF1
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: HSA_signal_peptide
+          - tag: signal_peptide_HSA  # human serum albumin signal peptide for efficient secretion
           - gene:
-              id: PROZ
+              id: protein_Z
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

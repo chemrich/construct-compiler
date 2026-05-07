@@ -1,40 +1,47 @@
 construct:
-  name: "clostridium_butanol_production_operon"
-  host: e_coli  # Substituted for Clostridium acetobutylicum; will require appropriate shuttle vector for expression
+  name: "butanol_production_operon_Cac"
+  host: bacillus
+  # Note: C. acetobutylicum is not in standard host list; using bacillus as closest anaerobic producer organism
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: chloramphenicol
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: P_thl  # Strong constitutive anaerobic promoter from C. acetobutylicum thiolase gene
+    - promoter: araBAD
+      # araBAD provides constitutive-like expression suitable for anaerobic conditions in Clostridium
+
     - cistron:
         label: thiolase
         expression: high
         gene:
-          id: P45359
+          id: thl
           source: uniprot
-    - spacer: 30
+
     - cistron:
-        label: hbd
+        label: HBD
+        expression: high
+        fused: false
+        gene:
+          id: hbd
+          source: uniprot
+
+    - cistron:
+        label: CR
         expression: medium
         fused: false
         gene:
-          id: P45362
+          id: crt
           source: uniprot
-    - spacer: 30
+
     - cistron:
-        label: crotonase
+        label: ADH
         expression: medium
         fused: false
         gene:
-          id: P45361
+          id: adh
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: adhE
-        expression: medium
-        fused: false
-        gene:
-          id: P33744
-          source: uniprot
-    - terminator: T_adc  # Robust terminator from the acetoacetate decarboxylase gene (adc)
+
+    - terminator: rrnB_T1
+      # rrnB_T1 provides robust transcription termination in anaerobic conditions

@@ -1,36 +1,43 @@
 construct:
-  name: "Bacillus_subtilis_chaperone_pullulanase_coexpression"
+  name: bacillus_groEL_groES_pullulanase
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: chaperone_GroEL
-        expression: medium
+        label: groEL
+        expression: high
+        gene:
+          id: groEL
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: groES
+        expression: high
         fused: false
         gene:
-          id: P19207
+          id: groES
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: chaperone_GroES
-        expression: medium
-        fused: false
-        gene:
-          id: P19208
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: secreted_pullulanase
+        label: pullulanase
         expression: high
         fused: false
         chain:
-          - tag: AmyE
+          - tag: AmyE_signal
           - gene:
-              id: P38940
+              id: pullulanase
               source: uniprot
           - tag: FLAG
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

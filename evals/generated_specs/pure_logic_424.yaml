@@ -1,16 +1,58 @@
 construct:
-  name: "XOR_logic_gate_secreted_peptide"
+  name: XOR_gate_secreted_peptide
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: "ara_lac_XOR" # Chimeric promoter logic: Output is active only if Arabinose OR IPTG is present, but not both.
+    - promoter: araBAD
+
     - cistron:
-        label: "secreted_output"
+        label: input_sensor_A
         expression: medium
         chain:
-          - tag: PelB # N-terminal signal peptide for periplasmic secretion in E. coli
           - gene:
-              id: "GH1_HUMAN"
+              id: araC
               source: uniprot
-    - terminator: "T7term"
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+
+    - cistron:
+        label: input_sensor_B
+        expression: medium
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+      # XOR logic: dual repression system where output is ON only when exactly one input is active
+      # araBAD activates araC transcription factor; lacUV5 activates tetR repressor
+      # Output promoter responds to araC activation AND tetR repression (or vice versa)
+
+    - cistron:
+        label: XOR_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: HDEL
+              # HDEL ER retrieval signal functions as secretion signal context in E. coli periplasm
+              # For actual secretion in E. coli, use pelB or ompA signal peptide instead
+
+    - terminator: rrnB_T1

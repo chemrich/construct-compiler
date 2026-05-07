@@ -1,75 +1,115 @@
-```yaml
 construct:
-  name: genetic_set_reset_latch_mammalian
+  name: mammalian_SR_latch_set_reset
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: CMV
-    
+
     - cistron:
-        label: tetR_repressor
-        expression: medium
-        gene:
-          id: P04483  # TetR repressor
-          source: uniprot
-    
+        label: rtTA_transactivator
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: rtTA
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: tTS_repressor
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: tTS
+              source: uniprot
+
     - terminator: rrnB_T1
-    
+
+  cassette_2:
+    - promoter: TRE
+
+    - cistron:
+        label: output_U_ON_state
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: SET_signal_sensor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: dCas9_VP64
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  cassette_3:
+    - promoter: TRE
+
+    - cistron:
+        label: output_U_OFF_state
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: RESET_signal_sensor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: dCas9_KRAB
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  cassette_4:
     - promoter: EF1_alpha
-    
+
     - cistron:
-        label: cI_repressor
+        label: memory_integrase_set
         expression: medium
-        gene:
-          id: P03034  # Lambda cI repressor
-          source: uniprot
-    
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PhiC31_integrase
+              source: uniprot
+
     - terminator: rrnB_T1
-    
-    - promoter: CMV  # Set promoter - induces tetR when doxycycline present
-    
+
+  cassette_5:
+    - promoter: EF1_alpha
+
     - cistron:
-        label: set_response
-        expression: high
-        gene:
-          id: P04483  # TetR (activated by doxycycline to repress cI)
-          source: uniprot
-    
-    - terminator: rrnB_T1
-    
-    - promoter: EF1_alpha  # Reset promoter - induces cI when IPTG present
-    
-    - cistron:
-        label: reset_response  
-        expression: high
-        gene:
-          id: P03034  # Lambda cI (activated by IPTG to repress tetR)
-          source: uniprot
-    
-    - terminator: rrnB_T1
-    
-    - promoter: CMV  # Output promoter - repressed by cI, drives mEGFP (ON state)
-    
-    - cistron:
-        label: output_on
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    
-    - terminator: rrnB_T1
-    
-    - promoter: EF1_alpha  # Constitutive promoter for OFF state reporter
-    
-    - cistron:
-        label: output_off
+        label: memory_integrase_reset
         expression: medium
-        gene:
-          id: mScarlet
-          source: fpbase
-    
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Bxb1_integrase
+              source: uniprot
+
     - terminator: rrnB_T1
-```
+
+  # Design logic:
+  # - TRE-driven output U (mNeonGreen ON state) is activated by transient SET signal via dCas9-VP64 activation
+  # - PhiC31 integrase locks the SET state through site-specific recombination
+  # - TRE-driven mScarlet (OFF state reporter) is activated by transient RESET signal via dCas9-KRAB repression
+  # - Bxb1 integrase locks the RESET state
+  # - rtTA and tTS provide basal control layers; doxycycline can modulate system
+  # - Distinct fluorophores allow simultaneous visualization of ON (green) and OFF (red) states

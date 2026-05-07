@@ -1,35 +1,59 @@
 construct:
-  name: "TargetGeneX_Diversified_shRNA_Array"
+  name: "mammalian_TargetGeneX_shRNA_triple_diversity"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: U6
-    - cistron:
-        label: shRNA_alpha
-        fused: false
-        gene:
-          id: shRNA_TargetGeneX_v1_miR30_scaffold
-    - terminator: T6_terminator_alpha
+      # U6 PolIII promoter for shRNA #1
 
-    - spacer: 30
+    - cistron:
+        label: shRNA_1_TargetGeneX
+        expression: high
+        chain:
+          - gene:
+              id: "shRNA_TargetGeneX_v1_stem_loop_GC47_scaffold_A"
+              source: "synthetic"
+              # Sequence annotation: 21bp targeting sequence + loop + reverse complement
+              # GC content ~47%, stem-loop scaffold type A for optimal processing
+
+    - terminator: BBa_B0015
+      # Termination sequence for shRNA #1
+
+    - spacer: 50
 
     - promoter: H1
-    - cistron:
-        label: shRNA_beta
-        fused: false
-        gene:
-          id: shRNA_TargetGeneX_v2_miR155_scaffold
-    - terminator: T6_terminator_beta
+      # H1 PolIII promoter for shRNA #2
 
-    - spacer: 30
-
-    - promoter: 7SK
     - cistron:
-        label: shRNA_gamma
-        fused: false
-        gene:
-          id: shRNA_TargetGeneX_v3_traditional_scaffold
-    - terminator: T6_terminator_gamma
+        label: shRNA_2_TargetGeneX
+        expression: high
+        chain:
+          - gene:
+              id: "shRNA_TargetGeneX_v2_stem_loop_GC52_scaffold_B"
+              source: "synthetic"
+              # Sequence annotation: alternative 21bp targeting sequence + loop + reverse complement
+              # GC content ~52%, stem-loop scaffold type B for secondary structure diversity
+
+    - terminator: rrnB_T1
+      # Termination sequence for shRNA #2
+
+    - spacer: 50
+
+    - promoter: 7SL
+      # 7SL PolIII promoter for shRNA #3
+
+    - cistron:
+        label: shRNA_3_TargetGeneX
+        expression: high
+        chain:
+          - gene:
+              id: "shRNA_TargetGeneX_v3_stem_loop_GC44_scaffold_C"
+              source: "synthetic"
+              # Sequence annotation: third distinct 21bp targeting sequence + loop + reverse complement
+              # GC content ~44%, stem-loop scaffold type C with modified loop region

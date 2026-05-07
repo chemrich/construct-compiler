@@ -1,40 +1,55 @@
 construct:
-  name: "three_stage_genetic_inverter_chain"
+  name: "three_stage_genetic_inverter"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Activated by L-arabinose (Input)
+    - promoter: araBAD
+      # Stage 1: Input-inducible repressor (LacI)
     - cistron:
-        label: repressor_1_tetr
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tetO  # Repressed by TetR
-    - cistron:
-        label: repressor_2_laci
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac  # Repressed by LacI
-    - cistron:
-        label: repressor_3_phlf
-        expression: medium
-        gene:
-          id: Q51351
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: phlF  # Repressed by PhlF
-    - cistron:
-        label: fluorescent_output
+        label: repressor_1
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+          id: lacI
+          source: uniprot
+
+    - spacer: 30
+
+    - promoter: lacUV5
+      # Stage 2: LacI-repressed repressor (TetR)
+    - cistron:
+        label: repressor_2
+        expression: high
+        gene:
+          id: tetR
+          source: uniprot
+
+    - spacer: 30
+
+    - promoter: tetO
+      # Stage 3: TetR-repressed repressor (CI)
+    - cistron:
+        label: repressor_3
+        expression: high
+        gene:
+          id: cI
+          source: uniprot
+
+    - spacer: 30
+
+    - promoter: PRM
+      # Output: CI-repressed fluorescent protein
+    - cistron:
+        label: output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1

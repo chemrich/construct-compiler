@@ -1,15 +1,24 @@
 construct:
-  name: "human_therapeutic_protein_yeast_expression"
+  name: TherapeuticProtein_yeast_optimized
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: TEF1  # Strong constitutive yeast promoter selected for high expression
+    - promoter: GAL1
+
     - cistron:
-        label: therapeutic_target
+        label: therapeutic_protein
         expression: high
-        gene:
-          id: TherapeuticProtein
-          source: uniprot
-    - terminator: CYC1  # Standard yeast transcription terminator
+        chain:
+          - tag: 6xHis
+          - solubility_tag: SUMO
+          - gene:
+              id: TherapeuticProtein
+              source: uniprot
+              codon_optimization: human_table
+
+    - terminator: rrnB_T1

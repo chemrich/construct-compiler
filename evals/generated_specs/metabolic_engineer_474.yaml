@@ -1,14 +1,15 @@
 construct:
-  name: "six_enzyme_operon_gg"
+  name: "six_enzyme_operon_golden_gate"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: custom
-
+    source: addgene
+  
   cassette:
-    - promoter: J23106 # Medium constitutive promoter
-
+    - promoter: J23106  # medium constitutive promoter for stable expression
+    
     - cistron:
         label: Var1
         expression: medium
@@ -17,9 +18,7 @@ construct:
           - gene:
               id: Var1
               source: uniprot
-
-    - spacer: 30
-
+    
     - cistron:
         label: Var2
         expression: medium
@@ -27,9 +26,9 @@ construct:
         gene:
           id: Var2
           source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
         label: Var3
         expression: medium
@@ -37,9 +36,9 @@ construct:
         gene:
           id: Var3
           source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
         label: Var4
         expression: medium
@@ -47,9 +46,9 @@ construct:
         gene:
           id: Var4
           source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
         label: Var5
         expression: medium
@@ -57,9 +56,9 @@ construct:
         gene:
           id: Var5
           source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
         label: Var6
         expression: medium
@@ -69,5 +68,10 @@ construct:
           - gene:
               id: Var6
               source: uniprot
-
+    
     - terminator: rrnB_T1
+  
+  # Comment: Golden Gate assembly ready — each enzyme between Var1 and Var6 is independently
+  # translatable via separate RBS elements (fused: false). Spacers provide BsaI recognition
+  # site compatibility for modular Golden Gate swapping. Add BsaI sites at cassette boundaries
+  # during synthesis for full Golden Gate compatibility.

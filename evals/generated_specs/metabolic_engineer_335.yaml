@@ -1,39 +1,56 @@
 construct:
-  name: "enzymatic_degradation_operon"
-  host: e_coli
+  name: "four_enzyme_degradation_operon"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: deg1
+        label: Deg1
         expression: high
-        gene:
-          id: Deg1
-    - spacer: 30
+        chain:
+          - gene:
+              id: Deg1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: deg2
+        label: Deg2
         expression: high
         fused: false
         chain:
           - gene:
               id: Deg2
-          - tag: LVA
-    - spacer: 30
+              source: uniprot
+          - degradation_tag: LVA
+
+    - spacer: 25
+
     - cistron:
-        label: deg3
+        label: Deg3
         expression: high
         fused: false
-        gene:
-          id: Deg3
-    - spacer: 30
+        chain:
+          - gene:
+              id: Deg3
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: deg4
+        label: Deg4
         expression: high
         fused: false
         chain:
           - gene:
               id: Deg4
-          - tag: LVA
+              source: uniprot
+          - degradation_tag: LVA
+
     - terminator: rrnB_T1

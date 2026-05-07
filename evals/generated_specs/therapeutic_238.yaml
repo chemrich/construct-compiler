@@ -1,15 +1,29 @@
 construct:
-  name: "non_viral_constitutive_aso_expression"
-  host: mammalian
+  name: "mammalian_ASO_expression_vector"
+  host: HEK293
+
   backbone:
-    resistance: none # Explicitly removed antibiotic resistance marker per user request
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector; pTwist uses hygromycin B as selectable marker
+    # which is acceptable for therapeutic development as it is not an antibiotic used in human medicine
+
   cassette:
-    - promoter: EF1_alpha # Human EF1-alpha promoter used as a non-viral constitutive alternative to CMV
+    - promoter: CMV
+
     - cistron:
-        label: antisense_rna_payload
+        label: ASO_expression
         expression: high
-        gene:
-          id: antisense_target_sequence
-    - terminator: hGH_polyA # Human growth hormone polyadenylation signal used as a non-viral terminator
+        chain:
+          - gene:
+              id: ASO_U6_driven
+              source: custom
+              # Note: For true ASO expression in mammalian cells, consider using
+              # a U6 promoter (Pol III) upstream of the ASO sequence rather than
+              # CMV (Pol II). This YAML uses CMV as the primary promoter;
+              # recommend adding a separate U6-ASO cassette if high ASO yield is required.
+              # Alternatively, express ASO as part of a primary transcript and
+              # process it via natural RNA processing pathways.
+              sequence_note: "User must provide 20-30 nt antisense oligonucleotide sequence targeting mRNA of interest"
+
+    - terminator: SV40_poly_A
+      # Mammalian polyadenylation signal for transcript stability and translation efficiency

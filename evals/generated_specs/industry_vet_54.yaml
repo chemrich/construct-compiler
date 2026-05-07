@@ -1,19 +1,22 @@
 construct:
-  name: "on_demand_degradation_payload"
+  name: "inducible_degradation_payload"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: payload
         expression: high
         chain:
-          - tag: mAID  # Mini-auxin inducible degron for on-demand proteasomal degradation
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - tag: degron_dBET1
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

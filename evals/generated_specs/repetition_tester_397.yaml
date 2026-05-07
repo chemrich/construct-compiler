@@ -1,31 +1,31 @@
 construct:
-  name: "tcs_geneu_genev_dual_unit"
-  host: e_coli_bl21
+  name: "two_component_system_GeneU_GeneV"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    # First Transcription Unit
-    - promoter: J23100 # Strong constitutive promoter
+    - promoter: J23100
+    
     - cistron:
-        label: gene_u_sensor
+        label: GeneU_sensor_kinase
         expression: high
         gene:
           id: GeneU
           source: uniprot
-    - terminator: BBa_B0015 # First distinct terminator
-
-    - spacer: 45 # Inter-unit spacer to maintain independence
-
-    # Second Transcription Unit
-    # Using a non-homologous strong constitutive promoter to fulfill the "unique" and "no internal repeats" requirement
-    - promoter: J23106 
+    
+    - terminator: rrnB_T1
+    
+    - promoter: J23106
+    
     - cistron:
-        label: gene_v_regulator
+        label: GeneV_response_regulator
         expression: high
-        fused: false
         gene:
           id: GeneV
           source: uniprot
-    - terminator: rrnB_T1 # Second distinct, non-homologous terminator
+    
+    - terminator: BBa_B0015

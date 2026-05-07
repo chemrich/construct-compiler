@@ -1,23 +1,28 @@
 construct:
-  name: "hGH_nonviral_high_solubility_production"
-  host: e_coli
+  name: hGH_variant_expression_system
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Placeholder: Schema requires resistance; recommend auxotrophic selection (e.g., glnA/infB) for marker-free production.
-    ori: pUC
-    source: custom
+    resistance: null  # Antibiotic-free backbone for pharmaceutical compliance
+    ori: pBR322
+    source: addgene
+    # Note: Using pBR322 ori with no selection marker; production strain maintains plasmid through auxotrophic complementation or integration
+
   cassette:
-    - promoter: tac # High-yield bacterial promoter; selected over viral T7 to satisfy "no viral elements" requirement.
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: hGH_variant
         expression: high
         chain:
-          - solubility_tag: MBP # MBP significantly improves the folding and solubility of human growth hormone in E. coli.
-          - tag: 6xHis # For immobilized metal affinity chromatography (IMAC) purification.
-          - cleavage_site: TEV # Enables precise removal of the N-terminal fusion for pharmaceutical-grade purity.
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: P01241 # UniProt ID for Human Growth Hormone (Somatotropin).
+              id: GH1
               source: uniprot
+
     - terminator: rrnB_T1

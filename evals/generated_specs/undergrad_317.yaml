@@ -1,14 +1,22 @@
 construct:
-  name: "rna_aptamer_translation_blocker"
+  name: translation_blocking_aptamer
   host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: inhibitory_aptamer
+        label: aptamer
         expression: high
-        gene:
-          id: Spinach2
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: custom_aptamer
+              sequence: "GGCCGAGGCGACCAGCCGAGCCGAGCCGAGAAGCCCCGAGAAGCCCCGAGAAGCCCCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATCGACGAGACGGATC"
+              source: custom
+    
+    - terminator: rrnB_T1

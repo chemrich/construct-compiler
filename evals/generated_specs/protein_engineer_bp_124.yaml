@@ -1,25 +1,31 @@
 construct:
-  name: "HSA_GLP1_Fusion_Pichia_Expression"
+  name: "HSA_therapeutic_peptide_pichia"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: therapeutic_fusion
+        label: HSA_fusion
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - gene:
               id: P02768
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P01275
+              id: therapeutic_peptide
               source: uniprot
           - tag: FLAG
-    - terminator: AOX1
+          - tag: His6
+
+    - terminator: rrnB_T1

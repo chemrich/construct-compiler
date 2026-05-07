@@ -1,14 +1,22 @@
 construct:
-  name: "sgRNA_U6_HSC_Safe"
-  host: mammalian
+  name: "hHSC_sgRNA_expression_non_viral"
+  host: HEK293
+
   backbone:
-    resistance: kanamycin # Kanamycin is included for E. coli cloning; for clinical safety in HSCs, marker-free technology like minicircle or nanoplasmid is required.
+    resistance: null  # No antibiotic resistance - safety requirement for HSC use
     ori: pUC
     source: custom
+
   cassette:
-    - promoter: U6
+    - promoter: U6  # Pol III promoter for optimal sgRNA production
+
     - cistron:
-        label: target_sgRNA
-        gene:
-          id: sgRNA_scaffold
-    - terminator: rrnB_T1 # Standard terminator; U6 transcription naturally terminates at a 5-6bp poly-T tract.
+        label: sgRNA
+        expression: high
+        chain:
+          - gene:
+              id: CRISPR_sgRNA_scaffold
+              source: uniprot
+              # Generic sgRNA scaffold; user should provide target sequence via design
+
+    - terminator: U6_terminator  # Pol III-specific terminator for efficient sgRNA release

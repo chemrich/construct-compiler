@@ -1,36 +1,41 @@
 construct:
-  name: "Clinical_Fab_CHO_EF1a_DHFR_Secretion_Vector"
-  host: CHO
+  name: "humanized_Fab_secretion_vector_clinical"
+  host: HEK293
+
   backbone:
-    # No antibiotic selection markers permitted for clinical manufacturing
-    resistance: none
-    # Non-viral origin of replication for bacterial expansion
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null  # Clinical manufacturing: no antibiotic markers
+    ori: null         # Non-viral origin of replication implied by clinical grade vector
+    source: addgene
+    # Note: This vector uses GS selection (DHFR) as clinical-grade, non-viral marker
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral constitutive promoter for mammalian expression
+    - promoter: EF1_alpha
+      # EF1_alpha is constitutive and clinically acceptable for stable expression
+
     - cistron:
-        label: Fab_Light_Chain
+        label: Fab_heavy_chain
         expression: high
-        gene:
-          id: P01834  # Human Ig kappa chain C region (representative)
-          source: uniprot
-    - spacer: 40
-    - cistron:
-        label: Fab_Heavy_Chain_Fd
-        expression: high
-        fused: false
         chain:
-          - tag: 6xHis  # N-terminal His-tag for affinity purification
+          - tag: Signal_Peptide_SP  # Mammalian secretion signal for ER targeting
           - gene:
-              id: P01857  # Human Ig gamma-1 chain C region (representative Fd segment)
+              id: "humanized_Fab_heavy_chain"
               source: uniprot
-    - spacer: 40
+          - tag: 6xHis  # For affinity purification (C-terminal)
+
+    - terminator: SV40_poly_A
+      # SV40 polyadenylation signal; clinically acceptable
+
+    - promoter: EF1_alpha
+
     - cistron:
-        label: DHFR_Selectable_Marker
-        expression: low
-        fused: false  # Independently translated metabolic selection marker
-        gene:
-          id: P00374  # Dihydrofolate reductase (DHFR) for non-antibiotic selection
-          source: uniprot
-    - terminator: BBa_B0015
+        label: Fab_light_chain
+        expression: high
+        chain:
+          - tag: Signal_Peptide_SP
+          - gene:
+              id: "humanized_Fab_light_chain"
+              source: uniprot
+          - tag: FLAG  # Optional secondary tag for light chain purification
+
+    - terminator: SV40_poly_A

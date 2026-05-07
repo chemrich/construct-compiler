@@ -1,16 +1,22 @@
 construct:
-  name: "toxin_u_tight_expression"
-  host: e_coli_bl21
+  name: Toxin_U_tight_control
+  host: e_coli_bl21_de3
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: araBAD  # araBAD is selected for the tightest control and minimal basal leakage in E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: toxin_u
-        expression: high
-        gene:
-          id: toxin_u
-          source: uniprot
+        label: Toxin_U
+        expression: very_low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: toxin_u
+              source: uniprot
+
     - terminator: rrnB_T1

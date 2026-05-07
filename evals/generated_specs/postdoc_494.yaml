@@ -1,35 +1,40 @@
 construct:
-  name: "CRISPR_KO_Cas9_GFP_IRES"
+  name: CRISPR_knockout_Cas9_GFP_HEK293
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: U6
-    - cistron:
-        label: sgRNA
-        gene:
-          id: sgRNA_target_scaffold
-    - terminator: BBa_B0015 # Substituting standard Pol III terminator for gRNA cassette
     - promoter: CMV
+
     - cistron:
-        label: Cas9_GFP_fusion
+        label: Cas9_GFP
         expression: high
         chain:
           - gene:
-              id: Q99ZW2 # SpCas9
+              id: SpCas9
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-    - spacer: 580 # Representative length of an IRES element for bicistronic expression
+        poly_a: true
+
+    - spacer: 30
+
+    - element: IRES
+      type: ENCV
+
     - cistron:
-        label: selection_reporter
+        label: guide_RNA
         expression: medium
-        fused: false # Signifies independent translation via the preceding IRES element
+        fused: false
         gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_PolyA # Poly-A signal for the protein expression transcript
+          id: gRNA_scaffold
+          source: uniprot
+        poly_a: true
+
+    - terminator: SV40_poly_A

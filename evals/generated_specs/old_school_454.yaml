@@ -1,18 +1,23 @@
 construct:
-  name: mammalian_pest_destabilized_POI
+  name: "CMV_target_PEST_degron"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: neomycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: target_protein
+              id: target
               source: uniprot
-          - tag: PEST
-    - terminator: bgh_pa
+          - c_tag: PEST
+
+    - terminator: rrnB_T1

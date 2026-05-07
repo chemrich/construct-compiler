@@ -1,20 +1,26 @@
 construct:
-  name: sacb_secreted_antigen_mbp_fusion
+  name: bacillus_sacb_antigen_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: SacB
+    - promoter: sacB
+
     - cistron:
-        label: secreted_fusion_protein
+        label: target
         expression: high
         chain:
-          - tag: SacB_signal
+          - tag: Twin-Strep
+            position: c_terminal
           - solubility_tag: MBP
           - cleavage_site: Factor_Xa
+          - secretion_signal: alpha-factor
           - gene:
-              id: target_antigen
-          - tag: Twin-Strep
-    - terminator: BBa_B0015
+              id: antigen
+              source: uniprot
+
+    - terminator: rrnB_T1

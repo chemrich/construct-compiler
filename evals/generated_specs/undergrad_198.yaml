@@ -1,23 +1,30 @@
 construct:
-  name: "toxin_antitoxin_plasmid_stability_system"
-  host: e_coli
+  name: toxin_antitoxin_stability_system
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
-    - cistron:
-        label: toxin
-        expression: medium
-        gene:
-          id: ToxinX
-          source: uniprot
-    - spacer: 30
+
     - cistron:
         label: antitoxin
         expression: high
-        fused: false
         gene:
           id: AntitoxinX
           source: uniprot
-    - terminator: T7term
+
+    - spacer: 25
+
+    - cistron:
+        label: toxin
+        expression: medium
+        fused: false
+        gene:
+          id: ToxinX
+          source: uniprot
+
+    - terminator: rrnB_T1

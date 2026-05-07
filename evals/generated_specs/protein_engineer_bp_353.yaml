@@ -1,19 +1,24 @@
 construct:
-  name: "bacillus_nuclease_secretion_system"
+  name: "bacillus_nuclease_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
-      cistron:
-        label: nuclease_secretion
+
+    - cistron:
+        label: nuclease_secreted
         expression: high
         chain:
-          - tag: NprB
+          - tag: signal_peptide_NprB
           - solubility_tag: SUMO
           - gene:
               id: nuclease
+              source: uniprot
           - tag: 6xHis
-      terminator: rrnB_T1
+
+    - terminator: rrnB_T1

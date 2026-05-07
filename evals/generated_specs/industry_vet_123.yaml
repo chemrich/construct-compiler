@@ -1,20 +1,24 @@
 construct:
-  name: "yeast_secreted_hEGF_high_yield"
+  name: "yeast_secreted_growth_factor"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: AOX1
+
     - cistron:
         label: secreted_growth_factor
         expression: high
         chain:
-          - tag: alpha_factor
-          - tag: 6xHis
-          - cleavage_site: TEV
+          - tag: alpha_factor_signal
           - gene:
-              id: P01133
+              id: PDGF_B
               source: uniprot
+          - tag: 6xHis
+
     - terminator: CYC1

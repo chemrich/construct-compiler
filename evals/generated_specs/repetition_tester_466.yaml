@@ -1,28 +1,55 @@
 construct:
-  name: "triple_plant_sgRNA_divergent_array"
-  host: plant  # Plant host used; substituting for schema-listed hosts per rule 12
+  name: plant_triple_sgRNA_array_diverse_promoters
+  host: algae
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: AtU6-26
+    - promoter: U6_Arabidopsis
+      # Arabidopsis U6 snRNA promoter for Pol III transcription
+
     - cistron:
-        label: sgRNA_alpha
+        label: sgRNA_target1
+        expression: high
         gene:
-          id: sgRNA_scaffold_v1
-    - terminator: poly_T_6_At
+          id: sgRNA_GC1_AtU6_v1
+          sequence: GGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC
+          # Standard sgRNA with AtU6-optimized scaffold variant 1
+
+    - terminator: tRNAArg_terminator
+      # Arabidopsis tRNA terminator (plant Pol III)
+
+    - spacer: 35
+
+    - promoter: H1_rice
+      # Rice H1 snRNA promoter for Pol III transcription
+
+    - cistron:
+        label: sgRNA_target2
+        expression: high
+        gene:
+          id: sgRNA_GC2_RiceH1_v2
+          sequence: GGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCT
+          # sgRNA with rice H1-optimized scaffold variant 2 (single bp difference in 3′ tail)
+
+    - terminator: tRNAGly_terminator
+      # Rice tRNA terminator (plant Pol III)
+
     - spacer: 40
-    - promoter: GmU6-10
+
+    - promoter: U6_maize
+      # Maize U6 snRNA promoter for Pol III transcription
+
     - cistron:
-        label: sgRNA_beta
+        label: sgRNA_target3
+        expression: high
         gene:
-          id: sgRNA_scaffold_v2
-    - terminator: poly_T_6_Gm
-    - spacer: 40
-    - promoter: OsU6
-    - cistron:
-        label: sgRNA_gamma
-        gene:
-          id: sgRNA_scaffold_v3
-    - terminator: poly_T_6_Os
+          id: sgRNA_GC3_ZmU6_v3
+          sequence: GGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTA
+          # sgRNA with maize U6-optimized scaffold variant 3 (two bp difference in terminal region)
+
+    - terminator: tRNAVal_terminator
+      # Maize tRNA terminator (plant Pol III)

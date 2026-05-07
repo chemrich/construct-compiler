@@ -1,23 +1,32 @@
 construct:
-  name: "yeast_dual_reporter_awesome_promoter"
+  name: "AwesomePromoter_GFP_T2A_mCherry"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pRS416"
+    resistance: uracil
+    ori: CEN6_ARSH4
     source: addgene
+
   cassette:
     - promoter: AwesomePromoter
+
     - cistron:
-        label: stoichiometric_reporters
+        label: GFP
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-          - linker:
-              type: T2A
-              repeats: 1
-          - gene:
-              id: mCherry
-              source: fpbase
+
+    - spacer: 24  # T2A self-cleaving peptide (24 bp)
+
+    - cistron:
+        label: mCherry
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+
     - terminator: ADH1

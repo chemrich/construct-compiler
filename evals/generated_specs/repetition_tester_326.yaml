@@ -1,24 +1,30 @@
 construct:
-  name: dual_reporter_mammalian_non_homologous
+  name: "dual_reporter_mammalian_CMV_EF1a"
   host: HEK293
-  backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: green_reporter
+        label: GFP_reporter
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_polyA
-    - spacer: 100
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: SV40_poly_A
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: red_reporter
+        label: mScarlet_reporter
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: SV40_polyA
+        chain:
+          - tag: HA
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: BGH_poly_A

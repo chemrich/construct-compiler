@@ -1,25 +1,29 @@
-```yaml
 construct:
-  name: therapeutic_peptide_CPP_fusion
+  name: "CPP_therapeutic_peptide_HEK293"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
 
     - cistron:
-        label: therapeutic_fusion
-        expression: medium
+        label: CPP_fusion
+        expression: high
         chain:
-          - tag: TAT  # cell-penetrating peptide
+          - tag: FLAG
           - linker:
               type: GS_flexible
               repeats: 1
           - gene:
-              id: P10145  # insulin B chain as example therapeutic peptide
+              id: TAT_CPP
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: therapeutic_peptide
               source: uniprot
 
     - terminator: rrnB_T1
-```

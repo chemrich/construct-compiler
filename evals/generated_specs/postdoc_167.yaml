@@ -1,17 +1,27 @@
 construct:
-  name: "pichia_constitutive_expression_aggregation_protein"
+  name: "pichia_pastoris_aggregation_prone_protein"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: GAP # Strong constitutive promoter in Pichia pastoris
+    - promoter: AOX1  # Strong constitutive promoter for Pichia pastoris
+
     - cistron:
         label: target
         expression: high
         gene:
-          id: P37840 # Human alpha-synuclein (example aggregation-prone protein)
+          id: null  # User must provide gene ID or sequence separately
           source: uniprot
-    - terminator: CYC1_term # Substituted mammalian poly-A with yeast CYC1 terminator for proper mRNA processing in yeast
+
+    - terminator: CYC1  # Pichia pastoris terminator
+
+    # Note: Poly-A tails are not standard in Pichia pastoris genomic constructs.
+    # They are added post-transcriptionally in mammalian systems but are not
+    # typically incorporated into yeast expression vectors. Yeast uses different
+    # 3' UTR mechanisms (e.g., CYC1 terminator already includes polyadenylation signals).
+    # For maximum mRNA stability in yeast, the CYC1 terminator is already optimized.

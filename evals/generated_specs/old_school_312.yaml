@@ -1,14 +1,25 @@
 construct:
-  name: "cDNA_library_lacZ_vector"
+  name: cDNA_library_vector_with_lacZ_screening
   host: e_coli
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+    # Note: lacZ alpha-fragment is present for blue/white screening
+
   cassette:
-    - promoter: J23100
+    - promoter: lacUV5
+      # Strong constitutive promoter suitable for cDNA expression and library screening
+
     - cistron:
         label: lacZ_alpha
-        gene:
-          id: P00722
-          source: uniprot
-    - terminator: BBa_B0015
+        expression: high
+        chain:
+          - gene:
+              id: lacZ_alpha
+              source: uniprot
+              # Multiple Cloning Site (MCS) positioned within lacZ coding sequence
+              # Insertion here disrupts lacZ and enables blue/white screening
+
+    - terminator: rrnB_T1

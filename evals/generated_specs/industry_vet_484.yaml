@@ -1,13 +1,26 @@
 construct:
-  name: "dox_inducible_toxic_gene_expression"
+  name: doxycycline_inducible_ToxicGene
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G  # High-tightness doxycycline-inducible promoter
+    - promoter: TRE3G  # Tetracycline Response Element for tight, doxycycline-inducible control
+
     - cistron:
-        label: toxic_payload
-        expression: high
-        gene:
-          id: ToxicGene
-    - terminator: bGH_polyA  # Robust mammalian polyadenylation signal/terminator
+        label: ToxicGene
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ToxicGene
+              source: uniprot
+
+    - terminator: bGH_polyA  # Mammalian polyadenylation signal
+
+  # Note: This design requires co-expression of a tetracycline transactivator (rtTA or tTA)
+  # either from a separate plasmid or genomically integrated in the host cell line.
+  # TRE3G provides tight basal repression with rapid activation upon doxycycline addition.

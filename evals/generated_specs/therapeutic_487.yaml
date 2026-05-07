@@ -1,15 +1,31 @@
 construct:
-  name: "shRNA_mammalian_knockdown_vector"
-  host: mammalian
+  name: "mammalian_shRNA_knockdown"
+  host: HEK293
+
   backbone:
-    resistance: kanamycin # Necessary for E. coli propagation; excluded mammalian selection markers to meet "no ARB" request for host cells.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Note: Using pTwist as base; will replace CMV with U6 promoter below
+
   cassette:
     - promoter: U6
+      # U6 is a Pol III promoter ideal for shRNA expression in mammalian cells
+
     - cistron:
-        label: shRNA_unit
+        label: shRNA
         expression: high
-        gene:
-          id: target_shRNA
-    - terminator: T6
+        chain:
+          - gene:
+              id: shRNA_scaffold
+              # shRNA construct with stem-loop structure for RNAi processing
+              # User should specify target sequence; using generic scaffold here
+              sequence: >
+                GCTAGCACCGGTGAATTCGAGCTCGGTACCCAAGTCTACTGTCTCTTCAAGAGAGACAGTAGACTTGGGTACGAGCTCGAATTCACCGGTGCTA
+              # Scaffold includes:
+              # - 5' flank with restriction sites
+              # - sense strand (targeting sequence)
+              # - loop region (TTCAAGAGA)
+              # - antisense strand (reverse complement)
+              # - 3' flank with restriction sites
+
+    - terminator: rrnB_T1
+      # Pol III termination signal for efficient shRNA release

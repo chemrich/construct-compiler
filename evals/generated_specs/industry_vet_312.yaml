@@ -1,21 +1,26 @@
 construct:
-  name: "mEGFP_AAV2_VP1_Fusion"
-  host: mammalian
+  name: "protein_localization_tracker_GFP"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: GFP_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P03135
+              id: YOUR_PROTEIN_ID
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: polyA

@@ -1,24 +1,32 @@
 construct:
-  name: "mammalian_sv40_luciferase_dhfr"
+  name: "SV40_Luciferase_reporter"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: SV40_early
+
     - cistron:
         label: luciferase
         expression: high
         gene:
-          id: luciferase
+          id: Luciferase
           source: uniprot
-    - spacer: 30
+
+    - terminator: SV40_polyA
+
+    - promoter: EF1_alpha
+
     - cistron:
-        label: selection
+        label: selection_marker
         expression: medium
-        fused: false
         gene:
           id: DHFR
           source: uniprot
+
     - terminator: SV40_polyA

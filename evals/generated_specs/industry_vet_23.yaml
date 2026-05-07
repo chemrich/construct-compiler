@@ -1,10 +1,10 @@
-```yaml
 construct:
   name: bicistronic_proteinA_proteinB_2A
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
@@ -12,19 +12,22 @@ construct:
     - cistron:
         label: proteinA
         expression: high
-        gene:
-          id: P04637  # p53 tumor suppressor as example Protein A
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: proteinA
+              source: uniprot
+
+    - spacer: 21  # 2A peptide sequence (GSGATNFSLLKQAGDVEENPG)
 
     - cistron:
         label: proteinB
         expression: high
-        fused: true  # 2A peptide creates stoichiometric co-translation
+        fused: false
         chain:
-          - cleavage_site: P2A  # 2A self-cleaving peptide for stoichiometric expression
+          - tag: 6xHis
           - gene:
-              id: P21359  # NF-kB p65 as example Protein B
+              id: proteinB
               source: uniprot
 
-    - terminator: BBa_B0015
-```
+    - terminator: rrnB_T1

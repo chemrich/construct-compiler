@@ -1,21 +1,27 @@
 construct:
-  name: "MyGene_CAT_fusion"
-  host: e_coli_bl21_de3
+  name: MyGene_CAT_fusion
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_fusion
+        label: fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: "MyGene"
+              id: My_Gene
               source: uniprot
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
-              id: "CAT"
+              id: CAT
               source: uniprot
+
     - terminator: T7term

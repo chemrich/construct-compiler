@@ -1,18 +1,23 @@
 construct:
-  name: "secreted_protease_bacillus_subtilis"
+  name: "bacillus_secreted_protease_xylose_inducible"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Pxyl # Xylose-inducible promoter for tight control in Bacillus
+    - promoter: Pxyl
+
     - cistron:
-        label: protease_expression_unit
-        expression: low # Low expression requested for tight control to avoid toxicity
+        label: secreted_protease
+        expression: low
         chain:
-          - tag: WapA # Signal peptide for secretion in Bacillus subtilis
+          - signal_peptide: WapA
           - gene:
-              id: P00782 # Subtilisin E (AprE) protease from Bacillus subtilis
+              id: subtilisin
               source: uniprot
-          - tag: FLAG # C-terminal FLAG tag
+          - tag: FLAG
+
     - terminator: rrnB_T1

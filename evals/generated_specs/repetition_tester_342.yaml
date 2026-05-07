@@ -1,32 +1,52 @@
 construct:
-  name: yeast_synthetic_metabolic_operon
+  name: "yeast_metabolic_pathway_operon_EnzA_EnzB_EnzC"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3 # Strong constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
         label: EnzA
         expression: high
-        gene:
-          id: P00330 # Alcohol dehydrogenase 1 (S. cerevisiae)
-          source: uniprot
-    - spacer: 45 # Unique intergenic spacer to prevent homology-directed recombination
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: EnzA
+              source: uniprot
+              codon_optimization: S_cerevisiae_rare_codons_set_1
+
+    - spacer: 45
+
     - cistron:
         label: EnzB
         expression: high
-        fused: false # Independent translation initiation; in yeast, this typically implies internal ribosome entry sites or specific 5' UTRs
-        gene:
-          id: P00549 # Phosphoglycerate kinase 1 (S. cerevisiae)
-          source: uniprot
-    - spacer: 72 # Divergent length and sequence for second intergenic region
+        fused: false
+        chain:
+          - tag: FLAG
+          - cleavage_site: 3C
+          - gene:
+              id: EnzB
+              source: uniprot
+              codon_optimization: S_cerevisiae_rare_codons_set_2
+
+    - spacer: 52
+
     - cistron:
         label: EnzC
         expression: high
         fused: false
-        gene:
-          id: P04046 # Glyceraldehyde-3-phosphate dehydrogenase 3 (S. cerevisiae)
-          source: uniprot
-    - terminator: CYC1 # Standard yeast terminator to stop transcription of the operon mRNA
+        chain:
+          - tag: HA
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: EnzC
+              source: uniprot
+              codon_optimization: S_cerevisiae_rare_codons_set_3
+
+    - terminator: rrnB_T1

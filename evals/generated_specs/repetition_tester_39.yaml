@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: ProteinP_His_Strep_diverse_codons
+  name: ProteinP_His_Strep_dual_tagged
   host: e_coli_bl21_de3
 
   backbone:
@@ -10,24 +9,19 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: ProteinP_dual_tagged
         expression: high
         chain:
           - tag: 6xHis
-            codon_optimization: max_diversity  # maximize codon diversity to avoid repeats
           - linker:
               type: GS_flexible
-              repeats: 2
-              codon_optimization: max_diversity  # use diverse synonymous codons
+              repeats: 1
           - gene:
               id: ProteinP
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-              codon_optimization: max_diversity  # different codon usage from N-terminal linker
+              repeats: 1
           - tag: Strep-II
-            codon_optimization: max_diversity  # maximize diversity vs His-tag codons
 
     - terminator: rrnB_T1
-```

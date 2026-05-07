@@ -1,45 +1,57 @@
 construct:
-  name: "metabolic_pathway_ires_expression"
+  name: "therapeutic_metabolic_pathway_4enzyme_IRES"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: enzyme_m1_fusion
+        label: Enzyme_M1_GFP
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: Enzyme_M1
               source: uniprot
-    - spacer: 580
+
+    - spacer: 25  # IRES sequence placeholder; in practice, insert EMCV or CrPV IRES here
+
     - cistron:
-        label: enzyme_m2
-        expression: medium
+        label: Enzyme_M2
+        expression: high
         fused: false
         gene:
           id: Enzyme_M2
           source: uniprot
-    - spacer: 580
+
+    - spacer: 25  # IRES sequence placeholder
+
     - cistron:
-        label: enzyme_m3
-        expression: medium
+        label: Enzyme_M3
+        expression: high
         fused: false
         gene:
           id: Enzyme_M3
           source: uniprot
-    - spacer: 580
+
+    - spacer: 25  # IRES sequence placeholder
+
     - cistron:
-        label: enzyme_m4
-        expression: medium
+        label: Enzyme_M4
+        expression: high
         fused: false
         gene:
           id: Enzyme_M4
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

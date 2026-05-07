@@ -1,16 +1,21 @@
 construct:
-  name: "massive_constitutive_EnzymeY"
-  host: e_coli
+  name: "EnzymeY_maximal_expression"
+  host: e_coli_bl21_de3
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: T7
+    
     - cistron:
-        label: target
+        label: EnzymeY
         expression: high
-        gene:
-          id: EnzymeY
-          source: uniprot
+        chain:
+          - gene:
+              id: EnzymeY
+              source: uniprot
+    
     - terminator: rrnB_T1

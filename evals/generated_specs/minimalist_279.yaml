@@ -1,15 +1,23 @@
 construct:
-  name: "yeast_constitutive_amp_expression"
+  name: constitutive_AMP_yeast
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: AMP
         expression: high
-        gene:
-          id: antimicrobial_peptide
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: novel_antimicrobial_peptide
+              source: uniprot
+
     - terminator: CYC1

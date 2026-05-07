@@ -1,32 +1,41 @@
 construct:
-  name: "bacillus_metabolic_operon"
+  name: "bacillus_metabolic_pathway_operon"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
         label: enzyme_A
-        expression: medium
+        expression: high
         gene:
           id: enzyme_A
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_B
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: enzyme_B
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_C
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: enzyme_C
           source: uniprot
+
+    - terminator: rrnB_T1
     - terminator: BBa_B0015

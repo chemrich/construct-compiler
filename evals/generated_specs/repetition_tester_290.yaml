@@ -1,27 +1,32 @@
 construct:
-  name: "scFv_VH_VL_insect_expression"
-  host: Sf9  # Insect cell line specified for codon optimization
+  name: "insect_scFv_secreted_codon_optimized"
+  host: insect_Sf9
+
   backbone:
-    resistance: gentamicin
-    ori: pUC
-    source: custom
+    catalog_vector: "pIEx-4"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: p10  # Distinct insect-specific promoter (alternative to Polh)
+    - promoter: polyhedrin
 
     - cistron:
-        label: scFv_construct
+        label: scFv
         expression: high
         chain:
-          - tag: gp67  # N-terminal secretion signal for insect cells
+          - tag: signal_peptide_Drosophila  # Native insect secretion signal
           - gene:
               id: VH_domain
-              source: uniprot
+              source: custom
+              codon_optimization: insect_Sf9
           - linker:
-              type: Linker_scFv_Unique  # Specific, non-repetitive linker requested
+              type: custom_scFv
+              sequence: "TVAAPSVFIFPPSDEQLKSGTASVVCLLNNFYPREAKVQWKVDNALQSGNSQESVTEQDSKDSTYSLSSTLTLSKADYEKHKVYACEVTHQGLSSPVTKSFNRGEC"
           - gene:
               id: VL_domain
-              source: uniprot
-          - tag: 6xHis  # C-terminal purification tag
+              source: custom
+              codon_optimization: insect_Sf9
+          - tag: 6xHis
 
-    - terminator: OpIE2_polyA  # Distinct polyA signal from common SV40/Polh terminators
+    - terminator: SV40_polyA
