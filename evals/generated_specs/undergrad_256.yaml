@@ -1,21 +1,27 @@
 construct:
-  name: "GFP_Protein_X_Fusion_Constitutive"
-  host: e_coli
+  name: "GFP_Protein_X_fusion"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: araBAD
+
     - cistron:
-        label: target_fusion
-        expression: medium
+        label: GFP_ProteinX
+        expression: high
         chain:
           - gene:
               id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: Protein_X
+              id: P12345
+              source: uniprot
+
     - terminator: rrnB_T1

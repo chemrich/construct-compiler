@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_subtilis_cell_wall_anchor"
+  name: bacillus_cell_wall_enzyme_display
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: cell_wall_targeted_enzyme
+        label: cell_wall_enzyme
         expression: high
         chain:
-          - tag: AmyE  # N-terminal signal peptide for Bacillus secretion
+          - tag: AmyE_signal_peptide
           - gene:
-              id: P04189
+              id: amylase
               source: uniprot
-          - tag: LPXTG # C-terminal sorting motif for cell wall anchoring
+          - tag: LPXTG_sorting_motif
+
     - terminator: rrnB_T1

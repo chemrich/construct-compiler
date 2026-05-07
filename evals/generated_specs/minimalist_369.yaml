@@ -1,26 +1,32 @@
 construct:
-  name: "GeneX_Purification_and_mCherry_Reporter"
+  name: TetR_GeneX
   host: e_coli
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: GeneX
+        label: TetR
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: Thrombin
           - gene:
-              id: P03023 # Lac repressor (LacI) used per specified UniProt ID, despite TetR mention
+              id: TetR
               source: uniprot
-    - spacer: 40
+
+    - spacer: 30
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: GeneX
+        expression: high
         fused: false
         gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+          id: GeneX
+          source: uniprot
+
+    - terminator: rrnB_T1

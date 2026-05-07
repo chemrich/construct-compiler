@@ -1,16 +1,24 @@
 construct:
-  name: "yeast_glucose_repressible_enzyme_D"
+  name: glucose_repressible_enzyme_D_yeast
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: ADH2
+    - promoter: GAL1
+
     - cistron:
-        label: enzyme_D_expression
+        label: enzyme_D
         expression: high
-        gene:
-          id: enzyme_D
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_D
+              source: uniprot
+
+    - terminator: CYC1

@@ -1,18 +1,23 @@
 construct:
-  name: "scFv_constitutive_secretion_CHO"
+  name: "CHO_scFv_secretion_therapeutic"
   host: CHO
+
   backbone:
-    resistance: dhfr # Using metabolic selection (DHFR) to comply with the prohibition of antibiotic markers
-    ori: pBR322
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    ori: null
+
   cassette:
-    - promoter: EF1_alpha # Non-viral, constitutive mammalian promoter
+    - promoter: EF1_alpha
+
     - cistron:
-        label: therapeutic_scFv
+        label: scFv_secreted
         expression: high
         chain:
-          - tag: IgK_leader # Signal peptide for efficient secretion in mammalian cells
+          - tag: signal_peptide_SP_B
           - gene:
-              id: therapeutic_scFv
+              id: scFv_construct
               source: uniprot
-    - terminator: hGH_polyA # Human growth hormone polyadenylation signal (non-viral)
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

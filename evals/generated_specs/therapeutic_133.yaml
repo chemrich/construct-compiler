@@ -1,19 +1,23 @@
 construct:
-  name: "mammalian_e3_ligase_nls_degrader"
+  name: E3_ligase_oncoprotein_degradation
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    # Note: 'Lacks ARGs' interpreted as exclusion of mammalian selection markers. 
-    # Bacterial resistance is required for construct propagation.
+    resistance: ampicillin
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral human promoter to ensure high expression without viral silencing
+    - promoter: CMV
+
     - cistron:
-        label: targeted_e3_ligase
+        label: E3_ligase
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: 3C
           - tag: NLS
           - gene:
-              id: VHL
+              id: NEDD4L
               source: uniprot
-    - terminator: bGH_pA  # Non-viral bovine growth hormone polyadenylation signal systems
+
+    - terminator: rrnB_T1

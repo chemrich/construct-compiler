@@ -1,32 +1,40 @@
 construct:
-  name: orthogonal_triple_reporter_ivt
+  name: "cell_free_three_module_system"
   host: in_vitro
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7
-    - cistron:
+      cistron:
         label: module_1
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: T7term
-    - promoter: tac
-    - cistron:
+      terminator: rrnB_T1
+    
+    - spacer: 50
+    
+    - promoter: SP6
+      cistron:
         label: module_2
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+      terminator: T7term
+    
+    - spacer: 50
+    
+    - promoter: T3
+      cistron:
+        label: module_3
         expression: high
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: rrnB_T1
-    - promoter: J23100
-    - cistron:
-        label: module_3
-        expression: high
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: BBa_B0015
+      terminator: BBa_B0015

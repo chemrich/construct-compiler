@@ -1,39 +1,53 @@
 construct:
-  name: "rhodobacter_sphaeroides_oxygen_sensor_operon"
-  host: e_coli  # Rhodobacter sphaeroides not in schema; using E. coli as proxy
+  name: "rhodobacter_oxygen_sensing_operon_S1-S4"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Pfnr  # Oxygen-sensitive FNR-regulated promoter
+    - promoter: PnifA
+      # Oxygen-sensitive promoter commonly used in Rhodobacter for anaerobic/microaerobic regulation
+
     - cistron:
         label: S1
         expression: medium
         gene:
-          id: S1_protein
+          id: S1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: S2
         expression: medium
         fused: false
         gene:
-          id: S2_protein
+          id: S2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: S3
         expression: medium
         fused: false
         gene:
-          id: S3_protein
+          id: S3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: reporter
+        label: S4_reporter
         expression: high
         fused: false
-        gene:
-          id: mNeonGreen
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
     - terminator: rrnB_T1

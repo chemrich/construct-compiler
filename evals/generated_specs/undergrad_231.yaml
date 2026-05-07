@@ -1,21 +1,25 @@
 construct:
-  name: "y2h_bait_yth_proteina"
+  name: "yeast_two_hybrid_bait_ProteinA_DBD"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: ADH1
+    - promoter: GAL4
+
     - cistron:
-        label: bait_fusion
+        label: bait
         expression: high
         chain:
-          - gene:
-              id: Gal4_DBD
+          - tag: GAL4_DBD
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: YTH_ProteinA
-    - terminator: ADH1_term
+              source: uniprot
+
+    - terminator: rrnB_T1

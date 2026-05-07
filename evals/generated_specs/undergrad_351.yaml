@@ -1,20 +1,23 @@
 construct:
-  name: "ReceptorM_Surface_Display"
+  name: ReceptorM_surface_display
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
-    ori: pUC
-    source: custom
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: receptor_construct
+        label: ReceptorM
         expression: high
         chain:
-          - tag: signal_peptide
-          - tag: Myc
+          - tag: signal_peptide_SP  # N-terminal secretion signal
           - gene:
               id: ReceptorM
               source: uniprot
-          - tag: GPI_anchor
-    - terminator: bGH_pA
+          - tag: Myc
+          - tag: GPI_anchor_signal  # C-terminal GPI modification signal
+
+    - terminator: polyA

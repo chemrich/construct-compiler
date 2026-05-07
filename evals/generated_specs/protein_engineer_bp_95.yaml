@@ -1,19 +1,24 @@
 construct:
-  name: "bacillus_xylanase_secretion"
+  name: "bacillus_xylanase_extracellular"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PamyQ
+
     - cistron:
-        label: xylanase_production
+        label: xylanase
         expression: high
         chain:
+          - signal_peptide: AmyE  # Native B. subtilis secretion signal
           - gene:
-              id: P18429
-              source: uniprot
+              id: xynA
+              source: uniprot  # B. subtilis xylanase (native CDS)
           - cleavage_site: TEV
           - tag: 6xHis
+
     - terminator: rrnB_T1

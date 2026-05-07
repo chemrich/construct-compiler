@@ -1,15 +1,17 @@
 construct:
-  name: "signaling_protein_expression"
-  host: e_coli_bl21
+  name: SignalingProtein_phos_ecoli
+  host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: T7lac
+    - promoter: T7
     - cistron:
-        label: target
+        label: SignalingProtein
         expression: high
-        gene:
-          id: SignalingProtein
-          source: uniprot
-    - terminator: T7term
-# Note: E. coli does not natively perform site-specific phosphorylation (e.g., Ser123) on eukaryotic proteins. A phosphomimetic mutation or kinase co-expression system would be required for functional phosphorylation.
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: SignalingProtein
+              source: uniprot
+    - terminator: rrnB_T1

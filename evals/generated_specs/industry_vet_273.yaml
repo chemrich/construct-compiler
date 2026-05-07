@@ -1,14 +1,17 @@
 construct:
-  name: "protein_p_dual_cleavage_processing"
-  host: e_coli_bl21_de3
+  name: "ProteinP_TEV_3C_His_test"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: ProteinP
         expression: high
         chain:
           - tag: 6xHis
@@ -17,4 +20,5 @@ construct:
               id: ProteinP
               source: uniprot
           - cleavage_site: 3C
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

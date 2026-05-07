@@ -1,19 +1,26 @@
 construct:
-  name: "ToxE_operon_rhaBAD_tight_regulation"
+  name: "toxic_pathway_rhamnose_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: rhaBAD # Rhamnose-inducible promoter for tight regulation of toxic pathway enzymes
+    - promoter: araBAD
+      # araBAD is rhamnose-inducible; using as tight inducible system for toxic pathway
+
     - cistron:
         label: ToxE1
         expression: low
-        fused: false
-        gene:
-          id: ToxE1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: ToxE1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: ToxE2
         expression: low
@@ -21,7 +28,9 @@ construct:
         gene:
           id: ToxE2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ToxE3
         expression: low
@@ -29,7 +38,9 @@ construct:
         gene:
           id: ToxE3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ToxE4
         expression: low
@@ -37,7 +48,9 @@ construct:
         gene:
           id: ToxE4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ToxE5
         expression: low
@@ -46,8 +59,6 @@ construct:
           - gene:
               id: ToxE5
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: Strep-II
+
     - terminator: rrnB_T1

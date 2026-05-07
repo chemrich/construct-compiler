@@ -1,19 +1,25 @@
 construct:
-  name: "subtilisin_amyE_expression_bacillus"
+  name: "Bacillus_subtilis_subtilisin_variant_expression"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
-    source: custom
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
         label: subtilisin_variant
         expression: high
         chain:
-          - tag: AmyE
+          - tag: signal_peptide_AmyE
           - gene:
-              id: P00782
+              id: subtilisin_variant
               source: uniprot
+              codon_optimized: bacillus
+          - cleavage_site: native_signal_peptidase
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

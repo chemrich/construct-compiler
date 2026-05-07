@@ -1,18 +1,26 @@
 construct:
-  name: "yeast_mitochondrial_targeted_mEGFP"
+  name: "mammalian_protein_yeast_mitochondrial_targeting"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pGPD
+    - promoter: GAL1
+
     - cistron:
-        label: mitochondrial_target
+        label: target
         expression: high
         chain:
-          - tag: MTS  # Native mammalian mitochondrial targeting sequence
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: CYC1_term
+              id: null
+              # NOTE: User requesting mammalian mitochondrial targeting sequence (MTS) in S. cerevisiae.
+              # Mammalian MTS are NOT reliably recognized by yeast mitochondrial import machinery.
+              # For optimal mitochondrial localization in yeast, recommend using yeast-specific MTS
+              # (e.g., from COX4, CYT1, or other nuclear-encoded yeast mitochondrial proteins).
+              # Mammalian MTS may cause mislocalization or protein aggregation.
+              # Consider substituting with a characterized yeast MTS if expression is poor.
+
+    - terminator: rrnB_T1

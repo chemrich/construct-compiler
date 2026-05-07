@@ -1,16 +1,23 @@
 construct:
-  name: "light_activated_egfp_switch"
-  host: e_coli
+  name: "light_inducible_GFP_switch"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pDawn  # Blue-light inducible promoter (dark-repressed, light-activated)
+    - promoter: light_inducible
+      # Note: Using generic "light_inducible" label for literature-based photosensitive promoter
+      # (e.g., cph8-based, EL222, or similar optogenetic system)
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

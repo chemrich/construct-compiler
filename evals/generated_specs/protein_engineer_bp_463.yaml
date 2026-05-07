@@ -1,19 +1,24 @@
 construct:
-  name: "bacillus_subtilis_phytase_secretion"
+  name: bacillus_phytase_secretion
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: phytase_target
+        label: phytase
         expression: high
         chain:
-          - tag: AprE
           - tag: 6xHis
           - cleavage_site: Enterokinase
+          - secretion_signal: AprE
           - gene:
-              id: P42094
+              id: phytase
               source: uniprot
+
     - terminator: rrnB_T1

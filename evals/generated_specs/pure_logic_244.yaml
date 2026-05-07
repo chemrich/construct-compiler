@@ -1,24 +1,34 @@
 construct:
-  name: "negative_feedback_lacI_autoregulation"
-  host: e_coli
+  name: "negative_feedback_loop_protein_P"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac  # tac is repressed by LacI, enabling the negative feedback loop
+    - promoter: T7lac
+
     - cistron:
         label: protein_P
-        expression: medium
-        gene:
-          id: P03023  # LacI repressor (Protein P)
-          source: uniprot
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: reporter
+        label: repressor
         expression: medium
-        fused: false  # Independently translated reporter to monitor steady-state levels
-        gene:
-          id: sfGFP
-          source: fpbase
+        fused: false
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+        # lacI repressor binds operator to inhibit P transcription
+        # As P levels rise, more lacI is produced, reducing P synthesis
+
     - terminator: rrnB_T1

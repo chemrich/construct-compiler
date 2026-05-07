@@ -1,23 +1,29 @@
 construct:
-  name: biocatalyst_a_diverse_linker_high_expression
+  name: "BioCatalystA_SolubilityTag_HisTag_Ecoli"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: biocatalyst_fusion
+        label: BioCatalystA_fusion
         expression: high
         chain:
-          - tag: 6xHis
-          - linker:
-              type: short_GS
-              repeats: 2
-          - solubility_tag: MBP
-          - linker:
-              type: rigid_EAAAK
-              repeats: 3
           - gene:
               id: BioCatalystA
               source: uniprot
-    - terminator: T7term
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - solubility_tag: MBP
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

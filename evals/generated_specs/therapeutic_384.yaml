@@ -1,24 +1,33 @@
 construct:
-  name: "human_ESR1_mEGFP_nuclear_fusion"
+  name: "human_nuclear_receptor_mCherry_fusion"
   host: HEK293
+
   backbone:
-    resistance: none  # User strictly prohibited antibiotic resistance markers
-    ori: pUC          # Required for bacterial propagation during construction
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # Moderate constitutive human promoter, avoiding viral CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: receptor_fusion
+        label: nuclear_receptor
         expression: medium
         chain:
           - tag: NLS
           - gene:
-              id: ESR1
+              id: NR3C1
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+
+    - linker:
+        type: GS_flexible
+        repeats: 1
+
+    - cistron:
+        label: fluorescent_reporter
+        expression: medium
+        fused: true
+        chain:
           - gene:
-              id: mEGFP
+              id: mCherry
               source: fpbase
-    - terminator: hGH_polyA  # Human growth hormone polyadenylation signal, avoiding viral SV40
+
+    - terminator: rrnB_T1

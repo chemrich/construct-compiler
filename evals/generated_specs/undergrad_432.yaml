@@ -1,20 +1,32 @@
 construct:
-  name: "mammalian_bicistronic_2A_mEGFP_SignalX"
+  name: "dual_expression_GFP_SignalX_2A"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: multicistronic_payload
+        label: GFP
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-          - linker:
-              type: P2A
-          - gene:
-              id: SignalX
-              source: uniprot
-    - terminator: bGH_PA
+
+    # 2A self-cleaving peptide enables polycistronic translation from single promoter in mammalian cells
+    - spacer: 18  # T2A coding sequence is ~18 bp
+
+    - cistron:
+        label: SignalX
+        expression: high
+        fused: false
+        gene:
+          id: SignalX
+          source: uniprot
+
+    - terminator: rrnB_T1

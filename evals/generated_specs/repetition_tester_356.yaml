@@ -1,29 +1,41 @@
 construct:
-  name: therapeutic_antibody_non_homologous_dual_expression
+  name: "mammalian_antibody_heavy_light_dual_promoter"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: heavy_chain
+        label: antibody_heavy_chain
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal signal for secretion
           - gene:
-              id: P01857
+              id: "IGHG1_codon_optimized_mammalian"
               source: uniprot
+              codon_optimize: true
+              repeat_elimination: true
+
     - terminator: bGH_polyA
-    - spacer: 200
+
+    - spacer: 150  # physical spacer to prevent recombination
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: light_chain
+        label: antibody_light_chain
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgK  # N-terminal signal for secretion
           - gene:
-              id: P01834
+              id: "IGKC_codon_optimized_mammalian"
               source: uniprot
+              codon_optimize: true
+              repeat_elimination: true
+
     - terminator: SV40_polyA

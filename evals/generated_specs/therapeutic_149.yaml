@@ -1,23 +1,24 @@
 construct:
-  name: "therapeutic_nonviral_tet_on_hEPO"
+  name: "mammalian_therapeutic_tet_inducible"
   host: HEK293
+
   backbone:
-    # Antibiotic-free and viral-free backbone as requested
-    resistance: none
+    catalog_vector: "pTwist CMV"
     ori: pUC
-    source: custom
+    resistance: null
+    source: addgene
+
   cassette:
-    - promoter: TRE3G # Inducible Tet-on promoter (Non-viral)
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P01588 # Human Erythropoietin (EPO)
+              id: IL_10
               source: uniprot
-    - terminator: bGH_PA # Non-viral polyadenylation signal
+
+    - terminator: rrnB_T1

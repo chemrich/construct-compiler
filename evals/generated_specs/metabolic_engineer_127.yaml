@@ -1,32 +1,54 @@
 construct:
-  name: "mammalian_mitochondrial_enzymes_2A_vector"
+  name: "mammalian_mitochondrial_enzyme_quartet_EF1a"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: mito_enzyme_polyprotein
+        label: mito_E1
         expression: high
         chain:
           - gene:
               id: mito_E1
               source: uniprot
           - tag: HA
-          - linker:
-              type: P2A
-          - gene:
-              id: mito_E2
-              source: uniprot
-          - linker:
-              type: T2A
-          - gene:
-              id: mito_E3
-              source: uniprot
-          - linker:
-              type: E2A
-          - gene:
-              id: mito_E4
-              source: uniprot
-    - terminator: bGH_pA # Standard mammalian polyadenylation signal appropriate for HEK293 and EF1a promoters.
+
+    # 2A peptide spacer between cistron 1 and 2
+    - spacer: 51  # bp encoding T2A peptide
+
+    - cistron:
+        label: mito_E2
+        expression: high
+        fused: false
+        gene:
+          id: mito_E2
+          source: uniprot
+
+    # 2A peptide spacer between cistron 2 and 3
+    - spacer: 51
+
+    - cistron:
+        label: mito_E3
+        expression: high
+        fused: false
+        gene:
+          id: mito_E3
+          source: uniprot
+
+    # 2A peptide spacer between cistron 3 and 4
+    - spacer: 51
+
+    - cistron:
+        label: mito_E4
+        expression: high
+        fused: false
+        gene:
+          id: mito_E4
+          source: uniprot
+
+    - terminator: rrnB_T1

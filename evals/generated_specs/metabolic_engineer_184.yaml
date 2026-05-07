@@ -1,37 +1,49 @@
 construct:
-  name: "HEK293_Multigene_Metabolic_Pathway_IRES"
+  name: "HEK293_metabolic_pathway_five_enzymes"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: synthase_x
+        label: SynthaseX
         expression: high
         chain:
           - tag: NLS
           - gene:
               id: SynthaseX
               source: uniprot
-    - spacer: 500 # Spacer length representing IRES for independent translation
+
+    - spacer: 25
+
     - cistron:
-        label: dehydrogenase_y
+        label: DehydrogenaseY
         expression: high
         fused: false
-        gene:
-          id: DehydrogenaseY
-          source: uniprot
-    - spacer: 500 # Spacer length representing IRES for independent translation
+        chain:
+          - gene:
+              id: DehydrogenaseY
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: isomerase_z
+        label: IsomeraseZ
         expression: high
         fused: false
-        gene:
-          id: IsomeraseZ
-          source: uniprot
-    - spacer: 500 # Spacer length representing IRES for independent translation
+        chain:
+          - gene:
+              id: IsomeraseZ
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: ligase_w
+        label: LigaseW
         expression: high
         fused: false
         chain:
@@ -39,12 +51,16 @@ construct:
           - gene:
               id: LigaseW
               source: uniprot
-    - spacer: 500 # Spacer length representing IRES for independent translation
+
+    - spacer: 25
+
     - cistron:
-        label: phosphatase_v
+        label: PhosphataseV
         expression: high
         fused: false
-        gene:
-          id: PhosphataseV
-          source: uniprot
-    - terminator: bGH_PA
+        chain:
+          - gene:
+              id: PhosphataseV
+              source: uniprot
+
+    - terminator: rrnB_T1

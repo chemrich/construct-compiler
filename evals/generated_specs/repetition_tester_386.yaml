@@ -1,14 +1,20 @@
 construct:
-  name: "complex_fusion_geneg_geneh"
+  name: "GeneG_LinkerA_TEV_GeneH_LinkerB_3C_CustomTag"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: multi_domain_fusion
+        label: fusion_complex
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: GeneG
               source: uniprot
@@ -16,12 +22,16 @@ construct:
               type: GS_flexible
               repeats: 3
           - cleavage_site: TEV
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
           - gene:
               id: GeneH
               source: uniprot
           - linker:
-              type: rigid_EAAAK
+              type: short_GS
               repeats: 2
           - cleavage_site: 3C
-          - tag: Twin-Strep  # Using Twin-Strep as a high-affinity purification tag per 'novel' requirement
-    - terminator: T7term
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

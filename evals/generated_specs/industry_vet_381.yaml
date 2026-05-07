@@ -1,17 +1,22 @@
 construct:
-  name: "secreted_scFv_HEK293_high_yield"
+  name: "scFv_secreted_HEK293"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: scFv_target
+        label: scFv
         expression: high
         chain:
-          - tag: Igk_leader
-          - gene:
-              id: antibody_scFv
-              source: uniprot
           - tag: 6xHis
-    - terminator: bGH_polyA
+          - secretion_signal: IgG_signal_peptide
+          - gene:
+              id: scFv
+              source: uniprot
+
+    - terminator: SV40_polyA

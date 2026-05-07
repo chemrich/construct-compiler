@@ -1,5 +1,5 @@
 construct:
-  name: "dual_operon_six_enzyme_expression"
+  name: dual_operon_six_enzyme_system
   host: e_coli
   backbone:
     resistance: kanamycin
@@ -7,50 +7,75 @@ construct:
     source: addgene
   cassette:
     - promoter: J23100
+    
     - cistron:
-        label: operon1_gene1
+        label: enzyme_1
         expression: high
-        gene:
-          id: P0A799
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacZ
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: operon1_gene2
-        expression: high
-        fused: false
-        gene:
-          id: P0A9B2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: operon1_gene3
+        label: enzyme_2
         expression: high
         fused: false
-        gene:
-          id: P00944
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araB
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: malZ
+              source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: lacUV5
+    
+    - promoter: T7lac
+    
     - cistron:
-        label: operon2_gene4
-        expression: medium
-        gene:
-          id: P00722
-          source: uniprot
-    - spacer: 30
+        label: enzyme_4
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: xylA
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: operon2_gene5
-        expression: medium
+        label: enzyme_5
+        expression: high
         fused: false
-        gene:
-          id: P02920
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: treA
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: operon2_gene6
-        expression: medium
+        label: enzyme_6
+        expression: high
         fused: false
-        gene:
-          id: P06721
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: scrK
+              source: uniprot
+    
+    - terminator: rrnB_T1

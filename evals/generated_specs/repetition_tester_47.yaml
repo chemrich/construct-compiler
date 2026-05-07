@@ -1,38 +1,32 @@
 construct:
-  name: triple_TEV_cleavage_synonymous_sites
+  name: "multi_site_tev_cleavage_ecoli"
   host: e_coli_bl21_de3
-  
+
   backbone:
     catalog_vector: "pET-28b(+)"
-  
+
   cassette:
     - promoter: T7lac
-    
+
     - cistron:
-        label: target_protein
+        label: target_multi_tev
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV  # Site 1: ENLYFQG (canonical)
+          - cleavage_site: TEV
           - gene:
-            # User must provide their target protein sequence
-            # This construct provides framework for triple TEV sites
-            id: target_gene
-            source: custom
-          - cleavage_site: TEV  # Site 2: ENLYFQS (synonymous variant)
-          - gene:
-            id: linker_domain
-            source: custom
-          - cleavage_site: TEV  # Site 3: ENLYFQT (synonymous variant)
-          - gene:
-            id: final_domain
-            source: custom
-    
-    - terminator: rrnB_T1
+              id: custom_multi_tev_target
+              source: user_defined
+              # Note: This gene must be manually synthesized with three synonymously
+              # encoded TEV sites (ENLYFQ-G). Each site should use different codon
+              # combinations for the same amino acid sequence while maintaining
+              # TEV protease recognition. Example codon variants:
+              # Site 1: GAA AAC CTG TAC TTC CAA GG[T/C/A/G]
+              # Site 2: GAG AAT TTA TAT TTC CAG GG[T/C/A/G]
+              # Site 3: GAA AAC CTG TAC TTC CAG GG[T/C/A/G]
+              # All encode ENLYFQ but with maximum sequence divergence.
+              # The user should generate the full sequence using optimization tools
+              # such as GeneDesigner, Codon Harmonizer, or similar, ensuring each
+              # TEV site differs in nucleotide sequence while remaining functional.
 
-# Note: TEV protease recognizes ENLYFQ|G/S where cleavage occurs after Q
-# Synonymous variants can use different codons for each amino acid:
-# Site 1: GAA AAC CTC TAC TTC CAG GGC (ENLYFQG)
-# Site 2: GAG AAT CTG TAT TTT CAA AGC (ENLYFQS) 
-# Site 3: GAA AAC TTG TAC TTT CAA ACG (ENLYFQT)
-# All encode functional TEV sites with maximal codon divergence
+    - terminator: rrnB_T1

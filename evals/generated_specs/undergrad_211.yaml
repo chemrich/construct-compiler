@@ -1,6 +1,6 @@
 construct:
   name: "dual_reporter_constitutive_inducible"
-  host: e_coli_bl21_de3
+  host: e_coli_bl21
 
   backbone:
     resistance: kanamycin
@@ -8,22 +8,30 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: J23100  # Standard constitutive E. coli promoter
+    - promoter: J23100
+
     - cistron:
-        label: constitutive_gfp
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
+        label: constitutive_GFP
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - terminator: rrnB_T1
 
     - spacer: 50
 
-    - promoter: T7lac  # Inducible E. coli promoter (IPTG)
+    - promoter: T7lac
+
     - cistron:
-        label: inducible_rfp
+        label: inducible_RFP
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

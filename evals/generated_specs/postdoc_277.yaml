@@ -1,19 +1,24 @@
 construct:
-  name: "protein_n_high_purity_yeast"
+  name: "yeast_ProteinN_dual_tag_purification"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD  # Strong constitutive yeast promoter (TDH3)
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: ProteinN
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: Protein_N
+              id: ProteinN
               source: uniprot
-          - tag: 6xHis
-    - terminator: CYC1
+          - tag: 8xHis
+
+    - terminator: rrnB_T1

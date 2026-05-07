@@ -1,56 +1,73 @@
 construct:
-  name: "xenobiotic_degradation_operon_KT2440"
-  host: e_coli  # Pseudomonas putida KT2440 not in schema; defaulting to E. coli as surrogate host
+  name: "pseudomonas_xenobiotic_degradation_operon"
+  host: pseudomonas_putida_kt2440
+
   backbone:
-    resistance: kanamycin
-    ori: p15A  # Stable low-to-medium copy origin compatible with wide-host-range systems
+    resistance: gentamicin
+    ori: pBBR1
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Strong, strictly inducible promoter for Pseudomonas/E. coli systems
+    - promoter: Pm
+      inducible: true
+      inducer: m_toluate
+
     - cistron:
         label: dioxygenase
         expression: high
+        rbs_strength: strong
         gene:
-          id: "P0A110"
+          id: todC1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ring_cleavage_dioxygenase
         expression: high
-        fused: false
+        rbs_strength: strong
         gene:
-          id: "P0A113"
+          id: todE
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: hydrolase
-        expression: medium
-        fused: false
+        expression: high
+        rbs_strength: medium
         gene:
-          id: "P14728"
+          id: todF
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: reductase
         expression: medium
-        fused: false
+        rbs_strength: medium
         gene:
-          id: "P23104"
+          id: todG
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: accessory_enzyme_1
-        expression: low
-        fused: false
+        expression: medium
+        rbs_strength: medium
         gene:
-          id: "P0A111"
+          id: todH
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: accessory_enzyme_2
         expression: low
-        fused: false
+        rbs_strength: weak
         gene:
-          id: "P0A112"
+          id: todI
           source: uniprot
+
     - terminator: rrnB_T1

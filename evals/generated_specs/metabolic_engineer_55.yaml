@@ -1,66 +1,76 @@
 construct:
-  name: "flavonoid_pathway_yeast_optimization"
+  name: "yeast_flavonoid_pathway_6gene"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pRS426"
+    resistance: uracil
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
         label: CHS
         expression: high
         chain:
           - gene:
-              id: P13114
+              id: CHS1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - solubility_tag: GST  # C-terminal GST-tag for pulldown
-    - terminator: CYC1
+              repeats: 1
+          - solubility_tag: GST
 
-    - promoter: TEF1  # Balanced high expression using unique strong yeast promoters
+    - spacer: 25
+
     - cistron:
         label: CHI
         expression: high
+        fused: false
         gene:
-          id: P2B7E1
+          id: CHI
           source: uniprot
-    - terminator: ADH1
 
-    - promoter: PGK1
+    - spacer: 25
+
     - cistron:
         label: F3H
         expression: high
+        fused: false
         gene:
-          id: Q9S771
+          id: F3H
           source: uniprot
-    - terminator: TEF1
 
-    - promoter: ADH1
+    - spacer: 25
+
     - cistron:
         label: FLS
         expression: high
+        fused: false
         gene:
-          id: Q96330
+          id: FLS
           source: uniprot
-    - terminator: PGK1
 
-    - promoter: ENO2
+    - spacer: 25
+
     - cistron:
         label: DFR
         expression: high
+        fused: false
         gene:
-          id: P51102
+          id: DFR
           source: uniprot
-    - terminator: ENO2
 
-    - promoter: PDC1
+    - spacer: 25
+
     - cistron:
         label: ANS
         expression: high
+        fused: false
         gene:
-          id: Q96323
+          id: ANS
           source: uniprot
-    - terminator: PDC1  # Final terminator for the construct
+
+    - terminator: CYC1

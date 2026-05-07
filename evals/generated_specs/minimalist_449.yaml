@@ -1,23 +1,32 @@
 construct:
-  name: proteinj_proteink_coexpression
-  host: e_coli
+  name: ProteinJ_ProteinK_coexpression
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_j
-        expression: medium
-        gene:
-          id: ProteinJ
-          source: uniprot
+        label: ProteinJ
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinJ
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: protein_k
-        expression: medium
+        label: ProteinK
+        expression: high
         fused: false
-        gene:
-          id: ProteinK
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinK
+              source: uniprot
+
     - terminator: rrnB_T1

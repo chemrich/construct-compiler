@@ -1,31 +1,46 @@
 construct:
-  name: "multivalent_dbd1_tandem_diversified"
+  name: multivalent_DBD_trimer_ecoli
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: tandem_dbd_fusion
+        label: multivalent_DBD
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: DBD1
+              id: DBD1_var1
               source: uniprot
+              codon_variant: "optimized_E_coli_v1"
+          
           - linker:
-              # First linker: Flexible GS type to break sequence identity
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: DBD1
-              source: uniprot
-          - linker:
-              # Second linker: Rigid EAAAK type to maximize DNA sequence divergence and structural spacing
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 3
+              comment: "First linker: 15 aa, rigid architecture"
+          
           - gene:
-              id: DBD1
+              id: DBD1_var2
               source: uniprot
-    - terminator: T7term # The compiler will automatically apply synonymous codon diversification for the repeated DBD1 gene entries to prevent recombination.
+              codon_variant: "optimized_E_coli_v2"
+          
+          - linker:
+              type: GS_flexible
+              repeats: 4
+              comment: "Second linker: 12 aa, flexible, distinct from first"
+          
+          - gene:
+              id: DBD1_var3
+              source: uniprot
+              codon_variant: "optimized_E_coli_v3"
+    
+    - terminator: rrnB_T1
+  
+  notes: "Three tandem DBD1 domains with synonymous codon variants to minimize recombination risk. Linkers differ in length (15 aa vs 12 aa), structure (rigid vs flexible), and amino acid composition to eliminate sequence identity at DNA level."

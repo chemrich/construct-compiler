@@ -1,23 +1,37 @@
 construct:
-  name: "exosome_targeted_IL10_clinical_construct"
+  name: "HEK293_exosome_therapeutic_high_yield"
   host: HEK293
+
   backbone:
-    resistance: none  # Clinical-grade design omitting antibiotic resistance markers for safety
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null  # Non-antibiotic selection; assume puromycin resistance or fluorescent marker selection
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_exosome_fusion
+        label: therapeutic_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: CD63
+              id: SEAP  # Secreted alkaline phosphatase as example therapeutic protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - gene:
-              id: IL10
-              source: uniprot
-    - terminator: bGH_PA
+              repeats: 1
+          - exosome_targeting_signal:
+              type: LAMP2b_C91  # Well-characterized exosome-targeting peptide derived from LAMP2b
+
+    - terminator: SV40_polyA
+
+  notes: |
+    - Backbone selection: pTwist CMV is a non-viral, episomal mammalian expression vector suitable for clinical translation
+    - No antibiotic resistance: Replace kanamycin/ampicillin selection with puromycin resistance marker or fluorescent enrichment
+    - CMV promoter: Provides robust, constitutive expression in mammalian cells
+    - Exosome targeting: LAMP2b_C91 is a clinically relevant targeting peptide that directs cargo proteins to exosomes
+    - Secretion: SEAP (or substitute with your therapeutic protein) is naturally secreted; alternative proteins should include native signal peptide or add ER signal peptide
+    - 6xHis tag and TEV site: Enable purification and cleavage if needed; can be removed post-translation
+    - SV40 polyA: Standard mammalian termination and transcript stability
+    - For GMP manufacturing: Use cGMP-grade plasmid and transfection reagents; scale to bioreactor culture for exosome collection

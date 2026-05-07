@@ -1,24 +1,32 @@
 construct:
-  name: "difficult_protein_bip_coexpression"
-  host: e_coli_bl21_de3
+  name: "DifficultProtein_with_BiP_chaperone"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: DifficultProtein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: DifficultProtein
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: chaperone
-        expression: medium
+        label: BiP_chaperone
+        expression: high
         fused: false
         gene:
-          id: P11021
+          id: BiP
           source: uniprot
+
     - terminator: rrnB_T1

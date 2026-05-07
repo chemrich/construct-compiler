@@ -1,32 +1,43 @@
 construct:
-  name: "morphogen_driven_adhesion_gradient"
-  host: e_coli
+  name: spatial_patterning_morphogen_responsive
+  host: mammalian
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: J23106
+    - promoter: CMV
+
     - cistron:
-        label: "morphogen_sensor_LuxR"
-        expression: medium
-        gene:
-          id: P12746
-          source: uniprot
-    - terminator: BBa_B0015
-    - promoter: luxRI
-    - cistron:
-        label: "Cell_Adhesion_Factor"
+        label: morphogen_sensor
         expression: high
-        gene:
-          id: P39180
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: HA
+          - gene:
+              id: Input_Morphogen
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: "spatial_reporter"
+        label: adhesion_factor_responsive
         expression: medium
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
+        chain:
+          - tag: FLAG
+          - gene:
+              id: Cell_Adhesion_Factor
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: morphogen_signaling_module
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: BMP_receptor
+              source: uniprot
+
     - terminator: rrnB_T1

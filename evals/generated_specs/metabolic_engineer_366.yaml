@@ -1,36 +1,90 @@
 construct:
-  name: "yeast_beta_carotene_2A_pathway"
+  name: "beta_carotene_pathway_S_cerevisiae"
   host: yeast
+
   backbone:
-    resistance: ura3
-    ori: 2_micron
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+    # High-copy episomal plasmid for S. cerevisiae (2-micron origin)
+    notes: "2-micron ori for high-copy episomal maintenance in S. cerevisiae"
+
   cassette:
     - promoter: TEF1
+
     - cistron:
-        label: carotenoid_pathway
+        label: HMGCR
         expression: high
+        fused: false
+        gene:
+          id: HMGCR
+          source: uniprot
+          organism: saccharomyces_cerevisiae
+          codon_optimization: saccharomyces_cerevisiae
+
+    - spacer: 30
+
+    - cistron:
+        label: F2A_idi1
+        expression: high
+        fused: false
         chain:
           - gene:
-              id: HMG1
+              id: idi1
               source: uniprot
+              organism: saccharomyces_cerevisiae
+              codon_optimization: saccharomyces_cerevisiae
           - cleavage_site: F2A
-          - gene:
-              id: IDI1
-              source: uniprot
-          - cleavage_site: F2A
+
+    - spacer: 30
+
+    - cistron:
+        label: F2A_crtE
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: crtE
               source: uniprot
+              organism: pantoea_ananatis
+              codon_optimization: saccharomyces_cerevisiae
           - cleavage_site: F2A
+
+    - spacer: 30
+
+    - cistron:
+        label: F2A_crtB
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: crtB
               source: uniprot
+              organism: pantoea_ananatis
+              codon_optimization: saccharomyces_cerevisiae
           - cleavage_site: F2A
+
+    - spacer: 30
+
+    - cistron:
+        label: crtI_GFP
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: crtI
               source: uniprot
+              organism: pantoea_ananatis
+              codon_optimization: saccharomyces_cerevisiae
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

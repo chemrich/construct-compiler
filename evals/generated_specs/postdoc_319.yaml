@@ -1,9 +1,9 @@
 construct:
-  name: e_coli_high_copy_c_terminal_his
+  name: "high_copy_ecoli_expression"
   host: e_coli
   backbone:
     resistance: kanamycin
-    ori: pUC # Substituted pUC for SV40; SV40 is a mammalian origin, while pUC provides high-copy replication in E. coli.
+    ori: pUC  # High-copy E. coli ori; SV40 is mammalian-specific, substituted with pUC for E. coli high-copy replication
     source: addgene
   cassette:
     - promoter: T7lac
@@ -12,10 +12,10 @@ construct:
         expression: high
         chain:
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: generic_insert
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 1
           - tag: 6xHis
-    - terminator: T7term
+    - terminator: rrnB_T1

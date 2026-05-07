@@ -1,21 +1,27 @@
 construct:
-  name: "protein_o_mcherry_fusion"
-  host: e_coli
+  name: "protein_O_mCherry_fusion"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: o_fusion
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P03688
+              id: protein_O
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

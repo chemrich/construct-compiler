@@ -1,47 +1,86 @@
 construct:
-  name: "binary_addressable_reporter_logic"
+  name: addressable_fluorescent_reporter_system
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23106  # Logic (0,0): Active in absence of specific inducers
+    - promoter: T7lac
+
     - cistron:
-        label: output_00_CFP
+        label: AddressBit0_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CI_repressor
+              source: uniprot
+        # Note: This represents the first address bit sensor (simplified placeholder)
+
+    - spacer: 25
+
+    - cistron:
+        label: AddressBit1_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Cro_repressor
+              source: uniprot
+        # Note: This represents the second address bit sensor (simplified placeholder)
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter_CFP_00
         expression: medium
+        # Activated when AddressBit0=0, AddressBit1=0
         fused: false
         gene:
-          id: mTurquoise2
+          id: mCerulean
           source: fpbase
-    - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: lacUV5  # Logic (0,1): Induced by AddressBit1 (e.g., IPTG)
+
+    - spacer: 25
+
     - cistron:
-        label: output_01_GFP
+        label: reporter_GFP_01
         expression: medium
+        # Activated when AddressBit0=1, AddressBit1=0
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: araBAD  # Logic (1,0): Induced by AddressBit0 (e.g., L-Arabinose)
+
+    - spacer: 25
+
     - cistron:
-        label: output_10_YFP
+        label: reporter_YFP_10
         expression: medium
+        # Activated when AddressBit0=0, AddressBit1=1
         fused: false
         gene:
           id: mVenus
           source: fpbase
-    - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: tac     # Logic (1,1): Strong expression representing both bits high
+
+    - spacer: 25
+
     - cistron:
-        label: output_11_RFP
-        expression: high
+        label: reporter_RFP_11
+        expression: medium
+        # Activated when AddressBit0=1, AddressBit1=1
         fused: false
         gene:
           id: mCherry
           source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+  # Note: This construct requires additional regulatory elements (NOT shown in this schema)
+  # such as promoters with address-dependent binding sites, repressors, and logic gates
+  # to implement the actual 2-to-4 decoder function. The cassette above shows the
+  # four fluorescent reporters that would be activated by external address bits.
+  # Recommend supplementing with synthetic biology design tools (e.g., Cello, Ribozyme-based logic)
+  # to implement the addressable switching between the four outputs.

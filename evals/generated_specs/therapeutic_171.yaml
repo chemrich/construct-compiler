@@ -1,18 +1,24 @@
 construct:
-  name: "amyloid_aggregation_study"
-  host: e_coli_bl21
+  name: "amyloid_protein_expression_high_level"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Kanamycin resistance included per Rule 12; selection is necessary for plasmid maintenance in E. coli.
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac # Bacterial tac promoter used instead of viral T7 to satisfy 'no viral elements' constraint.
+    - promoter: T7lac
+
     - cistron:
-        label: alpha_synuclein_target
+        label: amyloid_target
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: Thrombin # Non-viral mammalian cleavage site used instead of TEV (viral) to maintain non-viral constraint.
+          - cleavage_site: TEV
           - gene:
-              id: P37840
+              id: ""
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator.
+              # Note: User must specify UniProt ID for disease-associated amyloidogenic protein
+
+    - terminator: rrnB_T1

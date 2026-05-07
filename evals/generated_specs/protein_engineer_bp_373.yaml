@@ -1,19 +1,24 @@
 construct:
-  name: "pichia_pastoris_secreted_cytokine"
+  name: "Pichia_pastoris_secreted_cytokine_FLAG"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: secreted_cytokine
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: P60568
+              id: IL2
               source: uniprot
+              codon_optimization: pichia_pastoris
           - tag: FLAG
-    - terminator: AOX1_term
+
+    - terminator: AOX1_TT

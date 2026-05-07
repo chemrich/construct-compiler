@@ -1,17 +1,24 @@
 construct:
-  name: "industrial_phytase_bacillus_production"
+  name: "Bacillus_phytase_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: phytase_secretion
+        label: phytase
         expression: high
         chain:
-          - tag: AmyE
+          - secretion_signal: AmyE
           - gene:
-              id: P42094
+              id: "phytase_codon_optimized_bacillus"
               source: uniprot
-    - terminator: BBa_B0015
+              # Phytase from common feed additive sources (e.g., Aspergillus niger AppA or Escherichia coli AppA)
+              # User specifies Bacillus codon optimization; compiler applies appropriate optimization profile
+
+    - terminator: rrnB_T1

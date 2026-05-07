@@ -1,17 +1,23 @@
 construct:
-  name: "targeted_degradation_mEGFP"
-  host: e_coli_bl21_de3
+  name: "degron_tagged_protein_ecoli"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: target_protein
+              source: uniprot
           - tag: 6xHis
-          - tag: SsrA  # Standard E. coli C-terminal degradation tag recognized by ClpXP/ClpAP
-    - terminator: T7term
+          - degron: ssrA  # C-terminal ssrA tag (Lon protease recognition)
+
+    - terminator: rrnB_T1

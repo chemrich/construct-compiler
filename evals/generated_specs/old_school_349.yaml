@@ -1,25 +1,31 @@
 construct:
-  name: tet_on_key_regulator_system
+  name: "mammalian_TetOn_KeyRegulator"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
     ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TRE3G
+    - promoter: CMV
+    
     - cistron:
-        label: inducible_target
+        label: rtTA_activator
+        expression: high
+        gene:
+          id: rtTA
+          source: uniprot
+    
+    - terminator: BGH_polyA
+
+    - promoter: TRE
+    
+    - cistron:
+        label: KeyRegulator
         expression: high
         gene:
           id: KeyRegulator
           source: uniprot
-    - terminator: SV40_PA
-    - spacer: 50
-    - promoter: CMV
-    - cistron:
-        label: tet_activator
-        expression: medium
-        gene:
-          id: rtTA
-          source: uniprot
-    - terminator: bGH_PA
+    
+    - terminator: BGH_polyA

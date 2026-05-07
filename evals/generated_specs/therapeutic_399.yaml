@@ -1,29 +1,51 @@
 construct:
-  name: therapeutic_peptide_production_non_viral
-  host: e_coli_bl21
+  name: dual_therapeutic_peptide_no_resistance
+  host: e_coli_bl21_de3
+
   backbone:
-    # Note: Kanamycin resistance is included to satisfy compiler requirements; clinical-grade systems typically replace this with auxotrophic or toxin-antitoxin selection.
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    resistance: null
+    ori: pBR322
+    source: custom
+    # Note: Construct specified no antibiotic resistance genes.
+    # In practice, a selectable marker is typically required for plasmid maintenance.
+    # This design omits it per specification, but should use biosafety alternatives
+    # (e.g., auxotrophic complementation) in actual implementation.
+
   cassette:
-    - promoter: tac  # Inducible non-viral bacterial promoter used instead of T7 to satisfy "no viral elements" requirement.
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_peptide_1
+        label: peptide_1
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: PTH
+              id: therapeutic_peptide_1
               source: uniprot
-    - spacer: 30  # Polycistronic spacer/RBS used as a non-viral alternative to 2A peptides for producing separate proteins in E. coli.
+
+    - spacer: 25
+
     - cistron:
-        label: therapeutic_peptide_2
+        label: self_cleaving_linker_2A
         expression: high
-        fused: false  # Ensures independent translation to provide separate peptides post-translation.
+        fused: false
+        chain:
+          - gene:
+              id: 2A_self_cleaving_peptide
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: peptide_2
+        expression: high
+        fused: false
         chain:
           - tag: Strep-II
+          - cleavage_site: TEV
           - gene:
-              id: GCG
+              id: therapeutic_peptide_2
               source: uniprot
-    - terminator: rrnB_T1  # Bacterial terminator.
+
+    - terminator: rrnB_T1

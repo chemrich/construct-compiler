@@ -1,24 +1,24 @@
 construct:
-  name: proteink_codon_optimization_comparison
-  host: e_coli_bl21_de3
+  name: "ProteinK_E_coli_codon_set_1"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: proteink_optimization_a
+        label: ProteinK_optimized_set1
         expression: high
-        gene:
-          id: ProteinK
-          source: uniprot
-    - terminator: T7term
-    - spacer: 50  # Inter-cassette distance to separate transcription units
-    - promoter: tac
-    - cistron:
-        label: proteink_optimization_b
-        expression: high
-        fused: false
-        gene:
-          id: ProteinK
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinK
+              source: uniprot
+              codon_usage: e_coli_high_expression
+
     - terminator: rrnB_T1

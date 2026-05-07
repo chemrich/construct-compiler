@@ -1,15 +1,22 @@
 construct:
-  name: "T7_sfGFP_expression_BL21DE3"
+  name: "T7_GFP_expression"
   host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: sfGFP_target
+        label: GFP
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: T7term

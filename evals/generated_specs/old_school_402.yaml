@@ -1,18 +1,23 @@
 construct:
-  name: secreted_megfp_cho_expression
+  name: "CHO_secreted_protein_CMV"
   host: CHO
+
   backbone:
     resistance: neomycin
     ori: SV40
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: IgK_leader  # Standard mammalian secretion signal peptide
+          - tag: signal_peptide_IgG  # N-terminal secretion signal for mammalian cells
           - gene:
-              id: mEGFP      # Defaulting to mEGFP as placeholder for "my gene"
-              source: fpbase
-    - terminator: bGH_pA     # Strong mammalian polyadenylation signal suitable for CHO
+              id: null
+              source: uniprot
+              # User should specify their gene ID; placeholder for compilation
+
+    - terminator: WPRE  # Woodchuck Posttranscriptional Regulatory Element for mammalian stability

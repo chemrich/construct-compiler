@@ -1,11 +1,15 @@
 construct:
-  name: "xenobiotic_degradation_operon"
-  host: pseudomonas_putida  # Rule 15: using specific host name as allowed
+  name: "xenobiotic_degradation_operon_5enzyme"
+  host: other_gram_negative
+  
   backbone:
     resistance: kanamycin
-    ori: pBBR1  # Standard broad-host-range origin for Pseudomonas
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: tac
+    - promoter: Ptac
+    
     - cistron:
         label: Enzyme_A
         expression: high
@@ -13,11 +17,10 @@ construct:
           - gene:
               id: Enzyme_A
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: Enzyme_B
         expression: high
@@ -26,11 +29,10 @@ construct:
           - gene:
               id: Enzyme_B
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: Enzyme_C
         expression: high
@@ -39,11 +41,10 @@ construct:
           - gene:
               id: Enzyme_C
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: Enzyme_D
         expression: high
@@ -52,11 +53,10 @@ construct:
           - gene:
               id: Enzyme_D
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: Enzyme_E
         expression: high
@@ -65,8 +65,6 @@ construct:
           - gene:
               id: Enzyme_E
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: 6xHis
+    
     - terminator: rrnB_T1

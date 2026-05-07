@@ -1,22 +1,33 @@
 construct:
-  name: "Degradable_Therapeutic_Protein_L_araBAD"
+  name: degradable_protein_L_control
   host: e_coli
+
   backbone:
-    resistance: kanamycin # Substituted for requested auxotrophic marker; tool schema limited to antibiotic selection
+    resistance: none
     ori: pBR322
     source: addgene
+    # Note: auxotrophic selection (e.g., trpA complementation) would be implemented
+    # via chromosomal integration or plasmid-based metabolic selection, not antibiotic markers
+
   cassette:
     - promoter: araBAD
+      # araBAD provides tight, titratable control via L-arabinose induction
+      # tightly repressed in absence of inducer
+
     - cistron:
-        label: therapeutic_target
-        expression: high
+        label: degradable_protein_L
+        expression: medium
         chain:
           - tag: 6xHis
+            # N-terminal His-tag for purification via IMAC
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: DegradableProteinL
               source: uniprot
           - tag: LVA
+            # C-terminal LVA tag: bacterial proteasome recognition sequence
+            # targets protein for Lon/Clp protease-mediated degradation
+
     - terminator: rrnB_T1

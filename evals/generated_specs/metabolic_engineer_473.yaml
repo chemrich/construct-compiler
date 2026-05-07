@@ -1,47 +1,65 @@
 construct:
-  name: "nat1_5_polycistronic_expression"
+  name: "pentacistronic_Nat_expression"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: lacUV5 # lacUV5 is used as a well-characterized native E. coli promoter variant for robust expression
+    - promoter: lacUV5
+
     - cistron:
-        label: nat1
-        expression: medium
+        label: Nat1
+        expression: high
         gene:
           id: Nat1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nat2
-        expression: medium
+        label: Nat2
+        expression: high
         fused: false
         gene:
           id: Nat2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nat3
-        expression: medium
+        label: Nat3
+        expression: high
         fused: false
         gene:
           id: Nat3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nat4
-        expression: medium
+        label: Nat4
+        expression: high
         fused: false
         gene:
           id: Nat4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nat5
-        expression: medium
+        label: Nat5
+        expression: high
         fused: false
         gene:
           id: Nat5
           source: uniprot
-    - terminator: rrnB_T1 # Strong terminator to ensure transcript stability and proper termination
+
+    # Note: mRNA stability enhanced by compact spacing (25 bp RBS-to-start distances),
+    # strong RBS placement via lacUV5 promoter, and rrnB terminator with downstream
+    # stability elements. Consider adding stem-loop or Hfq-binding motifs post-synthesis
+    # if additional mRNA stabilization is needed.
+
+    - terminator: rrnB_T1

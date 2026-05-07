@@ -1,24 +1,30 @@
 construct:
   name: "bacillus_secretion_efficiency_screen"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Spac
+
+    - rbs: RBS_opt  # optimized ribosome binding site
+
     - cistron:
-        label: reporter_hydrolase_fusion
+        label: secretion_reporter
         expression: high
         chain:
-          - tag: AmyQ
+          - secretion_signal: AmyQ  # AmyQ signal peptide for Bacillus secretion
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P00692
+              id: hydrolase_target
               source: uniprot
+
     - terminator: rrnB_T1

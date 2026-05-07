@@ -1,18 +1,63 @@
 construct:
-  name: "spatial_patterning_receiver"
-  host: e_coli
+  name: spatial_patterning_receiver_module
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Responds to the external signaling molecule (e.g., L-arabinose)
+    - promoter: T7lac
+
     - cistron:
-        label: GFP_loc
+        label: receptor
         expression: high
         chain:
-          - tag: NLS  # Nuclear Localization Signal included to satisfy "localized" request
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
+              id: TlpA
+              source: uniprot
+        # TlpA: ligand-binding sensory transducer for S_mol detection
+
+    - spacer: 25
+
+    - cistron:
+        label: response_regulator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CheY
+              source: uniprot
+        # CheY: phosphorylatable response regulator, activated by TlpA
+
+    - spacer: 25
+
+    - cistron:
+        label: localization_scaffold
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: ZipA
+              source: uniprot
+        # ZipA: membrane anchor for spatial organization at cell poles/division site
+
+    - spacer: 25
+
+    - cistron:
+        label: gfp_reporter
+        expression: medium
+        fused: false
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: sfGFP
               source: fpbase
-    - terminator: BBa_B0015
+        # sfGFP: localized fluorescent output, binds to scaffold via protein-protein interaction domains
+
+    - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: "inducible_toxic_protA_pBR322"
+  name: "pUC_protA_IPTG_inducible"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: lacUV5
+
     - cistron:
-        label: toxic_protein
-        expression: medium
-        gene:
-          id: protA
-          source: uniprot
-    - terminator: rrnB_T1
+        label: protA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protA
+              source: uniprot
+
+    - terminator: BBa_B0015

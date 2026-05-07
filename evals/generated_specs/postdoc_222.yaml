@@ -1,28 +1,28 @@
 construct:
-  name: "secreted_human_receptor_glycosylated_yeast"
+  name: "human_receptor_secreted_yeast"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GAL1
+    - promoter: AOX1
+
     - cistron:
-        label: target_receptor
+        label: receptor
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: FLAG
           - cleavage_site: TEV
+          - tag: alpha-factor_signal
           - gene:
-              id: CD4
+              id: human_receptor
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: glycosylation_machinery
-        expression: medium
-        fused: false
-        gene:
-          id: MGAT1
-          source: uniprot
+              # Note: User should specify exact UniProt ID (e.g., P08069 for IL2RA)
+              # Yeast will perform N-linked glycosylation at consensus sites (N-X-S/T)
+              # similar to mammalian cells due to ER/Golgi processing
+
     - terminator: CYC1

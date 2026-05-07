@@ -1,29 +1,38 @@
 construct:
-  name: recombination_resistant_triple_fusion_hek293
+  name: "multi_domain_fusion_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: fusion_abc
+        label: multi_domain_fusion
         expression: high
-        # DNA Optimization Note: Linker DNA sequences must be non-homologous.
-        # DNA Optimization Note: Maximize synonymous codon differentiation for DomainA, DomainB, and DomainC.
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: DomainA
               source: uniprot
+              codon_optimization: mammalian_high_bias
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
+              sequence_variant: "GGSGGSGGSGGSGGS"
           - gene:
               id: DomainB
               source: uniprot
+              codon_optimization: mammalian_low_bias
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
+              sequence_variant: "GGTGGATCTGGATCCGGTTCT"
           - gene:
               id: DomainC
               source: uniprot
-    - terminator: SV40_polyA
+              codon_optimization: mammalian_medium_bias
+
+    - terminator: rrnB_T1

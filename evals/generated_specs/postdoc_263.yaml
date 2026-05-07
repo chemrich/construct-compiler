@@ -1,24 +1,33 @@
 construct:
-  name: "yeast_vp1_chaperone_p2a_expression"
+  name: "VP1_P2A_ChapC_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: GAL1
+
     - cistron:
-        label: vp1_p2a_chaperone
+        label: VP1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: VP1
               source: uniprot
-          - linker:
-              type: P2A
-              repeats: 1
-          - gene:
-              id: Chaperone_C
-              source: uniprot
-    - terminator: CYC1
+
+    # P2A self-cleaving peptide for polycistronic expression
+    - spacer: 51  # P2A sequence is ~51 bp
+
+    - cistron:
+        label: ChapC
+        expression: high
+        fused: false
+        gene:
+          id: Chaperone_C
+          source: uniprot
+
+    - terminator: rrnB_T1

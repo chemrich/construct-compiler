@@ -1,38 +1,48 @@
 construct:
-  name: "yeast_bistable_toggle_memory"
+  name: "yeast_toggle_memory_switch"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GAL1_LacO  # Repressed by LacI; Input A (Galactose) switches the state
+    - promoter: GAL4
+
     - cistron:
-        label: repressor_tetr
-        expression: medium
+        label: memory_ON_state
+        expression: high
+        chain:
+          - gene:
+              id: GAL4_VP16
+              source: uniprot
+              # Activator of memory state; responds to input A
+
+    - spacer: 25
+
+    - cistron:
+        label: memory_OFF_state
+        expression: high
+        chain:
+          - gene:
+              id: MatA1
+              source: uniprot
+              # Repressor that silences memory ON; responds to input B
+
+    - spacer: 25
+
+    - cistron:
+        label: memory_reporter
+        expression: high
         chain:
           - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P04483
-              source: uniprot
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: TetO_CYC1  # Repressed by TetR; Input B (aTc) switches the state
-    - cistron:
-        label: repressor_laci
-        expression: medium
-        chain:
-          - tag: FLAG
-          - gene:
-              id: P03023
-              source: uniprot
-    - terminator: ADH1_term
-    - spacer: 50
-    - promoter: TetO_CYC1  # Robust reporter linked to the ON-state (LacI expression)
-    - cistron:
-        label: reporter_mcherry
-        expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: ACT1_term
+              id: tdTomato
+              source: fpbase
+              # Robust red fluorescent reporter; expressed when memory is ON
+
+    - terminator: rrnB_T1

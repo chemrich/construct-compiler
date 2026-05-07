@@ -1,24 +1,37 @@
 construct:
-  name: yeast_synonymous_high_expression
+  name: "dual_GeneB_GeneC_yeast_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: gene_b
+        label: GeneB_codon_opt_v1
         expression: high
-        gene:
-          id: GeneB
-          source: uniprot
-    - spacer: 50
+        chain:
+          - gene:
+              id: GeneB_yeast_optimized_1
+              source: uniprot
+              codon_optimization: yeast_high_expression
+              sequence_variant: "variant_A"
+
+    - spacer: 30
+
     - cistron:
-        label: gene_c
+        label: GeneC_codon_opt_v2
         expression: high
         fused: false
-        gene:
-          id: GeneC
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - gene:
+              id: GeneC_yeast_optimized_2
+              source: uniprot
+              codon_optimization: yeast_high_expression
+              sequence_variant: "variant_B"
+
+    - terminator: CYC1

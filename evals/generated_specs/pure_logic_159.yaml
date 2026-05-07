@@ -1,34 +1,79 @@
 construct:
-  name: "essential_enzyme_redundant_system"
+  name: "redundant_error_correction_EssentialEnzyme"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac  # Primary pathway (Pathway 1)
+    # Pathway 1: Primary production route with native regulation
+    - promoter: T7lac
+      label: "Pathway1_control"
+
     - cistron:
-        label: pathway_1_enzyme
+        label: Pathway1_EssentialEnzyme
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P00722
+              id: EssentialEnzyme
               source: uniprot
-    - terminator: T7term
-    - promoter: araBAD  # Secondary backup pathway (Pathway 2), inducible/upregulatable
+
+    - terminator: rrnB_T1
+
+    # Spacer between pathways
+    - spacer: 35
+
+    # Pathway 2: Backup production route with inducible upregulation
+    - promoter: araBAD
+      label: "Pathway2_inducible"
+
     - cistron:
-        label: pathway_2_enzyme
+        label: Pathway2_EssentialEnzyme
         expression: high
         chain:
           - tag: 8xHis
           - gene:
-              id: P00722
+              id: EssentialEnzyme
               source: uniprot
-    - terminator: BBa_B0015
-    - promoter: J23106  # Constitutive promoter for error detection sensor
-    - cistron:
-        label: failure_sensor
-        expression: low
-        gene:
-          id: mScarlet
-          source: fpbase
+
     - terminator: rrnB_T1
+
+    # Spacer before failure sensor
+    - spacer: 35
+
+    # Failure Sensor: Detects pathway collapse and triggers arabinose-based upregulation
+    - promoter: lacUV5
+      label: "FailureSensor_promoter"
+
+    - cistron:
+        label: FailureSensor_AraC_regulator
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Spacer before output
+    - spacer: 30
+
+    # Reporter/Validation: GFP output correlates with EssentialEnzyme production
+    - promoter: T7
+      label: "validation_reporter"
+
+    - cistron:
+        label: production_validator
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: BBa_B0015

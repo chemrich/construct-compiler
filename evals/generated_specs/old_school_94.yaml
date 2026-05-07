@@ -1,21 +1,36 @@
 construct:
-  name: "tet_inducible_rtTA_mammalian_expression"
+  name: tetracycline_inducible_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: transactivator
-        expression: medium
-        gene:
-          id: rtTA
-    - terminator: bGH_PA
-    - promoter: TRE3G
-    - cistron:
-        label: target_gene
+        label: rtTA
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: rtTA
+              source: uniprot
+
     - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: TRE
+
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: target_gene
+              source: uniprot
+
+    - terminator: BGH_polyA

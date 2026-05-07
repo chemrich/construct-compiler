@@ -1,28 +1,43 @@
 construct:
-  name: "genetic_xor_gate"
+  name: XOR_logic_gate
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    # This XOR gate uses a dual-branch design where each branch represents (Input AND NOT Other_Input).
-    # Branch 1: Inducible by Arabinose (Input A), but repressed by high IPTG (Input B) via a hybrid araBAD-lacO promoter.
-    - promoter: araBAD_lacO
+    - promoter: araBAD
+    
     - cistron:
-        label: branch_a_high_b_low
+        label: input_A_sensor
         expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: input_B_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: rhamnose_operon_regulator
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: XOR_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
     - terminator: rrnB_T1
-
-    # Branch 2: Inducible by IPTG (Input B), but repressed by Arabinose (Input A) via a hybrid lacUV5-araO promoter.
-    - promoter: lacUV5_araO
-    - cistron:
-        label: branch_b_high_a_low
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015

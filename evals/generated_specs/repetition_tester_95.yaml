@@ -1,26 +1,34 @@
 construct:
-  name: "dual_pathway_secreted_protein_expression"
-  host: e_coli_bl21_de3
+  name: "dual_secreted_protein_distinct_leaders"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: sec_targeted_copy
+        label: secreted_copy1_sec_pathway
         expression: high
         chain:
-          - tag: pelB  # Sec-dependent leader peptide
+          - signal_peptide: PelB
           - gene:
-              id: P01241
+              id: secreted_protein
               source: uniprot
-    - spacer: 45
+
+    - spacer: 30
+
     - cistron:
-        label: srp_targeted_copy
+        label: secreted_copy2_tat_pathway
         expression: high
-        fused: false  # Separate RBS for the second cistron
+        fused: false
         chain:
-          - tag: dsbA  # SRP-dependent leader peptide (distinct from pelB)
+          - signal_peptide: TorA
           - gene:
-              id: P01241
+              id: secreted_protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

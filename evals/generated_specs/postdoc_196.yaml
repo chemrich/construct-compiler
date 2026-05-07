@@ -1,18 +1,26 @@
 construct:
-  name: "HugeProtein_Solubility_Optimization"
-  host: e_coli_bl21_de3
+  name: "HugeProtein_SUMO_StrepII"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: HugeProtein
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: SUMO
           - cleavage_site: 3C
           - gene:
               id: HugeProtein
               source: uniprot
-          - tag: Twin-Strep
-    - terminator: T7term
+          - tag: Strep-II
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

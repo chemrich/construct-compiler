@@ -1,54 +1,97 @@
 construct:
-  name: "biofuel_six_enzyme_operon_G1_G6"
+  name: "biofuel_six_enzyme_operon"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
+    - insulator: RBS_spacer
+      # Strong RBS-based insulation from upstream
+
     - promoter: T7lac
+
+    - insulator: LacO_operator
+      # Represses transcription in absence of IPTG
+
+    - rbs: RBS_strong
+      # BBa_B0034 for high translation initiation
+
     - cistron:
-        label: enzyme_G1
+        label: G1_enzyme
         expression: high
-        gene:
-          id: G1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: G1
+              source: uniprot
+
+    - rbs: RBS_medium
+      # BBa_B0032 for polycistron spacing
+
     - cistron:
-        label: enzyme_G2
-        expression: high
-        fused: false
-        gene:
-          id: G2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_G3
-        expression: high
-        fused: false
-        gene:
-          id: G3
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_G4
+        label: G2_enzyme
         expression: high
         fused: false
-        gene:
-          id: G4
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: G2
+              source: uniprot
+
+    - rbs: RBS_medium
+
     - cistron:
-        label: enzyme_G5
+        label: G3_enzyme
         expression: high
         fused: false
-        gene:
-          id: G5
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: G3
+              source: uniprot
+
+    - rbs: RBS_medium
+
     - cistron:
-        label: enzyme_G6
+        label: G4_enzyme
         expression: high
         fused: false
-        gene:
-          id: G6
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: G4
+              source: uniprot
+
+    - rbs: RBS_medium
+
+    - cistron:
+        label: G5_enzyme
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: G5
+              source: uniprot
+
+    - rbs: RBS_medium
+
+    - cistron:
+        label: G6_enzyme
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: G6
+              source: uniprot
+
+    - terminator: rrnB_T1
+      # Strong transcription terminator to prevent read-through
+
+    - insulator: transcription_terminator_spacer
+      # Downstream spacer to isolate from chromosomal elements

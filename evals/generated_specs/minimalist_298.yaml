@@ -1,19 +1,21 @@
 construct:
-  name: "protein_m_self_excising_reporter"
+  name: self_excising_reporter_protein_M
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: m_protein_reporter_fusion
+        label: protein_M
         expression: high
         chain:
-          - gene:
-              id: P0DTC5
-              source: uniprot
+          - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: mScarlet
-              source: fpbase
-    - terminator: T7term
+              id: protein_M
+              source: uniprot
+
+    - terminator: rrnB_T1

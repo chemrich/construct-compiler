@@ -1,39 +1,62 @@
 construct:
-  name: "cellulolytic_four_enzyme_operon"
-  host: e_coli
+  name: cellulolytic_operon_four_enzymes
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: trc  # strong constitutive promoter suitable for E. coli
+
     - cistron:
-        label: endo1
+        label: Endo1
         expression: high
-        gene:
-          id: Endo1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Endo1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: exo2
-        expression: high
-        fused: false
-        gene:
-          id: Exo2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: bgl3
+        label: Exo2
         expression: high
         fused: false
-        gene:
-          id: BGL3
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Exo2
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: lpmo4
+        label: BGL3
         expression: high
         fused: false
-        gene:
-          id: LPMO4
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: BGL3
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: LPMO4
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: LPMO4
+              source: uniprot
+
+    - terminator: rrnB_T1

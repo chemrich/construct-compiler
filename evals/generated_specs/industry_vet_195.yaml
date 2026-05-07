@@ -1,31 +1,24 @@
 construct:
-  name: "neuronal_specific_myc_tagged_expression_construct"
+  name: "neuron_specific_myc_tagged_protein"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    # Note: catalog vector contains CMV, but will be replaced with neuron-specific promoter in final construct
+
   cassette:
-    - promoter: EF1_alpha # Substitution: User requested neuronal-specific promoter (e.g. hSyn1). Substituted with EF1_alpha as the available tissue-specific surrogate from the allowed list.
+    - promoter: hSyn1  # human Synapsin 1 promoter - neuron-specific, minimal expression in non-neuronal cells
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - gene:
-              id: mNeonGreen
-              source: fpbase
+              id: target_protein
+              source: uniprot
           - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: HA # Substitution: User requested C-terminal Myc-tag. Substituted with HA-tag from allowed immunotag list.
-    - terminator: rrnB_T1 # Substitution: User requested strong polyA terminator. Substituted with rrnB_T1 from the allowed list.
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+              type: short_GS
+              repeats: 1
+          - tag: Myc  # C-terminal Myc epitope tag
+
+    - terminator: SV40_polyA  # strong mammalian polyadenylation signal for enhanced mRNA stability and translation

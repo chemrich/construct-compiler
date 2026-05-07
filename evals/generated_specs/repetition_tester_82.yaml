@@ -1,43 +1,50 @@
 construct:
-  name: "yeast_tricistronic_orthogonal_expression"
+  name: "yeast_tricistronic_distinct_RBS_terminators"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    # First expression unit
-    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - promoter: GAL1
+
     - cistron:
-        label: cistron_1
+        label: gene1
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: CYC1_term  # Distinct terminator 1
+        chain:
+          - rbs: AGGAGGU
+          - gene:
+              id: HIS3
+              source: uniprot
+
+    - terminator: CYC1
 
     - spacer: 30
 
-    # Second expression unit
-    - promoter: TEF1  # Strong constitutive yeast promoter (distinct from TDH3)
     - cistron:
-        label: cistron_2
+        label: gene2
         expression: high
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: ADH1_term  # Distinct terminator 2
+        chain:
+          - rbs: GAGG
+          - gene:
+              id: LEU2
+              source: uniprot
+
+    - terminator: ADH1
 
     - spacer: 30
 
-    # Third expression unit
-    - promoter: PGK1  # Strong constitutive yeast promoter (distinct from others)
     - cistron:
-        label: cistron_3
+        label: gene3
         expression: high
         fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: ENO2_term  # Distinct terminator 3
+        chain:
+          - rbs: AGGAGG
+          - gene:
+              id: URA3
+              source: uniprot
+
+    - terminator: PGK1

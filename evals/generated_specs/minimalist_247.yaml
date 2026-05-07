@@ -1,16 +1,22 @@
 construct:
-  name: "protein_z_solubility_expression"
-  host: e_coli_bl21_de3
+  name: "problematic_protein_Z_solubility_tag"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: protein_Z
         expression: high
         chain:
           - solubility_tag: MBP
           - gene:
-              id: P07225
+              id: protein_Z
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

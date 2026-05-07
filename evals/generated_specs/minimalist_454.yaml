@@ -1,23 +1,22 @@
 construct:
-  name: "yeast_two_hybrid_bait_proteinp"
+  name: yeast_two_hybrid_bait_ProteinP
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: ADH1
+    - promoter: J23106
+
     - cistron:
-        label: bait_fusion
-        expression: medium
+        label: bait
+        expression: high
         chain:
-          - gene:
-              id: GAL4_DBD
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

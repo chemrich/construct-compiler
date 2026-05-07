@@ -1,22 +1,26 @@
 construct:
-  name: "mCherry_P_mammalian_expression"
+  name: mCherry_tagged_protein_P_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: mCherry
-              source: fpbase
+              id: protein_P
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - tag: FLAG
           - gene:
-              id: P
-              source: uniprot
-    - terminator: bGH_PA
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

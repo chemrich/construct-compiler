@@ -1,17 +1,26 @@
 construct:
-  name: "tet_inducible_toxinA_expression"
-  host: e_coli
+  name: "ToxinA_tetracycline_inducible"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pBAD30"
+    # Note: E. coli uses araBAD (arabinose-inducible) as the closest tight regulatory system.
+    # True tetracycline-inducible (Tet-on/off) systems require additional chromosomal integration
+    # of tet repressor or transactivator genes; standard plasmid-based tight control in E. coli
+    # uses araBAD. Using pBAD30 with araBAD promoter for tight, titratable expression.
+    resistance: ampicillin
     ori: pBR322
+
   cassette:
-    - promoter: tetA  # Substituted mammalian Tet-on/off with E. coli tetA promoter for tetracycline induction
+    - promoter: araBAD
+
     - cistron:
-        label: target_toxin
-        expression: high
+        label: ToxinA
+        expression: low
         chain:
           - tag: 6xHis
           - gene:
               id: ToxinA
               source: uniprot
+
     - terminator: rrnB_T1

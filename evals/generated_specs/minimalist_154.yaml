@@ -1,16 +1,23 @@
 construct:
-  name: "plant_pm_receptor_expression"
-  host: plant
+  name: "plasma_membrane_receptor_plant"
+  host: algae
+
   backbone:
+    catalog_vector: "pCambia1300"
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: CaMV_35S # Substituted for plant-specific constitutive expression
+    - promoter: CaMV_35S
+
     - cistron:
         label: receptor
         expression: high
-        gene:
-          id: BRI1
-          source: uniprot
-    - terminator: NOS_term # Substituted for plant-specific termination
+        chain:
+          - tag: HA
+          - gene:
+              id: AtPMR1
+              source: uniprot
+
+    - terminator: nos_terminator

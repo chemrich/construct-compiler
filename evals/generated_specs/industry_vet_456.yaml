@@ -1,18 +1,26 @@
 construct:
-  name: "yeast_secreted_therapeutic_protein"
+  name: "therapeutic_protein_yeast_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: AOX1
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_protein
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P01588
+              id: IgG_Fc
               source: uniprot
-    - terminator: CYC1_term
+          - linker:
+              type: GS_flexible
+              repeats: 1
+
+    - terminator: CYC1

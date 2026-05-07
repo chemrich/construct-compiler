@@ -1,38 +1,49 @@
 construct:
-  name: triple_fluorescent_reporter_non_homologous
-  host: e_coli
+  name: "triple_reporter_codon_diversity"
+  host: e_coli_bl21
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: J23100  # Strong constitutive BioBrick promoter
+    - promoter: T7lac
+
     - cistron:
-        label: reporter1
+        label: reporter_1
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-          codon_optimization: ecoli_high_gc  # Force high GC codon usage
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+              codon_usage: human
+
     - terminator: rrnB_T1
 
-    - promoter: J23106  # Different strong constitutive promoter
-    - cistron:
-        label: reporter2
-        expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-          codon_optimization: ecoli_rare_codons  # Use rare codon variant
-    - terminator: BBa_B0015  # Double terminator, different from rrnB_T1
+    - spacer: 30
 
-    - promoter: tac  # Third strong promoter option
     - cistron:
-        label: reporter3
+        label: reporter_2
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-          codon_optimization: ecoli_balanced  # Balanced codon usage
-    - terminator: T7term  # T7 terminator, non-homologous to others
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+              codon_usage: yeast
+
+    - terminator: T7term
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter_3
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+              codon_usage: bacteria
+
+    - terminator: BBa_B0015

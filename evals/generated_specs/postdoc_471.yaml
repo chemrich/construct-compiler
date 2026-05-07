@@ -1,19 +1,29 @@
 construct:
-  name: "MitochondrialEnzyme_Yeast_Expression"
+  name: MitochondrialEnzyme
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: ADH1
+    - promoter: lacUV5
+
     - cistron:
-        label: target
+        label: mito_enzyme
         expression: high
         chain:
-          - tag: MTS # Mitochondrial Targeting Sequence
           - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: MitochondrialEnzyme
               source: uniprot
-    - terminator: CYC1
+        # Note: Mammalian mitochondrial targeting sequence (MTS) is highly conserved.
+        # In S. cerevisiae, the S. cerevisiae MTS (Cox4 presequence) is preferred,
+        # but mammalian MTS is functional due to sequence conservation.
+        # Recommend: prepend mammalian MTS (e.g., Cox4(1-25) or equivalent) or use native yeast MTS in actual implementation.
+
+    - terminator: rrnB_T1

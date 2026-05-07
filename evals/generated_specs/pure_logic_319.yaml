@@ -1,18 +1,32 @@
 construct:
-  name: sender_module_input_s_output_d
-  host: e_coli
+  name: "sender_module_cell_communication"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Inducible by Input_S (Arabinose)
+    - promoter: araBAD
+
     - cistron:
-        label: signal_generator
+        label: sender
         expression: high
         chain:
-          - tag: PelB  # N-terminal secretion signal for E. coli
           - gene:
-              id: LuxI
+              id: luxI
               source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: signal_output
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Input_S
+              source: uniprot
+
     - terminator: rrnB_T1

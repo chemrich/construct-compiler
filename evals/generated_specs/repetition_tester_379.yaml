@@ -1,14 +1,35 @@
 construct:
-  name: "gene_y_triple_mutant_recoded"
-  host: e_coli_bl21_de3
+  name: "GeneY_triple_mutant_codon_optimized"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: GeneY_mutant
         expression: high
-        gene:
-          id: GeneY # Optimization: Sequence diversity and diverse synonymous codon usage in flanking regions of the three mutation sites are required to prevent template switching and replication errors.
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: GeneY
+              source: custom
+              description: "Triple point mutant with codon-optimized flanking sequences to maximize sequence diversity and prevent template switching during synthesis"
+              mutations:
+                - position: 1
+                  codon_change: "ATG_to_GTG"
+                  flanking_sequence_variant: "variant_A"
+                - position: 2
+                  codon_change: "GAA_to_GAG"
+                  flanking_sequence_variant: "variant_B"
+                - position: 3
+                  codon_change: "TTC_to_TTT"
+                  flanking_sequence_variant: "variant_C"
+              codon_optimization: "synonymous_diversity_maximized"
+
+    - terminator: rrnB_T1

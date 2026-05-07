@@ -1,19 +1,26 @@
 construct:
-  name: "hGH_soluble_secretion_expression"
-  host: e_coli_bl21_de3
+  name: "hGH_variant_expression"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac  # CMV is a mammalian promoter; substituted with T7lac for E. coli expression.
+    - promoter: T7lac
+      # Note: CMV is a mammalian promoter and non-functional in E. coli.
+      # Substituted with T7lac for strong prokaryotic expression in BL21.
+
     - cistron:
-        label: hGH_fusion
+        label: hGH_variant
         expression: high
         chain:
-          - tag: PelB
           - tag: 6xHis
           - solubility_tag: MBP
-          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - gene:
               id: P01241
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

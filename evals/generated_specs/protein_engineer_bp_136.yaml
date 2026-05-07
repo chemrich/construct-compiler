@@ -1,23 +1,29 @@
 construct:
-  name: "Fc_3C_therapeutic_fusion_Pichia"
+  name: Fc_fusion_therapeutic_pichia_pastoris
   host: yeast
+
   backbone:
+    catalog_vector: "pPICZ_A"
     resistance: zeocin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: Fc_fusion_protein
+        label: fc_fusion_therapeutic
         expression: high
+        codon_optimization: GC_enriched_pichia
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_secretion_signal
           - gene:
-              id: P01857
+              id: human_Fc
               source: uniprot
           - cleavage_site: 3C
           - gene:
-              id: P01588
+              id: therapeutic_domain
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

@@ -1,37 +1,40 @@
 construct:
-  name: "yeast_diverse_triple_selection_marker"
+  name: "yeast_triple_marker_diverse"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
+    - promoter: GAL1
+      cistron:
+        label: marker1
+        expression: high
+        gene:
+          id: KanMX4
+          source: uniprot
+      terminator: CYC1
+
+    - spacer: 25
+
     - promoter: ADH1
-    - cistron:
-        label: marker_ura3
-        expression: medium
-        fused: false
+      cistron:
+        label: marker2
+        expression: high
         gene:
-          id: P03315
+          id: HygromycinB_phosphotransferase
           source: uniprot
-    - terminator: CYC1
-    - spacer: 60
+      terminator: PGK1
+
+    - spacer: 25
+
     - promoter: TEF1
-    - cistron:
-        label: marker_leu2
-        expression: medium
-        fused: false
+      cistron:
+        label: marker3
+        expression: high
         gene:
-          id: P04411
+          id: NatMX4
           source: uniprot
-    - terminator: TPS1
-    - spacer: 60
-    - promoter: GPD
-    - cistron:
-        label: marker_his3
-        expression: medium
-        fused: false
-        gene:
-          id: P06633
-          source: uniprot
-    - terminator: PGK1
+      terminator: ADH1_poly

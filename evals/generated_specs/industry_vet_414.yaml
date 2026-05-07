@@ -1,23 +1,32 @@
 construct:
-  name: "dual_cassette_goi_expression"
-  host: e_coli_bl21_de3
+  name: dual_independent_cassettes
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: GOI1
         expression: high
         gene:
           id: GOI1
           source: uniprot
+    
     - terminator: rrnB_T1
-    - spacer: 30
+  
+  cassette:
     - promoter: T7lac
+    
     - cistron:
         label: GOI2
         expression: high
         gene:
           id: GOI2
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

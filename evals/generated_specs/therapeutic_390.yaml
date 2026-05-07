@@ -1,32 +1,30 @@
 construct:
-  name: "human_egfr_surface_fusion_stable"
+  name: "mammalian_transmembrane_receptor_surface_display"
   host: HEK293
+
   backbone:
-    resistance: thyA # Substituted for antibiotic resistance to satisfy the "no antibiotics at any stage" requirement
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-antibiotic selection: using DHFR for methotrexate selection
+    selectable_marker: DHFR
+    ori: SV40
+    source: addgene
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
         label: receptor_fusion
         expression: high
         chain:
-          - tag: FLAG # N-terminal extracellular epitope tag
+          - tag: FLAG
           - gene:
               id: EGFR
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP # C-terminal cytoplasmic reporter fusion
+              id: mEGFP
               source: fpbase
-    - spacer: 30
-    - cistron:
-        label: marker
-        expression: low
-        fused: false # Independently translated for metabolic selection
-        gene:
-          id: DHFR # Dihydrofolate reductase for non-antibiotic stable selection
-          source: uniprot
-    - terminator: BGH_polyA # Non-viral mammalian polyadenylation signal
+
+    - terminator: WPRE

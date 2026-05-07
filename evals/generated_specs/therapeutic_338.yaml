@@ -1,17 +1,23 @@
 construct:
-  name: "commensal_amp_secretion"
-  host: e_coli # Lactobacillus not in schema; defaulting to e_coli as bacterial proxy for gut commensal.
+  name: "Lactobacillus_AMP_secretion_stable"
+  host: bacillus  # Bacillus-like expression system, compatible with gram-positive commensals like Lactobacillus
+
   backbone:
-    resistance: kanamycin
-    ori: p15A # Selected for stability during colonization
+    resistance: chloramphenicol  # chloramphenicol resistance for stable maintenance in Lactobacillus
+    ori: pUC  # high-copy plasmid for robust expression in gram-positive bacteria
+    source: addgene
+
   cassette:
-    - promoter: J23100 # High-strength constitutive promoter for continuous AMP production
+    - promoter: J23100  # strong constitutive promoter for stable high-level expression
+
     - cistron:
-        label: antimicrobial_peptide
+        label: AMP_secreted
         expression: high
         chain:
-          - tag: PelB # N-terminal secretion signal for extracellular export
+          - signal_peptide: AmyE  # Bacillus AmyE signal peptide for secretion in gram-positive bacteria
           - gene:
-              id: P35520 # Human Cathelicidin (LL-37) antimicrobial peptide
+              id: lacticin_480  # example: Lactobacillus-derived antimicrobial peptide
               source: uniprot
+          - tag: 6xHis  # C-terminal His tag for detection/purification if needed
+
     - terminator: rrnB_T1

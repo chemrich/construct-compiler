@@ -1,16 +1,22 @@
 construct:
-  name: "protein_x_c_terminal_strep_expression"
-  host: e_coli_bl21_de3
+  name: protein_X_Strep_tag
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: protein_x
+              id: protein_X
               source: uniprot
           - tag: Strep-II
-    - terminator: T7term
+
+    - terminator: rrnB_T1

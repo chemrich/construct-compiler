@@ -1,23 +1,33 @@
 construct:
-  name: ProteinC_ProteinD_P2A_HEK293
+  name: "ProteinC_2A_ProteinD_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_polyprotein
+        label: ProteinC
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: ProteinC
               source: uniprot
-          - linker:
-              type: P2A
-              repeats: 1
+
+    - spacer: 20  # 2A peptide acts as ribosomal skipping sequence; minimal spacer here for clarity
+
+    - cistron:
+        label: ProteinD_via_2A
+        expression: high
+        fused: false  # Independently translated via 2A skipping mechanism
+        chain:
           - tag: Strep-II
           - gene:
               id: ProteinD
               source: uniprot
-    - terminator: bgh_polyA
+
+    - terminator: rrnB_T1

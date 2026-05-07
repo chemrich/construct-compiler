@@ -1,24 +1,42 @@
 construct:
-  name: "crispri_nor_gate_protein_q"
+  name: CRISPRi_AND_gate
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: dcas9_expression
-        expression: medium
-        gene:
-          id: dCas9
-          source: uniprot
-    - terminator: BBa_B0015
-    - promoter: J23100 # This promoter contains target sites for Input_gRNA1 and Input_gRNA2
-    - cistron:
-        label: output_q
+        label: dCas9
         expression: high
-        gene:
-          id: Q
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: dCas9
+              source: uniprot
+
+    - spacer: 30
+
     - terminator: rrnB_T1
+
+    - promoter: araBAD
+
+    - cistron:
+        label: output_Q
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - spacer: 30
+
+    - terminator: rrnB_T1
+
+    # Note: Input gRNAs (gRNA1 and gRNA2) must be provided exogenously or on
+    # separate plasmids. The dCas9 protein produced here will bind and repress
+    # output_Q transcription only when BOTH gRNAs are present and target the
+    # promoter/5'UTR of the output gene. Absence of either gRNA allows Q expression.

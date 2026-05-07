@@ -1,23 +1,24 @@
 construct:
-  name: "VP1_solubility_enhanced_purification"
-  host: e_coli_bl21_de3
+  name: VP1_like_domain_solubility_optimized
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: VP1_like_domain
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
-              id: VP1
+              id: VP1_like_domain
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

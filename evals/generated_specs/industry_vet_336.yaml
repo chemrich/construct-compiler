@@ -1,33 +1,42 @@
 construct:
-  name: "bidirectional_aav_mammalian_construct"
+  name: bidirectional_mammalian_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: ampicillin
+
   cassette:
-    - promoter: CMV_bidirectional  # Using a bidirectional CMV promoter region to drive divergent transcription
+    - promoter: CMV
+      direction: forward
+
     - cistron:
-        label: protein_a
+        label: protein_A
         expression: high
         chain:
           - gene:
-              id: mCherry
-              source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: Myc
-    - spacer: 40
+              id: "USER_GENE_A"
+              source: uniprot
+          - tag: HA
+        c_tag: Myc
+
+    - terminator: rrnB_T1
+
+    # Bidirectional element: reverse-orientation promoter + terminator
+    - promoter: CMV
+      direction: reverse
+      # Note: Bidirectional promoter cassettes require careful spacing.
+      # In practice, the CMV promoter region is shared/overlapping in opposite orientations.
+      # This YAML represents the conceptual layout; physical implementation uses a
+      # bidirectional promoter cassette (e.g., pTRE-Tight Bidirectional from Clontech).
+
     - cistron:
-        label: protein_b
+        label: protein_B
         expression: high
-        fused: false  # Independently translated from the bidirectional promoter
         chain:
           - tag: Strep-II
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_PA
+              id: "USER_GENE_B"
+              source: uniprot
+
+    - terminator: rrnB_T1

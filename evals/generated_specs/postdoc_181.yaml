@@ -1,14 +1,17 @@
 construct:
-  name: "yeastbuddy_high_expression"
+  name: "YeastBuddy_expression"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD # Substituted GPD for requested CMV as CMV is not a standard strong promoter for S. cerevisiae.
+    - promoter: GAL1  # CMV is mammalian-specific; using GAL1 (strong yeast promoter) instead
+
     - cistron:
-        label: target
+        label: YeastBuddy
         expression: high
         chain:
           - tag: 6xHis
@@ -16,4 +19,5 @@ construct:
           - gene:
               id: YeastBuddy
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

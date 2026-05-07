@@ -1,29 +1,30 @@
 construct:
-  name: "nand_logic_gate"
+  name: NAND_logic_gate
   host: e_coli
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
     - cistron:
-        label: input_x
+        label: repressor_X
         expression: medium
         gene:
-          id: IN_X
+          id: tetR
+          source: uniprot
     - spacer: 25
-    - promoter: J23106
     - cistron:
-        label: input_y
+        label: repressor_Y
         expression: medium
         gene:
-          id: IN_Y
+          id: lacI
+          source: uniprot
     - spacer: 25
-    - promoter: tac # NAND logic implementation: promoter is repressed only when IN_X and IN_Y (e.g., split-LacI components) are both present to form a functional repressor
     - cistron:
-        label: target
+        label: NAND_OUT
         expression: high
-        gene:
-          id: NAND_OUT
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
     - terminator: rrnB_T1

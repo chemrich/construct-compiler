@@ -1,26 +1,44 @@
 construct:
-  name: "redundant_orthogonal_regulator_expression"
-  host: e_coli
+  name: "dual_regulatory_protein_codon_diverged"
+  host: e_coli_bl21_de3
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+    
     - cistron:
-        label: lexA_variant_alpha
+        label: regulatory_protein_v1
         expression: high
-        fused: false
-        gene:
-          id: P0A7C2
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: regulatory_protein_v1_codon_optimized_set_a
+              source: custom
+              # Note: This sequence uses preferred E. coli codons (set A: Arg=CGC, Leu=CTG, Gly=GGC)
+    
     - terminator: rrnB_T1
-    - promoter: lacUV5
+    
+    - spacer: 35
+    
+    - promoter: tac
+    # Alternative promoter to avoid sequence identity in regulatory region
+    
     - cistron:
-        label: lexA_variant_beta
-        expression: medium
-        fused: false
-        gene:
-          id: P0A7C2
-          source: uniprot
+        label: regulatory_protein_v2
+        expression: high
+        chain:
+          - tag: 8xHis
+          - cleavage_site: 3C
+          - gene:
+              id: regulatory_protein_v2_codon_optimized_set_b
+              source: custom
+              # Note: This sequence uses alternative E. coli codons (set B: Arg=AGA, Leu=TTA, Gly=GGA)
+              # Functionally identical protein, >10% nucleotide divergence from v1
+    
     - terminator: BBa_B0015
+    # Different terminator architecture to eliminate sequence overlap

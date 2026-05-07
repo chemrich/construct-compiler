@@ -1,19 +1,15 @@
 construct:
-  name: "gene_j_silencing_construct"
-  host: e_coli_bl21_de3
+  name: gene_J_silencing
+  host: e_coli
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: "dCas9_effector"
+        label: gene_J_silencer
         expression: high
-        # Substitution: Silencing 'gene J' (likely phage phiX174 capsid protein P03635) 
-        # is interpreted as a CRISPRi request; construct expresses dCas9 (Q99ZW2).
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: Q99ZW2
+              id: gene_J
               source: uniprot
-    - terminator: T7term
+    - terminator: rrnB_T1

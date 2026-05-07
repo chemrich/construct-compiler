@@ -1,19 +1,24 @@
 construct:
-  name: "yncm_secretion_evaluation_bacillus"
+  name: "YncM_secretion_signal_scFv_evaluation"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pveg  # Constitutive promoter for Bacillus subtilis
+    - promoter: Pveg
+
     - cistron:
-        label: secreted_scfv
+        label: target
         expression: high
         chain:
-          - tag: YncM  # Bacillus subtilis secretion signal peptide
+          - secretion_signal: YncM
           - tag: 6xHis
           - cleavage_site: Enterokinase
           - gene:
               id: scFv
+              source: uniprot
+
     - terminator: rrnB_T1

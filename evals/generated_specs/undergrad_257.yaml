@@ -1,22 +1,31 @@
 construct:
-  name: "sensor_effector_polycistronic_system"
-  host: e_coli_bl21
+  name: two_component_sensor_effector_system
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: sensor
-        expression: medium
+        expression: high
         gene:
           id: SensorProtein
           source: uniprot
-    - spacer: 30
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD
+
     - cistron:
         label: effector
         expression: high
-        fused: false # Independent translation via separate RBS to allow sensor-mediated control logic
         gene:
           id: EffectorProtein
           source: uniprot
-    - terminator: T7term # Standard T7 terminator for E. coli vectors
+
+    - terminator: rrnB_T1

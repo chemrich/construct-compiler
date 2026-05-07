@@ -1,26 +1,56 @@
 construct:
-  name: "mammalian_pulsatile_oscillator"
+  name: mammalian_synthetic_oscillator
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: TRE_CMV  # Tetracycline-responsive promoter for negative feedback regulation
+    - promoter: CMV
+
     - cistron:
         label: repressor
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P04483
+              id: tetR
               source: uniprot
-          - tag: PEST      # C-terminal degradation tag to ensure fast protein turnover for oscillation
-    - spacer: 30
+
+    - terminator: polyA
+
+    - promoter: TRE
+
     - cistron:
-        label: reporter
+        label: fluorescent_marker
         expression: high
-        fused: false       # Independently translated via IRES or similar mammalian mechanism
         chain:
           - gene:
               id: mCherry
               source: fpbase
-          - tag: PEST      # C-terminal degradation tag to enable visualization of pulsatile dynamics
-    - terminator: bGH_pA   # Standard mammalian polyadenylation signal/terminator
+
+    - spacer: 25
+
+    - cistron:
+        label: activator
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: p65
+              source: uniprot
+
+    - terminator: polyA
+
+    - promoter: constitutive_weak
+
+    - cistron:
+        label: negative_feedback_protein
+        expression: medium
+        chain:
+          - gene:
+              id: IkappaB_alpha
+              source: uniprot
+
+    - terminator: polyA

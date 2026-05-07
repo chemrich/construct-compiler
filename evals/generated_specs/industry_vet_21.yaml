@@ -1,32 +1,32 @@
-```yaml
 construct:
-  name: therapeutic_protein_GFP_bicistronic
+  name: "mammalian_therapeutic_bicistronic_GFP_reporter"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: therapeutic
+        label: therapeutic_protein
         expression: high
         chain:
           - gene:
-              id: P01308  # human insulin (placeholder - replace with actual therapeutic)
+              id: therapeutic_protein
               source: uniprot
+        # IRES follows for bicistronic expression
 
-    - spacer: 200  # IRES sequence placeholder
+    - spacer: 30
 
     - cistron:
-        label: reporter
-        expression: medium
-        fused: false  # IRES-mediated independent translation
+        label: GFP_reporter
+        expression: high
+        fused: false
         gene:
           id: mEGFP
           source: fpbase
 
-    - enhancer: WPRE  # Woodchuck hepatitis virus post-transcriptional regulatory element
     - terminator: BGH_polyA
-```

@@ -1,37 +1,42 @@
 construct:
-  name: "yeast_three_enzyme_metabolic_pathway"
+  name: "yeast_three_enzyme_pathway_independent"
   host: yeast
+
+  cassette:
+    - promoter: GAL1
+
+    - cistron:
+        label: E1
+        expression: high
+        gene:
+          id: E1
+          source: uniprot
+
+    - terminator: CYC1
+
+    - promoter: GAL10
+
+    - cistron:
+        label: E2
+        expression: high
+        gene:
+          id: E2
+          source: uniprot
+
+    - terminator: ADH1
+
+    - promoter: TPI1
+
+    - cistron:
+        label: E3
+        expression: high
+        gene:
+          id: E3
+          source: uniprot
+
+    - terminator: PGK1
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
-  cassette:
-    - promoter: TEF1
-    - cistron:
-        label: enzyme_E1
-        expression: high
-        fused: false
-        gene:
-          id: P04049
-          source: uniprot
-    - terminator: CYC1
-    - spacer: 50
-    - promoter: PGK1
-    - cistron:
-        label: enzyme_E2
-        expression: high
-        fused: false
-        gene:
-          id: P54839
-          source: uniprot
-    - terminator: ENO1
-    - spacer: 50
-    - promoter: GPM1
-    - cistron:
-        label: enzyme_E3
-        expression: high
-        fused: false
-        gene:
-          id: P12068
-          source: uniprot
-    - terminator: TDH1

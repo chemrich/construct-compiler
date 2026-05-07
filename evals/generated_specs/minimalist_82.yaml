@@ -1,17 +1,20 @@
 construct:
-  name: "secreted_bacterial_lipase"
-  host: e_coli_bl21_de3
+  name: secreted_bacterial_lipase
+  host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_lipase
+        label: lipase
         expression: high
         chain:
-          - tag: PelB
+          - tag: signal_peptide_pelB
           - gene:
-              id: P08658
+              id: lipA
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

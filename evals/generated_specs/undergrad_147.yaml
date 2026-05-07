@@ -1,22 +1,31 @@
 construct:
-  name: "mammalian_bicistronic_IRES_proteinD_proteinE"
+  name: ProteinD_IRES_ProteinE
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_d
+        label: ProteinD
         expression: high
-        gene:
-          id: ProteinD
-          source: uniprot
-    - spacer: 585  # Standard length for EMCV IRES to allow bicistronic expression
+        chain:
+          - gene:
+              id: ProteinD
+              source: uniprot
+
+    # IRES (Internal Ribosome Entry Site) enables cap-independent translation of downstream ProteinE
+    - spacer: 27  # IRES consensus sequence (~27 bp minimal)
+
     - cistron:
-        label: protein_e
+        label: ProteinE
         expression: high
-        fused: false  # Allows independent translation from the IRES element
+        fused: false
         gene:
           id: ProteinE
           source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: rrnB_T1

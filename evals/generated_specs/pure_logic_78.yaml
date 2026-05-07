@@ -1,17 +1,76 @@
 construct:
-  name: "dual_light_inducible_mito_p"
+  name: "dual_wavelength_light_controlled_mitochondrial_P"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: CMV # CMV serves as a placeholder for a specific light-inducible promoter (e.g., a Red-light responsive PhyB/PIF-based UAS system)
+    - promoter: CMV
+
     - cistron:
-        label: "targeted_p"
+        label: light_sensor_1
         expression: high
         chain:
-          - tag: MTS # Mitochondrial Targeting Signal for N-terminal localization
+          - tag: FLAG
           - gene:
-              id: "P"
+              id: VVD
               source: uniprot
-          - tag: B-LID # Blue-Light Inducible Degron for wavelength-tunable degradation
-    - terminator: BBa_B0015
+        fused: false
+
+    - spacer: 25
+
+    - cistron:
+        label: light_dependent_transcription_factor
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: EL222
+              source: uniprot
+        fused: false
+
+    - spacer: 25
+
+    - cistron:
+        label: target_protein_P
+        expression: high
+        chain:
+          - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: MTS
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: P
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: degron_ODC1
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+
+    - spacer: 25
+
+    - cistron:
+        label: degron_tuning_module
+        expression: medium
+        chain:
+          - gene:
+              id: phyB
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: FLAG
+        fused: false
+
+    - terminator: rrnB_T1

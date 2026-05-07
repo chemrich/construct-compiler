@@ -1,46 +1,60 @@
 construct:
-  name: "five_enzyme_operon_protA_E"
+  name: "five_enzyme_operon_e_coli"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protA_enzyme
+        label: ProtA
         expression: high
         gene:
           id: ProtA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: protBC_fusion
+        label: ProtB_ProtC_fusion
         expression: high
-        fused: false
         chain:
           - gene:
               id: ProtB
               source: uniprot
-          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: Factor_Xa
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: ProtC
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: protD_enzyme
+        label: ProtD
         expression: high
-        fused: false
         gene:
           id: ProtD
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: protE_enzyme
+        label: ProtE
         expression: high
-        fused: false
         chain:
-          - tag: S-tag
+          - tag: Strep-II
           - gene:
               id: ProtE
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

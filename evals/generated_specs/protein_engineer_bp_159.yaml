@@ -1,29 +1,35 @@
 construct:
-  name: "bacillus_subtilis_fab_secretion"
+  name: "bacillus_fab_secretion_operon"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: AmyE
-          - gene:
-              id: antibody_heavy_chain
-              source: uniprot
           - tag: 6xHis
+          - secretion_signal: AmyE
+          - gene:
+              id: P01857
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: light_chain
         expression: high
         fused: false
         chain:
-          - tag: SacB
+          - secretion_signal: SacB
           - gene:
-              id: antibody_light_chain
+              id: P01834
               source: uniprot
+
     - terminator: rrnB_T1

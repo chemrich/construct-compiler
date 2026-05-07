@@ -1,41 +1,56 @@
 construct:
-  name: "four_gene_biosensor_pathway"
-  host: e_coli_bl21_de3
+  name: four_gene_biosensor_pathway
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23106  # Very weak constitutive Anderson promoter for low baseline
+    - promoter: J23108
+      # Very weak constitutive promoter for low baseline expression
+
     - cistron:
         label: sensor_enzyme_1
         expression: very_low
-        fused: false
         gene:
-          id: luxA
+          id: envZ
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: sensor_enzyme_2
         expression: very_low
         fused: false
         gene:
-          id: luxB
+          id: ompR
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: sensor_enzyme_3
         expression: very_low
         fused: false
         gene:
-          id: luxC
+          id: cheA
           source: uniprot
-    - promoter: T7lac  # Strong inducible promoter for high sensitivity reporter output
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+      # Strong inducible promoter for reporter
+
     - cistron:
-        label: reporter_output
+        label: fluorescent_reporter
         expression: high
-        fused: false
-        gene:
-          id: mNeonGreen
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

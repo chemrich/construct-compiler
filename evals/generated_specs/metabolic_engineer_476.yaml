@@ -1,48 +1,67 @@
 construct:
-  name: "Met_ABCDE_metabolic_operon"
+  name: "met_pathway_operon_1_2_1_3_1"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # Strong constitutive promoter
+
     - cistron:
         label: MetA
-        expression: medium
+        expression: high
+        rbs_strength: 0.53  # Characterized RBS for ~1x expression baseline
         gene:
-          id: metA
+          id: MetA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: MetB
         expression: high
+        rbs_strength: 0.87  # Stronger RBS for ~2x relative to MetA
         fused: false
         gene:
-          id: metB
+          id: MetB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: MetC
-        expression: medium
+        expression: high
+        rbs_strength: 0.53  # Same as MetA for ~1x
         fused: false
         gene:
-          id: metC
+          id: MetC
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: MetD
         expression: high
+        rbs_strength: 0.95  # Strongest RBS for ~3x relative to MetA
         fused: false
         gene:
-          id: metD
+          id: MetD
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: MetE
-        expression: medium
+        expression: high
+        rbs_strength: 0.53  # Same as MetA for ~1x
         fused: false
         gene:
-          id: metE
+          id: MetE
           source: uniprot
+
+    - terminator: rrnB_T1
+
     - terminator: BBa_B0015

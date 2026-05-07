@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_thermostable_xylanase_secretion"
+  name: "pichia_pastoris_thermostable_xylanase_secretion"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: xylanase_gst_fusion
+        label: xylanase_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha-factor
           - gene:
-              id: O43097
+              id: thermostable_xylanase
               source: uniprot
-          - cleavage_site: 3C
+          - cleavage_site: PreScission
           - solubility_tag: GST
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

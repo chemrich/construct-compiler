@@ -1,26 +1,26 @@
 construct:
-  name: "Inducible_Therapeutic_mCherry_PEST_Fusion"
+  name: "mammalian_inducible_therapeutic_mCherry_PEST"
   host: HEK293
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV-TetO"
+    source: addgene
+
   cassette:
-    - promoter: TRE3G  # Inducible mammalian promoter for precise control
+    - promoter: CMV_TetO  # Doxycycline-inducible
+
     - cistron:
-        label: monitoring_therapeutic_fusion
-        expression: medium
+        label: fluorescent_therapeutic
+        expression: high
         chain:
-          - gene:
-              id: mCherry
-              source: fpbase
+          - tag: mCherry
+            source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: IL2  # Representative therapeutic protein
+              id: therapeutic_protein
               source: uniprot
-          - linker:
-              type: short_GS
-          - tag: PEST  # C-terminal degradation tag for half-life control
-    - terminator: bGH_pA  # Non-viral mammalian polyadenylation signal
+          - degradation_tag: PEST
+
+    - terminator: SV40_polyA

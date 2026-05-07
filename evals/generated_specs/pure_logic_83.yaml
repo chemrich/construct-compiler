@@ -1,33 +1,55 @@
 construct:
-  name: "tunable_periodic_oscillator"
+  name: "tunable_genetic_oscillator"
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
-        label: activator
-        expression: medium
-        fused: false
-        gene:
-          id: P0A9E0
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: repressor
-        expression: medium
-        fused: false
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: pulsating_reporter
+        label: repressor_protein
         expression: high
-        fused: false
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: activator_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: fluorescent_output
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
+    - spacer: 25
+    
+    - cistron:
+        label: stability_factor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ssrA
+              source: uniprot
+    
     - terminator: rrnB_T1

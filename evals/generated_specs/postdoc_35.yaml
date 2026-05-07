@@ -1,12 +1,9 @@
-```yaml
 construct:
-  name: drosophila_transmembrane_protein_with_CD8_TMD
-  host: e_coli
+  name: "drosophila_tm_protein_with_cd8_tmd_flag"
+  host: e_coli_bl21
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
 
   cassette:
     - promoter: T7lac
@@ -15,13 +12,21 @@ construct:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01732  # Human CD8 alpha transmembrane domain
+              id: CD8A_TMD
               source: uniprot
+              description: "human CD8 alpha transmembrane domain"
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: # Drosophila transmembrane protein UniProt ID needed
+              id: drosophila_protein
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: FLAG
 
     - terminator: rrnB_T1
-```

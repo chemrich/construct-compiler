@@ -1,24 +1,94 @@
 construct:
-  name: "transient_pulse_generator_iffl"
+  name: "transient_pulse_generator_S_to_P"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Input S (Arabinose) activates the repressor
+    - promoter: araBAD
+
     - cistron:
-        label: repressor_tetR
-        expression: high
-        gene:
-          id: P04483
-          source: uniprot
-    - spacer: 30
-    - promoter: araBAD  # Input S also activates the target; this would be a pBad-TetO hybrid in practice
-    - cistron:
-        label: target_protein_p
+        label: input_sensor
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: AraC
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD
+
+    - cistron:
+        label: pulse_generator
+        expression: high
+        chain:
+          - gene:
+              id: P
+              source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: anti_termination_factor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: N_antiterminator
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
+    - cistron:
+        label: degradation_timer
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ClpX
+              source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: ssrA_protease_target
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: ssrA_tagged_repressor
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
+    - cistron:
+        label: timing_oscillator
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: LuxR
+              source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: acyl_homoserine_lactone_synthase
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: LuxI
+              source: uniprot
+
     - terminator: rrnB_T1

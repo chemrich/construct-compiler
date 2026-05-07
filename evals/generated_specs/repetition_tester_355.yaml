@@ -1,16 +1,24 @@
 construct:
-  name: "yeast_divergent_phospho_protein"
+  name: "phosphosite_synthetic_gene_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: phospho_target
+        label: phosphoprotein
         expression: high
-        gene:
-          id: P08640
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: synthetic_phosphosite_array_sc
+              source: custom
+              description: "Codon-optimized S. cerevisiae synthetic gene with multiple phosphorylation sites (S/T-P motifs) encoded by divergent DNA sequences to eliminate repetitive elements. Each phosphosite region uses distinct codon usage patterns while maintaining identical or similar amino acid sequences. Requires custom synthesis with explicit codon optimization to avoid homopolymer tracts and repetitive sequences."
+
     - terminator: CYC1

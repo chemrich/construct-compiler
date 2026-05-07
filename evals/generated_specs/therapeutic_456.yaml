@@ -1,21 +1,27 @@
 construct:
-  name: "yeast_two_hybrid_bait_gal4_dbd_fusion"
+  name: "yeast_two_hybrid_bait_GAL4DBD"
   host: yeast
+
   backbone:
-    resistance: none # Excluded per user request for safety; assume auxotrophic selection in yeast
-    ori: pUC
+    resistance: none
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: ADH1 # Standard yeast promoter for constitutive bait expression
+    - promoter: GAL1
+
     - cistron:
-        label: bait_fusion
+        label: bait
         expression: medium
         chain:
-          - tag: GAL4_DBD # DNA-binding domain residues 1-147
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: BAIT_PROTEIN
+              id: MYC
               source: uniprot
-    - terminator: CYC1 # Standard yeast transcriptional terminator
+
+    - terminator: CYC1

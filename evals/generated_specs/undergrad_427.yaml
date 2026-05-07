@@ -1,18 +1,23 @@
 construct:
-  name: "YeastBuddy_Purification_Yeast"
+  name: "YeastBuddy_His_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2μ
     source: addgene
+
   cassette:
-    - promoter: GPD  # Standard high-expression constitutive promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: YeastBuddy
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: YeastBuddy
               source: uniprot
-    - terminator: CYC1  # Standard yeast terminator
+
+    - terminator: CYC1_poly_A

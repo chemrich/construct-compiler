@@ -1,23 +1,27 @@
 construct:
-  name: yeast_solubility_optimized_human_protein_expression
+  name: "yeast_soluble_human_50kDa"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: human_target
-        expression: medium
+        label: target
+        expression: high
         chain:
-          - tag: 8xHis
-          - solubility_tag: SUMO
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: P04637
+              id: human_target_protein
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

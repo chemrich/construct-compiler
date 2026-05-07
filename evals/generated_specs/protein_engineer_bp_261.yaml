@@ -1,12 +1,15 @@
 construct:
-  name: "bacillus_extracellular_amylase_production"
+  name: "Bacillus_AmyE_secreted_amylase_FLAG_TEV"
   host: bacillus
+
   backbone:
-    resistance: chloramphenicol
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
         label: target_amylase
         expression: high
@@ -15,6 +18,8 @@ construct:
           - cleavage_site: TEV
           - tag: FLAG
           - gene:
-              id: P00694
+              id: amylase
               source: uniprot
+              codon_optimization: bacillus_subtilis
+
     - terminator: rrnB_T1

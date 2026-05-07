@@ -1,27 +1,33 @@
 construct:
-  name: "mammalian_ires_therapeutic_coexpression"
+  name: dual_therapeutic_IRES_expression
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: pd_1_receptor
+        label: therapeutic_protein_1
         expression: high
         chain:
           - tag: FLAG
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: Q15116
+              id: P69905
               source: uniprot
-    - spacer: 574 # Approximate length of EMCV IRES for stoichiometric co-expression
+
+    # IRES element for polycistronic expression
+    - spacer: 50  # IRES sequence (50 bp placeholder for EMCV IRES or HCV IRES)
+
     - cistron:
-        label: pd_l1_ligand
+        label: therapeutic_protein_2
         expression: high
-        fused: false # Indicates independent translation via the IRES-containing spacer
-        gene:
-          id: Q9NZQ7
-          source: uniprot
-    - terminator: bGH_PA
+        fused: false
+        chain:
+          - tag: HA
+          - gene:
+              id: P12345
+              source: uniprot
+
+    - terminator: rrnB_T1

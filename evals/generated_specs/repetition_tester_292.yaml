@@ -1,19 +1,43 @@
 construct:
-  name: "tandem_pol_ii_ncrna_expression_system"
+  name: "dual_ncRNA_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV
-    - cistron:
-        label: ncRNA_X_unit
-        gene:
-          id: ncRNA_X
-    - terminator: bGH_polyA
-    - spacer: 100
     - promoter: EF1_alpha
+      label: ncRNA_X_cassette
+
     - cistron:
-        label: ncRNA_Y_unit
-        gene:
-          id: ncRNA_Y
+        label: ncRNA_X
+        expression: medium
+        chain:
+          - gene:
+              id: ncRNA_X
+              source: custom
+              sequence_type: non_coding_RNA
+        utr_5: "GGGCCGACGCGCCCCCCCCACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGAC"
+        utr_3: "CACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGAC"
+
     - terminator: SV40_polyA
+
+    - spacer: 300
+      comment: "maximal intergenic linker with low homology risk"
+
+    - promoter: U6
+      label: ncRNA_Y_cassette
+
+    - cistron:
+        label: ncRNA_Y
+        expression: medium
+        chain:
+          - gene:
+              id: ncRNA_Y
+              source: custom
+              sequence_type: non_coding_RNA
+        utr_5: "GCGCGACGACGCGCGCGACGACGACGCGCGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGAC"
+        utr_3: "ACGCGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGACGAC"
+
+    - terminator: rabbit_globin_polyA

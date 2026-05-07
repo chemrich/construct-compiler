@@ -1,16 +1,28 @@
 construct:
-  name: "mammalian_high_yield_WPRE_expression"
+  name: "mammalian_protein_expression_WPRE_enhanced"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: WPRE_bGH_pA  # WPRE is used here to provide the 'AAV boost' (mRNA stability/export) alongside a strong polyA signal.
+              id: uniprot_ID_here
+              source: uniprot
+
+    - terminator: rrnB_T1
+      # Note: WPRE (Woodchuck Post-transcriptional Regulatory Element) is an AAV-specific
+      # element that enhances transgene expression via mRNA stability. For non-AAV mammalian
+      # vectors, equivalent enhancements include: (1) synthetic polyadenylation signals with
+      # upstream regulatory elements (e.g., hGH poly(A) + SV40 enhancer); (2) matrix attachment
+      # regions (MARs); or (3) incorporating a strong 3' UTR element like the β-globin PolyA.
+      # Consider adding a robust poly(A) signal (e.g., SV40 late poly(A)) downstream of the
+      # terminator for maximum mRNA stability and protein yield in HEK293 cells.

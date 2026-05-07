@@ -1,31 +1,51 @@
 construct:
-  name: "nor_gate_logic_circuit"
+  name: "NOR_logic_gate_ecoli"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: repressor_y
-        fused: false
-        gene:
-          id: P0ACF0  # LacI repressor
-          source: uniprot
-    - spacer: 50
-    - promoter: tac
-    - cistron:
-        label: repressor_z
-        fused: false
-        gene:
-          id: P04483  # TetR repressor
-          source: uniprot
-    - spacer: 50
-    - promoter: J23106  # Anderson promoter serves as a base for the dual-repressible (LacI/TetR) NOR gate output
-    - cistron:
-        label: output_protein_x
+        label: repressor_Y
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: repressor_Z
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lexA
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_X
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - terminator: rrnB_T1
+
+# Logic implementation:
+# - tetR (repressor_Y) binds operator when ligand Y is absent; represses output
+# - lexA (repressor_Z) binds operator when ligand Z is absent; represses output
+# - Output promoter has dual operators for tetR and lexA in series
+# - Ligand Y (anhydrotetracycline/aTc) inactivates tetR → derepression
+# - Ligand Z (RecA + SOS signal) inactivates lexA → derepression
+# - Output X is ON only when BOTH ligands are absent (both repressors active)
+# - If either Y OR Z present, corresponding repressor is inactivated → X is OFF

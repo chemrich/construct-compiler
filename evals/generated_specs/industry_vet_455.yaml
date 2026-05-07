@@ -1,19 +1,22 @@
 construct:
-  name: "N_terminal_His_AAV_chimeric_protein"
-  host: e_coli_bl21_de3
+  name: "AAV_like_protein_Nterm_His"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: AAV_like
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P03135
-              source: uniprot # Using AAV2 VP1 as representative; C-terminus left free per request
-    - terminator: T7term
+              id: AAV_like_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

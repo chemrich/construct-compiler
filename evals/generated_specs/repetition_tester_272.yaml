@@ -1,28 +1,37 @@
 construct:
-  name: "triple_tmd_fusion_recombination_resistant"
+  name: "triple_TMD_fusion_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: tmd_fusion
+        label: TMD_fusion
         expression: high
-        # DNA diversity achieved via three non-homologous TMD sources and distinct linker architectures
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01732
+              id: TMD1
               source: uniprot
+              codon_usage: mammalian_variant_A
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 1
           - gene:
-              id: P10747
+              id: TMD2
               source: uniprot
+              codon_usage: mammalian_variant_B
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P01730
+              id: TMD3
               source: uniprot
-    - terminator: bGH_pA
+              codon_usage: mammalian_variant_C
+          - tag: HA
+
+    - terminator: rrnB_T1

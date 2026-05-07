@@ -1,33 +1,33 @@
-```yaml
 construct:
-  name: tetracycline_inducible_therapeutic
+  name: "tetracycline_inducible_therapeutic_system"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
-
-    - cistron:
-        label: TetR_repressor
+      cistron:
+        label: TetR
         expression: medium
         gene:
-          id: P04483
+          id: TetR
           source: uniprot
 
     - terminator: rrnB_T1
 
-    - promoter: TetO  # Tet-responsive promoter
+    - spacer: 50
 
-    - cistron:
-        label: therapeutic_target
+    - promoter: TetO  # Tetracycline-responsive promoter
+      cistron:
+        label: therapeutic
         expression: high
+        fused: false
         chain:
-          - secretion_signal: native  # Add appropriate secretion signal for therapeutic
+          - tag: 6xHis
           - gene:
-              id: P01308  # Human insulin as example therapeutic
+              id: null  # User to specify therapeutic gene
               source: uniprot
 
     - terminator: rrnB_T1
-```

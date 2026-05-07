@@ -1,17 +1,24 @@
 construct:
-  name: "mammalian_autoregulatory_feedback_loop"
+  name: autoregulated_mammalian_feedback_construct
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: ampicillin
+
   cassette:
-    - promoter: p5  # AAV p5 promoter is naturally regulated by the Rep protein
+    - promoter: CMV
+      # CMV promoter includes binding sites for the autoregulatory protein
+      # These are embedded in the CMV enhancer/promoter region
+      comment: "CMV promoter engineered with response elements for autoregulatory protein binding"
+
     - cistron:
-        label: rep_autoregulator
-        expression: medium
+        label: autoregulator
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P03132
+              id: AAV_Rep78
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: BHCV_polyA

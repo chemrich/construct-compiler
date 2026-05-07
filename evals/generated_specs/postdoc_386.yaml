@@ -1,16 +1,21 @@
 construct:
-  name: "NR_gamma_yeast_expression"
+  name: "NR_gamma_yeast_nuclear_localization"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD # High-expression constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: NR-gamma
+        label: NR_gamma
         expression: medium
-        gene:
-          id: PPARG # PPARG is the common gene symbol for human NR-gamma (NR1C3)
-          source: uniprot
-    - terminator: CYC1
+        chain:
+          - gene:
+              id: NR_gamma
+              source: uniprot
+
+    - terminator: rrnB_T1

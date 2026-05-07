@@ -1,21 +1,28 @@
 construct:
-  name: "S_cerevisiae_Aga2p_Surface_Display"
+  name: "yeast_surface_display_aga2p_peptide"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
+    source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: display_fusion
-        expression: medium
+        label: surface_display
+        expression: high
         chain:
+          - signal_peptide: Aga2p_signal
           - gene:
-              id: AGA2
+              id: Aga2p
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: target_peptide
-    - terminator: ADH1_term
+              source: uniprot
+
+    - terminator: CYC1

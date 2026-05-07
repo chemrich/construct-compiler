@@ -1,22 +1,25 @@
 construct:
-  name: "nls_gfp_bacterial_fusion"
-  host: e_coli_bl21_de3
+  name: "GFP_SV40NLS_bacterial_protein"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
-          - tag: NLS  # SV40 NLS requested; note: E. coli lacks a nucleus, so this will not target a specific compartment.
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: P0A705
-              source: uniprot
-    - terminator: T7term
+              repeats: 1
+          - tag: NLS  # SV40 NLS; note: lacks functional nuclear import machinery in E. coli
+    
+    - terminator: rrnB_T1

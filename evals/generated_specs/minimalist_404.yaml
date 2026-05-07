@@ -1,20 +1,27 @@
 construct:
-  name: "DomainX_DomainY_yeast_fusion"
+  name: "DomainX_DomainY_fusion_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: fusion_protein
+        label: fusion
         expression: high
         chain:
           - gene:
               id: DomainX
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: DomainY
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

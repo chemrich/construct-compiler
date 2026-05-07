@@ -1,19 +1,24 @@
 construct:
-  name: "pichia_gap_nanobody_production"
+  name: "pichia_nanobody_production"
   host: yeast
+
   backbone:
+    catalog_vector: "pPICZ_A"
     resistance: zeocin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
-      cistron:
-        label: secreted_nanobody
+
+    - cistron:
+        label: nanobody
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_mating_factor
           - gene:
-              id: nanobody_VHH
+              id: nanobody_pichia_codon_optimized
               source: uniprot
           - tag: HA
-      terminator: AOX1_term
+
+    - terminator: rrnB_T1

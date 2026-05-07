@@ -1,20 +1,25 @@
 construct:
-  name: "therapeutic_scfv_secretion_mammalian"
+  name: "scFv_secreted_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: secreted_scfv
+        label: scFv_therapeutic
         expression: high
         chain:
-          - tag: IgK_leader
-          - tag: 6xHis
+          - tag: signal_peptide_IgE  # N-terminal secretion signal
+          - gene:
+              id: scFv
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - gene:
-              id: scFv_therapeutic
-              source: uniprot
-    - terminator: bGH_PA
+              repeats: 1
+          - solubility_tag: Fc  # Enhanced stability via Fc domain
+          - tag: 8xHis  # C-terminal purification tag
+
+    - terminator: poly_A

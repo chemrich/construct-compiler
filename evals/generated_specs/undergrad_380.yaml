@@ -1,16 +1,16 @@
 construct:
-  name: "constitutive_high_gfp_expression"
-  host: e_coli
+  name: high_expression_GFP
+  host: e_coli_bl21
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: pET-28b(+)
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for constant high-level expression
+    - promoter: T7lac
     - cistron:
-        label: bright_gfp
+        label: GFP
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: rrnB_T1

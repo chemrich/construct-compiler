@@ -1,20 +1,24 @@
 construct:
-  name: "MBP_InsolubleProtein_solubility_fusion"
-  host: e_coli_bl21_de3
+  name: InsolubleProtein_MBP_fusion
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: pET-28b(+)
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target
+        label: InsolubleProtein_MBP
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: InsolubleProtein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,18 +1,23 @@
 construct:
-  name: "ProteinZ_purification_degradation"
+  name: ProteinZ_Strep_LVA
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: ProteinZ
         expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: ProteinZ
               source: uniprot
-          - tag: LVA
-    - terminator: T7term
+          - degradation_tag: LVA
+
+    - terminator: rrnB_T1

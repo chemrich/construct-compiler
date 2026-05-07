@@ -1,19 +1,24 @@
 construct:
-  name: "pAOX1_secreted_biosensor_pichia"
+  name: pichia_aox1_secreted_biosensor
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: biosensor_cistron
+        label: secreted_biosensor
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - tag: 6xHis
           - cleavage_site: Factor_Xa
           - gene:
               id: biosensor
-    - terminator: AOX1_TT
+              source: uniprot
+
+    - terminator: rrnB_T1

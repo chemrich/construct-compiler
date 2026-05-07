@@ -1,19 +1,27 @@
 construct:
-  name: inducible_therapeutic_nonviral_markerless
+  name: "mammalian_inducible_therapeutic_expression"
   host: HEK293
+
   backbone:
-    resistance: none # Provided as 'none' to meet requirement for no antibiotic resistance markers; implies alternative selection (e.g. pFAR or minicircle)
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector without antibiotic resistance
+    # Using CMV as default; will be overridden by inducible promoter in cassette
+    ori: ColA
+    source: addgene
+
   cassette:
-    - promoter: TRE3G # Inducible Tetracycline Response Element (synthetic/non-viral)
+    - promoter: TRE_tight  # Tetracycline Response Element for tight inducible control
+
     - cistron:
         label: therapeutic_protein
         expression: high
         chain:
-          - tag: 8xHis
-          - cleavage_site: TEV
+          - tag: 6xHis  # N-terminal purification tag
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01588
+              id: therapeutic_protein
               source: uniprot
-    - terminator: bGH_polyA # Non-viral polyadenylation signal
+
+    - polya: SV40_pA  # SV40 polyadenylation signal for mRNA stability and nuclear export

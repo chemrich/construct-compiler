@@ -1,18 +1,22 @@
 construct:
-  name: "human_KinaseK_yeast_high_expression"
+  name: "KinaseK_yeast_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: TEF1  # Substituted EF1_alpha with TEF1, its strong constitutive equivalent in S. cerevisiae
+    - promoter: GAL1  # Strong constitutive yeast promoter, equivalent to mammalian EF1α
+
     - cistron:
-        label: kinase_target
+        label: KinaseK
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: KinaseK
               source: uniprot
-    - terminator: CYC1  # Standard strong yeast terminator/poly-A signal
+
+    - terminator: CYC1  # Yeast poly(A) signal for mRNA stability

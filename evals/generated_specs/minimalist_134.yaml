@@ -1,16 +1,21 @@
 construct:
-  name: "protein_o_constitutive_yeast_expression"
+  name: "always_on_protein_O_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: TDH3  # Strong constitutive promoter for yeast
+    - promoter: GAL1
+
     - cistron:
-        label: protein_o
+        label: protein_O
         expression: high
-        gene:
-          id: Protein_O
-          source: uniprot
-    - terminator: CYC1  # Standard yeast terminator
+        chain:
+          - gene:
+              id: P0_yeast
+              source: uniprot
+
+    - terminator: CYC1

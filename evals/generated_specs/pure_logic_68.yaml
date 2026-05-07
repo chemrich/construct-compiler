@@ -1,58 +1,99 @@
 construct:
-  name: "tri_stable_repressilator_timer"
+  name: "E_coli_three_state_genetic_timer"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: PLtetO-1  # Repressed by TetR (State 3); can be triggered by aTc pulse
-    - cistron:
-        label: state_1_lacI
-        expression: medium
-        chain:
-          - gene:
-              id: P03023 # LacI repressor
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mTagBFP2
-              source: fpbase
-          - tag: SsrA # C-terminal degradation tag for rapid turnover/cycling
-    - terminator: BBa_B0015
+    - promoter: araBAD
 
-    - promoter: Plac_ara-1 # Repressed by LacI (State 1)
     - cistron:
-        label: state_2_cI
-        expression: medium
+        label: S1_state_marker
+        expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P03034 # Lambda cI repressor
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-          - tag: SsrA
-    - terminator: BBa_B0015
 
-    - promoter: PLlambda # Repressed by Lambda cI (State 2)
+    - spacer: 30
+
     - cistron:
-        label: state_3_tetR
+        label: degradation_trigger_1
+        expression: high
+        chain:
+          - gene:
+              id: ssrA_tag_fusion
+              source: uniprot
+        fused: false
+
+    - spacer: 30
+
+    - cistron:
+        label: S2_state_marker
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: time_delay_protein_1
         expression: medium
         chain:
           - gene:
-              id: P04483 # TetR repressor
+              id: cI_repressor
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
+        fused: false
+
+    - spacer: 30
+
+    - cistron:
+        label: degradation_trigger_2
+        expression: medium
+        chain:
           - gene:
-              id: mScarlet
+              id: lon_protease_substrate
+              source: uniprot
+        fused: false
+
+    - spacer: 30
+
+    - cistron:
+        label: S3_state_marker
+        expression: low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
               source: fpbase
-          - tag: SsrA
+
+    - spacer: 30
+
+    - cistron:
+        label: reset_regulator
+        expression: low
+        chain:
+          - gene:
+              id: araC_repressor
+              source: uniprot
+        fused: false
+
+    - spacer: 30
+
+    - cistron:
+        label: clp_protease_activator
+        expression: very_low
+        chain:
+          - gene:
+              id: clpP_ClpX_cochaperone
+              source: uniprot
+        fused: false
+
     - terminator: rrnB_T1

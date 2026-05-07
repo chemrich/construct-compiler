@@ -1,15 +1,22 @@
 construct:
-  name: "blue_light_inducible_gfp"
+  name: light_inducible_GFP_expression
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: pEL222  # Blue-light inducible promoter activated by the EL222 transcription factor
+    - promoter: CRY2_light_inducible
+      # Blue light-inducible promoter based on cryptochrome 2 (CRY2) system
+      # Requires co-expression of CRY2-VP16 or similar optogenetic transactivator
+
     - cistron:
-        label: light_responsive_gfp
+        label: GFP
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

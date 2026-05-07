@@ -1,30 +1,44 @@
 construct:
-  name: tandem_peptide_high_expression
-  host: e_coli_bl21
+  name: "triple_peptide_high_expression"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: tandem_peptide_fusion
+        label: peptide_1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P62988
+              id: peptide_copy_1
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
+
+    - spacer: 20
+
+    - cistron:
+        label: peptide_2
+        expression: high
+        fused: false
+        chain:
           - tag: 6xHis
           - gene:
-              id: P62988
+              id: peptide_copy_2
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
+
+    - spacer: 20
+
+    - cistron:
+        label: peptide_3
+        expression: high
+        fused: false
+        chain:
           - tag: 6xHis
           - gene:
-              id: P62988
+              id: peptide_copy_3
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

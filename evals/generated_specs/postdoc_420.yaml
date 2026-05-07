@@ -1,16 +1,26 @@
 construct:
-  name: "his_megfp_expression_ecoli"
-  host: e_coli_bl21_de3
+  name: "ecoli_gfp_expression"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac  # CMV/SV40 are mammalian; T7lac substituted for strong E. coli expression. RBS used instead of Kozak for prokaryotic host.
+    - promoter: T7lac
+      # Note: CMV and SV40 are mammalian promoters. Substituted with T7lac for robust E. coli expression.
+      # Kozak sequence is mammalian-specific and not applicable to prokaryotes; using RBS instead.
+    
+    - rbs: RBS_strong
+    
     - cistron:
-        label: target
+        label: gfp
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

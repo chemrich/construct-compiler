@@ -1,23 +1,52 @@
 construct:
-  name: genetic_comparator_x_y_dual_fluorescence
+  name: "E_coli_genetic_comparator_InputX_vs_InputY"
   host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: tac # Representative for InputX induction/InputY repression logic
+    - promoter: araBAD
+    
     - cistron:
-        label: blue_fluorescence_output
+        label: InputX_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: InputY_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: blueFluorescence_output
         expression: high
-        gene:
-          id: mTagBFP2
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    
+    - spacer: 25
+    
+    - cistron:
+        label: redFluorescence_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+    
     - terminator: rrnB_T1
-    - spacer: 30
-    - promoter: araBAD # Representative for InputY induction/InputX repression logic
-    - cistron:
-        label: red_fluorescence_output
-        expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term

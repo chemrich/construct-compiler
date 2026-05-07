@@ -1,21 +1,29 @@
 construct:
-  name: "mammalian_Z_expression_IRES_mScarlet"
+  name: Z_with_mScarlet_IRES
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: gene_Z
+        label: Z
+        expression: high
         gene:
-          id: "Z"
+          id: Z
           source: uniprot
-    - spacer: 30
+
+    # IRES enables cap-independent translation of downstream cistron
+    - spacer: 27  # IRES sequence (~27 bp minimal)
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: mScarlet_reporter
+        expression: high
         fused: false
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

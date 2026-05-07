@@ -1,17 +1,25 @@
 construct:
-  name: "mammalian_protein_turnover_study"
+  name: "unstable_protein_PEST_turnover"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: degradation_reporter
+        label: target
         expression: high
         chain:
-          - tag: FLAG
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
               id: mEGFP
               source: fpbase
-          - tag: PEST
-    - terminator: SV40_polyA # Substituted for bacterial terminator as host is mammalian
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: PEST  # C-terminal PEST degron for accelerated proteasomal turnover
+
+    - terminator: rrnB_T1

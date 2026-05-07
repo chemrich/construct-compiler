@@ -1,26 +1,36 @@
 construct:
-  name: "human_fv_periplasmic_expression"
-  host: e_coli_bl21_de3
+  name: "human_Fv_disulfide_bond_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: vh_domain
+        label: Fv_fragment
         expression: high
         chain:
-          - tag: PelB # Mammalian ER targeting signals are not functional in E. coli; substituted with PelB leader for periplasmic translocation to facilitate disulfide bond formation.
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01736
+              id: P01857  # Human variable heavy chain (example UniProt)
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: vl_domain
-        expression: high
-        fused: false
-        chain:
-          - tag: PelB
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01591
+              id: P01834  # Human variable light chain (example UniProt)
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+
+  # NOTE: E. coli cytoplasm is reducing and lacks ER machinery for proper disulfide bond formation.
+  # For authentic disulfide bonds, consider using:
+  # - E. coli Origami or SHuffle strains (cytoplasmic disulfide bonds)
+  # - Periplasmic expression (use pelB or similar signal peptide)
+  # - Mammalian expression (HEK293 or CHO) with native signal peptide
+  # This construct provides the basic framework; add pelB signal peptide or use appropriate E. coli strain.

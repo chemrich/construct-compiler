@@ -1,22 +1,29 @@
 construct:
-  name: yeast_v5_biotin_fusion
+  name: "yeast_protein_V5_BirA_CMV_enhancer"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3 # CMV enhancer is not functional in yeast; TDH3 (GPD) used as a strong yeast constitutive promoter substitute.
+    - promoter: GAL1
+    
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: YFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: V5
-          - tag: AviTag
-    - terminator: CYC1_term
+          - linker:
+              type: short_GS
+              repeats: 1
+          - sequence: GGAGGTGGT  # BirA recognition site (biotin ligase substrate)
+
+    - terminator: rrnB_T1

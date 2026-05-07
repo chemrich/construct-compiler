@@ -1,15 +1,19 @@
-```yaml
 construct:
-  name: "CRISPR_gRNA_U6"
+  name: "CRISPR_gRNA_human_U6"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: U6
+
     - gene:
-        id: "gRNA_scaffold"  # User will need to specify target sequence
-        source: synthetic
-    - terminator: U6_term
-```
+        id: CRISPR_gRNA
+        source: uniprot
+        sequence: "GGUUUUAGAGCUAGAAAUAGCAAGUU"
+
+    - terminator: rrnB_T1

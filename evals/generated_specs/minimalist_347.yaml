@@ -1,15 +1,20 @@
 construct:
-  name: "TM1_membrane_expression"
+  name: TM1_membrane_domain_ecoli
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: TM1_target
-        expression: medium
-        gene:
-          id: TM1
-          source: uniprot
-    - terminator: rrnB_T1  # Rule 10 requires a terminator despite request for omission; rrnB_T1 is a standard E. coli terminator.
+        label: TM1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TM1
+              source: uniprot

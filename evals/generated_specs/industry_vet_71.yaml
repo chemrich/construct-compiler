@@ -1,16 +1,21 @@
 construct:
-  name: "strep_tagged_viral_nucleocapsid_expression"
-  host: e_coli_bl21_de3
+  name: "codon_optimized_viral_gene_strep_tag"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: viral_protein
+        label: target
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: P0DTC9
+              id: viral_gene_codon_optimized_ecoli
               source: uniprot
-    - terminator: T7term
+              # Note: Codon optimization for E. coli should be applied during gene synthesis
+    
+    - terminator: rrnB_T1

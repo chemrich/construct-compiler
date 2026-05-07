@@ -1,22 +1,28 @@
 construct:
-  name: "pichia_hsa_stabilized_enzyme"
+  name: "Pichia_enzyme_HSA_fusion_half_life_boost"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: target_enzyme_fusion
+        label: secreted_enzyme_HSA_fusion
         expression: high
         chain:
-          - tag: alpha_factor
-          - tag: HSA
+          - tag: alpha_factor_signal
+          - gene:
+              id: P02768
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: lipase_A
+              id: industrial_enzyme
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1

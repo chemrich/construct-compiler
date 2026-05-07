@@ -1,14 +1,31 @@
 construct:
-  name: "c1_threshold_comparator_luminescence"
+  name: "C1_concentration_comparator_luminescence"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # araBAD provides a sigmoidal threshold response to the inducer (C1)
+    - promoter: araBAD
+
+    - cistron:
+        label: C1_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: luminescence_reporter
-        expression: high
-        gene:
-          id: P08659  # Firefly luciferase
-          source: uniprot
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: luxAB
+              source: uniprot
+
     - terminator: rrnB_T1

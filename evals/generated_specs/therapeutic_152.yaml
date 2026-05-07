@@ -1,23 +1,30 @@
 construct:
-  name: "therapeutic_cpp_delivery_system"
+  name: "mammalian_therapeutic_CPP_fusion"
   host: HEK293
+
   backbone:
-    resistance: none # Antibiotic resistance-free requirement for human therapeutic application
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    ori: null
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: therapeutic_CPP_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: P60484 # Human PTEN (Therapeutic protein example)
+              id: tat_CPP
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P04608 # TAT peptide domain from HIV-1 (Cell-penetrating peptide)
+              id: IFN_beta_1
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

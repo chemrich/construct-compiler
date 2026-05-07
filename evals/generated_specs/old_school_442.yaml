@@ -1,17 +1,22 @@
 construct:
-  name: "mammalian_secretory_expression_mEGFP"
+  name: mammalian_secreted_protein
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: neomycin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: secreted_target
+        label: secreted_protein
         expression: high
         chain:
-          - tag: IgK_leader
+          - signal_peptide: IgG_leader
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_polyA
+              id: target_protein
+              source: uniprot
+
+    - terminator: SV40_polyA

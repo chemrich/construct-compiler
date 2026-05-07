@@ -1,44 +1,16 @@
-# Note: Combined three requested localization constructs into a single multi-cassette plasmid to satisfy the single-document requirement while ensuring non-homology between promoters (CMV, EF1_alpha, UbC) and terminators (bGH_polyA, SV40_polyA, hGH_polyA). Each mNeonGreen instance should be uniquely codon-optimized by the compiler.
 construct:
-  name: "Subcellular_mNeonGreen_Localization_System"
+  name: mNeonGreen_mitochondrial_targeting
   host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
   cassette:
-    - promoter: CMV
-    - cistron:
-        label: mitochondrial_mNeonGreen
-        expression: high
-        fused: false
-        chain:
-          - tag: MTS_COX4
-          - gene:
-              id: mNeonGreen
-              source: fpbase
-    - terminator: bGH_polyA
-    - spacer: 100
-    - promoter: EF1_alpha
-    - cistron:
-        label: er_lumen_mNeonGreen
-        expression: high
-        fused: false
-        chain:
-          - tag: SP_CALR
-          - gene:
-              id: mNeonGreen
-              source: fpbase
-          - tag: KDEL
-    - terminator: SV40_polyA
-    - spacer: 100
-    - promoter: UbC
-    - cistron:
-        label: peroxisomal_mNeonGreen
-        expression: high
-        fused: false
-        chain:
-          - gene:
-              id: mNeonGreen
-              source: fpbase
-          - tag: SKL
-    - terminator: hGH_polyA
+  - promoter: CMV
+  - cistron:
+      label: mNeonGreen_mitochondrial
+      expression: high
+      chain:
+      - tag: MTS_COX8A
+      - gene:
+          id: mNeonGreen_codon_variant_A
+          source: fpbase
+  - terminator: rrnB_T1

@@ -1,18 +1,22 @@
 construct:
   name: "periplasmic_peptide_hormone_secretion"
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
-    source: custom
+    source: addgene
+  
   cassette:
     - promoter: lacUV5
+    
     - cistron:
-        label: secreted_hormone
-        expression: medium
+        label: peptide_hormone
+        expression: high
         chain:
-          - tag: pelB
+          - signal_peptide: pelB
           - gene:
               id: peptide_hormone
               source: uniprot
+    
     - terminator: rrnB_T1

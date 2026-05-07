@@ -1,39 +1,69 @@
 construct:
-  name: "yeast_multiplex_sgrna_array"
+  name: "S_cerevisiae_CRISPR_Cas9_sgRNA_array_quad_target"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: SNR52
-    - cistron:
-        label: sgRNA_target_1
+    - promoter: U6
+      label: sgRNA_target_1
+      cistron:
+        label: guide_RNA_1
         expression: high
-        gene:
-          id: sgRNA_scaffold_v1
-    - terminator: SUP4_term
+        chain:
+          - gene:
+              id: CRISPR_sgRNA_spacer_1_target_YLR110C
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+
+    - spacer: 45
+
+    - promoter: SNR52
+      label: sgRNA_target_2
+      cistron:
+        label: guide_RNA_2
+        expression: high
+        chain:
+          - gene:
+              id: CRISPR_sgRNA_spacer_2_target_YGR214W
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+
+    - spacer: 45
 
     - promoter: RPR1
-    - cistron:
-        label: sgRNA_target_2
+      label: sgRNA_target_3
+      cistron:
+        label: guide_RNA_3
         expression: high
-        gene:
-          id: sgRNA_scaffold_v2
-    - terminator: RPR1_term
+        chain:
+          - gene:
+              id: CRISPR_sgRNA_spacer_3_target_YJL200C
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
 
-    - promoter: SCR1
-    - cistron:
-        label: sgRNA_target_3
-        expression: high
-        gene:
-          id: sgRNA_scaffold_v3
-    - terminator: SCR1_term
+    - spacer: 45
 
-    - promoter: SUP4
-    - cistron:
-        label: sgRNA_target_4
+    - promoter: RPC53
+      label: sgRNA_target_4
+      cistron:
+        label: guide_RNA_4
         expression: high
-        gene:
-          id: sgRNA_scaffold_v4
-    - terminator: SUP4_term
+        chain:
+          - gene:
+              id: CRISPR_sgRNA_spacer_4_target_YDR208W
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+
+    - terminator: rrnB_T1

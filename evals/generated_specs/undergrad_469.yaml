@@ -1,12 +1,22 @@
 construct:
-  name: "sgRNA_GeneA_mammalian_expression"
+  name: "sgRNA_GeneA_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: sgRNA_target
-        gene:
-          id: GeneA_sgRNA
-    - terminator: BBa_B0015
+        label: sgRNA_GeneA
+        expression: high
+        chain:
+          - gene:
+              id: sgRNA_GeneA
+              source: custom
+
+    - terminator: U6term

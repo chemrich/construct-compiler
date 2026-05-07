@@ -1,32 +1,85 @@
 construct:
-  name: "metabolic_rewiring_switch_nutrient_AB"
+  name: "nutrient_responsive_metabolic_switch"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: lacUV5
-    - cistron:
-        label: X_pathway
-        expression: high
-        gene:
-          id: P0AEL0
-          source: uniprot
-    - terminator: rrnB_T1
+    # Cassette 1: Nutrient_A sensing and X pathway activation
     - promoter: araBAD
+      label: "nutrient_A_responsive"
+      # araBAD is activated by L-arabinose (represents Nutrient_A signal)
+
     - cistron:
-        label: Y_pathway
+        label: "X_pathway_activator"
         expression: high
-        gene:
-          id: P0A9G6
-          source: uniprot
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+              # AraC acts as positive regulator of X pathway
+
     - spacer: 30
+
+    # Cassette 2: X biosynthesis gene under araBAD control
+    - promoter: araBAD
+
     - cistron:
-        label: A_repressor
+        label: "X_Synth"
         expression: high
         fused: false
         gene:
-          id: P03023
+          id: X_Synth
           source: uniprot
-    - terminator: BBa_B0015
+          # Gene for Product_X biosynthesis; active when Nutrient_A present
+
+    - spacer: 30
+
+    # Cassette 3: Nutrient_B sensing and Y pathway activation with X repression
+    - promoter: tac
+      label: "nutrient_B_responsive"
+      # tac promoter responds to different inducer (Nutrient_B via separate regulatory circuit)
+
+    - cistron:
+        label: "Y_pathway_activator_X_repressor"
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+              # TetR represses X_Synth when expressed (acts as mutual exclusion factor)
+
+    - spacer: 30
+
+    # Cassette 4: Y biosynthesis gene under tac control
+    - promoter: tac
+
+    - cistron:
+        label: "Y_Synth"
+        expression: high
+        fused: false
+        gene:
+          id: Y_Synth
+          source: uniprot
+          # Gene for Product_Y biosynthesis; active when Nutrient_B present
+
+    - spacer: 30
+
+    # Cassette 5: Logical NOT gate for mutual exclusion
+    # X_Synth promoter is repressed by TetR (produced during Nutrient_B pathway)
+    - promoter: J23106
+      label: "X_expression_gate"
+
+    - cistron:
+        label: "repressible_X_Synth"
+        expression: medium
+        fused: false
+        gene:
+          id: X_Synth
+          source: uniprot
+          # Alternative copy: repressed by tetR product from Cassette 3
+
+    - terminator: rrnB_T1

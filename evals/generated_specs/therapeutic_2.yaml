@@ -1,11 +1,11 @@
-```yaml
 construct:
-  name: yeast_vaccine_antigen_his_tagged
+  name: yeast_vaccine_antigen_soluble
   host: yeast
 
   backbone:
-    resistance: kanamycin  # for E. coli cloning steps
-    ori: pBR322
+    catalog_vector: pYES2
+    ori: 2_micron
+    resistance: ura3
     source: addgene
 
   cassette:
@@ -16,13 +16,21 @@ construct:
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: SUMO
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P0DTC2  # SARS-CoV-2 spike protein RBD as example antigen
+              id: antigen_consensus
               source: uniprot
 
-    - terminator: CYC1_T
-```
+    - spacer: 25
+
+    - cistron:
+        label: solubility_enhancer
+        expression: medium
+        fused: false
+        gene:
+          id: MBP
+          source: uniprot
+
+    - terminator: CYC1

@@ -1,23 +1,33 @@
 construct:
-  name: "iptg_inducible_lac_expression_vector"
+  name: "inducible_expression_vector_lacI_kanR"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive promoter for the lacI repressor
+    - promoter: lacUV5
+    
     - cistron:
-        label: lacI_repressor
+        label: target
+        expression: high
+        fused: false
         gene:
           id: lacI
           source: uniprot
-    - spacer: 40
-    - promoter: lacUV5  # Classic IPTG-inducible promoter
+    
+    - terminator: T7term
+
+    - promoter: lacUV5
+    
     - cistron:
-        label: target_protein
+        label: selection_marker
         expression: high
+        fused: false
         gene:
-          id: mEGFP
-          source: fpbase
+          id: kanR
+          source: uniprot
+    
     - terminator: T7term

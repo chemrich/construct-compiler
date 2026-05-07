@@ -1,47 +1,67 @@
 construct:
-  name: "metabolic_cascade_5_enzyme_operon"
-  host: e_coli_bl21_de3
+  name: "five_enzyme_metabolic_cascade"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enz1
+        label: Enz1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Enz1
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: Enz2
         expression: high
         fused: false
-        gene:
-          id: P00895
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: Enz2
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: enz2
+        label: Enz3
         expression: medium
         fused: false
-        gene:
-          id: P00904
-          source: uniprot
-    - cistron:
-        label: enz3
-        fused: true # Enz2 and Enz3 are fused to facilitate TEV cleavage as requested
         chain:
           - cleavage_site: TEV
           - gene:
-              id: P00909
+              id: Enz3
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enz4
+        label: Enz4
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: Enz4
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: Enz5
         expression: low
         fused: false
-        gene:
-          id: P00933
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enz5
-        expression: very_low
-        fused: false
-        gene:
-          id: P00929
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: Enz5
+              source: uniprot
+    
+    - terminator: rrnB_T1

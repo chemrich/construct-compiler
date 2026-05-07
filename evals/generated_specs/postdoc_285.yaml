@@ -1,25 +1,34 @@
 construct:
-  name: "co_ip_protein_e_f"
-  host: e_coli
+  name: "E_F_coIP_construct"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: protein_e
-        expression: medium
+        label: protein_E
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: PROTEIN_E
+              id: protein_E
               source: uniprot
-    - spacer: 30 # IRES is for mammalian systems; substituted with spacer + independent translation (fused: false) for E. coli polycistronic expression
+    
+    - spacer: 30
+    
+    # Note: IRES elements do not function in E. coli prokaryotic systems.
+    # Using a ribosome binding site (RBS) instead for independent translation of protein F.
     - cistron:
-        label: protein_f
-        expression: medium
+        label: protein_F
+        expression: high
         fused: false
         gene:
-          id: PROTEIN_F
+          id: protein_F
           source: uniprot
+    
     - terminator: rrnB_T1

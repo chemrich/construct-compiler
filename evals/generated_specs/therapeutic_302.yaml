@@ -1,16 +1,45 @@
 construct:
-  name: "anti_CD19_CAR_T_cell_activation"
-  host: mammalian
+  name: CAR_T_cell_expression_construct
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
         label: CAR
         expression: high
         chain:
-          - tag: FLAG
+          - tag: HA
           - gene:
-              id: anti_CD19_CAR_41BB_CD3z
+              id: scFv
               source: uniprot
-    - terminator: SV40_pA
+              # Single-chain variable fragment for antigen binding
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD8_transmembrane
+              source: uniprot
+              # Transmembrane domain for surface anchoring
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD28_costimulatory
+              source: uniprot
+              # Costimulatory signaling domain
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD3z_intracellular
+              source: uniprot
+              # CD3-zeta signaling domain for T-cell activation
+
+    - terminator: rrnB_T1

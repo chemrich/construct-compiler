@@ -1,19 +1,24 @@
 construct:
-  name: "vlp_packaged_proteinx_design"
+  name: "ProteinX_VLP_packaging"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_x_cargo
+        label: ProteinX_for_VLP
         expression: high
         chain:
-          - tag: FLAG  # Using FLAG as a proxy for a VLP-interaction tag/domain
+          - tag: FLAG
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P04637  # Using UniProt P04637 (TP53) as a representative "ProteinX"
+              id: ProteinX
               source: uniprot
-    - terminator: bGH_pA  # Standard mammalian polyadenylation signal/terminator
+
+    - terminator: rrnB_T1

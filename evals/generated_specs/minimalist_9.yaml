@@ -1,20 +1,21 @@
-```yaml
 construct:
-  name: controlled_proteinL_mammalian
+  name: "mammalian_proteinL_tight_control"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
-    - promoter: CMV  # CMV promoter provides strict control with low basal expression in mammalian cells
+    - promoter: CMV
 
     - cistron:
         label: proteinL
-        expression: medium
-        gene:
-          id: P19909  # Protein L from Peptostreptococcus magnus
-          source: uniprot
+        expression: very_low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: proteinL
+              source: uniprot
 
     - terminator: rrnB_T1
-```

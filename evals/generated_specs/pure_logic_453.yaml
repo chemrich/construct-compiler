@@ -1,34 +1,53 @@
 construct:
-  name: "tunable_threshold_logic_inverter"
+  name: tunable_threshold_NOT_gate
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: repressor_lacI
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 30
-    - promoter: lacUV5
-    - cistron:
-        label: Mod_X
-        expression: medium
-        fused: false
-        gene:
-          id: P0ACA3
-          source: uniprot
-    - spacer: 30
-    - promoter: tac
-    - cistron:
-        label: inverter_output
+        label: repressor
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_reporter
+        expression: medium
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: modulator
+        expression: high
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: Mod_X
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: allosteric_modulation_protein
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
     - terminator: rrnB_T1

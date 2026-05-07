@@ -1,21 +1,32 @@
 construct:
-  name: "CHO_polycistronic_GeneA_IRES_GeneB"
+  name: "CHO_dual_expression_Gene_A_Gene_B_IRES"
   host: CHO
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
+    ori: ColA
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: gene_a
+        label: Gene_A
         expression: high
         gene:
-          id: GeneA
-    - spacer: 580  # Approximate length of a standard IRES element for polycistronic expression
+          id: Gene_A
+          source: uniprot
+
+    # IRES (Internal Ribosome Entry Site) for cap-independent translation of second gene
+    - spacer: 600  # IRES sequences are typically 400-700 bp; using standard ENCV IRES length
+
     - cistron:
-        label: gene_b
+        label: Gene_B
         expression: high
         fused: false
         gene:
-          id: GeneB
-    - terminator: bGH_polyA
+          id: Gene_B
+          source: uniprot
+
+    - terminator: rrnB_T1

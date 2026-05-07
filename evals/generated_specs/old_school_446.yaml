@@ -1,21 +1,30 @@
 construct:
-  name: "dual_enzyme_tac_polycistronic"
+  name: "dual_enzyme_expression_A_B"
   host: e_coli
+
   backbone:
     resistance: chloramphenicol
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
-        label: enzyme_a
+        label: enzyme_A
+        expression: high
         gene:
-          id: enzyme_a
+          id: enzyme_A
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_b
+        label: enzyme_B
+        expression: high
         fused: false
         gene:
-          id: enzyme_b
+          id: enzyme_B
           source: uniprot
+
     - terminator: rrnB_T1

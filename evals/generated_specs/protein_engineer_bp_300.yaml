@@ -1,20 +1,24 @@
 construct:
-  name: "bacillus_subtilis_industrial_cellulase_secretion"
+  name: "Bacillus_subtilis_secreted_cellulase"
   host: bacillus
+
   backbone:
     resistance: chloramphenicol
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: cellulase_secretion_unit
+        label: secreted_cellulase
         expression: high
         chain:
-          - tag: AmyE
+          - secretion_signal: AmyE
           - gene:
-              id: P06565
+              id: cellulase_codon_optimized
               source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
+
     - terminator: rrnB_T1

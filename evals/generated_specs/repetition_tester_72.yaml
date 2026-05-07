@@ -1,27 +1,18 @@
 construct:
-  name: "protein_m_subcellular_localization_dual_cassette"
-  host: mammalian  # Substituted mammalian for insect host as it is the closest schema-supported eukaryotic host
+  name: ProteinM_mitochondrial_targeting
+  host: insect_sf9
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
   cassette:
-    - promoter: OpIE2  # Insect cell specific promoter
-    - cistron:
-        label: mitochondrial_protein_m
-        expression: high
-        chain:
-          - tag: MTS
-          - gene:
-              id: ProteinM
-              source: uniprot
-    - terminator: SV40_polyA
-    - spacer: 50
-    - promoter: IE1  # Distinct insect cell promoter (HR5-IE1) to avoid repeats
-    - cistron:
-        label: er_protein_m
-        expression: high
-        chain:
-          - tag: ERTS
-          - gene:
-              id: ProteinM
-              source: uniprot
-    - terminator: bGH_polyA  # Distinct terminator to avoid sequence repeats
+  - promoter: IE1
+  - cistron:
+      label: mitochondrial_ProteinM
+      expression: high
+      chain:
+      - tag: MTS
+      - gene:
+          id: ProteinM
+          source: uniprot
+  - terminator: SV40_polyA

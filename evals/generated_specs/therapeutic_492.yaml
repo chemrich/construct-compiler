@@ -1,20 +1,26 @@
 construct:
-  name: "yeast_secretory_magainin_2_production"
+  name: yeast_secreted_AMP_expression
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: magainin_2_secreted
+        label: secreted_AMP
         expression: high
         chain:
-          - solubility_tag: MF_alpha_1_signal
           - tag: 6xHis
-          - cleavage_site: TEV
+          - secretion_signal: alpha_factor
           - gene:
-              id: Magainin_2
+              id: lacticin_3147
               source: uniprot
-    - terminator: CYC1
+          - cleavage_site: 3C
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

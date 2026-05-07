@@ -1,32 +1,48 @@
 construct:
-  name: "SR_latch_reset_dominant"
+  name: SR_latch_reset_priority
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: reset_repressor
+        label: NOR_gate_S
         expression: high
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 40
-    - promoter: araBAD
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: NOR_gate_protein_S
+              source: uniprot
+              description: "NOR logic gate for Set input (part of SR latch)"
+
+    - spacer: 25
+
     - cistron:
-        label: set_state_repressor
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: output_q
+        label: NOR_gate_R
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: NOR_gate_protein_R
+              source: uniprot
+              description: "NOR logic gate for Reset input (prioritized)"
+
+    - spacer: 25
+
+    - cistron:
+        label: buffer_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+              description: "Output buffer for Q state readout"
+
+    - terminator: rrnB_T1

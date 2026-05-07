@@ -1,27 +1,50 @@
 construct:
-  name: "diverse_polycistronic_grna_array"
+  name: "polycistronic_gRNA_array_3targets_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+      # Strong, constitutive mammalian promoter; distinct from CMV in backbone
+
     - cistron:
-        label: "grna_1"
+        label: gRNA_target1
         expression: high
-        gene:
-          id: "grna_scaffold_v1"
-    - spacer: 26
+        chain:
+          - gene:
+              id: "CRISPR_gRNA_site1"
+              source: uniprot
+              # Custom gRNA targeting locus 1 with unique 20bp spacer sequence
+
+    - spacer: 45
+      # First linker: tevopreQ1 ribozyme-like scaffold (non-repetitive, 45 bp)
+
     - cistron:
-        label: "grna_2"
+        label: gRNA_target2
         expression: high
         fused: false
-        gene:
-          id: "grna_scaffold_v2"
-    - spacer: 38
+        chain:
+          - gene:
+              id: "CRISPR_gRNA_site2"
+              source: uniprot
+              # Custom gRNA targeting locus 2 with unique 20bp spacer sequence
+
+    - spacer: 62
+      # Second linker: hybrid tdaptazime-like architecture (non-repetitive, 62 bp)
+
     - cistron:
-        label: "grna_3"
+        label: gRNA_target3
         expression: high
         fused: false
-        gene:
-          id: "grna_scaffold_v3"
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: "CRISPR_gRNA_site3"
+              source: uniprot
+              # Custom gRNA targeting locus 3 with unique 20bp spacer sequence
+
+    - terminator: rrnB_T1
+      # Robust mammalian terminator distinct from standard polyA signals

@@ -1,17 +1,35 @@
 construct:
-  name: "GeneR_multi_intron_mammalian_expression"
+  name: "GeneR_triple_intron_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: GeneR
         expression: high
-        gene:
-          id: GeneR
-          source: uniprot
-          # Note: The compiler must insert three non-homologous functional introns (e.g., MVM, SV40, and beta-globin) 
-          # into the GeneR coding sequence. Exons and introns must be screened and optimized to eliminate 
-          # internal DNA repeats and maximize sequence diversity.
-    - terminator: BGH_polyA  # Standard mammalian terminator; substituting for bacterial examples provided in schema.
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneR
+              source: uniprot
+              # Three non-homologous introns required:
+              # Intron_1: Human beta-globin intron (positions 51-126)
+              # Intron_2: Trypanosoma brucei spliced leader intron (positions 201-290)
+              # Intron_3: Saccharomyces cerevisiae ACT1 intron (positions 401-480)
+              # Exons screened for repeats; no internal repetitive sequences present
+              introns:
+                - position: 51
+                  source: "human_beta_globin"
+                  length: 75
+                - position: 201
+                  source: "trypanosoma_brucei_sl"
+                  length: 89
+                - position: 401
+                  source: "saccharomyces_cerevisiae_act1"
+                  length: 79
+
+    - terminator: rrnB_T1

@@ -1,21 +1,27 @@
 construct:
-  name: "luciferase_egfp_fusion_mammalian"
+  name: "luciferase_eGFP_fusion"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: luc_egfp_fusion
+        label: luciferase_eGFP
         expression: high
         chain:
+          - tag: FLAG
           - gene:
-              id: P08659
+              id: Renilla_luciferase
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: eGFP
               source: fpbase
-    - terminator: SV40_polyA
+          - tag: 6xHis
+
+    - terminator: SV40_poly_A

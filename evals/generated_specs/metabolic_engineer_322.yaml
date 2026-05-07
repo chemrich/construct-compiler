@@ -1,62 +1,83 @@
 construct:
-  name: "bacillus_secondary_metabolite_operon"
-  host: e_coli_bl21_de3 # Substituted for Bacillus subtilis to support T7-based expression control; host B. subtilis not in schema
+  name: "bacillus_secondary_metabolite_operon_E1E6"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: enzyme_E1
+        label: E1
         expression: high
-        fused: false
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: MBP
-          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: E1_enzyme
+              id: E1_bacillus_secondary_metabolite
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_E2
+        label: E2
         expression: medium
         fused: false
         gene:
-          id: E2_enzyme
+          id: E2_bacillus_secondary_metabolite
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_E3
+        label: E3
         expression: medium
         fused: false
         gene:
-          id: E3_enzyme
+          id: E3_bacillus_secondary_metabolite
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_E4
+        label: E4
         expression: medium
         fused: false
         chain:
-          - solubility_tag: GST
-          - cleavage_site: TEV
+          - tag: 6xHis
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: E4_enzyme
+              id: E4_bacillus_secondary_metabolite
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_E5
+        label: E5
         expression: medium
         fused: false
         gene:
-          id: E5_enzyme
+          id: E5_bacillus_secondary_metabolite
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_E6
+        label: E6
         expression: medium
         fused: false
         gene:
-          id: E6_enzyme
+          id: E6_bacillus_secondary_metabolite
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,12 +1,16 @@
 construct:
-  name: "Yeast_A_B_C_Polycistronic_IRES"
+  name: "YeastA_YeastB_YeastC_polycistronic"
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: 2u
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Robust constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
         label: YeastA
         expression: high
@@ -15,27 +19,30 @@ construct:
           - gene:
               id: YeastA
               source: uniprot
-    - spacer: 50  # IRES sequence as requested for inter-cistronic translation initiation
+
+    - spacer: 50
+
     - cistron:
         label: YeastB
         expression: high
-        fused: false  # Independently translated via IRES
+        fused: false
         gene:
           id: YeastB
           source: uniprot
-    - spacer: 50  # IRES sequence as requested for inter-cistronic translation initiation
+
+    - spacer: 50
+
     - cistron:
-        label: YeastC
+        label: YeastC_mCherry
         expression: high
-        fused: false  # Independently translated via IRES
+        fused: false
         chain:
           - gene:
               id: YeastC
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mCherry
-              source: fpbase
-    - terminator: CYC1_term
+              repeats: 1
+          - tag: mCherry
+
+    - terminator: rrnB_T1

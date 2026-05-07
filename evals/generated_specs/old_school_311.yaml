@@ -1,24 +1,30 @@
 construct:
-  name: "bicistronic_alpha_rfp_mammalian_expression"
-  host: mammalian
+  name: "CMV_protein_alpha_IRES_RFP_mammalian"
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
-    ori: pUC
-    source: custom
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: alpha_protein
+        label: protein_alpha
         expression: high
         gene:
           id: protein_alpha
           source: uniprot
-    - spacer: 500 # IRES element for bicistronic translation
+
+    # IRES element enables cap-independent translation of downstream cistron
+    - spacer: 588  # IRES_EMCV sequence, ~588 bp
+
     - cistron:
-        label: reporter_rfp
-        expression: medium
+        label: red_fluorescent_protein
+        expression: high
         fused: false
         gene:
-          id: mScarlet
+          id: mCherry
           source: fpbase
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

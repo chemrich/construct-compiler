@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_tat_phod_sfgfp_strep"
+  name: "Bacillus_Tat_pathway_GFP_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: tat_export_protein
+        label: secreted_GFP
         expression: high
         chain:
-          - tag: PhoD_signal_peptide
+          - tag: Strep-II
           - gene:
               id: sfGFP
               source: fpbase
-          - tag: Strep-II
-    - terminator: BBa_B0015
+          - signal_peptide: PhoD_Tat  # Tat signal peptide for secretion via Twin-Arginine pathway
+
+    - terminator: rrnB_T1

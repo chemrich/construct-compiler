@@ -1,26 +1,32 @@
 construct:
-  name: "mammalian_coexpression_proteinA_proteinB"
+  name: "ProteinA_ProteinB_mammalian_coexpression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_a
+        label: ProteinA
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: Protein_A
+              id: ProteinA
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: protein_b
+        label: ProteinB
         expression: high
         fused: false
         chain:
           - gene:
-              id: Protein_B
+              id: ProteinB
               source: uniprot
           - tag: V5
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

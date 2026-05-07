@@ -1,19 +1,39 @@
 construct:
-  name: mammalian_dual_expression_p2a
+  name: "Protein1_P2A_Protein2_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: p1_p2a_p2
+        label: Protein1
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: Protein1
               source: uniprot
-          - cleavage_site: P2A
+
+    - cistron:
+        label: P2A_spacer
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P2A
+              source: uniprot
+
+    - cistron:
+        label: Protein2
+        expression: high
+        chain:
+          - tag: 6xHis
           - gene:
               id: Protein2
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: polyA

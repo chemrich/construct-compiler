@@ -1,14 +1,22 @@
 construct:
-  name: "sgRNA_CRISPRa_human_HEK293"
+  name: "sgRNA_dCas9_VP64_activation"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: sgRNA_cassette
+        label: sgRNA
         expression: high
-        gene:
-          id: sgRNA_MS2_activator_scaffold
-          source: addgene
-    - terminator: polyT
+        chain:
+          - gene:
+              id: sgRNA_dCas9_VP64
+              source: uniprot
+              # Note: sequence should be user-customized with target-specific spacer (20bp) followed by NGG PAM
+              # Standard scaffold: GUUUUAGAGCUAGAAAUAGCAAGUU...AGCACCGAGUCGGUGCUUU (modified MS2 aptamer optional for VP64 recruitment)
+
+    - terminator: U6term

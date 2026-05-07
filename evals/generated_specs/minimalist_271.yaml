@@ -1,14 +1,22 @@
 construct:
-  name: "baculovirus_structural_protein_expression"
-  host: Sf9  # Specific insect cell line commonly used with baculovirus systems
+  name: baculovirus_structural_protein
+  host: insect
+
   backbone:
-    catalog_vector: "pFastBac1"
+    catalog_vector: "pFastBac"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: polh  # High-level polyhedrin promoter standard for baculovirus
+    - promoter: p10
+
     - cistron:
         label: structural_protein
         expression: high
-        gene:
-          id: P03135  # Hepatitis B core antigen (HBcAg) used as a model structural protein
-          source: uniprot
-    - terminator: SV40_polyA  # Standard polyadenylation signal for insect cell expression
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: structural_protein
+              source: uniprot
+
+    - terminator: SV40_polyA

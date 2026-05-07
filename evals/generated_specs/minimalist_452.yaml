@@ -1,13 +1,21 @@
 construct:
-  name: "gRNA_human_gene_M"
+  name: guide_RNA_gene_M
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: sgRNA
+        label: guide_RNA
         expression: high
-        gene:
-          id: sgRNA_M
-    - terminator: rrnB_T1  # Standard terminator included per rule 10; U6 normally terminates at a poly-T stretch.
+        chain:
+          - gene:
+              id: CRISPR_gRNA_gene_M
+              source: uniprot
+
+    - terminator: rrnB_T1

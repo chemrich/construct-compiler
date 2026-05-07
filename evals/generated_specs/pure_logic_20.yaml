@@ -1,33 +1,30 @@
-```yaml
 construct:
-  name: genetic_NOT_gate_A_to_B
-  host: e_coli_bl21_de3
+  name: "e_coli_NOT_gate_reporter"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: araBAD  # Input A controls this promoter
+    - promoter: T7lac
 
     - cistron:
         label: repressor
         expression: high
-        gene:
-          id: P0321
-          source: uniprot  # LacI repressor protein
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
 
-    - spacer: 50
-
-    - promoter: lacUV5  # Repressed by LacI when input A is HIGH
+    - spacer: 25
 
     - cistron:
-        label: output_B
-        expression: high
+        label: output_reporter
+        expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
+              id: mCherry
               source: fpbase
 
     - terminator: rrnB_T1
-```

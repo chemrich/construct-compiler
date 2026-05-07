@@ -1,22 +1,30 @@
 construct:
-  name: "mammalian_polycistronic_gfp_rfp"
+  name: "GFP_RFP_bicistronic_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: gfp_reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: rfp_reporter
+        label: RFP
         expression: high
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_polyA # Standard mammalian polyadenylation signal for termination
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1

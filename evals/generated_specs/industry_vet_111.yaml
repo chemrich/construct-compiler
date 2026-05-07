@@ -1,18 +1,24 @@
 construct:
-  name: "chaperone_A_protein_Y_polycistronic"
-  host: e_coli
+  name: "chaperone_target_polycistronic"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: chaperone
-        expression: medium
+        expression: high
         gene:
           id: ChaperoneA
           source: uniprot
-    - spacer: 30 # E. coli uses intergenic spacers with RBS for polycistronic expression; IRES/2A are substituted for independent translation (fused: false).
+
+    - spacer: 30
+
     - cistron:
         label: target
         expression: high
@@ -22,4 +28,5 @@ construct:
           - gene:
               id: ProteinY
               source: uniprot
+
     - terminator: rrnB_T1

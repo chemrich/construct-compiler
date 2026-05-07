@@ -1,22 +1,24 @@
-```yaml
 construct:
-  name: transmembrane_receptor_expression
+  name: "mammalian_transmembrane_receptor"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: null  # no antibiotic resistance marker
+    ori: null
+    source: addgene
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: EF1_alpha  # constitutive mammalian promoter, strong and stable
 
     - cistron:
         label: receptor
-        expression: medium
+        expression: high
         chain:
-          - signal_peptide: native  # endogenous signal sequence for membrane targeting
+          - tag: HA  # N-terminal epitope tag for detection
           - gene:
-              id: GPCR_template
+              id: multi_pass_transmembrane_receptor
               source: uniprot
+          - tag: NLS  # nuclear localization signal for proper subcellular trafficking
 
-    - terminator: SV40_polyA
-```
+    - terminator: bGH_polyA  # mammalian poly(A) signal for mRNA stability

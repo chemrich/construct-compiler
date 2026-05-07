@@ -1,21 +1,29 @@
 construct:
-  name: "mammalian_goi_luciferase_fusion"
+  name: mammalian_GOI_Renilla_luciferase_reporter
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV  # Strong viral promoter; tool assumes standard repeat-minimized version
+    - promoter: CMV
+
     - cistron:
-        label: reporter_fusion
+        label: GOI_luciferase_fusion
         expression: high
         chain:
           - gene:
-              id: mNeonGreen
-              source: fpbase
+              id: Renilla_luciferase
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 3
           - gene:
-              id: P08659
+              id: placeholder_GOI
               source: uniprot
-    - terminator: BGH_pA_SV40_pA  # Tandem non-overlapping polyA signals to prevent read-through
+        # Note: Replace placeholder_GOI with actual gene of interest ID
+
+    - terminator: SV40_poly_A
+
+    # Secondary polyadenylation signal for robust termination
+    - terminator: BGH_poly_A

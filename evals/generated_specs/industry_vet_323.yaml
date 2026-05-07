@@ -1,14 +1,21 @@
 construct:
-  name: "mammalian_gfp_reporter"
+  name: "mammalian_GFP_reporter"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BGH_pA  # Standard mammalian polyadenylation signal for proper processing/stability
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

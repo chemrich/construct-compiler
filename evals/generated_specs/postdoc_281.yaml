@@ -1,19 +1,24 @@
 construct:
-  name: "protein_Y_secretion_yeast"
+  name: "yeast_protein_Y_secreted_strep"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: protein_Y
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: Strep-II
+          - secretion_signal: alpha-factor
           - gene:
               id: protein_Y
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1_poly_A

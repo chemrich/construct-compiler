@@ -1,26 +1,32 @@
 construct:
-  name: "uAA_peptide_and_synthetase_system"
-  host: e_coli
+  name: "unnatural_aa_incorporation_system"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: target_peptide
+        label: peptide
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: peptide_uAA
+              id: unnatural_aa_peptide
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: aaRS
+        label: trna_synthetase
         expression: high
         fused: false
         gene:
-          id: MjTyrRS
+          id: mutant_trna_synthetase
           source: uniprot
+
     - terminator: rrnB_T1

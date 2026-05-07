@@ -1,30 +1,44 @@
 construct:
-  name: "nand_logic_gate_circuit"
-  host: e_coli
+  name: "two_input_NAND_logic_gate"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100  # Constitutive promoter used as a scaffold for dual repression (NAND logic)
+    - promoter: T7lac
+    
     - cistron:
-        label: "nand_output"
+        label: input_A_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: input_B_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: NAND_output
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
-    - cistron:
-        label: "sensor_lacI"
-        expression: medium
-        fused: false
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: "sensor_tetR"
-        expression: medium
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+    
     - terminator: rrnB_T1

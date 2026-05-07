@@ -1,23 +1,30 @@
 construct:
-  name: "polyprotein_abc_selfcleaving"
-  host: e_coli_bl21_de3
+  name: "polyprotein_ABC_self_cleaving"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: abc_polyprotein
+        label: polyprotein_ABC
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: A
               source: uniprot
-          - cleavage_site: P2A  # 2A peptides are ribosome-skipping sequences; in E. coli, this is used as the requested self-cleaving peptide linker.
+          - cleavage_site: 2A  # self-cleaving peptide
           - gene:
               id: B
               source: uniprot
-          - cleavage_site: P2A
+          - cleavage_site: 2A  # self-cleaving peptide
           - gene:
               id: C
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

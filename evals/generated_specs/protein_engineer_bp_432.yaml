@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_pastoris_fld1_secretion_system"
+  name: "pichia_fld1_target_secretion"
   host: yeast
+
   backbone:
+    catalog_vector: "pPICZ_A"
     resistance: zeocin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
-          - secretion_signal: alpha_factor
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: target_gene
+              id: target
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

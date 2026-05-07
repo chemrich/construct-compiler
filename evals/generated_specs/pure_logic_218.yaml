@@ -1,26 +1,56 @@
 construct:
-  name: "quorum_sensing_amplification_circuit"
-  host: e_coli_bl21_de3
+  name: quorum_sensing_gfp_amplification
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pLuxR  # Inducible by AutoInducer_X/LuxR complex
+    - promoter: araBAD
+
     - cistron:
-        label: reporter
+        label: autoinducer_receptor
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
-    - cistron:
-        label: amplifier
-        expression: high
-        fused: false
         chain:
-          - tag: pelB  # Secretion signal for export of SignalingProtein_Y to periplasm/media
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: autoinducer_synthase
+        expression: medium
+        chain:
+          - gene:
+              id: luxI
+              source: uniprot
+
+    - spacer: 25
+
+    - promoter: lacUV5
+      # Quorum-sensing responsive promoter (activated by AutoInducer_X-LuxR complex)
+
+    - cistron:
+        label: gfp_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: signaling_protein_amplifier
+        expression: high
+        chain:
+          - tag: signal_peptide
           - gene:
               id: SignalingProtein_Y
               source: uniprot
+
     - terminator: rrnB_T1

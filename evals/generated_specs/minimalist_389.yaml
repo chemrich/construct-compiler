@@ -1,16 +1,27 @@
 construct:
-  name: "gene_delta_proteasomal_degradation"
-  host: HEK293 # HEK293 selected over e_coli because 'proteasomal' degradation is a eukaryotic process
+  name: Gene_Delta_degron_construct
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: CMV
+    - promoter: T7lac
+
     - cistron:
-        label: gene_delta_degron_fusion
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: Gene_Delta
               source: uniprot
-          - tag: ODC_degron
-    - terminator: hGH_pA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: degron_degron  # C-terminal degron tag for proteasomal targeting
+
+    - terminator: rrnB_T1

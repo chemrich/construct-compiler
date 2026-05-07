@@ -1,42 +1,47 @@
 construct:
-  name: "iota_compact_operon"
-  host: e_coli
+  name: "iota_quadruple_operon"
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: J23100 # High-strength constitutive promoter
+    - promoter: J23100  # constitutive promoter for compact design
+    
     - cistron:
-        label: iota1
+        label: Iota1
         expression: high
         gene:
-          id: Iota1
+          id: iota1
           source: uniprot
-    - spacer: 20
+    
+    - spacer: 20  # minimal spacer for compact footprint
+    
     - cistron:
-        label: iota2
+        label: Iota2
         expression: high
-        fused: false
         gene:
-          id: Iota2
+          id: iota2
           source: uniprot
+    
     - spacer: 20
+    
     - cistron:
-        label: iota3
+        label: Iota3
         expression: high
-        fused: false
         gene:
-          id: Iota3
+          id: iota3
           source: uniprot
+    
     - spacer: 20
+    
     - cistron:
-        label: iota4
+        label: Iota4
         expression: high
-        fused: false
         chain:
           - gene:
-              id: Iota4
+              id: iota4
               source: uniprot
           - tag: HA
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

@@ -1,35 +1,59 @@
 construct:
-  name: "yeast_trivalent_scaffold_fusion"
+  name: "yeast_multi_domain_scaffold"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: multi_domain_assembly
+        label: scaffold_domain1
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: SpyCatcher
+              id: P12345
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
-          - gene:
-              id: mEGFP
-              source: fpbase
+
+    - cistron:
+        label: scaffold_domain2
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              # Divergent linker: EAAAK-based rigid composition
+              type: rigid_EAAAK
               repeats: 4
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: P12345
+              source: uniprot
           - linker:
-              type: rigid_EAAAK
+              # Second divergent linker: short GS motif
+              type: short_GS
+              repeats: 5
+
+    - cistron:
+        label: scaffold_domain3
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              # Third divergent linker: alternate composition (KST-based custom)
+              # Use GS with minimal repeats for sequence divergence
+              type: GS_flexible
               repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: CYC1
+              id: P12345
+              source: uniprot
+          - tag: FLAG
+
+    - terminator: rrnB_T1

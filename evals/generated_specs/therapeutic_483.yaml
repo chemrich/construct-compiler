@@ -1,24 +1,33 @@
 construct:
-  name: "mRNA_Vaccine_Spike_Template"
-  host: HEK293
+  name: "mRNA_vaccine_antigen_IVT"
+  host: in_vitro
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7  # T7 promoter used for in vitro transcription (IVT) of the mRNA template
+    - promoter: T7
+
+    - utr:
+        type: 5_prime
+        sequence: "GCCACCAUGGCUAGCUAA"  # Kozak consensus + start codon context
+
     - cistron:
-        label: spike_antigen
+        label: antigen
         expression: high
-        gene:
-          id: P0DTC2
-          source: uniprot
-    - terminator: T7term
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: antigen_target
+              source: uniprot
+
+    - utr:
+        type: 3_prime
+        source: polyadenylation_signal_SV40
+
+    - poly_a_tail:
+        length: 120
+
+    - terminator: rrnB_T1

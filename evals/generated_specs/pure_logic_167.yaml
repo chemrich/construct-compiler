@@ -1,23 +1,51 @@
 construct:
-  name: "acid_and_molecule_x_responsive_therapeutic_system"
-  host: e_coli_bl21
+  name: "pH_and_ligand_responsive_therapeutic"
+  host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: araBAD  # araBAD represents the 'molecule X' induction; since the standard schema lacks a specific pH-responsive promoter, pH logic is assumed to be integrated via a custom host or asr-based circuit.
+    - promoter: CMV
+
     - cistron:
         label: therapeutic_protein
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - gene:
+              id: VEGF165
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: pH_responsive_domain
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: pHluorin
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: 3C
+
+    - spacer: 30
+
+    - cistron:
+        label: ligand_binding_domain
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: MBP
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 2
-          - gene:
-              id: P60568
-              source: uniprot
+          - cleavage_site: Factor_Xa
+
     - terminator: rrnB_T1

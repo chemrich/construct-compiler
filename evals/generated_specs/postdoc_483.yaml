@@ -1,17 +1,22 @@
 construct:
-  name: "enzx_solubility_optimization"
-  host: e_coli_bl21_de3
+  name: "EnzX_MBP_fusion_solubility"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzx_fusion
+        label: EnzX_with_solubility_tag
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
               id: EnzX
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

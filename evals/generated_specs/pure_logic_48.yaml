@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: "NOR_gate_cytotoxic_protein"
-  host: e_coli_bl21_de3
+  name: "NOR_gate_cytotoxic_switch"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -10,18 +9,36 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: cytotoxic_protein
+        label: repressor_A
+        expression: medium
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_B
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: cytotoxic_output
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P0A9P0  # colicin E1 (cytotoxic protein)
+              id: ccdB
               source: uniprot
 
     - terminator: rrnB_T1
-```

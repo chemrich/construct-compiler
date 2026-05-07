@@ -1,22 +1,31 @@
 construct:
-  name: yeast_surface_display_target_protein_l
+  name: "yeast_surface_display_Target_Protein_L"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pCTCON"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: GAL1  # GAL1 is the standard inducible promoter for yeast surface display
+    - promoter: GAL1
+
     - cistron:
-        label: yeast_display_fusion
+        label: surface_display
         expression: high
         chain:
+          - tag: HA
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: AGA2
+              id: Aga2p
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: Target_Protein_L
               source: uniprot
-    - terminator: CYC1  # Standard yeast terminator
+
+    - terminator: CYC1

@@ -1,16 +1,21 @@
 construct:
-  name: "yeast_ADH1_URA3_expression_construct"
+  name: yeast_expression_vector
   host: yeast
+
   backbone:
     resistance: URA3
     ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
         label: target
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: ADH1_term  # Standard yeast ADH1 terminator to match the promoter requested.
+        chain:
+          - gene:
+              id: placeholder_protein
+              source: uniprot
+
+    - terminator: CYC1

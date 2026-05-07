@@ -1,23 +1,23 @@
-```yaml
 construct:
-  name: Y2H_bait_Scaffold_Protein_J
+  name: "yeast_two_hybrid_bait_Scaffold_Protein_J"
   host: yeast
 
   backbone:
-    resistance: ampicillin
-    ori: pBR322
+    resistance: kanamycin
+    ori: pUC
     source: addgene
 
   cassette:
-    - promoter: ADH1
+    - promoter: GAL1
 
     - cistron:
         label: bait
-        expression: medium
+        expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P04386
-              source: uniprot  # GAL4 DNA binding domain
+              id: GAL4_DBD
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 1
@@ -25,5 +25,4 @@ construct:
               id: Scaffold_Protein_J
               source: uniprot
 
-    - terminator: ADH1
-```
+    - terminator: CYC1

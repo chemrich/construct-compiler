@@ -1,50 +1,62 @@
 construct:
-  name: "carotenoid_biosynthesis_pathway"
+  name: carotenoid_biosynthesis_operon
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: crtE
+        label: enzyme1_crtE
         expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: crtE
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: crtB
+        label: enzyme2_crtI
         expression: medium
-        fused: false
-        gene:
-          id: crtB
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: crtI
-        expression: low
         fused: false
         gene:
           id: crtI
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: crtY
+        label: enzyme3_crtY
         expression: low
         fused: false
         gene:
           id: crtY
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: crtZ
+        label: enzyme4_crtZ
         expression: low
         fused: false
         gene:
           id: crtZ
           source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme5_crtW
+        expression: low
+        fused: false
+        gene:
+          id: crtW
+          source: uniprot
+
     - terminator: rrnB_T1

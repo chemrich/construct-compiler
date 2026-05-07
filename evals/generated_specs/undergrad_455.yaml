@@ -1,16 +1,22 @@
 construct:
-  name: "Protein_Mu_FLAG_expression"
-  host: e_coli_bl21
+  name: "Protein_Mu_FLAG"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: Mu_protein
+        label: target
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: P03741
+              id: Mu
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

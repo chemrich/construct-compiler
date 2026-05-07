@@ -1,18 +1,27 @@
 construct:
-  name: "non_viral_human_ER_chaperone_BiP"
+  name: ER_chaperone_mammalian_expression
   host: HEK293
+
   backbone:
-    resistance: none  # User requested construct completely free of antibiotic resistance genes
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+    # Non-viral backbone; no antibiotic resistance required for mammalian expression
+
   cassette:
-    - promoter: EF1_alpha  # Strong constitutive non-viral promoter
+    - promoter: EF1_alpha
+
     - cistron:
         label: ER_chaperone
         expression: high
         chain:
+          - tag: Strep-II
+          - cleavage_site: 3C
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P11021  # Human HSPA5 (BiP), a key ER chaperone
+              id: HSP70
               source: uniprot
-          - tag: KDEL     # C-terminal ER retention signal
-    - terminator: bGH_pA   # Bovine growth hormone polyadenylation signal (non-viral)
+          - tag: KDEL
+
+    - terminator: rrnB_T1

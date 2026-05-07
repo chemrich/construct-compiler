@@ -1,24 +1,31 @@
+```yaml
 construct:
-  name: "FusionY_Internal_Loop_Design"
+  name: "FusionY_dual_His_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: FusionY_with_dual_His
         expression: high
         chain:
           - gene:
-              id: FusionY_Domain_A
+              id: FusionY
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: 6xHis
+              codon_variant: standard
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: FusionY_Domain_B
-          - tag: 6xHis # The DNA sequence for this C-terminal tag must be synonymous with the internal tag to avoid repeats
-    - terminator: bGH_polyA
+              repeats: 1
+          - tag: 6xHis
+              codon_variant: optimized
+
+    - terminator: rrnB_T1
+```

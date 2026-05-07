@@ -1,16 +1,21 @@
 construct:
-  name: yeast_expression_sars_cov_2_envelope
+  name: EGFP_yeast_expression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: e_protein
+        label: EGFP
         expression: high
-        gene:
-          id: P0DTC4
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - gene:
+              id: EGFP
+              source: fpbase
+
+    - terminator: CYC1

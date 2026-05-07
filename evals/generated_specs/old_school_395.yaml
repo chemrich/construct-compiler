@@ -1,15 +1,22 @@
 construct:
-  name: "mu_protein_yeast_shuttle_trp1_cen_ars"
+  name: "ecoli_yeast_shuttle_vector_Mu"
   host: yeast
+
   backbone:
     resistance: ampicillin
-    ori: pBR322
-    source: addgene
+    ori: ColE1
+    source: custom
+    comment: "Dual-host shuttle vector with ColE1 (E. coli) and CEN/ARS (S. cerevisiae) origins; includes AmpR (E. coli) and TRP1 (yeast) selection markers"
+
   cassette:
     - promoter: GAPDH
+
     - cistron:
-        label: mu_protein
+        label: Mu
+        expression: high
         gene:
           id: Mu
           source: uniprot
-    - terminator: CYC1_term
+        comment: "S. cerevisiae expression cassette"
+
+    - terminator: CYC1

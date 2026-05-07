@@ -1,64 +1,60 @@
-```yaml
 construct:
-  name: lysine_biosynthesis_5enzyme_operon
+  name: "lysine_biosynthesis_operon_minimal_burden"
   host: e_coli
-
+  
   backbone:
     resistance: kanamycin
-    ori: p15A  # low copy number for minimal metabolic burden
+    ori: p15A
     source: addgene
-
+  
   cassette:
-    - promoter: araBAD  # amino acid-responsive feedback control via arabinose
-
+    - promoter: araBAD
+      # araBAD provides tunable, dose-dependent expression control
+      # Allows metabolic burden minimization via L-arabinose titration
+    
     - cistron:
-        label: aspartokinase_III
-        expression: medium
+        label: lysC
+        expression: high
         gene:
-          id: P00562  # lysC from E. coli
+          id: lysC
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
-        label: dapA_with_cleavage
+        label: dapA
         expression: medium
-        fused: false
         chain:
-          - cleavage_site: TEV  # for post-expression modification studies
+          - cleavage_site: TEV
           - gene:
-              id: P0A6L2  # dapA from E. coli
+              id: dapA
               source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
         label: dapB
         expression: medium
-        fused: false
         gene:
-          id: P0A6K1  # dapB from E. coli
+          id: dapB
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
         label: dapD
-        expression: low  # tuned lower to prevent accumulation
-        fused: false
-        gene:
-          id: P0A6K6  # dapD from E. coli
-          source: uniprot
-
-    - spacer: 25
-
-    - cistron:
-        label: dapE
         expression: medium
-        fused: false
         gene:
-          id: P0AED7  # dapE from E. coli
+          id: dapD
           source: uniprot
-
+    
+    - spacer: 25
+    
+    - cistron:
+        label: dapF
+        expression: low
+        gene:
+          id: dapF
+          source: uniprot
+    
     - terminator: rrnB_T1
-```

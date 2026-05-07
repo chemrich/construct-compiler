@@ -1,18 +1,23 @@
 construct:
-  name: "NovelProtein_Yeast_HighCopy_Screening"
+  name: "yeast_shuttle_NovelProtein_screening"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+    # Implicit yeast autonomous replication element (ARS) and selection marker (URA3/LEU2) handled by yeast shuttle vector defaults
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: NovelProtein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: NovelProtein
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

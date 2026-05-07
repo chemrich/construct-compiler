@@ -1,16 +1,21 @@
 construct:
-  name: "DisulfideDoe_Periplasmic_Expression"
-  host: e_coli_bl21_de3
+  name: "DisulfideDoe_periplasmic_His_tag"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: DisulfideDoe
         expression: high
         chain:
-          - tag: DsbA
+          - tag: DsbA_signal_peptide
           - gene:
               id: DisulfideDoe
+              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

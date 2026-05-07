@@ -1,19 +1,23 @@
 construct:
-  name: "6xHis_Thrombin_LacZ_Fusion"
-  host: e_coli_bl21_de3
+  name: "His_tag_target_thrombin_LacZ_fusion"
+  host: e_coli_bl21
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: ampicillin
     ori: pBR322
-    source: pET-21a(+)
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: lacz_fusion
+        label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: Thrombin
           - gene:
-              id: LacZ
+              id: lacZ
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,17 +1,21 @@
 construct:
   name: "AAV_UbC_Luciferase_WPRE"
   host: HEK293
+
   backbone:
-    # AAV2 ITRs are integrated into the backbone to flank the expression cassette
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pAAV"
+    # Note: pAAV backbone includes AAV ITRs and lacks selection marker per design requirements
+
   cassette:
     - promoter: UbC
+
     - cistron:
-        label: firefly_luciferase
+        label: luciferase
         expression: high
         gene:
-          id: P08659
+          id: Firefly_Luciferase
           source: uniprot
-    - terminator: WPRE_hGH_pA # WPRE sequence included for post-transcriptional enhancement as requested
+
+    - regulatory_element: WPRE
+
+    - terminator: SV40_poly_A

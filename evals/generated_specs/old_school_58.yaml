@@ -1,21 +1,27 @@
 construct:
-  name: "yeast_tef2_gfp_fusion_integration"
+  name: "GFP_target_visualization_yeast"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS405" # Yeast integrating vector with LEU2 selection marker
+    resistance: LEU2
+    ori: CEN6_ARSH4
+    source: addgene
+
   cassette:
     - promoter: TEF2
+
     - cistron:
-        label: visualization_fusion
+        label: GFP_fusion
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: GFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: target_protein
+              id: target
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

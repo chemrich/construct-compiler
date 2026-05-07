@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: "two_component_SensorA_EffectorB"
+  name: two_component_SensorA_EffectorB
   host: e_coli
 
   backbone:
@@ -9,7 +8,8 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: T7
+    - promoter: T7lac
+
     - cistron:
         label: SensorA
         expression: high
@@ -18,8 +18,12 @@ construct:
           - gene:
               id: SensorA
               source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: T7
+
+  cassette:
+    - promoter: T7lac
+
     - cistron:
         label: EffectorB
         expression: high
@@ -28,5 +32,5 @@ construct:
               id: EffectorB
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1
-```

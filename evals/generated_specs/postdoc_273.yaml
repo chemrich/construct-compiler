@@ -1,19 +1,26 @@
 construct:
-  name: protein_q_sumo_v5_yeast
+  name: "SUMO_ProteinQ_V5"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Constitutive high-expression yeast promoter
+    - promoter: lacUV5
+
     - cistron:
         label: target
         expression: high
         chain:
           - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: Protein_Q
+              id: proteinQ
               source: uniprot
           - tag: V5
-    - terminator: CYC1  # Standard yeast terminator
+
+    - terminator: rrnB_T1

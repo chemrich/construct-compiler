@@ -1,42 +1,55 @@
 construct:
-  name: yeast_triple_diverse_degron_expression
+  name: "yeast_triple_degradation_tag_fusion"
   host: yeast
-  backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+      
     - cistron:
-        label: target_a_fusion
+        label: TargetA_DegTag1
         expression: high
         chain:
           - gene:
               id: TargetA
               source: uniprot
-          - tag: DegTag_Variant_1
-    - terminator: ADH1
-    - spacer: 50
-    - promoter: TEF1
+              codon_optimization: maximal_synonymous_diversity
+          - degradation_tag: DegTag1_variant_LPLG
+
+    - terminator: CYC1
+
+    - spacer: 25
+
+    - promoter: ADH1
+      
     - cistron:
-        label: target_b_fusion
+        label: TargetB_DegTag2
         expression: high
-        fused: false
         chain:
           - gene:
               id: TargetB
               source: uniprot
-          - tag: DegTag_Variant_2
-    - terminator: CYC1
-    - spacer: 50
-    - promoter: CCW12
+              codon_optimization: maximal_synonymous_diversity
+          - degradation_tag: DegTag2_variant_KDHF
+
+    - terminator: PGK1
+
+    - spacer: 25
+
+    - promoter: TPI1
+      
     - cistron:
-        label: target_c_fusion
+        label: TargetC_DegTag3
         expression: high
-        fused: false
         chain:
           - gene:
               id: TargetC
               source: uniprot
-          - tag: DegTag_Variant_3
-    - terminator: ENO2
+              codon_optimization: maximal_synonymous_diversity
+          - degradation_tag: DegTag3_variant_RTNM
+
+    - terminator: ADH1_terminator
+
+  backbone:
+    resistance: kanamycin
+    ori: p15A
+    source: addgene

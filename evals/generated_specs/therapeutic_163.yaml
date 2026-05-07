@@ -1,20 +1,33 @@
 construct:
-  name: "Non_Viral_CAR_T_Expression_Construct"
-  host: mammalian
+  name: "CAR_T_cell_mRNA_construct"
+  host: in_vitro
+
   backbone:
-    resistance: none  # Antibiotic resistance genes excluded per user request for non-viral therapeutic safety
-    ori: pUC          # High-copy origin for plasmid production prior to LNP formulation
-    source: custom
+    resistance: none
+    ori: none
+    source: synthetic
 
   cassette:
-    - promoter: EF1_alpha  # Robust human-derived promoter, non-viral alternative to CMV
+    - promoter: T7
 
     - cistron:
-        label: anti_CD19_CAR
+        label: CAR
         expression: high
         chain:
+          - tag: 5_UTR_Kozak
           - gene:
-              id: CD19_CAR_FMC63
-              source: uniprot  # Synthetic chimeric antigen receptor sequence
+              id: CAR_scFv_CD28_CD3z
+              source: uniprot
 
-    - terminator: hGH_PA    # Human growth hormone polyadenylation signal; non-viral mammalian terminator
+    - cistron:
+        label: stabilization
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PABP
+              source: uniprot
+
+    - terminator: poly_A_tail
+
+  notes: "This construct is designed for in vitro transcription to generate mRNA for lipid nanoparticle delivery to human T-cells. The 5' Kozak sequence optimizes translation initiation in mammalian cells. PABP (poly(A) binding protein) enhances mRNA stability. No antibiotic resistance markers or viral elements are included. The poly(A) tail is essential for mRNA stability and translation efficiency in mammalian cells. The CAR gene should encode a second-generation CAR with scFv targeting domain, CD28 costimulatory domain, and CD3-zeta signaling domain."

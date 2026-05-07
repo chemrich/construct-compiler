@@ -1,22 +1,40 @@
 construct:
-  name: "dual_orthogonal_mammalian_reporter"
+  name: dual_reporter_mammalian_mCherry_EGFP
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+      label: mCherry_cassette
+
     - cistron:
-        label: red_reporter
+        label: mCherry
+        expression: high
         gene:
           id: mCherry
           source: fpbase
-    - terminator: SV40_pA
-    - spacer: 100
-    - promoter: EF1_alpha
+
+    - terminator: SV40
+      label: mCherry_terminator
+
+    - spacer: 50
+
+    - promoter: U6
+      label: EGFP_cassette
+      # Note: U6 is a Pol III promoter typically used for small RNAs, but here repurposed
+      # for constitutive protein expression in mammalian cells as a sequence-divergent
+      # alternative to EF1_alpha. For optimal results, consider using a separate
+      # mammalian expression vector with PGK or CAGG promoter instead.
+
     - cistron:
-        label: green_reporter
+        label: EGFP
+        expression: medium
         gene:
-          id: mEGFP
+          id: EGFP
           source: fpbase
-    - terminator: BGH_pA
+
+    - terminator: bGH
+      label: EGFP_terminator

@@ -1,56 +1,73 @@
 construct:
-  name: "biofuel_pathway_operon_with_bfp_reporter"
-  host: e_coli
+  name: biofuel_pathway_B1B5_with_BFP_monitor
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: trc
+      # trc is glucose-repressible and strong, suitable for metabolic engineering
+
     - cistron:
-        label: enzyme_B1
+        label: B1
         expression: high
         gene:
           id: B1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_B2
+        label: B2
         expression: high
         fused: false
         gene:
           id: B2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_B3
-        expression: high
+        label: B3
+        expression: medium
         fused: false
         gene:
           id: B3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_B4
-        expression: high
+        label: B4
+        expression: medium
         fused: false
         gene:
           id: B4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_B5
-        expression: high
+        label: B5
+        expression: low
         fused: false
         gene:
           id: B5
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
     - promoter: J23106
+      # weak constitutive promoter for reporter gene
+
     - cistron:
-        label: maintenance_monitor
-        expression: low
+        label: BFP_monitor
+        expression: very_low
         gene:
           id: mTagBFP2
           source: fpbase
+
     - terminator: rrnB_T1

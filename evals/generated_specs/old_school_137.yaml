@@ -1,24 +1,33 @@
 construct:
-  name: "toxinO_antitoxinP_dual_system"
+  name: toxin_antitoxin_system
   host: e_coli
+
   backbone:
     resistance: chloramphenicol
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: native_toxinO
+    - promoter: lacUV5
+      label: toxinO_native_promoter
+
     - cistron:
         label: toxinO
-        expression: medium
+        expression: high
         gene:
           id: toxinO
           source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: native_antitoxinP
+
+    - promoter: lacUV5
+      label: antitoxinP_native_promoter
+
     - cistron:
         label: antitoxinP
-        expression: medium
+        expression: high
         gene:
           id: antitoxinP
           source: uniprot
+
     - terminator: rrnB_T1

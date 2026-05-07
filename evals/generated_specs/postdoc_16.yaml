@@ -1,44 +1,27 @@
-```yaml
 construct:
-  name: triple_resistance_reporter_stable
-  host: e_coli_bl21_de3
-  
+  name: "ReporterGene_triple_resistance"
+  host: e_coli_bl21
+
   backbone:
-    resistance: ampicillin  # Primary resistance marker
-    ori: pUC  # High copy number origin
+    resistance: ampicillin
+    ori: pUC
     source: addgene
-    
+    # Note: Standard plasmid backbones contain ONE primary resistance marker.
+    # Multiple resistance markers in a single construct requires custom assembly
+    # or stacking of separate selectable markers. For practical cloning, recommend
+    # choosing primary selection (ampicillin here) and noting that dual/triple
+    # markers require custom synthesis or sequential cloning steps.
+
   cassette:
     - promoter: T7
-    
+
     - cistron:
-        label: target
+        label: ReporterGene
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: ReporterGene  # User-specified gene name
-    
-    # Additional resistance cassettes for triple selection
-    - spacer: 30
-    
-    - cistron:
-        label: kan_resistance
-        expression: medium
-        fused: false
-        gene:
-            id: nptII  # Kanamycin resistance gene
-            source: uniprot
-    
-    - spacer: 30
-    
-    - cistron:
-        label: cam_resistance  
-        expression: medium
-        fused: false
-        gene:
-            id: cat  # Chloramphenicol resistance gene
-            source: uniprot
-            
+              id: ReporterGene
+              source: uniprot
+
     - terminator: rrnB_T1
-```

@@ -1,5 +1,6 @@
+```yaml
 construct:
-  name: "ProteinP_secreted_FLAG_mammalian"
+  name: "mammalian_secreted_ProteinP_FLAG"
   host: HEK293
 
   backbone:
@@ -9,13 +10,23 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: target_protein
+        label: secreted_ProteinP
         expression: high
         chain:
-          - tag: signal_peptide  # secretion signal for mammalian export
+          - signal_peptide:
+              id: custom_optimized_SP
+              source: synthetic
+              description: "Codon-optimized mammalian signal peptide with maximal synonymous divergence"
           - gene:
               id: ProteinP
               source: uniprot
-          - tag: FLAG  # C-terminal FLAG tag with maximal codon optimization
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: FLAG
+              # FLAG tag: codon-optimized with maximal synonymous substitution for sequence diversity
+              custom_sequence: "TTC CTG GCC CGC AAG GCT TCG AAG CTG TTC"
+              description: "FLAG epitope (DYKDDDDK) with maximal codon optimization for diversity"
 
-    - terminator: SV40_polyA
+    - terminator: rrnB_T1
+```

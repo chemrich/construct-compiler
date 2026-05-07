@@ -1,44 +1,41 @@
-```yaml
 construct:
-  name: three_enzyme_operon_distinct_RBS
+  name: "three_enzyme_operon_divergent_RBS"
   host: e_coli
-
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-
   cassette:
     - promoter: T7lac
-
+    
     - cistron:
         label: E1
         expression: high
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: P0A6F5  # E. coli beta-galactosidase (lacZ)
-              source: uniprot
-
-    - spacer: 35  # Unique spacer length to avoid recombination
-
+        rbs: AGGAGGU
+        gene:
+          id: E1
+          source: uniprot
+    
+    - spacer: 35
+    
     - cistron:
         label: E2
-        expression: medium
-        fused: false  # Independent translation with distinct RBS
+        expression: high
+        fused: false
+        rbs: GGAAGG
         gene:
-          id: P00350  # E. coli 6-phosphofructokinase (pfkA)
+          id: E2
           source: uniprot
-
-    - spacer: 47  # Different spacer length for sequence divergence
-
+    
+    - spacer: 42
+    
     - cistron:
         label: E3
-        expression: medium
-        fused: false  # Independent translation with distinct RBS
+        expression: high
+        fused: false
+        rbs: GAAGGA
         gene:
-          id: P0A9P0  # E. coli alkaline phosphatase (phoA)
+          id: E3
           source: uniprot
-
+    
     - terminator: rrnB_T1
-```

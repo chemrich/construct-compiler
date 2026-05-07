@@ -1,18 +1,23 @@
 construct:
-  name: protein_y_expression_e_coli
+  name: "FLAG_TEV_ProteinY_expression"
   host: e_coli
+  
   backbone:
     resistance: chloramphenicol
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: lac
+    - promoter: lacUV5
+    
     - cistron:
-        label: target_protein
-        expression: medium
+        label: ProteinY
+        expression: high
         chain:
           - tag: FLAG
           - cleavage_site: TEV
           - gene:
-              id: Protein_Y
+              id: ProteinY
               source: uniprot
+    
     - terminator: rrnB_T1

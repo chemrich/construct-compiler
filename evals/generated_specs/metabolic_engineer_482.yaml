@@ -1,59 +1,79 @@
 construct:
-  name: "six_enzyme_pathway_solubility_optimized"
+  name: "six_enzyme_pathway_Z1_Z6_with_soluble_Z3"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: Z1
         expression: high
-        gene:
-          id: Z1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Z1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Z2
         expression: high
-        fused: false
-        gene:
-          id: Z2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: Z3
-        expression: high
-        fused: false
         chain:
+          - tag: 6xHis
+          - gene:
+              id: Z2
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Z3_soluble
+        expression: high
+        chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: Z3
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Z4
         expression: high
-        fused: false
-        gene:
-          id: Z4
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Z4
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Z5
         expression: high
-        fused: false
-        gene:
-          id: Z5
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Z5
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Z6
         expression: high
-        fused: false
-        gene:
-          id: Z6
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Z6
+              source: uniprot
+
+    - terminator: rrnB_T1

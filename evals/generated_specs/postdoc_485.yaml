@@ -1,16 +1,22 @@
 construct:
-  name: "high_expression_gfp_reporter"
+  name: "E_coli_strong_GFP_reporter"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac # CMV is mammalian; T7lac substituted for high-level expression in E. coli
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: GFP_reporter
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

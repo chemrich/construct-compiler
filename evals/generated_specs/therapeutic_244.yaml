@@ -1,22 +1,27 @@
 construct:
-  name: "yeast_secretion_vaccine_antigen_q"
+  name: yeast_vaccine_antigen_Q_secreted
   host: yeast
+
   backbone:
-    resistance: ura3  # Auxotrophic selection marker as requested
-    ori: 2_micron
+    resistance: URA3  # yeast auxotrophic marker, selects for uracil prototrophy
+    ori: 2_micron    # high-copy yeast plasmid origin
     source: addgene
+
   cassette:
-    - promoter: GAL1  # Strong inducible yeast promoter
+    - promoter: GAL1  # strong, inducible yeast promoter (repressed by glucose, induced by galactose)
+
     - cistron:
-        label: antigen_secretion_unit
+        label: vaccine_antigen
         expression: high
         chain:
-          - gene:
-              id: MF-alpha1  # Yeast alpha-mating factor leader for secretion
-              source: uniprot
+          - secretion_signal: alpha_factor  # yeast alpha-mating factor N-terminal secretion signal
           - gene:
               id: VaccineAntigenQ
               source: uniprot
-          - cleavage_site: Factor_Xa  # Non-viral cleavage site (mammalian origin)
-          - tag: 6xHis
-    - terminator: CYC1  # Standard yeast terminator
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: TEV  # post-purification cleavage to remove tag
+          - tag: 6xHis  # C-terminal histidine tag for affinity purification
+
+    - terminator: CYC1  # yeast transcription terminator (CYC1 polyadenylation signal)

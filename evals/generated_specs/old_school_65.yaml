@@ -1,18 +1,22 @@
 construct:
-  name: "mammalian_secretion_hGH_EF1alpha"
+  name: mammalian_secreted_protein_hGH_signal
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: zeocin
     ori: pUC
-    source: addgene
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
         label: secreted_target
         expression: high
         chain:
           - tag: hGH_signal_peptide
           - gene:
-              id: P01133 # Example: Human Epidermal Growth Factor (EGF), user should replace with specific UniProt ID
-              source: uniprot
-    - terminator: BGH_polyA
+              id: null
+              source: user_provided
+
+    - polyadenylation: bGH_poly_A

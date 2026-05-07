@@ -1,16 +1,20 @@
 construct:
-  name: "minimal_mammalian_secreted_reporter"
+  name: mammalian_secreted_luciferase_reporter
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
         label: secreted_luciferase
         expression: high
         chain:
-          - tag: Signal_Peptide
+          - signal_peptide: IgE_signal
           - gene:
-              id: P81278
+              id: Renilla_luciferase
               source: uniprot
-    - terminator: BGH_pA
+
+    - polyadenylation: SV40_poly_A

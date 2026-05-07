@@ -1,17 +1,33 @@
 construct:
-  name: "HEK293_P2RX2_2TM_Construct"
+  name: "mammalian_2TM_membrane_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_2TM_protein
+        label: membrane_protein
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: 6xHis
+          - signal_peptide: SP_alpha_factor_mammalian
           - gene:
-              id: Q9UBL9
-              source: uniprot
-    - terminator: bGH_pA
-# Note: Differential codon optimization for TM1/TM2 and unique extracellular loop/linker sequences cannot be specified via UniProt IDs in this YAML schema; these requirements must be implemented during the sequence synthesis and optimization phase for the P2RX2 (Q9UBL9) scaffold.
+              id: TM1_codon_optimized_v1
+              source: custom
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - gene:
+              id: extracellular_loop_unique
+              source: custom
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: TM2_codon_optimized_v2
+              source: custom
+
+    - terminator: rrnB_T1

@@ -1,19 +1,24 @@
 construct:
-  name: "pichia_aox1_nanobody_secretion"
+  name: "pichia_pastoris_nanobody_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: PAOX1
-      cistron:
-        label: nanobody_producer
+    - promoter: AOX1
+
+    - cistron:
+        label: nanobody
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: VHH
+              id: camelid_nanobody
               source: uniprot
           - tag: FLAG
-      terminator: AOX1_TT
+
+    - terminator: AOX1_TT

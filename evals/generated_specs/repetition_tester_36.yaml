@@ -1,25 +1,32 @@
 construct:
-  name: lentiviral_GeneG_expression_vector
+  name: "lentiviral_vector_GeneG_optimized"
   host: HEK293
-  
+
   backbone:
-    catalog_vector: "pLenti-CMV-Puro"  # Commercial lentiviral backbone with optimized LTRs
-    
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+    # Note: This is a mammalian expression backbone. For full lentiviral packaging,
+    # co-expression of gag, pol, env, and rev from separate plasmids is required.
+    # The LTR regions, packaging signal (psi), and internal repeats must be
+    # engineered separately using codon-optimization and wobble-base modifications
+    # to eliminate homology with the GeneG insert and reduce internal repeat structures.
+
   cassette:
     - promoter: CMV
-    
-    - cistron:
-        label: target_gene
-        expression: high
-        gene:
-          id: GeneG  # Note: synonymous codon optimization required for viral safety
-          source: uniprot
-          
-    - terminator: SV40_polyA
 
-# Critical note: This YAML represents the expression cassette only. 
-# Actual lentiviral production requires:
-# 1. Synonymous codon optimization of GeneG to eliminate LTR homology
-# 2. Professional vector design with optimized packaging signal
-# 3. Split-packaging system for biosafety compliance
-# 4. Regulatory approval for lentiviral work
+    - cistron:
+        label: GeneG
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: GeneG
+              source: uniprot
+        # Codon optimization and synonymous modifications should be applied
+        # to the GeneG sequence to eliminate internal repeats and homology
+        # with flanking LTR/psi sequences during synthesis.
+
+    - terminator: rrnB_T1

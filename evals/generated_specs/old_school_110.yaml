@@ -1,25 +1,31 @@
 construct:
-  name: "dhfr_mammalian_amplification_construct"
-  host: CHO
+  name: mammalian_dhfr_expression_amplification
+  host: HEK293
+  
   backbone:
     resistance: ampicillin
-    ori: pBR322
-    source: custom
-
+    ori: pUC
+    source: addgene
+  
   cassette:
-    - promoter: SV40
+    - promoter: SV40_early
+    
     - cistron:
-        label: target_gene
+        label: target
         expression: high
         gene:
-          id: target_gene
+          id: null
           source: uniprot
-    - spacer: 40
+    
+    - terminator: SV40_poly_A
+    
+    - promoter: SV40_early
+    
     - cistron:
-        label: selection_marker
-        expression: medium
-        fused: false
+        label: dhfr_selection
+        expression: high
         gene:
-          id: P00374  # UniProt ID for human Dihydrofolate reductase (DHFR)
+          id: dhfr
           source: uniprot
-    - terminator: bGH_polyA
+    
+    - terminator: SV40_poly_A

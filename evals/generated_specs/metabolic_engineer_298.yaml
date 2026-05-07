@@ -1,15 +1,18 @@
 construct:
-  name: "Bacillus_subtilis_bacteriocin_production_operon"
-  host: b_subtilis
+  name: bacillus_bacteriocin_operon_bacABCD
+  host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110
-    source: custom
+    resistance: chloramphenicol
+    ori: pAMβ1
+    source: addgene
 
   cassette:
-    - promoter: Pspo1_strong  # Strong constitutive promoter from B. subtilis phage SPO1
+    - promoter: SP01
+      # Strong, constitutive promoter from B. subtilis phage SP01
 
-    - spacer: 45  # RNA leader sequence to enhance mRNA stability and translation initiation
+    - rbs: riboswitch_THI
+      # RNA leader sequence for enhanced mRNA stability and translation initiation
 
     - cistron:
         label: bacA
@@ -56,4 +59,4 @@ construct:
               id: bacD
               source: uniprot
 
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1

@@ -1,15 +1,27 @@
 construct:
-  name: "GLA_NonViral_Gene_Therapy"
+  name: "HEK293_alphagal_lysosomal_therapy"
   host: HEK293
+
   backbone:
-    resistance: none # Antibiotic resistance genes excluded for safety as requested
+    catalog_vector: "pTwist CMV"
+    resistance: null  # No antibiotic resistance for safety
     ori: pUC
-    source: custom
+
   cassette:
-    - promoter: EF1_alpha # Strong ubiquitous human promoter used to avoid viral elements
+    - promoter: EF1_alpha  # Strong ubiquitous mammalian promoter
+
     - cistron:
-        label: alpha_galactosidase_A
-        gene:
-          id: P06280
-          source: uniprot
-    - terminator: hGH_PA # Human growth hormone polyadenylation signal (non-viral)
+        label: alphagal_a
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - secretion_signal: SP  # Alpha-gal A is lysosomal; signal peptide for trafficking
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: GLA  # Alpha-galactosidase A
+              source: uniprot
+
+    - terminator: rrnB_T1

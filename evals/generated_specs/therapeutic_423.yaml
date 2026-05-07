@@ -1,23 +1,26 @@
 construct:
-  name: "yeast_secreted_bacterial_antigen_design"
+  name: "yeast_secreted_bacterial_antigen"
   host: yeast
+
   backbone:
-    resistance: none  # Yeast auxotrophic markers (e.g., URA3, HIS3) are used as antibiotic resistance is not permitted.
-    ori: 2_micron
+    catalog_vector: "pPICZαA"
+    ori: 2μm
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: AOX1
+
     - cistron:
-        label: target_antigen
+        label: secreted_antigen
         expression: high
         chain:
-          - tag: alpha_factor  # N-terminal secretion signal for S. cerevisiae
-          - tag: 6xHis
-          - cleavage_site: TEV
+          - tag: alpha_factor_signal  # N-terminal secretion leader for yeast ER/Golgi targeting
+          - gene:
+              id: bacterial_surface_antigen
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: P0A910  # OmpA (Outer membrane protein A) from E. coli
-              source: uniprot
+              repeats: 1
+          - tag: 6xHis  # C-terminal purification tag
+
     - terminator: CYC1

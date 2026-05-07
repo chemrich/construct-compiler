@@ -1,32 +1,39 @@
 construct:
-  name: "HEK293_BlueLight_CRY2_CIBN_Switch"
+  name: "LightSwitch_HEK293_CIBN_CRY2"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cry2_activator
-        expression: medium
-        fused: false
-        gene:
-          id: CRY2_VP16
-          source: uniprot
-    - spacer: 50
-    - promoter: CMV
+        label: CIBN
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: CIBN
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: cibn_anchor
-        expression: medium
-        fused: false
-        gene:
-          id: CIBN_GAL4DBD
-          source: uniprot
-    - spacer: 50
-    - promoter: UAS # Gal4-responsive promoter for light-inducible control
-    - cistron:
-        label: target
+        label: CRY2_LightSwitch
         expression: high
         fused: false
-        gene:
-          id: LightSwitchProtein
-    - terminator: SV40_polyA
+        chain:
+          - tag: HA
+          - gene:
+              id: CRY2
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: LightSwitchProtein
+              source: uniprot
+
+    - terminator: rrnB_T1

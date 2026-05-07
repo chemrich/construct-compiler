@@ -1,13 +1,19 @@
 construct:
-  name: "human_sgRNA_U6_expression"
+  name: "human_U6_gRNA"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: U6
+
     - cistron:
         label: guide_RNA
         expression: high
-        gene:
-          id: sgRNA_scaffold
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: CRISPR_gRNA
+              source: uniprot
+
+    - terminator: rrnB_T1

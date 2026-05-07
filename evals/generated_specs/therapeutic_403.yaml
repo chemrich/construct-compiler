@@ -1,23 +1,35 @@
 construct:
-  name: "Mammalian_Secretion_A_Intracellular_B"
+  name: "human_protein_A_B_dimer_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: coexpression_unit
+        label: protein_A_secreted
         expression: high
         chain:
-          - tag: IgK_leader
           - tag: 6xHis
+          - secretion_signal: IL2SS
           - gene:
-              id: Protein_A_HUMAN
+              id: P00001
               source: uniprot
-          - linker:
-              type: P2A
+          - cleavage_site: P2A
+
+    - cistron:
+        label: protein_B_intracellular
+        expression: high
+        fused: false
+        chain:
           - tag: FLAG
           - gene:
-              id: Protein_B_HUMAN
+              id: P00002
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: SV40_poly_A

@@ -1,16 +1,27 @@
 construct:
-  name: "plant_ivt_scfv_diagnostic_template"
+  name: "plant_cellfree_scfv_diagnostic"
   host: in_vitro
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    resistance: null
+    ori: null
+    source: synthetic
+
   cassette:
-    - promoter: ZmUbi1  # Maize Ubiquitin 1: strong non-viral plant promoter for wheat germ systems
+    - promoter: SP6
+      # SP6 is the standard promoter for wheat germ cell-free systems (in vitro transcription)
+
+    - element: Kozak_consensus
+      # Enhances translation efficiency in plant-derived lysates
+
     - cistron:
-        label: diagnostic_scfv
+        label: scfv_diagnostic
         expression: high
-        gene:
-          id: P01857  # Human IgG1 constant region used as a representative fragment component
-          source: uniprot
-    - terminator: AtHsp70_term  # Arabidopsis Hsp70 terminator (non-viral plant origin)
+        chain:
+          - gene:
+              id: "anti_SARS_CoV2_spike_RBD_scfv"
+              source: uniprot
+              # User to provide UniProt ID or sequence directly; represents a diagnostic single-chain variable fragment
+
+    - terminator: rrnB_T1
+      # Standard transcription terminator for in vitro systems

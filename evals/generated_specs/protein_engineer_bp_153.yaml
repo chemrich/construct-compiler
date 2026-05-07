@@ -1,19 +1,25 @@
 construct:
-  name: "bacillus_subtilis_phytase_secretion"
+  name: "bacillus_phytase_expression"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
         label: phytase
         expression: high
         chain:
-          - tag: YncM_signal_peptide
           - tag: 10xHis
           - gene:
-              id: P07915
+              id: YncM
               source: uniprot
+          - gene:
+              id: phytase_codon_optimized_bacillus
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,43 +1,58 @@
 construct:
-  name: "Engineered_Pathway"
+  name: EngineeredPathway_4Enzyme_yeast
   host: yeast
-  backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+    - rbs: Kozak_yeast_v1
     - cistron:
-        label: enzyme_a
+        label: EnzymeA
         expression: high
         gene:
-          id: EnzymeA
+          id: EnzymeA_codon_set_1
           source: uniprot
-    - terminator: CYC1
-    - spacer: 40
-    - promoter: TEF1
+
+    - terminator: CYC1_terminator
+
+    - promoter: GAL10
+    - rbs: Kozak_yeast_v2
     - cistron:
-        label: enzyme_b
-        expression: medium
+        label: EnzymeB
+        expression: high
         gene:
-          id: EnzymeB
+          id: EnzymeB_codon_set_2
           source: uniprot
-    - terminator: ADH1
-    - spacer: 40
-    - promoter: PGK1
+
+    - terminator: PGK1_terminator
+
+    - promoter: ADH1
+    - rbs: Kozak_yeast_v3
     - cistron:
-        label: enzyme_c
-        expression: medium
+        label: EnzymeC
+        expression: high
         gene:
-          id: EnzymeC
+          id: EnzymeC_codon_set_3
           source: uniprot
-    - terminator: TPI1
-    - spacer: 40
-    - promoter: ENO2
+
+    - terminator: ADH1_terminator
+
+    - promoter: TPI1
+    - rbs: Kozak_yeast_v4
     - cistron:
-        label: enzyme_d
-        expression: low
+        label: EnzymeD
+        expression: high
         gene:
-          id: EnzymeD
+          id: EnzymeD_codon_set_4
           source: uniprot
-    - terminator: ACT1
+
+    - terminator: TPS1_terminator
+
+  backbone:
+    resistance: nourseothricin
+    ori: 2micron
+    source: addgene
+
+  # Note: Each enzyme uses distinct native S. cerevisiae promoters (GAL1, GAL10, ADH1, TPI1),
+  # unique RBS variants (Kozak_yeast_v1 through v4), and distinct terminators (CYC1, PGK1, ADH1, TPS1).
+  # Gene IDs reference codon-optimized variants (codon_set_1 through codon_set_4) to ensure
+  # complete DNA-level distinctness while maintaining functional protein sequences.

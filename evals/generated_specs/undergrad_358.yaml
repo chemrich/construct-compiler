@@ -1,10 +1,15 @@
 construct:
-  name: "ShortLivedProtein_LVA_Degradation"
-  host: e_coli_bl21_de3
+  name: "ShortLivedProtein_LVA_degron"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
         label: target
         expression: high
@@ -12,5 +17,6 @@ construct:
           - gene:
               id: ShortLivedProtein
               source: uniprot
-          - tag: LVA
-    - terminator: T7term
+          - degradation_tag: LVA
+
+    - terminator: rrnB_T1

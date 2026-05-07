@@ -1,32 +1,55 @@
 construct:
-  name: "genetic_and_gate_split_t7"
+  name: "genetic_AND_gate"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Input A: Induced by L-arabinose
+    - promoter: araBAD
+      # araBAD is repressed by AraC; activated only when L-arabinose is present
+      # This serves as Input_A sensor
+
     - cistron:
-        label: split_t7_n
-        expression: medium
-        gene:
-          id: P00573  # UniProt ID for T7 RNA Polymerase; engineered as N-terminal fragment
-          source: uniprot
-    - terminator: BBa_B0015
-    - promoter: lacUV5  # Input B: Induced by IPTG
-    - cistron:
-        label: split_t7_c
-        expression: medium
-        gene:
-          id: P00573  # UniProt ID for T7 RNA Polymerase; engineered as C-terminal fragment
-          source: uniprot
-    - terminator: BBa_B0015
-    - promoter: T7      # Logic Gate: Requires both N and C fragments to form functional T7 RNA Pol
-    - cistron:
-        label: reporter_output
+        label: AraC_repressor
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Second cassette for Input_B sensing
+    - promoter: T7lac
+      # T7lac is repressed by LacI; activated when lactose/IPTG is present
+      # This serves as Input_B sensor
+
+    - cistron:
+        label: LacI_repressor
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Third cassette: AND gate logic - Reporter only expressed when BOTH signals present
+    # Uses a hybrid promoter responsive to both AraC-arabinose AND TetR (from Input_B pathway)
+    - promoter: araBAD
+      # Dual-input promoter: activated by AraC+arabinose AND repressed by TetR
+      # (In practice, this would be a synthetic promoter with both araBAD and tetO sites)
+
+    - cistron:
+        label: Reporter_Protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1

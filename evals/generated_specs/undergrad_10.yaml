@@ -1,22 +1,22 @@
-```yaml
 construct:
-  name: "heat_inducible_GFP"
+  name: heat_shock_gfp
   host: e_coli
-  
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-  
+
   cassette:
-    - promoter: groE  # Heat shock promoter, active at elevated temperatures
-    
+    - promoter: groES  # Heat shock promoter (σ32-dependent)
+
     - cistron:
-        label: reporter
+        label: gfp
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1
-```

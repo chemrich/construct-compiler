@@ -1,16 +1,30 @@
 construct:
-  name: ribosome_function_CAT_study
+  name: "CAT_constitutive_minimal_leader"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: J23100
+    
     - cistron:
-        label: CAT_reporter
-        expression: high
+        label: leader
+        expression: very_low
         gene:
-          id: P62577
+          id: short_leader_peptide
           source: uniprot
+    
+    - spacer: 20
+    
+    - cistron:
+        label: CAT
+        expression: high
+        fused: false
+        gene:
+          id: P00481
+          source: uniprot
+    
     - terminator: rrnB_T1

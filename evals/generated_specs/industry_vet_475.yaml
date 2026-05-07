@@ -1,18 +1,21 @@
 construct:
-  name: "PeriplasmicProtein_Secretion"
-  host: e_coli_bl21
+  name: "PeriplasmicProtein_secreted_His"
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: periplasmic_protein
         expression: high
         chain:
-          - gene:
-              id: PelB
+          - tag: PelB_signal_peptide  # N-terminal signal peptide for E. coli periplasmic secretion
           - gene:
               id: PeriplasmicProtein
               source: uniprot
-          - tag: 6xHis
-    - terminator: T7term
+          - tag: 6xHis  # C-terminal His-tag
+
+    - terminator: rrnB_T1

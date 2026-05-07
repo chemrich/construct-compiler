@@ -1,22 +1,33 @@
 construct:
-  name: "P1_P2_polycistronic_expression"
-  host: e_coli_bl21_de3
+  name: "P1_P2_polycistronic"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: P1
         expression: high
-        gene:
-          id: P1
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P1
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: P2
         expression: high
         fused: false
-        gene:
-          id: P2
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P2
+              source: uniprot
+
+    - terminator: rrnB_T1

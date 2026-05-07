@@ -1,16 +1,24 @@
 construct:
-  name: "muscle_protein_coli_expression"
-  host: e_coli_bl21_de3
+  name: "muscle_promoter_ecoli_test"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac # Substituted T7lac for muscle-specific promoter; E. coli cannot recognize eukaryotic tissue-specific promoters.
+    - promoter: T7lac
+      # Note: Muscle-specific promoters (e.g., MCK, desmin) are eukaryotic and non-functional in E. coli.
+      # Substituted with T7lac for prokaryotic expression. For actual tissue-specific control, use a mammalian host with pTwist CMV or similar.
+
     - cistron:
-        label: muscle_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P68133
+              id: user_protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

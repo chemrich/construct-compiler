@@ -1,23 +1,30 @@
 construct:
-  name: alpha_beta_polycistronic_expression
+  name: "dual_gene_T7_expression"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
         label: gene_alpha
         expression: high
         gene:
-          id: Alpha
-          source: uniprot
+          id: gene_alpha
+          sequence: null
+
     - spacer: 30
+
     - cistron:
         label: gene_beta
         expression: high
         fused: false
         gene:
-          id: Beta
-          source: uniprot
-    - terminator: T7term
+          id: gene_beta
+          sequence: null
+
+    - terminator: rrnB_T1

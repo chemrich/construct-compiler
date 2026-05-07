@@ -1,19 +1,24 @@
 construct:
-  name: "Pichia_scFv_AOX1_secretion"
+  name: "pichia_scfv_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: scFv_expression
+        label: scfv
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: scFv_human
+              id: human_scfv
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

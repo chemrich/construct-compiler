@@ -1,16 +1,23 @@
 construct:
-  name: "human_metabolic_enzyme_pathway_engineering"
-  host: e_coli
+  name: "human_metabolic_enzyme_cytosolic_expression"
+  host: e_coli_bl21
+  
   backbone:
-    resistance: none # Selection via alternative metabolic complementation or toxin-antitoxin system as antibiotic markers are prohibited.
-    ori: pUC
-    source: custom
+    resistance: null
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: tac
+    
     - cistron:
-        label: target_metabolic_enzyme
+        label: metabolic_enzyme
         expression: high
-        gene:
-          id: P04406
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: human_metabolic_enzyme
+              source: uniprot
+    
     - terminator: rrnB_T1

@@ -1,24 +1,33 @@
 construct:
-  name: "yeast_surface_display_vaccine_antigen"
+  name: yeast_surface_antigen_display
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: surface_antigen
         expression: high
         chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P32323
+              id: HA_epitope
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P0DTC2
+              id: Aga2p_anchor
               source: uniprot
-          - tag: 6xHis
+              # C-terminal yeast cell surface anchor (Aga2 from panning vector)
+
     - terminator: CYC1

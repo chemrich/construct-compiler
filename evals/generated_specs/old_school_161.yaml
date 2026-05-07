@@ -1,16 +1,22 @@
 construct:
-  name: "secreted_antibody_expression_hgh"
+  name: "secreted_antibody_expression_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: SV40
+    - promoter: SV40_early
+
     - cistron:
-        label: secreted_antibody_heavy_chain
+        label: secreted_antibody
         expression: high
         chain:
-          - tag: IgK_leader
+          - signal_peptide: mammalian_IgG_leader
           - gene:
-              id: P01857
+              id: antibody_heavy_chain
               source: uniprot
-    - terminator: SV40_polyA
+        poly_a_tail: SV40
+
+    - terminator: poly_A_SV40

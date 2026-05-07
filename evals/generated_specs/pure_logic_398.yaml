@@ -1,24 +1,63 @@
 construct:
-  name: "genetic_full_adder_logic"
+  name: "genetic_full_adder_circuit"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac
-    - cistron:
-        label: sum_output_S
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: rrnB_T1
     - promoter: araBAD
+
     - cistron:
-        label: carry_out_output_Cout
+        label: input_A_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: input_B_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: carry_in_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: sum_output
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: carry_out_output
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,21 +1,25 @@
 construct:
-  name: "pichia_fld1_nanobody_secretion"
+  name: "Pichia_FLD1_nanobody_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPICZ
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: nanobody_cistron
+        label: nanobody
         expression: high
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - gene:
               id: nanobody
               source: uniprot
           - cleavage_site: 3C
           - tag: Myc
           - tag: 6xHis
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

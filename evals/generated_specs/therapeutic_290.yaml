@@ -1,19 +1,24 @@
 construct:
-  name: "ER_retained_therapeutic_GLA"
+  name: "ER_retained_therapeutic_mammalian"
   host: HEK293
+
   backbone:
-    resistance: none  # User requested construct free of antibiotic resistance
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral constitutive mammalian promoter
+    - promoter: EF1_alpha
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
         chain:
-          - tag: IgK_leader  # N-terminal secretion signal
+          - tag: signal_peptide_SP
           - gene:
-              id: P06670  # Human alpha-galactosidase A (GLA)
+              id: human_therapeutic_protein
               source: uniprot
-          - tag: KDEL        # C-terminal ER retention signal
-    - terminator: bGH_pA     # Non-viral polyadenylation signal
+          - tag: KDEL
+
+    - poly_A_signal: SV40
+
+    - terminator: SV40_poly_A

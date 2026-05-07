@@ -1,23 +1,27 @@
 construct:
-  name: yeast_two_hybrid_bait_Protein_H
+  name: yeast_two_hybrid_bait_Protein_H_Gal4_DBD
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: bait_fusion
-        expression: medium
+        label: bait
+        expression: high
         chain:
           - gene:
               id: GAL4_DBD
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: Protein_H
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

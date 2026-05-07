@@ -1,29 +1,35 @@
 construct:
-  name: yeast_dual_selection_divergent
+  name: yeast_dual_selection_markers
   host: yeast
+
   backbone:
-    resistance: ampicillin  # For E. coli propagation
-    ori: pUC                # High-copy E. coli origin
-    source: addgene         # Generic source for yeast shuttle backbone components
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+    # Note: pUC backbone for E. coli propagation; yeast selection via auxotrophic markers
 
   cassette:
-    # First selectable marker: Auxotrophic (Pyrimidine biosynthesis)
-    - promoter: TDH3        # Strong constitutive yeast promoter
-    - cistron:
-        label: marker_ura3
-        expression: medium
+    - promoter: GAL1
+      cistron:
+        label: URA3_marker
+        expression: high
         gene:
-          id: P03315        # Saccharomyces cerevisiae URA3 (OMP decarboxylase)
+          id: URA3
           source: uniprot
-    - terminator: ADH1      # Standard yeast terminator
+          # Orotidine 5'-phosphate decarboxylase; pyrimidine biosynthesis pathway
+          # S. cerevisiae native ORF; widely used auxotrophic marker
 
-    # Second selectable marker: Antibiotic Resistance (Aminoglycoside kinase)
-    # Divergent origin (Bacteria vs Yeast) and distinct mechanism
-    - promoter: TEF1        # Strong constitutive yeast promoter (divergent from TDH3)
-    - cistron:
-        label: marker_hph
-        expression: medium
+    - spacer: 500
+      # Large spacer to minimize recombination risk between divergent markers
+
+    - promoter: ADH1
+      cistron:
+        label: LEU2_marker
+        expression: high
         gene:
-          id: P00557        # Escherichia coli HPH (Hygromycin-B phosphotransferase)
+          id: LEU2
           source: uniprot
-    - terminator: CYC1      # Standard yeast terminator (divergent from ADH1)
+          # Isopropylmalate dehydrogenase; leucine biosynthesis pathway
+          # Distinct pathway from URA3; functionally independent selection
+
+    - terminator: rrnB_T1

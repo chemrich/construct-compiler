@@ -1,22 +1,32 @@
 construct:
-  name: "laccase_megfp_coexpression"
-  host: e_coli_bl21_de3
+  name: "GFP_and_Laccase_dual_expression"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: laccase_enzyme
+        label: GFP
         expression: high
-        gene:
-          id: P07788
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: Laccase
+        expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: laccase
+              source: uniprot
+
+    - terminator: rrnB_T1

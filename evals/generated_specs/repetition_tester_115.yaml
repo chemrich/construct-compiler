@@ -1,25 +1,45 @@
 construct:
-  name: "dual_ires_mammalian_expression_construct"
+  name: "dual_IRES_mammalian_enzyme_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
-    - spacer: 585  # Placeholder for EMCV IRES sequence (non-homologous to IRES2)
+
     - cistron:
-        label: enzyme_1_firefly_luciferase
+        label: enzyme_1
         expression: high
-        fused: false
-        gene:
-          id: P08659
-          source: uniprot
-    - spacer: 612  # Placeholder for CrPV IRES or similar distinct sequence
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P69905
+              source: uniprot
+        codon_optimization: mammalian
+        notes: "Lactase (beta-galactosidase), mammalian-optimized"
+
+    - element:
+        type: IRES
+        id: IRES_EMCV
+        notes: "Encephalomyocarditis virus IRES - non-homologous to HCV"
+
     - cistron:
-        label: enzyme_2_renilla_luciferase
+        label: enzyme_2
         expression: high
-        fused: false
-        gene:
-          id: P27652
-          source: uniprot
-    - terminator: bGH_polyA
-    - terminator: SV40_polyA  # Requested second distinct polyA signal
+        chain:
+          - tag: HA
+          - gene:
+              id: P04637
+              source: uniprot
+        codon_optimization: mammalian
+        notes: "Cellulase (Trichoderma reesei), mammalian-optimized, distinct codon usage"
+
+    - polyA_signal: SV40
+      notes: "SV40 polyadenylation signal for enzyme_1"
+
+    - polyA_signal: bGH
+      notes: "Bovine growth hormone polyadenylation signal for enzyme_2"
+
+    - terminator: rrnB_T1

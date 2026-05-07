@@ -1,14 +1,20 @@
 construct:
-  name: "mammalian_mcherry_constitutive_expression"
+  name: mammalian_mCherry_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: reporter
+        label: mCherry
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

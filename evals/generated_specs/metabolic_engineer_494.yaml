@@ -1,53 +1,66 @@
 construct:
-  name: balanced_six_enzyme_metabolic_operon
+  name: "six_enzyme_operon_balanced_low_burden"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: lacUV5
+    - promoter: lacUV5  # medium-strength, tightly regulated promoter for balanced expression
+
     - cistron:
-        label: enzyme_Y1
+        label: Y1
         expression: medium
         gene:
           id: Y1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_Y2
+        label: Y2
         expression: medium
         fused: false
         gene:
           id: Y2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_Y3
-        expression: low
+        label: Y3
+        expression: low  # reduced expression to minimize toxicity
         fused: false
         gene:
           id: Y3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_Y4
+        label: Y4
         expression: medium
         fused: false
         gene:
           id: Y4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_Y5
+        label: Y5
         expression: medium
         fused: false
         gene:
           id: Y5
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_Y6
+        label: Y6
         expression: medium
         fused: false
         chain:
@@ -55,4 +68,5 @@ construct:
           - gene:
               id: Y6
               source: uniprot
+
     - terminator: rrnB_T1

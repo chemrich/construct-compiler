@@ -1,30 +1,40 @@
 construct:
-  name: "coexpression_gene_k_dual_chaperones"
-  host: e_coli_bl21_de3
+  name: "Gene_K_with_dual_chaperones_independent_RBS_terminators"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gene_k_target
-        expression: high  # High expression triggers the use of a strong RBS
+        label: Gene_K
+        expression: high
+        rbs: BBa_B0034
         gene:
-          id: gene_k
+          id: Gene_K
           source: uniprot
-    - terminator: rrnB_T1  # First distinct terminator
-    - promoter: T7lac
+        terminator: rrnB_T1
+
     - cistron:
-        label: chaperone_1
-        expression: high  # Non-homologous strong RBS will be selected for this cistron
+        label: Chaperone_1
+        expression: high
+        fused: false
+        rbs: BBa_B0032
         gene:
-          id: chaperone_1
+          id: Chaperone_1
           source: uniprot
-    - terminator: T7term  # Second distinct terminator
-    - promoter: T7lac
+        terminator: T7term
+
     - cistron:
-        label: chaperone_2
-        expression: high  # Non-homologous strong RBS will be selected for this cistron
+        label: Chaperone_2
+        expression: high
+        fused: false
+        rbs: BBa_B0030
         gene:
-          id: chaperone_2
+          id: Chaperone_2
           source: uniprot
-    - terminator: BBa_B0015  # Third distinct terminator
+        terminator: BBa_B0015

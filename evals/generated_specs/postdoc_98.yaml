@@ -1,24 +1,27 @@
 construct:
-  name: "yeast_surface_display_PeptideZ"
+  name: "Aga2p_PeptideZ_surface_display"
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
 
   cassette:
     - promoter: TEF1
+
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
           - gene:
-              id: AGA2
+              id: Aga2p
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: PeptideZ
-    - terminator: CYC1_term
+              source: uniprot
+
+    - terminator: CYC1

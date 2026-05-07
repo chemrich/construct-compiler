@@ -1,15 +1,14 @@
 construct:
-  name: "E_coli_GFP_reporter"
-  host: e_coli_bl21_de3
+  name: "hTERT_GFP_reporter"
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: T7lac # Substitution: hTERT is a mammalian promoter; T7lac substituted for high-level expression in E. coli.
+    - promoter: T7lac  # hTERT is a mammalian promoter; substituted T7lac for E. coli expression. Kozak sequences are mammalian-specific and not used in bacterial systems; bacterial RBS sequences are used instead by the compiler.
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        # Note: Kozak sequences are eukaryotic; an RBS is used here for bacterial translation.
         gene:
           id: sfGFP
           source: fpbase
-    - terminator: T7term
+    - terminator: rrnB_T1

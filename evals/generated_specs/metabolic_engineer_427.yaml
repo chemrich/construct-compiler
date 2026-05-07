@@ -1,11 +1,15 @@
 construct:
-  name: "balanced_four_enzyme_operon"
+  name: "four_enzyme_operon_arabinose"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
         label: E_A_E_B_fusion
         expression: medium
@@ -15,11 +19,13 @@ construct:
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - gene:
               id: E_B
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: E_C
         expression: medium
@@ -29,7 +35,9 @@ construct:
           - gene:
               id: E_C
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: E_D
         expression: medium
@@ -37,4 +45,5 @@ construct:
         gene:
           id: E_D
           source: uniprot
+
     - terminator: rrnB_T1

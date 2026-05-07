@@ -1,21 +1,26 @@
 construct:
-  name: "inducible_therapeutic_protein_production"
-  host: e_coli
+  name: "immunomodulatory_therapeutic_high_expression"
+  host: e_coli_bl21_de3
+  
   backbone:
-    resistance: kanamycin # Defaulting to kanamycin; non-antibiotic selection systems are currently not supported in the schema.
-    ori: pUC
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD # Chosen for tight metabolic control and absence of viral components (unlike T7).
+    - promoter: T7lac
+    
     - cistron:
-        label: immunomodulator
+        label: immunomodulatory_protein
         expression: high
         chain:
           - gene:
-              id: IL2_HUMAN
+              id: IL10
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: 6xHis
+    
     - terminator: rrnB_T1

@@ -1,16 +1,23 @@
 construct:
-  name: "IVT_Bioactive_Peptide_Discovery_Template"
+  name: "cell_free_peptide_ivt_template"
   host: in_vitro
+
   backbone:
-    resistance: none # Explicitly set to none per requirement for therapeutic discovery pipeline compatibility
-    ori: pUC
-    source: custom
+    resistance: none
+    ori: none
+    source: synthetic
+
   cassette:
-    - promoter: T7 # Optimized for in vitro transcription (IVT) systems
+    - promoter: T7
+
     - cistron:
         label: bioactive_peptide
         expression: high
-        gene:
-          id: P01275 # Glucagon: a representative short, biologically active peptide
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: GCN4_basic_region
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,28 +1,35 @@
 construct:
-  name: "proteinp_multimerization_fusion"
-  host: e_coli
+  name: ProteinP_multimerization_study
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: araBAD
+
     - cistron:
-        label: multimer_fusion
+        label: ProteinP_multimerization_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ProteinP
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 1
           - gene:
-              id: GCN4
+              id: GCN4_pLZ
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: mCitrine
+              id: mNeonGreen
               source: fpbase
+
     - terminator: rrnB_T1

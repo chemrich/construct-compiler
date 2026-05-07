@@ -1,18 +1,22 @@
 construct:
-  name: "yeast_high_secretion_GLA"
+  name: "yeast_lysosomal_enzyme_secretion"
   host: yeast
+
   backbone:
-    resistance: URA3 # Used URA3 auxotrophic marker to satisfy the requirement for no antibiotic resistance genes
-    ori: 2_micron # High-copy yeast origin for high-level expression
-    source: addgene
+    resistance: null  # no antibiotic resistance - uses auxotrophic selection
+    ori: 2micron     # yeast episomal plasmid
+    source: standard
+
   cassette:
-    - promoter: GPD # High-level constitutive yeast promoter (TDH3)
+    - promoter: GAL1  # strong inducible promoter for high-level expression
+
     - cistron:
-        label: alpha_galactosidase_a
+        label: secreted_enzyme
         expression: high
         chain:
-          - tag: alpha_mating_factor # Yeast secretion signal for the secretory pathway
+          - tag: alpha_factor_signal  # yeast secretion signal peptide
           - gene:
-              id: P06280
+              id: P10744  # human beta-hexosaminidase A (hexosaminidase A)
               source: uniprot
-    - terminator: CYC1 # Standard yeast transcriptional terminator
+
+    - terminator: CYC1_poly_A  # yeast CYC1 terminator with poly(A) signal

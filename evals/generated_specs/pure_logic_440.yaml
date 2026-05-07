@@ -1,16 +1,44 @@
 construct:
-  name: "robust_NOT_gate_Ptet_mEGFP"
-  host: e_coli
+  name: robust_NOT_gate
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: p15A  # Low-copy origin used to minimize basal expression/leakiness
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: Ptet  # Repressed by the presence of TetR protein (Input A)
+    - promoter: T7lac
+
+    - cistron:
+        label: repressor_A
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: output_Z
         expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: rrnB_T1  # Strong terminator to prevent read-through and minimize noise
+        fused: false
+        chain:
+          - promoter: tetO_minimal
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_stabilization
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ssrA_tag
+              source: uniprot
+
+    - terminator: rrnB_T1

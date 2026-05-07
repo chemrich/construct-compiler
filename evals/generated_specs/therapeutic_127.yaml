@@ -1,27 +1,31 @@
 construct:
-  name: "yeast_surface_display_therapeutic_vaccine"
+  name: yeast_surface_display_vaccine_antigen
   host: yeast
+
   backbone:
-    resistance: URA3 # Using URA3 auxotrophic marker to fulfill the "free of ARGs" (Antibiotic Resistance Genes) requirement
-    ori: 2micron
+    resistance: zeomycin
+    ori: 2_micron
     source: addgene
 
   cassette:
-    - promoter: GPD # Using GPD (TDH3) constitutive yeast promoter for high-level expression in yeast host
+    - promoter: GAL1
 
     - cistron:
-        label: display_fusion
+        label: vaccine_antigen
         expression: high
         chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P02829 # AGA2 surface display anchor protein
+              id: antigen_display_motif
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P04626 # Human HER2 (ERBB2) therapeutic antigen (non-viral)
+              id: aga2
               source: uniprot
-          - tag: 6xHis
 
-    - terminator: CYC1 # Standard yeast transcriptional terminator
+    - terminator: CYC1

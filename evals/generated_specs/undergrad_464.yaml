@@ -1,24 +1,34 @@
 construct:
-  name: "bicistronic_gfp_proteinx_expression"
-  host: e_coli
+  name: GFP_ProteinX_bicistronic
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: target
+        label: ProteinX
         expression: high
         fused: false
-        gene:
-          id: P00561  # Representative UniProt ID for ProteinX placeholder
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinX
+              source: uniprot
+
+    - terminator: rrnB_T1

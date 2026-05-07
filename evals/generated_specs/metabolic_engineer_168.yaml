@@ -1,46 +1,92 @@
 construct:
-  name: "biofuel_precursor_fusion_operon"
-  host: e_coli_bl21_de3
+  name: "biofuel_precursor_operon_BFP1_BFP6"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_assembly
+        label: BFP1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: BFP1
               source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: BFP2
+        expression: high
+        fused: false
+        chain:
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: BFP2
               source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: BFP3
+        expression: high
+        fused: false
+        chain:
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: BFP3
               source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: BFP4
+        expression: high
+        fused: false
+        chain:
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: BFP4
               source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: BFP5
+        expression: high
+        fused: false
+        chain:
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: BFP5
               source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: BFP6
+        expression: high
+        fused: false
+        chain:
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: BFP6
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

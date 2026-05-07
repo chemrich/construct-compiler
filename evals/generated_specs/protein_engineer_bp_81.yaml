@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_amylase_secretion_Pveg"
+  name: "bacillus_amylase_secretion_cassette"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: Pveg # Constitutive strong promoter for Bacillus subtilis
+    - promoter: Pveg
+
     - cistron:
-        label: amylase_production
+        label: amylase_secreted
         expression: high
         chain:
-          - tag: AmyE_signal # N-terminal signal peptide for secretion
+          - secretion_signal: AmyE
           - gene:
-              id: P06911 # UniProt ID for Bacillus licheniformis alpha-amylase (AmyL)
+              id: amyE
               source: uniprot
-          - tag: Strep-II # C-terminal tag for purification
-    - terminator: BBa_B0015
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

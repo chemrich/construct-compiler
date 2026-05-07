@@ -1,26 +1,34 @@
 construct:
-  name: "YeastProteinX_Mito_Luciferase"
+  name: YeastProteinX_mitochondrial_luciferase
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3 # Substituted requested mammalian promoter with strong yeast TDH3 promoter as mammalian promoters are typically inactive in S. cerevisiae.
+    - promoter: GAL1  # Strong yeast promoter substituted for mammalian CMV (incompatible with S. cerevisiae)
+
     - cistron:
-        label: target_protein
+        label: ProteinX
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS  # Mitochondrial targeting sequence
           - gene:
-              id: YeastProteinX
+              id: ProteinX
               source: uniprot
-    - spacer: 66 # DNA sequence encoding the P2A self-cleaving peptide to allow bicistronic expression.
+
+    - spacer: 30
+
     - cistron:
-        label: reporter
+        label: luciferase_reporter
         expression: high
-        fused: true
-        gene:
-          id: firefly_luciferase
-          source: uniprot
-    - terminator: CYC1_term
+        fused: false
+        chain:
+          - cleavage_site: P2A  # Self-cleaving 2A peptide for stoichiometric separation
+          - gene:
+              id: Renilla_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

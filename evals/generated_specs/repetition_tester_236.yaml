@@ -1,23 +1,41 @@
 construct:
-  name: "bidirectional_divergent_mammalian_expression"
+  name: "bidirectional_dual_polyA_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+      direction: forward
+
     - cistron:
-        label: unit_1
+        label: gene1
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_pA
-    - spacer: 100
-    - promoter: EF1_alpha
+        chain:
+          - tag: FLAG
+          - gene:
+              id: EGFP
+              source: fpbase
+
+    - terminator: SV40_polyA
+      # SV40 polyadenylation signal (AATAAA-based)
+
+    - spacer: 50
+
+    - promoter: CMV
+      direction: reverse
+
     - cistron:
-        label: unit_2
+        label: gene2
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - tag: HA
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: BGH_polyA
+      # BGH (Bovine Growth Hormone) polyadenylation signal
+      # Structurally divergent from SV40; uses distinct upstream elements
+      # Minimal sequence homology prevents recombination hotspots

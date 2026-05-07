@@ -1,18 +1,22 @@
 construct:
-  name: "pichia_pastoris_secretion_reporter"
+  name: "pichia_secretion_gfp_screen"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: secreted_gfp
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: AOX1_term
+
+    - terminator: CYC1

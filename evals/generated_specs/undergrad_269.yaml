@@ -1,25 +1,33 @@
 construct:
-  name: "yeast_dual_reporter_GPD_TEF1"
+  name: "dual_promoter_yeast_GFP_mCherry"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: gfp_unit
-        expression: medium
+        label: GFP
+        expression: high
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
+
     - terminator: CYC1
-    - spacer: 50
+
+    - spacer: 100
+
     - promoter: TEF1
+
     - cistron:
-        label: mcherry_unit
-        expression: medium
+        label: mCherry
+        expression: high
         gene:
           id: mCherry
           source: fpbase
-    - terminator: ADH1
+
+    - terminator: CYC1

@@ -1,27 +1,43 @@
 construct:
-  name: "orthologous_two_component_system"
-  host: e_coli
+  name: "orthogonal_two_component_signaling_system"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+      rbs: BBa_B0034
+    
     - cistron:
-        label: histidine_kinase_envZ
-        expression: medium
-        fused: false
-        gene:
-          id: P0AEJ4
-          source: uniprot
+        label: histidine_kinase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P39383"
+              source: uniprot
+              # Vibrio cholerae VarS histidine kinase (orthologous to E. coli EnvZ)
+              # Codon-optimized for E. coli with synonymous recoding
+    
     - terminator: rrnB_T1
-    - spacer: 40
+    
+    - spacer: 35
+    
     - promoter: tac
+      rbs: BBa_B0032
+    
     - cistron:
-        label: response_regulator_ompR
-        expression: medium
-        fused: false
-        gene:
-          id: P06184
-          source: uniprot
+        label: response_regulator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P39384"
+              source: uniprot
+              # Vibrio cholerae VarG response regulator (orthologous to E. coli OmpR)
+              # Codon-optimized for E. coli with synonymous recoding
+    
     - terminator: T7term

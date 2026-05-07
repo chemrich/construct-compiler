@@ -1,46 +1,59 @@
 construct:
-  name: "enzyme_pathway_gradient_operon"
-  host: e_coli_bl21_de3
+  name: "five_enzyme_pathway_gradient"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enz_a
+        label: Enz_A
         expression: high
         gene:
           id: Enz_A
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enz_b
-        expression: medium
+        label: Enz_B
+        expression: high
         fused: false
         gene:
           id: Enz_B
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enz_c
-        expression: low
+        label: Enz_C
+        expression: medium
         fused: false
         gene:
           id: Enz_C
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enz_d
-        expression: very_low
+        label: Enz_D
+        expression: medium
         fused: false
         gene:
           id: Enz_D
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enz_e
-        expression: very_low
+        label: Enz_E
+        expression: low
         fused: false
         gene:
           id: Enz_E
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

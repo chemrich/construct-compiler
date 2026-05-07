@@ -1,56 +1,52 @@
-```yaml
 construct:
   name: circadian_antibody_oscillator
   host: mammalian
-
+  
   backbone:
-    catalog_vector: "pTwist CMV"
-
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+    
   cassette:
     - promoter: CMV
-
-    - cistron:
-        label: clock_activator
-        expression: medium
-        chain:
-          - gene:
-              id: CLOCK
-              source: uniprot
-
-    - spacer: 30
-
+    
     - cistron:
         label: clock_repressor
-        expression: medium
-        fused: false
+        expression: high
         chain:
+          - tag: FLAG
           - gene:
               id: PER2
               source: uniprot
-
-    - spacer: 30
-
+    
+    - terminator: rrnB_T1
+    
+    - promoter: EF1_alpha
+    
     - cistron:
-        label: therapeutic_antibody
+        label: clock_activator
         expression: high
-        fused: false
         chain:
-          - tag: signal_peptide  # secretion signal for mammalian cells
+          - tag: HA
           - gene:
-              id: P01857  # human IgG1 heavy chain constant region
+              id: CLOCK
               source: uniprot
-
-    - spacer: 30
-
+    
+    - terminator: rrnB_T1
+    
+    - promoter: CMV
+    
     - cistron:
-        label: antibody_light_chain
-        expression: high
-        fused: false
+        label: oscillating_antibody
+        expression: medium
         chain:
-          - tag: signal_peptide
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01834  # human IgG kappa light chain constant region
+              id: IgG1_Fc_optimized
               source: uniprot
-
-    - terminator: BBa_B0015
-```
+        notes: "Secretion signal (leader peptide) automatically included for mammalian expression. Output protein has N-terminal secretion signal, MBP solubility tag, and therapeutic antibody Fc domain. Rhythmic expression driven by clock_repressor/clock_activator negative feedback oscillator with ~24h period."
+    
+    - terminator: rrnB_T1

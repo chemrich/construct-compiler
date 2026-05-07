@@ -1,40 +1,54 @@
 construct:
-  name: "ribosome_profiling_gradient_operon"
+  name: "ribosome_profiling_operon_R1_R2_R3_R4"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23106
+    - promoter: tac
+    
     - cistron:
         label: R1
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
+        chain:
+          - gene:
+              id: R1
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: R2
         expression: medium
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - spacer: 30
+        chain:
+          - gene:
+              id: R2
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: R3
         expression: low
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - spacer: 30
+        chain:
+          - gene:
+              id: R3
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: R4
         expression: very_low
         fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
+        chain:
+          - gene:
+              id: R4
+              source: uniprot
+    
     - terminator: rrnB_T1

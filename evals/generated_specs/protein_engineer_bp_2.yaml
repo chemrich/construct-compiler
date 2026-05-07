@@ -1,25 +1,23 @@
-```yaml
 construct:
-  name: GAP_GST_TEV_lipase_stability
+  name: "Pichia_GAP_GST_TEV_lipase_stability"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
 
   cassette:
     - promoter: GAP
 
     - cistron:
-        label: target
+        label: lipase_construct
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: TEV
           - gene:
-              id: P62694  # Candida rugosa lipase
+              id: lipase_codon_optimized_pichia
               source: uniprot
 
     - terminator: CYC1
-```

@@ -1,24 +1,55 @@
 construct:
-  name: "genetic_timer_pulse_generator"
+  name: "genetic_timer_toggle_switch"
   host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+    
+    - cistron:
+        label: trigger_receptor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: clock_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ssrA_tagging_system
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: reporter
         expression: high
+        fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: mNeonGreen
               source: fpbase
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: delayed_off_switch
+        label: timer_protease
         expression: medium
         fused: false
-        gene:
-          id: P04483
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lon_protease
+              source: uniprot
+    
     - terminator: rrnB_T1

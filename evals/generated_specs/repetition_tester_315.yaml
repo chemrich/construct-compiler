@@ -1,40 +1,75 @@
 construct:
-  name: "Mammalian_Dual_Inducible_Toxic_Control"
+  name: dual_inducible_toxic_protein_HEK293
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
+
   cassette:
+    # First inducible system: Tet-On with rtTA and TRE promoter
     - promoter: CMV
+      label: rtTA_expression
+      cistron:
+        gene:
+          id: rtTA
+          source: uniprot
+        expression: medium
+
+    - terminator: rrnB_T1
+
+    # Spacer between independent cassettes
+    - spacer: 35
+
+    # Second inducible system: Ecdysone-responsive with EcR/RXR and EcRE promoter
+    - promoter: CMV
+      label: EcR_RXR_expression
+      cistron:
+        gene:
+          id: EcR
+          source: uniprot
+        expression: medium
+
+    - spacer: 20
+
     - cistron:
-        label: tet_activator
+        label: RXR_coactivator
         expression: medium
         gene:
-          id: rtTA3
+          id: RXR
           source: uniprot
-    - spacer: 45
-    - promoter: EF1_alpha
-    - cistron:
-        label: cumate_repressor
-        expression: medium
-        gene:
-          id: CymR
-          source: uniprot
-    - spacer: 60
-    - promoter: TRE3G
-    - cistron:
-        label: toxic_protein
+
+    - terminator: rrnB_T1
+
+    # Third cassette: Tet-On responsive cassette (TRE promoter + toxic protein)
+    - spacer: 35
+
+    - promoter: TRE
+      label: toxic_tet_on
+      cistron:
+        label: toxic_protein_tet
         expression: high
-        gene:
-          id: P00588
-          source: uniprot
-    - spacer: 45
-    - promoter: CuO
-    - cistron:
-        label: induction_reporter
-        expression: medium
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: your_toxic_protein
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Fourth cassette: Ecdysone-responsive cassette (EcRE promoter + toxic protein variant)
+    - spacer: 35
+
+    - promoter: EcRE
+      label: toxic_ecdysone
+      cistron:
+        label: toxic_protein_ecdysone
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: your_toxic_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

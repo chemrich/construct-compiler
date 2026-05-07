@@ -1,20 +1,24 @@
 construct:
-  name: "bacillus_protease_secretion_sacb"
+  name: "Bacillus_protease_SacB_FLAG"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: target_protease
+        label: protease
         expression: high
         chain:
-          - tag: SacB
+          - signal_peptide: SacB
           - gene:
               id: protease
               source: uniprot
           - cleavage_site: Enterokinase
           - tag: FLAG
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

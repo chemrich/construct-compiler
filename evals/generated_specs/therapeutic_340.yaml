@@ -1,18 +1,27 @@
 construct:
-  name: non_viral_secreted_human_therapeutic
+  name: "mammalian_secreted_therapeutic_peptide"
   host: HEK293
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance genes; typically requires alternative selection or minicircle production.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Mammalian expression vector with CMV promoter; using pTwist avoids antibiotic resistance requirement
+
   cassette:
-    - promoter: EF1_alpha  # High-level constitutive human promoter used to avoid viral elements like CMV.
+    - promoter: EF1_alpha
+      # EF1_alpha provides strong, constitutive expression in mammalian cells
+
     - cistron:
         label: therapeutic_peptide
         expression: high
         chain:
-          - tag: IgK_leader  # Signal peptide for efficient protein secretion.
+          - tag: signal_peptide_SP
+            # N-terminal signal peptide for ER-directed secretion
           - gene:
-              id: P01308     # Human Insulin as a representative therapeutic peptide.
+              id: therapeutic_peptide
               source: uniprot
-    - terminator: hGH_polyA  # Human growth hormone polyadenylation signal to avoid viral terminators like SV40.
+              # User to specify UniProt ID for their therapeutic peptide
+          - tag: His6
+            # C-terminal His6 tag for purification of secreted product
+
+    - terminator: SV40_polyA
+      # SV40 polyadenylation signal for efficient mRNA processing and stability

@@ -1,12 +1,15 @@
 construct:
-  name: "inducible_metabolic_operon_FGHI"
-  host: e_coli
+  name: "inducible_4enzyme_pathway_FGHI"
+  host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: enzyme_F
         expression: high
@@ -16,10 +19,12 @@ construct:
           - gene:
               id: enzyme_F
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_G
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
@@ -27,10 +32,12 @@ construct:
           - gene:
               id: enzyme_G
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_H
-        expression: low
+        expression: medium
         fused: false
         chain:
           - tag: 6xHis
@@ -38,10 +45,12 @@ construct:
           - gene:
               id: enzyme_H
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_I
-        expression: very_low
+        expression: medium
         fused: false
         chain:
           - tag: 6xHis
@@ -49,4 +58,5 @@ construct:
           - gene:
               id: enzyme_I
               source: uniprot
+
     - terminator: rrnB_T1

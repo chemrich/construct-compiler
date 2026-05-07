@@ -1,34 +1,34 @@
-```yaml
 construct:
-  name: two_component_system
-  host: e_coli
+  name: sensor_histidine_kinase_response_regulator_coexpression
+  host: e_coli_bl21
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: sensor_kinase
-        expression: medium
+        label: sensor_histidine_kinase
+        expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0AEC3
+              id: cheA
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: response_regulator
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: P0AA18
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: cheY
+              source: uniprot
 
     - terminator: rrnB_T1
-```

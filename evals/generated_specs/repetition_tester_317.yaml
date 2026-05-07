@@ -1,31 +1,42 @@
 construct:
-  name: "yeast_dual_auxotrophic_centromeric_plasmid"
+  name: "dual_marker_centromeric_yeast_plasmid"
   host: yeast
 
   backbone:
-    resistance: ampicillin
-    ori: CEN6_ARS4  # Centromeric origin for single-copy maintenance in yeast
-    source: addgene
+    resistance: null
+    ori: CEN6_ARSH4
+    source: custom
+    # Centromeric element CEN6/ARSH4 provides single-copy stability in S. cerevisiae
+    # No antibiotic selection used; instead relying on dual auxotrophic markers
 
   cassette:
-    - promoter: ADH1
+    - promoter: GAL1
+      # Strong, regulatable promoter from GAL1 locus
+
     - cistron:
         label: URA3_marker
-        expression: medium
-        fused: false
+        expression: high
         gene:
-          id: P03315
+          id: URA3
           source: uniprot
+          # Orotidine 5'-phosphate decarboxylase; standard yeast marker
+
     - terminator: CYC1
+      # Transcription terminator from cytochrome c gene
 
-    - spacer: 50  # Physical separation between transcription units
+    - spacer: 50
+      # Minimal spacing to reduce recombination risk
 
-    - promoter: TEF1  # Distinct promoter to prevent internal rearrangements
+    - promoter: ADH1
+      # Distinct constitutive promoter from alcohol dehydrogenase
+
     - cistron:
         label: LEU2_marker
-        expression: medium
-        fused: false
+        expression: high
         gene:
-          id: P06633
+          id: LEU2
           source: uniprot
-    - terminator: PGK1  # Distinct terminator to prevent internal rearrangements
+          # 3-isopropylmalate dehydrogenase; second selection marker
+
+    - terminator: ADH1
+      # Distinct terminator from ADH1 3' region

@@ -1,15 +1,27 @@
 construct:
-  name: yeast_ecoli_shuttle_adh1_expression
-  host: yeast
+  name: "dual_host_shuttle_vector"
+  host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
-    source: custom  # Incorporates ARS/CEN yeast origin and URA3 selection marker
+    source: custom
+    # Note: This shuttle vector also contains S. cerevisiae ARS/CEN element and URA3 marker for yeast selection
+    # ARS1 and CEN6 elements enable autonomous replication and stable maintenance in yeast
+    # URA3 provides nutritional selection in yeast (uracil auxotrophy complementation)
+  
   cassette:
     - promoter: ADH1
+      # ADH1 (alcohol dehydrogenase 1 promoter) is a strong constitutive yeast promoter
+      # For E. coli propagation, this construct is maintained as a shuttle plasmid without requiring bacterial expression
+    
     - cistron:
-        label: target
+        label: dual_host_protein
+        expression: high
         gene:
-          id: Dual_Host_Protein
+          id: dual_host_protein
+          # User should provide UniProt ID or sequence separately for cloning
           source: uniprot
-    - terminator: CYC1_term
+    
+    - terminator: CYC1
+      # CYC1 (cytochrome c) terminator is standard for yeast expression

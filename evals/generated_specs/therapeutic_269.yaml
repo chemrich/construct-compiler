@@ -1,21 +1,29 @@
 construct:
-  name: "mitochondrial_mNeonGreen_human_nonviral"
+  name: "mitochondrial_fluorescent_reporter_HEK293"
   host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic resistance; requires custom selection mechanism
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Note: pTwist vectors use hygromycin B resistance by default; 
+    # for antibiotic-free selection, a mammalian selectable marker 
+    # (e.g., blasticidin or puromycin) or fluorescent selection marker 
+    # should be substituted. Using EF1_alpha promoter for non-viral constitutive expression.
+    resistance: null
+    ori: mammalian
+
   cassette:
-    - promoter: EF1_alpha # Strong constitutive non-viral mammalian promoter
+    - promoter: EF1_alpha
+
     - cistron:
-        label: mito_reporter
+        label: mitochondrial_reporter
         expression: high
         chain:
-          - tag: MTS # Mitochondrial Targeting Sequence for localization
+          - tag: MTS  # Mitochondrial Targeting Sequence (N-terminal)
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: mNeonGreen
               source: fpbase
-    - terminator: bGH_polyA # Non-viral mammalian polyadenylation signal
+
+    - terminator: rrnB_T1

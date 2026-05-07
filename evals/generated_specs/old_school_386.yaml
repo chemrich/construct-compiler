@@ -1,24 +1,33 @@
 construct:
-  name: "IPTG_inducible_Gene_Epsilon_lacI_system"
+  name: "Gene_Epsilon_IPTG_control"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: lacUV5
+
     - cistron:
-        label: target_epsilon
+        label: Gene_Epsilon
         expression: high
         gene:
           id: Gene_Epsilon
           source: uniprot
-    - spacer: 30
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: lacUV5
+
     - cistron:
-        label: lac_repressor
-        expression: low
-        fused: false
+        label: lacI_repressor
+        expression: medium
         gene:
           id: lacI
           source: uniprot
+
     - terminator: rrnB_T1

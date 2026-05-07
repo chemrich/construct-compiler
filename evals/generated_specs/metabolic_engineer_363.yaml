@@ -1,56 +1,66 @@
 construct:
-  name: "indole_derivative_biosynthesis_operon"
+  name: indole_derivative_pathway_operon
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23106
+
     - cistron:
-        label: trpA
+        label: TrpA
         expression: medium
         gene:
-          id: P0A877
+          id: TrpA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: trpB
+        label: TrpB
         expression: medium
-        fused: false
         gene:
-          id: P0A879
+          id: TrpB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: fmo
+        label: FMO
         expression: medium
-        fused: false
         gene:
-          id: Q51944
+          id: FMO
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: p450
+        label: P450
+        expression: high
+        gene:
+          id: CYP102A1
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Reductase
+        expression: high
+        gene:
+          id: CPR
+          source: uniprot
+
+    - spacer: 50
+
+    - cistron:
+        label: GFP_reporter
         expression: medium
-        fused: false
-        gene:
-          id: P14779
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reductase
-        expression: medium
-        fused: false
-        gene:
-          id: P16452
-          source: uniprot
-    - spacer: 35
-    - cistron:
-        label: reporter
-        expression: low
         fused: false
         gene:
           id: sfGFP
           source: fpbase
+
     - terminator: rrnB_T1

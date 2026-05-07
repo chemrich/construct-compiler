@@ -1,13 +1,26 @@
 construct:
-  name: "AAVS1_targeting_gRNA"
+  name: "gRNA_AAVS1_human"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330-U6-Chimeric_BB-CBh-hSpCas9"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: sgRNA
+        label: guide_RNA
         expression: high
-        gene:
-          id: AAVS1_sgRNA
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: "AAVS1_sgRNA"
+              sequence: "GGGGCCACTAGGGACAGGAT"
+              source: custom
+          - linker:
+              type: GS_flexible
+              repeats: 1
+
+    - terminator: U6_terminator

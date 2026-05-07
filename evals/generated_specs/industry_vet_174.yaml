@@ -1,18 +1,23 @@
 construct:
-  name: "periplasmic_protein_export"
+  name: "periplasmic_protein_expression"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
         label: periplasmic_target
         expression: high
         chain:
-          - tag: PelB
+          - signal_peptide: PelB
           - gene:
               id: PeriplasmicProtein
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

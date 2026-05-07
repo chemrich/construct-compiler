@@ -1,25 +1,32 @@
 construct:
   name: "dual_promoter_mammalian_activator_reporter"
-  host: mammalian
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: blasticidin
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: activator
+        label: ActivatorA
         expression: high
         gene:
           id: ActivatorA
           source: uniprot
-    - terminator: BGH_pA
-    - spacer: 50
+
+    - terminator: rrnB_T1
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: reporter
+        label: ReporterR
         expression: high
         gene:
           id: ReporterR
           source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: rrnB_T1

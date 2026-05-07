@@ -1,24 +1,35 @@
 construct:
-  name: "tac_inducible_lacIq_expression_system"
+  name: "inducible_lac_expression_with_lacIq"
   host: e_coli
+  
   backbone:
     resistance: chloramphenicol
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: tac
+    
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - spacer: 45
-    - promoter: J23100
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: target_gene
+              source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 100
+    
+    - promoter: lacIq
+    
     - cistron:
-        label: lacIq_repressor
+        label: repressor
         expression: medium
-        fused: false
         gene:
-          id: P03023
+          id: lacI
           source: uniprot
+    
     - terminator: rrnB_T1

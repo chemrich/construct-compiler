@@ -1,19 +1,25 @@
 construct:
-  name: "Pichia_PAOX1_Secretory_Enzyme"
+  name: "Pichia_pastoris_secretory_enzyme_His6"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PAOX1
+
     - cistron:
-        label: secretory_target
+        label: secretory_enzyme
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - cleavage_site: TEV
           - gene:
               id: target_enzyme
+              source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

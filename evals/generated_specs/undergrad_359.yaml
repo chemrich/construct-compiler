@@ -1,24 +1,38 @@
 construct:
-  name: mammalian_bicistronic_ires_zeocin
+  name: "mammalian_bicistronic_Protein1_Protein2"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: zeocin
-    ori: pUC
-    source: custom
+    # Note: zeocin resistance cassette will be included in the backbone
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_1
+        label: Protein1
         expression: high
-        gene:
-          id: Protein1
-          source: uniprot
-    - spacer: 585 # Length of EMCV IRES for bicistronic mammalian translation
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Protein1
+              source: uniprot
+
+    # IRES (Internal Ribosome Entry Site) represented as spacer with comment
+    # Standard ENCV IRES sequence (~600 bp) enables cap-independent translation
+    - spacer: 600
+
     - cistron:
-        label: protein_2
-        expression: medium
-        fused: false # Necessary for independent translation via IRES
-        gene:
-          id: Protein2
-          source: uniprot
-    - terminator: bGH_polyA
+        label: Protein2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Protein2
+              source: uniprot
+
+    - terminator: rrnB_T1

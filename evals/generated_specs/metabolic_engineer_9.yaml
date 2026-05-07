@@ -1,74 +1,74 @@
-```yaml
 construct:
-  name: pollutant_degradation_operon
-  host: e_coli  # Using E. coli as host since P. putida not in schema
-
+  name: "P_putida_pollutant_degradation_operon"
+  host: pseudomonas_putida
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: gentamicin
+    ori: RK2
     source: addgene
-
+  
   cassette:
-    - promoter: araBAD  # Inducible promoter as proxy for pollutant-inducible system
-
+    - promoter: araBAD
+      # araBAD allows induction by L-arabinose; can be engineered for pollutant-responsive variants
+    
     - cistron:
-        label: enzyme1
+        label: enzyme_1_monooxygenase
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P19835  # Example degradation enzyme
+              id: PAH_monooxygenase
               source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
-        label: enzyme2
+        label: enzyme_2_hydroxylase
         expression: high
         fused: false
         gene:
-          id: P0A9P0
+          id: PAH_hydroxylase
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
-        label: enzyme3
+        label: enzyme_3_dehydrogenase
         expression: high
         fused: false
         gene:
-          id: P77731
+          id: catechol_dehydrogenase
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
-        label: enzyme4
+        label: enzyme_4_oxygenase
         expression: high
         fused: false
         gene:
-          id: P39831
+          id: catechol_1_2_oxygenase
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
-        label: enzyme5
+        label: enzyme_5_isomerase
         expression: high
         fused: false
         gene:
-          id: P0A9Q1
+          id: muconate_isomerase
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
-        label: enzyme6
+        label: enzyme_6_lactonase
         expression: high
         fused: false
         gene:
-          id: P77212
+          id: muconolactone_isomerase
           source: uniprot
-
+    
     - terminator: rrnB_T1
-```

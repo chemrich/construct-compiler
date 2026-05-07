@@ -1,35 +1,46 @@
 construct:
-  name: diversified_5x_binding_protein
+  name: "pentameric_binding_domain_codon_optimized"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: pentamer_construct
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
-          # Each of the 5 repeats of the binding domain (substituted with UniProt: P02976) 
-          # must be codon-optimized distinctly to minimize nucleotide homology.
+              repeats: 1
           - gene:
-              id: P02976
-              source: uniprot
+              id: binding_domain_repeat_1_codon_opt_variant_A
+              source: custom
+          - linker:
+              type: short_GS
           - gene:
-              id: P02976
-              source: uniprot
+              id: binding_domain_repeat_2_codon_opt_variant_B
+              source: custom
+          - linker:
+              type: short_GS
           - gene:
-              id: P02976
-              source: uniprot
+              id: binding_domain_repeat_3_codon_opt_variant_C
+              source: custom
+          - linker:
+              type: short_GS
           - gene:
-              id: P02976
-              source: uniprot
+              id: binding_domain_repeat_4_codon_opt_variant_D
+              source: custom
+          - linker:
+              type: short_GS
           - gene:
-              id: P02976
-              source: uniprot
-    - terminator: T7term
+              id: binding_domain_repeat_5_codon_opt_variant_E
+              source: custom
+
+    - terminator: rrnB_T1

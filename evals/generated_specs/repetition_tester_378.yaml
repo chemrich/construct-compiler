@@ -1,27 +1,32 @@
 construct:
-  name: "protein_x_subcellular_dual_targeting"
+  name: "ProteinX_dual_localization_mitochondrial_peroxisomal"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: mitochondrial_variant
-        expression: medium
+        label: ProteinX_mitochondrial
+        expression: high
         chain:
-          - tag: MTS
+          - tag: MTS  # mitochondrial targeting sequence (N-terminal)
           - gene:
               id: ProteinX
               source: uniprot
-    - spacer: 40
+
+    - spacer: 30
+
     - cistron:
-        label: peroxisomal_variant
-        expression: medium
+        label: ProteinX_peroxisomal
+        expression: high
         fused: false
         chain:
           - gene:
               id: ProteinX
               source: uniprot
-          - tag: PTS1
-    - terminator: bGH_polyA
+          - tag: PTS1  # peroxisomal targeting sequence (C-terminal)
+
+    - terminator: BBa_B0015

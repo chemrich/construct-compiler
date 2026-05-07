@@ -1,27 +1,36 @@
 construct:
-  name: "Hydrophobe_P_solubility_optimization_fusion"
-  host: e_coli_bl21
+  name: "Hydrophobe_P_triple_solubility_tags"
+  host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
-        expression: high
+        label: hydrophobe_mbp_gst_sumo
+        expression: medium
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - solubility_tag: GST
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: rigid_EAAAK
+              repeats: 2
           - gene:
               id: Hydrophobe_P
               source: uniprot
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: short_GS
+              repeats: 1
           - solubility_tag: SUMO
-    - terminator: T7term
+          - cleavage_site: 3C
+
+    - terminator: rrnB_T1

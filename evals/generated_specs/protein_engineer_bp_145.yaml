@@ -1,18 +1,25 @@
 construct:
-  name: "Bacillus_Pveg_WapA_Subtilisin_6xHis"
+  name: "bacillus_secreted_serine_protease"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pveg
-      cistron:
+
+    - rbs: optimized
+
+    - cistron:
         label: secreted_protease
         expression: high
         chain:
-          - tag: WapA  # Secretion signal peptide for B. subtilis
+          - signal_peptide: WapA
           - gene:
-              id: P04189  # UniProt ID for Subtilisin E (Serine Protease)
+              id: serine_protease
               source: uniprot
-          - tag: 6xHis  # C-terminal His-tag
-      terminator: rrnB_T1
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

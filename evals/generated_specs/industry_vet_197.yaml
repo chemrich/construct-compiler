@@ -1,10 +1,15 @@
 construct:
-  name: "dual_tag_purification_system"
+  name: "dual_tag_purification_ecoli"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
         label: target
         expression: high
@@ -12,7 +17,8 @@ construct:
           - tag: Strep-II
           - cleavage_site: TEV
           - gene:
-              id: protein_of_interest
+              id: target_protein
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

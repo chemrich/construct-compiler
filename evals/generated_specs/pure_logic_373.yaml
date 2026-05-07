@@ -1,16 +1,48 @@
 construct:
-  name: "cell_free_rna_sensing_module"
+  name: "cell_free_RNA_sensing_module"
   host: in_vitro
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7  # T7 promoter is used for high-yield in vitro transcription
+    - promoter: T7
+
+    - cistron:
+        label: toehold_switch_riboregulator
+        expression: high
+        chain:
+          - gene:
+              id: toehold_switch_Target_RNA
+              source: custom
+        # Comment: toehold switch RNA structure encodes riboregulator that activates translation of Reporter_R only upon Target_RNA binding
+
+    - spacer: 25
+
     - cistron:
         label: Reporter_R
         expression: high
-        # Note: Functional sensing (e.g., toehold switch) is typically implemented in the 5' UTR,
-        # which is not explicitly modeled in this schema. This cistron represents the reporter output.
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+        fused: false
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: replication_factor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: T7_RNA_polymerase
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,35 +1,80 @@
 construct:
-  name: metabolic_load_balancing_circuit
-  host: e_coli_bl21
+  name: "metabolic_load_balancing_circuit"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: araBAD
+      label: "pathway_A_detector"
+    
     - cistron:
-        label: pathway_B_activation
-        expression: high
-        fused: false
+        label: "signal_integrator_I"
+        expression: medium
         gene:
-          id: P0A715
+          id: luxR
           source: uniprot
+    
     - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: Ptet
+    
+    - spacer: 30
+    
+    - promoter: T7lac
+      label: "pathway_B_activation_on_high_I"
+    
     - cistron:
-        label: pathway_A_activation
+        label: "pathway_B_activator"
         expression: high
         fused: false
         gene:
-          id: P0ABH7
+          id: araC
           source: uniprot
-    - terminator: T7term
-    - spacer: 40
-    - promoter: J23106
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: araBAD
+      label: "pathway_B_detector"
+    
     - cistron:
-        label: basal_pathway_K
+        label: "signal_integrator_J"
+        expression: medium
+        gene:
+          id: tetR
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: T7lac
+      label: "pathway_A_activation_on_high_J"
+    
+    - cistron:
+        label: "pathway_A_activator"
+        expression: high
+        fused: false
+        gene:
+          id: crp
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: lacUV5
+      label: "basal_pathway_K_low_load"
+    
+    - cistron:
+        label: "pathway_K_basal"
         expression: low
         fused: false
         gene:
-          id: P0A944
+          id: fabA
           source: uniprot
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

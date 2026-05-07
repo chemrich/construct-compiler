@@ -1,5 +1,5 @@
 construct:
-  name: "bacillus_spore_display_cotG_dehydrogenase"
+  name: "cotg_dehydrogenase_spore_display"
   host: bacillus
 
   backbone:
@@ -8,19 +8,24 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: pCotG
+    - promoter: cotG_native
+
     - cistron:
-        label: display_fusion
+        label: spore_anchor_enzyme_fusion
         expression: high
         chain:
           - gene:
               id: cotG
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: ADH
+              id: dehydrogenase
               source: uniprot
+
     - terminator: rrnB_T1

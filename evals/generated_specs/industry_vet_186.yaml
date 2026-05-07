@@ -1,19 +1,27 @@
 construct:
-  name: "HEK293_CMV_CtermHis_WPRE"
+  name: "HEK293_CMV_protein_His_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: human_protein  # placeholder; specify actual gene
+              source: uniprot
           - linker:
-              type: short_GS
-              repeats: 2
+              type: GS_flexible
+              repeats: 1
           - tag: 6xHis
-    - terminator: WPRE_BGH_pA  # WPRE included before BGH_pA to boost mRNA stability and expression as requested
+
+    # WPRE equivalent for mammalian: polyadenylation signal (pA) + WPRE-like element
+    # Using synthetic poly(A) signal for mRNA stability
+    - regulatory_element: SV40_pA
+
+    - terminator: rrnB_T1

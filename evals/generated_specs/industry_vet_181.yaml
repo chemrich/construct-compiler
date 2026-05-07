@@ -1,24 +1,35 @@
 construct:
-  name: "bicistronic_HEK293_A_B_IRES"
+  name: "bicistronic_A_B_HEK293_IRES"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: Protein_A
+        label: protein_A
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: Protein_A
-    - spacer: 500  # Spacer length approximating an IRES element
+              id: protein_A
+              source: uniprot
+
+    # IRES element represented as spacer with comment
+    # In practice, an ENCV or EMCV IRES (~580bp) would be inserted here
+    - spacer: 600
+
     - cistron:
-        label: Protein_B
+        label: protein_B
         expression: high
         fused: false
         chain:
           - gene:
-              id: Protein_B
+              id: protein_B
+              source: uniprot
           - tag: 6xHis
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

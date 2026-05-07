@@ -1,47 +1,61 @@
 construct:
-  name: "two_bit_combinatorial_decoder"
-  host: e_coli_bl21_de3
+  name: two_bit_combinatorial_decoder
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23106 # State 00: High in absence of inputs (Assumes default state)
+    - promoter: araBAD
+      description: "Input A: arabinose-inducible promoter"
+    
     - cistron:
-        label: state_00_RFP
-        expression: medium
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BBa_B0015
-
-    - spacer: 40
-
-    - promoter: lacUV5 # State 01: Inducible by Input B (e.g., IPTG)
-    - cistron:
-        label: state_01_GFP
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
-
-    - spacer: 40
-
-    - promoter: araBAD # State 10: Inducible by Input A (e.g., L-Arabinose)
-    - cistron:
-        label: state_10_BFP
-        expression: medium
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: BBa_B0015
-
-    - spacer: 40
-
-    - promoter: T7lac # State 11: High only when Inputs A and B are present
-    - cistron:
-        label: state_11_YFP
+        label: output_00
         expression: high
-        gene:
-          id: mVenus
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: mTagBFP2
+              source: fpbase
+    
+    - terminator: rrnB_T1
+    
+    - promoter: lacUV5
+      description: "Input B: IPTG-inducible promoter"
+    
+    - cistron:
+        label: output_01
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1
+    
+    - promoter: araBAD
+      description: "Input A AND B: dual arabinose induction"
+    
+    - cistron:
+        label: output_10
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - terminator: rrnB_T1
+    
+    - promoter: araBAD
+      description: "Input A OR B: combined induction"
+    
+    - cistron:
+        label: output_11
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    
+    - terminator: rrnB_T1

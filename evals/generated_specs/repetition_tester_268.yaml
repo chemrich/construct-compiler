@@ -1,25 +1,63 @@
 construct:
-  name: "dual_selection_non_homologous_mammalian"
+  name: dual_marker_mammalian_expression_vector
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV Dual
+    # Note: pTwist CMV Dual is a mammalian expression backbone with
+    # independent selection marker cassettes designed for minimal homology
+    source: addgene
+
   cassette:
     - promoter: CMV
+      # Primary expression cassette
+
     - cistron:
-        label: puromycin_selection
-        expression: medium
+        label: primary_transgene
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: SV40_polyA
+
+    # First selection marker cassette: Hygromycin B resistance
+    # Uses SV40 promoter (divergent from CMV) with synthetic codon-optimized hph gene
+    - spacer: 50
+
+    - promoter: SV40
+      # Note: SV40 promoter is structurally distinct from CMV, reducing recombination risk
+
+    - cistron:
+        label: hygromycin_resistance_marker_1
+        expression: high
         gene:
-          id: PuroR
+          id: hph_synthetic  # Synthetic codon-optimized hygromycin phosphotransferase
           source: uniprot
-    - terminator: BGH_pA
-    - spacer: 100
+          # Engineered for maximum sequence divergence from puromycin marker
+
+    - terminator: BGH_polyA
+      # Note: BGH polyA (bovine growth hormone) is structurally distinct from SV40 polyA
+
+    # Second selection marker cassette: Puromycin resistance
+    # Uses EF1_alpha promoter (entirely distinct from SV40 and CMV) with codon-optimized pac gene
+    - spacer: 50
+
     - promoter: EF1_alpha
+      # Note: EF1_alpha is structurally unrelated to both CMV and SV40,
+      # minimizing cross-homology
+
     - cistron:
-        label: hygromycin_selection
-        expression: medium
+        label: puromycin_resistance_marker_2
+        expression: high
         gene:
-          id: HygR
+          id: pac_synthetic  # Synthetic codon-optimized puromycin N-acetyltransferase
           source: uniprot
-    - terminator: SV40_pA
+          # Engineered for maximum sequence divergence from hygromycin marker
+
+    - terminator: rSV40_polyA
+      # Note: Rabbit SV40 polyA (rSV40) is a variant polyA distinct from BGH and mammalian SV40,
+      # further reducing sequence homology across all regulatory elements

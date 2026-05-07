@@ -1,19 +1,24 @@
 construct:
-  name: "scFv_stability_secretion_bacillus"
+  name: "bacillus_scFv_secretion_construct"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: secreted_scFv
+        label: scFv
         expression: high
         chain:
-          - tag: AmyE
+          - tag: signal_peptide_AmyE
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
               id: scFv
+              source: uniprot
+
     - terminator: rrnB_T1

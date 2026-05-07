@@ -1,25 +1,23 @@
-```yaml
 construct:
-  name: antibody_fragment_secretion_yeast
+  name: antibody_fragment_yeast_secreted
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
-    - promoter: TEF1  # CMV is mammalian - using strong constitutive TEF1 for yeast
+    - promoter: GAL1  # Strong constitutive yeast promoter (CMV is mammalian; using GAL1 for S. cerevisiae)
 
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
-          - tag: alpha_factor_signal  # yeast secretion signal
+          - tag: signal_peptide_alpha_factor  # S. cerevisiae secretion signal
           - tag: 6xHis
           - gene:
               id: antibody_fragment
               source: uniprot
 
-    - terminator: CYC1
-```
+    - terminator: CYC1  # S. cerevisiae transcription terminator

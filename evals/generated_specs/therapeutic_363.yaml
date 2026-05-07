@@ -1,15 +1,43 @@
 construct:
-  name: "mRNA_therapeutic_hEPO_IVT"
+  name: "mRNA_therapeutic_protein_IVT"
   host: in_vitro
+
   backbone:
-    resistance: kanamycin # Required for plasmid template propagation; not included in final transcribed mRNA
-    ori: pUC
+    # mRNA construct for IVT - no plasmid backbone needed
+    # This is a linear transcription template
+    type: mrna_template
+
   cassette:
-    - promoter: T7
+    - element: 5_utr
+      type: kozak_optimized
+      sequence_context: "GCCRCCAUGG"  # optimized Kozak for mammalian translation
+
+    - element: 5_cap_analog
+      variant: "m7G"  # 7-methylguanosine cap for stability and recognition
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_protein
         expression: high
-        gene:
-          id: P01588 # Human Erythropoietin (hEPO)
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: "therapeutic_protein"
+              # User must supply actual protein ID or sequence
+              source: "uniprot"
+
+    - element: 3_utr
+      type: poly_a_tail
+      length: 120  # poly(A) tail for stability and translation efficiency
+      synthetic: true
+
+    - element: post_transcriptional_modification
+      type: pseudouridine_substitution
+      # Pseudouridine improves stability and reduces innate immune activation
+      coverage: "partial"
+
+    - element: rna_stability_motif
+      type: "WPRE"  # Woodchuck Posttranscriptional Regulatory Element (WPRE)
+      # Enhances expression without integration capability
+
+  notes: "This construct is optimized for in vitro transcription followed by mRNA delivery to mammalian cells. No plasmid resistance markers, integrase elements, or viral sequences included. The pseudouridine substitution reduces immunogenicity. Poly(A) tail and 5' cap are essential for in vivo stability and translation."

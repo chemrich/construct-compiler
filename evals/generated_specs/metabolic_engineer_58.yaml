@@ -1,61 +1,85 @@
 construct:
-  name: "tet_on_inducible_drug_metabolism_panel"
+  name: "mammalian_drug_metabolism_panel_tetOn"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: "pTRE-Tight"
+    resistance: neomycin
+    source: addgene
+
   cassette:
-    - promoter: TRE3G  # High-sensitivity Tet-responsive promoter for tight regulation
+    - promoter: TRE_tight
+
     - cistron:
-        label: CYP1A1_expression
-        expression: high
+        label: CYP1A1
+        expression: medium
         chain:
           - gene:
               id: CYP1A1
               source: uniprot
-          - tag: FLAG  # C-terminal detection tag
-    - terminator: bGH_pA
-    - spacer: 50
-    - promoter: TRE3G
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: FLAG
+
+    - spacer: 30
+
     - cistron:
-        label: CYP2D6_expression
-        expression: high
+        label: CYP2D6
+        expression: medium
+        fused: false
         chain:
           - gene:
               id: CYP2D6
               source: uniprot
-          - tag: V5  # C-terminal detection tag
-    - terminator: bGH_pA
-    - spacer: 50
-    - promoter: TRE3G
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: V5
+
+    - spacer: 30
+
     - cistron:
-        label: CYP3A4_expression
-        expression: high
+        label: CYP3A4
+        expression: medium
+        fused: false
         chain:
           - gene:
               id: CYP3A4
               source: uniprot
-          - tag: Myc  # C-terminal detection tag
-    - terminator: bGH_pA
-    - spacer: 50
-    - promoter: TRE3G
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: Myc
+
+    - spacer: 30
+
     - cistron:
-        label: NAT2_expression
-        expression: high
+        label: NAT2
+        expression: medium
+        fused: false
         chain:
           - gene:
               id: NAT2
               source: uniprot
-          - tag: HA  # C-terminal detection tag
-    - terminator: bGH_pA
-    - spacer: 50
-    - promoter: TRE3G
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: HA
+
+    - spacer: 30
+
     - cistron:
-        label: UGT1A1_expression
-        expression: high
+        label: UGT1A1
+        expression: medium
+        fused: false
         chain:
           - gene:
               id: UGT1A1
               source: uniprot
-          - tag: Strep-II  # C-terminal detection tag
-    - terminator: bGH_pA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: Twin-Strep
+
+    - terminator: SV40_polyA

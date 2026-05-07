@@ -1,37 +1,56 @@
-```yaml
 construct:
-  name: genetic_2to1_multiplexer_secreted
-  host: e_coli_bl21_de3
+  name: "e_coli_2to1_multiplexer_secreted"
+  host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: araBAD  # Control signal S - LOW arabinose = input A selected
+    - promoter: T7lac
 
     - cistron:
-        label: signal_peptide_A
-        expression: medium
+        label: multiplexer_output
+        expression: high
         chain:
-          - tag: pelB  # Secretion signal for E. coli
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP  # Input A
-              source: fpbase
-          - tag: 6xHis  # Purification tag
+              id: MuxO
+              source: uniprot
+              # Functional description: Logic gate protein that outputs A when S=LOW, B when S=HIGH
+              # Implementation requires a fusion protein with conditional domain-swapping or allosteric regulation
+              # DNA sequence encodes a synthetic logic circuit protein responsive to S signal
 
-    - spacer: 30
-
-    - promoter: lacUV5  # Control signal S - HIGH IPTG = input B selected
+    - spacer: 25
 
     - cistron:
-        label: signal_peptide_B
+        label: signal_input_A
         expression: medium
-        chain:
-          - tag: pelB  # Secretion signal for E. coli
-          - gene:
-              id: mScarlet  # Input B
-              source: fpbase
-          - tag: 6xHis  # Purification tag
+        fused: false
+        gene:
+          id: InputA
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: signal_input_B
+        expression: medium
+        fused: false
+        gene:
+          id: InputB
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: control_signal_S
+        expression: medium
+        fused: false
+        gene:
+          id: ControlS
+          source: uniprot
 
     - terminator: rrnB_T1
-```

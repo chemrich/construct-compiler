@@ -1,19 +1,27 @@
 construct:
-  name: "metabolic_flux_control_operon"
-  host: e_coli_bl21_de3
+  name: "flux_control_operon_tunable"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: FluxE1
-        expression: medium
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: FluxE1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: FluxE2
         expression: high
@@ -23,7 +31,10 @@ construct:
           - gene:
               id: FluxE2
               source: uniprot
-    - spacer: 30
+        rbs_tuning: true
+
+    - spacer: 25
+
     - cistron:
         label: FluxE3
         expression: medium
@@ -33,14 +44,18 @@ construct:
           - gene:
               id: FluxE3
               source: uniprot
-    - spacer: 30
+        rbs_tuning: true
+
+    - spacer: 25
+
     - cistron:
         label: FluxE4
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: FluxE4
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

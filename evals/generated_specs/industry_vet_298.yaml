@@ -1,23 +1,33 @@
 construct:
-  name: "stable_mammalian_integration_aav"
+  name: stable_integration_mammalian_expression
   host: HEK293
+
   backbone:
-    catalog_vector: "pAAV-MCS"
+    catalog_vector: "pTwist CMV"
+    resistance: neomycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 50
-    - promoter: EF1_alpha
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: polyA
+
+    - promoter: SV40
+
     - cistron:
         label: selection_marker
-        expression: low
-        fused: false
-        gene:
-          id: NeoR
-          source: uniprot
-    - terminator: bGH_PA
+        expression: high
+        chain:
+          - gene:
+              id: neomycin_phosphotransferase
+              source: uniprot
+
+    - terminator: polyA

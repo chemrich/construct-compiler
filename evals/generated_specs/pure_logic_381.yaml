@@ -1,17 +1,43 @@
 construct:
-  name: "genetic_or_gate_tandem_promoters"
-  host: e_coli
+  name: "two_input_OR_logic_gate"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
-    - promoter: tac
+
     - cistron:
-        label: reporter_output
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
+        label: input_A_sensor
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: input_B_sensor
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: OR_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

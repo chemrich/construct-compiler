@@ -1,28 +1,49 @@
 construct:
-  name: "orthogonal_dual_gRNA_crispri_system"
+  name: "dual_gRNA_dCas9_CRISPRi"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: dCas9_effector
+        label: dCas9
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: dCas9
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 35
+
+    - promoter: araBAD
+
+    - cistron:
+        label: gRNA_1
+        expression: high
+        gene:
+          id: gRNA_target_1
+          source: uniprot
+
+    - terminator: BBa_B0015
+
+    - spacer: 35
+
+    - promoter: lacUV5
+
+    - cistron:
+        label: gRNA_2
         expression: medium
         gene:
-          id: Q99ZW2
+          id: gRNA_target_2
           source: uniprot
-    - terminator: rrnB_T1
-    - promoter: J23100
-    - cistron:
-        label: sgRNA_target_1
-        gene:
-          id: sgRNA_F_plus_E_backbone
+
     - terminator: T7term
-    - promoter: J23106
-    - cistron:
-        label: sgRNA_target_2
-        gene:
-          id: sgRNA_standard_v2_backbone
-    - terminator: BBa_B0015

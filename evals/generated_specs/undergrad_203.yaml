@@ -1,18 +1,22 @@
 construct:
-  name: "yeast_secretion_secretstuff"
+  name: "yeast_secretion_SecretStuff"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: TEF1  # Robust constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: SecretStuff_secreted
         expression: high
         chain:
-          - tag: alpha_factor  # Yeast alpha-mating factor secretion signal
+          - tag: alpha_factor_signal_peptide
           - gene:
               id: SecretStuff
               source: uniprot
-    - terminator: CYC1  # Robust yeast terminator
+
+    - terminator: CYC1_poly_A

@@ -1,22 +1,30 @@
 construct:
-  name: fusion_alpha_beta_myc
+  name: "Protein_Alpha_Beta_fusion_Myc"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: alpha_beta_fusion
+        label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - tag: Myc
           - gene:
-              id: Protein_Alpha
+              id: P12345
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: Protein_Beta
+              id: P67890
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

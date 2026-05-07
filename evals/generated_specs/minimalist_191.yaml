@@ -1,29 +1,33 @@
 construct:
-  name: yeast_display_protein_d_mcherry
+  name: yeast_display_protein_D_mCherry
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: display
         expression: high
         chain:
+          - tag: HA
           - gene:
-              id: AGA2
+              id: protein_D
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P06821
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: mCherry
               source: fpbase
+
     - terminator: CYC1

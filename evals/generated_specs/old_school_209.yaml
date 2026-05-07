@@ -1,20 +1,32 @@
 construct:
-  name: "tet_on_inducible_mEGFP_rtTA"
+  name: "tet_inducible_GFP_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: TRE
+      
     - cistron:
-        label: target_reporter
+        label: GFP
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: bGH_polyA
+    
+    - terminator: polyA
+
+    - spacer: 100
+
     - promoter: CMV
+
     - cistron:
-        label: transactivator
+        label: rtTA
+        expression: medium
         gene:
           id: rtTA
           source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: polyA

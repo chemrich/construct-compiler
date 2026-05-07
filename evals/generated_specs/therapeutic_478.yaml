@@ -1,21 +1,22 @@
 construct:
-  name: "exosomal_therapeutic_delivery_construct"
+  name: exosomal_therapeutic_protein
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: exosomal_payload
         expression: high
         chain:
+          - tag: exosome_targeting_signal
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: LAMP2B
+              id: VEGF_A
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: IL10
-              source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

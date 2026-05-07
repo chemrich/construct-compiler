@@ -1,24 +1,58 @@
 construct:
-  name: "weighted_sum_analog_detector"
-  host: e_coli_bl21
+  name: weighted_sum_detector_analog_output
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac  # tac promoter is used instead of T7lac to provide a more linear analog response for input integration
+    - promoter: T7lac
+
     - cistron:
-        label: FinalProduct
-        expression: high  # High expression level serves as the Weight=2 multiplier for InputA/B integration
+        label: InputA_sensor
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
+              id: LuxR_variant
+              source: uniprot
+        # LuxR homolog for first weighted input
+
+    - spacer: 30
+
+    - cistron:
+        label: InputB_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TetR_variant
+              source: uniprot
+        # TetR homolog for second weighted input
+
+    - spacer: 30
+
+    - cistron:
+        label: InputC_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: AraC_variant
+              source: uniprot
+        # AraC homolog for inhibitory third input
+
+    - spacer: 30
+
+    - cistron:
+        label: FinalProduct
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
               id: sfGFP
               source: fpbase
-    - spacer: 30
-    - cistron:
-        label: inhibitor_input_c
-        expression: low  # Low expression of the repressor implements the subtractive -0.5 weighting for InputC
-        fused: false
-        gene:
-          id: P03023
-          source: uniprot
+        # Fluorescent output scaled by integrated regulatory logic; expression modulated by weighted combination of upstream regulators
+
     - terminator: rrnB_T1

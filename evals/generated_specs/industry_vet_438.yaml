@@ -1,12 +1,17 @@
 construct:
-  name: "library_peptide_f_expression"
-  host: e_coli_bl21
+  name: "AAV_library_peptide_F_strep"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: LibraryPeptideF
         expression: high
         chain:
           - tag: Strep-II
@@ -15,4 +20,6 @@ construct:
               repeats: 2
           - gene:
               id: LibraryPeptideF
-    - terminator: T7term
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,16 +1,21 @@
 construct:
-  name: "BiofuelEnzyme_High_Expression_Yeast"
+  name: "BiofuelEnzyme_high_expression_yeast"
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: biofuel_enzyme_target
+        label: BiofuelEnzyme
         expression: high
-        gene:
-          id: BiofuelEnzyme
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - gene:
+              id: BiofuelEnzyme
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,26 +1,40 @@
 construct:
-  name: "dual_resistance_biosensor_distinct_regulators"
+  name: "E_coli_dual_resistance_biosensor"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
     - cistron:
-        label: biosensor_reporter
+        label: biosensor
         expression: high
         gene:
-          id: mNeonGreen
-          source: fpbase
+          id: lacZ
+          source: uniprot
     - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: J23106
+
+    - spacer: 30
+
+    - promoter: araBAD
     - cistron:
-        label: spectinomycin_resistance
-        expression: medium
-        fused: false
+        label: kan_resistance
+        expression: high
         gene:
-          id: P0AG05
+          id: neo
+          source: uniprot
+    - terminator: T7term
+
+    - spacer: 30
+
+    - promoter: tac
+    - cistron:
+        label: spec_resistance
+        expression: high
+        gene:
+          id: aadA
           source: uniprot
     - terminator: BBa_B0015

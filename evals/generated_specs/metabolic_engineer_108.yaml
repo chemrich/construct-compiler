@@ -1,55 +1,60 @@
 construct:
-  name: mammalian_four_gene_fret_pathway
+  name: "four_gene_FRET_pathway_mammalian"
   host: HEK293
-  backbone:
-    catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
     - cistron:
-        label: enzyme_1_cfp
+        label: enzyme1_CFP
         expression: high
         chain:
           - gene:
-              id: enzyme_1
-              source: uniprot
+              id: mCerulean
+              source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mTurquoise2
-              source: fpbase
-    - terminator: bGH_polyA
-    - spacer: 50
+              id: enzyme1
+              source: uniprot
+
+    - terminator: SV40polyA
+
     - promoter: EF1_alpha
     - cistron:
-        label: enzyme_2_yfp
+        label: enzyme2_YFP
         expression: high
         chain:
-          - gene:
-              id: enzyme_2
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
           - gene:
               id: mVenus
               source: fpbase
-    - terminator: bGH_polyA
-    - spacer: 50
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: enzyme2
+              source: uniprot
+
+    - terminator: SV40polyA
+
     - promoter: CMV
     - cistron:
-        label: enzyme_3
+        label: enzyme3
         expression: high
-        gene:
-          id: enzyme_3
-          source: uniprot
-    - terminator: bGH_polyA
-    - spacer: 50
+        chain:
+          - gene:
+              id: enzyme3
+              source: uniprot
+
+    - terminator: SV40polyA
+
     - promoter: EF1_alpha
     - cistron:
-        label: enzyme_4
+        label: enzyme4
         expression: high
-        gene:
-          id: enzyme_4
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: enzyme4
+              source: uniprot
+
+    - terminator: SV40polyA

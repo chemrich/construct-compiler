@@ -1,22 +1,29 @@
 construct:
-  name: "B_then_C_polycistronic_expression"
-  host: e_coli
+  name: B_then_C
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_B
+        label: B
         expression: high
         gene:
           id: B
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: protein_C
+        label: C
         expression: high
-        fused: false
         gene:
           id: C
           source: uniprot
+
     - terminator: rrnB_T1

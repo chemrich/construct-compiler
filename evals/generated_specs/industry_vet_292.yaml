@@ -1,20 +1,25 @@
 construct:
-  name: "nuclear_targeted_purifiable_mEGFP"
+  name: nuclear_localized_purifiable_protein
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: nls_target
+        label: target
         expression: high
         chain:
           - tag: 6xHis
-          - tag: NLS
+          - cleavage_site: TEV
+          - gene:
+              id: GFP
+              source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_polyA # Standard mammalian polyadenylation signal for termination
+              repeats: 1
+          - tag: NLS
+
+    - terminator: rrnB_T1

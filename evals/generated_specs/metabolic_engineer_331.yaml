@@ -1,56 +1,85 @@
 construct:
-  name: "tox_operon_agrobacterium_tight_control"
+  name: "toxin_biosynthesis_operon_ToxA_ToxF"
   host: agrobacterium_tumefaciens
+
   backbone:
     resistance: kanamycin
-    ori: pBBR1
-    source: custom
+    ori: pTi
+    source: addgene
+
   cassette:
     - promoter: araBAD
+      # araBAD provides tight OFF state with minimal leakiness in Agrobacterium
+      # Induction with L-arabinose enables dose-dependent control
+
     - cistron:
-        label: toxA
-        expression: medium
-        gene:
-          id: toxA
-          source: uniprot
-    - spacer: 30
+        label: ToxA
+        expression: high
+        chain:
+          - rbs: RBS_strong
+          - gene:
+              id: ToxA
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: toxB
+        label: ToxB
+        expression: high
+        fused: false
+        chain:
+          - rbs: RBS_medium
+          - gene:
+              id: ToxB
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: ToxC
+        expression: high
+        fused: false
+        chain:
+          - rbs: RBS_medium
+          - gene:
+              id: ToxC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: ToxD
         expression: medium
         fused: false
-        gene:
-          id: toxB
-          source: uniprot
-    - spacer: 30
+        chain:
+          - rbs: RBS_medium
+          - gene:
+              id: ToxD
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: toxC
+        label: ToxE
         expression: medium
         fused: false
-        gene:
-          id: toxC
-          source: uniprot
-    - spacer: 30
+        chain:
+          - rbs: RBS_weak
+          - gene:
+              id: ToxE
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: toxD
+        label: ToxF
         expression: medium
         fused: false
-        gene:
-          id: toxD
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: toxE
-        expression: medium
-        fused: false
-        gene:
-          id: toxE
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: toxF
-        expression: medium
-        fused: false
-        gene:
-          id: toxF
-          source: uniprot
+        chain:
+          - rbs: RBS_weak
+          - gene:
+              id: ToxF
+              source: uniprot
+
     - terminator: rrnB_T1
+      # Double terminator (transcriptional + translational) ensures no read-through

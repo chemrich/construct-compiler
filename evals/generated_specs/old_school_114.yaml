@@ -1,25 +1,33 @@
 construct:
-  name: "lambda_pr_repressible_expression_system"
+  name: lambda_PR_conditional_expression
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: lambda_PR
+    
     - cistron:
-        label: target_gene
+        label: target
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: J23100
-    - cistron:
-        label: ci_repressor
-        fused: false
-        gene:
-          id: P03034
+          id: lacZ
           source: uniprot
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 50
+    
+    - promoter: lacUV5
+    
+    - cistron:
+        label: cI_repressor
+        expression: medium
+        gene:
+          id: cI
+          source: uniprot
+    
+    - terminator: rrnB_T1

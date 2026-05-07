@@ -1,15 +1,17 @@
 construct:
-  name: AwesomeProtein_crystallography
-  host: e_coli_bl21_de3
-
+  name: "AwesomeProtein_His_TEV_crystallography"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
-
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+  
   cassette:
-    - promoter: T7lac  # CMV is mammalian, using T7lac for strong E. coli expression
-
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: AwesomeProtein
         expression: high
         chain:
           - gene:
@@ -17,5 +19,5 @@ construct:
               source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
-
+    
     - terminator: rrnB_T1

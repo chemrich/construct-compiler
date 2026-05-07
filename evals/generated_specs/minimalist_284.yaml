@@ -1,18 +1,20 @@
 construct:
-  name: "secreted_mcherry"
-  host: e_coli
+  name: secreted_mCherry
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: mcherry_secretion
+        label: secreted_mCherry
         expression: high
         chain:
-          - tag: pelB
+          - tag: signal_peptide_pelB
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,35 +1,73 @@
 construct:
-  name: modular_tripartite_scaffold_assembly
+  name: "modular_protein_scaffold_three_effectors"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
-    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: scaffold_fusion
+        label: scaffold_n_terminus
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - solubility_tag: MBP
+          - gene:
+              id: scaffold_core_backbone
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: effector_domain_1
+        expression: high
+        fused: false
+        chain:
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: effector_binding_site_1
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: effector_domain_2
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: rigid_EAAAK
-              repeats: 4
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: mScarlet
-              source: fpbase
+              id: effector_binding_site_2
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: effector_domain_3
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: rigid_EAAAK
-              repeats: 4
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: mNeonGreen
-              source: fpbase
-    - terminator: T7term
+              id: effector_binding_site_3
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: solubility_tag_c_terminus
+        expression: high
+        fused: false
+        chain:
+          - solubility_tag: MBP
+          - tag: 8xHis
+
+    - terminator: rrnB_T1

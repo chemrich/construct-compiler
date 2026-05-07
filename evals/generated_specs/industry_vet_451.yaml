@@ -1,21 +1,21 @@
 construct:
-  name: "high_yield_epitope_fusion"
+  name: epitope_tag_peptide_bacterial_expression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: epitope_fragment
+        label: epitope_tag
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P01106  # Myc-proto-oncogene protein; standard epitope tag source
+              id: custom_epitope
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

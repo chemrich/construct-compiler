@@ -1,19 +1,23 @@
 construct:
-  name: "Bacillus_subtilis_LipA_secreted_lipase"
+  name: Bacillus_subtilis_lipase_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
-        label: industrial_lipase
+        label: lipase
         expression: high
         chain:
-          - tag: LipA_signal
+          - signal_peptide: LipA
           - gene:
-              id: P19096
+              id: lipase
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

@@ -1,14 +1,31 @@
 construct:
-  name: "diverse_3UTR_stabilized_expression"
+  name: "mammalian_low_abundance_dual_UTR_stabilization"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: low_abundance_target
+        label: target_protein
         expression: low
         gene:
-          id: P60568
+          id: P12345
           source: uniprot
-    - terminator: WPRE_BGH_pA  # Using WPRE and BGH polyA as two sequence-diverse mRNA stabilization/processing elements.
+
+    - terminator: SV40_poly_A
+
+    # First 3' UTR stabilization element: beta-globin poly(A) signal + stability element
+    - utr_element:
+        type: "3UTR_stability"
+        name: "beta_globin_3UTR"
+        sequence: "AATAAA ATGACTGTGAGTGCTCACTCCCTATCTGCCCTATCTGCCCACAGACCCCAGTAGCAGCGCGGTGTGTGTGCGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTG"
+
+    # Second 3' UTR stabilization element: histone stem-loop + downstream sequence
+    - utr_element:
+        type: "3UTR_stability"
+        name: "histone_stemloop_3UTR"
+        sequence: "AGACCCGCGCGCGGGCCGCCGCCGCCCGCCGACACCCCGGGCGCCGCCGCCGCCGCGCCGACGCGCCGACCCGACCGCCGCCCGCGCCGACCCGACCCGACCGACGCCCCGAC"

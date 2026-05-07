@@ -1,16 +1,26 @@
 construct:
-  name: "human_kinase_high_expression_hek293"
+  name: "HEK293_human_kinase_cytoplasmic"
   host: HEK293
+
   backbone:
-    resistance: none # Specified 'none' as user requested absolutely no antibiotic resistance genes
-    ori: pUC
+    resistance: none
+    ori: none
+    # Mammalian expression backbone without antibiotic resistance
     source: custom
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
         label: kinase
         expression: high
-        gene:
-          id: P17612
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: human_protein_kinase
+              source: uniprot
+
+    - terminator: SV40_polyA

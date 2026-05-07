@@ -1,18 +1,24 @@
 construct:
-  name: "ProteinM_Secretion_Construct"
+  name: "ProteinM_secreted_His_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: ProteinM_secreted
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_mammalian
           - gene:
               id: ProteinM
               source: uniprot
+              codon_optimize: true
           - cleavage_site: TEV
           - tag: 6xHis
-    - terminator: BGH_polyA
+
+    - terminator: polyA

@@ -1,23 +1,43 @@
 construct:
-  name: self_limiting_therapeutic_safeguard
+  name: "self_limiting_safety_switch_mammalian"
   host: HEK293
+
   backbone:
-    # Kanamycin resistance is included for essential bacterial cloning and propagation.
-    # The request for 'No ARB' is acknowledged for the downstream therapeutic implementation.
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TRE3G # Highly specific, tightly regulated inducible promoter (non-viral origin)
+    - promoter: TRE_tight
+      # TRE (Tetracycline Response Element) provides tight, doxycycline-inducible control
+      # OFF state: minimal basal expression
+      # ON state: rapid, dose-dependent activation upon doxycycline addition
+
     - cistron:
-        label: effector
+        label: safety_protein
         expression: high
         chain:
-          - gene:
-              id: mNeonGreen
-              source: fpbase
+          - tag: PEST_degron
+            # PEST sequence (Pro-Glu-Ser-Thr rich) targets protein for rapid proteasomal degradation
+            # Half-life reduced from hours to minutes
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: PEST # C-terminal degradation signal for rapid protein clearance
-    - terminator: bGH_PA # Non-viral mammalian polyadenylation signal
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+              # mCherry chosen as a marker; can be replaced with therapeutic protein
+              # Its fluorescence allows real-time monitoring of degradation kinetics
+
+    - cistron:
+        label: destabilizing_domain
+        expression: medium
+        fused: false
+        chain:
+          - tag: degron_ssrA
+            # ssrA (SsrA) tag: bacterial degron adapted for mammalian proteasomal recognition
+            # Orthogonal to endogenous machinery; triggers rapid 26S proteasome degradation
+          - gene:
+              id: GFP
+              source: fpbase
+
+    - terminator: rrnB_T1

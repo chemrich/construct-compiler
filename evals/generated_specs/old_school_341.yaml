@@ -1,16 +1,21 @@
 construct:
-  name: "pUC_lacZ_promoter_test"
+  name: lacZ_promoter_test_vector
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+  
   cassette:
-    - promoter: custom_promoter_fragment
+    - promoter: custom_test_fragment
+      # User's test promoter fragment cloned upstream
+    
     - cistron:
-        label: lacZ_reporter
+        label: lacZ
         expression: high
         gene:
           id: lacZ
           source: uniprot
-    - terminator: rrnB_T1
+    
+    - terminator: BBa_B0015

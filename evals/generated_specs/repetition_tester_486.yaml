@@ -1,20 +1,23 @@
 construct:
-  name: "Chimeric_P_TripleTag_Yeast"
+  name: Chimeric_P_yeast_multi_tag
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: Chimeric_P_multi_tagged
         expression: high
         chain:
-          - tag: 6xHis
+          - tag: 8xHis
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - tag: Strep-II
           - linker:
               type: rigid_EAAAK
@@ -23,6 +26,8 @@ construct:
               id: Chimeric_P
               source: uniprot
           - linker:
-              type: short_GS
+              type: SGSG
+              repeats: 2
           - tag: FLAG
+
     - terminator: CYC1

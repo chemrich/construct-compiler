@@ -1,14 +1,25 @@
 construct:
-  name: "HEK293_strong_AAVR_expression"
+  name: "mammalian_membrane_protein_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: membrane_protein
         expression: high
-        gene:
-          id: KIAA0319L
-          source: uniprot
-    - terminator: bgh_pA
+        chain:
+          - tag: FLAG
+          - cleavage_site: TEV
+          - gene:
+              id: AAV_receptor
+              source: uniprot
+              # User to provide UniProt ID or gene symbol for their specific GOI
+              # This example uses "AAV_receptor" as placeholder
+
+    - terminator: rrnB_T1

@@ -1,19 +1,25 @@
 construct:
-  name: therapeutic_peptide_high_yield_system
+  name: "therapeutic_peptide_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: peptide_construct
         expression: high
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: TEV
-          - gene:
-              id: GLP1_HUMAN
-              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: therapeutic_peptide
+              source: uniprot
+
+    - terminator: rrnB_T1

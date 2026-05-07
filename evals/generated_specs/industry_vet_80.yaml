@@ -1,17 +1,21 @@
 construct:
-  name: "therapeutic_protein_expression_system"
+  name: "bacterial_therapeutic_expression_cassette"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: therapeutic_target
+        label: therapeutic_protein
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: IGF1_HUMAN
+              id: therapeutic_protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

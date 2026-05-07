@@ -1,20 +1,40 @@
 construct:
-  name: "viral_protein_complex_p2a"
+  name: "viral_subunit_complex_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "subunit_a_b_polyprotein"
+        label: SubunitA
         expression: high
         chain:
           - gene:
-              id: "SubunitA"
+              id: SubunitA
               source: uniprot
-          - cleavage_site: P2A
+
+    - spacer: 21
+
+    - cistron:
+        label: P2A_linker
+        expression: high
+        chain:
           - gene:
-              id: "SubunitB"
+              id: P2A
               source: uniprot
+
+    - spacer: 21
+
+    - cistron:
+        label: SubunitB
+        expression: high
+        chain:
           - tag: 6xHis
-    - terminator: BBa_B0015
+          - gene:
+              id: SubunitB
+              source: uniprot
+
+    - terminator: rrnB_T1

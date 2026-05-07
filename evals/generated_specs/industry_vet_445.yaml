@@ -1,16 +1,21 @@
 construct:
-  name: "targeting_peptide_mEGFP_fusion"
+  name: targeting_peptide_GFP_fusion
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: peptide_reporter_fusion
+        label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: targeting_peptide
+              id: targeting_ligand
               source: uniprot
           - linker:
               type: GS_flexible
@@ -18,4 +23,5 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

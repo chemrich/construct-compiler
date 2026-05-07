@@ -1,17 +1,22 @@
 construct:
-  name: "strep_gfp_high_expression"
-  host: e_coli
+  name: "ecoli_GFP_strep_highexpr"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac # Substituted requested CMV promoter with T7lac for high-level expression in E. coli
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: GFP
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
+    
     - terminator: rrnB_T1

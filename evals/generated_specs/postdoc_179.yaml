@@ -1,14 +1,17 @@
 construct:
-  name: "yeast_sumo_tev_protein_assay"
+  name: "yeast_SUMO_fusion_functional_assay"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: difficult_protein
+        label: SUMO_fusion
         expression: high
         chain:
           - solubility_tag: SUMO
@@ -16,12 +19,14 @@ construct:
           - gene:
               id: target_protein
               source: uniprot
-    - spacer: 40  # IRES functional distance for yeast internal ribosome entry
+        # Note: IRES included conceptually for polycistronic co-expression in yeast
+
     - cistron:
-        label: assay_peptide
+        label: functional_peptide
         expression: medium
-        fused: false  # Independent translation via IRES
+        fused: false
         gene:
-          id: functional_peptide
+          id: assay_peptide
           source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

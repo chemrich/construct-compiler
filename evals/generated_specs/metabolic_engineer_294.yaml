@@ -1,48 +1,72 @@
 construct:
-  name: "Liver_Specific_Inducible_mGlu_Pathway"
-  host: mammalian
+  name: "doxycycline_inducible_liver_albumin_5enzyme_operon"
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTRE-Tight"
+    resistance: ampicillin
+
   cassette:
-    - promoter: "TRE-Albumin" # Dox-inducible liver-specific promoter (TRE fused to Albumin promoter)
+    - promoter: albumin
+      inducible: doxycycline
+
     - cistron:
-        label: "mGluA"
-        expression: medium
-        gene:
-          id: "mGluA"
-          source: uniprot
+        label: mGluA
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mGluA
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: "mGluB"
-        expression: medium
-        fused: false
-        gene:
-          id: "mGluB"
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: "mGluC"
-        expression: medium
+        label: mGluB
+        expression: high
         fused: false
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
           - gene:
-              id: "mGluC"
+              id: mGluB
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: "mGluD"
-        expression: medium
+        label: mGluC
+        expression: high
         fused: false
-        gene:
-          id: "mGluD"
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - solubility_tag: SUMO
+          - cleavage_site: SUMO_protease
+          - gene:
+              id: mGluC
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: "mGluE"
-        expression: medium
+        label: mGluD
+        expression: high
         fused: false
-        gene:
-          id: "mGluE"
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mGluD
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: mGluE
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mGluE
+              source: uniprot
+
+    - terminator: SV40_polyA

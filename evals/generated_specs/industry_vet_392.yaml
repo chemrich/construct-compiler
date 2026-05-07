@@ -1,21 +1,26 @@
 construct:
-  name: "human_SLC2A1_yeast_expression"
+  name: "yeast_human_TM_protein_expression"
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: target_transmembrane
+        label: human_TM_protein
         expression: high
         chain:
           - gene:
-              id: SLC2A1
+              id: "uniprot_search_required"
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: 8xHis
-    - terminator: CYC1_term
+              repeats: 1
+          - tag: 6xHis
+
+    - terminator: CYC1

@@ -1,20 +1,30 @@
 construct:
-  name: "dual_sgRNA_orthogonal_expression"
+  name: dual_sgRNA_mammalian_no_homology
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: sgRNA_locus_A
-        fused: false
-        gene:
-          id: "sgRNA_target_A_standard_scaffold"
-    - spacer: 50
+      cistron:
+        label: sgRNA_1
+        expression: high
+        chain:
+          - gene:
+              id: sgRNA_target_locus_1
+              source: custom
+              sequence: GGTGAGTGAGTGTGTGCGTG
+
     - promoter: H1
-    - cistron:
-        label: sgRNA_locus_B
-        fused: false
-        gene:
-          id: "sgRNA_target_B_orthogonal_E_scaffold"
-    - terminator: BBa_B0015 # Added to ensure cassette termination as per rule 10
+      cistron:
+        label: sgRNA_2
+        expression: high
+        chain:
+          - gene:
+              id: sgRNA_target_locus_2
+              source: custom
+              sequence: GGTGTGTGAGTGCGTGTGTG
+
+    - terminator: rrnB_T1

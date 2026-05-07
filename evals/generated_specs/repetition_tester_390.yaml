@@ -1,30 +1,50 @@
 construct:
-  name: "ribozyme_processed_nop_polycistronic"
-  host: e_coli_bl21_de3
+  name: "triexpress_GeneN_GeneO_GeneP_ribozyme_separated"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: gene_n
+        label: GeneN
         expression: high
-        gene:
-          id: GeneN
-          source: uniprot
-    - spacer: 55  # Hammerhead ribozyme (sHHR) variant for RNA processing
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneN
+              source: uniprot
+    
+    - ribozyme: hammerhead_type1
+      # Classic hammerhead ribozyme (autocatalytic cleavage, different fold mechanism)
+    
     - cistron:
-        label: gene_o
+        label: GeneO
         expression: high
-        fused: false # Ensures independent translation via a distinct RBS
-        gene:
-          id: GeneO
-          source: uniprot
-    - spacer: 84  # HDV ribozyme variant (non-homologous to HHR) for RNA processing
+        fused: false
+        # Independent translation with distinct RBS
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneO
+              source: uniprot
+    
+    - ribozyme: HDV_ribozyme
+      # Hepatitis Delta Virus ribozyme (fundamentally different catalytic mechanism: uses metal ion cofactors)
+    
     - cistron:
-        label: gene_p
+        label: GeneP
         expression: high
-        fused: false # Ensures independent translation via a distinct RBS
-        gene:
-          id: GeneP
-          source: uniprot
+        fused: false
+        # Independent translation with distinct RBS
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneP
+              source: uniprot
+    
     - terminator: rrnB_T1

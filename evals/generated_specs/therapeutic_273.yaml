@@ -1,25 +1,39 @@
 construct:
-  name: "Bicistronic_Therapeutic_Enzyme_System"
-  host: mammalian
+  name: "dual_therapeutic_enzyme_IRES_mammalian"
+  host: HEK293
+
   backbone:
-    # No antibiotic resistance or viral sequences as requested
-    resistance: none
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    ori: pBR322
+    source: addgene
+    # Note: removed resistance marker for non-viral, marker-free design
+
   cassette:
-    - promoter: EF1_alpha  # Robust constitutive human promoter, non-viral
+    - promoter: EF1_alpha  # robust constitutive mammalian promoter, non-viral
+
     - cistron:
-        label: Enzyme_A
+        label: enzyme_A
         expression: high
-        gene:
-          id: P00441  # Superoxide dismutase 1 (Example therapeutic enzyme)
-          source: uniprot
-    - spacer: 585  # Approximate length of a standard IRES sequence
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P69905  # UniProt ID for a representative therapeutic enzyme
+              source: uniprot
+
+    # IRES element represented as spacer with functional annotation
+    # In practice, this would be a 500-800 bp IRES sequence (e.g., EMCV or CrPV IRES)
+    - spacer: 600  # bp; represents IRES element for cap-independent translation
+
     - cistron:
-        label: Enzyme_B
-        expression: medium
-        fused: false  # Independent translation via the IRES-like spacer
-        gene:
-          id: P04062  # Glucosylceramidase (Example therapeutic enzyme)
-          source: uniprot
-    - terminator: bGH_polyA  # Non-viral mammalian polyadenylation signal
+        label: enzyme_B
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P12345  # UniProt ID for second therapeutic enzyme
+              source: uniprot
+
+    - terminator: rrnB_T1

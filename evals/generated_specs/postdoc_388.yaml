@@ -1,17 +1,28 @@
 construct:
-  name: "human_IL2_constitutive_flag"
-  host: e_coli
+  name: human_cytokine_ecoli_expression
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100  # Substituted SV40 with J23100; mammalian promoters like SV40 are non-functional in E. coli hosts.
+    - promoter: T7lac
+      # Note: SV40 is a mammalian viral promoter and does not function in E. coli.
+      # Substituted with T7lac, which is strong and constitutive in BL21(DE3) with IPTG induction.
+      # Codon optimization for human vs. E. coli requires different tRNA abundance profiles;
+      # human codon usage will likely reduce expression in E. coli. Consider E. coli codon optimization
+      # for this host, or use a mammalian expression system if human codons are required.
+    
     - cistron:
-        label: target_cytokine
+        label: cytokine
         expression: high
         chain:
           - gene:
-              id: P60568
+              id: human_cytokine
+              # Using uniprot reference; ensure sequence is E. coli codon-optimized, not human-optimized
               source: uniprot
           - tag: FLAG
+    
     - terminator: rrnB_T1

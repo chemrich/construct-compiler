@@ -1,46 +1,104 @@
 construct:
-  name: "mammalian_sr_latch_recombinase_system"
+  name: mammalian_SR_latch_system
   host: HEK293
-  backbone:
-    catalog_vector: "pTwist CMV"
+
+  cassette:
+    # Cassette 1: SetSignal-responsive component (produces Cre recombinase)
+    - promoter: CMV
+    
+    - cistron:
+        label: SetSignal_detector
+        expression: high
+        chain:
+          - gene:
+              id: SetSignal_responsive_TF
+              source: uniprot
+        fused: false
+
+    - spacer: 20
+
+    - cistron:
+        label: Cre_recombinase
+        expression: high
+        chain:
+          - gene:
+              id: P06954
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # Cassette 2: State_Green (loxP-flanked, flips to default state)
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: set_signal_processor
+        label: State_Green
         expression: high
         chain:
           - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P06956
-              source: uniprot
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1
-    - promoter: EF1_alpha
-    - cistron:
-        label: reset_signal_processor
-        expression: high
-        chain:
-          - tag: NLS
-          - gene:
-              id: P03870
-              source: uniprot
-    - terminator: rrnB_T1
+
+  # Cassette 3: ResetSignal-responsive component (produces Flp recombinase)
+  cassette:
     - promoter: CMV
+
     - cistron:
-        label: state_green
-        expression: medium
+        label: ResetSignal_detector
+        expression: high
         chain:
-          - tag: NLS
           - gene:
-              id: mEGFP
-              source: fpbase
-    - spacer: 40
-    - cistron:
-        label: state_red
-        expression: medium
+              id: ResetSignal_responsive_TF
+              source: uniprot
         fused: false
+
+    - spacer: 20
+
+    - cistron:
+        label: Flp_recombinase
+        expression: high
+        chain:
+          - gene:
+              id: P08928
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # Cassette 4: State_Red (frt-flanked, flips to default state)
+  cassette:
+    - promoter: CMV
+
+    - cistron:
+        label: State_Red
+        expression: high
         chain:
           - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
+
+    - terminator: rrnB_T1
+
+  # Cassette 5: Bistable memory element with loxP and frt sites
+  # (This cassette uses synthetic DNA elements for the latch logic)
+  cassette:
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: latch_memory_element
+        expression: medium
+        chain:
+          - gene:
+              id: synthetic_latch_dna
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,49 +1,62 @@
 construct:
-  name: "aptE_operon_constitutive_riboswitch"
+  name: "AptE_operon_riboswitch_control"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
         label: AptE1
-        expression: medium
-        # 5' UTR contains a riboswitch for small molecule control of translation
+        expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: AptE1
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: AptE2
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: Strep-II
           - gene:
               id: AptE2
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: AptE3
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: Strep-II
           - gene:
               id: AptE3
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: AptE4
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: Strep-II
           - gene:
               id: AptE4
               source: uniprot
+
     - terminator: rrnB_T1
+
+  # NOTE: Riboswitch/aptamer element should be manually inserted in the 5' UTR
+  # upstream of the AptE1 start codon. The compiler does not yet have built-in
+  # riboswitch support; this must be added during assembly or post-synthesis.

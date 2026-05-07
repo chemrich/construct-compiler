@@ -1,11 +1,15 @@
 construct:
-  name: SuperProtein_DualTagged_T7
-  host: e_coli_bl21_de3
+  name: "SuperProtein_dual_tag"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7
+    - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
@@ -13,5 +17,7 @@ construct:
           - tag: 6xHis
           - gene:
               id: SuperProtein
+              source: uniprot
           - tag: Strep-II
-    - terminator: T7term
+
+    - terminator: rrnB_T1

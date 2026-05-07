@@ -1,16 +1,22 @@
 construct:
-  name: "toxicity_assay_low_copy"
+  name: "toxicity_assay_lowcopy"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: SC101 # SC101 is used as a generic low-copy substitute for P1/F origins
+    ori: SC101
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: toxic_payload
-        expression: low
-        gene:
-          id: P00648 # Barnase (standard toxic protein)
-          source: uniprot
+        label: toxic_protein
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: null
+              source: null
+
     - terminator: rrnB_T1

@@ -1,16 +1,24 @@
 construct:
-  name: "toxic_protein_a_tet_on_expression"
+  name: "ToxicProteinA_TetOn_inducible"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTRE-Tight"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TRE3G # Tetracycline-responsive promoter for Tet-On induction
+    - promoter: TRE
+      # TRE (Tetracycline Response Element) requires co-expression of rtTA (reverse Tet transactivator)
+      # This enables doxycycline-inducible expression
+
     - cistron:
-        label: toxic_protein_a
-        expression: high
+        label: ToxicProteinA
+        expression: medium
         chain:
           - tag: HA
           - gene:
               id: ToxicProteinA
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: WPRE
+      # WPRE (Woodchuck Posttranscriptional Regulatory Element) enhances expression in mammalian cells

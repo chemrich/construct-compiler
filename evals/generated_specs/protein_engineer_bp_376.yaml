@@ -1,23 +1,27 @@
 construct:
-  name: "bacillus_secreted_vaccine_antigen"
+  name: bacillus_secreted_vaccine_antigen
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
-        label: antigen_expression_unit
+        label: vaccine_antigen
         expression: high
         chain:
-          - tag: Vpr
+          - signal_peptide: Vpr
           - gene:
-              id: vaccine_antigen
+              id: antigen
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - cleavage_site: TEV
           - tag: 6xHis
+
     - terminator: rrnB_T1

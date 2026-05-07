@@ -1,46 +1,67 @@
 construct:
-  name: "sequential_logic_circuit_abc"
-  host: e_coli_bl21_de3
+  name: "sequential_logic_circuit_ABC"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+      # Step A: arabinose-inducible enzyme A with auto-repressor
     - cistron:
-        label: step_a_enzyme
+        label: step_A_enzyme
         expression: high
         chain:
           - gene:
-              id: P00688
+              id: lacI
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: step_b_enzyme
-        expression: medium
-        fused: false
-        chain:
-          - gene:
-              id: P00722
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: step_c_enzyme
-        expression: medium
-        fused: false
-        chain:
-          - gene:
-              id: P08659
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reporter
-        expression: high
-        fused: false
-        chain:
-          - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mNeonGreen
-              source: fpbase
-    - terminator: T7term # Sequential logic timing (A -> off -> B -> off -> C) is assumed to be controlled by external induction timing or secondary regulatory elements not explicitly defined in the structural schema.
+              id: cI
+              source: uniprot
+
+    - spacer: 35
+
+    - promoter: T7lac
+      # Step B: induced by removal of LacI/CI repression; produces enzyme B and tetR repressor
+    - cistron:
+        label: step_B_enzyme
+        expression: high
+        chain:
+          - gene:
+              id: dioxygenase
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 35
+
+    - promoter: T7lac
+      # Step C: induced by removal of TetR repression; produces enzyme C and lacZ reporter for visual confirmation
+    - cistron:
+        label: step_C_enzyme
+        expression: high
+        chain:
+          - gene:
+              id: monooxygenase
+              source: uniprot
+
+    - spacer: 35
+
+    - cistron:
+        label: reporter_C_confirmation
+        expression: high
+        fused: false
+        gene:
+          id: lacZ
+          source: uniprot
+
+    - terminator: rrnB_T1

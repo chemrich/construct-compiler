@@ -1,27 +1,33 @@
 construct:
-  name: "non_homologous_triple_fusion_protein"
-  host: e_coli_bl21_de3
+  name: "multi_domain_fusion_protein_distinct_linkers"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: triple_domain_fusion
+        label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: domain_1
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
-          - gene:
-              id: mCherry
-              source: fpbase
-          - linker:
-              type: short_GS
               repeats: 3
           - gene:
-              id: mTagBFP2
-              source: fpbase
-    - terminator: T7term
+              id: domain_2
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: domain_3
+              source: uniprot
+
+    - terminator: rrnB_T1

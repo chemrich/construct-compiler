@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_aox1_ost1_sumo_scfv_secretion"
+  name: "Pichia_scFv_SUMO_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: scfv_expression
+        label: scFv_secreted
         expression: high
         chain:
-          - tag: Ost1
+          - tag: Ost1_signal_peptide
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
               id: scFv
               source: uniprot
-    - terminator: CYC1_TT
+
+    - terminator: rrnB_T1

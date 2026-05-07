@@ -1,15 +1,15 @@
 construct:
-  name: "GeneA_GeneB_polycistronic_complex"
+  name: "GeneA_GeneB_complex_ecoli"
   host: e_coli_bl21_de3
-  
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-  
+
   cassette:
-    - promoter: T7
-    
+    - promoter: T7lac
+
     - cistron:
         label: GeneA
         expression: high
@@ -18,19 +18,19 @@ construct:
           - gene:
               id: GeneA
               source: uniprot
-    
-    # Note: E. coli ribosomes don't recognize IRES sequences (eukaryotic mechanism)
-    # Using spacer for polycistronic expression with separate RBS for each cistron
+
+    # Note: E. coli ribosomes do not recognize IRES elements (eukaryotic feature).
+    # Using RBS + spacing instead for efficient polycistronic translation.
     - spacer: 30
-    
+
     - cistron:
         label: GeneB
         expression: high
-        fused: false  # independent translation with its own RBS
+        fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: GeneB
               source: uniprot
-    
+
     - terminator: rrnB_T1

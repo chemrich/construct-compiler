@@ -1,40 +1,52 @@
 construct:
-  name: "carotenoid_production_operon"
-  host: e_coli_bl21_de3
+  name: "carotenoid_synthesis_operon"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: synthase
+        label: CarotenoidSynthase
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - gene:
               id: CarotenoidSynthase
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: desaturase
+        label: CarotenoidDesaturase
         expression: high
         fused: false
         gene:
           id: CarotenoidDesaturase
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: hydroxylase
+        label: CarotenoidHydroxylase
         expression: high
         fused: false
         gene:
           id: CarotenoidHydroxylase
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: ketolase
+        label: CarotenoidKetolase
         expression: high
         fused: false
         gene:
           id: CarotenoidKetolase
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

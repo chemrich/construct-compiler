@@ -1,12 +1,17 @@
 construct:
-  name: "ProtZ_expression_dual_tagged"
-  host: e_coli_bl21_de3
+  name: "ProtZ_dual_tags"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: target
+        label: ProtZ
         expression: high
         chain:
           - tag: 6xHis
@@ -15,4 +20,5 @@ construct:
               id: ProtZ
               source: uniprot
           - tag: Strep-II
-    - terminator: T7term
+
+    - terminator: rrnB_T1

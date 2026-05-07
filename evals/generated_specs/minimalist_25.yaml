@@ -1,31 +1,34 @@
-```yaml
 construct:
-  name: "dual_enzyme_expression"
+  name: "enzyme_A_B_polycistronic"
   host: e_coli
   
   backbone:
     resistance: kanamycin
     ori: pBR322
-    
+    source: addgene
+  
   cassette:
     - promoter: T7lac
     
     - cistron:
-        label: enzyme_a
+        label: enzyme_A
         expression: high
-        gene:
-          id: "ENZYME_A"
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: enzyme_A
+              source: uniprot
     
     - spacer: 30
     
     - cistron:
-        label: enzyme_b
+        label: enzyme_B
         expression: high
         fused: false
-        gene:
-          id: "ENZYME_B" 
-          source: uniprot
-          
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: enzyme_B
+              source: uniprot
+    
     - terminator: rrnB_T1
-```

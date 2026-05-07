@@ -1,20 +1,24 @@
 construct:
   name: "bacillus_pxyl_chitinase_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: target
+        label: chitinase
         expression: high
         chain:
-          - tag: AmyQ_secretion_signal
           - tag: 8xHis
           - cleavage_site: Thrombin
+          - secretion_signal: AmyQ
           - gene:
-              id: chiA
+              id: chitinase
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

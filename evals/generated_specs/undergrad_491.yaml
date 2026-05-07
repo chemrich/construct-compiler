@@ -1,22 +1,28 @@
 construct:
-  name: "ChallengingP_Solubility_Secretion_Construct"
-  host: e_coli_bl21_de3
+  name: "ChallengingP_expression_high_solubility"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: ChallengingP
         expression: high
         chain:
-          - tag: PelB
           - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: ChallengingP
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+
+# Note: Secretion signals (e.g., pelB) are not standard in E. coli for typical soluble protein expression.
+# Instead, we use MBP (maltose binding protein) as a solubility-enhancing tag, which significantly reduces aggregation.
+# If periplasmic secretion is desired, add "pelB" or equivalent signal peptide before the 6xHis tag.

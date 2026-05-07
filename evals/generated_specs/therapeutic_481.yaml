@@ -1,18 +1,25 @@
 construct:
-  name: "probiotic_gut_human_amylase_delivery"
-  host: e_coli
+  name: "probiotic_secreted_digestive_enzyme"
+  host: bacillus
+
   backbone:
-    resistance: none # Compliant with GRAS requirements for probiotic applications; selection via chromosomal auxotrophy (e.g., thyA complementation) is assumed.
-    ori: pUC
-    source: custom
+    resistance: null  # No antibiotic resistance marker for GRAS compliance
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac # Non-viral bacterial promoter used to avoid viral elements.
+    - promoter: araBAD
+
     - cistron:
-        label: secreted_amylase
+        label: secreted_enzyme
         expression: high
         chain:
-          - tag: OmpA # Bacterial signal peptide for transport across the membrane to aid secretion.
+          - tag: signal_peptide_amye  # AmyE signal peptide for secretion in Bacillus
           - gene:
-              id: AMY2A
+              id: P04637  # Example: human alpha-amylase (UniProt ID)
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator to ensure no viral components are present.
+          - linker:
+              type: GS_flexible
+              repeats: 1
+
+    - terminator: rrnB_T1

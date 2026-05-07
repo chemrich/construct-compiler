@@ -1,14 +1,22 @@
 construct:
-  name: "yeast_strong_sfGFP_reporter"
+  name: "yeast_GFP_reporter"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
         label: reporter
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: CYC1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: CYC1

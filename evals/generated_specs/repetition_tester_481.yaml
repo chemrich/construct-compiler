@@ -1,43 +1,47 @@
 construct:
-  name: "mammalian_triple_fp_independent_expression"
+  name: mammalian_tri_FP_expression
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
     resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: gfp_unit
+        label: GFP
         expression: high
-        fused: false
         chain:
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: bGH_pA
-    - spacer: 40
+
+    - terminator: rrnB_T1
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: mcherry_unit
+        label: mCherry
         expression: high
-        fused: false
         chain:
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: SV40_pA
-    - spacer: 40
-    - promoter: UbC
+
+    - terminator: BBa_B0015
+
+    - promoter: U6
+
     - cistron:
-        label: bfp_unit
+        label: mTagBFP2
         expression: high
-        fused: false
         chain:
           - linker:
               type: short_GS
@@ -45,4 +49,5 @@ construct:
           - gene:
               id: mTagBFP2
               source: fpbase
-    - terminator: hGH_pA
+
+    - terminator: T7term

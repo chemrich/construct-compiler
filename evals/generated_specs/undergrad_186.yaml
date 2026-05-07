@@ -1,12 +1,16 @@
 construct:
-  name: "fret_interaction_assay_proteinA_proteinB"
+  name: "FRET_ProteinA_CFP_ProteinB_YFP"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: donor_fusion
+        label: ProteinA_CFP
         expression: high
         chain:
           - gene:
@@ -14,13 +18,15 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mCerulean3
+              id: mCFP
               source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: acceptor_fusion
+        label: ProteinB_YFP
         expression: high
         fused: false
         chain:
@@ -29,8 +35,9 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mVenus
+              id: mYFP
               source: fpbase
-    - terminator: hGH_pA
+
+    - terminator: rrnB_T1

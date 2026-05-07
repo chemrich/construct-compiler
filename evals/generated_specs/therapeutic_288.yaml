@@ -1,30 +1,41 @@
 construct:
-  name: "non_viral_cas9_grna_expression_system"
+  name: "mammalian_cas9_gRNA_delivery_non_viral"
   host: HEK293
-  backbone:
-    resistance: kanamycin # Substitution: Tool requires standard antibiotic resistance; kanamycin used as default despite 'non-antibiotic' request.
-    ori: pUC
-    source: twist
+
   cassette:
-    - promoter: EF1_alpha # Human-derived non-viral robust constitutive promoter.
+    - promoter: EF1_alpha
+      
     - cistron:
-        label: cas9_p2a_egfp
+        label: cas9
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-          - linker:
-              type: P2A # 2A self-cleaving peptide for multicistronic expression in mammals.
-          - gene:
-              id: mEGFP
-              source: fpbase
-          - tag: NLS
-    - spacer: 40
-    - promoter: U6 # Pol III promoter for guide RNA expression.
+
+    - spacer: 30
+
     - cistron:
-        label: grna
-        gene:
-          id: sgRNA_scaffold
-    - terminator: hGH_polyA
+        label: reporter
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: P2A
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    - promoter: U6
+
+    - cistron:
+        label: gRNA
+        expression: high
+        chain:
+          - gene:
+              id: guide_RNA
+              source: uniprot
+
+    - terminator: rrnB_T1

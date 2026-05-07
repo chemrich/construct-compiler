@@ -1,16 +1,21 @@
 construct:
-  name: "bacillus_amylase_production"
+  name: "Bacillus_amylase_expression_system"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: lacUV5
+
     - cistron:
-        label: amylase
+        label: Bacillus_amylase
         expression: high
-        gene:
-          id: P00691
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: AmyE
+              source: uniprot
+
+    - terminator: rrnB_T1

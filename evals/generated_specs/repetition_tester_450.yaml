@@ -1,24 +1,29 @@
 construct:
-  name: "dual_divergent_reporter_system"
-  host: e_coli_bl21_de3
+  name: "dual_reporter_divergent_e_coli"
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
     - cistron:
         label: inducible_reporter
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: T7term
-    - spacer: 60
-    - promoter: J23106
-    - cistron:
-        label: internal_control
-        expression: low
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
     - terminator: rrnB_T1
+    - spacer: 35
+    - promoter: J23100
+    - cistron:
+        label: constitutive_control
+        expression: high
+        chain:
+          - tag: 8xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    - terminator: BBa_B0015

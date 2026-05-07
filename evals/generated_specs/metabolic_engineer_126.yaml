@@ -1,14 +1,18 @@
 construct:
-  name: "aa_synthesis_six_gene_operon"
-  host: e_coli_bl21_de3
+  name: "six_gene_amino_acid_synthesis_operon"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: aa1_aa2_fusion
-        expression: high
-        fused: false
+        label: AA1
+        expression: very_high
         chain:
           - gene:
               id: AA1
@@ -16,40 +20,54 @@ construct:
           - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: AA2
-              source: uniprot
-    - spacer: 30
+              repeats: 1
+
     - cistron:
-        label: aa3
-        expression: high
+        label: AA2
+        expression: very_high
+        fused: false
+        gene:
+          id: AA2
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: AA3
+        expression: very_high
         fused: false
         gene:
           id: AA3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: aa4
-        expression: high
+        label: AA4
+        expression: very_high
         fused: false
         gene:
           id: AA4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: aa5
-        expression: high
+        label: AA5
+        expression: very_high
         fused: false
         gene:
           id: AA5
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: aa6
-        expression: high
+        label: AA6
+        expression: very_high
         fused: false
         gene:
           id: AA6
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

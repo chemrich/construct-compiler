@@ -1,47 +1,56 @@
 construct:
-  name: "enzyme_operon_E1_E5_araBAD"
+  name: "five_enzyme_operon_araBAD"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: enzyme_E1
+        label: E1
         expression: medium
         gene:
           id: E1
-          source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_E2_E3_fusion
+        label: E2
         expression: medium
-        fused: false
+        gene:
+          id: E2
+
+    - spacer: 25
+
+    - cistron:
+        label: E3_E2_fusion
+        expression: medium
+        fused: true
         chain:
-          - gene:
-              id: E2
-              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
               id: E3
-              source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_E4
+        label: E4
         expression: medium
-        fused: false
         gene:
           id: E4
-          source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_E5
+        label: E5
         expression: medium
-        fused: false
         gene:
           id: E5
-          source: uniprot
+
     - terminator: rrnB_T1

@@ -1,50 +1,55 @@
-```yaml
 construct:
-  name: synthetic_CO2_fixation_polycistronic
-  host: e_coli_bl21_de3
+  name: "CO2_fixation_light_inducible_polycistronic"
+  host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: T7lac  # Light-inducible via T7 RNAP control
+    - promoter: araBAD
+      # Light-inducible control via araBAD + L-arabinose induction
+      # Fine-tuned RBS strengths for stoichiometric balance
 
     - cistron:
-        label: RuBisCO_large
+        label: RuBisCO_large_subunit
         expression: high
-        gene:
-          id: P00877
-          source: uniprot
+        chain:
+          - gene:
+              id: rbcL
+              source: uniprot
 
-    - spacer: 25
+    - spacer: 30
 
     - cistron:
-        label: RuBisCO_small
-        expression: high
+        label: RuBisCO_small_subunit
+        expression: medium
         fused: false
         gene:
-          id: P00871
+          id: rbcS
           source: uniprot
 
     - spacer: 30
 
     - cistron:
-        label: PRK
+        label: phosphoribulokinase
         expression: medium
         fused: false
-        gene:
-          id: P23921
-          source: uniprot
+        chain:
+          - gene:
+              id: prkA
+              source: uniprot
 
-    - spacer: 35
+    - spacer: 30
 
     - cistron:
-        label: GAPDH
-        expression: medium
+        label: glyceraldehyde_3_phosphate_dehydrogenase
+        expression: low
         fused: false
-        gene:
-          id: P0A9B2
-          source: uniprot
+        chain:
+          - gene:
+              id: gapA
+              source: uniprot
 
     - terminator: rrnB_T1
-```

@@ -1,24 +1,38 @@
 construct:
-  name: "genetic_not_gate_arabinose_signal"
-  host: e_coli_bl21
+  name: "NOT_gate_signal_A_repressed"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+      # araBAD is repressed by AraC in absence of arabinose (signal A)
+      # When arabinose (signal A) is absent, AraC represses this promoter
+      # When arabinose is present, AraC activates it - so we need constitutive + repressible setup
+      
     - cistron:
-        label: repressor_lacI
+        label: signal_sensor
         expression: high
         gene:
-          id: P03023
+          id: araC
           source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac
+          # AraC protein acts as repressor of araBAD when arabinose absent
+    
+    - spacer: 30
+    
+    - promoter: lacUV5
+      # Constitutive-ish promoter for output X, but modulated by signal A system
+    
     - cistron:
         label: output_X
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GFP
+              source: fpbase
+    
+    - terminator: rrnB_T1

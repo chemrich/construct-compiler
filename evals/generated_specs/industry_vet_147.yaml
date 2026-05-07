@@ -1,24 +1,33 @@
 construct:
-  name: "mammalian_stable_expression_neomycin"
+  name: stable_mammalian_expression_with_selection
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: gene_of_interest
         expression: high
-        gene:
-          id: "target_gene"
-          source: uniprot
-    - terminator: bGH_polyA
-    - spacer: 100
-    - promoter: SV40
+        chain:
+          - gene:
+              id: EGFP
+              source: fpbase
+
+    - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: EF1_alpha
+
     - cistron:
         label: selection_marker
         expression: high
-        gene:
-          id: "NeoR"
-          source: uniprot
+        chain:
+          - gene:
+              id: neomycin_phosphotransferase
+              source: uniprot
+
     - terminator: SV40_polyA

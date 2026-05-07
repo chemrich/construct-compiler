@@ -1,18 +1,22 @@
 construct:
-  name: "GAL1_alpha_factor_secretion_construct"
+  name: "yeast_secreted_protein_gal1"
   host: yeast
+
   backbone:
-    resistance: ura3
-    ori: 2_micron
+    resistance: uracil
+    ori: 2-micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: secreted_protein
+        label: secreted_target
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha-factor
           - gene:
               id: target_protein
               source: uniprot
+
     - terminator: CYC1

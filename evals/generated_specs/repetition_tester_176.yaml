@@ -1,47 +1,24 @@
 construct:
-  name: "mammalian_degron_optimization_system"
+  name: DegronTag_TargetProtein_variant_1
   host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
   cassette:
-    - promoter: CMV
-    - cistron:
-        label: degron_variant_1
-        expression: high
-        chain:
-          - tag: DegronTag_v1
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: BGH_polyA
-    - spacer: 50
-    - promoter: EF1_alpha
-    - cistron:
-        label: degron_variant_2
-        expression: high
-        chain:
-          - tag: DegronTag_v2
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: mCherry
-              source: fpbase
-    - terminator: SV40_polyA
-    - spacer: 50
-    - promoter: PGK  # Substitution: PGK is a common mammalian promoter for stable expression
-    - cistron:
-        label: degron_variant_3
-        expression: high
-        chain:
-          - tag: DegronTag_v3
-          - linker:
-              type: GS_flexible
-              repeats: 4
-          - gene:
-              id: mNeonGreen
-              source: fpbase
-    - terminator: hGH_polyA
+  - promoter: CMV
+  - cistron:
+      label: DegronTag_v1_TargetProtein
+      expression: high
+      chain:
+      - gene:
+          id: DegronTag_degron_v1
+          sequence: ATGAACCTGCAACTGACCGACCTGGACAAACTGACGGTGGTGACCGACGACGAAGACAAACTGAACGACCTGGTG
+          source: synthetic
+      - linker:
+          type: GS_flexible
+          repeats: 3
+      - gene:
+          id: TargetProtein_codon_optimized_human_v1
+          sequence: ATGAAACTGGTGGTGACCCAGGACGACGACGACTACGAGGACGACGTGGTGGTGACCGTGACCCTGACCCTGGTGATCGTGGTGCTGACCACCACCGTGACCGACGACGTGACCGACGTG
+          source: synthetic
+  - terminator: rrnB_T1

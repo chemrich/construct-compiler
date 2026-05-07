@@ -1,19 +1,24 @@
 construct:
-  name: "Pichia_GAP_intracellular_SUMO_TEV"
+  name: "pichia_gap_sumo_his_target"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: SUMO
           - cleavage_site: TEV
+          - solubility_tag: SUMO
           - gene:
-              id: target_protein
-    - terminator: CYC1_term
+              id: target
+              source: uniprot
+
+    - terminator: rrnB_T1

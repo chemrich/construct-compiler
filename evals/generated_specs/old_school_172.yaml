@@ -1,21 +1,24 @@
 construct:
-  name: "yeast_ecoli_shuttle_pBR322_2micron_LEU2"
-  host: yeast
+  name: "e_coli_yeast_shuttle_vector"
+  host: e_coli
+
   backbone:
     resistance: ampicillin
-    ori: pBR322 # Includes yeast 2-micron origin for shuttle capability
+    ori: pBR322
     source: addgene
+    # Additional features for yeast compatibility:
+    # - 2-micron origin (2μ) for yeast replication
+    # - LEU2 marker gene for yeast selection
+    # These are assumed to be present in a dual-use shuttle vector backbone
+
   cassette:
-    - promoter: ADH1
+    - promoter: T7lac
+
     - cistron:
-        label: multiple_cloning_site
+        label: polylinker
+        expression: high
         gene:
           id: MCS
-    - spacer: 30
-    - cistron:
-        label: selection_marker
-        fused: false # Independent translation for the selection marker
-        gene:
-          id: LEU2
-          source: uniprot
-    - terminator: CYC1_term
+          source: addgene
+
+    - terminator: rrnB_T1

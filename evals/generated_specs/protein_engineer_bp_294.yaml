@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_das1_beta_glucosidase_secretion"
+  name: "Pichia_DAS1_betaglucosidase_secreted"
   host: yeast
+
   backbone:
     resistance: zeocin
-    ori: pUC
+    ori: autonomously_replicating_sequence
     source: addgene
+
   cassette:
     - promoter: DAS1
+
     - cistron:
-        label: bgl_target
+        label: betaglucosidase
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - tag: Strep-II
           - cleavage_site: TEV
           - gene:
-              id: P04337
+              id: "GH1_betaglucosidase"
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1_terminator

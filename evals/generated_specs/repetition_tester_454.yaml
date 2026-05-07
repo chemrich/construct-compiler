@@ -1,27 +1,44 @@
 construct:
-  name: cre_lox_conditional_knockout_hek293
+  name: "conditional_knockout_Cre_mCherry"
   host: HEK293
+
+  cassette:
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: recombinase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P06954
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: CMV
+
+    - cistron:
+        label: reporter
+        expression: medium
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: BBa_B0015
+
+  # YAML comment: This construct uses two distinct promoters (EF1_alpha for Cre, CMV for mCherry)
+  # and two independent terminators (rrnB_T1 and BBa_B0015) to ensure separate transcriptional units.
+  # The reporter mCherry is functionally "conditional" in that Cre-mediated recombination at loxP/loxN sites
+  # (to be added flanking the reporter in a downstream cloning step) will excise or invert the cassette.
+  # For non-identical recognition sites, use loxP (ATAACTTCGTATA-N9-TATACGAAGTTAT) and
+  # loxN (ATAACTTCGTATA-N9-TATACGAAGTTAT with different spacer orientation), or lox511/lox2272 variants.
+  # These variants differ in spacer sequence and directionality, minimizing unintended cross-recombination.
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
-  cassette:
-    - promoter: EF1_alpha
-    - cistron:
-        label: nls_cre_recombinase
-        expression: medium
-        chain:
-          - tag: NLS
-          - gene:
-              id: P06956
-              source: uniprot
-    - terminator: bGH_polyA
-    - promoter: CMV
-    - cistron:
-        label: floxed_mscarlet_reporter
-        # Note: Functional loxP and loxN sites are typically placed flanking this cistron 
-        # at the DNA level during synthesis to facilitate recombination.
-        expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: SV40_polyA

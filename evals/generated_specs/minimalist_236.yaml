@@ -1,14 +1,23 @@
 construct:
-  name: gene_X_mammalian_viral_vector
+  name: "viral_vector_gene_X"
   host: HEK293
+
   backbone:
-    catalog_vector: "pLenti-CMV"
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: gene_X
         expression: high
-        gene:
-          id: gene_X
-          source: uniprot
-    - terminator: SV40_polyA
+        chain:
+          - tag: NLS
+          - gene:
+              id: gene_X
+              source: uniprot
+
+    - terminator: rrnB_T1

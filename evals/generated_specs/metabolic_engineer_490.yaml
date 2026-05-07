@@ -1,57 +1,89 @@
 construct:
   name: "five_enzyme_scaffold_operon"
-  host: e_coli_bl21
+  host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
-        label: enzyme_1
+        label: U1
         expression: medium
         chain:
-          - tag: SpyTag
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: U1
-              source: uniprot
-    - spacer: 30
+              source: custom
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: SpyTag
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
-        expression: medium
-        fused: false
-        chain:
-          - tag: SpyCatcher
-          - gene:
-              id: U2
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_3
+        label: U2
         expression: medium
         fused: false
         chain:
           - tag: Dockerin
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: U2
+              source: custom
+
+    - spacer: 25
+
+    - cistron:
+        label: U3
+        expression: medium
+        fused: false
+        chain:
+          - tag: SpyTag
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: U3
-              source: uniprot
-    - spacer: 30
+              source: custom
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_4
+        label: U4
         expression: medium
         fused: false
         chain:
-          - tag: Cohesin
+          - tag: Dockerin
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: U4
-              source: uniprot
-    - spacer: 30
+              source: custom
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_5
+        label: U5
         expression: medium
         fused: false
         chain:
-          - tag: SnoopTag
+          - tag: SpyTag
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: U5
-              source: uniprot
+              source: custom
+
     - terminator: rrnB_T1

@@ -1,17 +1,22 @@
 construct:
-  name: zapase_high_expression_plasmid
-  host: e_coli_bl21_de3
+  name: "pET_Zapase_His"
+  host: e_coli_bl21
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: ampicillin
     ori: pBR322
-    source: custom
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_enzyme
+        label: Zapase
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: Zapase
-    - terminator: T7term
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,16 +1,31 @@
 construct:
-  name: "cold_shock_rnat_mNeonGreen"
+  name: RNA_thermometer_cold_shock
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: "cspA" # The cspA promoter naturally includes the cold-shock responsive RNA thermometer in its 5' UTR
+    - promoter: T7lac
+    
     - cistron:
-        label: "cold_shock_reporter"
-        expression: medium
+        label: thermometer_rna
+        expression: high
+        chain:
+          - gene:
+              id: cspA_5utr_thermometer
+              sequence: >
+                GGAAGATTTAAGAAGATTGAAAGAAGATTTTGAAAGAAGATTTTAAGAAGATTGAAAGAAGATTTTGAAAGAAGATTGAAACGCCTTATAGGCGGATTGACCGTAATCATAACAGAAAC
+              source: synthetic
+    
+    - cistron:
+        label: cspA_protein
+        expression: high
+        fused: false
         gene:
-          id: "mNeonGreen"
-          source: fpbase
-    - terminator: "rrnB_T1"
+          id: cspA
+          source: uniprot
+    
+    - terminator: rrnB_T1

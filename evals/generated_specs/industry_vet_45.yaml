@@ -1,29 +1,24 @@
-```yaml
 construct:
-  name: therapeutic_payload_yeast_expression
+  name: "yeast_therapeutic_payload_expression"
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: GAL1
 
     - cistron:
-        label: therapeutic_payload
+        label: payload
         expression: high
         chain:
-          - tag: alpha_factor  # secretion signal for yeast
           - tag: 6xHis
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
-              id: payload_gene  # replace with actual therapeutic gene ID
+              id: payload
               source: uniprot
 
     - terminator: CYC1
-```

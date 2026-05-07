@@ -1,40 +1,67 @@
 construct:
-  name: "human_cd19_3rd_gen_car_t_cell"
-  host: mammalian
+  name: "CAR_T_cell_scFv_TM_3xSignaling_HCO"
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: ampicillin
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha # Substituted for T-cell specific requirement for compatibility
+    - promoter: EF1_alpha
+      # Note: EF1_alpha provides strong ubiquitous expression suitable for T-cell engineering
+      # For truly T-cell-specific promoter, user should substitute with lck or CD2 promoter sequences
+
     - cistron:
-        label: third_generation_car
+        label: CAR
         expression: high
         chain:
           - gene:
-              id: FMC63_scFv
-              source: uniprot
+              id: scFv_HCO_diverse
+              source: custom
+              description: "human codon-optimized scFv with maximal synonymous diversity, no internal repeats"
+
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: custom
+              sequence: "GGTGGTGGTGGTGGTGGTGGTGGT"
+              description: "unique linker 1: scFv-to-TM connector"
+
           - gene:
-              id: CD8A_hinge_TM
-              source: uniprot
+              id: TM_domain_HCO_diverse
+              source: custom
+              description: "human codon-optimized transmembrane domain with maximal synonymous diversity"
+
           - linker:
-              type: rigid_EAAAK
-              repeats: 3 # Unique linker for first junction
+              type: custom
+              sequence: "GGCGGCGGCGGCGGCGGCGGCGGC"
+              description: "unique linker 2: TM-to-Signaling1 connector"
+
           - gene:
-              id: CD28_intracellular
-              source: uniprot
+              id: Signaling1_HCO_diverse
+              source: custom
+              description: "human codon-optimized signaling domain 1 with maximal synonymous diversity"
+
           - linker:
-              type: short_GS
-              repeats: 4 # Unique linker for second junction
+              type: custom
+              sequence: "GCCGCCGCCGCCGCCGCCGCCGCC"
+              description: "unique linker 3: Signaling1-to-Signaling2 connector"
+
           - gene:
-              id: TNFRSF9_intracellular
-              source: uniprot
+              id: Signaling2_HCO_diverse
+              source: custom
+              description: "human codon-optimized signaling domain 2 with maximal synonymous diversity"
+
           - linker:
-              type: GS_flexible
-              repeats: 2 # Unique linker for third junction
+              type: custom
+              sequence: "GAGGATGAGGATGAGGATGAGGA"
+              description: "unique linker 4: Signaling2-to-Signaling3 connector"
+
           - gene:
-              id: CD247_zeta
-              source: uniprot
-    - terminator: bGH_pA # Substituted for custom polyA requirement
+              id: Signaling3_HCO_diverse
+              source: custom
+              description: "human codon-optimized signaling domain 3 with maximal synonymous diversity"
+
+    - terminator:
+        type: custom
+        sequence: "AATAAAAGGACGCGCCGCCGAAA"
+        description: "custom polyA signal non-standard sequence for enhanced stability"

@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: synthetic_essential_enzyme_operon
+  name: synthetic_operon_three_enzymes
   host: e_coli_bl21_de3
   
   backbone:
@@ -12,31 +11,40 @@ construct:
     - promoter: T7lac
     
     - cistron:
-        label: enzyme1
+        label: enzyme_1
         expression: high
-        gene:
-          id: P0A6F5  # glyA - serine hydroxymethyltransferase
-          source: uniprot
-    
-    - spacer: 45
-    
-    - cistron:
-        label: enzyme2
-        expression: high
-        fused: false
-        gene:
-          id: P0A9P0  # lpdA - dihydrolipoyl dehydrogenase
-          source: uniprot
-    
-    - spacer: 52
-    
-    - cistron:
-        label: enzyme3
-        expression: high
-        fused: false
-        gene:
-          id: P0A796  # folA - dihydrofolate reductase
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: aroA
+              source: uniprot
     
     - terminator: rrnB_T1
-```
+    
+    - spacer: 35
+    
+    - cistron:
+        label: enzyme_2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: trpE
+              source: uniprot
+    
+    - terminator: BBa_B0015
+    
+    - spacer: 35
+    
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: dapA
+              source: uniprot
+    
+    - terminator: T7term

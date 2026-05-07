@@ -1,24 +1,63 @@
 construct:
-  name: "genetic_pulse_generator"
+  name: genetic_pulse_generator
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Activated by stimulus (Arabinose); should contain TetO sites for negative feedback to create the pulse
+    - promoter: T7lac
+    
     - cistron:
-        label: output_activity
+        label: stimulus_sensor
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 35
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: repressor
-        expression: low
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
+        label: pulse_generator_repressor
+        expression: high
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: output_protein
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
+    - spacer: 25
+    
+    - cistron:
+        label: transient_degradation_tag
+        expression: high
+        chain:
+          - gene:
+              id: ssrA
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: feedback_inhibitor
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+    
     - terminator: rrnB_T1

@@ -1,14 +1,42 @@
 construct:
-  name: "threshold_detector_system"
-  host: e_coli_bl21_de3
+  name: "threshold_detector_high_activation"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: output_signal
+        label: sensor_kinase
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxS
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: response_regulator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_protein
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

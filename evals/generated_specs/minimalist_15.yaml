@@ -1,25 +1,21 @@
-```yaml
 construct:
-  name: proteinD_fast_degradation
+  name: "proteinD_degron"
   host: e_coli
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: proteinD
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: proteinD
               source: uniprot
-          - tag: ssrA  # degradation tag for fast turnover
+          - degron: ssrA  # C-terminal degron for rapid proteolysis
 
     - terminator: rrnB_T1
-```

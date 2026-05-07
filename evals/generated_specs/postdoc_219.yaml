@@ -1,26 +1,35 @@
 construct:
-  name: "dox_inducible_yeast_coexpression_E_F"
+  name: "yeast_TetOn_E_F_coexpression"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TRE
+    - promoter: pTet
+      inducible: doxycycline
+
     - cistron:
-        label: E_protein
+        label: E
         expression: high
         chain:
           - tag: HA
           - gene:
               id: E
               source: uniprot
-    - spacer: 500
+
+    - spacer: 20
+
+    - ires: IRES_eukaryotic
+
     - cistron:
-        label: F_protein
+        label: F
         expression: high
         fused: false
         gene:
           id: F
           source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

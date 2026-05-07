@@ -1,14 +1,18 @@
 construct:
-  name: "Pichia_AOX1_GPCR_eGFP_Fusion"
+  name: "Pichia_GPCR_eGFP_localization"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: gpcr_fusion
+        label: GPCR_fusion
         expression: high
         chain:
           - tag: 10xHis
@@ -16,7 +20,11 @@ construct:
           - gene:
               id: GPCR
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: eGFP
               source: fpbase
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

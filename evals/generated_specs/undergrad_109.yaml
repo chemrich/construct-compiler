@@ -1,16 +1,21 @@
 construct:
-  name: "secreted_signal_protein_expression_hek293"
+  name: "SignalProtein_secretion"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: secreted_protein
+        label: SignalProtein
         expression: high
         chain:
-          - tag: IgK_leader  # Standard N-terminal secretion signal for mammalian cells
+          - tag: signal_peptide_SP  # N-terminal secretion signal
           - gene:
               id: SignalProtein
               source: uniprot
-    - terminator: bGH_pA  # Standard mammalian polyadenylation signal and terminator
+          - tag: 6xHis  # C-terminal tag for purification from media
+
+    - terminator: rrnB_T1

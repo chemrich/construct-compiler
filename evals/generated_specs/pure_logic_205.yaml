@@ -1,35 +1,54 @@
 construct:
-  name: "nor_gate_lacz_secretion"
-  host: e_coli
+  name: "NOR_gate_LacZ_secretion"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Inducer C1 (Arabinose) activates TetR production
+    - promoter: araBAD
+    
     - cistron:
-        label: repressor_1
+        label: C1_sensor
         expression: medium
-        gene:
-          id: tetR
-          source: uniprot
-    - spacer: 40
-    - promoter: tac  # Inducer C2 (IPTG) activates TetR production
-    - cistron:
-        label: repressor_2
-        expression: medium
-        gene:
-          id: tetR
-          source: uniprot
-    - spacer: 40
-    - promoter: J23100  # Constitutive promoter acting as output; assumed to be TetR-repressible for NOR logic
-    - cistron:
-        label: secreted_lacz
-        expression: high
-        fused: false
         chain:
-          - tag: pelB  # N-terminal secretion signal for E. coli periplasmic export
+          - gene:
+              id: arsR
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: C2_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: mals
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: repressor_integrase
+        expression: high
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+    
+    - spacer: 30
+    
+    - promoter: araBAD
+    
+    - cistron:
+        label: LacZ_secreted
+        expression: high
+        chain:
+          - tag: signal_peptide_ompA
           - gene:
               id: lacZ
               source: uniprot
+    
     - terminator: rrnB_T1

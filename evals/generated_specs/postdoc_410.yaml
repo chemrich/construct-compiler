@@ -1,17 +1,22 @@
 construct:
-  name: "GST_TEV_insoluble_protein_expression"
+  name: "GST_TEV_insoluble_protein_e_coli"
   host: e_coli_bl21_de3
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
-              id: target_protein
+              id: insoluble_protein
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

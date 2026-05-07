@@ -1,20 +1,35 @@
 construct:
-  name: "amyE_integration_PxylA_MBP_TEV_enzyme"
+  name: "bacillus_amyE_metabolic_integration"
   host: bacillus
+
   backbone:
-    # Homology arms for amyE locus integration are included in the vector flanks
-    resistance: kanamycin
-    ori: pBR322
+    resistance: chloramphenicol
+    ori: pUC
     source: addgene
+
   cassette:
+    - homology_arm:
+        label: amyE_front
+        length: 1000
+        target_locus: amyE
+
     - promoter: PxylA
+
+    - rbs: RBS_canonical
+
     - cistron:
-        label: metabolic_enzyme
+        label: target_enzyme
         expression: high
         chain:
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: target_enzyme
+              id: CDS_metabolic_enzyme
               source: uniprot
-    - terminator: BBa_B0015
+
+    - homology_arm:
+        label: amyE_back
+        length: 1000
+        target_locus: amyE
+
+    - terminator: rrnB_T1

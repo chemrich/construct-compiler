@@ -1,20 +1,21 @@
 construct:
-  name: "GlycoEnzyme_Secreted_HEK293"
+  name: GlycoEnzyme_secreted_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: GlycoEnzyme
         expression: high
         chain:
-          - tag: IgK_leader
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - signal_peptide: SP_IgG  # N-terminal secretion signal for mammalian ER targeting
           - gene:
               id: GlycoEnzyme
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40polyA

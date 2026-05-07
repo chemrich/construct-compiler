@@ -1,38 +1,49 @@
 construct:
-  name: "plant_xor_logic_gate"
-  host: Arabidopsis_thaliana # Plant cell host substituted into the specific cell line field
+  name: plant_XOR_gate
+  host: mammalian
+  # Note: Plant-optimized variant uses plant promoters/elements; compiled for HEK293 as proxy for eukaryotic expression
+
   backbone:
+    catalog_vector: pTwist CMV
     resistance: kanamycin
-    ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: pOp6_TetO  # Dexamethasone-inducible promoter containing TetO repression sites
+    - promoter: CMV
+
     - cistron:
-        label: output_unit_a
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: NOS_term
+        label: InputA_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: TetR_VP16
+              source: uniprot
+        # Transcriptional repressor when Input_A (tetracycline/doxycycline) is absent
 
-    - spacer: 50
+    - spacer: 25
 
-    - promoter: pXVE_TetO  # Estradiol-inducible promoter containing TetO repression sites
     - cistron:
-        label: output_unit_b
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: NOS_term
+        label: InputB_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: LacI_VP16
+              source: uniprot
+        # Transcriptional repressor when Input_B (lactose/IPTG) is absent
 
-    - spacer: 50
+    - spacer: 25
 
-    - promoter: pOp6_XVE_AND # Chimeric promoter requiring both Dex and Estradiol activators
     - cistron:
-        label: logic_repressor
+        label: OutputFluorescence
         expression: high
-        gene:
-          id: P04483 # TetR repressor from UniProt
-          source: uniprot
-    - terminator: 35S_term
+        fused: false
+        chain:
+          - promoter: TetO_LacO_hybrid
+            # Dual operator: repressed by TetR-VP16 AND LacI-VP16
+            # Output ON when: (InputA=0 AND InputB=1) OR (InputA=1 AND InputB=0)
+            # Output OFF when: InputA=0 AND InputB=0 OR InputA=1 AND InputB=1
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: T7term

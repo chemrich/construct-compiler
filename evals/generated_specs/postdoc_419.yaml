@@ -1,22 +1,30 @@
+```yaml
 construct:
-  name: "yeast_transmembrane_SLC6A4_GFP_fusion"
+  name: "yeast_tmprotein_gfp"
   host: yeast
+
   backbone:
-    # Using pRS426, a standard high-copy yeast shuttle vector
-    catalog_vector: "pRS426"
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: TEF1 # Strong constitutive promoter for yeast
+    - promoter: GAL1
+
     - cistron:
-        label: tm_fusion
-        expression: medium
+        label: transmembrane_protein
+        expression: high
         chain:
           - gene:
-              id: P31645 # Human Serotonin Transporter (SLC6A4), a representative multi-pass TM protein
+              id: transmembrane_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mEGFP
+              repeats: 1
+          - tag: GFP
+              id: sfGFP
               source: fpbase
-    - terminator: CYC1 # Standard yeast transcriptional terminator
+
+    - terminator: CYC1
+```

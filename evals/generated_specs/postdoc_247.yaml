@@ -1,16 +1,20 @@
 construct:
-  name: "yeast_constitutive_gfp_reporter"
+  name: yeast_gfp_reporter
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3 # Substituted strong constitutive yeast promoter TDH3 for CMV, which is mammalian.
+    - promoter: TEF1  # Constitutive promoter in yeast (TEF1 is the yeast equivalent of CMV)
+
     - cistron:
-        label: reporter
+        label: gfp
         expression: high
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
-    - terminator: CYC1_term # Standard yeast terminator.
+
+    - terminator: CYC1  # Standard yeast terminator

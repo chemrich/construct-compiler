@@ -1,22 +1,37 @@
 construct:
-  name: "adrb2_gnas_coexpression_diverse_utrs"
+  name: GPCR_Galpha_coexpression_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: gpcr_adrb2
+        label: GPCR
         expression: high
-        gene:
-          id: ADRB2
-          source: uniprot
-    - terminator: BGH_polyA
-    - promoter: EF1_alpha
-    - cistron:
-        label: galpha_gnas
-        expression: high
-        gene:
-          id: GNAS
-          source: uniprot
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P07550
+              source: uniprot
+
     - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: Galpha
+        expression: high
+        fused: false
+        chain:
+          - tag: HA
+          - gene:
+              id: P04637
+              source: uniprot
+
+    - terminator: bGH_polyA

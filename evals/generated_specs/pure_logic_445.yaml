@@ -1,25 +1,43 @@
 construct:
   name: "high_gain_amplifier_cascade"
   host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: J23106  # Weak constitutive promoter representing initial S_weak signal
+    - promoter: T7lac
+    
     - cistron:
-        label: S_weak_activator
-        expression: low
-        gene:
-          id: P00573  # T7 RNA Polymerase (UniProt ID)
-          source: uniprot
-    - terminator: rrnB_T1
-    - spacer: 45
-    - promoter: T7  # High-gain promoter activated by S_weak_activator
-    - cistron:
-        label: Z_strong_output
+        label: stage_1_amplifier
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: S_weak
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: stage_2_amplifier
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Z_strong
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: positive_feedback
+        expression: medium
+        chain:
+          - gene:
+              id: S_weak
+              source: uniprot
+    
+    - terminator: rrnB_T1

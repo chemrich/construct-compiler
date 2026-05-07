@@ -1,48 +1,68 @@
 construct:
-  name: "mercury_contaminant_remediation_operon"
+  name: "contaminant_sensing_remediation_operon"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: P_mer  # Promoter specifically regulated by the MerR transcription factor
+    - promoter: lacUV5
+      # lacUV5 serves as the constitutive basal promoter for SensorTF expression
+    
     - cistron:
-        label: sensor_tf
+        label: SensorTF
         expression: medium
-        gene:
-          id: P06687
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: SensorTF
+              source: uniprot
+    
+    - spacer: 25
+    
+    - promoter: SensorTF_responsive
+      # This is a synthetic/natural promoter responsive to SensorTF binding
+      # In practice, this would be engineered with appropriate operator sequences
+      comment: "Contaminant-responsive promoter controlled by SensorTF transcriptional factor"
+    
     - cistron:
-        label: effector_1
+        label: Effector1
         expression: high
         fused: false
         gene:
-          id: P06683
+          id: Effector1
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: effector_2
+        label: Effector2
         expression: high
         fused: false
         gene:
-          id: P06684
+          id: Effector2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: effector_3
+        label: Effector3
         expression: high
         fused: false
         gene:
-          id: P07111
+          id: Effector3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: effector_4
+        label: Effector4
         expression: high
         fused: false
         gene:
-          id: P07110
+          id: Effector4
           source: uniprot
+    
     - terminator: rrnB_T1

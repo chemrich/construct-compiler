@@ -1,17 +1,22 @@
 construct:
-  name: "AwesomeEnzyme_Yeast_Secretion_Construct"
+  name: "yeast_AwesomeEnzyme_expression"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: AwesomeEnzyme
         expression: high
         chain:
-          - tag: alpha_factor  # Secretion signal for yeast export
+          - tag: 6xHis
           - gene:
               id: AwesomeEnzyme
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

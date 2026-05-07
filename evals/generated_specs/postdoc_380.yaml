@@ -1,16 +1,20 @@
 construct:
-  name: "TF_alpha_E_coli_expression"
+  name: TF_alpha_high_expression_ecoli
   host: e_coli_bl21_de3
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: T7lac  # CMV substituted with T7lac; CMV is a mammalian promoter and not functional for expression in E. coli.
+    - promoter: T7lac  # CMV is mammalian-specific; T7lac provides strongest E. coli expression equivalent
+    
     - cistron:
-        label: target
+        label: TF_alpha
         expression: high
         chain:
           - gene:
-              id: TF-alpha
+              id: TF_alpha
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term  # Kozak sequence requested is specific to mammalian translation; bacterial translation uses RBS/Shine-Dalgarno.
+    
+    - terminator: rrnB_T1

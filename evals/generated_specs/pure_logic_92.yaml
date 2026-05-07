@@ -1,22 +1,50 @@
 construct:
-  name: mammalian_homeostatic_negative_feedback_system
+  name: "mammalian_protein_homeostat_negative_feedback"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV # Note: Assumed to be a TetR-repressible variant (e.g., CMV-TetO2) for homeostasis
+    - promoter: CMV
+
     - cistron:
-        label: target_protein_p
+        label: degradation_tag
+        expression: high
+        chain:
+          - tag: degron_DD  # destabilizing degron for rapid turnover control
+          - gene:
+              id: P
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_inhibitor
         expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
+        fused: false
+        chain:
+          - gene:
+              id: miR_P_sponge
+              source: uniprot
+        # This synthetic circuit element sequesters microRNAs targeting P mRNA
+        # As P concentration rises, feedback inhibition increases sponge expression
+        # Sponge sequesters miRNAs → P mRNA is translated more → P accumulates
+        # At steady state, P concentration auto-regulates via this negative loop
+
+    - spacer: 25
+
     - cistron:
-        label: feedback_repressor
-        expression: low
-        fused: false # Separately translated via IRES or 2A peptide to provide negative feedback
-        gene:
-          id: P04483 # TetR repressor from E. coli Tn10
-          source: uniprot
-    - terminator: bGH_polyA
+        label: miR_sensor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: miR_P_generator
+              source: uniprot
+        # Constitutive microRNA generator targeting P mRNA
+        # Creates the negative feedback arm: high P → more sponge → less miR activity
+        # Low P → less sponge → more miR activity on P mRNA
+
+    - terminator: rrnB_T1

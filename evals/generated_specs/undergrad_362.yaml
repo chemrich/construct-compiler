@@ -1,18 +1,22 @@
 construct:
-  name: "YeastStuff_secretion_ADH1"
+  name: "YeastStuff_secreted"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: target
+        label: YeastStuff
         expression: high
         chain:
-          - tag: alpha_mating_factor_signal
+          - signal_peptide: alpha_factor
           - gene:
               id: YeastStuff
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

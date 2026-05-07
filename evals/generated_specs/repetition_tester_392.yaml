@@ -1,14 +1,15 @@
 construct:
-  name: "GeneQ_C_terminal_dual_tag_fusion"
-  host: e_coli_bl21
+  name: "GeneQ_dual_purification_tags"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: GeneQ_target
+        label: GeneQ_with_dual_tags
         expression: high
         chain:
           - gene:
@@ -16,10 +17,11 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: 6xHis
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - tag: Strep-II
+
     - terminator: rrnB_T1

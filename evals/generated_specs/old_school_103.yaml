@@ -1,23 +1,31 @@
 construct:
-  name: "mammalian_cmv_p53_megfp"
+  name: CMV_target_GFP_neomycin
   host: HEK293
+
   backbone:
+    catalog_vector: pTwist CMV
     resistance: neomycin
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_gene
+        label: target
         expression: high
-        gene:
-          id: P53_HUMAN # Substitution: P53_HUMAN used as placeholder for "my gene"
-          source: uniprot
-    - spacer: 40
+        chain:
+          - gene:
+              id: unspecified_target
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: visual_marker
-        expression: medium
+        label: GFP_marker
+        expression: high
         fused: false
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
+
     - terminator: SV40_polyA

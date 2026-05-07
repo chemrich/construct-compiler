@@ -1,24 +1,36 @@
 construct:
-  name: yeast_ho_integration_antifungal_peptide
+  name: "AntifungalPeptide_HO_integration"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
-    source: HO_locus_integration_vector # Backbone provides homology arms for HO locus integration
+    resistance: LEU2
+    ori: null
+    source: integration_cassette
+
   cassette:
-    - promoter: TDH3 # Strong constitutive yeast promoter
+    - homology_arm:
+        locus: HO
+        direction: upstream
+        length: 1000
+
+    - promoter: GAL1
+
     - cistron:
         label: antifungal_peptide
         expression: high
-        gene:
-          id: AntifungalPeptide
-          source: uniprot
-    - spacer: 50
-    - cistron:
-        label: yeast_selectable_marker
-        expression: medium
-        fused: false # Independent translation for LEU2 selectable marker
-        gene:
-          id: LEU2
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: AntifungalPeptide
+              source: uniprot
+
+    - terminator: CYC1
+
+    - marker:
+        type: LEU2
+        direction: forward
+
+    - homology_arm:
+        locus: HO
+        direction: downstream
+        length: 1000

@@ -1,17 +1,56 @@
 construct:
-  name: "binary_ph_sensor_acid_gfp"
-  host: e_coli
+  name: "binary_pH_sensor_ACID_GFP"
+  host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: asr  # pH-responsive promoter (acid stress response) induced at pH < 6.5
-      cistron:
-        label: ACID_GFP
+    - promoter: T7lac
+
+    - cistron:
+        label: pH_sensor_domain
         expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: pHluorin
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: TrpR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: ACID_GFP_reporter
+        expression: high
+        fused: false
         chain:
           - gene:
               id: mEGFP
               source: fpbase
-      terminator: rrnB_T1
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: ssrA_degradation_tag
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: thermal_stabilizer
+        expression: medium
+        fused: false
+        gene:
+          id: GroES
+          source: uniprot
+
+    - terminator: rrnB_T1

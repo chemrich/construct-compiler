@@ -1,26 +1,28 @@
-```yaml
 construct:
-  name: "doxycycline_inducible_therapeutic_enzyme"
+  name: "mammalian_doxycycline_inducible_enzyme"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
-      
+
     - cistron:
-        label: transactivator
-        expression: medium
+        label: rtTA_transactivator
+        expression: high
         chain:
+          - tag: HA
           - gene:
               id: rtTA3
               source: uniprot
-              
-    - spacer: 50
-    
-    - promoter: TRE3G  # Tight, doxycycline-responsive promoter
-      
+        fused: false
+
+    - spacer: 30
+
+    - promoter: TRE
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
@@ -28,8 +30,8 @@ construct:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: ASPA  # Aspartoacylase - therapeutic enzyme for Canavan disease
+              id: P69905
               source: uniprot
-              
-    - terminator: BGH_polyA
-```
+        fused: false
+
+    - terminator: rrnB_T1

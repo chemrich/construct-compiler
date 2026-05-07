@@ -1,17 +1,21 @@
 construct:
-  name: "mammalian_sensitive_luciferase_reporter"
+  name: "mammalian_luciferase_promoter_reporter"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: blasticidin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: sensitive_reporter
+        label: luciferase
         expression: high
-        chain:
-          - gene:
-              id: P0DIW2
-              source: uniprot
-    - terminator: bGH_polyA
+        gene:
+          id: Renilla_luciferase
+          source: uniprot
+
+    - terminator: rrnB_T1

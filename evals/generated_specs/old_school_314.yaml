@@ -1,17 +1,20 @@
 construct:
-  name: "toxic_protein_low_copy_expression"
+  name: "low_copy_poison_peptide_expression"
   host: e_coli
+
   backbone:
     resistance: chloramphenicol
-    ori: SC101
+    ori: p15A
     source: addgene
+
   cassette:
-    - promoter: J23106  # Medium-low constitutive promoter for subtle expression
+    - promoter: lacUV5
+
     - cistron:
-        label: poison_target
+        label: poison_peptide
         expression: low
-        chain:
-          - gene:
-              id: poison_peptide
-              source: uniprot
+        gene:
+          id: poison_peptide
+          source: uniprot
+
     - terminator: rrnB_T1

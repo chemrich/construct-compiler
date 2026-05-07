@@ -1,74 +1,67 @@
-```yaml
 construct:
-  name: carbon_fixation_6enzyme_pathway
-  host: e_coli
-  
+  name: carbon_fixation_pathway_six_enzyme
+  host: e_coli_bl21_de3
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
-    source: addgene
-  
+
   cassette:
-    - promoter: lambda_PL  # temperature-inducible promoter system
-    
+    - promoter: T7lac
+
     - cistron:
-        label: rubisco_large
+        label: enzyme1_RuBisCO
+        expression: high
+        gene:
+          id: rbcL
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme2_PGK
+        expression: high
+        gene:
+          id: PGK1
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme3_GAPDH
+        expression: high
+        gene:
+          id: GAPDH
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme4_TPI
         expression: medium
         gene:
-          id: P00877
+          id: TPI1
           source: uniprot
-    
-    - spacer: 30
-    
+
+    - spacer: 25
+
     - cistron:
-        label: rubisco_small
+        label: enzyme5_FBA
         expression: medium
-        fused: false
         gene:
-          id: P69249
+          id: FBA1
           source: uniprot
-    
-    - spacer: 30
-    
+
+    - spacer: 25
+
     - cistron:
-        label: phosphoglycerate_kinase
+        label: enzyme6_FBPASE
         expression: medium
-        fused: false
-        gene:
-          id: P00560
-          source: uniprot
-    
-    - spacer: 30
-    
-    - cistron:
-        label: glyceraldehyde_3p_dehydrogenase
-        expression: medium
-        fused: false
-        gene:
-          id: P00354
-          source: uniprot
-    
-    - spacer: 30
-    
-    - cistron:
-        label: triose_phosphate_isomerase
-        expression: medium
-        fused: false
-        gene:
-          id: P00938
-          source: uniprot
-    
-    - spacer: 30
-    
-    - cistron:
-        label: aldolase_his_tagged
-        expression: medium
-        fused: false
         chain:
+          - tag: C_6xHis
           - gene:
-              id: P00883
+              id: FBP1
               source: uniprot
-          - tag: 6xHis
-    
+
     - terminator: rrnB_T1
-```

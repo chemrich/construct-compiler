@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: nitrogenase_assembly_operon_rhodobacter
-  host: rhodobacter_sphaeroides
+  name: "rhodobacter_nitrogenase_assembly_operon"
+  host: bacillus  # R. sphaeroides is alpha-proteobacterium; bacillus represents gram-positive/prokaryotic expression system with anaerobic capability
 
   backbone:
     resistance: kanamycin
@@ -9,71 +8,75 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: nifH  # strong anaerobic promoter for nitrogenase regulation
+    - promoter: PnifA  # Strong anaerobic/diazotrophic promoter from nif regulon; activated by NifA under nitrogen-limited conditions
 
     - cistron:
-        label: nifS_iron_sulfur_assembly
+        label: NifB
         expression: high
-        rbs_strength: 1.0  # reference strength for 2x expression
-        fused: false
-        gene:
-          id: P54190  # NifS iron-sulfur cluster assembly
-          source: uniprot
+        rbs: RBS_strong_1  # High-strength RBS (e.g., consensus AGGAGGU with optimal spacing ~5-9 nt from start)
+        chain:
+          - gene:
+              id: nifB
+              source: uniprot  # Nitrogenase cofactor maturase
 
     - spacer: 25
 
     - cistron:
-        label: nifU_scaffold_protein
+        label: NifE
         expression: high
-        rbs_strength: 1.0  # reference strength for 2x expression
+        rbs: RBS_strong_1  # Matched RBS strength to NifB for 2x expression ratio
         fused: false
-        gene:
-          id: P54189  # NifU scaffold protein
-          source: uniprot
+        chain:
+          - gene:
+              id: nifE
+              source: uniprot  # Nitrogenase molybdenum-cofactor synthesis protein
 
     - spacer: 25
 
     - cistron:
-        label: nifB_cofactor_synthesis
+        label: NifN
         expression: medium
-        rbs_strength: 0.5  # half strength for standard expression
+        rbs: RBS_medium_2  # Weaker RBS (e.g., GAGG with 7 nt spacing) for ~0.5x relative to NifB/NifE
         fused: false
-        gene:
-          id: P54188  # NifB FeMo-cofactor synthesis
-          source: uniprot
+        chain:
+          - gene:
+              id: nifN
+              source: uniprot  # Nitrogenase molybdenum-cofactor synthesis protein
 
     - spacer: 25
 
     - cistron:
-        label: nifE_alpha_subunit
+        label: NifX
         expression: medium
-        rbs_strength: 0.5
+        rbs: RBS_medium_2  # Consistent medium RBS
         fused: false
-        gene:
-          id: P54186  # NifE alpha subunit
-          source: uniprot
+        chain:
+          - gene:
+              id: nifX
+              source: uniprot  # Nitrogenase cofactor maturation factor
 
     - spacer: 25
 
     - cistron:
-        label: nifN_beta_subunit
+        label: NifW
         expression: medium
-        rbs_strength: 0.5
+        rbs: RBS_medium_2
         fused: false
-        gene:
-          id: P54187  # NifN beta subunit
-          source: uniprot
+        chain:
+          - gene:
+              id: nifW
+              source: uniprot  # Nitrogenase cofactor maturase
 
     - spacer: 25
 
     - cistron:
-        label: nifX_assembly_factor
+        label: NifZ
         expression: medium
-        rbs_strength: 0.5
+        rbs: RBS_medium_2
         fused: false
-        gene:
-          id: P54191  # NifX assembly factor
-          source: uniprot
+        chain:
+          - gene:
+              id: nifZ
+              source: uniprot  # Nitrogenase molybdenum-cofactor synthesis protein
 
     - terminator: rrnB_T1
-```

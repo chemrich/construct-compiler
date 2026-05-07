@@ -1,13 +1,21 @@
 construct:
-  name: "mammalian_crispr_guide_genex"
+  name: CRISPR_gRNA_GeneX
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: U6  # Standard Pol III promoter for sgRNA expression in mammalian cells
+    - promoter: U6
+
     - cistron:
-        label: guide_genex
+        label: gRNA
         expression: high
         gene:
-          id: "sgRNA_GeneX"
-    - terminator: polyT # Standard termination sequence for Pol III promoters
+          id: GeneX_gRNA
+          source: uniprot
+
+    - terminator: U6_terminator

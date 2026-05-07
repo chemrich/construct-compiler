@@ -1,17 +1,21 @@
 construct:
-  name: "AAV_VP1_C_terminal_His_TEV"
+  name: "AAV_protein_removable_tag"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: AAV_protein
         expression: high
         chain:
           - gene:
-              id: P03132
+              id: AAV2_capsid
               source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

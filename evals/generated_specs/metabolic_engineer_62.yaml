@@ -1,90 +1,84 @@
 construct:
-  name: PKS_Module_Aggregation_Resistant_Operon
+  name: "PKS_module_6enzyme_operon"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: pks_enzyme_1
+        label: PKS_KS
         expression: high
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: SUMO
           - gene:
-              id: Q03131
+              id: pks_ketosynthase
               source: uniprot
+
     - spacer: 20
+
     - cistron:
-        label: pks_enzyme_2
+        label: PKS_AT
         expression: high
         fused: false
         chain:
           - solubility_tag: SUMO
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: Q03132
+              id: pks_acyltransferase
               source: uniprot
+
     - spacer: 20
+
     - cistron:
-        label: pks_enzyme_3
+        label: PKS_DH
         expression: high
         fused: false
         chain:
           - solubility_tag: SUMO
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: Q03133
+              id: pks_dehydratase
               source: uniprot
+
     - spacer: 20
+
     - cistron:
-        label: pks_enzyme_4
+        label: PKS_ER
         expression: high
         fused: false
         chain:
           - solubility_tag: SUMO
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: Q9ZGH4
+              id: pks_enoylreductase
               source: uniprot
+
     - spacer: 20
+
     - cistron:
-        label: pks_enzyme_5
+        label: PKS_KR
         expression: high
         fused: false
         chain:
           - solubility_tag: SUMO
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: Q9ZGH3
+              id: pks_ketoreductase
               source: uniprot
+
     - spacer: 20
+
     - cistron:
-        label: pks_enzyme_6
+        label: PKS_ACP
         expression: high
         fused: false
         chain:
-          - solubility_tag: SUMO
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
-              id: Q9ZGH2
+              id: pks_acp
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,23 +1,28 @@
 construct:
-  name: "yeast_surface_display_binding_domain"
+  name: yeast_surface_display_BindingDomain
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pCTCON2"
+    # pCTCON2 is a standard yeast surface display vector with selection markers
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: display_protein
         expression: high
         chain:
+          - tag: HA
           - gene:
-              id: AGA2
+              id: BindingDomain
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
+          - tag: c_myc
           - gene:
-              id: BindingDomain
-          - tag: Myc
+              id: Aga2p
+              source: uniprot
+
     - terminator: CYC1

@@ -1,28 +1,36 @@
 construct:
-  name: "triple_BindingDomainX_tandem_mammalian"
+  name: "BindingDomainX_triplicant_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: BindingDomainX_tandem
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: BindingDomainX
-              source: uniprot
+              id: BindingDomainX_v1
+              source: custom
+              note: "First codon-optimized variant for mammalian expression"
           - linker:
-              type: short_GS
-              repeats: 1
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: BindingDomainX
-              source: uniprot
+              id: BindingDomainX_v2
+              source: custom
+              note: "Second synonymous variant, <70% nucleotide identity to v1"
           - linker:
-              type: short_GS
-              repeats: 1
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: BindingDomainX
-              source: uniprot
-        # Note: Compiler must ensure distinct synonymous coding sequences for each BindingDomainX repeat (<70% identity).
-    - terminator: bGH_polyA
+              id: BindingDomainX_v3
+              source: custom
+              note: "Third synonymous variant, <70% nucleotide identity to v1 and v2"
+
+    - terminator: rrnB_T1

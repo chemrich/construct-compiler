@@ -1,37 +1,60 @@
 construct:
-  name: "metabolic_logic_array_logic_gates"
+  name: metabolic_logic_array_AND_OR
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: enzyme_a_output
+        label: Input_1_sensor
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Input_2_sensor
+        expression: medium
+        gene:
+          id: TetR
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Input_3_sensor
+        expression: medium
+        gene:
+          id: AraC
+          source: uniprot
+
+    - spacer: 35
+
+    - cistron:
+        label: Output_Enzyme_A
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P00439
+              id: Output_Enzyme_A_AND_gate
               source: uniprot
+
+    - spacer: 35
+
+    - cistron:
+        label: Output_Enzyme_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Output_Enzyme_B_OR_gate
+              source: uniprot
+
     - terminator: rrnB_T1
-    - spacer: 30
-    - promoter: araBAD
-    - cistron:
-        label: enzyme_b_logic_input_2
-        expression: medium
-        chain:
-          - gene:
-              id: P00722
-              source: uniprot
-    - terminator: T7term
-    - spacer: 30
-    - promoter: J23106
-    - cistron:
-        label: enzyme_b_logic_input_3
-        expression: low
-        chain:
-          - gene:
-              id: P00722
-              source: uniprot
-    - terminator: BBa_B0015

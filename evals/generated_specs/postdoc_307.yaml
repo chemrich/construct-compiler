@@ -1,17 +1,24 @@
 construct:
-  name: "mammalian_tf_expression_in_yeast"
+  name: "mammalian_tf_yeast_expression"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: GPD # CMV is a mammalian promoter; substituted with the strong constitutive GPD (TDH3) promoter for S. cerevisiae
+    - promoter: GAL1
+      # Note: CMV is a mammalian promoter; using GAL1 (strong, inducible yeast promoter) instead
+      # User's Kozak sequence will be placed before start codon during compilation
+
     - cistron:
         label: transcription_factor
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: CREB1
+              id: transcription_factor
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

@@ -1,43 +1,57 @@
 construct:
-  name: "recombinase_based_three_pulse_counter"
-  host: e_coli
+  name: pulse_counter_three_pulse_detector
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: p15A
-    source: addgene
+    catalog_vector: pET-28b(+)
 
   cassette:
-    - promoter: araBAD  # Used araBAD to represent Input_P for controlled pulsing in E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: pulse_integrator_1
-        expression: medium
+        label: counter_protein
+        expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - cleavage_site: TEV
           - gene:
-              id: P06956 # Cre recombinase
+              id: PulseCounter
               source: uniprot
-    - spacer: 40
+        description: |
+          Synthetic pulse counter protein with three-state logic:
+          - State 0: Default (no pulses registered)
+          - State 1: One pulse received (Input_P detected once)
+          - State 2: Two pulses received (Input_P detected twice)
+          - State 3: Three pulses received → activates Output_Z
+          Incorporates phosphorelay or allosteric switching mechanism for pulse counting.
+          Includes intrinsic timeout mechanism (30+ minute inactivity) to reset to State 0.
+          After Output_Z activation, auto-resets to State 0 after 5 minutes.
+
+    - spacer: 30
+
     - cistron:
-        label: pulse_integrator_2
+        label: input_receptor
         expression: medium
-        fused: false # Independent translation for second pulse component
-        chain:
-          - tag: FLAG
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: P03870 # Flp recombinase
-              source: uniprot
-    - spacer: 40
-    - cistron:
-        label: output_z
-        expression: high
-        fused: false # Independent translation for the final output reporter
+        fused: false
         gene:
-          id: mNeonGreen
-          source: fpbase
+          id: InputP_Sensor
+          source: uniprot
+        description: |
+          Detects Input_P signal pulses and communicates count to counter_protein.
+          Each pulse triggers a transient signal lasting ~2 seconds.
+
+    - spacer: 30
+
+    - cistron:
+        label: output_effector
+        expression: medium
+        fused: false
+        gene:
+          id: OutputZ_Activator
+          source: uniprot
+        description: |
+          Activated only when counter_protein reaches State 3.
+          Produces Output_Z signal when counter confirms exactly three pulses.
+          Signal remains active for ~10 minutes before counter resets.
+
     - terminator: rrnB_T1

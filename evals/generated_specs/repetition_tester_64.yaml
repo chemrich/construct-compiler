@@ -1,22 +1,19 @@
 construct:
-  name: "protein_a_expression_pbr322_kan"
-  host: e_coli_bl21_de3
+  name: ProteinA_pBR322_ampicillin_T7lac
+  host: e_coli
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
   cassette:
-    - promoter: T7lac
-    - cistron:
-        label: protein_a
-        expression: high
-        gene:
+  - promoter: T7lac
+  - cistron:
+      label: ProteinA
+      expression: high
+      chain:
+      - tag: 6xHis
+      - cleavage_site: TEV
+      - gene:
           id: ProteinA
           source: uniprot
-    - terminator: T7term
-
-# To fulfill the requirement for two co-existing plasmids with no similarity, 
-# this construct (Plasmid 1) uses a pBR322 origin and Kanamycin resistance. 
-# The second construct (Plasmid 2) must be designed using a p15A origin, 
-# Chloramphenicol resistance, and a non-homologous promoter like 'araBAD' 
-# to ensure stability and independent regulation.
+  - terminator: rrnB_T1

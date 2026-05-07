@@ -1,21 +1,28 @@
 construct:
-  name: "mEGFP_MODC_Degron_HEK293"
+  name: "mammalian_EGFP_degron_reporter"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: degron_fusion
+        label: EGFP_degron
         expression: high
         chain:
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 4
-          - gene:
-              id: P04135
-              source: uniprot
-    - terminator: SV40_pA
+              repeats: 1
+          - degron:
+              type: dPEST
+              variant: "canonical_C-terminal"
+              sequence: "PEST_motif_C-terminal"
+          - tag: V5
+
+    - terminator: rrnB_T1

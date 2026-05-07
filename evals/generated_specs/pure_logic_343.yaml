@@ -1,42 +1,74 @@
+```yaml
 construct:
-  name: "yeast_oscillatory_glp1_secretion"
+  name: yeast_tunable_oscillator_secreted_peptide
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pRS426"
+    resistance: uracil
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: ADH1
+    - promoter: GAL1
+      comment: "Galactose-inducible promoter; strength tunable by glucose/galactose ratio for period control"
+
     - cistron:
-        label: oscillator_repressor_1
-        expression: medium
-        gene:
-          id: TetR
-          source: uniprot
-    - spacer: 40
-    - promoter: pTet
-    - cistron:
-        label: oscillator_repressor_2
-        expression: medium
-        gene:
-          id: LacI
-          source: uniprot
-    - spacer: 40
-    - promoter: pLac
-    - cistron:
-        label: therapeutic_output
+        label: repressor
         expression: high
         chain:
-          - tag: alpha_factor
           - gene:
-              id: GLP1
+              id: GAL80
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reporter
-        expression: low
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
+        comment: "Oscillator repressor; GAL80 inhibits GAL4-driven transcription"
+
     - terminator: CYC1
+
+  cassette_2:
+    - promoter: GAL4
+      comment: "Constitutive strong promoter; strength adjustable via additional GAL4 cassette for period tuning"
+
+    - cistron:
+        label: activator
+        expression: medium
+        chain:
+          - gene:
+              id: GAL4
+              source: uniprot
+        comment: "Positive feedback activator; creates oscillatory dynamic with GAL80 repressor"
+
+    - terminator: CYC1
+
+  cassette_3:
+    - promoter: GAL1
+      comment: "Output promoter; active when GAL80 levels are low during oscillation cycle"
+
+    - cistron:
+        label: secreted_peptide
+        expression: medium
+        chain:
+          - tag: alpha_factor_signal
+            comment: "Yeast secretion signal for N-terminal export"
+          - gene:
+              id: insulin
+              source: uniprot
+              comment: "Example therapeutic peptide; replace with desired cargo"
+          - cleavage_site: Kex2
+            comment: "Yeast protease cleavage site for signal peptide removal"
+
+    - terminator: CYC1
+    comment: "Pulsatile expression driven by oscillatory GAL4/GAL80 circuit; secretion via alpha-factor signal"
+
+  notes: |
+    Period tunability:
+    - Increase GAL4 expression strength → faster oscillation
+    - Decrease GAL4 expression strength → slower oscillation
+    - Adjust glucose/galactose ratio in medium → modulate GAL1 promoter activity
+    - Add doxycycline-inducible GAL4 cassette for dynamic period control via external input
+    
+    Oscillation mechanism:
+    - GAL4 activates both GAL80 and the output peptide
+    - GAL80 represses GAL4, creating negative feedback
+    - Repressor synthesis and degradation kinetics determine oscillation frequency
+    - Pulsatile bursts occur as oscillator cycles between active/repressed states
+```

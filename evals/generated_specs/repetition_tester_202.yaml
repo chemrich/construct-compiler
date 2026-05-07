@@ -1,40 +1,51 @@
 construct:
-  name: "yeast_diverse_enzyme_pathway"
+  name: S_cerevisiae_synthetic_pathway_three_enzymes
   host: yeast
-  backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TDH3
-    - cistron:
-        label: synthase_1
+    - promoter: ADH1
+      cistron:
+        label: Synthase1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: Synthase1
               source: uniprot
+              codon_optimize: yeast
+              sequence_variant: optimized_variant_A
+
     - terminator: CYC1
-    - spacer: 40
+
     - promoter: TEF1
-    - cistron:
-        label: reductase_2
-        expression: medium
+      cistron:
+        label: Reductase2
+        expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: Reductase2
               source: uniprot
-    - terminator: ADH1
-    - spacer: 40
-    - promoter: PGK1
-    - cistron:
-        label: kinase_3
-        expression: low
+              codon_optimize: yeast
+              sequence_variant: optimized_variant_B
+
+    - terminator: PGK1
+
+    - promoter: TDH3
+      cistron:
+        label: Kinase3
+        expression: high
         chain:
           - tag: FLAG
           - gene:
               id: Kinase3
               source: uniprot
-    - terminator: ENO2
+              codon_optimize: yeast
+              sequence_variant: optimized_variant_C
+
+    - terminator: ADH2
+
+  backbone:
+    resistance: kanamycin
+    ori: 2_micron  # S. cerevisiae 2-micron circle origin
+    source: addgene

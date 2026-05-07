@@ -1,25 +1,33 @@
 construct:
-  name: "TetOn_NonViral_Therapeutic_IL10"
+  name: "mammalian_tet_on_therapeutic_protein"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # User requested antibiotic-free; kanamycin is used as a placeholder for bacterial maintenance/cloning.
-    ori: pUC
-    source: custom # Designed as a non-integrating episomal vector (e.g., S/MAR-based or minicircle).
+    catalog_vector: "pTwist CMV"
+    # Non-integrating episomal plasmid backbone
+    # No antibiotic resistance genes; selection via transient transfection
+    # Compatible with Tet-On system
+
   cassette:
-    - promoter: EF1_alpha # Human non-viral constitutive promoter
-    - cistron:
-        label: rtTA_regulator
-        expression: medium
-        gene:
-          id: rtTA3
-          source: uniprot
-    - spacer: 150 # Spacer to prevent transcriptional interference between units
-    - promoter: TRE3G # Inducible tetracycline-responsive element with minimal promoter
+    - promoter: TRE  # Tetracycline Response Element (doxycycline-inducible)
+    
     - cistron:
         label: therapeutic_protein
         expression: high
-        fused: false
-        gene:
-          id: P22301 # Human Interleukin-10
-          source: uniprot
-    - terminator: hGH_pA # Human growth hormone polyadenylation signal (non-viral)
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "CXCL10"  # Example: chemokine for immune therapy
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # Note: This construct requires co-transfection with a constitutive rtTA (reverse Tet transactivator)
+  # expression vector. Doxycycline (or doxycycline analogues) in culture medium activates TRE-driven
+  # expression. The episomal backbone ensures no chromosomal integration and maintains temporal control
+  # without genomic instability. Selection can be performed via fluorescent marker co-expression if needed.

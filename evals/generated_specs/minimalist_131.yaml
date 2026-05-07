@@ -1,17 +1,24 @@
 construct:
-  name: "Protein_L_Baculovirus_Expression"
+  name: "baculovirus_Protein_L_high_yield"
   host: insect
+
   backbone:
-    catalog_vector: "pFastBac1"
+    catalog_vector: "pFastBac_Dual"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Polh
+    - promoter: polyhedrin
+
     - cistron:
-        label: protein_l
+        label: Protein_L
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P18131
+              id: Protein_L
               source: uniprot
+
     - terminator: SV40_polyA

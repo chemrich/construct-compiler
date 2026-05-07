@@ -1,23 +1,31 @@
 construct:
-  name: tet_on_gfp_inducible_system
+  name: "TetOn_GFP_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
-    ori: pUC
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: transactivator
+        label: tTA
+        expression: high
         gene:
-          id: rtTA # Substituted tTA with rtTA to enable Tet-On (inducible) functionality as requested
+          id: tTA
           source: uniprot
-    - terminator: bGH_pA
-    - spacer: 100
-    - promoter: TRE
+
+    - terminator: SV40_polyA
+
+    - promoter: TetO
+
     - cistron:
-        label: reporter
+        label: GFP
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: SV40_pA
+
+    - terminator: SV40_polyA

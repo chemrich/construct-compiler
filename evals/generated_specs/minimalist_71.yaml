@@ -1,22 +1,30 @@
 construct:
-  name: "cfp_yfp_tandem_expression"
-  host: e_coli_bl21_de3
+  name: CFP_YFP_dual_expression
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: cfp_protein
-        expression: medium
+        label: CFP
+        expression: high
         gene:
-          id: mTurquoise2
+          id: mCerulean
           source: fpbase
-    - spacer: 30
+
+    - spacer: 50
+
     - cistron:
-        label: yfp_protein
-        expression: medium
+        label: YFP
+        expression: high
         fused: false
         gene:
           id: mVenus
           source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,26 +1,48 @@
 construct:
-  name: "genetic_timer_hormone_maturation"
-  host: e_coli_bl21_de3
+  name: "genetic_timer_hormone_output"
+  host: mammalian
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: T7lac
+    - promoter: CMV
+
     - cistron:
-        label: trigger_reporter
+        label: trigger_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: rtTA
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: time_delay
         expression: medium
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - spacer: 40
+        chain:
+          - gene:
+              id: degron_timer
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: destabilizing_domain
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: hormone_output
         expression: high
-        fused: false
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: TEV
+          - tag: 6xHis
+          - cleavage_site: Furin
           - gene:
-              id: P01275
+              id: human_growth_hormone
               source: uniprot
-    - terminator: T7term # The 6-8 hour delay is achieved by transcriptional regulation logic (e.g. a feed-forward loop) external to this output construct.
+
+    - terminator: rrnB_T1

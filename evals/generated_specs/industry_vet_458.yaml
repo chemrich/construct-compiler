@@ -1,23 +1,26 @@
 construct:
-  name: "lysosomal_targeting_enzyme_fusion"
+  name: "lysosomal_targeting_enzyme"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: targeted_enzyme
+        label: lysosomal_enzyme
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - gene:
-              id: GAA
-              source: uniprot
+          - tag: NLS
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: IGF2
+              id: lysosomal_enzyme
               source: uniprot
-    - terminator: BBa_B0015
+          - tag: KFERQ  # C-terminal KFERQ-like motif for chaperone-mediated autophagy targeting
+
+    - terminator: rrnB_T1

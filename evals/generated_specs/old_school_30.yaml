@@ -1,42 +1,39 @@
-```yaml
 construct:
-  name: AntigenA_shuttle_vector
-  host: e_coli  # Primary host for cloning
-
+  name: "shuttle_vector_AntigenA_ecoli_yeast"
+  host: e_coli
+  
   backbone:
     resistance: ampicillin
-    ori: pBR322  # Contains ColE1
-    source: custom
-
+    ori: pBR322
+    source: addgene
+    # Note: This construct includes dual origins (ColE1 for E. coli, ARS/CEN for yeast)
+    # and dual selectable markers (AmpR for E. coli, URA3 for yeast) to function
+    # as a shuttle vector. Additional backbone elements (ARS/CEN, URA3) should be
+    # included in the physical construct but are specified here for documentation.
+    
   cassette:
-    - promoter: lac
+    # E. coli expression cassette
+    - promoter: lacUV5
+    
     - cistron:
         label: lacI_repressor
         expression: medium
         gene:
-          id: P03023  # LacI repressor
+          id: lacI
           source: uniprot
+    
     - terminator: rrnB_T1
-
-    - promoter: lac
-    - cistron:
-        label: antigenA_ecoli
-        expression: high
-        gene:
-          id: AntigenA
-          # source: uniprot  # User should specify actual protein ID
-    - terminator: rrnB_T1
-
+    
+    - spacer: 50
+    
     # Yeast expression cassette
-    - promoter: GPD  # Strong constitutive yeast promoter
+    - promoter: GPD
+    
     - cistron:
-        label: antigenA_yeast
+        label: AntigenA
         expression: high
         gene:
           id: AntigenA
-          # source: uniprot  # Same antigen for yeast expression
-    - terminator: CYC1  # Yeast terminator
-
-    # Note: This YAML schema doesn't explicitly support multiple origins or selection markers
-    # The actual shuttle vector would need ARS/CEN origin and URA3 marker added during assembly
-```
+          source: uniprot
+    
+    - terminator: rrnB_T1

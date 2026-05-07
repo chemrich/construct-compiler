@@ -1,23 +1,25 @@
 construct:
-  name: "Xenobiotic_Degradation_High_Expression"
-  host: e_coli
+  name: "xenobiotic_degrader_e_coli_high_expression"
+  host: e_coli_bl21_de3
+
   backbone:
-    # ARB-free systems (e.g., auxotrophy/toxin-antitoxin) are not available in the selection schema; using Kanamycin as a placeholder.
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Inducible, non-viral bacterial promoter
+    - promoter: T7lac
+
     - cistron:
-        label: bioremediation_enzyme
+        label: degrading_enzyme
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P72156
+              id: bphC
               source: uniprot
+              # biphenyl 2,3-dioxygenase - well-characterized xenobiotic-degrading enzyme
+              # UniProt P07604 or similar biphenyl/polycyclic aromatic hydrocarbon degradation gene
+
     - terminator: rrnB_T1

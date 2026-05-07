@@ -1,16 +1,22 @@
 construct:
-  name: "N_terminal_6xHis_MyProtein_expression"
-  host: e_coli
+  name: MyProtein_His_tagged
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: MyProtein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: MyProtein
+              source: uniprot
+
     - terminator: rrnB_T1

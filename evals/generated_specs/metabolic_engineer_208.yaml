@@ -1,45 +1,80 @@
 construct:
-  name: "yeast_metabolon_fusion_metA_E"
+  name: "yeast_metabolon_MetABCDE"
   host: yeast
 
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
-    source: addgene
+    ori: 2_micron
 
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter
+    - promoter: GAL1
 
     - cistron:
-        label: metabolon
-        expression: high
+        label: MetA
+        expression: medium
         chain:
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: MetA
               source: uniprot
+
+    - spacer: 24
+
+    - cistron:
+        label: MetB
+        expression: medium
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
               id: MetB
               source: uniprot
+
+    - spacer: 24
+
+    - cistron:
+        label: MetC
+        expression: medium
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
               id: MetC
               source: uniprot
+
+    - spacer: 24
+
+    - cistron:
+        label: MetD
+        expression: medium
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
               id: MetD
               source: uniprot
+
+    - spacer: 24
+
+    - cistron:
+        label: MetE
+        expression: medium
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
               id: MetE
               source: uniprot
 
-    - terminator: CYC1_term
+    - terminator: rrnB_T1

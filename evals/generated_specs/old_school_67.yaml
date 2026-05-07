@@ -1,17 +1,24 @@
 construct:
-  name: "gst_fusion_protein_expression"
+  name: "GST_fusion_Factor_Xa_cleavable"
   host: e_coli_bl21
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
-      cistron:
-        label: gst_fusion
+    
+    - cistron:
+        label: GST_target
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: Factor_Xa
           - gene:
-              id: target_protein
-      terminator: T7term
+              id: target
+              source: uniprot
+    
+    - terminator: rrnB_T1

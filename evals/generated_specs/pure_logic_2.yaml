@@ -1,73 +1,88 @@
-```yaml
 construct:
-  name: three_input_OR_gate_secreted_cytokine
+  name: "mammalian_OR_gate_three_input_cytokine"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
-      
+
     - cistron:
-        label: dCas9_VP64
-        expression: medium
+        label: OR_gate_output
+        expression: high
         chain:
-          - tag: NLS
-          - gene:
-              id: P61964  # dCas9 (nuclease dead)
-              source: uniprot
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: VP64_activation_domain  # transcriptional activator
+              id: TNF_alpha
               source: uniprot
 
-    - spacer: 50
+    - terminator: rrnB_T1
 
-    - promoter: U6
-      
-    - cistron:
-        label: gRNA_signal1
-        expression: high
-        fused: false
-        gene:
-          id: gRNA_scaffold_signal1_target  # targets signal1-responsive promoter
-          source: custom
-
-    - spacer: 30
+    # Separate cassette for input sensor 1 (ligand-responsive transcription factor)
+    - promoter: EF1_alpha
 
     - cistron:
-        label: gRNA_signal2
-        expression: high
-        fused: false
-        gene:
-          id: gRNA_scaffold_signal2_target  # targets signal2-responsive promoter
-          source: custom
+        label: sensor_1
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: STAT3
+              source: uniprot
 
-    - spacer: 30
+    - terminator: rrnB_T1
+
+    # Separate cassette for input sensor 2
+    - promoter: EF1_alpha
 
     - cistron:
-        label: gRNA_signal3
-        expression: high
-        fused: false
-        gene:
-          id: gRNA_scaffold_signal3_target  # targets signal3-responsive promoter
-          source: custom
+        label: sensor_2
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: NF_kB_p65
+              source: uniprot
 
-    - spacer: 50
+    - terminator: rrnB_T1
 
-    - promoter: minimal_CMV  # minimal promoter with gRNA target sites
-      
+    # Separate cassette for input sensor 3
+    - promoter: EF1_alpha
+
     - cistron:
-        label: secreted_cytokine
+        label: sensor_3
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: AP1_c_Jun
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # OR gate logic: composite promoter with binding sites for all three sensors
+    # (represented as regulatory element upstream of output, design assumes
+    # chemical signal 1 → STAT3 activation, signal 2 → NF-κB activation,
+    # signal 3 → AP-1/c-Jun activation; any one drives output expression)
+    - promoter: CMV
+      # Comment: Composite promoter with tandem STAT3, NF-κB, and AP-1 binding sites
+      # ensures OR logic: activation by any sensor alone is sufficient for transcription
+
+    - cistron:
+        label: secreted_cytokine_output
         expression: high
         chain:
-          - tag: signal_peptide  # for secretion
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01579  # Interferon-gamma as example cytokine
+              id: IL_6
               source: uniprot
 
-    - terminator: BBa_B0015
-```
+    - terminator: rrnB_T1

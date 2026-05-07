@@ -1,16 +1,21 @@
 construct:
-  name: "mammalian_gfp_variant_expression_g418"
-  host: mammalian
+  name: "mammalian_GFP_expression_CMV"
+  host: HEK293
+
   backbone:
-    resistance: neomycin
+    catalog_vector: "pTwist CMV"
+    resistance: G418
     ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: gfp_variant
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: SV40_polyA

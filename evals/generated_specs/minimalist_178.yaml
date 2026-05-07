@@ -1,14 +1,21 @@
 construct:
-  name: "humanized_protein_m_expression"
-  host: e_coli_bl21_de3
+  name: humanized_ProteinM_expression
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_m
+        label: ProteinM
         expression: high
-        gene:
-          id: ProteinM
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: humanized_ProteinM
+              source: uniprot
+
+    - terminator: rrnB_T1

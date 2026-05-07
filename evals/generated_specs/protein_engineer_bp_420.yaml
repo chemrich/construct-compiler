@@ -1,20 +1,22 @@
 construct:
-  name: "pichia_aox1_secreted_lipase"
+  name: "pichia_pastoris_aox1_secreted_lipase"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pPICZ"
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: lipase_target
+        label: lipase
         expression: high
         chain:
-          - tag: alpha-factor
-          - cleavage_site: TEV
+          - signal_peptide: alpha_factor
           - gene:
-              id: P04058
+              id: lipase
               source: uniprot
+          - cleavage_site: TEV
           - tag: 6xHis
-    - terminator: AOX1_TT
+
+    - terminator: TT_polyA

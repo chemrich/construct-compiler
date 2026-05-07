@@ -1,26 +1,34 @@
 construct:
-  name: "immunogen_peptide_tandem_repeat_library_yeast"
+  name: "S_cerevisiae_ImmunogenPeptide_triply_tandem_codon_optimized"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: tandem_immunogen
+        label: ImmunogenPeptide_construct
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: ImmunogenPeptide
+              id: ImmunogenPeptide_repeat1_codon_variant_A
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: ImmunogenPeptide
-          - linker:
-              type: short_GS
               repeats: 1
           - gene:
-              id: ImmunogenPeptide
+              id: ImmunogenPeptide_repeat2_codon_variant_B
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: ImmunogenPeptide_repeat3_codon_variant_C
+              source: uniprot
+
     - terminator: CYC1

@@ -1,32 +1,50 @@
 construct:
-  name: "xor_gate_h_i_reporter_g"
+  name: XOR_logic_gate_reporter_G
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: araBAD
+    
     - cistron:
-        label: sensor_H_araC
-        fused: false
-        gene:
-          id: P0A9E5
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: sensor_I_lacI
-        fused: false
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 40
-    - promoter: XOR_H_I  # Custom logic promoter: ON if Inducer_H XOR Inducer_I is present
-    - cistron:
-        label: Reporter_G
+        label: repressor_J
         expression: high
-        fused: false
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: T7lac
+    
+    - cistron:
+        label: repressor_K
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: lacUV5
+    
+    - cistron:
+        label: reporter_G
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: mNeonGreen
               source: fpbase
+    
     - terminator: rrnB_T1

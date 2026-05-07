@@ -1,25 +1,37 @@
 construct:
-  name: "tet_inducible_system"
+  name: "tet_inducible_expression"
   host: e_coli
+  
   backbone:
     resistance: chloramphenicol
-    ori: p15A
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23106  # Constitutive promoter for the repressor
+    - promoter: lacUV5
+      # lacUV5 for constitutive tetR expression
+    
     - cistron:
         label: tetR_repressor
-        expression: medium
-        gene:
-          id: P03038
-          source: uniprot
-    - terminator: BBa_B0015
-    - spacer: 40
-    - promoter: tet  # Inducible promoter regulated by TetR
-    - cistron:
-        label: target_gene
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
+          id: tetR
+          source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: tetO
+      # tet operator-based promoter; active when tetracycline is present
+    
+    - cistron:
+        label: target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: target_gene
+              source: uniprot
+    
     - terminator: rrnB_T1

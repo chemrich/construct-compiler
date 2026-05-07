@@ -1,11 +1,11 @@
-```yaml
 construct:
-  name: lentiviral_gene_therapy_vector
-  host: HEK293
+  name: lentiviral_CMV_target_PGK_puro
+  host: mammalian
 
   backbone:
-    catalog_vector: "pLenti CMV Puro DEST"
-    source: addgene
+    catalog_vector: "pLenti4"
+    # Note: LTRs and packaging signals (Psi, RRE, cPPT) are inherent to lentiviral backbones
+    # and handled by the construct_compiler for pLenti4
 
   cassette:
     - promoter: CMV
@@ -13,17 +13,21 @@ construct:
     - cistron:
         label: target
         expression: high
-        gene:
-          id: target_gene
-          source: uniprot
+        chain:
+          - gene:
+              id: GFP
+              source: fpbase
+
+    - terminator: rrnB_T1
 
     - promoter: PGK
 
     - cistron:
         label: selection
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: puromycin_resistance
+          id: puromycin_N_acetyltransferase
           source: uniprot
-```
+
+    - terminator: rrnB_T1

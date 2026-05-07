@@ -1,18 +1,23 @@
 construct:
-  name: "Bacillus_protease_secretion_vector"
+  name: "Bacillus_secretion_vector_Pgrac_AprE_protease_HA"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
-      cistron:
-        label: protease_production
+
+    - cistron:
+        label: secreted_protease
         expression: high
         chain:
           - secretion_signal: AprE
           - gene:
-              id: protease
+              id: proprietary_protease
+              source: uniprot
           - tag: HA
-      terminator: rrnB_T1
+
+    - terminator: rrnB_T1

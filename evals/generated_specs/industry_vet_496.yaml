@@ -1,13 +1,21 @@
 construct:
-  name: "NucleolarQ_Mammalian_Expression"
+  name: NucleolarQ_mammalian_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: NucleolarQ
         expression: high
-        gene:
-          id: NucleolarQ
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: NucleolarQ
+              source: uniprot
+
+    - terminator: rrnB_T1

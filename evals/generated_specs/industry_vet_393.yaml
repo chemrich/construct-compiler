@@ -1,17 +1,23 @@
 construct:
-  name: "immunogen_inclusion_body_expression"
-  host: e_coli_bl21_de3
+  name: "immunogenic_protein_inclusion_body"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: target_immunogen
+        label: immunogenic_target
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P02842  # Ovalbumin (model immunogen)
+              id: null
+              # User must provide the specific gene ID or sequence
+              # This construct assumes an immunogenic protein (e.g., antigen, toxoid)
+              # Expression at high level in BL21(DE3) will drive inclusion body formation
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

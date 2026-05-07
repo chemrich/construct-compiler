@@ -1,36 +1,44 @@
 construct:
-  name: "synthetic_organelle_targeting_array"
-  host: e_coli_bl21_de3
+  name: "synthetic_organelle_triple_targeting"
+  host: mammalian
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+  
   cassette:
-    - promoter: T7lac
+    - promoter: CMV
+    
     - cistron:
-        label: protein_1_torA_target
+        label: protein_A_targeted
         expression: high
         chain:
-          - tag: TorA
-          - gene:
-              id: mEGFP
-              source: fpbase
-    - spacer: 30
-    - cistron:
-        label: protein_2_ompA_target
-        expression: high
-        fused: false
-        chain:
-          - tag: OmpA
-          - gene:
-              id: mScarlet
-              source: fpbase
-    - spacer: 30
-    - cistron:
-        label: protein_3_pelB_target
-        expression: high
-        fused: false
-        chain:
-          - tag: PelB
+          - tag: "MKTAYIAKQRQISFVKSHFSRQLEERLGLIEVQAPILSRVGDGTQDNLSGAEKAVQ"  # Custom organelle-targeting peptide 1
           - gene:
               id: mNeonGreen
               source: fpbase
-    - terminator: T7term
+    
+    - spacer: 30
+    
+    - cistron:
+        label: protein_B_targeted
+        expression: high
+        fused: false
+        chain:
+          - tag: "MLPGLALLLLAAWTARALEVPTVRPVNYLSTPGSNIEGRAGQDNLSGAEKAVQVKV"  # Custom organelle-targeting peptide 2 (diverged from peptide 1)
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - spacer: 30
+    
+    - cistron:
+        label: protein_C_targeted
+        expression: high
+        fused: false
+        chain:
+          - tag: "MSVLSEFQHWENLYTPQGSYNLTQGKQLALLPLSQVFSVSVQQEEKNQEIAQEVT"  # Custom organelle-targeting peptide 3 (distinct from peptides 1 and 2)
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1

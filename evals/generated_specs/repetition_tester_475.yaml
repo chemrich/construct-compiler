@@ -1,19 +1,23 @@
 construct:
-  name: "chloroplast_targeted_diversified_mEGFP"
-  host: Arabidopsis_thaliana  # Specific plant host for optimized codon usage
+  name: "plant_chloroplast_targeting_construct"
+  host: algae
+
   backbone:
-    catalog_vector: "pCAMBIA1300"
+    resistance: spectinomycin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: 35S  # Standard CaMV 35S promoter for high-level plant expression
+    - promoter: J23100
+
     - cistron:
-        label: target
-        expression: high  # codon-optimized for plants; diversification and GC variation requested
+        label: chloroplast_targeted_protein
+        expression: high
         chain:
-          - tag: RBCS_CTS  # Rubisco small subunit chloroplast transit peptide for targeting
-          - linker:
-              type: short_GS
-              repeats: 1
+          - tag: chloroplast_transit_peptide
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: NOS_term  # Nopaline synthase terminator for plant expression systems
+              id: codon_optimized_plant_protein_diversified
+              source: custom
+              notes: "Sequences must be synonymously diversified with variable GC content to eliminate long identical DNA repeats. Apply wobble position randomization and alternative codon usage patterns throughout the ORF."
+
+    - terminator: rrnB_T1

@@ -1,16 +1,61 @@
 construct:
-  name: "E_coli_AND_gate_ara_iptg"
-  host: e_coli
+  name: "AND_logic_gate_circuit"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD_lacO # Hybrid promoter requiring Arabinose (Input B) and IPTG (Input C) for induction of Protein Y
+    - promoter: araBAD
+      # araBAD is repressed by AraC; activated only in presence of arabinose
+      # This is our first input (ligand B = arabinose)
+
     - cistron:
-        label: Protein_Y
+        label: araC_regulator
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+              # AraC protein: activates araBAD in presence of arabinose
+
+    - terminator: rrnB_T1
+
+    # Second cassette: encodes output Y under dual control
+    - promoter: lacUV5
+      # lacUV5 is a constitutive low-level promoter, basal expression controlled by LacI repressor
+
+    - cistron:
+        label: lacI_repressor
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+              # LacI repressor: represses lacUV5 unless IPTG (ligand C) is present
+
+    - terminator: rrnB_T1
+
+    # Third cassette: output gene Y
+    # Controlled by P_araBAD (needs arabinose AND AraC)
+    # AND by presence of LacI repression relief (needs IPTG to remove repression)
+    # This dual control achieves AND logic
+
+    - promoter: araBAD
+
+    - cistron:
+        label: output_Y
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: YFP
+              source: fpbase
+              # Yellow fluorescent protein as output Y
+              # Expressed ONLY when:
+              # 1) Arabinose (ligand B) is present to activate araBAD
+              # 2) IPTG (ligand C) is present to relieve LacI repression of araBAD
+
     - terminator: rrnB_T1

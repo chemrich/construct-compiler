@@ -1,15 +1,20 @@
 construct:
   name: "T7_Protein_C_expression"
-  host: e_coli_bl21_de3  # Added DE3 lysogen to support T7-driven expression
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target
+        label: Protein_C
         expression: high
-        gene:
-          id: P04070
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Protein_C
+              source: uniprot
+
+    - terminator: rrnB_T1

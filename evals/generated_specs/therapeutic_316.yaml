@@ -1,21 +1,28 @@
 construct:
-  name: "ev_cargo_loading_fusion"
+  name: "EV_cargo_therapeutic_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: ev_targeted_therapeutic
+        label: EV_cargo
         expression: high
         chain:
+          - tag: HA
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: CD63
+              id: "P04637"
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - gene:
-              id: IGF1
-              source: uniprot
-    - terminator: bGH_polyA
+              repeats: 1
+          - tag: EV_targeting_peptide
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

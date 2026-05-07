@@ -1,20 +1,26 @@
 construct:
-  name: "PGAP_alpha_factor_cytokine_strep"
+  name: "Pichia_pastoris_secreted_cytokine"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
         label: secreted_cytokine
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_preproleader
           - cleavage_site: TEV
           - gene:
-              id: IL2
+              id: cytokine
               source: uniprot
+              codon_optimization: pichia_pastoris
           - tag: Strep-II
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

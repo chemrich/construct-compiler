@@ -1,14 +1,34 @@
 construct:
-  name: "distinct_operator_inducible_system"
-  host: e_coli_bl21_de3
+  name: "multi_operator_inducible_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac # Configured with distinct LacO1 and LacOid variants to enhance repression and prevent homologous recombination
+    - promoter: lacUV5
+      # Multiple distinct operator variants to prevent recombination
+      operators:
+        - id: "O1_canonical"
+          sequence: "AATTGTGAGC_GCTCACAATT"
+          position: "upstream"
+        - id: "O2_variant_half1"
+          sequence: "GGCCAGTGAG_CGGCACACC"
+          position: "spacer_1"
+        - id: "O3_variant_half2"
+          sequence: "CCAGTGAGCG_CTCACGGCC"
+          position: "spacer_2"
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: lacZ_alpha
+              source: uniprot
+
+    - terminator: rrnB_T1

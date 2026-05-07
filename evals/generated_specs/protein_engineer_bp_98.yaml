@@ -1,22 +1,26 @@
 construct:
-  name: "Pichia_thaumatin_YPT1_secretion"
+  name: "Pichia_pastoris_thaumatin_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: YPT1
+
     - cistron:
-        label: thaumatin_secretion
+        label: thaumatin_secreted
         expression: medium
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: P02883
+              id: thaumatin
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: 8xHis
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

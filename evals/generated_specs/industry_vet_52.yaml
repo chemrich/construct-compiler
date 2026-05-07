@@ -1,33 +1,21 @@
 construct:
-  name: "purification_tag_position_study"
+  name: "mammalian_nterminal_his_tag"
   host: HEK293
+  
   backbone:
     catalog_vector: "pTwist CMV"
+  
   cassette:
     - promoter: CMV
+    
     - cistron:
-        label: n_term_tagged_protein
+        label: target_nterm_tagged
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
-    - spacer: 25 # This spacer represents a P2A self-cleaving sequence to allow bicistronic expression in HEK293
-    - cistron:
-        label: c_term_tagged_protein
-        expression: high
-        fused: false
-        chain:
-          - gene:
-              id: mCherry
-              source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: FLAG
-    - terminator: BBa_B0015
+              id: target_protein
+              source: uniprot
+    
+    - terminator: rrnB_T1

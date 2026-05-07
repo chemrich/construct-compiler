@@ -1,22 +1,53 @@
 construct:
-  name: "transcriptional_delay_circuit"
+  name: timing_delay_circuit
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: araBAD  # Input signal: Arabinose induces expression of the activator
+    - promoter: T7lac
+
     - cistron:
-        label: intermediate_activator
-        expression: medium
-        gene:
-          id: P12746  # LuxR transcriptional activator
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: pLuxI   # Delay is introduced as activator concentration must reach a threshold to trigger this promoter
-    - cistron:
-        label: delayed_output
+        label: input_sensor
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: delay_integrator
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_actuator
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gfp
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: timing_buffer
+        expression: low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cAMP_receptor_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

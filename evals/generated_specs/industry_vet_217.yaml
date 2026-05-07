@@ -1,19 +1,23 @@
 construct:
-  name: "tightly_regulated_toxic_expression"
-  host: e_coli
+  name: "tight_inducible_toxic_GOI"
+  host: e_coli_bl21_de3
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: araBAD  # Selected for its tight regulation and catabolite repression to minimize basal expression of toxic genes
+    - promoter: T7lac
+
     - cistron:
-        label: toxic_goi
-        expression: high
+        label: target
+        expression: very_low
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P0A8F4
+              id: toxic_GOI
               source: uniprot
+
     - terminator: rrnB_T1

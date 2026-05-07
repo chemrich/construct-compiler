@@ -1,18 +1,23 @@
 construct:
-  name: "pichia_pastoris_viral_antigen_high_yield"
+  name: "pichia_viral_antigen_secreted"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: AOX1
+    - promoter: PAOX1
+
     - cistron:
-        label: antigen
+        label: viral_antigen
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: HBsAg
+              id: viral_surface_antigen
               source: uniprot
+
     - terminator: AOX1

@@ -1,17 +1,17 @@
 construct:
-  name: "Pichia_YPT1_mCherry_fusion"
+  name: "pichia_mcherry_membrane_protein_localization"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
 
   cassette:
     - promoter: YPT1
 
     - cistron:
-        label: membrane_protein_localization
+        label: fluorescent_reporter
         expression: medium
         chain:
           - gene:
@@ -20,7 +20,13 @@ construct:
           - linker:
               type: GS_flexible
               repeats: 3
-          - gene:
-              id: target_membrane_protein
 
-    - terminator: AOX1_term
+    - cistron:
+        label: target_membrane_protein
+        expression: medium
+        fused: false
+        gene:
+          id: membrane_protein
+          source: uniprot
+
+    - terminator: CYC1

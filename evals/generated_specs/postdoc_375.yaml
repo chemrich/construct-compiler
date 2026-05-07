@@ -1,16 +1,25 @@
 construct:
-  name: "ecoli_promoter_test_luciferase"
-  host: e_coli
+  name: ecoli_promoter_test_luciferase
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac  # Default per instruction for E. coli since the 'new' promoter sequence/id was not provided
+    - promoter: T7lac
+      # NOTE: User specified "new E. coli promoter" but did not provide sequence/name.
+      # Defaulting to T7lac as standard high-expression bacterial promoter for testing.
+      # Replace with actual promoter name/ID if available.
+
     - cistron:
-        label: luciferase_reporter
-        expression: medium
-        gene:
-          id: P08659
-          source: uniprot
+        label: luciferase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: photinus_pyralis_luciferase
+              source: uniprot
+
     - terminator: rrnB_T1

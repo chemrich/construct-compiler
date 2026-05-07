@@ -1,19 +1,26 @@
 construct:
-  name: "cytoplasmic_therapeutic_nes_strep"
-  host: mammalian
+  name: "cytoplasmic_therapeutic_NES_purification"
+  host: HEK293
+
   backbone:
-    resistance: none # Substituted 'none' to satisfy the requirement for a construct devoid of antibiotic resistance genes.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+
   cassette:
-    - promoter: EF1_alpha # Non-viral human promoter for high constitutive expression
+    - promoter: EF1_alpha
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
         chain:
-          - tag: NES
           - gene:
-              id: P60568
+              id: null
               source: uniprot
-          - tag: Twin-Strep
-    - terminator: hGH_polyA # Non-viral human polyadenylation signal
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NES
+          - cleavage_site: 2A
+          - tag: 8xHis
+
+    - terminator: rrnB_T1

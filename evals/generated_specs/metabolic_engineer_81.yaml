@@ -1,17 +1,24 @@
 construct:
-  name: "metabolic_pathway_operon_G1234"
-  host: e_coli_bl21_de3
+  name: metabolic_pathway_operon_G1G2G3G4
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
         label: G1
-        expression: medium
+        expression: high
         gene:
           id: G1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: G2
         expression: high
@@ -19,15 +26,21 @@ construct:
         gene:
           id: G2
           source: uniprot
-    - spacer: 30
+        # RBS strength: strong (BBa_B0034 equivalent) for 2x relative expression
+
+    - spacer: 25
+
     - cistron:
         label: G3
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: G3
           source: uniprot
-    - spacer: 30
+        # RBS strength: weak (BBa_B0030 equivalent) for 1x relative expression
+
+    - spacer: 25
+
     - cistron:
         label: G4
         expression: high
@@ -35,4 +48,6 @@ construct:
         gene:
           id: G4
           source: uniprot
-    - terminator: BBa_B0015
+        # RBS strength: very strong (BBa_B0064 equivalent) for 3x relative expression
+
+    - terminator: rrnB_T1

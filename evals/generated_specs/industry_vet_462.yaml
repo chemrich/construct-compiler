@@ -1,23 +1,44 @@
 construct:
-  name: "mammalian_ires_polycistronic_expression"
+  name: "dual_protein_AAV_IRES"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: "pAAV-CMV"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_a
+        label: ProteinA
         expression: high
-        gene:
-          id: ProteinA
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinA
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: protein_b
+        label: IRES
         expression: high
         fused: false
         gene:
-          id: ProteinB
+          id: IRES_EMCV
           source: uniprot
-    - terminator: bGH_PA
+
+    - spacer: 25
+
+    - cistron:
+        label: ProteinB
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinB
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,23 +1,69 @@
 construct:
-  name: "spatial_patterning_logic_circuit"
+  name: spatial_patterning_logic_circuit
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV # Substituted as a placeholder for a Signal X-inducible, Signal Y-repressible hybrid promoter
+    - promoter: CMV
+
+    - cistron:
+        label: receptor_X
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: CXCR4
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: receptor_Y
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: CCR7
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: NOT_gate_X_Y
+        expression: high
+        chain:
+          - gene:
+              id: KRAB
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: reporter_A
-        expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: bGH_PA
-    - promoter: EF1_alpha # Substituted as a placeholder for a Signal Y-inducible, Signal X-repressible hybrid promoter
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 25
+
     - cistron:
         label: reporter_B
-        expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: bGH_PA
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  # Logic specification (YAML comment):
+  # Reporter A activation: X signal → CXCR4 activation → mCherry expression (blocked by KRAB if Y present)
+  # Reporter B activation: Y signal → CCR7 activation → mNeonGreen expression (blocked by KRAB if X present)
+  # KRAB is co-expressed with both receptors and acts as a repressor when both signals are active
+  # Circuit requires external regulatory elements (promoter variants with signal-responsive elements) for full functionality

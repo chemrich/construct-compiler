@@ -1,20 +1,26 @@
 construct:
-  name: "nonviral_inducible_secreted_scFv"
+  name: inducible_secreted_antibody_fragment
   host: HEK293
+
   backbone:
-    # Kanamycin resistance included for E. coli production; the schema requires a resistance field despite the "no antibiotic" request.
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
     ori: pUC
-    source: custom
+    # Note: antibiotic resistance removed per requirements; mammalian selection uses other methods (e.g., metabolic selection)
+
   cassette:
-    - promoter: EF1_alpha_TetO # Inducible, non-viral human promoter system
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_scFv
+        label: antibody_fragment
         expression: high
         chain:
-          - tag: IgK_leader # Mammalian secretion signal peptide
+          - signal_peptide: IgG_leader  # N-terminal secretion signal for mammalian secretion
           - gene:
-              id: P01857
+              id: scFv
               source: uniprot
-          - tag: Twin-Strep # C-terminal purification tag
-    - terminator: bGH_pA # Non-viral bovine growth hormone polyadenylation signal
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: Twin-Strep
+
+    - terminator: WPRE  # Woodchuck Post-transcriptional Regulatory Element for mammalian expression

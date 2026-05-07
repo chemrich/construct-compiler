@@ -1,18 +1,26 @@
 construct:
-  name: "fungal_cellulase_secretion_system"
-  host: e_coli_bl21_de3
+  name: "E_coli_cellulase_secretion_purification"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: secreted_cellulase
+        label: cellulase
         expression: high
         chain:
-          - tag: PelB
           - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: P07981
+              id: Cel7A
               source: uniprot
-    - terminator: T7term
+              # Fungal cellulase (e.g., Trichoderma reesei Cel7A, commonly used for heterologous expression)
+
+    - terminator: rrnB_T1

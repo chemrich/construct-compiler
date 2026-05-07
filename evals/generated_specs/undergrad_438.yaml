@@ -1,22 +1,30 @@
 construct:
-  name: "mammalian_dual_promoter_fret_mCerulean_mVenus"
+  name: "FRET_CFP_YFP_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: donor_cfp
+        label: CFP
         expression: high
         gene:
           id: mCerulean
           source: fpbase
-    - terminator: bGH_pA
+
+    - terminator: WPRE
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: acceptor_yfp
+        label: YFP
         expression: high
         gene:
           id: mVenus
           source: fpbase
-    - terminator: SV40_pA
+
+    - terminator: WPRE

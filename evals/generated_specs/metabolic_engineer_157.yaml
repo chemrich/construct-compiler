@@ -1,47 +1,60 @@
 construct:
-  name: broad_host_acetate_pathway_chaperone_operon
-  host: e_coli  # Defaulting to e_coli; elements chosen for broad-host-range compatibility
+  name: five_enzyme_pathway_operon
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: SC101  # Low-copy, stable replication origin for non-model strains
+    ori: p15A
+    source: addgene
+
   cassette:
-    - promoter: J23106  # Anderson promoter for constitutive moderate expression across various bacteria
+    - promoter: araBAD
+
     - cistron:
-        label: acsA
+        label: AcsA
         expression: medium
         gene:
-          id: P0A6Q3
+          id: AcsA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: pta
-        expression: medium
-        fused: false
-        gene:
-          id: P0A9M8
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: ackA
+        label: Pta
         expression: medium
         fused: false
         gene:
-          id: P0AAD6
+          id: Pta
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: dnaK
+        label: AckA
         expression: medium
         fused: false
         gene:
-          id: P0A6Y8
+          id: AckA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: grpE
+        label: DnaK
         expression: medium
         fused: false
         gene:
-          id: P0AGB1
+          id: DnaK
           source: uniprot
-    - terminator: BBa_B0015  # Reliable double terminator for bacterial hosts
+
+    - spacer: 25
+
+    - cistron:
+        label: GrpE
+        expression: medium
+        fused: false
+        gene:
+          id: GrpE
+          source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,20 +1,63 @@
 construct:
-  name: "dual_compartment_localization_HEK293"
+  name: dual_compartment_targeting_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: dual_targeted_reporter
+        label: mitochondrial_targeted
         expression: high
         chain:
-          - tag: MTS_human_COX4
-          - tag: PTS2_rat_thiolase
+          - tag: FLAG
+          - cleavage_site: 3C
+          - gene:
+              id: COX8A_MTS
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: SV40_polyA
+
+    - spacer: 30
+
+    - cistron:
+        label: peroxisomal_targeted
+        expression: high
+        chain:
+          - tag: HA
+          - cleavage_site: TEV
+          - gene:
+              id: PTS1_SKL
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - spacer: 40
+
+    - cistron:
+        label: control_nuclear_localization
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: NLS
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1

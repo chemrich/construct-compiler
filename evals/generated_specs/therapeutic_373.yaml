@@ -1,21 +1,49 @@
 construct:
-  name: "exosome_targeted_il10_therapeutic"
+  name: exosome_targeted_therapeutic_protein
   host: HEK293
+
   backbone:
-    resistance: none # Specified as free of antibiotic resistance genes for therapeutic safety
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector without antibiotic resistance
+    resistance: none
     ori: pUC
-    source: custom
+
   cassette:
-    - promoter: EF1_alpha # Constitutive human promoter, selected for non-viral origin and stability
+    - promoter: CMV
+      # Constitutive mammalian promoter for stable expression
+
     - cistron:
-        label: therapeutic_cargo
+        label: therapeutic_protein
         expression: high
         chain:
-          - tag: CD63 # Standard exosome-targeting scaffold protein
+          - tag: NLS
+            # Nuclear localization signal for efficient protein synthesis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
+          - solubility_tag: SUMO
+            # Enhanced solubility and expression in mammalian cells
+          - cleavage_site: 3C
+            # Protease cleavage for tag removal if needed
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: IL10
+              id: exosome_targeting_peptide_fused_payload
               source: uniprot
-    - terminator: bGH_pA # Standard mammalian polyadenylation signal and terminator
+              # Note: This represents a fusion of an exosome-targeting peptide (e.g., C1C2, CD63-binding, or HSP90 signal) with the therapeutic cargo
+
+    - spacer: 25
+
+    - cistron:
+        label: exosome_marker
+        expression: medium
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: CD63
+              source: uniprot
+              # CD63 is a native exosomal tetraspanin; co-expression aids in exosome loading confirmation
+
+    - terminator: rrnB_T1

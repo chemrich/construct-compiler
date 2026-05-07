@@ -1,14 +1,19 @@
 construct:
-  name: "hek293_tet_on_gfp"
+  name: "HEK293_Dox_inducible_GFP"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTRE3G"
+
   cassette:
-    - promoter: TRE3G  # Standard Tet-Responsive Element (TRE) for Tet-On systems
+    - promoter: TRE3G  # Tet-responsive element for Dox-inducible expression
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: SV40_polyA

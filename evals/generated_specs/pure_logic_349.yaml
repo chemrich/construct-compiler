@@ -1,22 +1,61 @@
 construct:
   name: mammalian_2bit_state_machine
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: bit_0_reporter
+        label: state_register_Q0
         expression: high
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: BBa_B0015
-    - promoter: EF1_alpha
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
     - cistron:
-        label: bit_1_reporter
+        label: state_register_Q1
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        fused: false
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: clock_input_sensor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: rtTA
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: reset_input_sensor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: tTA
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # State definitions (comment-based documentation):
+  # State 00: Q0=OFF (no mNeonGreen), Q1=OFF (no mCherry) — basal state
+  # State 01: Q0=ON (mNeonGreen+), Q1=OFF — after 1st clock pulse
+  # State 10: Q0=OFF, Q1=ON (mCherry+) — after 2nd clock pulse
+  # State 11: Q0=ON (mNeonGreen+), Q1=ON (mCherry+) — after 3rd clock pulse
+  # Reset: Clock_Input trigger with doxycycline returns both Q0 and Q1 to OFF (00)
+  # Mechanism: rtTA (clock sensor) and tTA (reset sensor) act as input transducers
+  # to control state-specific promoters driving each fluorescent output.

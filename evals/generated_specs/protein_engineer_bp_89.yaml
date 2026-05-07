@@ -1,30 +1,46 @@
 construct:
-  name: "p43_3enzyme_pathway_bacillus"
+  name: "B_subtilis_3enzyme_pathway"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
-        label: enzyme_a
+        label: enzyme_A
+        expression: high
+        rbs: RBS_optimized_Bsubtilis_v1
+        chain:
+          - gene:
+              id: GeneA
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_B
         expression: high
         fused: false
-        gene:
-          id: GeneA
-    - spacer: 30
+        rbs: RBS_optimized_Bsubtilis_v2
+        chain:
+          - gene:
+              id: GeneB
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_b
+        label: enzyme_C
         expression: high
         fused: false
-        gene:
-          id: GeneB
-    - spacer: 30
-    - cistron:
-        label: enzyme_c
-        expression: high
-        fused: false
-        gene:
-          id: GeneC
+        rbs: RBS_optimized_Bsubtilis_v3
+        chain:
+          - gene:
+              id: GeneC
+              source: uniprot
+
     - terminator: rrnB_T1

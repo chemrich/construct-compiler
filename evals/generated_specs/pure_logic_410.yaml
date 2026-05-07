@@ -1,16 +1,36 @@
 construct:
-  name: "analog_to_digital_converter"
+  name: "analog_digital_converter_biosensor"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Utilizes the AraC-arabinose system, which exhibits digital (all-or-none) behavior in E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: digital_output
+        label: sensor_protein
         expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: TetR
+              source: uniprot
+        # TetR is a repressor with high cooperativity (Hill coefficient ~1.7)
+        # Binds DNA with sharp threshold behavior
+
+    - spacer: 30
+
+    - cistron:
+        label: output
+        expression: high
+        fused: false
+        # Fluorescent output controlled by TetR-responsive promoter
+        # When ligand (e.g., tetracycline analog) binds TetR with cooperativity,
+        # sharp derepression occurs, producing HIGH fluorescence above threshold
         gene:
-          id: sfGFP
+          id: mNeonGreen
           source: fpbase
+
     - terminator: rrnB_T1

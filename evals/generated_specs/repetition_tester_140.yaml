@@ -1,24 +1,35 @@
 construct:
-  name: dual_proteinx_recombination_resistant_expression
+  name: "dual_ProteinX_distinct_promoters_terminators"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: J23100
+    
     - cistron:
-        label: proteinx_copy_1
+        label: ProteinX_v1
         expression: high
-        gene:
-          id: ProteinX
-          source: uniprot
+        chain:
+          - gene:
+              id: ProteinX
+              source: uniprot
+    
     - terminator: rrnB_T1
+    
+    - spacer: 50
+    
     - promoter: J23106
+    
     - cistron:
-        label: proteinx_copy_2
+        label: ProteinX_v2
         expression: high
-        gene:
-          id: ProteinX
-          source: uniprot
+        chain:
+          - gene:
+              id: ProteinX
+              source: uniprot
+    
     - terminator: BBa_B0015

@@ -1,12 +1,20 @@
 construct:
-  name: "shRNA_knockdown_target_K"
+  name: shRNA_knockdown_gene_K
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: U6  # U6 is the standard Pol III promoter for shRNA expression in mammalian cells
+    - promoter: U6
+
     - cistron:
-        label: shRNA_expression
-        gene:
-          id: shRNA_target_K
-    - terminator: BGH_polyA
+        label: shRNA_K
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_gene_K
+              source: custom
+              sequence: "GCTAGCTAGCTGCTGTAGCTAGCTAGC"
+
+    - terminator: BBa_B0015

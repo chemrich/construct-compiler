@@ -1,25 +1,35 @@
 construct:
-  name: "protein_a_b_coexpression"
-  host: e_coli
+  name: "dual_protein_expression_AB"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Substituted mammalian constitutive promoter with strong bacterial constitutive promoter J23100
+    - promoter: T7lac
+      # Note: IRES sequences are not functional in E. coli prokaryotic translation.
+      # Substituting with a standard RBS spacer between cistrons for proper polycistronic expression.
+      # For true dual independent translation in E. coli, each cistron gets its own RBS via the spacer element.
+
     - cistron:
-        label: protein_a
+        label: Protein_A
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: Protein_A
+              id: ProtA
               source: uniprot
-    - spacer: 30  # Substituted mammalian IRES with a 30bp spacer; IRES sequences do not function in E. coli for translation initiation
+
+    - spacer: 30
+
     - cistron:
-        label: protein_b
+        label: Protein_B
         expression: high
         fused: false
         gene:
-          id: Protein_B
+          id: ProtB
           source: uniprot
+
     - terminator: rrnB_T1

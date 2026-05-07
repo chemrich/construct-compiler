@@ -1,25 +1,33 @@
 construct:
-  name: yeast_gal_inducible_mysterygene_mcherry_reporter
+  name: "yeast_galactose_inducible_red_marker"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: inducible_mystery_gene
+        label: MysteryGene
         expression: high
         gene:
           id: MysteryGene
           source: uniprot
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: TDH3
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: ADH1
+
     - cistron:
-        label: constitutive_reporter
-        expression: medium
+        label: red_marker
+        expression: high
         gene:
           id: mCherry
           source: fpbase
-    - terminator: ADH1_term
+
+    - terminator: rrnB_T1

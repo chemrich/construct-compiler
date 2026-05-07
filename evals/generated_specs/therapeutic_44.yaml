@@ -1,28 +1,28 @@
-```yaml
 construct:
-  name: gene_editing_enzyme_GFP_NLS
+  name: "GFP_gene_editor_NLS_HEK293"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector; no resistance marker per user request
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: gene_editor
+        label: GFP_editor_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: EGFP
+              id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: P9WQL1  # Cas9 from Streptococcus pyogenes
+              id: Cas9
               source: uniprot
           - tag: NLS
 
-    - terminator: SV40_polyA
-```
+    - terminator: rrnB_T1

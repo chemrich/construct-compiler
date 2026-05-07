@@ -1,16 +1,22 @@
 construct:
-  name: "his_tagged_protein_p"
-  host: e_coli_bl21_de3
+  name: "His_tagged_protein_P"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: protein_P
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P
+              id: protein_P
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

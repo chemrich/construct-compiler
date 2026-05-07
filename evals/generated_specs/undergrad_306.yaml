@@ -1,23 +1,30 @@
 construct:
-  name: "effector_tev_gfp_fusion"
+  name: "effector_GFP_fusion_TEV_cleavable"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: fusion_protein
+        label: effector_GFP
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: effector
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

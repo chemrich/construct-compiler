@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: "mRNA_therapeutic_IVT_construct"
+  name: "mRNA_therapeutic_high_expression"
   host: in_vitro
 
   backbone:
@@ -9,14 +8,26 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: T7  # For in vitro transcription
+    - promoter: T7
+
+    - cistron:
+        label: utron_5prime
+        expression: high
+        chain:
+          - element: Kozak_consensus
+          - element: IRES_EMCV
 
     - cistron:
         label: therapeutic_protein
         expression: high
-        gene:
-          id: P01308  # Human insulin as example therapeutic
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: therapeutic_target
+              source: uniprot
+
+    - element: poly_A_tail_extended
+      length: 200
 
     - terminator: T7term
-```

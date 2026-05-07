@@ -1,18 +1,23 @@
 construct:
-  name: "nattokinase_industrial_production"
+  name: "nattokinase_industrial_bacillus"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110
+    resistance: chloramphenicol
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
         label: nattokinase
         expression: high
         chain:
-          - tag: SacB  # Bacillus secretion signal
+          - secretion_signal: AmyE
           - gene:
-              id: P35835
+              id: nattokinase
               source: uniprot
+              # Note: sequence assumed codon-optimized for B. subtilis during compilation
+
     - terminator: rrnB_T1

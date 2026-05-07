@@ -1,32 +1,57 @@
 construct:
-  name: "bistable_memory_toggle_switch"
-  host: e_coli
+  name: stable_memory_circuit_latch
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: PLtetO-1  # Repressed by TetR; derepressed by InputEvent (e.g., aTc)
+    - promoter: T7lac
+    
     - cistron:
-        label: state_repressor_lacI
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
+        label: set_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: CI
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: MemoryOutput
+        label: reset_recombinase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Cre
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: memory_switch
+        expression: medium
+        chain:
+          - gene:
+              id: loxP_flanked_promoter
+              source: addgene
+    
+    - spacer: 30
+    
+    - cistron:
+        label: memory_output
         expression: high
         fused: false
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    
     - terminator: rrnB_T1
-    - promoter: Ptrc-1    # Repressed by LacI; derepressed by ClearSignal (e.g., IPTG)
-    - cistron:
-        label: state_repressor_tetR
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: BBa_B0015

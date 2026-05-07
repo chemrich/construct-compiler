@@ -1,28 +1,50 @@
 construct:
-  name: "blue_light_repressed_secretion"
+  name: light_gated_repressor_Output_Z
   host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: J23100  # Constitutive promoter for the light-sensitive transcription factor
+    - promoter: T7lac
+    
     - cistron:
-        label: sensor
-        expression: medium
-        gene:
-          id: EL222
-          source: uniprot
-    - spacer: 35
-    - promoter: pEL222_repressed  # Custom promoter designed to be repressed when EL222 binds in the presence of blue light
-    - cistron:
-        label: target
+        label: blue_light_sensor
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: YtvA
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: output_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: Output_Z
+        expression: medium
         fused: false
         chain:
-          - tag: pelB  # N-terminal secretion signal for E. coli periplasmic export
+          - tag: 6xHis
           - solubility_tag: MBP
+          - cleavage_site: TEV
+          # Secretion signal for E. coli: Pel B signal peptide context
           - gene:
-              id: Output_Z
+              id: Output_Z_secreted
               source: uniprot
+    
     - terminator: rrnB_T1

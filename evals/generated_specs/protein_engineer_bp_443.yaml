@@ -1,26 +1,32 @@
 construct:
-  name: "bacillus_amylase_groes_operon"
+  name: "Bacillus_amylase_GroES_bicistronic"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: secreted_amylase
+        label: amylase
         expression: high
         chain:
-          - tag: AprE
+          - signal_peptide: AprE
           - gene:
               id: amyE
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: chaperone
+        label: GroES
         expression: high
         fused: false
         gene:
-          id: groS
+          id: groES
           source: uniprot
+
     - terminator: rrnB_T1

@@ -1,20 +1,24 @@
 construct:
-  name: "bacillus_pxyl_nanobody_secretion"
+  name: "bacillus_inducible_secreted_nanobody"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: secreted_nanobody
-        expression: high
+        label: nanobody
+        expression: medium
         chain:
-          - tag: SacB  # Bacillus secretion signal peptide
           - tag: Strep-II
           - cleavage_site: TEV
           - gene:
-              id: VHH
+              id: nanobody
               source: uniprot
+        secretion_signal: SacB
+
     - terminator: rrnB_T1

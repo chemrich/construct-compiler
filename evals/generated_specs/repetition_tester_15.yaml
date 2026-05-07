@@ -1,25 +1,44 @@
 construct:
-  name: divergent_rna_aptamer_expression
+  name: "custom_RNA_aptamer_expression_vector"
   host: e_coli_bl21_de3
-  
+
   backbone:
-    resistance: chloramphenicol  # divergent from common kanamycin vectors
-    ori: p15A  # low-copy, divergent from pBR322
+    resistance: kanamycin
+    ori: p15A
     source: addgene
-  
+    # p15A chosen for low copy number to minimize recombination pressure
+
   cassette:
-    - promoter: araBAD  # tight regulation, divergent from T7 systems
-    
+    - promoter: T7
+
     - cistron:
-        label: aptamer_rna
-        expression: medium
+        label: aptamer_expression
+        expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: Factor_Xa  # divergent from common TEV sites
+          - cleavage_site: TEV
           - gene:
-              # Custom aptamer scaffold with divergent flanking sequences
-              id: ATGGGCAACGTGCTGAAACAGATCACCAATCTGTTGGCGCAGTTCGGTGCGGAAATCGCC
-              # Encodes structured aptamer with non-canonical flanking regions
-              # avoiding homology to common vector elements
-    
-    - terminator: BBa_B0015  # strong bidirectional terminator for RNA stability
+              id: custom_RNA_aptamer
+              source: custom
+              # Custom aptamer with user-defined sequence
+              # Flanking constant regions must be designed de novo
+              # with maximal divergence from:
+              # - T7 promoter-derived sequences
+              # - Vector backbone repeats
+              # - Standard aptamer libraries (SELEX, in vitro selection sets)
+              # Internal structure: specify custom secondary structure
+              # to minimize off-target base pairing with vector elements
+              note: "User must supply aptamer sequence with custom constant regions (5' UTR and 3' UTR) designed for minimal homology to backbone and standard motifs"
+
+    - spacer: 25
+
+    - cistron:
+        label: RNase_inhibitor
+        expression: medium
+        fused: false
+        gene:
+          id: rrnH
+          source: uniprot
+          # RNase H-like protein for stabilization during purification
+
+    - terminator: rrnB_T1

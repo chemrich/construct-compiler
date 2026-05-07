@@ -1,29 +1,41 @@
 construct:
-  name: "qs_receiver_isolation"
-  host: e_coli_bl21_de3
+  name: "QS_receiver_purification_module"
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100  # Constitutive promoter for the receiver protein
+    - promoter: araBAD
+
     - cistron:
-        label: luxR_receiver
-        expression: medium
-        gene:
-          id: P12746
-          source: uniprot
-    - spacer: 30
-    - promoter: tac  # Placeholder for QS-inducible promoter (e.g., Plux) activated by LuxR+AHL
+        label: QS_receptor
+        expression: high
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: lacUV5
+
     - cistron:
         label: target_protein
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
-          - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
+
     - terminator: rrnB_T1

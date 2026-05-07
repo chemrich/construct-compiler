@@ -1,22 +1,36 @@
 construct:
-  name: "therapeutic_expression_stable_cho"
+  name: "CHO_therapeutic_puromycin_selection"
   host: CHO
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: puromycin
+    ori: SC101
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_target
+        label: therapeutic
         expression: high
-        gene:
-          id: P01588
-          source: uniprot
-    - terminator: bGH_polyA
-    - promoter: SV40
+        chain:
+          - gene:
+              id: null
+              source: uniprot
+        poly_a: SV40
+
+    - spacer: 30
+
+    - promoter: CMV
+
     - cistron:
         label: puromycin_resistance
-        expression: medium
-        gene:
-          id: P08121
-          source: uniprot
-    - terminator: SV40_polyA
+        expression: high
+        chain:
+          - gene:
+              id: pac
+              source: uniprot
+        poly_a: SV40
+
+    - terminator: rrnB_T1

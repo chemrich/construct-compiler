@@ -1,12 +1,14 @@
 construct:
-  name: "yeast_subunit_A_B_assembly"
+  name: "AAV_capsid_subunits_AB_yeast"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
-    resistance: kanamycin # Defaulting to kanamycin; note that pRS426 typically uses URA3 auxotrophic selection in yeast.
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: GAL1 # High-level galactose-inducible promoter for S. cerevisiae
+    - promoter: GAL1
 
     - cistron:
         label: subunit_A
@@ -14,19 +16,29 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: subunit_A
+              id: AAV_VP1
               source: uniprot
 
-    - spacer: 30 # Required for polycistronic organization
+    - spacer: 22
+
+    - cistron:
+        label: P2A_self_cleaving
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 22
 
     - cistron:
         label: subunit_B
         expression: high
-        fused: false # User requested independent translation and a self-cleaving peptide; in this schema, independent translation (e.g., via IRES or 2A) is represented as a separate cistron.
+        fused: false
         chain:
-          - tag: Strep-II
+          - tag: 6xHis
           - gene:
-              id: subunit_B
+              id: AAV_VP3
               source: uniprot
 
-    - terminator: CYC1 # Standard yeast terminator for stable mRNA processing
+    - terminator: rrnB_T1

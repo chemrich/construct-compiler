@@ -1,25 +1,29 @@
 construct:
-  name: "aav2_vp1_yeast_surface_display"
+  name: yeast_AAV_epitope_display
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: AAV_capsid_epitope
         expression: high
         chain:
+          - tag: HA
           - gene:
-              id: AGA2
+              id: AAV2_VP3_neutralizing_epitope
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: HA
+              repeats: 1
           - gene:
-              id: P03135
+              id: agal1
               source: uniprot
-          - tag: FLAG
+
     - terminator: CYC1

@@ -1,18 +1,25 @@
 construct:
-  name: "protein_x_gst_expression"
-  host: e_coli_bl21_de3  # Substituted BL21 with BL21(DE3) to support the requested T7 promoter
+  name: "GST_ProteinX_T7lac_Cm"
+  host: e_coli_bl21
+
   backbone:
     resistance: chloramphenicol
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: GST_ProteinX
         expression: high
         chain:
-          - solubility_tag: GST
-          - cleavage_site: TEV
+          - tag: N-terminal_GST
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: protein_x
-    - terminator: T7term
+              id: ProteinX
+              source: uniprot
+
+    - terminator: rrnB_T1

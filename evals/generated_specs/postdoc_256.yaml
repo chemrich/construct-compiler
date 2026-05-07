@@ -1,15 +1,20 @@
 construct:
-  name: "biofilm_reporter_lacz"
+  name: "biofilm_reporter_lacZ"
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: csgD  # csgD promoter is a key regulator for biofilm formation induction in E. coli
+    - promoter: araBAD
+    
     - cistron:
         label: lacZ_reporter
-        expression: medium
+        expression: high
         gene:
-          id: P00722
+          id: lacZ
           source: uniprot
+    
     - terminator: rrnB_T1

@@ -1,29 +1,37 @@
 construct:
-  name: Pichia_pastoris_dual_AOX1_expression
+  name: "Pichia_pastoris_dual_AOX1_subunits"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
+    source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: subunit_A
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - gene:
               id: subunit_A
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1
+
     - promoter: AOX1
+
     - cistron:
         label: subunit_B
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - gene:
               id: subunit_B
               source: uniprot
           - tag: FLAG
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

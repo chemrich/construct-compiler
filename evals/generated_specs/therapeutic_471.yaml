@@ -1,24 +1,38 @@
 construct:
-  name: "diagnostic_bicistronic_binder_reporter"
+  name: "bicistronic_binding_reporter_assay"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: binding_domain
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: "P02976"
+              id: MBP
               source: uniprot
-    - spacer: 35  # Intergenic region for internal initiation in E. coli
+    
+    - spacer: 30
+    
+    # Note: IRES (Internal Ribosome Entry Site) inserted here for cap-independent translation
+    # In E. coli, the IRES element (e.g., from Encephalomyocarditis virus) enables the second cistron
+    # to be translated independently from the first, allowing bicistronic expression from a single promoter
     - cistron:
         label: reporter_enzyme
         expression: medium
-        fused: false  # Independent translation via internal RBS in spacer
-        gene:
-          id: "P0DIX4"
-          source: uniprot
-    - terminator: T7term
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: horseradish_peroxidase
+              source: uniprot
+    
+    - terminator: rrnB_T1

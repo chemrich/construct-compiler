@@ -1,20 +1,29 @@
 construct:
-  name: bidirectional_mammalian_expression_GeneA_GeneB
+  name: "bidirectional_GeneA_GeneB"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - terminator: SV40_polyA
+    - promoter: bidirectional_CMV
+      # Bidirectional promoter driving divergent transcription
+
     - cistron:
-        label: GeneA_rev
-        fused: false
+        label: GeneA
+        expression: high
         gene:
           id: GeneA
-    - promoter: CMV_bidirectional # Reasonable substitution: A bidirectional promoter is used to drive expression in opposite directions. In a linear spec, the upstream cistron is assumed to be in reverse orientation.
-    - spacer: 30
+          source: uniprot
+
+    - spacer: 50
+
     - cistron:
-        label: GeneB_fwd
-        fused: false
+        label: GeneB
+        expression: high
         gene:
           id: GeneB
-    - terminator: bGH_polyA
+          source: uniprot
+
+    - terminator: SV40_poly_A

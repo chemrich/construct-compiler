@@ -1,23 +1,24 @@
-```yaml
 construct:
-  name: "mammalian_secreted_fc_fusion"
+  name: mammalian_secreted_protein_Fc_fusion
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: EF1_alpha
 
     - cistron:
-        label: secreted_fc_fusion
+        label: secreted_target
         expression: high
         chain:
-          - tag: signal_peptide
+          - tag: signal_peptide_IgK  # Ig kappa signal peptide for secretion
           - gene:
               id: target_protein
               source: uniprot
-          - tag: Fc
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: Fc  # Human IgG1 Fc domain for purification and half-life extension
 
-    - terminator: rrnB_T1
-```
+    - terminator: SV40_polyA

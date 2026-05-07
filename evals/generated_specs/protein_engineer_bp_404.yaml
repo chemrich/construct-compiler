@@ -1,30 +1,35 @@
 construct:
-  name: "mab_coexpression_pichia_aox1"
+  name: "mAb_dual_chain_Pichia_pastoris"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: antibody_heavy_chain
+              id: "antibody_heavy_chain"
               source: uniprot
-    - terminator: AOX1_term
-    - spacer: 50  # Spacer between independent expression cassettes
-    - promoter: AOX1
+
+    - spacer: 50
+
     - cistron:
         label: light_chain
         expression: high
         fused: false
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: antibody_light_chain
+              id: "antibody_light_chain"
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

@@ -1,16 +1,28 @@
 construct:
-  name: "rhamnose_inducible_toxic_protein_system"
-  host: e_coli
+  name: "tight_rhamnose_toxic_protein_expr"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: rhaBAD # Rhamnose-inducible promoter for tight regulation
+    - promoter: araBAD
+      # araBAD (L-rhamnose-inducible) provides tight regulation with minimal basal expression
+      # This is tightly regulated by AraC and has no homology to typical toxic protein coding sequences
+
     - cistron:
-        label: toxin
+        label: toxic_protein
         expression: high
-        gene:
-          id: ccdB
-          source: uniprot
-    - terminator: rrnB_T1
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: VapC
+              # VapC (toxin from E. coli VapBC system) as example; user to substitute their specific toxic protein
+              source: uniprot
+
+    - terminator: BBa_B0015
+      # BBa_B0015 (double terminator) provides strong, independent termination
+      # structurally distinct from araBAD and coding sequences

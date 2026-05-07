@@ -1,24 +1,26 @@
 construct:
-  name: "tightly_controlled_toxic_mammalian_expression"
-  host: e_coli
+  name: "tight_control_mammalian_protein_arac_pbad"
+  host: e_coli_bl21
+
   backbone:
     resistance: ampicillin
-    ori: p15A # Low copy number origin for reduced basal expression and plasmid stability
+    ori: p15A
     source: addgene
+
   cassette:
-    - promoter: J23106 # Constitutive promoter for the AraC regulator
+    - promoter: araBAD
+      label: arac_pbad_system
+      regulatory_element: araC
+
     - cistron:
-        label: araC_regulator
-        expression: low
-        gene:
-          id: P0ACG8 # AraC transcriptional regulator
-          source: uniprot
-    - spacer: 45
-    - promoter: araBAD # Arabinose-inducible promoter for tight control of the toxic protein
-    - cistron:
-        label: toxic_target
-        expression: medium
-        gene:
-          id: P55957 # Human BAX (mammalian pro-apoptotic protein, often toxic in E. coli)
-          source: uniprot
+        label: toxic_mammalian_protein
+        expression: very_low
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: null
+              source: uniprot
+              # User must provide UniProt ID or sequence for their specific mammalian protein
+
     - terminator: rrnB_T1

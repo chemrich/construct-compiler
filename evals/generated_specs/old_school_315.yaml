@@ -1,35 +1,24 @@
 construct:
-  name: "tet_on_regulated_apoptosis_system"
+  name: "tet_on_apoptosis_inducer_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTRE3G"
     resistance: blasticidin
-    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TRE3G  # Substituted for CMV to enable Tet-On inducible control as requested
+    - promoter: TRE3G
+      # Tetracycline-responsive element (tet-on): requires rtTA transactivator
+      # Provides tight OFF state and dose-dependent ON with doxycycline
+
     - cistron:
         label: apoptosis_inducer
-        expression: high
-        gene:
-          id: P55269
-          source: uniprot
-    - spacer: 60
-    - promoter: CMV
-    - cistron:
-        label: rtTA_transactivator
         expression: medium
-        fused: false
-        gene:
-          id: Q06AC0
-          source: uniprot
-    - terminator: BBa_B0015
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+        chain:
+          - tag: FLAG
+          - gene:
+              id: apoptosis_inducer
+              source: uniprot
+
+    - terminator: SV40_polyA

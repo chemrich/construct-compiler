@@ -1,18 +1,39 @@
 construct:
-  name: "input_k_inducible_membrane_output_w"
-  host: e_coli
+  name: "conditional_membrane_localization_Output_W"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Inducible promoter used to represent Input_K control
+    - promoter: T7lac
+
     - cistron:
-        label: membrane_output_w
+        label: Output_W
         expression: high
         chain:
-          - tag: OmpA  # Membrane targeting signal peptide for E. coli
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: Output_W
               source: uniprot
+          # Note: In E. coli, membrane targeting typically requires the Lipobox signal peptide (SPase II substrate)
+          # or fusion to outer membrane proteins. MBP provides cytoplasmic localization; for true membrane
+          # localization, Output_W should be fused to an outer membrane protein domain or contain an N-terminal
+          # Lipobox (LXXC motif). This design assumes Output_W encodes or is fused to a membrane-anchoring domain.
+
+    - spacer: 30
+
+    - cistron:
+        label: Input_K
+        expression: medium
+        fused: false
+        gene:
+          id: Input_K
+          source: uniprot
+
     - terminator: rrnB_T1

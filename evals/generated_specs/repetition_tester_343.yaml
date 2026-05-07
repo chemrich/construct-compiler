@@ -1,41 +1,54 @@
 construct:
-  name: "tandem_repeat_5x_non_homologous"
+  name: "tandem_repeat_protein_five_copies_no_recombination"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: tandem_repeat_fusion
+        label: tandem_repeats
         expression: high
-        # To prevent recombination, the compiler must maximize DNA divergence (synonymous codons) 
-        # across all five repeat units and ensure linker DNA homology is minimized.
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P62988
+              id: repeat_unit_1_codon_opt_v1
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: P62988
-              source: uniprot
+              # Monomer unit with codon optimization variant 1
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
+              # Linker sequence 1: non-homologous (EAAAK)
           - gene:
-              id: P62988
+              id: repeat_unit_2_codon_opt_v2
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 2
-          - gene:
-              id: P62988
-              source: uniprot
+              # Monomer unit with codon optimization variant 2 (synonymous but distinct codons)
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
+              # Linker sequence 2: non-homologous (GS-based)
           - gene:
-              id: P62988
+              id: repeat_unit_3_codon_opt_v3
               source: uniprot
-    - terminator: T7term
+              # Monomer unit with codon optimization variant 3
+          - linker:
+              type: short_GS
+              repeats: 1
+              # Linker sequence 3: non-homologous (short GS)
+          - gene:
+              id: repeat_unit_4_codon_opt_v4
+              source: uniprot
+              # Monomer unit with codon optimization variant 4
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+              # Linker sequence 4: non-homologous (EAAAK variant)
+          - gene:
+              id: repeat_unit_5_codon_opt_v5
+              source: uniprot
+              # Monomer unit with codon optimization variant 5
+
+    - terminator: rrnB_T1

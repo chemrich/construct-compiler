@@ -1,33 +1,59 @@
 construct:
-  name: "Adenoviral_Helper_E1_E4_VA"
+  name: "adenovirus_helper_plasmid_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: E1A
         expression: high
-        fused: false
-        gene:
-          id: P03254
-          source: uniprot
-    - spacer: 100
-    - promoter: EF1_alpha
+        chain:
+          - tag: FLAG
+          - gene:
+              id: ADV5_E1A
+              source: uniprot
+
+    - spacer: 20
+
     - cistron:
-        label: E4orf6
+        label: E1B_55K
         expression: high
         fused: false
-        gene:
-          id: P04492
-          source: uniprot
-    - spacer: 100
-    - promoter: U6
+        chain:
+          - gene:
+              id: ADV5_E1B_55K
+              source: uniprot
+
+    - spacer: 20
+
     - cistron:
-        label: VA_RNA_I
+        label: E4_ORF6
         expression: high
         fused: false
-        gene:
-          id: K4PBB5
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: ADV5_E4_ORF6
+              source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: VA_RNA_pol3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: ADV5_VA_RNA_I
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+  # Note: This construct uses a single CMV promoter with independent translation
+  # initiation for each cistron (fused: false). For optimal co-expression in HEK293,
+  # consider using an IRES-based design or separate expression cassettes with
+  # distinct promoters (e.g., SV40, EF1-alpha) if translation efficiency is limiting.

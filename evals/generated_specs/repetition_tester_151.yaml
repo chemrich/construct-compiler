@@ -1,23 +1,35 @@
 construct:
-  name: "dual_genek_distinct_tandem_cassettes"
+  name: "GeneK_dual_cassette_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+      
     - cistron:
-        label: genek_primary
+        label: GeneK_cassette1
         expression: high
         gene:
           id: GeneK
           source: uniprot
-    - terminator: BGH_pA
-    - spacer: 60
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
     - promoter: EF1_alpha
+      # Functionally equivalent mammalian promoter, distinct from CMV
+      
     - cistron:
-        label: genek_secondary_synonymous
+        label: GeneK_cassette2
         expression: high
         gene:
-          id: GeneK
+          id: GeneK_synonymous_codon_optimized
+          # Synonymous recoding: same protein, distinct DNA sequence
           source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: BBa_B0015
+      # Functionally equivalent terminator, distinct from rrnB_T1

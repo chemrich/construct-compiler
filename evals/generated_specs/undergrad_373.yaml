@@ -1,18 +1,23 @@
 construct:
-  name: "FastDegradeProtein_Auxin_Inducible_Yeast"
+  name: FastDegradeProtein_auxin_degron_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: MET3
+
     - cistron:
         label: target
-        expression: medium
+        expression: high
         chain:
-          - tag: AID
+          - tag: 6xHis
           - gene:
               id: FastDegradeProtein
               source: uniprot
-    - terminator: CYC1_term
+          - degron: auxin_inducible
+
+    - terminator: rrnB_T1

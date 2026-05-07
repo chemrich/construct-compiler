@@ -1,14 +1,20 @@
 construct:
-  name: "yeast_galactose_inducible_expression"
+  name: "yeast_galactose_inducible_YeastProtein"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS416" # Common S. cerevisiae centromere vector with URA3 selection marker
+    resistance: G418  # geneticin, standard selection marker for S. cerevisiae
+    ori: 2_micron    # 2_micron plasmid origin for S. cerevisiae
+    source: addgene
+
   cassette:
-    - promoter: GAL1 # Standard yeast galactose-inducible promoter
+    - promoter: GAL1  # galactose-inducible promoter in S. cerevisiae
+
     - cistron:
-        label: target
+        label: YeastProtein
         expression: high
         gene:
           id: YeastProtein
           source: uniprot
-    - terminator: CYC1 # Standard yeast transcriptional terminator
+
+    - terminator: CYC1  # CYC1 terminator, standard for yeast

@@ -1,50 +1,62 @@
 construct:
-  name: "periplasmic_metabolic_operon_m1_m5"
-  host: e_coli_bl21_de3
+  name: "five_enzyme_periplasmic_operon"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enzyme_m1
+        label: M1
         expression: high
         chain:
-          - tag: pelB  # Signal peptide for periplasmic secretion in E. coli
+          - signal_peptide: pelB
           - gene:
               id: M1
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_m2
+        label: M2
         expression: high
         fused: false
         gene:
           id: M2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_m3
+        label: M3
         expression: high
         fused: false
         gene:
           id: M3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_m4
+        label: M4
         expression: high
         fused: false
         gene:
           id: M4
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_m5
+        label: M5
         expression: high
         fused: false
         gene:
           id: M5
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

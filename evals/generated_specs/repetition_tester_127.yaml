@@ -1,23 +1,33 @@
 construct:
-  name: "araBAD_mEGFP_Target_Fusion"
-  host: e_coli_bl21
+  name: "FluorescentProtein_Green_TargetProtein_fusion_ecoli"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
         label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: rigid_EAAAK
+              repeats: 3
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: FluorescentProtein_Green
+              source: uniprot
+              codon_optimization: e_coli_synonymous_diversity
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 1
           - gene:
-              id: P01112
+              id: TargetProtein
               source: uniprot
+
     - terminator: rrnB_T1

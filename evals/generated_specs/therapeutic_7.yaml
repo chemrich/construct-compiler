@@ -1,31 +1,34 @@
-```yaml
 construct:
-  name: PROTAC_fusion_degradation_system
+  name: "PROTAC_fusion_degradation_system"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
 
     - cistron:
         label: PROTAC_fusion
-        expression: medium
+        expression: high
         chain:
-          - gene:
-              id: P14317  # VHL E3 ligase binding domain (VHL substrate recognition)
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 4
-          - gene:
-              id: P42336  # PI3K p110 alpha (example target-binding domain)
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
           - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: VHL
+              source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: CRBN
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
 
     - terminator: rrnB_T1
-```

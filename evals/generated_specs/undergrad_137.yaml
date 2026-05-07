@@ -1,18 +1,24 @@
 construct:
-  name: fusion_protein_P_O
-  host: e_coli_bl21_de3
+  name: "Protein_P_O_fusion"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target_fusion
+        label: P_O_fusion
         expression: high
         chain:
           - gene:
-              id: Protein_P
+              id: proteinP
               source: uniprot
           - gene:
-              id: Protein_O
+              id: proteinO
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

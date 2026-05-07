@@ -1,20 +1,34 @@
 construct:
-  name: "ProteinC_ProteinD_2A_coexpression"
-  host: mammalian
+  name: "mammalian_dual_protein_2A"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: coexpression_payload
+        label: ProteinC
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: ProteinC
               source: uniprot
-          - linker:
-              type: P2A
+
+    # 2A peptide for ribosomal skipping (efficient stoichiometric co-expression)
+    - spacer: 51  # ~17 aa for standard P2A sequence
+
+    - cistron:
+        label: ProteinD
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
           - gene:
               id: ProteinD
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

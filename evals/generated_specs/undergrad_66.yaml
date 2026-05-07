@@ -1,12 +1,17 @@
 construct:
-  name: "protein_w_n_flag_tev"
-  host: e_coli_bl21_de3
+  name: "ProteinW_Flag_TEV"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: ProteinW
         expression: high
         chain:
           - tag: FLAG
@@ -14,4 +19,5 @@ construct:
           - gene:
               id: ProteinW
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

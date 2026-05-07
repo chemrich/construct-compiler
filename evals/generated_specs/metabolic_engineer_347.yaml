@@ -1,48 +1,75 @@
 construct:
-  name: "biofuel_precursor_operon"
+  name: "biofuel_precursor_five_enzyme_operon"
   host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: pdc
+        label: PDC
         expression: high
-        gene:
-          id: "P06672"
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: PDC
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: adh
-        expression: high
-        fused: false
-        gene:
-          id: "P06121"
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: thap
+        label: ADH
         expression: high
         fused: false
-        gene:
-          id: "P45359"
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ADH
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: chat
+        label: THAP
         expression: high
         fused: false
-        gene:
-          id: "P28329"
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: THAP
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: pks
+        label: CHAT
         expression: high
         fused: false
-        gene:
-          id: "Q04869"
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: CHAT
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: PKS
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: PKS
+              source: uniprot
+
+    - terminator: rrnB_T1

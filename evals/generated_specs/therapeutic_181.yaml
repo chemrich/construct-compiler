@@ -1,19 +1,27 @@
 construct:
-  name: "non_viral_car_t_therapeutic"
-  host: mammalian
+  name: mammalian_CAR_constitutive_expression
+  host: HEK293
+
   backbone:
-    resistance: none # Antibiotic resistance markers are excluded per therapeutic safety requirements to prevent horizontal gene transfer
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+    resistance: null
+    ori: null
+    source: addgene
 
   cassette:
-    - promoter: EF1_alpha # Robust, constitutive mammalian promoter; substituted for CMV to avoid viral sequences
+    - promoter: EF1_alpha
 
     - cistron:
-        label: "car_fusion_protein"
+        label: CAR
         expression: high
-        gene:
-          id: P20963 # CD247 (CD3-zeta signaling domain), a core component of Chimeric Antigen Receptors
-          source: uniprot
+        chain:
+          - tag: HA
+          - gene:
+              id: CAR_scFv_CD8_CD3zeta_4_1BB
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NLS
 
-    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal; robust non-viral termination signal
+    - polyadenylation: WPRE_polyA

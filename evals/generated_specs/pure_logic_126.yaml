@@ -1,21 +1,55 @@
 construct:
-  name: "mammalian_conditional_secretion_and_gate"
+  name: mammalian_AND_logic_secretion_system
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV # Substituted for a synthetic logic-gated promoter responsive to Input_X AND Input_Y
+    - promoter: CMV
+
     - cistron:
-        label: effector_cistron
+        label: input_X_receptor
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: FLAG
           - gene:
-              id: P01241
+              id: NFAT1
+              source: uniprot
+
+    - terminator: WPRE
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: input_Y_receptor
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: GATA4
+              source: uniprot
+
+    - terminator: WPRE
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: AND_logic_output
+        expression: medium
+        chain:
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - signal_peptide: alpha_factor_secretion
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: IL2
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - cleavage_site: TEV
-          - tag: 6xHis
-    - terminator: SV40_polyA
+              repeats: 1
+          - tag: StrepII
+
+    - terminator: WPRE

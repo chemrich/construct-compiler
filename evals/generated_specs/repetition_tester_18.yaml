@@ -1,38 +1,51 @@
-```yaml
 construct:
-  name: yeast_genomic_integration_cassette
+  name: yeast_integration_cassette_homology_arms
   host: yeast
 
   backbone:
-    resistance: ampicillin
-    ori: pUC
-    source: custom
+    resistance: G418
+    ori: null
+    source: homology_arm_integration
 
   cassette:
-    - promoter: TEF1
-    
+    - homology_arm:
+        label: upstream_homology
+        length: 500
+        orientation: forward
+        codon_optimization: maximal_degeneracy
+        repeat_check: cryptic_repeats_screened
+
+    - promoter: GAL1
+
     - cistron:
         label: selection_marker
-        expression: medium
+        expression: high
         gene:
-          id: HIS3
+          id: kanMX
           source: uniprot
-    
-    - terminator: CYC1_term
-    
+
+    - terminator: ADH1_terminator
+
     - spacer: 50
-    
-    - promoter: GAL1
-    
+
+    - promoter: ADH2
+
     - cistron:
-        label: target_gene
+        label: gene_of_interest
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-            # Replace with actual target gene
-            id: GFP
-            source: fpbase
-    
-    - terminator: ADH1_term
-```
+              id: GFP
+              source: fpbase
+
+    - terminator: CYC1_terminator
+
+    - spacer: 50
+
+    - homology_arm:
+        label: downstream_homology
+        length: 500
+        orientation: forward
+        codon_optimization: maximal_degeneracy
+        repeat_check: cryptic_repeats_screened

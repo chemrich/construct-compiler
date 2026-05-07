@@ -1,15 +1,21 @@
 construct:
-  name: "heat_shock_chaperonin_k_production"
+  name: heat_shock_inducible_chaperonin_K
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: P_groE  # Heat-shock inducible promoter recognized by sigma-32
+    - promoter: araBAD
+
     - cistron:
-        label: chaperonin_k
+        label: chaperonin_K
         expression: high
-        gene:
-          id: Q8TUQ2
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: groEL
+              source: uniprot
+
     - terminator: rrnB_T1

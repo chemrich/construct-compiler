@@ -1,17 +1,22 @@
 construct:
-  name: "AAVR_HEK293_Expression_System"
+  name: "mammalian_AAV_receptor_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: AAVR_target
+        label: AAV_receptor
         expression: high
         chain:
           - tag: FLAG
-          - cleavage_site: 3C
+          - cleavage_site: TEV
           - gene:
-              id: Q8IZA0  # UniProt ID for KIAA0319L (AAV Receptor)
+              id: AAVR
               source: uniprot
-    - terminator: SV40_polyA  # Using mammalian polyA signal for proper processing in HEK293
+          - tag: 8xHis
+
+    - terminator: rrnB_T1

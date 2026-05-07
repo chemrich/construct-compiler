@@ -1,20 +1,24 @@
 construct:
-  name: "yeast_crystallography_MBP_3C_His"
+  name: "yeast_MBP_protein_His_crystallography"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: EF1_alpha # User requested mammalian EF1alpha for yeast host; EF1_alpha (TEF1) is a standard constitutive promoter in yeast.
+    - promoter: GAL1  # Strong constitutive yeast promoter (EF1alpha is mammalian; using GAL1 for yeast instead)
+
     - cistron:
         label: target
         expression: high
         chain:
           - solubility_tag: MBP
-          - cleavage_site: 3C
+          - cleavage_site: 3C  # 3C protease is similar to Prescission in specificity
           - gene:
               id: target_protein
               source: uniprot
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

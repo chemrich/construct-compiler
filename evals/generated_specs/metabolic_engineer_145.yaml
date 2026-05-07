@@ -1,45 +1,88 @@
 construct:
-  name: "aromatic_biosynthesis_operon_fusion"
+  name: "aromatic_biosynthesis_operon_Ea_Ef"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enzyme_fusion_assembly
+        label: Ea
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: Ea
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+    
+    - linker:
+        type: GS_flexible
+        repeats: 2
+    
+    - cistron:
+        label: Eb
+        expression: high
+        fused: true
+        chain:
           - gene:
               id: Eb
               source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 2
+    
+    - linker:
+        type: rigid_EAAAK
+        repeats: 1
+    
+    - cistron:
+        label: Ec
+        expression: high
+        fused: true
+        chain:
           - gene:
               id: Ec
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 2
+    
+    - linker:
+        type: GS_flexible
+        repeats: 2
+    
+    - cistron:
+        label: Ed
+        expression: high
+        fused: true
+        chain:
           - gene:
               id: Ed
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
+    
+    - linker:
+        type: rigid_EAAAK
+        repeats: 1
+    
+    - cistron:
+        label: Ee
+        expression: high
+        fused: true
+        chain:
           - gene:
               id: Ee
               source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 3
+    
+    - linker:
+        type: GS_flexible
+        repeats: 2
+    
+    - cistron:
+        label: Ef
+        expression: high
+        fused: true
+        chain:
           - gene:
               id: Ef
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

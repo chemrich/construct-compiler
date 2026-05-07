@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_amyE_sfgfp_6xhis"
+  name: "bacillus_secreted_gfp_amyE_his"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: target
+        label: secreted_gfp
         expression: high
         chain:
-          - tag: AmyE
+          - signal_peptide: AmyE
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: gfp_codon_optimized
+              source: uniprot
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

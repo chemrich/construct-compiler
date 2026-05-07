@@ -1,22 +1,33 @@
 construct:
-  name: "dual_expression_p_q"
+  name: "dual_protein_production_P_Q"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_p
+        label: protein_P
         expression: high
-        gene:
-          id: P
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
     - cistron:
-        label: protein_q
+        label: protein_Q
         expression: high
-        fused: false
-        gene:
-          id: Q
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q
+              source: uniprot
+
+    - terminator: rrnB_T1

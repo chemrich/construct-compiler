@@ -1,29 +1,50 @@
 construct:
-  name: yeast_two_hybrid_interaction_L_M
+  name: "GAL4_interaction_detector_L_M"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: ADH1  # ADH1 is a standard constitutive promoter for yeast expression in interaction assays
+    - promoter: GAL1
+
     - cistron:
-        label: AD_L_fusion
-        expression: medium
+        label: GAL4_AD_L
+        expression: high
         chain:
-          - tag: GAL4_AD
           - gene:
-              id: Protein_L
+              id: GAL4_AD
               source: uniprot
-    - spacer: 40
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: protein_L
+              source: uniprot
+
+    - spacer: 30
+
+    - terminator: rrnB_T1
+
+  cassette_2:
+    - promoter: GAL1
+
     - cistron:
-        label: BD_M_fusion
-        expression: medium
-        fused: false  # Independently translated to allow separate protein production in the same yeast cell
+        label: GAL4_BD_M
+        expression: high
         chain:
-          - tag: GAL4_BD
           - gene:
-              id: Protein_M
+              id: GAL4_BD
               source: uniprot
-    - terminator: CYC1_term  # Common yeast terminator for expression cassettes
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: protein_M
+              source: uniprot
+
+    - spacer: 30
+
+    - terminator: rrnB_T1

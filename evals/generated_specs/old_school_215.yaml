@@ -1,15 +1,18 @@
 construct:
-  name: "promoter_trap_bla"
+  name: "promoter_trap_betalactamase"
   host: e_coli
+
   backbone:
-    resistance: chloramphenicol  # Using chloramphenicol to avoid conflict with the bla (ampicillin) reporter
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    # Promoter omitted to create a promoterless trap system as requested
     - cistron:
-        label: bla_reporter
+        label: betalactamase
         expression: high
         gene:
-          id: P00810
+          id: bla
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

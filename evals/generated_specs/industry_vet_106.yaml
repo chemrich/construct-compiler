@@ -1,17 +1,22 @@
 construct:
-  name: "bacterial_enzyme_high_expression_pET28b"
+  name: "bacterial_enzyme_ecoli_expression"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: bacterial_enzyme
+        label: enzyme
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P00722
+              id: bacterial_enzyme
               source: uniprot
-    - terminator: T7term
+              codon_optimization: e_coli
+
+    - terminator: rrnB_T1

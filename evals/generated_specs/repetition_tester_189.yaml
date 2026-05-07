@@ -1,25 +1,31 @@
 construct:
-  name: "divergent_kan_spec_resistance_vector"
+  name: dual_resistance_divergent_e_coli
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: J23100
-    - cistron:
-        label: kan_resistance
-        expression: medium
+      cistron:
+        label: kanamycin_resistance
+        expression: high
         gene:
-          id: P00552
+          id: aph3
           source: uniprot
+    
     - terminator: rrnB_T1
-    - spacer: 100
-    - promoter: tac
-    - cistron:
-        label: spec_resistance
-        expression: medium
+    
+    - spacer: 50
+    
+    - promoter: araBAD
+      cistron:
+        label: spectinomycin_resistance
+        expression: high
         gene:
-          id: P0AG21
+          id: aadA
           source: uniprot
+    
     - terminator: T7term

@@ -1,29 +1,56 @@
 construct:
-  name: "diversified_amp_x_trimer"
-  host: e_coli_bl21_de3
+  name: "triple_AMP-X_codon_optimized_divergent"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: amp_x_tandem_repeat
+        label: AMP-X_v1
         expression: high
         chain:
-          - gene:
-              id: "AMP-X"
-              source: uniprot
+          - tag: 6xHis
+          - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: "AMP-X"
+              id: AMP-X_codon_variant_1
               source: uniprot
+              note: "First copy with synonymous codons optimized for E. coli codon bias"
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              id: linker_divergent_1
+              sequence_note: "Unique non-homologous linker #1 (GGGSGGG linker variant A)"
+    
+    - cistron:
+        label: AMP-X_v2
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              id: linker_divergent_2
+              sequence_note: "Unique non-homologous linker #2 (AAAGAAA linker variant B)"
           - gene:
-              id: "AMP-X"
+              id: AMP-X_codon_variant_2
               source: uniprot
-        # Note: Optimization must maximize synonymous codon divergence (DNA identity < 75%) 
-        # between the three AMP-X segments to prevent homologous recombination.
-    - terminator: T7term
+              note: "Second copy with alternate synonymous codons to minimize homology with v1"
+          - linker:
+              id: linker_divergent_3
+              sequence_note: "Unique non-homologous linker #3 (GAGAGAG linker variant C)"
+    
+    - cistron:
+        label: AMP-X_v3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: AMP-X_codon_variant_3
+              source: uniprot
+              note: "Third copy with third unique set of synonymous codons, maximizing divergence from v1 and v2"
+    
+    - terminator: rrnB_T1

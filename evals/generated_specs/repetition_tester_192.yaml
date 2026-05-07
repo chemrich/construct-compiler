@@ -1,24 +1,40 @@
 construct:
-  name: "non_homologous_two_component_system"
-  host: e_coli
+  name: two_component_signaling_system
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: sensor_kinase_envz
-        expression: medium
-        gene:
-          id: P0AEJ4
-          source: uniprot
+        label: sensor_kinase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: envZ
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: rhaBAD
+
+    - spacer: 50
+
+    - promoter: rhamnose
+
     - cistron:
-        label: response_regulator_ompr
-        expression: medium
-        gene:
-          id: P0AA16
-          source: uniprot
+        label: response_regulator
+        expression: high
+        fused: false
+        chain:
+          - tag: 8xHis
+          - cleavage_site: 3C
+          - gene:
+              id: ompR
+              source: uniprot
+
     - terminator: T7term

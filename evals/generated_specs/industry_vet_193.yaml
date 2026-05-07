@@ -1,21 +1,20 @@
 construct:
-  name: "high_stability_20aa_cargo_expression"
+  name: "small_peptide_His_tag_highexpr"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: therapeutic_cargo
+        label: therapeutic_peptide
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP  # Added MBP fusion to ensure stability and prevent proteolysis of the 20aa peptide
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: Bivalirudin
+              id: small_therapeutic_peptide
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,16 +1,24 @@
 construct:
-  name: "firefly_luciferase_reporter_construct"
-  host: e_coli
+  name: custom_promoter_firefly_luciferase
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac # Defaulting to T7lac per Rule 8 as no specific custom promoter name was provided.
+    - promoter: custom
+      sequence: "TTGACA_TATAAT"
+
     - cistron:
-        label: reporter
+        label: firefly_luciferase
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+
     - terminator: rrnB_T1

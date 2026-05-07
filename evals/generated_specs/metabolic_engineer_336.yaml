@@ -1,45 +1,58 @@
 construct:
-  name: "five_enzyme_fusion_operon"
-  host: e_coli_bl21_de3
+  name: five_enzyme_operon_fused_enz1_enz2
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enz1_enz2_fusion
+        label: Enz1_Enz2_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: Enz1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: Enz2
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: enz3
+        label: Enz3
         expression: high
         fused: false
         gene:
           id: Enz3
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: enz4
+        label: Enz4
         expression: high
         fused: false
         gene:
           id: Enz4
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: enz5
+        label: Enz5
         expression: high
         fused: false
         gene:
           id: Enz5
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

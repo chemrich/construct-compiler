@@ -1,26 +1,41 @@
 construct:
-  name: "intein_split_splicing_system"
+  name: "ProteinFragment_N_intein_trans_splicing"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: n_terminal_fusion
+        label: ProteinFragment_N_intein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ProteinFragment_N
               source: uniprot
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
           - gene:
-              id: gp41-1_N_intein
+              id: Npu_intein_codon_optimized
               source: uniprot
+              note: "Codon-optimized with maximal synonymous codon usage for E. coli; flanking regions are non-homologous to ProteinFragment_N and ProteinFragment_C"
+
     - spacer: 30
+
     - cistron:
-        label: c_terminal_fragment
+        label: ProteinFragment_C
         expression: high
         fused: false
-        gene:
-          id: ProteinFragment_C
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: ProteinFragment_C
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,23 +1,23 @@
 construct:
-  name: "ProteinY_secretion_yeast"
+  name: "yeast_secreted_ProteinY"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: GAL1
 
     - cistron:
-        label: secreted_protein
+        label: secreted_ProteinY
         expression: high
         chain:
-          - signal_peptide: alpha_factor  # S. cerevisiae secretion signal
+          - tag: alpha_factor_signal_peptide
           - gene:
               id: ProteinY
               source: uniprot
-              # Codon optimization will use synonymous divergence to avoid repeats
+              codon_optimization: yeast_synonymous_divergence
 
-    - terminator: CYC1
+    - terminator: CYC1_poly_A

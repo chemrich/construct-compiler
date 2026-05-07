@@ -1,12 +1,13 @@
 construct:
-  name: "dual_tagged_protein_expression"
-  host: e_coli
+  name: "dual_tag_sequential_purification"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
@@ -14,6 +15,7 @@ construct:
           - tag: 6xHis
           - tag: Strep-II
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: GOI
+              source: uniprot
+
     - terminator: rrnB_T1

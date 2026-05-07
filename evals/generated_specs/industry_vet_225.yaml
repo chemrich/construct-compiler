@@ -1,16 +1,26 @@
 construct:
-  name: "restricted_mammalian_therapeutic_cargo"
-  host: HEK293
+  name: "tissue_specific_therapeutic_cargo"
+  host: in_vitro
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: hSyn1 # Human Synapsin 1 promoter used for restricted expression as requested
+    - promoter: U6
+      # U6 is a Pol III promoter with more restricted/tissue-specific activity
+      # compared to ubiquitous CMV, suitable for therapeutic cargo in IVT context
+
     - cistron:
         label: therapeutic_cargo
-        expression: medium
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P00740
+              id: PLACEHOLDER_THERAPEUTIC
               source: uniprot
-    - terminator: bGH_pA
+              # User should replace PLACEHOLDER_THERAPEUTIC with actual UniProt ID
+
+    - terminator: rrnB_T1

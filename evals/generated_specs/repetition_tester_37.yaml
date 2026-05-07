@@ -1,27 +1,41 @@
-```yaml
 construct:
-  name: dual_pathway_reporter_system
+  name: "dual_orthogonal_reporter_system"
   host: HEK293
-
-  backbone:
-    catalog_vector: "pTwist CMV"
 
   cassette:
     - promoter: CMV
-    - cistron:
-        label: nfkb_reporter
-        expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: rrnB_T1
+      comment: "Constitutive CMV backbone for transient transfection; cassette 1 uses unique MAPK-responsive elements"
 
-    - promoter: EF1_alpha
     - cistron:
-        label: ap1_reporter
+        label: reporter_1_MAPK
         expression: high
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: T7term
-```
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+              comment: "Bright green FP, spectrally distinct from mScarlet"
+
+    - terminator: poly_A_BGH
+      comment: "BGH polyadenylation signal, distinct from SV40"
+
+  cassette:
+    - promoter: SV40_early
+      comment: "Distinct promoter architecture from CMV; drives Wnt-responsive cassette"
+
+    - cistron:
+        label: reporter_2_Wnt
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+              comment: "Red FP, orthogonal to mNeonGreen"
+
+    - terminator: poly_A_SV40
+      comment: "SV40 late polyA signal; different from BGH"
+
+  design_notes:
+    response_elements: "Cassette 1 incorporates 4× canonical MAPK-responsive SRE elements (CCGCGG). Cassette 2 uses 5× minimal TCF/LEF Wnt-responsive elements (CTTTGATC). These motif sequences are mutually exclusive and do not overlap."
+    promoter_architecture: "CMV and SV40 early promoters have entirely distinct cis-regulatory regions; no cross-reactivity."
+    recombination_avoidance: "Genes (mNeonGreen vs mCherry) share <55% sequence identity; polyA signals (BGH vs SV40) are distinct; response element repeats use different spacers (18bp vs 22bp between sites)."
+    transfection_ratio: "Co-transfect at 1:1 ratio for balanced signaling readout."

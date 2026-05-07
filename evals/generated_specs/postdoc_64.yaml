@@ -1,17 +1,23 @@
 construct:
-  name: "periplasmic_bacterial_secreted_protein_expression"
-  host: e_coli_bl21_de3
+  name: BacterialSecretedProtein
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: PelB  # N-terminal secretion signal for periplasmic localization
+          - signal_peptide: pelB
           - gene:
               id: BacterialSecretedProtein
               source: uniprot
-          - tag: 6xHis  # C-terminal purification tag
-    - terminator: T7term
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

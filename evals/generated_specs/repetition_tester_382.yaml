@@ -1,12 +1,15 @@
 construct:
-  name: "mammalian_gened_unique_fusion_construct"
+  name: "GeneD_fusion_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: GeneD_fusion
         expression: high
         chain:
           - gene:
@@ -14,9 +17,11 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - tag: 8xHis
           - linker:
-              type: short_GS
-          - solubility_tag: SUMO
-    - terminator: bGH_polyA
+              type: rigid_EAAAK
+              repeats: 2
+          - solubility_tag: GST
+
+    - terminator: rrnB_T1

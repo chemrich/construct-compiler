@@ -1,16 +1,22 @@
 construct:
-  name: "yeast_mitochondrial_targeting_COX4"
+  name: "yeast_COX4_mitochondrial_targeting"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: cox4_target
+        label: COX4_mito
         expression: high
-        gene:
-          id: P00424
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - tag: NLS  # Mitochondrial targeting sequence (MTS) for yeast
+          - gene:
+              id: COX4
+              source: uniprot
+
+    - terminator: rrnB_T1

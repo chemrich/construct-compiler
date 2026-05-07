@@ -1,16 +1,23 @@
 construct:
-  name: "tet_inducible_protein_f"
+  name: tetracycline_inducible_protein_F
   host: e_coli
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tetA
+    - promoter: tetO  # tetracycline operator-controlled promoter
+
     - cistron:
-        label: protein_f
+        label: protein_F
         expression: high
-        gene:
-          id: P0A155
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_F
+              source: uniprot
+
     - terminator: rrnB_T1

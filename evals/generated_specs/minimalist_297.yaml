@@ -1,19 +1,22 @@
 construct:
-  name: "protein_L_degradation_system"
+  name: protein_L_degradation_tagged
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_L_target
+        label: protein_L
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P06830
+              id: protein_L
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: ssrA
-    - terminator: T7term
+          - degron: ssrA  # C-terminal degradation tag (SsrA)
+
+    - terminator: rrnB_T1

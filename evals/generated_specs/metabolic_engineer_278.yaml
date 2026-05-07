@@ -1,41 +1,47 @@
 construct:
-  name: "pyruvate_flux_redirection_operon"
+  name: pyruvate_production_operon
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
         label: pyruvate_carboxylase
         expression: high
-        fused: false
         gene:
-          id: P11583
+          id: pyc
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: malic_enzyme
-        expression: medium
-        fused: false
+        expression: high
         gene:
-          id: P06668
+          id: maeA
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: malate_dehydrogenase
         expression: medium
-        fused: false
         gene:
-          id: P0A715
+          id: mdh
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: phosphotransacetylase
-        expression: low
-        fused: false
+        expression: medium
         gene:
-          id: P0A9M8
+          id: pta
           source: uniprot
+    
     - terminator: rrnB_T1

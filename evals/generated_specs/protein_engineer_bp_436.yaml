@@ -1,18 +1,22 @@
 construct:
-  name: "pichia_pastoris_ost1_alpha_secretion_construct"
+  name: pichia_ost1_secretion_flag
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: AOX1
-      cistron:
-        label: target_protein
+
+    - cistron:
+        label: target
         expression: high
         chain:
-          - tag: Ost1-alpha_hybrid
+          - tag: Ost1_alpha_mating_factor
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: target_protein
           - tag: FLAG
-      terminator: AOX1_term
+
+    - terminator: rrnB_T1

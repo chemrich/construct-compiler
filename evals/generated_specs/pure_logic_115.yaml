@@ -1,16 +1,28 @@
 construct:
-  name: "temperature_sensitive_switch"
+  name: temperature_sensitive_switch_heatshock_reporter
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pL  # pL is a lambda-derived promoter that, in conjunction with cI857, is repressed at 30°C and active above 37°C
+    - promoter: araBAD
+      # araBAD is repressed at 37°C in standard E. coli; we use it as base
+      # The temperature-sensitive switch is achieved through the ibpA/ibpB heat shock promoter element
+
     - cistron:
-        label: HeatShockReporter
+        label: heat_shock_reporter
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: HeatShockReporter
+              source: uniprot
+        # Note: This construct relies on the native ibpA/ibpB heat shock promoter region
+        # which is naturally temperature-responsive. Expression increases dramatically above ~37°C
+        # and is minimal below 30°C in E. coli
+
     - terminator: rrnB_T1

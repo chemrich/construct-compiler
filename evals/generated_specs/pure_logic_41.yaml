@@ -1,32 +1,26 @@
-```yaml
 construct:
-  name: genetic_NOT_gate_metabolic_enzyme
+  name: "NOT_gate_repressible_enzyme"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: J23100  # Constitutive promoter for NOT gate logic
+    - promoter: araBAD
+      # araBAD is repressed by AraC protein in the absence of L-arabinose
+      # This serves as our NOT logic: no arabinose (input A absent) = high expression
+      # Arabinose present (input A present) = repressed expression
 
     - cistron:
-        label: repressor
-        expression: medium
-        chain:
-          - gene:
-              id: P0451  # LacI repressor
-              source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: essential_enzyme
+        label: metabolic_enzyme
         expression: high
-        fused: false
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0A9Q7  # thrA (aspartate kinase I) - essential for amino acid biosynthesis
+              id: atp_synthase_beta
               source: uniprot
 
     - terminator: rrnB_T1
-```

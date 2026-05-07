@@ -1,19 +1,24 @@
 construct:
-  name: "Human_TNF_Alpha_Soluble_Production"
-  host: e_coli_bl21
+  name: "human_therapeutic_soluble_expression"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Placeholder: schema requires an antibiotic resistance; for therapeutic production, this would be replaced with a selection-free system like auxotrophic markers.
+    resistance: null  # No antibiotic resistance per specification
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac # High-yield non-viral bacterial promoter (inducible by IPTG).
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: therapeutic_protein
         expression: high
         chain:
-          - solubility_tag: MBP
           - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - gene:
-              id: P01375
+              id: human_therapeutic  # User to specify actual UniProt ID
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator; no viral components used.
+
+    - terminator: rrnB_T1

@@ -1,18 +1,23 @@
 construct:
-  name: "HEK293_HA_Protein_Y_Myc"
+  name: "HEK293_nuclear_receptor_Y_HA_myc"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: target_receptor
+        label: nuclear_receptor_Y
         expression: high
         chain:
           - tag: HA
           - gene:
-              id: Protein_Y
+              id: nuclear_receptor_Y
               source: uniprot
-          - tag: Myc
-    - terminator: SV40
+          - tag: myc
+
+    - terminator: SV40_polyA

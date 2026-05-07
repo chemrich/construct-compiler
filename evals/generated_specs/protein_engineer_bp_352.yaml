@@ -1,20 +1,24 @@
 construct:
-  name: "FLD1_secreted_IL2_Pichia"
+  name: "Pichia_secreted_IL2_FLD1"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: IL2_secretion_unit
+        label: secreted_IL2
         expression: high
         chain:
           - tag: alpha_factor
           - gene:
-              id: P60568
+              id: IL2
               source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

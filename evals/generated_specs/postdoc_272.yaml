@@ -1,17 +1,22 @@
 construct:
-  name: "mammalian_tm_protein_e_coli_expression"
+  name: "E_coli_TM_Protein_expression"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Strongest constitutive promoter for E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: TM_Protein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: TM_Protein
               source: uniprot
+
     - terminator: rrnB_T1

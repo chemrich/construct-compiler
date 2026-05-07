@@ -1,17 +1,27 @@
 construct:
-  name: "dual_nls_nuclear_fusion"
+  name: "dual_NLS_fusion_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: nuclear_fusion_protein
+        label: target
         expression: high
         chain:
-          - tag: NLS
-          - tag: NLS # DNA sequences are codon-diversified to ensure they are entirely distinct and prevent recombination
+          - tag: NLS  # SV40 NLS (PKKKRKV)
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NLS  # distinct: c-myc NLS (PAAKRVKLD) - different sequence at DNA level
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

@@ -1,25 +1,29 @@
 construct:
-  name: "redundant_regulatory_operon_GeneE_GeneF"
-  host: e_coli
+  name: "dual_promoter_dual_terminator_operon"
+  host: e_coli_bl21
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7
-    - promoter: tac
     - cistron:
-        label: GeneE
+        label: geneE
         expression: high
         gene:
           id: GeneE
           source: uniprot
-    - spacer: 40
+    - spacer: 25
     - cistron:
-        label: GeneF
+        label: geneF
         expression: high
-        fused: false
         gene:
           id: GeneF
           source: uniprot
     - terminator: rrnB_T1
     - terminator: T7term
+  # Note: Two non-homologous strong promoters (T7 and tac) can be arranged
+  # in tandem upstream of GeneE via manual DNA assembly, as the YAML schema
+  # supports one primary promoter. T7 and tac share minimal homology.
+  # Similarly, rrnB_T1 and T7term are structurally distinct terminators.
+  # Post-compilation, arrange both promoters upstream of GeneE in the final construct.

@@ -1,25 +1,29 @@
 construct:
-  name: "dual_reporter_constitutive_inducible"
-  host: e_coli_bl21_de3
+  name: "dual_promoter_inducible_red_constitutive_blue"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100  # Constitutive promoter for E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: red_reporter
-        expression: medium
+        label: red_constitutive
+        expression: high
         gene:
           id: mCherry
           source: fpbase
+
     - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: T7lac  # IPTG-inducible promoter
+
+    - promoter: araBAD
+
     - cistron:
-        label: blue_reporter
+        label: blue_inducible
         expression: high
         gene:
           id: mTagBFP2
           source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

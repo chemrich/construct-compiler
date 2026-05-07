@@ -1,20 +1,28 @@
 construct:
-  name: "yeast_surface_display_aga2p_fusion"
+  name: "protein_X_surface_display_aga2p"
   host: yeast
+
   backbone:
+    catalog_vector: "pYEPlac195"
     resistance: ampicillin
-    ori: pUC
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: "display_fusion"
+        label: surface_display
         expression: high
         chain:
           - gene:
-              id: AGA2
-              source: uniprot
-          - gene:
               id: protein_X
               source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: AGA2
+              source: uniprot
+
     - terminator: CYC1

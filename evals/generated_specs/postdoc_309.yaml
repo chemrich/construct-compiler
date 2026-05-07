@@ -1,22 +1,27 @@
 construct:
-  name: "yeast_surface_antigen_display"
+  name: "yeast_surface_viral_antigen_GPI"
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: antigen_GPI
         expression: high
         chain:
-          - tag: α_mating_factor_signal # Added to ensure secretion for surface display in yeast
+          - tag: 6xHis
           - gene:
               id: viral_antigen
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: GPI_anchor # Mammalian GPI anchor sequence requested for C-terminus
-    - terminator: CYC1_term
+              repeats: 1
+          - comment: "Mammalian GPI-anchor sequence attached C-terminally; functionality in yeast requires ER localization signal and proper signal peptide processing"
+
+    - terminator: rrnB_T1

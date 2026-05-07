@@ -1,16 +1,21 @@
 construct:
-  name: "protein_l_high_expression"
+  name: "ProteinL_codon_optimized_Ecoli_His_tag"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: ProteinL
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P19932
+              id: ProteinL
               source: uniprot
-    - terminator: T7term
+              codon_optimization: e_coli
+
+    - terminator: rrnB_T1

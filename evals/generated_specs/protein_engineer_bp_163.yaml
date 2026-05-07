@@ -1,19 +1,24 @@
 construct:
-  name: "PGAP_Lipase_Secretion_Pichia"
+  name: "Pichia_pastoris_PGAP_lipase_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pGAPZα"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
-        label: secreted_lipase
+        label: lipase
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P41365
+              id: lipase
               source: uniprot
           - tag: Myc
-    - terminator: AOX1_TT
+
+    - terminator: CYC1_terminator

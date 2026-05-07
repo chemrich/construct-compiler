@@ -1,23 +1,30 @@
 construct:
-  name: "toxin_q_antitoxin_r_operon"
-  host: e_coli_bl21_de3
+  name: toxin_antitoxin_QR_operon
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: toxin_q
-        expression: medium
-        gene:
-          id: Q
-          source: uniprot
-    - spacer: 20
-    - cistron:
-        label: antitoxin_r
-        expression: medium
-        fused: false
+        label: antitoxin_R
+        expression: high
         gene:
           id: R
           source: uniprot
-    - terminator: T7term
+    
+    - spacer: 20
+    
+    - cistron:
+        label: toxin_Q
+        expression: high
+        fused: false
+        gene:
+          id: Q
+          source: uniprot
+    
+    - terminator: rrnB_T1

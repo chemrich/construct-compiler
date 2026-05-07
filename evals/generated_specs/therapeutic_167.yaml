@@ -1,23 +1,36 @@
 construct:
-  name: "cytotoxic_fragment_expression_system"
-  host: e_coli
+  name: "IPTG_inducible_cytotoxic_fragment_soluble"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: none # User requested strict exclusion of antibiotic resistance; implies auxotrophic or toxin-antitoxin selection
+    resistance: null  # No antibiotic resistance marker per requirement
     ori: pBR322
-    source: custom
+    source: addgene
+    # Note: Most standard cloning vectors require a resistance marker for selection.
+    # This construct uses pBR322 ori for replication but no selectable marker.
+    # In practice, alternative selection methods (e.g., auxotrophic complementation) would be needed.
+
   cassette:
-    - promoter: lacUV5 # Bacterial IPTG-inducible promoter to avoid viral elements (T7)
+    - promoter: T7lac
+      # T7lac provides tight, IPTG-inducible regulation with minimal basal expression
+
     - cistron:
-        label: cytotoxic_target
+        label: cytotoxic_fragment
         expression: high
         chain:
-          - tag: 8xHis
+          - tag: 6xHis
+            # N-terminal His tag for affinity purification
+          - cleavage_site: TEV
+            # Allows removal of tag if desired
           - solubility_tag: MBP
-          - cleavage_site: Enterokinase # Mammalian protease site to avoid viral-derived sites like TEV or 3C
+            # MBP (maltose binding protein) enhances solubility of cytotoxic/aggregation-prone proteins
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
+              # Flexible linker provides spatial separation between tags and cargo
           - gene:
-              id: barnase
-              source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator to avoid viral sequences like T7term
+              id: "user_defined_cytotoxic_fragment"
+              # User must supply the actual gene sequence for the cytotoxic protein fragment
+
+    - terminator: rrnB_T1
+      # Strong terminator ensures clean transcript end and prevents read-through

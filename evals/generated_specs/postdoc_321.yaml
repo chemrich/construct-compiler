@@ -1,18 +1,24 @@
 construct:
-  name: "human_growth_factor_secretion_yeast"
+  name: human_growth_factor_secreted_yeast
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: growth_factor
         expression: high
         chain:
+          - signal_peptide: mammalian_native
           - gene:
-              id: P01241
+              id: human_growth_factor
               source: uniprot
           - tag: FLAG
-    - terminator: ADH1
+
+    - terminator: CYC1

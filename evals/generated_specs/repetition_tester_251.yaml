@@ -1,24 +1,32 @@
 construct:
-  name: mammalian_bicistronic_diversified_expression
+  name: "mammalian_bicistronic_dual_purified"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: alpha_subunit
+        label: protein_A
         expression: high
         chain:
           - gene:
-              id: mNeonGreen
-              source: fpbase
+              id: EGFP
+              source: uniprot
           - linker:
-              type: short_GS
-              repeats: 2
-          - tag: 8xHis
-    - spacer: 585
+              type: GS_flexible
+              repeats: 1
+          - tag: FLAG
+
+    # 2A self-cleaving peptide (T2A variant) positioned between cistrons
+    # T2A is structurally distinct from typical IRES sequences and avoids homology-driven deletions
+    - spacer: 18
+
     - cistron:
-        label: beta_subunit
+        label: protein_B
         expression: high
         fused: false
         chain:
@@ -27,6 +35,7 @@ construct:
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: Twin-Strep
-    - terminator: hGH_polyA
+              repeats: 1
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

@@ -1,28 +1,45 @@
 construct:
-  name: "dual_protein_z_secretion_system"
+  name: "dual_secreted_ProteinZ_different_SPs"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_z_albumin_sp
+        label: ProteinZ_albumin_SP
         expression: high
         chain:
-          - tag: Albumin_SP
           - gene:
-              id: P22891
+              id: SP_albumin
               source: uniprot
-    - terminator: bGH_polyA
-    - spacer: 100
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ProteinZ
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Second cassette with non-identical strong constitutive promoter
     - promoter: EF1_alpha
+
     - cistron:
-        label: protein_z_immunoglobulin_sp
+        label: ProteinZ_IgG_SP
         expression: high
-        fused: false
         chain:
-          - tag: Ig_kappa_SP
           - gene:
-              id: P22891
+              id: SP_immunoglobulin
               source: uniprot
-    - terminator: SV40_polyA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ProteinZ
+              source: uniprot
+
+    - terminator: rrnB_T1

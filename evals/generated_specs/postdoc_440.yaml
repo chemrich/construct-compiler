@@ -1,18 +1,23 @@
 construct:
-  name: "human_gpcr_strep_expression"
-  host: e_coli
+  name: "E_coli_GPCR_StrepTEV"
+  host: e_coli_bl21_de3
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac # Substituted T7lac for requested CMV as CMV is a mammalian promoter and host is E. coli
+    - promoter: T7lac  # E. coli-optimized; CMV is mammalian-specific and non-functional in bacteria
+    
     - cistron:
-        label: gpcr_target
+        label: GPCR
         expression: high
         chain:
           - tag: Strep-II
           - cleavage_site: TEV
           - gene:
-              id: ADRB2
+              id: human_GPCR  # Specify UniProt ID or gene name for your target GPCR
               source: uniprot
-    - terminator: T7term # Substituted T7term for poly-A tail because polyadenylation in bacteria signals mRNA degradation rather than stability
+    
+    - terminator: rrnB_T1  # Standard E. coli terminator; poly-A tails are not functional in prokaryotes

@@ -1,25 +1,30 @@
 construct:
-  name: "mammalian_cas9_targetgenex_knockout"
+  name: "mammalian_CRISPR_Cas9_TargetGeneX"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cas9_nuclease
+        label: Cas9
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-          - tag: NLS
-    - terminator: bGH_pA
+
+    - terminator: SV40
+
     - promoter: U6
-    - cistron:
-        label: sgRNA_target
-        expression: high
-        fused: false
-        gene:
-          id: sgRNA_TargetGeneX
-    - terminator: U6_term
+
+    - guide_rna:
+        label: gRNA_TargetGeneX
+        target_gene: TargetGeneX
+        pam: NGG
+
+    - terminator: U6term

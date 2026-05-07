@@ -1,21 +1,29 @@
 construct:
-  name: "cpp_drug_cargo_fusion"
-  host: e_coli_bl21_de3
+  name: "CPP_drug_cargo_fusion"
+  host: e_coli
+  
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: therapeutic_fusion
+        label: cpp_cargo_fusion
         expression: high
         chain:
-          - tag: TAT
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: TAT_CPP
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P01241
+              id: cargo_protein
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

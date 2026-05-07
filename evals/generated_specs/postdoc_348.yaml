@@ -1,18 +1,22 @@
 construct:
   name: "yeast_tf_activator_overexpression"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: 2_micron
+    resistance: kanamycin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3 # Substituted CMV with TDH3 for strong constitutive expression in yeast
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: YeastTF_Activator
         expression: high
         chain:
           - tag: NLS
           - gene:
               id: YeastTF_Activator
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

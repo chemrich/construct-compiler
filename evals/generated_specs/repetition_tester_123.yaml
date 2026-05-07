@@ -1,25 +1,44 @@
 construct:
-  name: "dual_reporter_mammalian_diversity"
+  name: "dual_reporter_mammalian_diverse"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: custom
+
   cassette:
     - promoter: EF1_alpha
+      label: luciferase_cassette
+
     - cistron:
-        label: firefly_luciferase
+        label: luciferase
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: bGH_pA
-    - spacer: 60
-    - promoter: CMV
+        chain:
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+
+    - terminator: SV40_poly_A
+      label: SV40_terminator
+
+    - spacer: 200
+
+    - promoter: U6
+      label: gfp_cassette
+      # U6 is a Pol III promoter, driving constitutive expression
+      # Note: U6 is typically used for small RNAs; substituting with hSPC promoter for better protein expression
+    
+    - promoter: hSPC
+      label: alternative_constitutive
+
     - cistron:
-        label: green_fluorescent_reporter
+        label: gfp
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_pA
+        fused: false
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: BGH_poly_A
+      label: BGH_terminator

@@ -1,59 +1,67 @@
 construct:
-  name: "n_butanol_biosynthesis_operon"
+  name: "e_coli_butanol_synthesis_operon"
   host: e_coli_bl21_de3
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
-    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: thiolase
+        label: Thiolase
         expression: high
-        fused: false
         gene:
-          id: atoB
+          id: thl
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: hbd
+        label: HBD
         expression: high
-        fused: false
         gene:
           id: hbd
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: crotonase
+        label: BD
         expression: high
-        fused: false
         gene:
-          id: crt
+          id: bd
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: bcd
+        label: BCD
         expression: high
-        fused: false
         gene:
           id: bcd
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: adhe2
+        label: AdhE2
         expression: high
-        fused: false
         gene:
           id: adhE2
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: td_reductase
+        label: Td
         expression: high
-        fused: false
         chain:
-          - gene:
-              id: ter
-              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+          - gene:
+              id: td
+              source: uniprot
+
+    - terminator: rrnB_T1

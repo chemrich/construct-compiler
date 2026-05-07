@@ -1,16 +1,23 @@
 construct:
-  name: "inducible_lac_library_expression_vector"
+  name: "protein_variant_library_backbone"
   host: e_coli
+  
   backbone:
     resistance: chloramphenicol
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: lacUV5
+    
     - cistron:
-        label: library_insertion_site
+        label: variant_insert
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: MCS_unique
+              source: custom
+    
     - terminator: rrnB_T1

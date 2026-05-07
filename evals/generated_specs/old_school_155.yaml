@@ -1,15 +1,21 @@
 construct:
-  name: "T7_MCS_ColE1_AmpR"
-  host: e_coli_bl21_de3
+  name: "T7_MCS_expression_vector"
+  host: e_coli
+  
   backbone:
     resistance: ampicillin
-    ori: pBR322
-    source: custom
+    ori: ColE1
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: cloning_site
+        label: MCS
         expression: high
-        gene:
-          id: MCS
+        chain:
+          - gene:
+              id: MCS
+              source: synthetic
+    
     - terminator: T7term

@@ -1,23 +1,43 @@
 construct:
-  name: "non_viral_dual_expression_2A"
+  name: "mammalian_dual_protein_2A_expression"
   host: HEK293
+
   backbone:
-    resistance: none # Avoids antibiotic resistance genes as requested by user
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian vector; resistance gene removed post-cloning if needed
+    # Use selection-marker-free backbone or piggyBac for integration
+
   cassette:
-    - promoter: EF1_alpha # Human promoter used as a non-viral alternative to CMV
+    - promoter: CMV
+      # Constitutive mammalian promoter, non-viral origin
+
     - cistron:
-        label: therapeutic_polyprotein
+        label: Protein_X
         expression: high
         chain:
+          - tag: FLAG
+          - cleavage_site: TEV
           - gene:
-              id: Protein_X
+              id: "Protein_X"
               source: uniprot
-          - linker:
-              type: P2A # 2A self-cleaving peptide used per specific user request despite viral origin
-              repeats: 1
+              # User to provide UniProt ID or sequence reference
+
+    - spacer_2A: "GGCAGCGGAGGTGGCGGTGGTGGTGGAGGATCTGGTGAGCGAGGATGTGGGCGAG"
+      # Synonym for 2A self-cleaving peptide (e.g., T2A or P2A sequence)
+      # This causes ribosomal skipping and produces two separate proteins from one ORF
+
+    - cistron:
+        label: Protein_Y
+        expression: high
+        fused: false
+        # fused: false indicates independent translation post-2A cleavage
+        chain:
+          - tag: HA
+          - cleavage_site: TEV
           - gene:
-              id: Protein_Y
+              id: "Protein_Y"
               source: uniprot
-    - terminator: hGH_pA # Human Growth Hormone polyA signal used as non-viral terminator
+              # User to provide UniProt ID or sequence reference
+
+    - terminator: SV40polyA
+      # Mammalian polyadenylation signal (non-viral backbone includes standard polyA)

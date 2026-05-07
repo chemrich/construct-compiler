@@ -1,17 +1,25 @@
 construct:
-  name: "antibody_fab_production_e_coli"
+  name: "Fab_expression_ecoli"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: heavy_chain
         expression: high
-        gene:
-          id: P01857
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: fab_heavy
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: light_chain
         expression: high
@@ -19,6 +27,7 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: P01834
+              id: fab_light
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

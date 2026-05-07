@@ -1,18 +1,23 @@
 construct:
-  name: "high_yield_human_therapeutic_secretion"
+  name: "human_therapeutic_secreted_high_yield_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: therapeutic_protein
         expression: high
         chain:
-          - tag: IgK_leader
-          - tag: Twin-Strep
+          - tag: 6xHis
           - cleavage_site: TEV
+          - signal_peptide: SP_IgK  # Immunoglobulin kappa signal peptide for robust secretion
           - gene:
-              id: P01588 # Human Erythropoietin (EPO)
+              id: "therapeutic_protein_codon_optimized"
               source: uniprot
-    - terminator: bGH_polyA
+              # Note: User should provide UniProt ID; codon optimization handled by synthesis vendor
+
+    - terminator: rrnB_T1

@@ -1,17 +1,25 @@
 construct:
-  name: "strep_tagged_library_expression"
-  host: e_coli
+  name: "protein_variant_library_strep_tag"
+  host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # CMV is mammalian-specific; J23100 is a very strong constitutive substitute for E. coli
+    - promoter: T7lac
+      # Note: T7lac is the standard high-yield promoter for E. coli BL21(DE3).
+      # CMV (mammalian) is not functional in bacteria. T7lac provides comparable
+      # inducible high expression with IPTG induction.
+
     - cistron:
-        label: target
+        label: protein_variant
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: null
+              # Placeholder for variant library; sequence to be inserted
+
     - terminator: rrnB_T1

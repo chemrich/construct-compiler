@@ -1,23 +1,25 @@
 construct:
-  name: "yeast_proteinL_egfp_localization"
+  name: proteinL_EGFP_localization_yeast
   host: yeast
+
   backbone:
     resistance: HIS3
-    ori: CEN6-ARSH4
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: TEF2
+
     - cistron:
-        label: localization_fusion
-        expression: medium
+        label: proteinL_EGFP
+        expression: high
         chain:
           - gene:
               id: proteinL
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: EGFP
-              source: fpbase
-    - terminator: CYC1_term
+              repeats: 1
+          - tag: EGFP
+
+    - terminator: CYC1

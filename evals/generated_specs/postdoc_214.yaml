@@ -1,16 +1,21 @@
 construct:
-  name: "protein_Y_furin_activation_construct"
-  host: e_coli_bl21_de3
+  name: "Y_protein_furin_activated"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: protein_Y_mature
+        label: Y_proprotein
         expression: high
         chain:
-          - cleavage_site: Furin # E. coli does not natively express furin proteases; site included per request for potential in vitro or engineered processing.
+          - tag: 6xHis
+          - cleavage_site: Furin
           - gene:
-              id: protein_Y
+              id: Y
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

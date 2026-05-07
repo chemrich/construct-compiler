@@ -1,19 +1,22 @@
 construct:
-  name: "MBP_TEV_therapeutic_protein"
+  name: "therapeutic_MBP_TEV_His"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: therapeutic
         expression: high
         chain:
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              # Substituted P01241 (human growth hormone) as a representative therapeutic gene
-              id: P01241
+              id: therapeutic_protein
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

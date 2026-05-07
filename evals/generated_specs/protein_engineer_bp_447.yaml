@@ -1,20 +1,37 @@
 construct:
-  name: "bacillus_amyE_integration_phytase"
+  name: "Bacillus_amyE_integration_phytase"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: spectinomycin
+    ori: pAMβ
     source: addgene
-    # Targeting amyE locus for integration via homology arms
+    # Integration vector backbone with amyE homology arms for chromosomal integration
+
   cassette:
+    - homology_arm_5:
+        target_locus: amyE
+        length: 500
+        position: upstream
+
     - promoter: Pgrac
+
     - cistron:
-        label: secreted_phytase
+        label: phytase
         expression: high
         chain:
-          - tag: SacB
+          - tag: SacB_signal_peptide
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: phyC
+              id: "Bacillus_phytase_codon_optimized"
               source: uniprot
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+    - homology_arm_3:
+        target_locus: amyE
+        length: 500
+        position: downstream

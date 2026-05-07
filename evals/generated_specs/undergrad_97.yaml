@@ -1,15 +1,21 @@
 construct:
-  name: "tightly_inducible_amp_expression"
-  host: e_coli
+  name: "tight_AMP_expression_ecoli"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # araBAD (L-arabinose inducible) provides exceptionally tight control with minimal basal expression for toxic proteins
+    - promoter: T7lac
+
     - cistron:
-        label: antimicrobial_peptide
+        label: AMP
         expression: very_low
-        gene:
-          id: AMP
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: AMP
+              source: uniprot
+
     - terminator: rrnB_T1

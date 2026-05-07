@@ -1,13 +1,17 @@
 construct:
-  name: "FLAG_ProteinX_ProteinY_fusion"
+  name: FLAG_ProteinX_ProteinY_fusion
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: tac
+    
     - cistron:
-        label: fusion_target
+        label: fusion
         expression: high
         chain:
           - tag: FLAG
@@ -16,8 +20,9 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: ProteinY
               source: uniprot
+    
     - terminator: rrnB_T1

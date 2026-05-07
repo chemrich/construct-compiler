@@ -1,19 +1,26 @@
 construct:
-  name: "bacillus_amyq_secretion_variant"
+  name: "bacillus_engineered_amylase_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AmyQ
+
     - cistron:
-        label: amylase_variant
+        label: amylase
         expression: high
         chain:
-          - tag: AmyQ_signal_peptide
+          - secretion_signal: AmyQ_signal_sequence
           - gene:
-              id: P00692
+              id: amylase_engineered
               source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 1
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

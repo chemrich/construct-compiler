@@ -1,31 +1,35 @@
 construct:
-  name: fusion_ABC_non_repetitive_linkers
-  host: e_coli
+  name: "A_B_C_fusion_distinct_linkers"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: A_B_C_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Protein_A
+              id: proteinA
               source: uniprot
           - linker:
-              # Using GS_flexible for the first junction
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: Protein_B
+              id: proteinB
               source: uniprot
           - linker:
-              # Using rigid_EAAAK for the second junction to ensure genetic distinction from the first GS linker
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 1
           - gene:
-              id: Protein_C
+              id: proteinC
               source: uniprot
+
     - terminator: rrnB_T1

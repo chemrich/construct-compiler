@@ -1,24 +1,33 @@
 construct:
-  name: non_repetitive_solubility_fusion
-  host: e_coli_bl21
+  name: "solubility_fusion_minimal_repetition"
+  host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: solubility_fusion
         expression: high
         chain:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: sfGFP
+              id: mEGFP
               source: fpbase
-          - cleavage_site: TEV
           - linker:
               type: rigid_EAAAK
-              repeats: 2
-          - tag: 8xHis
-    - terminator: T7term
+              repeats: 1
+          - cleavage_site: TEV
+          - linker:
+              type: short_GS
+              repeats: 1
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

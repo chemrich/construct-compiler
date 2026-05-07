@@ -1,19 +1,24 @@
 construct:
-  name: "HEK293_scFv_Secretion_NonViral"
+  name: "HEK293_scFv_secretion_humanized"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Kanamycin for bacterial propagation; final construct design ignores resistance for mammalian yield.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    ori: null
+    resistance: null
+
   cassette:
-    - promoter: EF1_alpha # High-expression non-viral promoter to replace viral CMV
+    - promoter: CMV
+
     - cistron:
-        label: antibody_fragment
+        label: scFv_secreted
         expression: high
         chain:
-          - tag: IgK_leader # N-terminal secretion signal for export to supernatant
+          - tag: signal_peptide_IL2
           - gene:
-              id: humanized_scFv
+              id: scFv_humanized
               source: uniprot
-          - tag: 8xHis # C-terminal tag for purification from supernatant
-    - terminator: hGH_PA # Human growth hormone polyadenylation signal (non-viral)
+          - cleavage_site: 3C
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

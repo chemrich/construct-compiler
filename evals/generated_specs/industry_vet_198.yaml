@@ -1,18 +1,22 @@
 construct:
-  name: "AOX1_Pichia_high_expression_system"
+  name: "high_expression_pichia_pastoris_His_tag"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: AOX1 # Strong methanol-inducible promoter for Pichia pastoris
+    - promoter: AOX1
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: sfGFP # Placeholder gene; AOX1 terminator and high expression flag optimized for yeast mRNA stability
-              source: fpbase
-    - terminator: AOX1_TT # The AOX1 terminator is used to ensure efficient polyadenylation and mRNA stability in Pichia, analogous to WPRE in mammalian systems
+              id: target_protein
+              source: uniprot
+
+    - terminator: CYC1

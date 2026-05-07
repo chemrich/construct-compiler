@@ -1,18 +1,22 @@
 construct:
-  name: "yeast_tet_on_strep_expression_system"
+  name: "yeast_tet_on_strep_protein"
   host: yeast
+
   backbone:
-    resistance: kanamycin  # G418 selection in yeast
-    ori: 2_micron          # Stable high-copy episomal replication origin for S. cerevisiae
+    resistance: kanamycin
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: TetO7_CYC1  # Standard Tet-inducible (Tet-On) promoter for yeast
+    - promoter: tTA  # tetracycline-controlled transactivator; S. cerevisiae Tet-On equivalent
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: gene_of_interest
+              id: tTA
               source: uniprot
-    - terminator: CYC1_term  # Common yeast terminator for Tet-systems
+
+    - terminator: CYC1

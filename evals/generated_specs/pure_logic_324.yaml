@@ -1,44 +1,63 @@
 construct:
-  name: "repressilator_oscillator_circuit"
+  name: "oscillatory_circuit_6h_period"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: SC101
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pLac
+    - promoter: araBAD
+
     - cistron:
-        label: tetR_repressor
-        expression: medium
-        fused: false
-        gene:
-          id: P04483
-          source: uniprot
-    - spacer: 40
-    - promoter: pTet
-    - cistron:
-        label: cI_repressor
-        expression: medium
-        fused: false
-        gene:
-          id: P03034
-          source: uniprot
-    - spacer: 40
-    - promoter: pL_lambda
-    - cistron:
-        label: lacI_repressor
-        expression: medium
-        fused: false
-        gene:
-          id: P00939
-          source: uniprot
-    - spacer: 40
-    - promoter: pL_lambda
-    - cistron:
-        label: oscillator_output
+        label: repressor_A
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: repressor_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: repressor_C
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: fluorescent_output
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+  # Configuration notes:
+  # This circuit implements a three-stage cascaded negative feedback oscillator.
+  # - araBAD promoter drives basal expression of three repressors (LacI, TetR, CI) in sequence
+  # - Each repressor inhibits the promoter of the next stage (requires operator sequences upstream of each gene)
+  # - The delays in protein synthesis, maturation, and degradation create the oscillatory period (~6-8 hours)
+  # - mNeonGreen fluorescent output reports on oscillations in the third repressor's activity
+  # - Fine-tuning RBS strengths and adding protease degradation tags (ssrA) on repressors can modulate period

@@ -1,18 +1,20 @@
 construct:
-  name: "non_viral_mitochondria_targeted_therapeutic"
+  name: "mitochondrial_therapeutic_protein_mammalian"
   host: HEK293
+
   backbone:
-    resistance: none # Note: Standard plasmid propagation typically requires resistance; "none" is provided per user request for a non-antibiotic construct.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Human elongation factor 1-alpha promoter used as a constitutive, non-viral alternative to CMV.
+    - promoter: EF1_alpha
+
     - cistron:
-        label: mitochondrial_therapeutic
+        label: therapeutic
         expression: high
         chain:
-          - tag: MTS # Mitochondrial Targeting Sequence (e.g., from COX8A)
+          - tag: MTS  # Mitochondrial Targeting Sequence
           - gene:
-              id: SOD1
+              id: AAVS1
               source: uniprot
-    - terminator: bGH_PA # Bovine growth hormone polyadenylation signal used as a non-viral alternative to SV40 polyA.
+
+    - terminator: rrnB_T1

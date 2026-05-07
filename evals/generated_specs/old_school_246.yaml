@@ -1,17 +1,22 @@
 construct:
-  name: "pelB_mediated_secretion_of_exported_factor"
+  name: "pelB_secretion_exported_factor"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
-        label: secreted_protein
+        label: exported_factor
         expression: high
         chain:
-          - tag: pelB
+          - signal_peptide: pelB
           - gene:
-              id: Exported_Factor
+              id: exported_factor
+              source: uniprot
+
     - terminator: rrnB_T1

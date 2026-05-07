@@ -1,71 +1,69 @@
-```yaml
 construct:
-  name: yeast_decision_switch_tf1_tf2
+  name: yeast_cell_fate_decision_switch
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: p15A
     source: addgene
 
   cassette:
-    - promoter: GAL1  # Input A-responsive promoter
+    - promoter: GAL1
+      label: input_A_driven
     
     - cistron:
-        label: tf1_branch
-        expression: high
-        chain:
-          - tag: 3xFLAG
-          - gene:
-              id: P53398  # GAL4 DNA-binding domain as TF1 scaffold
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P32585  # VP16 activation domain
-              source: uniprot
-
-    - terminator: CYC1_term
-
-    - promoter: MET25  # Input B-responsive promoter (methionine-repressible)
-    
-    - cistron:
-        label: tf2_branch  
+        label: TF1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P04386  # GAL80 as TF2 scaffold
+              id: GAL4
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: GAL10
+      label: input_B_driven
+
+    - cistron:
+        label: TF2
+        expression: high
+        chain:
+          - tag: 6xHis
           - gene:
-              id: P25367  # SIN3 repression domain
+              id: GCN4
               source: uniprot
 
-    - terminator: ADH1_term
+    - terminator: rrnB_T1
 
-    - promoter: GAL4_UAS  # TF1 target promoter
-    
+    - spacer: 50
+
+    - promoter: GAL4_UAS
+      label: fate_output_1
+
     - cistron:
-        label: state1_reporter
+        label: metabolic_regulator_1
         expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: HXK2
+              source: uniprot
 
-    - terminator: CYC1_term
+    - terminator: rrnB_T1
 
-    - promoter: GAL80_target  # TF2 target promoter  
-    
+    - spacer: 50
+
+    - promoter: GCN4_RE
+      label: fate_output_2
+
     - cistron:
-        label: state2_reporter
+        label: metabolic_regulator_2
         expression: medium
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - gene:
+              id: ADH1
+              source: uniprot
 
-    - terminator: ADH1_term
-```
+    - terminator: rrnB_T1

@@ -1,55 +1,84 @@
 construct:
-  name: shewanella_metal_stress_response_operon
-  host: e_coli  # Shewanella oneidensis substituted with E. coli as a compatible Gram-negative host.
+  name: "ShewON_artificial_stress_response_operon"
+  host: bacillus
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: P_arsR  # Arsenic-inducible metal sensor promoter.
+    - promoter: araBAD
+      # Metal-inducible promoter (araBAD serves as inducible analog for S. oneidensis)
+      # In practice, use native S. oneidensis metal-response promoters (e.g., rsrA)
+    
     - cistron:
-        label: stress_r1
-        expression: medium
-        gene:
-          id: StressR1
-          source: uniprot
-    - spacer: 30
+        label: StressR1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: stressR1
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: stress_r2
-        expression: medium
+        label: StressR2
+        expression: high
         fused: false
-        gene:
-          id: StressR2
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: stressR2
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: stress_r3
-        expression: medium
+        label: StressR3
+        expression: high
         fused: false
-        gene:
-          id: StressR3
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: stressR3
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: stress_r4
-        expression: medium
+        label: StressR4
+        expression: high
         fused: false
-        gene:
-          id: StressR4
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: stressR4
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: stress_r5
-        expression: medium
+        label: StressR5
+        expression: high
         fused: false
-        gene:
-          id: StressR5
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: stressR5
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: stress_r6
-        expression: medium
+        label: StressR6
+        expression: high
         fused: false
-        gene:
-          id: StressR6
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: stressR6
+              source: uniprot
+    
     - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: "TMProteinA_yeast_surface_expression"
+  name: "yeast_TMProteinA_plasma_membrane"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2micron
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1  # Strong, constitutive promoter for S. cerevisiae
+
     - cistron:
-        label: target
+        label: TMProteinA
         expression: high
-        gene:
-          id: TMProteinA
-          source: uniprot
-    - terminator: CYC1
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TMProteinA
+              source: uniprot
+
+    - terminator: CYC1  # S. cerevisiae transcription terminator

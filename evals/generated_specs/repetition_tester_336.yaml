@@ -1,16 +1,28 @@
 construct:
-  name: "AAV_hFIX_Liver_Specific_Therapy"
+  name: "AAV_tissue_specific_therapeutic"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pAAV"
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: hAAT  # Human alpha-1-antitrypsin promoter for liver-specific expression
+    - promoter: EF1_alpha
+      # Tissue specificity can be achieved via enhancer elements; compiler will use sequence-diverse variants
+
     - cistron:
-        label: coagulation_factor_IX
+        label: therapeutic
         expression: high
-        gene:
-          id: P00740
-          source: uniprot
-    - terminator: hGH_polyA # Human growth hormone polyadenylation signal as terminator
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 2A
+          - gene:
+              id: LDLR
+              source: uniprot
+              # LDLR: low-density lipoprotein receptor, common AAV therapeutic target
+
+    - terminator: polyA
+      # Note: Internal poly-A sequences (if used by compiler for safety/regulation) 
+      # must employ synonymously diverse DNA sequences to avoid harmful repeats in AAV context

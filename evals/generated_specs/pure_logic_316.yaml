@@ -1,24 +1,52 @@
 construct:
-  name: "coli_deadman_kill_switch"
-  host: e_coli
+  name: "E_coli_kill_switch_Input_P_dependent"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Activated by Arabinose (Input P)
+    - promoter: araBAD
+      label: "Input_P_sensing_promoter"
+    
     - cistron:
-        label: repressor_lacI
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: lacUV5  # Repressed by LacI; active when Arabinose (Input P) is absent
-    - cistron:
-        label: toxin_mazF
+        label: "repressor_protein"
         expression: high
-        gene:
-          id: P0AE70
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: "tetR"
+              source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 25
+    
+    - promoter: lacUV5
+      label: "constitutive_output_promoter"
+    
+    - cistron:
+        label: "toxin_output"
+        expression: high
+        chain:
+          - gene:
+              id: "RelE"
+              source: uniprot
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 25
+    
+    - promoter: T7lac
+      label: "antitoxin_expression"
+    
+    - cistron:
+        label: "antitoxin_suppressor"
+        expression: high
+        chain:
+          - gene:
+              id: "RelB"
+              source: uniprot
+    
+    - terminator: rrnB_T1

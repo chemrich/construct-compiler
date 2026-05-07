@@ -1,18 +1,21 @@
 construct:
-  name: "proteinP_high_expression"
+  name: proteinP_high_expression
   host: e_coli_bl21_de3
-
+  
   backbone:
     catalog_vector: "pET-28b(+)"
-
+  
   cassette:
     - promoter: T7
-
+    
     - cistron:
-        label: target
+        label: proteinP
         expression: high
-        gene:
-          id: proteinP
-          source: uniprot
-
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: proteinP
+              source: uniprot
+    
     - terminator: rrnB_T1

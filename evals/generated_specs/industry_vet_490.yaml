@@ -1,14 +1,20 @@
 construct:
-  name: "CytoplasmicJ_Mammalian_High_Expression"
-  host: mammalian
+  name: CytoplasmicJ_mammalian
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: CytoplasmicJ
         expression: high
-        gene:
-          id: CytoplasmicJ
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CytoplasmicJ
+              source: uniprot
+
+    - terminator: BBa_B0015

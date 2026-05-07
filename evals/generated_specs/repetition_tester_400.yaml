@@ -1,64 +1,81 @@
 construct:
-  name: "divergent_metabolic_five_enzyme_coexpression"
+  name: "five_enzyme_metabolic_pathway_codon_optimized"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
         label: enzyme_1
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
-          - gene:
-              id: P0ABH7
-              source: uniprot
           - solubility_tag: MBP
-    - spacer: 25
+          - gene:
+              id: enzyme_1_codon_set_A
+              source: uniprot
+              note: "codon_optimized_variant_A"
+
+    - spacer: 30
+
     - cistron:
         label: enzyme_2
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: Strep-II
-          - gene:
-              id: P36683
-              source: uniprot
           - solubility_tag: GST
+          - gene:
+              id: enzyme_2_codon_set_B
+              source: uniprot
+              note: "codon_optimized_variant_B"
+
     - spacer: 30
+
     - cistron:
         label: enzyme_3
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: FLAG
-          - gene:
-              id: P08200
-              source: uniprot
           - solubility_tag: SUMO
-    - spacer: 35
+          - gene:
+              id: enzyme_3_codon_set_C
+              source: uniprot
+              note: "codon_optimized_variant_C"
+
+    - spacer: 30
+
     - cistron:
         label: enzyme_4
-        expression: medium
+        expression: high
         fused: false
         chain:
           - tag: HA
-          - gene:
-              id: P0AFG8
-              source: uniprot
           - solubility_tag: Trx
-    - spacer: 40
+          - gene:
+              id: enzyme_4_codon_set_D
+              source: uniprot
+              note: "codon_optimized_variant_D"
+
+    - spacer: 30
+
     - cistron:
         label: enzyme_5
-        expression: medium
+        expression: high
         fused: false
         chain:
-          - tag: Twin-Strep
-          - gene:
-              id: P07016
-              source: uniprot
+          - tag: 8xHis
           - solubility_tag: NusA
+          - gene:
+              id: enzyme_5_codon_set_E
+              source: uniprot
+              note: "codon_optimized_variant_E"
+
     - terminator: rrnB_T1

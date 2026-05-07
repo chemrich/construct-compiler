@@ -1,47 +1,78 @@
 construct:
-  name: "four_enzyme_solubility_tagged_operon"
+  name: "four_enzyme_complex_equimolar_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: ComplexPart1
         expression: high
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: ComplexPart1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ComplexPart2
         expression: high
         fused: false
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: ComplexPart2
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ComplexPart3
         expression: high
         fused: false
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: ComplexPart3
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: ComplexPart4
         expression: high
         fused: false
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: ComplexPart4
               source: uniprot
-          - tag: Myc
-    - terminator: T7term
+          - c_tag: Myc
+
+    - terminator: rrnB_T1
+
+  # Note: Co-expression plasmid (pGro7 or pG-KJE8 with groES/groEL) should be co-transformed
+  # for enhanced solubility and complex assembly. This is a separate construct.

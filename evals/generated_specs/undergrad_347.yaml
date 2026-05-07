@@ -1,23 +1,36 @@
 construct:
-  name: "split_mVenus_yeast_fusion"
+  name: "yeast_split_mVenus_complementation"
   host: yeast
+
   backbone:
-    resistance: his3  # Yeast HIS3 auxotrophic selection marker
-    ori: 2micron      # High-copy yeast origin of replication
+    resistance: HIS3
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - promoter: GAL1
+
     - cistron:
-        label: split_mVenus_fusion
+        label: mVenus_N_terminal
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: mVenus_N
-              source: fpbase
+              id: mVenus_1_155
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: mVenus_C_terminal
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
-              id: mVenus_C
-              source: fpbase
-    - terminator: CYC1 # Standard yeast transcriptional terminator
+              id: mVenus_156_238
+              source: uniprot
+
+    - terminator: CYC1

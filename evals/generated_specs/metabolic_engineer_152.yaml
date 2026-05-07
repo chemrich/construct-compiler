@@ -1,47 +1,73 @@
 construct:
-  name: "detoxification_pathway_operon"
+  name: "detoxification_operon_E_cat1_to_E_cat5"
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_1
+        label: E_cat1
         expression: high
-        gene:
-          id: E_cat1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: E_cat1_codon_optimized
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
-        expression: high
-        fused: false
-        gene:
-          id: E_cat2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_3
+        label: E_cat2
         expression: high
         fused: false
-        gene:
-          id: E_cat3
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: E_cat2_codon_optimized
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_4
+        label: E_cat3
         expression: high
         fused: false
-        gene:
-          id: E_cat4
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: E_cat3_codon_optimized
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_5
+        label: E_cat4
         expression: high
         fused: false
-        gene:
-          id: E_cat5
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: E_cat4_codon_optimized
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: E_cat5
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: E_cat5_codon_optimized
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,22 +1,31 @@
 construct:
-  name: "mammalian_bicistronic_ires_enzymex_egfp"
+  name: "EnzymeX_IRES_FluorescentMarker"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: enzyme_x
+        label: EnzymeX
         expression: high
-        gene:
-          id: EnzymeX
-          source: uniprot
-    - spacer: 585  # Approximate length for a standard IRES element to allow internal ribosome entry
+        chain:
+          - gene:
+              id: EnzymeX
+              source: uniprot
+
+    # IRES element for polycistronic expression from single mRNA
+    - spacer: 50
+
     - cistron:
-        label: fluorescent_marker
-        expression: medium
-        fused: false  # Indicates independent translation via the IRES spacer
+        label: FluorescentMarker
+        expression: high
+        fused: false
         gene:
-          id: mEGFP
+          id: mNeonGreen
           source: fpbase
-    - terminator: bGH_PA  # Standard mammalian polyadenylation signal/terminator
+
+    - terminator: rrnB_T1

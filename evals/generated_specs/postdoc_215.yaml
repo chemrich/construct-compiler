@@ -1,18 +1,22 @@
 construct:
-  name: "yeast_protein_K_high_expression"
+  name: "yeast_K_constitutive_His"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3 # CAG is a mammalian promoter; substituted with TDH3 for high constitutive expression in yeast.
+    - promoter: CAG
+
     - cistron:
-        label: target
+        label: K
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: K
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

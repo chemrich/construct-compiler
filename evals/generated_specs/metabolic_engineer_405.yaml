@@ -1,14 +1,17 @@
 construct:
-  name: "four_enzyme_operon_s1_s4"
-  host: e_coli
+  name: "E_coli_S1_S2_S3_S4_operon"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100 # Strong constitutive promoter for non-repressible expression
+    - promoter: araBAD
+    
     - cistron:
-        label: enzyme_s1
+        label: S1
         expression: high
         chain:
           - tag: 6xHis
@@ -16,28 +19,35 @@ construct:
           - gene:
               id: S1
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_s2
+        label: S2
         expression: high
         fused: false
         gene:
           id: S2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_s3
+        label: S3
         expression: high
         fused: false
         gene:
           id: S3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_s4
+        label: S4
         expression: high
         fused: false
         gene:
           id: S4
           source: uniprot
+    
     - terminator: rrnB_T1

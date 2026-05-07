@@ -1,24 +1,30 @@
 construct:
-  name: "gene_A_gene_B_polycistronic_readthrough"
-  host: e_coli
+  name: "geneA_readthrough_geneB"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gene_A
+        label: geneA
         expression: high
         gene:
-          id: gene_A
+          id: geneA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 20
+
     - cistron:
-        label: gene_B
+        label: geneB
         expression: high
         fused: false
         gene:
-          id: gene_B
+          id: geneB
           source: uniprot
+
     - terminator: rrnB_T1

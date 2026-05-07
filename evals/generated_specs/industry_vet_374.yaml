@@ -1,28 +1,31 @@
 construct:
-  name: "yeast_surface_display_aga2_megfp"
+  name: "yeast_surface_display_POI"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    resistance: ampicillin
+    ori: pUC
     source: addgene
 
   cassette:
-    - promoter: GAL1 # Inducible strong yeast promoter
+    - promoter: GAL1
 
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
+          - tag: HA
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: AGA2_YEAST
+              id: AGA1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: HA
+              repeats: 1
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: POI
+              source: uniprot
 
     - terminator: CYC1

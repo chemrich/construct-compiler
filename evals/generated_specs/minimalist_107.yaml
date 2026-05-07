@@ -1,24 +1,33 @@
 construct:
   name: "activator_repressor_minimal"
-  host: e_coli_bl21_de3
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: activator
         expression: high
-        gene:
-          id: Activator
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: activator
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: repressor
-        expression: medium
-        fused: false
-        gene:
-          id: Repressor
-          source: uniprot
+        label: repressor_x_responsive
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: repressor
+              source: uniprot
+
     - terminator: rrnB_T1

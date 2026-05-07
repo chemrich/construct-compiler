@@ -1,31 +1,35 @@
 construct:
-  name: "secreted_multidomain_cellulase_fusion"
+  name: "secreted_multidomain_enzyme_sc"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
         label: secreted_enzyme
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P62694
+              id: catalytic_domain
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P07987
+              id: binding_domain
               source: uniprot
           - linker:
               type: rigid_EAAAK
               repeats: 2
           - gene:
-              id: Q00329
+              id: cellulose_binding_module
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

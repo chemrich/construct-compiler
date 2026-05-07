@@ -1,14 +1,46 @@
 construct:
-  name: "Tissue_Specific_Dual_Enhancer_Lumi_Reporter"
+  name: "Reporter_Lumi_dual_enhancer_tissue_specific"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: "Dual_Enhancer_Basal" # Synthetic regulatory region utilizing two non-homologous tissue-specific enhancers to prevent recombination
+    - promoter_element:
+        type: enhancer
+        id: SPC1_enhancer
+        description: "Surfactant protein C enhancer - lung epithelial cell-specific"
+        position: upstream
+        distance_from_tss: 2500
+
+    - promoter_element:
+        type: spacer
+        length: 150
+        description: "Non-homologous spacer to minimize recombination risk"
+
+    - promoter_element:
+        type: enhancer
+        id: PDX1_enhancer
+        description: "Pancreatic duodenal homeobox-1 enhancer - pancreatic beta cell-specific"
+        position: upstream
+        distance_from_tss: 1200
+
+    - promoter_element:
+        type: spacer
+        length: 150
+        description: "Additional spacing before basal promoter"
+
+    - promoter: lacUV5
+      description: "Minimal basal promoter for tissue-specific regulation by enhancers"
+
     - cistron:
-        label: reporter
-        expression: medium
-        gene:
-          id: Reporter_Lumi
-          source: uniprot
-    - terminator: bGH_polyA
+        label: Reporter_Lumi
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Renilla_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

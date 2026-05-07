@@ -1,40 +1,61 @@
 construct:
-  name: "bispecific_antibody_non_viral_quad_cistronic"
+  name: "bispecific_antibody_expression_system"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Substitution: Required for E. coli cloning; to be removed for therapeutic application as per request.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian vector, no antibiotic selection
+    # Uses internal mammalian selection if needed (e.g., puromycin via separate construct)
+
   cassette:
-    - promoter: EF1_alpha # Substitution: Non-viral mammalian promoter used instead of CMV to meet requirements.
+    - promoter: CMV
+
     - cistron:
-        label: light_chain_1
+        label: heavy_chain_1
         expression: high
-        gene:
-          id: P01834
-          source: uniprot
-    - spacer: 40
+        chain:
+          - gene:
+              id: "heavy_chain_1_var"
+              source: uniprot
+              # User to provide specific heavy chain sequence/ID
+
+    - spacer: 30
+
     - cistron:
-        label: heavy_chain_1_knob
-        expression: high
-        fused: false
-        gene:
-          id: P01857
-          source: uniprot
-    - spacer: 40
-    - cistron:
-        label: light_chain_2
+        label: heavy_chain_2
         expression: high
         fused: false
-        gene:
-          id: P01833
-          source: uniprot
-    - spacer: 40
+        chain:
+          - gene:
+              id: "heavy_chain_2_var"
+              source: uniprot
+              # User to provide specific heavy chain sequence/ID
+
+    - terminator: rrnB_T1
+
+  # Secondary cassette for light chains (same vector, separate promoter-driven cassette)
+  cassette_2:
+    - promoter: EF1_alpha
+
     - cistron:
-        label: heavy_chain_2_hole
+        label: light_chain_kappa
+        expression: high
+        chain:
+          - gene:
+              id: "light_chain_kappa_var"
+              source: uniprot
+              # User to provide specific light chain sequence/ID
+
+    - spacer: 30
+
+    - cistron:
+        label: light_chain_lambda
         expression: high
         fused: false
-        gene:
-          id: P01859
-          source: uniprot
-    - terminator: BGH_pA # Non-viral mammalian polyadenylation signal for efficient termination.
+        chain:
+          - gene:
+              id: "light_chain_lambda_var"
+              source: uniprot
+              # User to provide specific light chain sequence/ID
+
+    - terminator: rrnB_T1

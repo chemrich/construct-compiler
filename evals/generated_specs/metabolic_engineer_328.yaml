@@ -1,56 +1,70 @@
 construct:
-  name: "synthetic_nif_operon_azotobacter_A_F"
-  host: e_coli  # Azotobacter vinelandii is not a predefined host; E. coli is used as the closest bacterial proxy.
+  name: "nif_ABCDEF_operon_anaerobic"
+  host: bacillus  # Azotobacter vinelandii is a gram-negative bacterium; using bacillus as closest available for anaerobic optimization
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: PnifH  # Anaerobic, NifA-dependent promoter native to Azotobacter vinelandii nitrogenase.
+    - promoter: araBAD  # araBAD provides tight anaerobic control and is responsive to microaerobic conditions
+
     - cistron:
-        label: nifA
+        label: NifA
+        expression: high
+        gene:
+          id: NifA
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: NifB
         expression: high
         fused: false
         gene:
-          id: P09121
+          id: NifB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifB
+        label: NifC
         expression: high
         fused: false
         gene:
-          id: P09122
+          id: NifC
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifC
+        label: NifD
         expression: high
         fused: false
         gene:
-          id: P22036
+          id: NifD
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifD
+        label: NifE
         expression: high
         fused: false
         gene:
-          id: P07328
+          id: NifE
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nifE
+        label: NifF
         expression: high
         fused: false
         gene:
-          id: P07329
+          id: NifF
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: nifF
-        expression: high
-        fused: false
-        gene:
-          id: P09124
-          source: uniprot
+
     - terminator: rrnB_T1

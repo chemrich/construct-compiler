@@ -1,24 +1,43 @@
 construct:
-  name: "pichia_gap_p2a_system"
+  name: pichia_gappromoter_his_p2a_ha
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: multicistronic_2a_polyprotein
+        label: gene1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: gene_1
+              id: gene1
               source: uniprot
-          - linker:
-              type: P2A
+
+    - spacer: 21
+
+    - cistron:
+        label: p2a_peptide
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - spacer: 21
+
+    - cistron:
+        label: gene2
+        expression: high
+        chain:
           - gene:
-              id: gene_2
+              id: gene2
               source: uniprot
           - tag: HA
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

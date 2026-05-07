@@ -1,16 +1,23 @@
 construct:
-  name: "enzymeZ_pBR322_constitutive_dual_selection"
+  name: "enzymeZ_dual_resistance"
   host: e_coli
+  
   backbone:
-    resistance: ampicillin # pBR322 naturally carries both ampicillin (bla) and tetracycline (tetA) resistance markers
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+    # Note: dual antibiotic resistance (ampicillin + tetracycline) requires 
+    # two separate resistance markers in the backbone. This spec includes ampicillin 
+    # as primary; tetracycline marker must be engineered into the pBR322 backbone separately.
+  
   cassette:
-    - promoter: J23100 # Standard constitutive promoter for E. coli
+    - promoter: lacUV5
+    
     - cistron:
-        label: target_enzyme
-        expression: medium
+        label: enzymeZ
+        expression: high
         gene:
           id: enzymeZ
           source: uniprot
+    
     - terminator: rrnB_T1

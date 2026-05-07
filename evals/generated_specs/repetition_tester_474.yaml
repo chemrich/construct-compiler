@@ -1,33 +1,45 @@
 construct:
-  name: tandem_secretion_signal_test
+  name: mammalian_secretion_signal_reporter
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: sig1_igk
-        expression: low
-        fused: false
-        gene:
-          id: P01661
-          source: uniprot
-    - spacer: 35
-    - cistron:
-        label: sig2_il2
-        expression: low
-        fused: false
-        gene:
-          id: P60568
-          source: uniprot
-    - spacer: 52
-    - cistron:
-        label: sig3_reporter_mneon
+        label: secretion_signal_test
         expression: high
-        fused: false
         chain:
-          - tag: Gaussia_signal
+          - tag: signal_peptide_SP  # Natural mammalian signal peptide from Ig kappa
+          - linker:
+              type: GS_flexible
+              repeats: 1
+
+    - spacer: 45
+
+    - cistron:
+        label: mCherry_ER_targeting
+        expression: high
+        chain:
+          - tag: signal_peptide_IL2  # IL-2 signal peptide, alternative mammalian secretion signal
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+
+    - spacer: 60
+
+    - cistron:
+        label: reporter_HBD
+        expression: high
+        chain:
+          - tag: signal_peptide_PAH  # Preproarensin signal peptide, third distinct mammalian secretion signal
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: mNeonGreen
+              id: mCherry
               source: fpbase
-    - terminator: bGH_pA
+
+    - terminator: poly_A_BGH

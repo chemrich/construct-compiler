@@ -1,19 +1,23 @@
 construct:
-  name: "Pichia_GAP_HSA_secretion"
+  name: pichia_pastoris_HSA_secretion
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: G418
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: target
+        label: HSA_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_mating_factor
           - gene:
               id: P02768
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: CYC1_polyA

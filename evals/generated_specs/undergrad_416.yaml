@@ -1,22 +1,35 @@
 construct:
-  name: "stable_high_expression_supergene"
+  name: "mammalian_SuperGene_stable_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: neomycin
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: target
+        label: SuperGene
         expression: high
-        gene:
-          id: SuperGene
-          source: uniprot
-    - spacer: 40
+        chain:
+          - gene:
+              id: SuperGene
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: SV40
+
     - cistron:
-        label: selection
-        expression: medium
+        label: selection_marker
+        expression: high
         fused: false
-        gene:
-          id: PuroR
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: neomycin_phosphotransferase
+              source: uniprot
+
+    - terminator: rrnB_T1

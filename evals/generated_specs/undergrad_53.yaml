@@ -1,21 +1,27 @@
 construct:
-  name: yeast_y2h_gal4bd_bait
+  name: GAL4_DBD_fusion_partner_yeast_two_hybrid
   host: yeast
+
   backbone:
-    resistance: trp1
+    resistance: TRP1
     ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: ADH1
+    - promoter: GAL1
+
     - cistron:
-        label: bait_fusion
-        expression: medium
+        label: GAL4_DBD_fusion
+        expression: high
         chain:
-          - tag: GAL4_BD
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: Fusion_Partner
               source: uniprot
-    - terminator: ADH1_term
+
+    - terminator: CYC1

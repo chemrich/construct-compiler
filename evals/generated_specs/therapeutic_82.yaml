@@ -1,22 +1,26 @@
 construct:
-  name: "Mtb_Ag85B_yeast_secretion"
+  name: "mtb_antigen_yeast_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: ag85b_antigen
+        label: mtb_antigen
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: P9WQP3
+              id: Rv1980c
               source: uniprot
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - tag: 6xHis
-    - terminator: CYC1_term
+
+    - terminator: CYC1_terminator

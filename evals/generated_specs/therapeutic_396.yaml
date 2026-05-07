@@ -1,15 +1,34 @@
 construct:
-  name: "therapeutic_miRNA_mimic_ncRNA"
-  host: mammalian
+  name: "miRNA_mimic_mammalian_Pol3"
+  host: HEK293
+
   backbone:
-    resistance: none # Selection-free backbone requested to avoid antibiotic resistance genes in therapeutic context
+    catalog_vector: "pTwist CMV"
+    # Note: Using pTwist CMV as base; resistance gene will be removed in final construct
+    # Alternative: custom backbone with no resistance marker for therapeutic use
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: U6 # RNA Polymerase III promoter for high, constitutive non-coding RNA expression
+    - promoter: U6
+      # U6 is RNA Pol III promoter for high constitutive ncRNA expression
+
     - cistron:
-        label: miRNA_mimic
+        label: miRNA_precursor
         expression: high
-        gene:
-          id: hsa-mir-1-mimic # miRNA mimic includes necessary flanking sequences for Drosha/Dicer processing
-    - terminator: polyT # Standard RNA Polymerase III termination signal (T6 stretch)
+        chain:
+          - element: 5prime_flank
+            # 5' flanking sequence for proper miRNA processing
+            sequence_feature: "GGCCAGCCATGG"
+          
+          - gene:
+              id: hsa-miR-122
+              # Therapeutic miRNA mimic targeting hepatitis C virus
+              source: mirbase
+          
+          - element: 3prime_flank
+            # 3' flanking sequence (poly-U tract) for Pol III termination
+            sequence_feature: "TTTTTT"
+
+    - terminator: U6_poly_U
+      # Pol III termination: poly(T) tract for proper transcript release

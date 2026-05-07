@@ -1,37 +1,46 @@
 construct:
-  name: "metabolic_pathway_polycistronic_expression"
+  name: "metabolic_pathway_tristone_operon"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_1
+        label: gene1
         expression: high
         chain:
           - gene:
-              id: gene_1
+              id: gene1
               source: uniprot
           - tag: 6xHis
-    - spacer: 30 # IRES is used in mammalian systems; for E. coli, a spacer is used for independent translation within an operon
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
+        label: gene2_ires
         expression: high
-        fused: false # Ensures independent translation initiation (separate RBS/start codon)
+        fused: false
         chain:
           - gene:
-              id: gene_2
+              id: gene2
               source: uniprot
           - tag: 6xHis
-    - spacer: 30 # IRES is used in mammalian systems; for E. coli, a spacer is used for independent translation within an operon
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_3
+        label: gene3_ires
         expression: high
-        fused: false # Ensures independent translation initiation (separate RBS/start codon)
+        fused: false
         chain:
           - gene:
-              id: gene_3
+              id: gene3
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,29 +1,29 @@
 construct:
-  name: "therapeutic_rbd_egfp_fusion"
-  host: e_coli_bl21
+  name: "RBD_GFP_fusion_therapeutic"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Non-antibiotic selection requested; kanamycin used as substitution per schema limits.
-    ori: pBR322
+    resistance: chloramphenicol
+    ori: p15A
     source: addgene
+
   cassette:
-    - promoter: tac # Non-viral hybrid promoter for bacterial expression
+    - promoter: T7lac
+
     - cistron:
-        label: fusion_protein
+        label: RBD_GFP_fusion
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 3
           - gene:
-              id: P0DTC2 # SARS-CoV-2 Spike RBD (UniProt)
+              id: ACE2_RBD
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
+
     - terminator: rrnB_T1

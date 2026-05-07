@@ -1,14 +1,20 @@
 construct:
-  name: triple_protein_Y_fusion
-  host: e_coli_bl21
+  name: "triple_Y_fusion"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: triple_Y
+        label: Y_triple
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: Y
               source: uniprot
@@ -18,4 +24,5 @@ construct:
           - gene:
               id: Y
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

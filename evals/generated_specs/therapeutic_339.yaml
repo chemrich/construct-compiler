@@ -1,16 +1,24 @@
 construct:
-  name: "OCT4_reprogramming_IVT_template"
+  name: "OCT4_IVT_mRNA_reprogramming"
   host: in_vitro
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: OCT4_factor
+        label: OCT4
         expression: high
-        gene:
-          id: Q01860
-          source: uniprot
+        chain:
+          - tag: 5_prime_UTR_Kozak
+          - gene:
+              id: OCT4
+              source: uniprot
+          - tag: PABP_binding_site
+          - tag: poly_A_tail
+
     - terminator: T7term

@@ -1,18 +1,23 @@
 construct:
-  name: "T5_mEGFP_C_terminal_FLAG_plasmid"
+  name: "ecoli_T5_FLAG_CAT"
   host: e_coli
+  
   backbone:
     resistance: chloramphenicol
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T5
+    
+    - rbs: strong
+    
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: target_protein
           - tag: FLAG
+    
     - terminator: rrnB_T1

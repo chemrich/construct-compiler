@@ -1,16 +1,20 @@
 construct:
-  name: "Secreted_Z_Secretion_Construct"
+  name: "secreted_Z_ecoli"
   host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: secreted_Z
         expression: high
         chain:
-          - tag: PelB  # Signal peptide for periplasmic secretion in E. coli
+          - tag: pelB_signal_peptide
           - gene:
-              id: Secreted_Z
+              id: secreted_Z
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

@@ -1,19 +1,23 @@
 construct:
-  name: "pichia_pastoris_high_yield_secretion_glp1"
+  name: "pichia_pastoris_secreted_peptide"
   host: yeast
+
   backbone:
-    resistance: HIS4 # Using HIS4 nutritional selection marker to avoid antibiotic resistance as requested
-    ori: pUC
+    catalog_vector: "pGAPZα"
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: AOX1 # Strong methanol-inducible promoter for high-yield expression in Pichia
+    - promoter: GAP
+
     - cistron:
-        label: therapeutic_secretion_unit
+        label: secreted_peptide
         expression: high
         chain:
-          - tag: alpha_mating_factor # Standard N-terminal secretion signal for Pichia pastoris
-          - cleavage_site: TEV # Explicit cleavage site to remove the leader sequence
+          - tag: alpha_factor_signal
+          - cleavage_site: 3C
           - gene:
-              id: GLP1
+              id: therapeutic_peptide
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1_polya

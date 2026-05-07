@@ -1,13 +1,17 @@
 construct:
-  name: "antisense_rna_against_m"
-  host: e_coli_bl21_de3
+  name: antisense_RNA_against_mRNA_M
+  host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7lac
     - cistron:
-        label: asRNA
+        label: antisense_M
         expression: high
         gene:
-          id: antisense_mRNA_M
-    - terminator: T7term
+          id: mRNA_M
+          source: uniprot
+          antisense: true
+    - terminator: rrnB_T1

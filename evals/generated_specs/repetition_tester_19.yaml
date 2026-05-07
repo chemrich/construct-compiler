@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: triple_protein_2A_expression
+  name: "mammalian_triple_2A_expression"
   host: HEK293
 
   backbone:
@@ -10,26 +9,40 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: P1_F2A_P2_P2A_P3
+        label: P1
         expression: high
         chain:
+          - tag: FLAG
           - gene:
               id: P1
               source: uniprot
-          - cleavage_site: F2A  # First 2A peptide
+
+    - cistron:
+        label: P2A_linker1
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: F2A
           - linker:
-              type: GS_flexible  # First unique linker
-              repeats: 2
+              type: GS_flexible
+              repeats: 1
+          - tag: HA
           - gene:
               id: P2
               source: uniprot
-          - cleavage_site: P2A  # Second 2A peptide (different from F2A)
+
+    - cistron:
+        label: P3A_linker2
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: P2A
           - linker:
-              type: rigid_EAAAK  # Second unique linker (different from GS_flexible)
+              type: rigid_EAAAK
               repeats: 1
+          - tag: 6xHis
           - gene:
               id: P3
               source: uniprot
 
     - terminator: rrnB_T1
-```

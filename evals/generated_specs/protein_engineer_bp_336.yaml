@@ -1,19 +1,24 @@
 construct:
-  name: "pichia_das1_antigen_secretion"
+  name: "pichia_DAS1_delta_pro_alphafactor_antigen_HA"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: DAS1
+
     - cistron:
-        label: target_antigen
+        label: target
         expression: high
         chain:
-          - tag: alpha_factor_delta_pro
+          - secretion_signal: delta_pro_alpha_factor
           - gene:
               id: antigen
               source: uniprot
           - tag: HA
-    - terminator: AOX1_term
+          - cleavage_site: Kex2
+
+    - terminator: CYC1_TT

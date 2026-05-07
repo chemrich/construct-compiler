@@ -1,14 +1,20 @@
 construct:
-  name: protein_D_mammalian_expression
+  name: mammalian_vitamin_D_delivery
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: vitamin_D_binding_protein
         expression: high
-        gene:
-          id: D
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P02774
+              source: uniprot
+
+    - terminator: rrnB_T1

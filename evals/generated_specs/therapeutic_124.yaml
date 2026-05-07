@@ -1,34 +1,42 @@
 construct:
-  name: "Mammalian_NonViral_Polycistronic_Immunomodulator"
+  name: "dual_secreted_immunomodulator_mammalian"
   host: HEK293
+
   backbone:
-    resistance: kanamycin  # Necessary for bacterial propagation
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    # Non-integrating, mammalian expression vector without antibiotic resistance
+
   cassette:
-    - promoter: EF1_alpha  # Human promoter used to avoid viral CMV
+    - promoter: CMV
+
     - cistron:
-        label: IL2_purification
-        expression: medium
+        label: immunomod_1
+        expression: high
         chain:
-          - gene:
-              id: P60568
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - tag: 8xHis
-    - spacer: 40  # Required for polycistronic spacing
-    - cistron:
-        label: IL10_purification
-        expression: medium
-        fused: false  # Enables independent translation from single mRNA
-        chain:
-          - gene:
-              id: P22301
-              source: uniprot
+          - cleavage_site: 3C
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: Twin-Strep
-    - terminator: hGH_polyA  # Human growth hormone polyadenylation signal (non-viral)
+              repeats: 1
+          - gene:
+              id: IL10
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: immunomod_2
+        expression: high
+        chain:
+          - tag: Strep-II
+          - cleavage_site: TEV
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: TNF
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,18 +1,23 @@
 construct:
-  name: "bacillus_cellulase_secretion_system"
+  name: "xylose_inducible_cellulase_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: PxylA
+
     - cistron:
-        label: target_cellulase
+        label: cellulase
         expression: high
         chain:
-          - tag: SacB
+          - signal_peptide: SacB
           - gene:
-              id: P06210
+              id: cellulase
               source: uniprot
           - tag: FLAG
+
     - terminator: rrnB_T1

@@ -1,16 +1,25 @@
 construct:
-  name: "YFG_rapid_degradation_yeast"
+  name: YFG_rapid_degradation_yeast
   host: yeast
+
   backbone:
-    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: YFG_degron
         expression: high
         chain:
           - gene:
               id: YFG
               source: uniprot
-          - tag: PEST
-    - terminator: CYC1
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: degron_CL1
+
+    - terminator: rrnB_T1

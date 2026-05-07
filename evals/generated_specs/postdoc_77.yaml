@@ -1,16 +1,22 @@
 construct:
-  name: "BacterialTargetProtein_Expression"
+  name: "BacterialTargetProtein_CHis"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
-        expression: high # Optimized Shine-Dalgarno sequence will be used instead of requested Kozak sequence, which is for eukaryotic systems.
+        expression: high
         chain:
           - gene:
               id: BacterialTargetProtein
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

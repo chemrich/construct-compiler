@@ -1,16 +1,23 @@
 construct:
-  name: "yeast_high_yield_beta_galactosidase"
+  name: "high_yield_beta_galactosidase_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
         label: beta_galactosidase
         expression: high
-        gene:
-          id: P00722
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacZ
+              source: uniprot
+
+    - terminator: CYC1_terminator

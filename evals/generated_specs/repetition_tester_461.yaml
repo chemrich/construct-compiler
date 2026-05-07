@@ -1,21 +1,35 @@
 construct:
-  name: "dual_reporter_non_homologous_mammalian"
+  name: dual_reporter_firefly_neongreen
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: firefly_luciferase
+        expression: high
         gene:
-          id: P08659
+          id: Photinus_pyralis_luciferase
           source: uniprot
-    - terminator: SV40_pA
-    - spacer: 500  # Non-coding recombination barrier
+
+    - terminator: SV40_polyA
+
+    - spacer: 250
+      # Unique non-coding recombination barrier sequence
+      # (prevents homologous recombination between cassettes)
+
     - promoter: EF1_alpha
+      # Non-homologous to CMV; constitutive mammalian promoter
+
     - cistron:
-        label: mNeonGreen_reporter
+        label: neongreen
+        expression: high
         gene:
           id: mNeonGreen
           source: fpbase
-    - terminator: bGH_pA
+
+    - terminator: hGH_polyA
+      # Distinct poly-A signal (growth hormone, not SV40)

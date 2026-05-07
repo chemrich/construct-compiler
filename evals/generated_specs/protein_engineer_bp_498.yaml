@@ -1,21 +1,24 @@
 construct:
-  name: "bacillus_tat_secretion_sfgfp"
+  name: "Bacillus_TAT_secreted_sfGFP"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
 
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: secreted_reporter
+        label: TAT_secreted_reporter
         expression: high
         chain:
-          - tag: PhoD
+          - tag: TAT_signal_PhoD
           - tag: 6xHis
           - cleavage_site: Enterokinase
           - gene:
               id: sfGFP
               source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

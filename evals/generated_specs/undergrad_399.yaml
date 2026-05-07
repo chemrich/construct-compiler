@@ -1,16 +1,21 @@
 construct:
-  name: "toxic_killer_protein_tight_regulation"
-  host: e_coli
+  name: "tight_killer_protein_arabinose_inducible"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: target
+        label: killer
         expression: low
-        gene:
-          id: KillerProtein
-          source: uniprot
+        chain:
+          - gene:
+              id: KillerProtein
+              source: uniprot
+
     - terminator: rrnB_T1

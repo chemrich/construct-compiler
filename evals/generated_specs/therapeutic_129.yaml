@@ -1,23 +1,39 @@
 construct:
-  name: "siRNA_reporter_nonviral_vector"
+  name: "siRNA_reporter_mammalian_nonviral"
   host: HEK293
+
   backbone:
-    resistance: kanamycin  # Note: Kanamycin included for bacterial propagation; user requested no ARGs for final construct
-    ori: pUC
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    ori: null
     source: addgene
+
   cassette:
-    - promoter: U6  # Non-viral Pol III promoter for siRNA/shRNA expression
+    - promoter: U6
+      # U6 is a Pol III promoter for constitutive siRNA expression
+
     - cistron:
-        label: siRNA_expression
+        label: siRNA
         expression: high
-        gene:
-          id: siRNA_targeting_sequence
-    - spacer: 50
-    - promoter: EF1_alpha  # Non-viral Pol II promoter for protein expression
+        chain:
+          - gene:
+              id: "generic_siRNA_target"
+              source: uniprot
+              # Note: User specifies siRNA design; compiler should handle Pol III output
+
+    - terminator: "U6_term"
+
+    # Separate cassette for fluorescent reporter
+    - promoter: EF1_alpha
+      # EF1_alpha provides mammalian constitutive expression independent of CMV
+
     - cistron:
         label: reporter
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: "rrnB_T1"

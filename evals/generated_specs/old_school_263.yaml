@@ -1,18 +1,22 @@
 construct:
-  name: "ReceptorProtein_Mammalian_Expression"
+  name: "ReceptorProtein_CMV_Flag"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: neomycin
     ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: receptor_target
+        label: ReceptorProtein
         expression: high
         chain:
           - gene:
               id: ReceptorProtein
               source: uniprot
           - tag: FLAG
-    - terminator: SV40
+
+    - terminator: SV40_polyA

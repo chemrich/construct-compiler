@@ -1,19 +1,32 @@
 construct:
-  name: "amyE_integration_protease_Pveg"
+  name: "bacillus_amyE_integration_aprE_protease"
   host: bacillus
+
   backbone:
-    # Bacillus integration vectors like pDR111 utilize E. coli origins for cloning
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
+    - homology_arm_left:
+        locus: amyE
+        length: 1000
+        position: upstream
+
     - promoter: Pveg
+
     - cistron:
-        label: "secreted_protease"
+        label: secreted_protease
         expression: high
         chain:
-          - tag: AprE_secretion_signal
+          - secretion_signal: AmyE
           - gene:
-              id: P04189
-              source: uniprot
-    - terminator: BBa_B0015  # Standard bidirectional terminator appropriate for Bacillus
+              id: engineered_protease_variant
+              source: custom
+
+    - terminator: rrnB_T1
+
+    - homology_arm_right:
+        locus: amyE
+        length: 1000
+        position: downstream

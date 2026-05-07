@@ -1,20 +1,22 @@
 construct:
-  name: "antigenz_yeast_surface_display"
+  name: AntigenZ_yeast_surface_display
   host: yeast
+
   backbone:
-    catalog_vector: "pYD1"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: display_anchor_fusion
+        label: surface_display
+        expression: high
         chain:
-          - gene:
-              id: Aga2p
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - tag: Aga2p
           - gene:
               id: AntigenZ
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

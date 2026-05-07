@@ -1,18 +1,40 @@
 construct:
-  name: "AAV2_AAP_Yeast_Purification_Construct"
+  name: "AAV_accessory_membrane_yeast"
   host: yeast
+
   backbone:
     catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2mu
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target_aap
+        label: AAV_accessory
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: SUMO
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P0DQC1
+              id: AAV_accessory_protein
               source: uniprot
-    - terminator: CYC1_term
+
+    - spacer: 25
+
+    - cistron:
+        label: membrane_anchor
+        expression: medium
+        fused: false
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: membrane_targeting_signal
+              source: uniprot
+
+    - terminator: rrnB_T1

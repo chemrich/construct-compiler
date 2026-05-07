@@ -1,44 +1,77 @@
 construct:
   name: "bistable_toggle_switch"
-  host: e_coli
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pSC101
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: Ptet  # Repressed by TetR; activated by 'Set' pulse (aTc)
+    - promoter: araBAD
+
     - cistron:
-        label: state_1_repressor
-        expression: medium
-        gene:
-          id: P03023  # LacI
-          source: uniprot
-    - spacer: 30
+        label: State1_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: state_1_reporter
+        label: State2_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: State1_reporter
         expression: medium
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: mGFP
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: State2_reporter
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: Set_input_sensor
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Reset_input_sensor
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: rhamnose_operon_regulator
+              source: uniprot
 
     - terminator: rrnB_T1
-
-    - promoter: lacUV5  # Repressed by LacI; activated by 'Reset' pulse (IPTG)
-    - cistron:
-        label: state_2_repressor
-        expression: medium
-        gene:
-          id: P04483  # TetR
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: state_2_reporter
-        expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-
-    - terminator: BBa_B0015

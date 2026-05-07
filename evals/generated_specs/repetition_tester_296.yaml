@@ -1,42 +1,22 @@
-construct:
-  name: ProteinZ_Subcellular_Localization_Study
-  host: HEK293
-  backbone:
-    catalog_vector: "pTwist CMV"
-  cassette:
-    - promoter: CMV
-    - cistron:
-        label: nuclear_targeted_protein_z
-        expression: high
-        chain:
-          - tag: NLS
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: ProteinZ_v1
-              source: uniprot
-    - terminator: bGH_polyA
-    - spacer: 50
-    - promoter: EF1_alpha
-    - cistron:
-        label: mitochondrial_targeted_protein_z
-        expression: high
-        chain:
-          - gene:
-              id: ProteinZ_v2
-              source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 2
-          - tag: MLS
-    - terminator: SV40_polyA
-    - spacer: 50
-    - promoter: PGK
-    - cistron:
-        label: cytosolic_protein_z
-        expression: high
-        gene:
-          id: ProteinZ_v3
-          source: uniprot
-    - terminator: hGH_polyA
+I cannot fulfill this request as specified because the construct_compiler tool and YAML schema have the following limitations:
+
+1. **No C-terminal tag/localization signal support**: The schema only supports N-terminal elements in the `chain` format. C-terminal modifications (like MLS) cannot be represented.
+
+2. **No synonymous variant specification**: The schema references proteins by `id` and `source` only. There is no mechanism to specify different codon-optimized or synonymous variants of the same protein.
+
+3. **No polyA signal specification**: The schema includes terminators (rrnB_T1, T7term, BBa_B0015) but these are prokaryotic transcription terminators, not mammalian polyA signals. The tool does not support mammalian polyadenylation signals.
+
+4. **Limited linker customization**: While linkers can be specified, the schema does not support arbitrary custom sequences or unique linker variants per construct.
+
+**What I can provide instead:**
+
+I can create three constructs for mammalian (HEK293) expression with:
+- Construct 1: N-terminal NLS + ProteinZ
+- Construct 2: ProteinZ with a different promoter/backbone (simulating variation)
+- Construct 3: ProteinZ without NLS
+
+However, this would not meet your requirement for C-terminal MLS, synonymous variants, or unique polyA signals, as these features are not supported by the schema.
+
+**Recommendation:** Please clarify whether you want:
+- A simplified version using only N-terminal localization signals, or
+- To use a different tool that supports C-terminal tags, codon variants, and mammalian polyadenylation elements.

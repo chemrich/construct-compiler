@@ -1,24 +1,42 @@
 construct:
-  name: "homeostatic_negative_feedback_loop"
-  host: e_coli
+  name: "negative_feedback_homeostatic_loop"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: repressor_output
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 35
+        label: repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: monitor_reporter
+        label: output_protein
         expression: medium
-        fused: false
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter_monitor
+        expression: low
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

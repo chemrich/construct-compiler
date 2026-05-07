@@ -1,28 +1,36 @@
 construct:
-  name: "pichia_pastoris_heterodimer_expression"
+  name: "heterodimeric_complex_pichia"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: subunit_a
+        label: subunit_A
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor
           - gene:
-              id: Subunit_A
+              id: subunit_A
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1
+
+  cassette:
     - promoter: GAP
+
     - cistron:
-        label: subunit_b
+        label: subunit_B
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor
           - gene:
-              id: Subunit_B
+              id: subunit_B
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1

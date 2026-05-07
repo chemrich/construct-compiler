@@ -1,19 +1,23 @@
 construct:
-  name: "yeast_secretory_protein_production"
+  name: secreted_protein_yeast
   host: yeast
+
   backbone:
     resistance: ampicillin
-    ori: 2_micron
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
         label: secreted_target
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
               id: SecretedYeastProtein
               source: uniprot
           - tag: 6xHis
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

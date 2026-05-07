@@ -1,14 +1,21 @@
 construct:
-  name: "human_luminescence_reporter"
+  name: luminescence_reporter_human
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: luciferase_reporter
+        label: luciferase
         expression: high
-        gene:
-          id: P00552
-          source: uniprot
-    - terminator: SV40_polyA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Renilla_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

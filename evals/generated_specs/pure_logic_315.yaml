@@ -1,16 +1,54 @@
 construct:
-  name: yeast_oxidative_stress_sensor
+  name: "yeast_ROS_sensor_circuit"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TRX2  # Oxidative stress-responsive promoter induced by Yap1 in yeast
+    - promoter: GAL1
+
     - cistron:
-        label: output_z
+        label: ROS_sensor
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: CYC1
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: YAP1
+              source: uniprot
+        # YAP1 is the native S. cerevisiae oxidative stress transcription factor
+
+    - spacer: 30
+
+    - cistron:
+        label: ROS_reporter
+        expression: high
+        chain:
+          - gene:
+              id: GFP
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+        # Dual fluorescent readout for ROS activation
+
+    - spacer: 30
+
+    - cistron:
+        label: Output_Z
+        expression: medium
+        fused: false
+        chain:
+          - tag: HA
+          - gene:
+              id: caspase_YCA1
+              source: uniprot
+        # YCA1 is the yeast caspase homolog, activated under ROS stress
+
+    - terminator: rrnB_T1

@@ -1,19 +1,25 @@
 construct:
-  name: "pichia_cutinase_secretion_optimization"
+  name: "Pichia_pastoris_cutinase_secretion_hybrid_SP"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: cutinase_expression
+        label: cutinase_secreted
         expression: high
         chain:
-          - tag: Ost1_alpha_factor
+          - secretion_signal: Ost1_alpha_factor_hybrid
           - gene:
               id: cutinase
               source: uniprot
           - tag: FLAG
-    - terminator: AOX1_TT
+          - cleavage_site: Factor_Xa
+
+    - terminator: rrnB_T1

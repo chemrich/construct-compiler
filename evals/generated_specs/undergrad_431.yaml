@@ -1,18 +1,21 @@
 construct:
-  name: "MyProtein_His_TEV_Purification"
+  name: MyProtein_with_TEV_cleavage
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100  # Constitutive expression as requested
+    - promoter: tac
+
     - cistron:
-        label: purification_target
-        expression: medium
+        label: target
+        expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: MyProtein
               source: uniprot
+
     - terminator: rrnB_T1

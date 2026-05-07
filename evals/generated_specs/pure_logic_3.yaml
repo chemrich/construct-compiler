@@ -1,49 +1,52 @@
-```yaml
 construct:
-  name: yeast_XOR_fluorescent_gate
+  name: yeast_XOR_gate
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
-    # Input A activates repressor R1
     - promoter: GAL1
-      
-    - cistron:
-        label: repressor_R1
-        expression: high
-        gene:
-          id: P0AC54  # LacI repressor
-          source: uniprot
-
-    - terminator: rrnB_T1
-
-    # Input B activates repressor R2  
-    - promoter: GAL10
 
     - cistron:
-        label: repressor_R2
-        expression: high
-        gene:
-          id: P03023  # TetR repressor
-          source: uniprot
+        label: input_A_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: LexA_DBD_Gal4_AD
+              source: uniprot
 
-    - terminator: rrnB_T1
-
-    # XOR output: dual-repressible promoter driving fluorescent protein
-    - promoter: J23100  # Constitutive promoter with lac and tet operator sites
+    - spacer: 25
 
     - cistron:
-        label: XOR_output
+        label: input_B_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: MS2_coat_protein_fusion
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: XOR_logic_integrator
         expression: high
         chain:
-          - tag: NLS  # Nuclear localization for yeast
+          - gene:
+              id: Not1_repressor
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_fluorescent_protein
+        expression: high
+        chain:
+          - tag: 6xHis
           - gene:
               id: mNeonGreen
               source: fpbase
 
     - terminator: rrnB_T1
-```

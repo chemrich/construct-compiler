@@ -1,45 +1,57 @@
 construct:
-  name: "multiplex_grna_expression_array"
-  host: e_coli_bl21
+  name: "quad_crRNA_array"
+  host: in_vitro
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: T7
+
     - cistron:
         label: gRNA_1
         expression: high
-        gene:
-          id: sgRNA_target_1
+        chain:
+          - gene:
+              id: crRNA_spacer_1_GCTAGCTAGCTAGCTAGCTAGCTAGCTA
+              source: custom
+
     - terminator: rrnB_T1
 
-    - spacer: 35
+    - spacer: 25
 
-    - promoter: J23106
     - cistron:
         label: gRNA_2
         expression: high
-        gene:
-          id: sgRNA_target_2
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: crRNA_spacer_2_ATCGATCGATCGATCGATCGATCGAT
+              source: custom
 
-    - spacer: 42
+    - terminator: T7term
 
-    - promoter: J23119
+    - spacer: 25
+
     - cistron:
         label: gRNA_3
         expression: high
-        gene:
-          id: sgRNA_target_3
-    - terminator: T7term
+        chain:
+          - gene:
+              id: crRNA_spacer_3_TTAATTAATTAATTAATTAATTAATTAA
+              source: custom
 
-    - spacer: 51
+    - terminator: BBa_B0015
 
-    - promoter: J23110
+    - spacer: 25
+
     - cistron:
         label: gRNA_4
         expression: high
-        gene:
-          id: sgRNA_target_4
-    - terminator: lambda_t0
+        chain:
+          - gene:
+              id: crRNA_spacer_4_GGCCGGCCGGCCGGCCGGCCGGCCGGCC
+              source: custom
+
+    - terminator: rrnB_T1

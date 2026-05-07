@@ -1,30 +1,32 @@
-```yaml
 construct:
-  name: "AAV_GFP_P2A_therapeutic_dual_expression"
+  name: "AAV_dual_expression_GFP_enzyme"
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pAAV"
+    resistance: ampicillin
+    ori: pBR322
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: reporter_gfp
+        label: Reporter_GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
 
-    - spacer: 66  # P2A self-cleaving peptide sequence length
+    # P2A self-cleaving peptide separates the two proteins
+    - spacer: 51  # P2A sequence length in bp (approximate)
 
     - cistron:
-        label: therapeutic_enzyme
+        label: Therapeutic_Enzyme
         expression: high
-        fused: false  # P2A causes ribosomal skipping, producing separate proteins
+        fused: false
         gene:
-          id: THERAPEUTIC_ENZYME  # Replace with actual enzyme UniProt ID
+          id: Cre_recombinase
           source: uniprot
 
-    - terminator: polyA  # Single polyA signal for both proteins
-```
+    - terminator: polyA  # Single polyA tail for both proteins post-cleavage

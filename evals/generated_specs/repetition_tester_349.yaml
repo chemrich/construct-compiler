@@ -1,24 +1,27 @@
 construct:
-  name: "mammalian_secretion_system_optimized"
+  name: "mammalian_secretion_POI_affinity_system"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: secreted_poi
+        label: secreted_POI
         expression: high
         chain:
-          - gene:
-              id: P01834  # Ig kappa chain V-III region signal peptide
-              source: uniprot
+          - signal_peptide: IL2_signal  # IL-2 signal peptide for mammalian secretion
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mNeonGreen
-              source: fpbase
+              id: POI
+              source: uniprot  # User must provide UniProt ID or protein sequence via separate specification
           - linker:
-              type: short_GS
-          - tag: Twin-Strep
-    - terminator: bGH_pA # Standard mammalian polyadenylation signal for mRNA stability and termination
+              type: rigid_EAAAK
+              repeats: 2
+          - tag: Twin-Strep  # C-terminal affinity tag for purification
+
+    - terminator: rrnB_T1

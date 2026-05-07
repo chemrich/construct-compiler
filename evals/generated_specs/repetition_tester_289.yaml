@@ -1,14 +1,17 @@
 construct:
-  name: "AntigenZ_Aga2p_Yeast_Surface_Display"
+  name: AntigenZ_Aga2p_yeast_display
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Strong constitutive yeast promoter selected as alternative to TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
@@ -16,8 +19,11 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 3
           - gene:
-              id: AGA2
+              id: Aga2p
               source: uniprot
-    - terminator: CYC1_term
+              codon_optimization: true
+              # Codon optimization subtly recodes Aga2p while preserving function
+
+    - terminator: CYC1

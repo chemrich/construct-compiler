@@ -1,18 +1,23 @@
 construct:
-  name: "pichia_gcw14_secreted_enzyme"
+  name: "Pichia_GCW14_secretion_industrial_enzyme"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: ARS
     source: addgene
+
   cassette:
     - promoter: GCW14
+
     - cistron:
-        label: enzyme_secretion_cistron
+        label: secreted_enzyme
         expression: high
         chain:
-          - tag: alpha-factor
+          - signal_peptide: alpha_mating_factor_pre_pro
           - gene:
-              id: industrial_enzyme
+              id: industrial_enzyme_proprietary
+              source: custom
           - tag: Strep-II
-    - terminator: CYC1_term
+
+    - terminator: CYC1

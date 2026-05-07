@@ -1,23 +1,24 @@
 construct:
-  name: "non_viral_nuclear_meganuclease_therapeutic"
+  name: therapeutic_meganuclease_nuclear_localization
   host: HEK293
+
   backbone:
-    resistance: none # Specified none to comply with the requirement for a construct free of antibiotic resistance genes
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
 
   cassette:
-    - promoter: EF1_alpha # Selected EF1_alpha as a strong constitutive human promoter to avoid viral elements like CMV
+    - promoter: CMV
 
     - cistron:
-        label: therapeutic_nuclease
+        label: meganuclease
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: NLS
           - gene:
-              id: P03882
+              id: I-SceI
               source: uniprot
 
-    - terminator: bGH_polyA
+    - terminator: rrnB_T1

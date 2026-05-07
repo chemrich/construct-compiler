@@ -1,23 +1,33 @@
 construct:
-  name: "cas9_grna_mammalian_expression"
+  name: "Cas9_gRNA_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cas9_nls
+        label: Cas9
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-    - terminator: bGH_polyA
-    - spacer: 30
+
+    - terminator: bGH_poly_A
+
     - promoter: U6
+
     - cistron:
-        label: grna
+        label: guide_RNA
+        expression: high
         gene:
-          id: sgRNA_scaffold
-    - terminator: polyT_terminator
+          id: CRISPR_guide_RNA
+          source: uniprot
+
+    - terminator: U6_terminator

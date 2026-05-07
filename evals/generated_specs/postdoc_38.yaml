@@ -1,11 +1,9 @@
 construct:
-  name: ubiquitin_fusion_degradation_control
-  host: e_coli
+  name: ubiquitin_fusion_protein
+  host: e_coli_bl21
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
 
   cassette:
     - promoter: T7lac
@@ -16,11 +14,13 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: P0CG48  # Human ubiquitin
+              id: ubiquitin
               source: uniprot
-          # Note: Ubiquitin fusion for degradation control - protein will be processed by E. coli deubiquitinating enzymes
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mEGFP  # Replace with your target protein
-              source: fpbase
+              id: MCP
+              source: uniprot
 
     - terminator: rrnB_T1

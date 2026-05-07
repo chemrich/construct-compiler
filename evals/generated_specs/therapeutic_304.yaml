@@ -1,18 +1,55 @@
 construct:
-  name: "mRNA_vaccine_SARS_CoV_2_Spike"
+  name: mRNA_vaccine_pathogen_antigen
   host: in_vitro
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
-    source: custom
+    # In vitro transcription template
+    resistance: null
+    ori: null
+    source: synthetic
+
   cassette:
     - promoter: T7
+      # T7 promoter for efficient IVT
+
+    - cistron:
+        label: 5_UTR_kozak
+        expression: high
+        chain:
+          - gene:
+              id: 5_UTR_Kozak_optimized
+              source: synthetic
+              # Kozak sequence: GCCRCCAUGG for enhanced translation initiation
+
     - cistron:
         label: antigen
         expression: high
         chain:
-          - tag: HA
+          - tag: 5cap
+            # 7-methylguanosine cap for mRNA stability and innate immunity evasion
           - gene:
-              id: P0DTC2
+              id: pathogen_antigen
               source: uniprot
-    - terminator: T7term
+              # User to specify actual antigen (e.g., spike protein, nucleocapsid)
+
+    - cistron:
+        label: 3_UTR_stability
+        expression: high
+        chain:
+          - gene:
+              id: 3_UTR_poly_A_signal_PABP_binding
+              source: synthetic
+              # Includes SV40 polyadenylation signal + extended poly(A) tail (120-150 nt)
+              # for mRNA stability and translational enhancement
+
+    - cistron:
+        label: adjuvant_motif
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: TLR7_TLR8_agonist_motif
+              source: synthetic
+              # Optimized GU-rich motifs to activate innate immune TLR7/8 for enhanced immunogenicity
+
+    - terminator: rrnB_T1

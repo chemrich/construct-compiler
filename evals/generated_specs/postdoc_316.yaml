@@ -1,22 +1,26 @@
 construct:
-  name: "protein_x_y_fusion_flag"
-  host: e_coli_bl21
+  name: ProteinX_ProteinY_fusion
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: fusion
         expression: high
         chain:
           - gene:
-              id: Protein_X
+              id: ProteinX
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: Protein_Y
+              id: ProteinY
               source: uniprot
           - tag: FLAG
-    - terminator: T7term
+
+    - terminator: rrnB_T1

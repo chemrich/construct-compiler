@@ -1,18 +1,24 @@
 construct:
-  name: "bacillus_subtilis_phytase_secretion"
+  name: bacillus_autoinducible_phytase
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pspac
+
     - cistron:
-        label: phytase_expression
+        label: phytase
         expression: high
         chain:
-          - tag: YncM
+          - secretion_signal: AmyE
           - gene:
-              id: P42094
+              id: phytase
               source: uniprot
+              codon_optimization: bacillus
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

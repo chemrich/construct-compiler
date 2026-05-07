@@ -1,20 +1,23 @@
 construct:
-  name: "scFv_solubility_enhanced_expression"
+  name: "antibody_fragment_ecoli_his_tev"
   host: e_coli_bl21_de3
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: scFv
+              id: antibody_fragment
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

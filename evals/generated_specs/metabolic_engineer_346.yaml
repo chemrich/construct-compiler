@@ -1,54 +1,82 @@
 construct:
-  name: "O_glycosylation_operon_GlyAF"
+  name: "O_linked_glycosylation_pathway_6enzyme_operon"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: glyA
+        label: GlyA
         expression: high
-        gene:
-          id: GlyA
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GlyA
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: glyB
-        expression: high
-        fused: false
-        gene:
-          id: GlyB
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: glyC
+        label: GlyB
         expression: high
         fused: false
-        gene:
-          id: GlyC
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GlyB
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: glyD
+        label: GlyC
         expression: high
         fused: false
-        gene:
-          id: GlyD
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GlyC
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: glyE
+        label: GlyD
         expression: high
         fused: false
-        gene:
-          id: GlyE
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GlyD
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: glyF
+        label: GlyE
         expression: high
         fused: false
-        gene:
-          id: GlyF
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GlyE
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: GlyF
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GlyF
+              source: uniprot
+
+    - terminator: rrnB_T1

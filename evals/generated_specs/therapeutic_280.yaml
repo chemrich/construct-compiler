@@ -1,23 +1,23 @@
 construct:
-  name: soluble_therapeutic_protein_expression
-  host: e_coli_bl21
+  name: "therapeutic_protein_expression_purification"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Defaulted to kanamycin as per Rule 9; selection is required for plasmid stability and antibiotic-free systems are not supported in the standard spec.
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD # Chosen as a robust, non-viral inducible promoter to satisfy the 'no viral' constraint.
+    - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: therapeutic_target
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P01241
+              id: human_TNF_alpha
               source: uniprot
+
     - terminator: rrnB_T1

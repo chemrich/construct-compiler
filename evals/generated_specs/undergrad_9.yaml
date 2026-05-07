@@ -1,18 +1,23 @@
-```yaml
 construct:
-  name: sgRNA_expression_vector
+  name: "CRISPR_sgRNA_expression"
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: U6
+
     - cistron:
         label: sgRNA
         expression: high
-        gene:
-          id: sgRNA_target  # Replace with your specific target sequence
-          source: custom
+        chain:
+          - gene:
+              id: sgRNA
+              source: custom
+              sequence: "GGTGAGTGAGTGTGTGCGTG"
+
     - terminator: U6_terminator
-```

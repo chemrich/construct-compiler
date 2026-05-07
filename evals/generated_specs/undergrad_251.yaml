@@ -1,16 +1,21 @@
 construct:
-  name: "plant_constitutive_mEGFP_expression"
-  host: plant # Plant host used as requested; CaMV 35S is a standard constitutive promoter for plant systems.
+  name: plant_constitutive_gfp
+  host: algae
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: spectinomycin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: CaMV_35S
+    - promoter: J23100
+
     - cistron:
-        label: green_reporter
+        label: gfp
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: NOS_term
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

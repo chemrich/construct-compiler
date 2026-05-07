@@ -1,28 +1,27 @@
-```yaml
 construct:
-  name: tandem_purification_construct
-  host: e_coli
-  
+  name: dual_affinity_purification_cassette
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
-  
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
-    
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 4
           - gene:
-              id: your_protein_id
+              id: target_protein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - tag: Strep-II
-    
+
     - terminator: rrnB_T1
-```

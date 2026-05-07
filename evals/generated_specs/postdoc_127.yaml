@@ -1,17 +1,22 @@
 construct:
-  name: yeast_constitutive_high_expression_vector
+  name: yeast_expression_vector_his_optional
   host: yeast
+
   backbone:
-    resistance: ampicillin # Standard for E. coli selection in yeast shuttle vectors
-    ori: pUC # High-copy E. coli origin for cloning
+    resistance: kanamycin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD # Strong constitutive yeast promoter (TDH3)
+    - promoter: GAL1
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: 6xHis # Included as requested; sequence is resolved by the compiler
+          - tag: 6xHis
           - gene:
-              id: GOI # Placeholder for your Gene of Interest
-    - terminator: CYC1 # Standard yeast terminator
+              id: MCS
+              source: synthetic
+
+    - terminator: CYC1

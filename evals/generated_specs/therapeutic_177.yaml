@@ -1,15 +1,23 @@
 construct:
-  name: "human_tRNA_nonsense_suppressor"
+  name: "mammalian_tRNA_suppressor_u6_driven"
   host: HEK293
+
   backbone:
-    resistance: none  # User requested no antibiotic markers
-    ori: pUC
-    source: custom
+    resistance: null  # No antibiotic resistance marker
+    ori: pUC  # Mammalian expression vector, episomal replication
+    source: addgene
+
   cassette:
-    - promoter: U6  # Standard human RNA polymerase III promoter for tRNA expression
+    - promoter: U6  # RNA Polymerase III promoter for stable tRNA expression
+
     - cistron:
         label: suppressor_tRNA
         expression: high
         gene:
-          id: tRNA_Ser_CUA
-    - terminator: polyT  # Standard Pol III termination signal (sequence of T's)
+          id: "amber_suppressor_tRNA"
+          source: uniprot
+          # Modified human tRNA(CUA) with UAG suppressor activity
+          # User should provide the actual tRNA sequence or UniProt ID
+          # This construct uses U6 for constitutive, stable expression
+
+    - terminator: "polIII_terminator"  # RNA Pol III terminator (string of U residues typically)

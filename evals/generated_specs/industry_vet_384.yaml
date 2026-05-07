@@ -1,25 +1,32 @@
 construct:
-  name: "bicistronic_enzyme_chaperone_expression"
-  host: e_coli_bl21_de3
+  name: "enzyme_chaperone_bicistronic"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_target
+        label: enzyme
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P08659
+              id: P00761
               source: uniprot
-    - spacer: 30
+
+    # Spacer between cistrons; in E. coli, RBS + start codon needed for independent translation
+    - spacer: 25
+
     - cistron:
-        label: chaperone_support
-        expression: medium
+        label: chaperone
+        expression: high
         fused: false
         gene:
-          id: P0A6Y8
+          id: P0A6F5
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

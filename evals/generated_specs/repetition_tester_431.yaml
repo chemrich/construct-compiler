@@ -1,25 +1,40 @@
 construct:
-  name: "tricistronic_2A_recombination_resistant"
-  host: HEK293 # Defaulted to HEK293 as 2A peptides are specific to eukaryotic translation
+  name: "tri_protein_2A_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: CMV
+    - promoter: T7lac
+
     - cistron:
-        label: p1_p2_p3_2A_polycistron
+        label: P1
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: P1
               source: uniprot
-          - linker:
-              type: P2A
+
+    - cistron:
+        label: P2A_P2
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: P2A  # Porcine 2A
           - gene:
               id: P2
               source: uniprot
-          - linker:
-              type: T2A
+
+    - cistron:
+        label: T2A_P3
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: T2A  # Thosea asigna 2A (different from P2A)
           - gene:
               id: P3
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

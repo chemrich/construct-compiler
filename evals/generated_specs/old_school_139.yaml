@@ -1,21 +1,32 @@
 construct:
   name: "proteinR_P2A_proteinS_fusion"
-  host: e_coli_bl21_de3
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target
+        label: proteinR_P2A_proteinS
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: proteinR
               source: uniprot
           - linker:
-              type: P2A  # P2A is a eukaryotic ribosome-skipping sequence; in E. coli, this will likely remain a single fusion protein without cleavage.
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: P2A
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: proteinS
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

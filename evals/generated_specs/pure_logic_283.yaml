@@ -1,24 +1,90 @@
 construct:
-  name: "genetic_toggle_switch"
-  host: e_coli
+  name: "genetic_toggle_switch_circuit"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: PLtetO-1  # Repressed by P2 (TetR); pulse of aTc (Input F) switches to State 1
+    # State 1: F-inducible P1 expression with P2 repression
+    - promoter: araBAD
+
     - cistron:
-        label: P1
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
+        label: F_input_sensor
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: P1_state1
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P1
+              source: uniprot
+
+    - spacer: 25
+
+    # P2 repressor under tetracycline-controlled promoter
+    - promoter: tetR
+
+    - cistron:
+        label: P2_repressor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    # State 2: G-inducible P2 expression with P1 repression
+    - promoter: lacUV5
+
+    - cistron:
+        label: G_input_sensor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: P2_state2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P2
+              source: uniprot
+
+    - spacer: 25
+
+    # P1 repressor under araBAD-controlled promoter
+    - promoter: tetR
+
+    - cistron:
+        label: P1_repressor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: tac  # Repressed by P1 (LacI); pulse of IPTG (Input G) switches to State 2
-    - cistron:
-        label: P2
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: BBa_B0015

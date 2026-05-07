@@ -1,24 +1,32 @@
 construct:
-  name: "yeast_polycistronic_A_B"
+  name: "protein_A_protein_B_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
         label: protein_A
-        expression: medium
-        gene:
-          id: protein_A
-          source: uniprot
+        expression: high
+        chain:
+          - gene:
+              id: protein_A
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: protein_B
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: protein_B
-          source: uniprot
-    - terminator: CYC1
+        chain:
+          - gene:
+              id: protein_B
+              source: uniprot
+
+    - terminator: rrnB_T1

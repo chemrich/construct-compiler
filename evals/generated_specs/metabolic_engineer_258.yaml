@@ -1,45 +1,57 @@
 construct:
-  name: "five_enzyme_solubility_operon"
-  host: e_coli
+  name: "five_enzyme_soluble_operon"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: enzyme_1
+        label: SolubleE1
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - gene:
               id: SolubleE1
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_2
+        label: SolubleE2
         expression: high
         fused: false
         chain:
           - gene:
               id: SolubleE2
               source: uniprot
-          - solubility_tag: MBP
+          - solubility_tag: GST
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_3
+        label: SolubleE3
         expression: high
         fused: false
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
+          - solubility_tag: SUMO
           - gene:
               id: SolubleE3
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_4
+        label: SolubleE4
         expression: high
         fused: false
         chain:
@@ -48,9 +60,11 @@ construct:
               source: uniprot
           - solubility_tag: MBP
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_5
+        label: SolubleE5
         expression: high
         fused: false
         chain:
@@ -58,4 +72,5 @@ construct:
               id: SolubleE5
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

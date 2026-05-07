@@ -1,24 +1,25 @@
-```yaml
 construct:
-  name: algal_antibody_fragment_intracellular
+  name: "algal_scFv_intracellular_expression"
   host: algae
 
   backbone:
-    resistance: none  # No antibiotic resistance allowed
-    ori: algal_endogenous
+    resistance: none
+    ori: none
     source: custom
 
   cassette:
-    - promoter: HSP70A  # Strong constitutive promoter for Chlamydomonas
-
+    - promoter: rbcL
+    
     - cistron:
-        label: antibody_fragment
+        label: scFv
         expression: high
         chain:
           - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01857  # Human IgG1 heavy chain variable region example
+              id: scFv_VH_VL
               source: uniprot
-
-    - terminator: RBCS2  # Ribulose bisphosphate carboxylase small subunit terminator
-```
+    
+    - terminator: rbcL_3UTR

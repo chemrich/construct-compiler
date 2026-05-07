@@ -1,19 +1,24 @@
 construct:
-  name: "isomerase_bacillus_gst_thrombin"
+  name: "bacillus_isomerase_gst_thrombin"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: target_isomerase
-        expression: medium  # Medium expression used to facilitate correct folding of difficult proteins
+        label: isomerase
+        expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: isomerase  # Placeholder: specific UniProt ID should be provided for the isomerase
+              id: isomerase
               source: uniprot
-    - terminator: BBa_B0015
+              codon_optimization: bacillus_subtilis
+
+    - terminator: rrnB_T1

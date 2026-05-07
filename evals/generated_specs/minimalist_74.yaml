@@ -1,22 +1,31 @@
 construct:
-  name: "toxA_antitoxB_expression_system"
-  host: e_coli_bl21_de3
+  name: ToxA_AntiToxB_dual_expression
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: toxA
-        expression: medium
-        gene:
-          id: toxA
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: antiToxB
+        label: ToxA
         expression: high
-        fused: false
         gene:
-          id: antiToxB
+          id: ToxA
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
+    - cistron:
+        label: AntiToxB
+        expression: high
+        gene:
+          id: AntiToxB
+          source: uniprot
+
+    - terminator: rrnB_T1

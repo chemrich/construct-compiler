@@ -1,20 +1,29 @@
 construct:
-  name: "Mammalian_IRES_J_K_Expression"
+  name: "mammalian_dual_protein_IRES"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_j
+        label: protein_J
+        expression: high
         gene:
-          id: Protein_J
+          id: protein_J
           source: uniprot
-    - spacer: 580 # Spacer represents the IRES sequence for internal ribosome entry
+
+    - spacer: 30
+
+    # IRES enables cap-independent translation of the downstream cistron
     - cistron:
-        label: protein_k
-        fused: false # Indicated as an independent translation unit via IRES
+        label: protein_K
+        expression: high
         gene:
-          id: Protein_K
+          id: protein_K
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

@@ -1,25 +1,56 @@
 construct:
-  name: "yeast_transcriptional_or_gate"
+  name: "yeast_OR_gate_z_selection"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: nourseothricin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+      # Input A: GAL1 is native yeast promoter, activated by galactose/repressed by glucose
+      
     - cistron:
-        label: output_z_input_a
+        label: input_A_sensor
         expression: medium
-        gene:
-          id: URA3
-          source: uniprot
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: CUP1
+        chain:
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
+              # DNA-binding domain sensing input A
+
+    - terminator: CYC1
+
+    - spacer: 30
+
+    - promoter: ADH1
+      # Input B: constitutive promoter with binding sites for input B TF
+
     - cistron:
-        label: output_z_input_b
+        label: input_B_sensor
         expression: medium
-        gene:
-          id: URA3
-          source: uniprot
-    - terminator: ADH1_term
+        chain:
+          - gene:
+              id: GAL4_AD
+              source: uniprot
+              # Activation domain sensing input B
+
+    - terminator: CYC1
+
+    - spacer: 30
+
+    - promoter: hybrid_OR
+      # Hybrid promoter with binding sites for both GAL4 and input B TF
+      # Activated if either GAL4-DBD (from A) OR input B TF binds
+
+    - cistron:
+        label: output_Z
+        expression: high
+        chain:
+          - gene:
+              id: kanMX
+              source: uniprot
+              # G418/neomycin resistance for selection
+
+    - terminator: CYC1

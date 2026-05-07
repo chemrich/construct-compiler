@@ -1,20 +1,26 @@
 construct:
-  name: "targeting_therapeutic_fusion"
+  name: "targeting_peptide_therapeutic_fusion"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
               id: targeting_peptide
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
               id: therapeutic_domain
+              source: uniprot
           - tag: 6xHis
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

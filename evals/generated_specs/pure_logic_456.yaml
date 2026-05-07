@@ -1,32 +1,50 @@
 construct:
-  name: "conditional_lysis_biocontainment_system"
-  host: e_coli_bl21
+  name: "conditional_biocontainment_lysis"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+      # Essential gene under constitutive/weak expression
+    
     - cistron:
-        label: essential_gene_rescue
-        expression: high
-        gene:
-          id: "P0A6L1"
-          source: uniprot
-    - spacer: 35
-    - cistron:
-        label: lacI_repressor
+        label: essential_gene
         expression: medium
-        fused: false
         gene:
-          id: "P00939"
+          id: EG
           source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: lacUV5
+
+    - spacer: 30
+
+    - promoter: araBAD
+      # Lysis gene under inducible control (inverted logic via repressor)
+      # Absent inducer I_env means no repression → LG expressed → cell death
+
     - cistron:
-        label: lysis_gene_lambda_S
+        label: lysis_gene
         expression: high
         gene:
-          id: "P03756"
+          id: LG
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: lacUV5
+      # Repressor of lysis gene (active when I_env is present)
+
+    - cistron:
+        label: lysis_repressor
+        expression: medium
+        gene:
+          id: LacI
+          source: uniprot
+
+    - terminator: rrnB_T1

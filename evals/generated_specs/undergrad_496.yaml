@@ -1,17 +1,24 @@
 construct:
-  name: "nuclear_protein_flag_nls_expression"
+  name: "NuclearProtein_FLAG_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: NuclearProtein
         expression: high
         chain:
           - tag: FLAG
-          - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: NuclearProtein
               source: uniprot
-    - terminator: bGH_pA
+          - tag: NLS
+
+    - terminator: rrnB_T1

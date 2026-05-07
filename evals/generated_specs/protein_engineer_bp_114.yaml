@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_secreted_lipase_amyL"
+  name: "Bacillus_lipolytic_secretion_cassette"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: amyL
+    - promoter: PamyL
+
     - cistron:
-        label: lipase_expression
+        label: lipolytic_enzyme
         expression: high
         chain:
-          - tag: Vpr_SP
+          - signal_peptide: Vpr_protease
           - gene:
-              id: P37957
+              id: lipase
               source: uniprot
           - tag: FLAG
+
     - terminator: rrnB_T1

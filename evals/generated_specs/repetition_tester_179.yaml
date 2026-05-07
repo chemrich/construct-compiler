@@ -1,24 +1,44 @@
 construct:
-  name: "FusionProteinB_Yeast_Expression"
+  name: "FusionProteinB_yeast_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: fusion_protein_b
+        label: FusionProteinB
         expression: high
         chain:
-          - tag: ActivatorDomain
-          - linker:
-              type: GS_flexible
-              repeats: 4
-          - tag: BindingDomain
+          - gene:
+              id: ActivatorDomain
+              source: uniprot
+              codon_optimization: maximum_bias_AT_rich
+
           - linker:
               type: rigid_EAAAK
-              repeats: 4
+              repeats: 1
+              custom_sequence: "GGAGGTGGCGGCAGCGGC"
+
+          - gene:
+              id: BindingDomain
+              source: uniprot
+              codon_optimization: maximum_bias_GC_rich
+
+          - linker:
+              type: GS_flexible
+              repeats: 1
+              custom_sequence: "TCCGGTTCCGGCTCCGGT"
+
           - gene:
               id: TaggingDomain
+              source: uniprot
+              codon_optimization: maximum_bias_GC_lean
+
+          - tag: 6xHis
+
     - terminator: CYC1

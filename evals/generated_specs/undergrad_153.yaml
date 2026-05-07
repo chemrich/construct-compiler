@@ -1,10 +1,14 @@
 construct:
-  name: "TargetProtein_His_TEV_Purification"
-  host: e_coli_bl21_de3
+  name: "TargetProtein_His_TEV"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target
         expression: high
@@ -13,4 +17,6 @@ construct:
           - cleavage_site: TEV
           - gene:
               id: TargetProtein
-    - terminator: T7term
+              source: uniprot
+    
+    - terminator: rrnB_T1

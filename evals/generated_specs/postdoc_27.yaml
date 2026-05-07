@@ -1,13 +1,15 @@
 construct:
-  name: T7_promoter_mammalian_low_expression
+  name: "mammalian_T7_driven_expression"
   host: HEK293
-
+  
   backbone:
     catalog_vector: "pTwist CMV"
-
+  
   cassette:
-    - promoter: T7  # Note: T7 promoter will have minimal activity in mammalian cells without T7 RNA polymerase
-
+    # T7 promoter included for potential basal activity or co-expression with T7 RNAP
+    # Note: T7 is bacterial; in mammalian cells it requires co-expressed T7 polymerase
+    - promoter: T7
+    
     - cistron:
         label: target
         expression: very_low
@@ -16,5 +18,5 @@ construct:
           - gene:
               id: mEGFP
               source: fpbase
-
+    
     - terminator: rrnB_T1

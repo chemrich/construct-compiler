@@ -1,15 +1,22 @@
 construct:
-  name: "enzyme_x_iptg_regulated_expression"
+  name: "Enzyme_X_IPTG_inducible"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: lacUV5
+
     - cistron:
-        label: enzyme_x_production
+        label: enzyme_x
         expression: high
-        gene:
-          id: Enzyme_X
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: enzyme_x
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,20 +1,24 @@
 construct:
-  name: pichia_cutinase_expression
+  name: "Pichia_cutinase_PAOX1_secretion"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pBR322
+    resistance: zeocin
+    ori: ARS
     source: addgene
+
   cassette:
     - promoter: PAOX1
+
     - cistron:
-        label: cutinase_cistron
+        label: cutinase
         expression: high
         chain:
-          - tag: alpha-factor
+          - secretion_signal: alpha-factor
           - gene:
-              id: P10935
+              id: cutinase
               source: uniprot
           - cleavage_site: TEV
           - tag: Myc
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

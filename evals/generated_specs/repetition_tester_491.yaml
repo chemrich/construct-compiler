@@ -1,20 +1,29 @@
 construct:
-  name: "dual_reporter_mammalian_nuclear_cyto"
+  name: "dual_reporter_nuclear_cytoplasmic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: nuclear_gfp
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: bgh_pa
+
+    - terminator: SV40_poly_A
+
+    - spacer: 100
+
     - promoter: EF1_alpha
+
     - cistron:
         label: cytoplasmic_mcherry
         expression: high
@@ -23,4 +32,5 @@ construct:
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: sv40_pa
+
+    - terminator: BGH_poly_A

@@ -1,22 +1,66 @@
 construct:
-  name: "genetic_mux_2to1_mscarlet"
+  name: "E_coli_2to1_multiplexer"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac  # Select HIGH logic: active with IPTG (DataIn1)
+    - promoter: T7lac
+
     - cistron:
-        label: reporter_pathway_1
+        label: DataIn1
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - gene:
+              id: lacZ
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: DataIn2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: araB
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Select
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Multiplexer_Logic
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: ReporterOrange
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
     - terminator: rrnB_T1
-    - promoter: araBAD  # Select LOW logic: active with Arabinose (DataIn2)
-    - cistron:
-        label: reporter_pathway_2
-        expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term

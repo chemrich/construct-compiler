@@ -1,49 +1,58 @@
 construct:
-  name: "bacillus_subtilis_exopolysaccharide_operon"
-  host: b_subtilis
+  name: "Bacillus_exopolysaccharide_operon"
+  host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: chloramphenicol
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pveg  # Strong constitutive promoter for Bacillus subtilis
+    - promoter: PsrfA  # Strong, constitutive B. subtilis promoter
+
     - cistron:
-        label: hydrolase_1
+        label: Hydrolase1
         expression: high
-        fused: false
         chain:
-          - tag: amyE_signal
+          - secretion_signal: AmyE  # Bacillus amylase signal peptide for extracellular secretion
           - gene:
               id: Hydrolase1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: reductase_2
+        label: Reductase2
         expression: high
         fused: false
         chain:
-          - tag: amyE_signal
+          - secretion_signal: AmyE
           - gene:
               id: Reductase2
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: transferase_3
-        expression: high
+        label: Transferase3
+        expression: medium
         fused: false
         chain:
-          - tag: amyE_signal
+          - secretion_signal: AmyE
           - gene:
               id: Transferase3
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: kinase_4
-        expression: high
+        label: Kinase4
+        expression: medium
         fused: false
         chain:
-          - tag: amyE_signal
+          - secretion_signal: AmyE
           - gene:
               id: Kinase4
               source: uniprot
+
     - terminator: rrnB_T1

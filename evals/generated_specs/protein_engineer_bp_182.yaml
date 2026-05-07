@@ -1,19 +1,24 @@
 construct:
-  name: "bacillus_kinase_high_expression"
+  name: "bacillus_kinase_sumo_ha"
   host: bacillus
+
   backbone:
     resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Veg
+    - promoter: Pveg
+
     - cistron:
-        label: kinase_target
+        label: kinase
         expression: high
         chain:
-          - tag: HA
           - solubility_tag: SUMO
           - cleavage_site: TEV
+          - tag: HA
           - gene:
-              id: P11362
+              id: kinase
               source: uniprot
+
     - terminator: rrnB_T1

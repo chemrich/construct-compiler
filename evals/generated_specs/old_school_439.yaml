@@ -1,15 +1,25 @@
 construct:
-  name: "lentiviral_EF1a_protein_gamma"
-  host: mammalian
+  name: lentiviral_Protein_Gamma
+  host: HEK293
+
   backbone:
-    catalog_vector: "pLenti-EF1alpha-Neo"
+    catalog_vector: pLenti-EF1a-IRES-Puro
     resistance: neomycin
     source: addgene
+    # Note: Full lentiviral vector includes 5' LTR, packaging signal (ψ), central polypurine tract (cPPT), 
+    # woodchuck hepatitis post-transcriptional regulatory element (WPRE), and 3' LTR for proper virion assembly
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: target
-        gene:
-          id: Protein_Gamma
-          source: uniprot
-    - terminator: bGH_PA
+        label: Protein_Gamma
+        expression: high
+        chain:
+          - tag: FLAG
+          - cleavage_site: TEV
+          - gene:
+              id: Protein_Gamma
+              source: uniprot
+
+    - terminator: WPRE

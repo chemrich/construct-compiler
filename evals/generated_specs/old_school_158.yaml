@@ -1,22 +1,32 @@
 construct:
-  name: "mammalian_dual_reporter_ires_puro"
+  name: dual_reporter_CMV_IRES_renilla
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
     ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 500  # IRES sequence (approximate length)
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 25
+      # IRES enables cap-independent translation of downstream cistron
+
     - cistron:
-        label: reporter
+        label: renilla_luciferase
+        expression: medium
         fused: false
         gene:
-          id: P27652
+          id: renilla_luciferase
           source: uniprot
+
     - terminator: SV40_polyA

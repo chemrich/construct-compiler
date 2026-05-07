@@ -1,38 +1,54 @@
 construct:
-  name: "metabolic_pathway_diverse_operon_ABCD"
-  host: e_coli_bl21
+  name: metabolic_pathway_four_gene_operon
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: gene_A
         expression: high
+        rbs: BBa_B0034
         gene:
-          id: P00933
+          id: GENE_A
           source: uniprot
-    - spacer: 35
+
+    - spacer: 28
+
     - cistron:
         label: gene_B
         expression: high
+        rbs: BBa_B0030
         fused: false
         gene:
-          id: P00935
+          id: GENE_B
           source: uniprot
-    - spacer: 42
+
+    - spacer: 35
+
     - cistron:
         label: gene_C
         expression: high
+        rbs: BBa_B0032
         fused: false
         gene:
-          id: P0A6Y8
+          id: GENE_C
           source: uniprot
-    - spacer: 57
+
+    - spacer: 42
+
     - cistron:
         label: gene_D
         expression: high
+        rbs: BBa_B0031
         fused: false
         gene:
-          id: P00350
+          id: GENE_D
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

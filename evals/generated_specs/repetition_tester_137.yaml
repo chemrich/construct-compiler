@@ -1,36 +1,48 @@
 construct:
-  name: "dual_peptide_carrier_fusion_system"
-  host: e_coli_bl21_de3
+  name: dual_carrier_peptide_fusion_ecoli
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: fusion_x
+        label: fusion_1_CarrierZ_PeptideX
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: CarrierProtein_Z
               source: uniprot
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: custom_linker_X
+              sequence: GGSGGSGGS
           - gene:
               id: Peptide_X
               source: uniprot
-    - spacer: 35
+
+    - spacer: 30
+
     - cistron:
-        label: fusion_y
+        label: fusion_2_CarrierZ_PeptideY
         expression: high
-        fused: false  # Ensures independent translation with separate RBS/start codon
+        fused: false
         chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: CarrierProtein_Z # Compiler: apply maximal synonymous codon divergence from cistron 1
+              id: CarrierProtein_Z_codon_optimized
               source: uniprot
           - linker:
-              type: rigid_EAAAK # Unique, non-homologous linker compared to GS_flexible
-              repeats: 3
+              type: custom_linker_Y
+              sequence: AAPVSTSGGGS
           - gene:
               id: Peptide_Y
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

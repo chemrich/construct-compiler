@@ -1,27 +1,25 @@
-```yaml
 construct:
-  name: tandem_Pveg_Pgrac_subtilisin_strep
+  name: "Bacillus_dual_promoter_secreted_subtilisin"
   host: bacillus
 
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
 
   cassette:
     - promoter: Pveg
 
-    - promoter: Pgrac  # Tandem promoter for maximum expression
+    - promoter: Pgrac
 
     - cistron:
-        label: subtilisin
+        label: secreted_subtilisin
         expression: high
         chain:
-          - secretion_signal: AprE  # Bacillus secretion signal
+          - tag: AmyE_SP  # AmyE signal peptide for Bacillus secretion
           - gene:
-              id: subtilisin_E
+              id: subtilisin_BPN
               source: uniprot
           - tag: Strep-II
 
     - terminator: rrnB_T1
-```

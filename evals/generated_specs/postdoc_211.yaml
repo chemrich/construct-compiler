@@ -1,23 +1,48 @@
 construct:
-  name: yeast_gene_v_knockout_gfp
+  name: "S_cerevisiae_gene_V_CRISPR_knockout_GFP_insertion"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+    # Note: This is a yeast shuttle vector backbone for propagation in E. coli
+    # In practice, you would use a yeast vector like pRS4xx for genomic integration
+
   cassette:
-    - promoter: U6
+    - promoter: J23100
+      # Comment: Guide RNA expression in yeast typically uses SNR52 or other Pol III promoters
+      # J23100 is a placeholder; recommend using a yeast Pol III promoter (U6-equivalent)
+
     - cistron:
-        label: guide_rna
-        gene:
-          id: sgRNA_target_V
-    - terminator: BBa_B0015
-    - spacer: 30
-    - promoter: GPD # Using yeast GPD promoter for high-level expression of the repair template reporter
-    - cistron:
-        label: gfp_repair_template
+        label: guide_RNA
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+          id: "gRNA_gene_V"
+          # Comment: User must design specific ~20bp gRNA target sequence within gene V
+          # and provide the actual sequence; this is a placeholder identifier
+
+    - spacer: 30
+
+    - cistron:
+        label: repair_template
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: GFP
+              source: fpbase
+              # Comment: In yeast, use yeast-codon-optimized GFP (e.g., sGFP from fpbase)
+              # Flank with homology arms (500+ bp) to gene V 5' and 3' UTR
+              # This construct is a placeholder; the actual repair template must include
+              # homology arms for targeted integration at the gene V locus
+
+    - terminator: rrnB_T1
+
+  # Important notes for yeast CRISPR-Cas9:
+  # 1. S. cerevisiae requires different promoters than mammalian/E. coli systems
+  # 2. Use native yeast Pol III promoters (SNR52, RDN3-1) for gRNA expression
+  # 3. Use native yeast Pol II promoters (e.g., ADH1, GAL1, PGK1) for Cas9 expression
+  # 4. The repair template MUST include ~500 bp homology arms flanking the insertion
+  # 5. Consider using a yeast-specific vector backbone (pRS4xx integration plasmids)
+  # 6. This design is fundamentally different from mammalian CRISPR due to yeast biology

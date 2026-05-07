@@ -1,18 +1,44 @@
 construct:
-  name: "yeast_metabolic_logic_circuit"
+  name: glucose_absent_ammonium_present_enzyme_y_logic_circuit
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2micron
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: "ADH2-MEP2_hybrid" # Synthetic hybrid promoter for glucose-repression and ammonium-activation
+    - promoter: GAL1
+      # GAL1 is repressed by glucose, activated by galactose; acts as "glucose absent" sensor
+
     - cistron:
-        label: enzyme_y_mitochondrial
+        label: ammonium_sensor
         expression: high
         chain:
-          - tag: MTS # Mitochondrial targeting sequence
+          - gene:
+              id: GAT1
+              source: uniprot
+              # GAT1 is a GATA-type transcription factor activated by nitrogen starvation
+              # In presence of ammonium, GAT1 is inactivated; in absence, it activates target genes
+              # This serves as the "ammonium present" logic element
+
+    - terminator: rrnB_T1
+
+    - promoter: GATA_element
+      # Synthetic GATA-responsive element (multiple GAT1 binding sites)
+      # Active only when GAT1 is present and ammonium conditions favor activation
+
+    - cistron:
+        label: enzyme_y
+        expression: high
+        chain:
+          - tag: MTS
+            # Mitochondrial Targeting Sequence (yeast-specific)
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: Enzyme_Y
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

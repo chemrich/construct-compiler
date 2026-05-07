@@ -1,23 +1,33 @@
 construct:
-  name: "Enzyme_Y_GST_TEV_Peptide_Z_Fusion"
-  host: e_coli_bl21_de3
+  name: "GST_TEV_EnzymeY_PeptideZ"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: enzyme_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
-              id: Enzyme_Y
+              id: Enzyme_Y_codon_optimized_ecoli
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: Peptide_Z
-              source: uniprot
-    - terminator: T7term
+              # Codon-optimized for E. coli expression
+
+    - spacer: 25
+
+    - cistron:
+        label: peptide_Z
+        expression: high
+        fused: false
+        gene:
+          id: Peptide_Z
+          source: uniprot
+
+    - terminator: rrnB_T1

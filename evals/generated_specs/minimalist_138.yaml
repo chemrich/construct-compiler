@@ -1,26 +1,34 @@
 construct:
-  name: periplasmic_export_S_T
-  host: e_coli_bl21_de3
+  name: "dual_periplasmic_export_S_T"
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: protein_S
         expression: high
         chain:
-          - tag: pelB
+          - signal_peptide: pelB  # pelB signal peptide for periplasmic export
+          - tag: 6xHis
           - gene:
               id: S
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: protein_T
         expression: high
         fused: false
         chain:
-          - tag: ompA
+          - signal_peptide: pelB
+          - tag: 6xHis
           - gene:
               id: T
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

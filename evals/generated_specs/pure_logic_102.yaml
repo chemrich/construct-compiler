@@ -1,23 +1,58 @@
 construct:
-  name: "delayed_negative_feedback_oscillator"
-  host: e_coli_bl21_de3
+  name: genetic_oscillator_delayed_feedback
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
+    - cistron:
+        label: activator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: CI_lambda
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: delay_element
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ssrA_tag_fusion
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: repressor
         expression: high
         fused: false
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: TetR
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: output_signal
+        label: OutputSignal
         expression: medium
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    
+    - terminator: rrnB_T1

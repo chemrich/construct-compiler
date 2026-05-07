@@ -1,23 +1,29 @@
 construct:
-  name: "ProteinG_GFP_subcellular_localization"
-  host: mammalian
+  name: ProteinG_GFP_mammalian_localization
+  host: HEK293
+
   backbone:
     resistance: hygromycin
-    ori: pUC
-    source: custom
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: ProteinG_GFP_fusion
         expression: high
         chain:
           - gene:
-              id: P06654
+              id: ProteinG
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: GFP
+              id: EGFP
               source: fpbase
-    - terminator: SV40
+
+    - polya: SV40
+
+    - terminator: rrnB_T1

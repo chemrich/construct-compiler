@@ -1,10 +1,9 @@
-```yaml
 construct:
-  name: pBAD_flexible_MCS_His
+  name: pBAD_MCS_His_expression_vector
   host: e_coli
 
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pBR322
     source: addgene
 
@@ -12,13 +11,15 @@ construct:
     - promoter: araBAD
 
     - cistron:
-        label: insert_site
+        label: insert
         expression: high
         chain:
           - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: multiple_cloning_site
-              # Flexible MCS with common restriction sites: EcoRI, BamHI, HindIII, XbaI, SalI, PstI, SphI, KpnI
+              id: MCS_placeholder
+              source: uniprot
 
     - terminator: rrnB_T1
-```

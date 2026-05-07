@@ -1,35 +1,78 @@
 construct:
-  name: "yeast_diversified_multivalent_scaffold"
+  name: "yeast_scaffold_protein_four_sites"
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
-    source: addgene # Standard yeast shuttle vector backbone
+    source: addgene
+
   cassette:
-    - promoter: TDH3 # High-expression constitutive yeast promoter (substitution for GPD)
+    - promoter: GAL1
+
     - cistron:
-        label: "scaffold_core"
+        label: scaffold_core
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: WW_domain_scaffold
+              source: uniprot
+              # Core scaffold unit (e.g., tandem WW domains or PDZ-like)
+
+    - linker:
+        type: rigid_EAAAK
+        repeats: 1
+
+    - cistron:
+        label: binding_site_1
+        fused: false
         expression: high
         chain:
           - gene:
-              id: "PDZ_domain_PSD95"
+              id: SH3_domain_1
               source: uniprot
-          - linker:
-              type: GS_flexible # Unique linker 1
-              repeats: 4
+
+    - linker:
+        type: GS_flexible
+        repeats: 3
+
+    - cistron:
+        label: binding_site_2
+        fused: false
+        expression: high
+        chain:
           - gene:
-              id: "PDZ_domain_PSD95" # DNA will be codon-diversified/synonymous to prevent recombination
+              id: SH3_domain_1_syn1
               source: uniprot
-          - linker:
-              type: rigid_EAAAK # Unique linker 2
-              repeats: 3
+              # Synonymous variant of SH3 domain to minimize deletion risk
+
+    - linker:
+        type: rigid_EAAAK
+        repeats: 2
+
+    - cistron:
+        label: binding_site_3
+        fused: false
+        expression: high
+        chain:
           - gene:
-              id: "PDZ_domain_PSD95" # DNA will be codon-diversified/synonymous
+              id: SH3_domain_1_syn2
               source: uniprot
-          - linker:
-              type: short_GS # Unique linker 3
-              repeats: 2
+              # Second synonymous variant of SH3 domain
+
+    - linker:
+        type: GS_flexible
+        repeats: 4
+
+    - cistron:
+        label: binding_site_4
+        fused: false
+        expression: high
+        chain:
           - gene:
-              id: "PDZ_domain_PSD95" # DNA will be codon-diversified/synonymous
+              id: SH3_domain_1_syn3
               source: uniprot
-    - terminator: CYC1_term # Standard yeast terminator
+              # Third synonymous variant of SH3 domain
+
+    - terminator: rrnB_T1

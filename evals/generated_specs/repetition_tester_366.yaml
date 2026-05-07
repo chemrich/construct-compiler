@@ -1,29 +1,33 @@
 construct:
-  name: "periplasmic_his_tev_construct"
+  name: "ecoli_periplasmic_unique_linkers"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
-          - tag: pelB  # Periplasmic secretion signal
+          - tag: pelB_signal  # N-terminal periplasmic secretion signal for E. coli
           - linker:
-              type: short_GS
-              repeats: 1
+              type: custom
+              sequence: GGAGGT  # Unique linker 1 (6 bp)
           - tag: 6xHis
           - linker:
-              type: GS_flexible
-              repeats: 1
+              type: custom
+              sequence: GGTGGA  # Unique linker 2 (6 bp) - distinct from linker 1
           - cleavage_site: TEV
           - linker:
-              type: rigid_EAAAK
-              repeats: 1
+              type: custom
+              sequence: GAGGGT  # Unique linker 3 (6 bp) - distinct from linkers 1 & 2
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: YOUR_PROTEIN_ID
+              source: uniprot
+
+    - terminator: rrnB_T1

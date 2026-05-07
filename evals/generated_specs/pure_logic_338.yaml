@@ -1,33 +1,45 @@
 construct:
-  name: "light_inducible_nand_gate_m"
-  host: e_coli_bl21
+  name: "light_NAND_gate"
+  host: mammalian
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: T7lac  # Controlled by a split-repressor complex formed by N and O inputs
+    - promoter: CMV
+
     - cistron:
-        label: output_m
+        label: blue_light_sensor
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: mEGFP
+              id: CRY2
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: red_light_sensor
+        expression: high
+        chain:
+          - tag: FLAG
+          - cleavage_site: 3C
+          - gene:
+              id: PhyB
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: NAND_output
+        expression: high
+        chain:
+          - tag: HA
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: mCherry
               source: fpbase
-    - spacer: 30
-    - cistron:
-        label: input_n_blue
-        expression: medium
-        fused: false
-        gene:
-          id: Q2NB98  # EL222 blue-light sensitive protein
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: input_o_red
-        expression: medium
-        fused: false
-        gene:
-          id: P14712  # PhyB red-light sensitive protein
-          source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

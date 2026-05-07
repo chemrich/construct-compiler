@@ -1,20 +1,25 @@
 construct:
-  name: "pichia_transaminase_intracellular_expression"
+  name: "pichia_transaminase_biocatalyst"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: biocatalyst
+        label: transaminase
         expression: high
         chain:
-          - solubility_tag: Trx
+          - tag: Trx
           - cleavage_site: TEV
           - gene:
               id: transaminase
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: AOX1

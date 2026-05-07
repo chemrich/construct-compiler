@@ -1,14 +1,24 @@
 construct:
-  name: "viral_therapeutic_payload_human_optimized"
+  name: "viral_therapeutic_codon_optimized_HEK293"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_payload
+        label: viral_therapeutic
         expression: high
-        gene:
-          id: B1A5M9
-          source: uniprot
-    - terminator: bGH_PA
+        codon_optimized: true
+        codon_optimization_organism: homo_sapiens
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: viral_therapeutic_payload
+              source: uniprot
+              codon_optimized: true
+
+    - terminator: rrnB_T1

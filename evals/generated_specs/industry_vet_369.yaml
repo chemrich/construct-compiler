@@ -1,22 +1,22 @@
 construct:
-  name: inducible_mammalian_expression_system
+  name: "tet_on_inducible_mammalian_expression"
   host: HEK293
 
   backbone:
     catalog_vector: "pTRE3G"
-    resistance: ampicillin
 
   cassette:
-    - promoter: TRE3G # Inducible Tet-On promoter to manage protein toxicity
+    - promoter: TRE3G
 
     - cistron:
-        label: inducible_toxic_protein
-        expression: high # Maximum expression level upon induction
+        label: toxic_protein
+        expression: medium
         chain:
-          - tag: Twin-Strep # High-purity purification tag for mammalian systems
+          - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: target_protein # Placeholder: user should replace with specific UniProt ID
+              id: null
               source: uniprot
+              # User should specify the actual protein UniProt ID
 
-    - terminator: bGH_PA # Standard mammalian polyadenylation signal/terminator
+    - terminator: SV40pA

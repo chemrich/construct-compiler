@@ -1,22 +1,28 @@
 construct:
-  name: "pollutant_degradation_operon"
+  name: "pollutant_degradation_operon_5_enzyme"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # araBAD used as a proxy for an inducible pollutant-responsive promoter system
+    - promoter: araBAD  # pollutant-responsive; arabinose inducible as proxy for chemical induction
+
     - cistron:
-        label: degradase_1
+        label: Degradase1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: Degradase1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: degradase_2
+        label: Degradase2
         expression: high
         fused: false
         chain:
@@ -24,9 +30,11 @@ construct:
               id: Degradase2
               source: uniprot
           - tag: FLAG
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: degradase_3
+        label: Degradase3
         expression: high
         fused: false
         chain:
@@ -34,9 +42,11 @@ construct:
               id: Degradase3
               source: uniprot
           - tag: FLAG
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: degradase_4
+        label: Degradase4
         expression: high
         fused: false
         chain:
@@ -44,9 +54,11 @@ construct:
               id: Degradase4
               source: uniprot
           - tag: FLAG
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: degradase_5
+        label: Degradase5
         expression: high
         fused: false
         chain:
@@ -54,4 +66,5 @@ construct:
           - gene:
               id: Degradase5
               source: uniprot
+
     - terminator: rrnB_T1

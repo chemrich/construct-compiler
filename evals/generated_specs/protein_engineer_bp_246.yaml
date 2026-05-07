@@ -1,20 +1,25 @@
 construct:
-  name: "pichia_aox1_secretion_glycoprotein"
+  name: "Pichia_AOX1_viral_glycoprotein_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: ARS
     source: addgene
+
   cassette:
     - promoter: AOX1
-      cistron:
-        label: target_glycoprotein
+
+    - cistron:
+        label: secreted_glycoprotein
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - cleavage_site: Kex2
           - gene:
-              id: P04578
+              id: gp120
               source: uniprot
-          - tag: Strep-II
-      terminator: AOX1_TT
+          - c_tag: Strep-II
+
+    - terminator: AOX1_TT

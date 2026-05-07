@@ -1,18 +1,25 @@
 construct:
-  name: "HSA_Pichia_GAP_secretion"
+  name: "pichia_phaffii_HSA_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pGAPZα"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: HSA_protein
+        label: HSA
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
               id: P02768
               source: uniprot
-    - terminator: AOX1_term
+              codon_optimization: true
+              organism: Komagataella_phaffii
+
+    - terminator: rrnB_T1

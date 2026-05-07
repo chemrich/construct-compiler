@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: dual_gRNA_mammalian_expression
+  name: "dual_gRNA_mammalian_expression"
   host: HEK293
 
   backbone:
@@ -13,21 +12,18 @@ construct:
         label: gRNA1
         expression: high
         gene:
-          id: gRNA1_scaffold_variant1
-          # This would be a custom gRNA scaffold sequence with synonymous codons
-          # to avoid homology with gRNA2 scaffold
-    
-    - spacer: 50
-    
+          id: gRNA1_U6_scaffold_v1
+          sequence: "GTTTAAGAGCTATGCTGGAAACAGCATAGCAAGTTTAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC"
+          source: custom
+
     - promoter: H1
     
     - cistron:
-        label: gRNA2  
+        label: gRNA2
         expression: high
         gene:
-          id: gRNA2_scaffold_variant2
-          # This would be a synonymous variant of the gRNA scaffold
-          # to prevent direct repeats and recombination
-    
-    - terminator: BBa_B0015
-```
+          id: gRNA2_H1_scaffold_v2
+          sequence: "GTTTGAGCTAGCTGGAGACAGTATGCAAGCTTCAAACGAGGCTCGTCCCGTGATCGACCTGAAAAGAGGCACTGAGTCGGTGCT"
+          source: custom
+
+    - terminator: rrnB_T1

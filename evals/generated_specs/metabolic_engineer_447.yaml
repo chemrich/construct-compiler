@@ -1,26 +1,34 @@
 construct:
-  name: "thermosensitive_4_enzyme_operon"
+  name: "thermosensitive_4enzyme_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: P_lambda_pR  # Temperature-inducible promoter (lambda pR)
+    - promoter: P_lambda_pR  # temperature-inducible promoter
+
     - cistron:
         label: Thermo1
         expression: high
         gene:
           id: Thermo1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Thermo2
-        expression: medium
+        expression: high
         fused: false
         gene:
           id: Thermo2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Thermo3
         expression: medium
@@ -28,12 +36,15 @@ construct:
         gene:
           id: Thermo3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Thermo4
-        expression: low
+        expression: medium
         fused: false
         gene:
           id: Thermo4
           source: uniprot
+
     - terminator: rrnB_T1

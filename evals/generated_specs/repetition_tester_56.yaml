@@ -1,29 +1,33 @@
 construct:
-  name: yeast_complex_tagged_protein
+  name: "yeast_multitagged_protein_complex"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: GAL1
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
-          - tag: 6xHis
+          - tag: 8xHis
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: FLAG
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - tag: Strep-II
           - linker:
               type: short_GS
               repeats: 1
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: CYC1
+              id: MFalpha1
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,27 +1,30 @@
 construct:
-  name: "mammalian_dual_minimal_promoter_expression"
+  name: "mammalian_reporter_enzyme_dual"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: minCMV
+    - promoter: CMV
+
     - cistron:
-        label: reporter_g
-        expression: medium
-        fused: false
+        label: reporter_G
+        expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_polyA
-    - spacer: 50
-    - promoter: minCMV
-    - cistron:
-        label: enzyme_f
-        expression: medium
-        fused: false
-        gene:
-          id: P08659
+          id: reporter_G
           source: uniprot
+
+    - terminator: SV40_polyA
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: enzyme_F
+        expression: high
+        gene:
+          id: enzyme_F
+          source: uniprot
+
     - terminator: SV40_polyA

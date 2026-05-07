@@ -1,19 +1,42 @@
 construct:
-  name: "e_coli_xor_logic_gate_w"
-  host: e_coli_bl21
+  name: "XOR_logic_gate_E_coli"
+  host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_XOR_F_G  # Logic: (Ligand_F OR Ligand_G) AND NOT (Ligand_F AND Ligand_G)
+    - promoter: T7lac
+
     - cistron:
-        label: target_protein_W
+        label: repressor_F
         expression: medium
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: protein_W
+              id: tetR
               source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_G
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_protein_W
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gfp
+              source: fpbase
+
     - terminator: rrnB_T1

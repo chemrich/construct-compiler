@@ -1,21 +1,36 @@
 construct:
-  name: "GeneG_IRES_GeneH_mammalian_expression"
-  host: mammalian
+  name: "GeneG_GeneH_IRES_mammalian"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: GeneG
+        expression: high
         gene:
           id: GeneG
           source: uniprot
-    - spacer: 500  # Spacer for IRES element
+
+    - spacer: 30
+
+    - cistron:
+        label: IRES
+        expression: high
+        gene:
+          id: IRES_EMCV
+          source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: GeneH
-        fused: false
+        expression: high
         gene:
           id: GeneH
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

@@ -1,15 +1,21 @@
 construct:
-  name: "toggle_switch_side_a"
-  host: e_coli
+  name: genetic_toggle_switch_proteinA
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100 # Constitutive promoter as requested; note that self-repression logic typically requires operator sites (e.g., tetO).
+    - promoter: J23100
+
     - cistron:
-        label: "ProteinA_repressor"
-        expression: "high"
-        gene:
-          id: "P02976"
-          source: "uniprot"
-    - terminator: "BBa_B0015"
+        label: proteinA
+        expression: high
+        chain:
+          - gene:
+              id: proteinA
+              source: uniprot
+
+    - terminator: rrnB_T1

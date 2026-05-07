@@ -1,14 +1,17 @@
 construct:
-  name: "peptide_hormone_a_production_system"
-  host: e_coli
+  name: PeptideHormoneA_MBP_fusion_construct
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin # Placeholder: user requested non-antibiotic selection (e.g., thyA or infC complementation), using kanamycin as schema default
-    ori: pUC
+    resistance: chloramphenicol
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100 # Strong constitutive (non-inducible) bacterial promoter
+    - promoter: tac
+    
     - cistron:
-        label: hormone_fusion
+        label: carrier_fusion
         expression: high
         chain:
           - tag: 6xHis
@@ -17,4 +20,5 @@ construct:
           - gene:
               id: PeptideHormoneA
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator (non-viral)
+    
+    - terminator: rrnB_T1

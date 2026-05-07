@@ -1,25 +1,47 @@
 construct:
-  name: "ecoli_or_gate_sfgfp"
-  host: e_coli
+  name: OR_logic_gate_D_E
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: protein_z_d
+        label: repressor_D
         expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CI
+              source: uniprot
+        # CI repressor responds to ligand D binding; when D is absent, CI represses promoter_Z
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_E
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Cro
+              source: uniprot
+        # Cro repressor responds to ligand E binding; when E is absent, Cro represses promoter_Z
+
+    - spacer: 25
+
+    - cistron:
+        label: output_Z
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+        # Output protein Z (sfGFP) is expressed from a dual-repressed promoter.
+        # Logic: Z is ON when D is present (inactivates CI) OR E is present (inactivates Cro) or both.
+        # Z is OFF only when both D and E are absent (both CI and Cro actively repress).
+
     - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: lacUV5
-    - cistron:
-        label: protein_z_e
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015

@@ -1,18 +1,20 @@
 construct:
-  name: "SuperProtein_high_expression_constitutive"
-  host: e_coli
+  name: SuperProtein_high_expression
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for 'always on' expression in E. coli
+    - promoter: T7
+
     - cistron:
-        label: target
+        label: SuperProtein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: SuperProtein
               source: uniprot
+
     - terminator: rrnB_T1

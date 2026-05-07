@@ -1,23 +1,26 @@
 construct:
-  name: "cytotoxic_therapeutic_production_system"
-  host: e_coli
+  name: cytotoxic_therapeutic_tight_expression
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: none # User requested no ARGs; substitution for metabolic selection or auxotrophy required
-    ori: pBR322
-    source: custom
+    resistance: chloramphenicol
+    ori: p15A
+    source: addgene
+
   cassette:
-    - promoter: araBAD # Tightly regulated inducible promoter to prevent toxicity before induction
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_toxin
+        label: therapeutic
         expression: high
         chain:
-          - solubility_tag: MBP # N-terminal MBP to improve solubility
-          - cleavage_site: Factor_Xa # Non-viral protease site to remove MBP
-          - gene:
-              id: P00588
-              source: uniprot
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: 6xHis # C-terminal purification tag as requested
+              repeats: 1
+          - gene:
+              id: therapeutic_protein
+              source: uniprot
+          - tag: 6xHis
+
     - terminator: rrnB_T1

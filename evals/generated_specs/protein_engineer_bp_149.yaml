@@ -1,18 +1,26 @@
 construct:
-  name: "bacillus_subtilis_phytase_secretion"
+  name: "bacillus_phytase_secretion_cassette"
   host: bacillus
+
   backbone:
-    catalog_vector: "pHT43"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pgrac
+
+    - rbs: RBS_strong
+
     - cistron:
-        label: target
+        label: phytase_secreted
         expression: high
         chain:
-          - tag: SamP
+          - secretion_signal: SamP
           - tag: 6xHis
           - cleavage_site: Enterokinase
           - gene:
-              id: Phytase
+              id: phytase
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

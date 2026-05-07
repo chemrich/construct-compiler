@@ -1,51 +1,62 @@
 construct:
-  name: "zymomonas_mobilis_membrane_operon"
-  host: e_coli # Substituted e_coli as Zymomonas mobilis is not a standard host option; J23100 promoter remains compatible
+  name: "Zymomonas_mobilis_five_gene_membrane_cytosol_operon"
+  host: bacillus  # Zymomonas mobilis is a Gram-negative bacterium; use bacillus as closest proxy for prokaryotic secretion/membrane targeting
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # constitutive promoter for balanced expression
+
     - cistron:
         label: MemE1
         expression: medium
-        fused: false
         chain:
-          - tag: pelB
+          - signal_peptide: Sec_signal  # N-terminal signal peptide for Sec pathway membrane targeting
           - gene:
               id: MemE1
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: MemE2
         expression: medium
         fused: false
         chain:
-          - tag: pelB
+          - signal_peptide: Sec_signal
           - gene:
               id: MemE2
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: MemE3
         expression: medium
         fused: false
         chain:
-          - tag: pelB
+          - signal_peptide: Sec_signal
           - gene:
               id: MemE3
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: MemE4
         expression: medium
         fused: false
         chain:
-          - tag: pelB
+          - signal_peptide: Sec_signal
           - gene:
               id: MemE4
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: CytoE5
         expression: medium
@@ -53,4 +64,5 @@ construct:
         gene:
           id: CytoE5
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

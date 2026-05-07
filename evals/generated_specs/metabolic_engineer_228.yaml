@@ -1,31 +1,39 @@
 construct:
-  name: yeast_multiorganelle_five_enzyme_pathway
+  name: "S_cerevisiae_five_enzyme_pathway"
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
         label: MitoEnz1
         expression: high
         chain:
-          - tag: MTS  # Mitochondrial Targeting Sequence
+          - tag: MTS_mitochondrial
           - gene:
               id: MitoEnz1
               source: uniprot
-    - spacer: 30  # IRES-mediated polycistronic spacer
+
+    - spacer: 30
+
     - cistron:
         label: MitoEnz2
         expression: high
         fused: false
         chain:
-          - tag: MTS
+          - tag: MTS_mitochondrial
           - gene:
               id: MitoEnz2
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: CytoEnz3
         expression: high
@@ -33,17 +41,21 @@ construct:
         gene:
           id: CytoEnz3
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: PeroxEnz4
         expression: high
         fused: false
         chain:
+          - tag: PTS1_peroxisomal
           - gene:
               id: PeroxEnz4
               source: uniprot
-          - tag: PTS1  # Peroxisomal Targeting Sequence (C-terminal)
+
     - spacer: 30
+
     - cistron:
         label: CytoEnz5
         expression: high
@@ -51,4 +63,5 @@ construct:
         gene:
           id: CytoEnz5
           source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1_terminator

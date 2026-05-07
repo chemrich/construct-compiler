@@ -1,29 +1,38 @@
 construct:
-  name: "mercury_sensor_actuator_system"
-  host: e_coli_bl21
+  name: heavy_metal_sensor_actuator_system
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: araBAD
+      # Metal-responsive promoter controlled by sensor protein
+    
     - cistron:
-        label: merR_regulator
-        expression: medium
-        gene:
-          id: P06687
-          source: uniprot
-    - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: PmerT
-    - cistron:
-        label: merA_actuator
+        label: metal_sensor
         expression: high
-        fused: false
+        chain:
+          - gene:
+              id: MerR
+              source: uniprot
+      # MerR: mercury/heavy metal sensor transcription factor
+    
+    - terminator: rrnB_T1
+    
+    - promoter: araBAD
+      # This promoter is activated by MerR upon metal M detection
+    
+    - cistron:
+        label: detoxification_enzyme
+        expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P06683
+              id: MerA
               source: uniprot
-    - terminator: T7term
+      # MerA: mercury reductase detoxifying enzyme
+    
+    - terminator: rrnB_T1

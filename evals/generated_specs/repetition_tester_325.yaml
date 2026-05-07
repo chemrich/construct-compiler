@@ -1,30 +1,34 @@
 construct:
-  name: "tandem_affinity_purification_sfGFP"
-  host: e_coli_bl21
+  name: tandem_affinity_purification_ecoli
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: tac
+
     - cistron:
-        label: target
+        label: target_with_dual_tags
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - cleavage_site: TEV
           - linker:
-              type: short_GS
-              repeats: 2
-          - tag: Twin-Strep
-          - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
+          - tag: Strep-II
           - cleavage_site: 3C
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: your_protein_of_interest
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,15 +1,21 @@
 construct:
-  name: "therapeutic_RNA_aptamer_IVT_template"
+  name: "IVT_RNA_aptamer_therapeutic"
   host: in_vitro
+
   backbone:
-    # User requested no antibiotic markers; default placeholder included for compatibility but intended for linear DNA production.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    resistance: none
+    ori: none
+    source: synthetic
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: aptamer_sequence
-        gene:
-          id: therapeutic_aptamer
-    - terminator: T7term
+        label: aptamer
+        expression: high
+        chain:
+          - gene:
+              id: SELEX_aptamer_placeholder
+              source: custom
+
+    - terminator: rrnB_T1

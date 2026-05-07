@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: "bacillus_mannitol_inducible_levansucrase_secretion"
+  name: "B_subtilis_secretion_system_levansucrase"
   host: bacillus
 
   backbone:
@@ -9,17 +8,19 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: PmtlA  # mannitol-inducible promoter
+    - promoter: PmtlA
 
     - cistron:
-        label: secreted_levansucrase
+        label: levansucrase_secreted
         expression: high
         chain:
-          - signal_peptide: SacB  # B. subtilis secretion signal
+          - signal_peptide: SacB
           - gene:
-              id: P00724  # levansucrase from B. subtilis
+              id: levansucrase
               source: uniprot
-          - tag: HA  # C-terminal HA tag for Western blotting
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: HA
 
     - terminator: rrnB_T1
-```

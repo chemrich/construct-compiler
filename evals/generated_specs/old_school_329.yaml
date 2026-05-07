@@ -1,14 +1,22 @@
 construct:
-  name: "pBluescript_phagemid_ssDNA"
+  name: "phagemid_gene_of_interest"
   host: e_coli
+
   backbone:
-    catalog_vector: "pBluescript II SK(+)"
+    catalog_vector: "pBluescript"
     resistance: ampicillin
+    ori: pBR322
+    # pBluescript includes f1 origin for M13 phage packaging and ssDNA production
+    source: addgene
+
   cassette:
-    - promoter: lac
+    - promoter: lacUV5
+
     - cistron:
-        label: target
+        label: gene_of_interest
+        expression: medium
         gene:
           id: gene_of_interest
           source: uniprot
+
     - terminator: rrnB_T1

@@ -1,20 +1,24 @@
 construct:
-  name: Yeast_ER_Retention_Antibody
+  name: "antibody_ER_retention_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: antibody_cistron
+        label: antibody
         expression: high
         chain:
-          - tag: alpha_factor_signal  # Required for ER entry
-          - gene:
-              id: scFv_antibody
-              source: uniprot
           - tag: FLAG
-          - tag: KDEL  # Note: S. cerevisiae typically uses HDEL for ER retention; KDEL is used as requested.
-    - terminator: CYC1
+          - gene:
+              id: antibody
+              source: uniprot
+          - tag: KDEL
+
+    - terminator: rrnB_T1

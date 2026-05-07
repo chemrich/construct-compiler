@@ -1,23 +1,40 @@
 construct:
-  name: "tet_on_gene_x_inducible_system"
+  name: "tetracycline_inducible_mammalian_system"
   host: HEK293
-  backbone:
-    resistance: hygromycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
-    - cistron:
-        label: rtTA_regulator
-        gene:
-          id: rtTA3
-          source: uniprot
-    - terminator: SV40_pA
-    - spacer: 100
-    - promoter: TRE3G # Substituted TRE3G for EF1_alpha to enable doxycycline induction; a TRE-based promoter is required for rtTA-mediated activation.
-    - cistron:
-        label: target_gene_x
-        gene:
-          id: gene_x
-          source: uniprot
-    - terminator: bGH_pA
+      cistron:
+        label: regulator
+        expression: high
+        chain:
+          - gene:
+              id: rtTA
+              source: uniprot
+      terminator: SV40_poly_A
+
+    - promoter: hEF1a
+      cistron:
+        label: target
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gene_X
+              source: uniprot
+      terminator: SV40_poly_A
+
+    - promoter: SV40
+      cistron:
+        label: selection_marker
+        expression: high
+        chain:
+          - gene:
+              id: hygromycin_B_phosphotransferase
+              source: uniprot
+      terminator: SV40_poly_A
+
+  backbone:
+    resistance: hygromycin
+    ori: SV40
+    source: addgene

@@ -1,28 +1,34 @@
 construct:
-  name: "yeast_surface_display_therapeutic_peptide"
+  name: yeast_surface_display_therapeutic_peptide
   host: yeast
 
   backbone:
-    resistance: URA3  # Using auxotrophic marker to avoid antibiotic resistance genes
-    ori: 2_micron     # High-copy yeast origin for directed evolution
+    resistance: null
+    ori: 2_micron
     source: addgene
 
   cassette:
-    - promoter: GAL1  # Strong, galactose-inducible promoter standard for yeast display
+    - promoter: GAL1
 
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
+          - tag: HA
           - gene:
-              id: AGA2
-              source: uniprot  # UniProt: P32590; Includes signal peptide for ER translocation
+              id: alpha_factor_signal
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: HA            # N-terminal tag to monitor surface expression levels
+              repeats: 1
           - gene:
               id: therapeutic_peptide
-              source: uniprot  # Placeholder for the novel therapeutic sequence
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: Aga2p
+              source: uniprot
 
-    - terminator: CYC1_term  # Standard yeast transcription terminator
+    - terminator: CYC1

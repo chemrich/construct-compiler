@@ -1,13 +1,21 @@
 construct:
-  name: "hammerhead_ribozyme_targeting_system"
-  host: e_coli_bl21_de3
+  name: "Hammerhead_Ribozyme_mRNA_Target"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: ribozyme
+        label: hammerhead_ribozyme
         expression: high
-        gene:
-          id: "HammerheadRibozyme_targeting_mRNA_Target_Sequence"
-    - terminator: T7term
+        chain:
+          - gene:
+              id: hammerhead_ribozyme
+              source: uniprot
+    
+    - terminator: rrnB_T1

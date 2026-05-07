@@ -1,25 +1,67 @@
 construct:
-  name: "selection_logic_mux"
+  name: "genetic_selector_switch_system"
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: tac  # Driven by Select_A and Input_Data_1 (e.g., IPTG)
+    - promoter: araBAD
+      label: "select_A_input"
+    
     - cistron:
-        label: output_x_branch_a
+        label: "recombinase_A"
         expression: high
         gene:
-          id: sfGFP
-          source: fpbase
+          id: "cre"
+          source: "uniprot"
+    
     - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: araBAD  # Driven by Select_B and Input_Data_2 (e.g., Arabinose)
+    
+    - spacer: 30
+    
+    - promoter: araBAD
+      label: "select_B_input"
+    
     - cistron:
-        label: output_x_branch_b
+        label: "recombinase_B"
         expression: high
         gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015
+          id: "flp"
+          source: "uniprot"
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: "loxP_regulated"
+      label: "input_data_1_path"
+    
+    - cistron:
+        label: "output_X_from_input_1"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "gfp"
+              source: "fpbase"
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: "FRT_regulated"
+      label: "input_data_2_path"
+    
+    - cistron:
+        label: "output_X_from_input_2"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "gfp"
+              source: "fpbase"
+    
+    - terminator: rrnB_T1

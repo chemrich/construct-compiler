@@ -1,16 +1,20 @@
 construct:
-  name: "lysosomal_targeting_enzyme_e"
-  host: mammalian
+  name: "enzyme_E_lysosomal_targeting"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: enzyme_E_lysosomal
         expression: high
         chain:
-          - tag: Lysosomal_Signal
+          - tag: KFERQ  # Lysosomal targeting signal (chaperone-mediated autophagy motif)
           - gene:
-              id: Enzyme_E
+              id: enzyme_E
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

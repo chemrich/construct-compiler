@@ -1,19 +1,25 @@
 construct:
-  name: "ubiquitin_stability_fusion"
+  name: ubiquitin_fusion_stability_study
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: lacUV5
+    
     - cistron:
-        label: stability_target
-        expression: medium
+        label: ubiquitin_fusion
+        expression: high
         chain:
-          - solubility_tag: Ubiquitin
+          - gene:
+              id: ubiquitin
+              source: uniprot
           - cleavage_site: TEV
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: your_protein
+              source: uniprot
+    
     - terminator: rrnB_T1

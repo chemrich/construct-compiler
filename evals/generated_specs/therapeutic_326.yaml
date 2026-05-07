@@ -1,22 +1,31 @@
 construct:
-  name: "therapeutic_receptor_fc_fusion"
+  name: "receptor_ectodomain_Fc_fusion"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: receptor_fusion
+        label: receptor_ectodomain_Fc
         expression: high
         chain:
-          - tag: Igk_leader
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - solubility_tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P20333
+              id: "receptor_ectodomain"
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P01857
+              id: "human_IgG1_Fc"
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40_poly_A

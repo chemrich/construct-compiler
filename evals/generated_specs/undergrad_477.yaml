@@ -1,15 +1,22 @@
 construct:
-  name: "HA_MysteryProt_HEK293_Expression"
+  name: MysteryProt_HA_detection
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: MysteryProt_HA
         expression: high
         chain:
           - tag: HA
           - gene:
               id: MysteryProt
-    - terminator: SV40_polyA
+              source: uniprot
+
+    - terminator: rrnB_T1

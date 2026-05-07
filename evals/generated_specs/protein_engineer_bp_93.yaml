@@ -1,27 +1,37 @@
 construct:
-  name: "bacillus_keratinase_expression_system"
+  name: "bacillus_keratinase_autoinduction"
   host: bacillus
+
   backbone:
-    resistance: chloramphenicol
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: constitutive
+      # lacI repressor cassette for tight control
     - cistron:
         label: lacI_repressor
         expression: medium
         gene:
-          id: P03023
+          id: lacI
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
     - promoter: Pspac
+      # IPTG-inducible Pspac promoter for keratinase expression
+
     - cistron:
-        label: secreted_keratinase
+        label: keratinase
         expression: high
         chain:
-          - tag: NprE_signal_peptide
-          - tag: 6xHis
+          - signal_peptide: NprE
           - gene:
-              id: P00780
+              id: NprE
               source: uniprot
+          - tag: 6xHis
+
     - terminator: rrnB_T1

@@ -1,14 +1,21 @@
 construct:
-  name: "Tet_On_Therapeutic_Protein_Expression"
+  name: "Tet_On_TherapeuticProtein"
   host: HEK293
+  
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  
   cassette:
-    - promoter: TRE_Ptight
+    - promoter: Ptight
+    
     - cistron:
-        label: target
+        label: therapeutic
         expression: high
-        gene:
-          id: TherapeuticProtein
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TherapeuticProtein
+              source: uniprot
+    
+    - terminator: rrnB_T1

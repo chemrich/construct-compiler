@@ -1,14 +1,14 @@
 construct:
-  name: "gfp_high_expression_check"
-  host: e_coli
+  name: "quick_GFP_check"
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
-    - promoter: T7lac  # User requested CMV; substituted with T7lac because CMV is a mammalian promoter and inactive in E. coli.
+    - promoter: T7lac  # CMV is a mammalian promoter; substituted T7lac for efficient E. coli expression
     - cistron:
-        label: gfp_reporter
+        label: GFP
         expression: high
         gene:
           id: sfGFP
           source: fpbase
-    - terminator: T7term
+    - terminator: rrnB_T1

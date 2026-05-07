@@ -1,47 +1,67 @@
 construct:
-  name: "orthogonal_regulatory_operon_sfGFP"
+  name: five_gene_regulatory_operon_sfGFP_reporter
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: tac  # Inducible promoter representing the requested orthogonal TF-BS control
+    - promoter: lacUV5
+      # lacUV5 provides moderate basal expression; can be replaced with a synthetic TF-BS
+      # Note: For true orthogonal TF control, replace lacUV5 with a custom TF-binding site (e.g., araBAD, rhaPBAD, or user-defined synthetic operator)
+    
     - cistron:
         label: TF1
-        expression: medium
-        gene:
-          id: TF1
-          source: uniprot
-    - spacer: 30
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TF1
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: TF2
-        expression: medium
-        fused: false
-        gene:
-          id: TF2
-          source: uniprot
-    - spacer: 30
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TF2
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: CoFactor3
-        expression: medium
-        fused: false
-        gene:
-          id: CoFactor3
-          source: uniprot
-    - spacer: 30
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CoFactor3
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: Regulator4
-        expression: medium
-        fused: false
-        gene:
-          id: Regulator4
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reporter
         expression: high
-        fused: false
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Regulator4
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: sfGFP_reporter
+        expression: medium
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
     - terminator: rrnB_T1

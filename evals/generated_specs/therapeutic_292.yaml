@@ -1,26 +1,33 @@
 construct:
-  name: "non_viral_dual_fp_tracker"
+  name: dual_FP_mammalian_tracker
   host: HEK293
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance elements
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: EF1_alpha  # Strong non-viral constitutive mammalian promoter
+    - promoter: EF1_alpha
+
     - cistron:
-        label: tracker_protein
+        label: cell_tracker
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - cistron:
-        label: monitor_protein
-        expression: high
-        fused: true  # Joined in a single ORF for 2A-mediated cleavage
         chain:
-          - linker:
-              type: P2A
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: state_monitor
+        expression: high
+        chain:
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: hGH_pA  # Human growth hormone polyadenylation signal (non-viral)
+        # 2A peptide for ribosomal skipping enables polycistronic expression
+        # from a single mRNA transcript without requiring IRES elements
+        fused: false
+
+    - terminator: polyA

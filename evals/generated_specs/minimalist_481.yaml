@@ -1,22 +1,30 @@
 construct:
-  name: "cotranslation_sfGFP_mCherry"
-  host: e_coli
+  name: "GFP_mCherry_cotranslation"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: sfGFP_reporter
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
+        label: GFP
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: mCherry_reporter
-        expression: medium
+        label: mCherry
+        expression: high
         fused: false
         gene:
           id: mCherry
           source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,19 +1,32 @@
 construct:
-  name: "cas9_ivt_template"
+  name: "CRISPR_Cas9_mRNA_IVT_template"
   host: in_vitro
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: cas9_effector
+        label: Cas9_mRNA
         expression: high
         chain:
-          - tag: NLS
+          - tag: 6xHis
+          - cleavage_site: T2A
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-          - tag: NLS
-    - terminator: T7term
+
+    - cistron:
+        label: PolyA_binding_protein
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PABP
+              source: uniprot
+
+    - terminator: rrnB_T1

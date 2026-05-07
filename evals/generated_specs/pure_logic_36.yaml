@@ -1,25 +1,40 @@
-```yaml
 construct:
   name: pH_responsive_ON_gate_yeast
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2micron
     source: addgene
 
   cassette:
-    - promoter: PHO5  # pH-responsive promoter, activated under acidic conditions
+    - promoter: GAL1
 
     - cistron:
-        label: pH_sensor_output
+        label: pH_sensor
         expression: high
         chain:
-          - tag: alpha_factor_signal  # secretion signal for yeast
-          - tag: GPI_anchor  # cell-surface localization
           - gene:
-              id: W  # output protein W
+              id: PHO4
               source: uniprot
 
+    - spacer: 25
+
+    - cistron:
+        label: output_W
+        expression: high
+        fused: false
+        chain:
+          - tag: HA
+          - solubility_tag: GFP
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+        # Cell-surface localization via yeast alpha-factor secretion signal
+        localization: alpha_factor_secretion_signal
+
     - terminator: CYC1
-```

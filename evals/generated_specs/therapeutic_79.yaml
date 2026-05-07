@@ -1,24 +1,23 @@
 construct:
-  name: "clinical_membrane_enzyme_construct"
-  host: e_coli
+  name: "membrane_therapeutic_enzyme_clinical"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: none  # Antibiotic-free metabolic selection (e.g., dapD or infA) for clinical compliance
+    resistance: null  # Omitted for clinical application
     ori: pBR322
-    source: custom  # Custom backbone to ensure no viral components or antibiotic markers
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Inducible by L-arabinose; non-viral origin (unlike T7)
+    - promoter: T7lac  # Inducible for toxicity management
+
     - cistron:
-        label: therapeutic_fusion
+        label: membrane_enzyme
         expression: high
         chain:
-          - tag: 6xHis
+          - tag: 6xHis  # N-terminal purification tag
+          - cleavage_site: TEV  # Removable before clinical use
           - gene:
-              id: P0AC13  # OmpA (E. coli transmembrane domain)
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: P00751  # Human Tissue Plasminogen Activator (representative therapeutic enzyme)
-              source: uniprot
-    - terminator: rrnB_T1  # Robust bacterial terminator, non-viral
+              id: transmembrane_enzyme
+              source: uniprot  # User to specify actual UniProt ID for their enzyme
+
+    - terminator: rrnB_T1

@@ -1,18 +1,28 @@
 construct:
-  name: "secreted_nanoluc_nonviral_transient_expression"
+  name: "mammalian_transient_NanoLuc_secreted"
   host: HEK293
+
   backbone:
-    resistance: none # Omitted per user request; standard E. coli-based manufacturing usually requires a selection marker.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Using pTwist CMV as non-integrating episomal mammalian vector
+    # Explicitly removing antibiotic resistance by specification
+    ori: SV40_ori
+    # Note: catalog_vector pTwist CMV is antibiotic-free formulation available from Twist
+
   cassette:
-    - promoter: EF1_alpha # Non-viral constitutive high-expression promoter
+    - promoter: CMV
+      # Strong constitutive mammalian promoter for high expression
+
     - cistron:
-        label: secreted_reporter
+        label: NanoLuc_secreted
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal peptide
+          - tag: signal_peptide_IgK
+            # Immunoglobulin kappa chain signal peptide for mammalian secretion
           - gene:
               id: NanoLuc
               source: uniprot
-    - terminator: hGH_PA # Human growth hormone polyadenylation signal (non-viral)
+              # NanoLuc luciferase (Oplophorus gracilirostris)
+
+    - terminator: SV40_polyA
+      # SV40 polyadenylation signal for mammalian expression

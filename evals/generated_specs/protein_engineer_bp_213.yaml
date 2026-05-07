@@ -1,24 +1,36 @@
 construct:
-  name: "Pichia_Cas9_sgRNA_plasmid"
-  host: yeast  # Yeast host used for Pichia pastoris codon optimization
+  name: Pichia_pastoris_CRISPR_Cas9_editing
+  host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pPIC9
+    source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: cas9
+        label: Cas9
         expression: high
         chain:
-          - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: Cas9_Pichia_pastoris_codon_optimized
               source: uniprot
-          - tag: NLS
-    - terminator: AOX1_TT
-    - promoter: U6
+              # Note: This references a Pichia-optimized variant of Cas9
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: SNR52
+
     - cistron:
-        label: sgrna
-        gene:
-          id: sgRNA_scaffold
-    - terminator: BBa_B0015
+        label: sgRNA
+        expression: medium
+        chain:
+          - gene:
+              id: sgRNA_scaffold
+              source: uniprot
+
+    - terminator: rrnB_T1

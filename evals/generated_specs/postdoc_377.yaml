@@ -1,21 +1,27 @@
 construct:
-  name: "E_coli_C_terminal_TAP_like_sfGFP"
-  host: e_coli_bl21_de3
+  name: "ecoli_dual_tag_protein"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: your_protein_id
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: 6xHis
-          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - terminator: T7term
+
+    - terminator: rrnB_T1

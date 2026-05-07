@@ -1,74 +1,75 @@
 construct:
-  name: "biosynthetic_5_enzyme_operon_low_toxicity"
-  host: e_coli_bl21_de3
+  name: "five_enzyme_biosynthetic_operon_tunable"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: enzyme_1
         expression: low
-        fused: false
         chain:
           - gene:
-              id: P40733
+              id: enzyme_1
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - cleavage_site: TEV
           - tag: Strep-II
-    - spacer: 30
+    
+    - spacer: 35
+    
     - cistron:
         label: enzyme_2
         expression: low
         fused: false
         chain:
           - gene:
-              id: P40734
+              id: enzyme_2
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - cleavage_site: TEV
           - tag: Strep-II
-    - spacer: 30
+    
+    - spacer: 35
+    
     - cistron:
         label: enzyme_3
-        expression: low
+        expression: medium
         fused: false
         chain:
           - gene:
-              id: P40735
+              id: enzyme_3
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - cleavage_site: TEV
           - tag: Strep-II
-    - spacer: 30
+    
+    - spacer: 35
+    
     - cistron:
         label: enzyme_4
         expression: low
         fused: false
         chain:
           - gene:
-              id: P40736
+              id: enzyme_4
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - cleavage_site: TEV
           - tag: Strep-II
-    - spacer: 30
+    
+    - spacer: 35
+    
     - cistron:
         label: enzyme_5
-        expression: low
+        expression: medium
         fused: false
         chain:
           - gene:
-              id: P40737
+              id: enzyme_5
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 1
+          - cleavage_site: TEV
           - tag: Strep-II
+    
     - terminator: rrnB_T1

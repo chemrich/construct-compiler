@@ -1,24 +1,34 @@
 construct:
-  name: "SV40_IRES_Bicistronic_Hygro"
-  host: mammalian
+  name: bicistronic_mammalian_SV40_IRES
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: hygromycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: SV40
+    - promoter: SV40_early
+
     - cistron:
-        label: gene_1
-        expression: high  # Mapping 'high' to the requested full-length Kozak sequence
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 585  # Standard sequence length for an EMCV IRES element
+        label: first_cistron
+        expression: high
+        chain:
+          - gene:
+              id: GFP
+              source: fpbase
+
+    # IRES element represented as spacer with comment
+    # Note: IRES (Internal Ribosome Entry Site) enables cap-independent translation of second cistron
+    - spacer: 600
+
     - cistron:
-        label: gene_2
-        expression: low   # Mapping 'low' to the requested weaker Kozak sequence
-        fused: false      # Enables independent translation initiation via IRES
+        label: second_cistron
+        expression: medium
+        fused: false
         gene:
-          id: mScarlet
+          id: mCherry
           source: fpbase
-    - terminator: SV40_polyA
+
+    - terminator: SV40_poly

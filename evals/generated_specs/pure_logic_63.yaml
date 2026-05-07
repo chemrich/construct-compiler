@@ -1,25 +1,90 @@
 construct:
-  name: "mammalian_bistable_switch"
+  name: mammalian_bistable_switch_nls_reporter
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: UAS  # Synthetic Upstream Activating Sequence for positive feedback logic
+    - promoter: CMV
+
     - cistron:
-        label: activator
-        expression: medium
+        label: state_protein_A
+        expression: high
         chain:
-          - tag: NLS
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: GAL4_VP16
-    - spacer: 30  # Acts as an internal ribosome entry site (IRES) for polycistronic mammalian expression
+              id: VP16
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NLS
+
+    - spacer: 25
+
+    - cistron:
+        label: state_protein_B
+        expression: high
+        chain:
+          - tag: HA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: KRAB
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NLS
+
+    - spacer: 25
+
     - cistron:
         label: reporter
-        expression: high
-        fused: false  # Independently translated protein
+        expression: medium
+        fused: false
         chain:
           - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mCherry
+              id: mNeonGreen
               source: fpbase
-    - terminator: SV40_polyA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NLS
+
+    - spacer: 25
+
+    - cistron:
+        label: inducible_input
+        expression: very_low
+        fused: false
+        chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: dCas9-VP64
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: NLS
+
+    - terminator: rrnB_T1
+
+  # Design notes: VP16 activation domain and KRAB repression domain create mutual
+  # inhibition feedback. VP16 and dCas9-VP64 both activate state_protein_A promoter
+  # (positive feedback), while KRAB represses it. mNeonGreen with dual NLS tags
+  # reports nuclear localization of active state. Input pulse of dCas9-VP64 can
+  # drive system toward state A; removal allows KRAB to dominate, driving toward state B.

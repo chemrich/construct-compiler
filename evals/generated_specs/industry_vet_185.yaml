@@ -1,33 +1,47 @@
 construct:
-  name: compact_tripeptide_polycistron
-  host: e_coli_bl21_de3
+  name: "triple_peptide_AAV_cassette"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: P1_cistron
+        label: P1
         expression: high
+        fused: false
         chain:
           - tag: Strep-II
           - gene:
               id: P1
+              source: uniprot
+    
     - spacer: 20
+    
     - cistron:
-        label: P2_cistron
+        label: P2
         expression: high
         fused: false
         chain:
           - tag: FLAG
           - gene:
               id: P2
+              source: uniprot
+    
     - spacer: 20
+    
     - cistron:
-        label: P3_cistron
+        label: P3
         expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: P3
-    - terminator: T7term
+              source: uniprot
+    
+    - terminator: rrnB_T1

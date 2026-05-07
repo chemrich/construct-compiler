@@ -1,41 +1,72 @@
 construct:
-  name: "mammalian_bistable_toggle_switch"
+  name: mammalian_bistable_toggle_switch
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G  # Repressed by TetR; Tet-Off/On system component
+    - promoter: CMV
+
     - cistron:
-        label: state_P1_secretion_output
+        label: P1_output
         expression: high
         chain:
-          - tag: IgK_leader  # Mammalian secretion signal
+          - tag: 6xHis
+          - cleavage_site: 2A
+          - signal_peptide: HV_secretion_signal
           - gene:
-              id: P01241     # Human Growth Hormone (hGH)
+              id: IL6
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: state_P1_repressor
-        expression: medium
-        fused: false         # Independent translation via IRES/2A
-        gene:
-          id: Q83RE7         # CymR repressor
-          source: uniprot
-    - terminator: bGH_PA
+        secreted: true
 
-    - promoter: CMV_CuO      # Repressed by CymR; Cumate-controlled promoter
-    - cistron:
-        label: state_P2_reporter
-        expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
     - spacer: 30
+
     - cistron:
-        label: state_P2_repressor
+        label: TetR_repressor
+        expression: high
+        chain:
+          - gene:
+              id: TetR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: LacI_repressor
+        expression: high
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: P2_output
+        expression: high
+        chain:
+          - tag: FLAG
+          - signal_peptide: HV_secretion_signal
+          - gene:
+              id: TNF
+              source: uniprot
+        secreted: true
+
+    - spacer: 30
+
+    - cistron:
+        label: toggle_control_circuits
         expression: medium
-        fused: false         # Independent translation via IRES/2A
-        gene:
-          id: P04483         # TetR repressor
-          source: uniprot
-    - terminator: bGH_PA
+        chain:
+          - gene:
+              id: dCas9
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # Commentary: This bistable toggle uses two repressors (LacI and TetR) that mutually repress 
+  # each other's promoters. P1 and P2 outputs are secreted factors (IL-6 and TNF-alpha as examples).
+  # The system can be flipped between states via external induction (IPTG for LacI, aTc for TetR).
+  # dCas9 provides additional programmable control if needed for state switching.

@@ -1,54 +1,48 @@
-```yaml
 construct:
-  name: tripartite_self_assembling_complex
-  host: e_coli_bl21_de3
+  name: "self_assembling_tripartite_complex"
+  host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
-    
+
     - cistron:
         label: Sub1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P25848  # Example subunit 1 - replace with actual subunit IDs
+              id: sub1_variant_A
               source: uniprot
-    
-    - terminator: rrnB_T1
-    
-    - spacer: 150  # Large spacer to prevent recombination
-    
-    - promoter: tac  # Different promoter to prevent homologous recombination
-    
+        rbs: consensus_optimized_v1
+        terminator: rrnB_T1
+
+    - spacer: 50
+
     - cistron:
         label: Sub2
-        expression: medium
-        fused: false
+        expression: high
         chain:
-          - tag: Strep-II  # Different tag system
+          - tag: Strep-II
           - gene:
-              id: P30876  # Example subunit 2 - replace with actual subunit IDs  
+              id: sub2_variant_B
               source: uniprot
-    
-    - terminator: T7term  # Different terminator
-    
-    - spacer: 200  # Even larger spacer
-    
-    - promoter: araBAD  # Inducible with arabinose, completely different sequence
-    
+        rbs: consensus_optimized_v2
+        terminator: T7term
+
+    - spacer: 50
+
     - cistron:
         label: Sub3
-        expression: medium
-        fused: false
+        expression: high
         chain:
-          - tag: FLAG  # Third unique tag system
+          - tag: FLAG
           - gene:
-              id: Q9Y6K9  # Example subunit 3 - replace with actual subunit IDs
+              id: sub3_variant_C
               source: uniprot
-    
-    - terminator: BBa_B0015  # Third unique terminator with double termination
-```
+        rbs: consensus_optimized_v3
+        terminator: BBa_B0015

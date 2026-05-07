@@ -1,21 +1,21 @@
 construct:
-  name: therapeutic_peptide_high_expression
+  name: "therapeutic_peptide_high_expression"
   host: e_coli_bl21_de3
 
   backbone:
     catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: T7  # Strong promoter for high expression
+    - promoter: T7
 
     - cistron:
         label: therapeutic_peptide
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-            id: UNKNOWN  # User did not specify which therapeutic peptide
-            source: uniprot
-            # Note: Kozak sequences are for eukaryotic translation; E. coli uses Shine-Dalgarno sequences instead
+              id: therapeutic_peptide
+              source: uniprot
 
     - terminator: rrnB_T1

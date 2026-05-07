@@ -1,22 +1,31 @@
 construct:
-  name: "polycistronic_egfp_repa_expression"
-  host: e_coli
+  name: GFP_RepA_polycistronic
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gfp_reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 25
+
     - cistron:
-        label: repa_protein
-        expression: medium
+        label: RepA
+        expression: high
         fused: false
-        gene:
-          id: P03819
-          source: uniprot
+        chain:
+          - gene:
+              id: RepA
+              source: uniprot
+
     - terminator: rrnB_T1

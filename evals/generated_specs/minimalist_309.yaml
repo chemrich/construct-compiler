@@ -1,13 +1,20 @@
 construct:
-  name: "sgRNA_mammalian_expression_targeting_TARGET_SEQUENCE"
+  name: "sgRNA_TARGET_SEQUENCE"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: U6  # Pol III promoter preferred for sgRNA expression in mammalian cells
+    - promoter: U6
+
     - cistron:
         label: sgRNA
         expression: high
-        gene:
-          id: "sgRNA_targeting_TARGET_SEQUENCE"
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: "sgRNA_TARGET_SEQUENCE"
+              sequence: "GCTAGCCAGTGAATTCGAGACCGNNNNNNNNNNNNNNNNNNNNGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTTTTTT"
+              # Replace NNNNNNNNNNNNNNNNNN (20 bp) with actual TARGET_SEQUENCE
+
+    - terminator: rrnB_T1

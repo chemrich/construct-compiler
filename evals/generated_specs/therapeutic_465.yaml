@@ -1,21 +1,25 @@
 construct:
-  name: "high_solubility_vaccine_antigen_production"
-  host: e_coli_bl21_de3
+  name: "recombinant_vaccine_antigen_soluble"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_antigen
+        label: antigen
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P0DTC2
+              id: hypothetical_antigen_001
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

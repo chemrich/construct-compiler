@@ -1,14 +1,17 @@
 construct:
-  name: "GAL4DBD_proteinE_Y2H_bait"
+  name: proteinE_GAL4DBD_yeast_twohybrid
   host: yeast
+
   backbone:
-    resistance: tryptophan
-    ori: 2_micron
+    resistance: trp1
+    ori: CEN4
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: bait_fusion
+        label: GAL4DBD_proteinE
         expression: high
         chain:
           - gene:
@@ -16,8 +19,9 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: proteinE
               source: uniprot
-    - terminator: ADH1_term
+
+    - terminator: CYC1

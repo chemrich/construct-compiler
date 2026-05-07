@@ -1,21 +1,27 @@
 construct:
-  name: "DifficultProteinH_MBP_fusion"
+  name: "DifficultProteinH_MBP_soluble"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: DifficultProteinH
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - solubility_tag: MBP
+
     - terminator: rrnB_T1

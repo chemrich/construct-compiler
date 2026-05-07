@@ -1,37 +1,16 @@
 construct:
-  name: mammalian_triple_compartment_visualizer
+  name: nuclear_GFP_mammalian
   host: HEK293
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
   cassette:
-    - promoter: CMV
-    - cistron:
-        label: nuclear_gfp
-        chain:
-          - tag: NLS
-          - linker:
-              type: short_GS
-              repeats: 1
-          - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: SV40_polyA
-    - promoter: CMV
-    - cistron:
-        label: cytosolic_mcherry
-        gene:
-          id: mCherry
+  - promoter: CMV
+  - cistron:
+      label: nuclear_GFP
+      expression: high
+      chain:
+      - tag: NLS
+      - gene:
+          id: sfGFP
           source: fpbase
-    - terminator: SV40_polyA
-    - promoter: CMV
-    - cistron:
-        label: mitochondrial_bfp
-        chain:
-          - tag: MTS
-          - linker:
-              type: short_GS
-              repeats: 1
-          - gene:
-              id: mTagBFP2
-              source: fpbase
-    - terminator: SV40_polyA
+  - terminator: rrnB_T1

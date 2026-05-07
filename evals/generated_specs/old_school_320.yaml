@@ -1,16 +1,21 @@
 construct:
-  name: "pBR322_strong_lac_expression_vector"
+  name: "pBR322_high_expression_polypeptide"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: lacUV5
+
     - cistron:
-        label: target
+        label: target_polypeptide
         expression: high
-        gene:
-          id: target_polypeptide
-          source: uniprot
+        chain:
+          - gene:
+              id: custom_polypeptide
+              source: uniprot
+
     - terminator: rrnB_T1

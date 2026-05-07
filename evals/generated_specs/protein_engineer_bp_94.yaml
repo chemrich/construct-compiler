@@ -1,27 +1,36 @@
 construct:
-  name: "Pichia_Lipase_PDI_Coexpression"
+  name: "Pichia_PDI_lipase_coexpression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeomycin
+    ori: ARS
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: target_lipase
+        label: lipase_target
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: 6xHis
+          - cleavage_site: KEX2
+          - secretion_signal: alpha_factor
           - gene:
-              id: LIP1
+              id: lipase
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1
+
+  cassette_2:
     - promoter: GAP
+
     - cistron:
-        label: PDI_helper
+        label: PDI
         expression: medium
-        fused: false
         gene:
-          id: PDI1
+          id: PDI
           source: uniprot
-    - terminator: CYC1_TT
+
+    - terminator: CYC1

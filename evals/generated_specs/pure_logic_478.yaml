@@ -1,38 +1,67 @@
 construct:
-  name: "precision_time_delay_pulse_generator"
-  host: e_coli_bl21
+  name: "time_delayed_gene_expression_system"
+  host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Inducible by L-arabinose (Input S)
+    - promoter: T7lac
+
     - cistron:
-        label: delay_timer_activator
-        expression: low  # Slow accumulation to achieve 4-6h delay
-        chain:
-          - solubility_tag: MBP  # Tag increases translation/folding time to sharpen delay
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: luxR
-              source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac  # Proxy for pLux/pTet hybrid promoter for logic implementation
-    - cistron:
-        label: target_O
+        label: input_sensor
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: mScarlet
-              source: fpbase
-    - spacer: 45
+              id: LuxR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: shutoff_repressor
-        expression: medium  # Kinetic delay in repressor accumulation allows 8h pulse duration
+        label: delay_element_protease
+        expression: high
+        chain:
+          - gene:
+              id: ClpXP
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: timing_protein_stabilizer
+        expression: medium
+        chain:
+          - gene:
+              id: ssrA_tag_variant
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_protein
+        expression: high
         fused: false
-        gene:
-          id: tetR
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: timer_OFF_switch
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: toxin_antitoxin_MazE
+              source: uniprot
+
+    - terminator: rrnB_T1

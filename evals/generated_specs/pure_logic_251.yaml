@@ -1,24 +1,48 @@
 construct:
-  name: "positive_feedback_switch_T7"
-  host: e_coli
+  name: "irreversible_positive_feedback_loop_U_autoactivation"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Signal X trigger (Arabinose)
+    - promoter: T7lac
+
     - cistron:
-        label: trigger_unit
+        label: signal_input_X
         expression: medium
-        gene:
-          id: P00573
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7      # Product U (T7 Polymerase) auto-activator
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+        # araC is a transcription factor that can be externally induced
+
+    - spacer: 25
+
     - cistron:
-        label: auto_feedback_unit
+        label: product_U_autoactivator
         expression: high
-        gene:
-          id: P00573
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lexA_repressor
+              source: uniprot
+        # lexA acts as both the product U and its own negative regulator
+        # when cleaved (self-inactivating via SOS response), it auto-activates
+
+    - spacer: 25
+
+    - cistron:
+        label: positive_feedback_amplifier
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cro_protein
+              source: uniprot
+        # cro reinforces the feedback loop by antagonizing lexA repression
+
+    - terminator: rrnB_T1

@@ -1,39 +1,64 @@
 construct:
-  name: "yeast_surface_display_trivalent_vaccine"
+  name: "S_cerevisiae_triepitope_surface_display_vaccine"
   host: yeast
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: surface_display_fusion
+        label: surface_scaffold
         expression: high
         chain:
+          - tag: alpha_factor_secretion_signal
           - gene:
-              id: AGA2_signal
+              id: AGA1_display_domain
               source: uniprot
-          - gene:
-              id: AGA2
-              source: uniprot
+
+    - spacer: 24
+
+    - cistron:
+        label: epitope_1
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: custom_linker_APRGLGAQKQ
           - gene:
-              id: Epitope_Alpha
+              id: epitope_pathogen_A
               source: uniprot
+              codon_optimization: divergent_set_1
+
+    - spacer: 22
+
+    - cistron:
+        label: epitope_2
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              type: custom_linker_DGSGSETSP
           - gene:
-              id: Epitope_Beta
+              id: epitope_pathogen_B
               source: uniprot
+              codon_optimization: divergent_set_2
+
+    - spacer: 26
+
+    - cistron:
+        label: epitope_3
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
-              repeats: 2
+              type: custom_linker_KSSPGSKVS
           - gene:
-              id: Epitope_Gamma
+              id: epitope_pathogen_C
               source: uniprot
-          - tag: FLAG
-    - terminator: CYC1_term
+              codon_optimization: divergent_set_3
+
+    - terminator: CYC1_poly_A

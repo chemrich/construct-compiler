@@ -1,24 +1,51 @@
 construct:
-  name: "mammalian_apoptosis_delay_circuit"
+  name: mammalian_time_delay_apoptosis_circuit
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: TRE3G  # Inducer-responsive promoter (responds to inducer_delay pulse)
+    - promoter: CMV
+
     - cistron:
-        label: delay_relay
-        expression: medium
-        fused: false
-        gene:
-          id: GAL4_VP16
-    - terminator: SV40_PA
-    - spacer: 60  # Intergenic region between transcription units
-    - promoter: UAS  # Responds to GAL4-VP16 to create the 6-8 hour transcriptional delay
-    - cistron:
-        label: apoptosis_effector
+        label: doxycycline_regulated_transactivator
         expression: high
-        fused: false
-        gene:
-          id: BAX
-          source: uniprot
-    - terminator: bGH_PA
+        chain:
+          - tag: HA
+          - gene:
+              id: rtTA3
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: timer_protein
+        expression: high
+        chain:
+          - gene:
+              id: degron_fused_caspase3
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: time_delay_stabilizer
+        expression: medium
+        chain:
+          - gene:
+              id: phosphodiesterase_PDE4D8
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: feedback_timer
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: titin_degradation_domain
+              source: uniprot
+
+    - terminator: rrnB_T1

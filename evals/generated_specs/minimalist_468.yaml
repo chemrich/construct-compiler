@@ -1,16 +1,21 @@
 construct:
-  name: "yeast_secreted_protein_s"
+  name: yeast_secreted_protein_S
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: target_protein
+        label: protein_S
         expression: high
-        gene:
-          id: PROS_HUMAN
-          source: uniprot
-    - terminator: CYC1
+        chain:
+          - gene:
+              id: protein_S
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,83 +1,77 @@
 construct:
-  name: biofuel_precursor_pathway_operon
+  name: "bacillus_biofuel_pathway_iptg_inducible"
   host: bacillus
 
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: chloramphenicol
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: lacI_Phyperspank  # IPTG-inducible promoter for tight control in B. subtilis
+    - promoter: lacUV5
 
     - cistron:
-        label: enzyme1
+        label: enzyme_1
         expression: high
         gene:
-          id: P450BM3  # example pathway enzyme
+          id: aldehyde_dehydrogenase
           source: uniprot
 
     - spacer: 25
 
     - cistron:
-        label: enzyme2
-        expression: medium
-        fused: false
-        gene:
-          id: Q45619  # example dehydrogenase
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: enzyme3
+        label: enzyme_2
         expression: high
-        fused: false
         gene:
-          id: P39844  # example synthase
+          id: alcohol_dehydrogenase
           source: uniprot
 
     - spacer: 25
 
     - cistron:
-        label: enzyme4
+        label: enzyme_3
         expression: medium
-        fused: false
         gene:
-          id: O34667  # example reductase
+          id: acyl_CoA_synthetase
           source: uniprot
 
-    - spacer: 35
+    - spacer: 25
 
     - cistron:
-        label: enzyme5
+        label: enzyme_4
+        expression: medium
+        gene:
+          id: fatty_acid_desaturase
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_5
+        expression: medium
+        gene:
+          id: thioesterase
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_6
         expression: low
-        fused: false
         gene:
-          id: P54424  # example isomerase
+          id: aldol_condensase
           source: uniprot
 
-    - spacer: 30
-
-    - cistron:
-        label: enzyme6
-        expression: medium
-        fused: false
-        gene:
-          id: P80877  # example transferase
-          source: uniprot
-
-    - spacer: 40  # larger spacer before reporter with BsaI sites
+    - spacer: 25
 
     - cistron:
         label: gfp_reporter
         expression: low
-        fused: false
         chain:
-          - BsaI_site: GGTCTC  # flanking BsaI site for removal
+          - tag: BsaI_site_n_terminus
           - gene:
               id: sfGFP
               source: fpbase
-          - BsaI_site: GAGACC  # complementary BsaI site
+          - tag: BsaI_site_c_terminus
 
     - terminator: rrnB_T1

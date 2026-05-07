@@ -1,22 +1,27 @@
 construct:
-  name: "yeast_scfv_surface_display"
+  name: yeast_scFv_surface_display
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2-micron
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: display_fusion
+        label: scFv_display
         expression: high
         chain:
-          - tag: alpha_factor_leader
+          - tag: alpha_factor_signal
           - gene:
               id: scFv
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: Aga2p
-    - terminator: ADH1
+              repeats: 1
+          - tag: Aga2p_anchor
+
+    - terminator: CYC1

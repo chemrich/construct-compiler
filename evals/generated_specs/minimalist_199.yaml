@@ -1,16 +1,25 @@
 construct:
-  name: "library_scaffold_randomized_loop"
-  host: e_coli_bl21
+  name: library_scaffold_randomized_loop
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: scaffold
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Sso7d
+              id: scaffold_randomized_loop
               source: uniprot
-    - terminator: T7term
+        # Note: randomized loop region should be specified in the gene sequence;
+        # NNN or degenerate codon libraries at the loop position enable variant generation
+
+    - terminator: rrnB_T1

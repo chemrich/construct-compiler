@@ -1,18 +1,23 @@
 construct:
-  name: "hgh_lipa_secretion_bacillus"
+  name: bacillus_growth_factor_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
         label: growth_factor
         expression: high
         chain:
-          - secretion_signal: LipA
+          - signal_peptide: LipA_Bacillus
           - gene:
-              id: P01241
+              id: HGF
               source: uniprot
           - tag: Strep-II
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

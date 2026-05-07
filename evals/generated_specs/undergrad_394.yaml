@@ -1,17 +1,21 @@
 construct:
-  name: "secreted_protein_x_expression"
+  name: SecretedProteinX_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: IgK_leader  # Standard secretion signal for mammalian expression
-          - tag: 6xHis
+          - tag: signal_peptide_IgG  # N-terminal secretion signal
           - gene:
-              id: SecretedProteinX
+              id: ProteinX
               source: uniprot
-    - terminator: bGH_polyA
+          - tag: 6xHis  # C-terminal His-tag for purification
+
+    - terminator: rrnB_T1

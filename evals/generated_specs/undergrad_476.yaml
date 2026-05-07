@@ -1,16 +1,25 @@
 construct:
-  name: "rna_toehold_sensor_egfp"
+  name: "RNA_sensor_GFP_riboswitch"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100 # Constitutive promoter typically used to drive toehold switch sensors
+    - promoter: T7lac
+    
     - cistron:
-        label: sensor_output
+        label: sensor_gfp
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - riboswitch:
+              type: theophylline_responsive
+              ligand: TargetRNA
+              mechanism: translational_control
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1

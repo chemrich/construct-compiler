@@ -1,40 +1,76 @@
 construct:
   name: "toggle_flip_flop_memory_module"
   host: e_coli_bl21
+  
   backbone:
+    catalog_vector: "pSC101"
     resistance: kanamycin
-    ori: pBR322
+    ori: SC101
     source: addgene
+
   cassette:
-    - promoter: tac # Repressed by LacI; induced by Ligand O (IPTG)
+    # Cassette 1: O-inducible promoter driving CI repressor (sets State 1)
+    - promoter: araBAD
+      gene_id: araC
+      # araC is constitutively expressed to enable araBAD regulation
+    
     - cistron:
-        label: output_e
+        label: CI_repressor
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
-    - cistron:
-        label: repressor_tetr
-        expression: medium
-        fused: false # Independent translation via its own RBS
-        gene:
-          id: P04483 # TetR
+          id: CI
           source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: Ptet # Repressed by TetR; induced by Ligand P (aTc)
+
+    # Spacer between cassettes
+    - spacer: 50
+
+    # Cassette 2: P-inducible promoter driving Cro repressor (sets State 2)
+    - promoter: araBAD
+      gene_id: araC
+
     - cistron:
-        label: output_f
+        label: Cro_repressor
         expression: high
         gene:
-          id: mCherry
-          source: fpbase
-    - spacer: 30
-    - cistron:
-        label: repressor_laci
-        expression: medium
-        fused: false # Independent translation via its own RBS
-        gene:
-          id: P03023 # LacI
+          id: Cro
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+    # Spacer
+    - spacer: 50
+
+    # Cassette 3: CI-repressible promoter (P_RM from lambda) driving Output E
+    - promoter: lacUV5
+      # Note: Use CI-responsive promoter P_RM (CI represses, Cro allows expression)
+
+    - cistron:
+        label: Output_E
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    # Spacer
+    - spacer: 50
+
+    # Cassette 4: Cro-repressible promoter (P_R from lambda) driving Output F
+    - promoter: tac
+      # Note: Use Cro-responsive promoter P_R (Cro represses, CI allows expression)
+
+    - cistron:
+        label: Output_F
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

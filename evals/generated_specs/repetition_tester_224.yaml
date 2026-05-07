@@ -1,21 +1,26 @@
 construct:
-  name: "mammalian_dual_grna_orthogonal_scaffolds"
+  name: "dual_gRNA_CRISPR_mammalian"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: grna_1
+      cistron:
+        label: gRNA1
         expression: high
         gene:
-          id: sgRNA_FplusE_variant # Using non-identical scaffold variant to avoid repeats
-    - terminator: U6_terminator
-    - spacer: 50 # Separation between gRNA expression units
-    - promoter: H1 # Utilizing different Pol III promoter to avoid repetition
-    - cistron:
-        label: grna_2
+          id: gRNA_scaffold_mpknot
+          source: uniprot
+      terminator: U6term
+
+    - promoter: H1
+      cistron:
+        label: gRNA2
         expression: high
         gene:
-          id: sgRNA_standard_variant
-    - terminator: U6_terminator
+          id: gRNA_scaffold_twister_sister
+          source: uniprot
+      terminator: H1term

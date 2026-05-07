@@ -1,57 +1,66 @@
 construct:
-  name: "polycistronic_five_enzyme_translational_coupling"
+  name: five_enzyme_pathway_translational_coupling
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: J23100
+    
     - cistron:
-        label: enzyme_alpha
+        label: alpha
         expression: high
         chain:
           - gene:
               id: alpha
               source: uniprot
           - tag: FLAG
-    - spacer: 20 # Minimum spacer allowed by schema used to approximate translational coupling
+    
     - cistron:
-        label: enzyme_beta
+        label: beta
         expression: high
         fused: false
+        # Translational coupling: stop codon of alpha overlaps with start codon of beta
         chain:
           - gene:
               id: beta
               source: uniprot
           - tag: FLAG
-    - spacer: 20
+    
     - cistron:
-        label: enzyme_gamma
+        label: gamma
         expression: high
         fused: false
+        # Translational coupling: stop codon of beta overlaps with start codon of gamma
         chain:
           - gene:
               id: gamma
               source: uniprot
           - tag: FLAG
-    - spacer: 20
+    
     - cistron:
-        label: enzyme_delta
+        label: delta
         expression: high
         fused: false
+        # Translational coupling: stop codon of gamma overlaps with start codon of delta
         chain:
           - gene:
               id: delta
               source: uniprot
           - tag: FLAG
-    - spacer: 20
+    
     - cistron:
-        label: enzyme_epsilon
+        label: epsilon
         expression: high
         fused: false
+        # Translational coupling: stop codon of delta overlaps with start codon of epsilon
         chain:
           - gene:
               id: epsilon
               source: uniprot
           - tag: FLAG
+    
     - terminator: rrnB_T1

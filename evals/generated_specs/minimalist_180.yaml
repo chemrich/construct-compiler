@@ -1,13 +1,20 @@
 construct:
-  name: "protein_x_expression_vector"
-  host: e_coli_bl21_de3
+  name: protein_X_expression
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
-        gene:
-          id: protein_x
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_X
+              source: uniprot
+
+    - terminator: rrnB_T1

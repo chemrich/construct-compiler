@@ -1,21 +1,21 @@
 construct:
-  name: "egfp_high_yield_purification"
+  name: "GFP_reporter_purification_ecoli"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: reporter_target
+        label: GFP_reporter
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: T7term
+
+    - terminator: rrnB_T1

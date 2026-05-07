@@ -1,36 +1,36 @@
 construct:
-  name: "dual_inducible_tandem_promoter_system"
+  name: dual_inducible_mammalian_expression
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+
   cassette:
-    - promoter: EF1_alpha
-    - cistron:
-        label: tet_on_transactivator
-        expression: medium
-        fused: false
-        gene:
-          id: rtTA3
-          source: uniprot
-    - terminator: SV40_pA
-    - spacer: 50
-    - promoter: Ubc
-    - cistron:
-        label: ecdysone_transactivator
-        expression: medium
-        fused: false
-        gene:
-          id: VgEcR
-          source: uniprot
-    - terminator: hGH_pA
-    - spacer: 50
-    - promoter: TRE3G
-    - promoter: pIND
-    - cistron:
-        label: dual_inducible_target
+    # First inducible system: Tet-On (tetracycline-responsive)
+    - promoter: TRE  # Tetracycline Response Element
+      cistron:
+        label: gene_of_interest_tet
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bgh_pA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: uniprot_id_placeholder
+              source: uniprot
+      terminator: rrnB_T1
+
+    - spacer: 50
+
+    # Second inducible system: Ecdysone-responsive (non-homologous to Tet system)
+    - promoter: EcRE  # Ecdysone Response Element
+      cistron:
+        label: gene_of_interest_ecd
+        expression: high
+        chain:
+          - tag: Strep-II  # Different tag to minimize homology
+          - cleavage_site: 3C
+          - gene:
+              id: uniprot_id_placeholder
+              source: uniprot
+      terminator: T7term

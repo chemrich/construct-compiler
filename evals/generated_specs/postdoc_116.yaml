@@ -1,16 +1,24 @@
 construct:
-  name: "yeast_high_copy_neomycin_vector"
+  name: yeast_high_copy_mammalian_ori
   host: yeast
+
   backbone:
-    resistance: kanamycin # Kanamycin/G418 selection is the standard method for neomycin-type resistance in yeast
-    ori: 2_micron # Substituted 2-micron for mammalian origin as mammalian origins do not support replication in S. cerevisiae
+    resistance: G418  # neomycin resistance (G418) for yeast selection
+    ori: 2_micron    # S. cerevisiae 2-micron circle - natural high-copy yeast ori
     source: addgene
+    # Note: mammalian ORIs (SV40, CMV-enhancer) are not functional in S. cerevisiae.
+    # Using native 2-micron ori instead for stable, high-copy replication in yeast.
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: reporter
+        label: target
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: CYC1

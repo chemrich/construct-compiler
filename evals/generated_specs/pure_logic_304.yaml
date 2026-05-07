@@ -1,15 +1,46 @@
 construct:
-  name: "negative_feedback_stabilized_output_p"
-  host: e_coli_bl21_de3
+  name: negative_feedback_output_P_stabilizer
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: "Output_P"
-        expression: medium
+        label: repressor
+        expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: "P03023"
+              id: tetR
               source: uniprot
-    - terminator: T7term
+
+    - spacer: 25
+
+    - cistron:
+        label: output_P
+        expression: medium
+        fused: false
+        chain:
+          - cleavage_site: TEV
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: input_sensor
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,31 +1,51 @@
-```yaml
 construct:
-  name: CAR_T_receptor_construct
+  name: CAR_TCR_stable_integration
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
 
   cassette:
     - promoter: EF1_alpha
 
     - cistron:
-        label: CAR_receptor
+        label: CAR_extracellular
         expression: high
         chain:
-          - signal_peptide: CD8_alpha  # CD8 alpha signal peptide for surface expression
+          - tag: HA
           - gene:
-              id: CD19_scFv  # Anti-CD19 single chain variable fragment
+              id: scFv_anti_CD19
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - transmembrane: CD28_TM  # CD28 transmembrane domain
-          - costimulatory: CD28_cyto  # CD28 costimulatory domain
-          - linker:
-              type: short_GS
               repeats: 1
-          - signaling: CD3_zeta  # CD3 zeta signaling domain
 
-    - terminator: BBa_B0015
-```
+    - cistron:
+        label: transmembrane_domain
+        expression: high
+        fused: true
+        chain:
+          - gene:
+              id: CD8a_transmembrane
+              source: uniprot
+
+    - cistron:
+        label: intracellular_signaling
+        expression: high
+        fused: true
+        chain:
+          - gene:
+              id: CD3zeta_signaling_domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD28_costimulatory_domain
+              source: uniprot
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

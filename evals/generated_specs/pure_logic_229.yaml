@@ -1,27 +1,48 @@
 construct:
-  name: "sustained_input_memory_switch"
+  name: "sustained_input_temporal_switch_output_Z"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: integrator_recombinase
+        label: integrase
         expression: medium
         chain:
-          - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P0C6T1
+              id: Cre
               source: uniprot
-    - spacer: 45
+
+    - spacer: 25
+
     - cistron:
-        label: output_z
+        label: timing_module
+        expression: medium
+        chain:
+          - gene:
+              id: ssrA_tagged_protease
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_reporter
         expression: high
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
     - terminator: rrnB_T1
+
+  # Design rationale: This construct implements a temporal delay switch using:
+  # 1. Input_A induces Cre recombinase expression
+  # 2. Cre-lox site recombination (floxed cassette, not shown) occurs slowly over ~2 hours
+  # 3. ssrA-tagged protease (with tunable degradation) creates temporal coupling
+  # 4. Output_Z (mNeonGreen) is released/activated after sustained Input_A presence
+  # 5. Once Cre recombines lox sites, output remains ON (bistable locking)
+  # Note: Full implementation requires floxed regulatory elements in backbone not captured in this schema

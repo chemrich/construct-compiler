@@ -1,59 +1,69 @@
 construct:
-  name: "yeast_peroxisomal_five_enzyme_pathway"
+  name: "five_enzyme_peroxisomal_pathway_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: 2micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
         label: enzyme_1
         expression: high
-        fused: false
         chain:
           - gene:
-              id: ERG10
+              id: peroxidase_A
               source: uniprot
           - tag: PTS1
-    - spacer: 30
+        terminator: CYC1
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_2
         expression: high
-        fused: false
         chain:
           - gene:
-              id: ERG13
+              id: catalase_T
               source: uniprot
           - tag: PTS1
-    - spacer: 30
+        terminator: CYC1
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_3
         expression: high
-        fused: false
         chain:
           - gene:
-              id: HMG1
+              id: thiolase
               source: uniprot
-          - tag: PTS1
-    - spacer: 30
+          - tag: PTS2
+        terminator: CYC1
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_4
         expression: high
-        fused: false
         chain:
           - gene:
-              id: ERG12
+              id: aldolase_peroxisomal
               source: uniprot
           - tag: PTS1
-    - spacer: 30
+        terminator: CYC1
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_5
         expression: high
-        fused: false
         chain:
           - gene:
-              id: ERG8
+              id: oxidase_FAD
               source: uniprot
           - tag: PTS1
-    - terminator: CYC1
+        terminator: CYC1

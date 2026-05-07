@@ -1,16 +1,23 @@
 construct:
-  name: "inducible_ecoli_expression"
-  host: e_coli_bl21_de3
+  name: "inducible_ecoli_expression_histon"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: T7lac # Substituted T7lac for mammalian Tet-On; mammalian TRE/CMV promoters do not function in E. coli
+    - promoter: T7lac
+      # Note: Tet-On system (mammalian) is not compatible with E. coli.
+      # Substituted T7lac (IPTG-inducible) which provides equivalent tight control
+      # and industrial reliability for bacterial protein expression.
+    
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: target_protein
+              source: uniprot
+    
+    - terminator: rrnB_T1

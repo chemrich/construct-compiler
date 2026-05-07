@@ -1,32 +1,56 @@
 construct:
-  name: "diversity_polycistronic_fp_operon"
+  name: "multi_FP_operon_three_color"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: trc  # trc promoter (IPTG-inducible, distinct from T7/T7lac)
+
     - cistron:
-        label: red_reporter
-        expression: medium
-        gene:
-          id: mCherry
-          source: fpbase
-    - spacer: 32
+        label: FP1_mCherry
+        expression: high
+        rbs: BBa_B0034  # strong RBS (distinct from default Shine-Dalgarno)
+        chain:
+          - tag: 8xHis  # 8xHis (different from 6xHis)
+          - cleavage_site: 3C  # 3C protease (different from TEV)
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 25  # bp spacer between cistrons
+
     - cistron:
-        label: green_reporter
+        label: FP2_EGFP
         expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 47
+        rbs: BBa_B0030  # medium RBS (distinct from B0034)
+        chain:
+          - tag: Strep-II  # Strep-II tag (different from His tags)
+          - cleavage_site: Factor_Xa  # Factor Xa (different from TEV and 3C)
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: EGFP
+              source: fpbase
+
+    - spacer: 22  # distinct spacer size
+
     - cistron:
-        label: cyan_reporter
-        expression: medium
-        fused: false
-        gene:
-          id: mTurquoise2
-          source: fpbase
-    - terminator: BBa_B0015
+        label: FP3_mTurquoise
+        expression: low
+        rbs: BBa_B0032  # weak RBS (distinct from B0034 and B0030)
+        chain:
+          - tag: FLAG  # FLAG tag (different from His and Strep)
+          - cleavage_site: Thrombin  # Thrombin (distinct from prior sites)
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          - gene:
+              id: mTurquoise
+              source: fpbase
+
+    - terminator: T7term  # T7 terminator (distinct from rrnB_T1 and BBa_B0015)

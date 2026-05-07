@@ -1,26 +1,46 @@
 construct:
-  name: "inducible_cell_adhesion_system"
+  name: "reversible_adhesion_switch_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: tet_transactivator
-        expression: medium
+        label: transcription_factor
+        expression: high
         chain:
+          - tag: FLAG
           - tag: NLS
+          - cleavage_site: 2A
           - gene:
-              id: rtTA3
+              id: dCas9
               source: uniprot
-    - terminator: bgh_pa
-    - spacer: 50
-    - promoter: TRE3G  # Inducible promoter activated by Signal X (Doxycycline) + rtTA3
+
+    - spacer: 30
+
     - cistron:
         label: adhesion_protein
         expression: high
         fused: false
-        gene:
-          id: P12830  # UniProt ID for Human E-cadherin (CDH1)
-          source: uniprot
-    - terminator: bgh_pa
+        chain:
+          - gene:
+              id: NCAM1
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: signal_sensor
+        expression: medium
+        fused: false
+        chain:
+          - tag: HA
+          - gene:
+              id: PIP2
+              source: uniprot
+
+    - terminator: rrnB_T1

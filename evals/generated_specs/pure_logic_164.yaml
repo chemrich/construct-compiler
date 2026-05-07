@@ -1,16 +1,40 @@
 construct:
-  name: "P_ESS_Negative_Feedback_Loop"
+  name: P_ESS_autoregulatory_negative_feedback
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV  # Note: Robust autoregulation typically requires a promoter with operator sites (e.g., TetO) bound by P_ESS
+    - promoter: CMV
+
     - cistron:
-        label: P_ESS_target
-        expression: medium
+        label: P_ESS_main
+        expression: high
         chain:
           - tag: NLS
           - gene:
               id: P_ESS
               source: uniprot
-    - terminator: bGH_pA
+          - tag: 6xHis
+
+    - spacer: 25
+
+    - cistron:
+        label: miRNA_repressor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: mir30_P_ESS_target
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # Design rationale:
+  # The construct implements negative autoregulation where P_ESS protein levels
+  # trigger expression of a miRNA (mir30-based hairpin) that targets the P_ESS mRNA,
+  # creating a negative feedback loop. NLS ensures nuclear localization of P_ESS.
+  # The miRNA is expressed as an independent cistron to allow proportional feedback.
+  # Expression levels are tuned such that basal P_ESS production is high, while
+  # the repressor miRNA provides dose-dependent feedback to maintain homeostasis.

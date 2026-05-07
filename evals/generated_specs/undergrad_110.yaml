@@ -1,27 +1,46 @@
 construct:
-  name: "bacterial_ABC_operon"
-  host: e_coli_bl21_de3
+  name: "ABC_polycistronic_operon"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: protein_A
-        gene:
-          id: A
-          source: uniprot
-    - spacer: 30  # 2A peptides are eukaryotic; bacterial operons use spacers with RBS for polycistronic expression
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_A
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: protein_B
+        expression: high
         fused: false
-        gene:
-          id: B
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_B
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: protein_C
+        expression: high
         fused: false
-        gene:
-          id: C
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_C
+              source: uniprot
+
+    - terminator: rrnB_T1

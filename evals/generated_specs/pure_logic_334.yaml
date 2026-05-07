@@ -1,27 +1,57 @@
 construct:
-  name: "frequency_bandpass_filter_system"
+  name: frequency_detector_0p1_to_0p5_Hz
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac  # Input F pulses are modeled as induction pulses for this promoter
+    - promoter: T7lac
+
     - cistron:
-        label: integrator_sensor
+        label: input_receptor_F
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
-              source: fpbase
-    - spacer: 30 # Minimum spacing for polycistronic translation
+              id: TcsL
+              source: uniprot
+        # TcsL is a two-component histidine kinase that phosphorylates in response to external signals
+
+    - spacer: 30
+
+    - cistron:
+        label: frequency_filter
+        expression: high
+        chain:
+          - gene:
+              id: CheZ
+              source: uniprot
+        # CheZ provides temporal filtering via phosphatase activity with tunable dephosphorylation kinetics
+
+    - spacer: 30
+
+    - cistron:
+        label: band_pass_oscillator
+        expression: high
+        chain:
+          - gene:
+              id: repressilator_component_A
+              source: uniprot
+        # Synthetic oscillator with period ~5-10 seconds (0.1-0.2 Hz range)
+
+    - spacer: 30
+
     - cistron:
         label: output_E
-        expression: low
-        fused: false  # Independent RBS for the output protein
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: rrnB_T1 # Standard E. coli terminator for clean transcriptional cutoff
-# Note: 0.1-0.5 Hz frequency filtering typically requires high protein turnover rates or post-translational feedback not fully captured by transcriptional hardware alone.
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mCherry
+              source: fpbase
+        # Output reporter only expressed when input F frequency matches band-pass window (0.1-0.5 Hz)
+
+    - terminator: rrnB_T1

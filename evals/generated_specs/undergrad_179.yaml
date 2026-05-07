@@ -1,16 +1,22 @@
 construct:
-  name: yeast_membrane_anchor_high_expression
+  name: "yeast_membrane_anchor"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter (also known as GPD)
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: membrane_anchor
         expression: high
-        gene:
-          id: MembraneAnchor
-          source: uniprot
-    - terminator: CYC1 # Standard yeast terminator
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MembraneAnchor
+              source: uniprot
+
+    - terminator: CYC1

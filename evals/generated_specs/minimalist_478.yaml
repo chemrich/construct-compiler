@@ -1,16 +1,24 @@
 construct:
-  name: "sumo_protein_x_fusion"
-  host: e_coli_bl21_de3
+  name: SUMO_tagged_protein_X
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: SUMO_X_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: SUMO
+          - cleavage_site: TEV
           - gene:
-              id: protein_x
+              id: protein_X
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

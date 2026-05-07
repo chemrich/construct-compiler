@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_secreted_cellulase_pxyl"
+  name: "Bacillus_secreted_cellulase"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
         label: secreted_cellulase
         expression: medium
         chain:
-          - tag: amyQ  # Secretion signal peptide for Bacillus subtilis
+          - tag: amyQ_signal_peptide
           - gene:
-              id: P06242  # Endoglucanase (cellulase) from B. subtilis
+              id: cellulase
               source: uniprot
-          - tag: Strep-II  # C-terminal Strep-tag
-    - terminator: BBa_B0015
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

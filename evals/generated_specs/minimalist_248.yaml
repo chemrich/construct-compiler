@@ -1,23 +1,26 @@
 construct:
-  name: "metabolite_x_sensor_fusion"
-  host: e_coli
+  name: metabolite_X_sensor_GFP
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: lacUV5
+    - promoter: T7lac
+
     - cistron:
         label: sensor
         expression: low
         chain:
+          - tag: 6xHis
           - gene:
-              id: binding_domain
+              id: PBD_metabolite_X
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
+
     - terminator: rrnB_T1

@@ -1,20 +1,28 @@
 construct:
-  name: "non_viral_purifiable_therapeutic_production"
-  host: e_coli_bl21
+  name: "E_coli_recombinant_fusion_protein_purification"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Substitution: Tool requires antibiotic marker; recommend auxotrophic selection for final implementation to meet 'no antibiotic resistance' requirement.
+    resistance: null
     ori: pBR322
     source: addgene
+    # Comment: No antibiotic resistance marker specified; alternative: use toxin-antitoxin system for plasmid maintenance
+
   cassette:
-    - promoter: tac # Substitution: Non-viral promoter used to satisfy 'no viral elements' requirement (T7 is phage-derived).
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: P01241 # Human Growth Hormone (hGH) as a representative therapeutic protein.
-              source: uniprot
+              id: target_protein
+              # Note: Replace 'target_protein' with actual gene ID (e.g., from uniprot)
+
     - terminator: rrnB_T1

@@ -1,28 +1,36 @@
 construct:
-  name: yeast_tandem_nls_mEGFP
+  name: "yeast_triple_NLS_reporter"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2_micron
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Robust constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: nls_reporter_fusion
+        label: triple_NLS_reporter
         expression: high
         chain:
           - tag: NLS
+            variant: SV40_canonical
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: NLS
+            variant: SV40_synonymous_v2
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              type: GS_flexible
+              repeats: 1
           - tag: NLS
+            variant: bipartite_IBB
           - linker:
-              type: short_GS
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: mCherry
               source: fpbase
-    - terminator: CYC1  # Standard yeast terminator
+
+    - terminator: CYC1

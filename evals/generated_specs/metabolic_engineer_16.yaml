@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: clostridium_solvent_production_operon
-  host: bacillus  # closest available host for Clostridium
+  name: "clostridium_solvent_production_operon"
+  host: bacillus
 
   backbone:
     resistance: chloramphenicol
@@ -9,66 +8,63 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: araBAD  # butyrate-inducible system not in schema, using araBAD as tightly controlled alternative
+    - promoter: araBAD
+      # araBAD used as proxy for butyrate-inducible regulation in Clostridium
+      # Note: Native Clostridium promoters (e.g., adhE-type) may be substituted
+      # araBAD provides tight, titratable control suitable for metabolic pathway engineering
 
     - cistron:
-        label: acetyl_coa_acetyltransferase
+        label: enzyme_1
         expression: medium
         gene:
-          id: P23672  # thlA from C. acetobutylicum
+          id: thlA
           source: uniprot
 
     - spacer: 25
 
     - cistron:
-        label: 3_hydroxybutyryl_coa_dehydrogenase
+        label: enzyme_2
         expression: medium
-        fused: false
         gene:
-          id: P23673  # hbd from C. acetobutylicum
+          id: ctfA
           source: uniprot
 
     - spacer: 25
 
     - cistron:
-        label: crotonase
+        label: enzyme_3
         expression: medium
-        fused: false
         gene:
-          id: P23674  # crt from C. acetobutylicum
+          id: ctfB
           source: uniprot
 
     - spacer: 25
 
     - cistron:
-        label: butyryl_coa_dehydrogenase
+        label: enzyme_4
         expression: medium
-        fused: false
         gene:
-          id: Q97II0  # bcd from C. acetobutylicum
+          id: adhE
           source: uniprot
 
     - spacer: 25
 
     - cistron:
-        label: acetoacetyl_coa_transferase
+        label: enzyme_5
         expression: medium
-        fused: false
         gene:
-          id: P23675  # ctfA from C. acetobutylicum
+          id: adhB
           source: uniprot
 
     - spacer: 25
 
     - cistron:
-        label: acetoacetate_decarboxylase
+        label: enzyme_6
         expression: medium
-        fused: false
         chain:
           - tag: Strep-II
           - gene:
-              id: P23676  # adc from C. acetobutylicum
+              id: bdhB
               source: uniprot
 
     - terminator: rrnB_T1
-```

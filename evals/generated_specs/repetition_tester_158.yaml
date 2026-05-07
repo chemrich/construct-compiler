@@ -1,21 +1,23 @@
 construct:
-  name: "GeneX_sfGFP_reporter_fusion"
-  host: e_coli_bl21_de3
+  name: GeneX_mEGFP_reporter
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
   cassette:
-    - promoter: T7lac
-    - cistron:
-        label: reporter_fusion
-        expression: high
-        chain:
-          - gene:
-              id: GeneX
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+  - promoter: T7lac
+  - cistron:
+      label: GeneX_mEGFP
+      expression: high
+      chain:
+      - tag: 6xHis
+      - cleavage_site: TEV
+      - gene:
+          id: GeneX
+          source: uniprot
+      - linker:
+          type: GS_flexible
+          repeats: 1
+      - gene:
+          id: mEGFP
+          source: fpbase
+  - terminator: rrnB_T1

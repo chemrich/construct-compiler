@@ -1,18 +1,22 @@
 construct:
-  name: yeast_pGAL1_6xHis_X
+  name: "human_protein_X_yeast_expression"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GAL1  # Translated from user 'pGALL'
+    - promoter: GAL1
+
     - cistron:
-        label: human_protein_X
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: X
+              id: human_protein_X
               source: uniprot
-    - terminator: CYC1_term  # Standard yeast terminator for S. cerevisiae constructs
+
+    - terminator: rrnB_T1

@@ -1,40 +1,50 @@
 construct:
-  name: "vitamin_synthesis_operon_abcd"
+  name: "vitamin_synthesis_operon_vitA_B_C_D"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # constitutive promoter for operon expression
+    
     - cistron:
         label: vitA
-        expression: high
+        expression: high  # 1.0 relative level
         gene:
           id: vitA
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25  # minimal RBS spacing (25 bp) for vitB
+    
     - cistron:
         label: vitB
-        expression: medium
+        expression: medium  # 0.8 relative level (reduced from vitA)
         fused: false
         gene:
           id: vitB
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 35  # increased spacing (35 bp) for vitC - higher expression
+    
     - cistron:
         label: vitC
-        expression: high
+        expression: high  # 1.2 relative level (elevated)
         fused: false
         gene:
           id: vitC
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 20  # minimal spacing (20 bp) for vitD - lowest expression
+    
     - cistron:
         label: vitD
-        expression: low
+        expression: very_low  # 0.5 relative level (substantially reduced)
         fused: false
         gene:
           id: vitD
           source: uniprot
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

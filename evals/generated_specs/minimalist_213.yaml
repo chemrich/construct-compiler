@@ -1,23 +1,24 @@
 construct:
-  name: "protein_g_internal_tev_insertion"
+  name: "Protein_G_with_TEV_cleavage"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: "modified_protein_g"
+        label: protein_G_tev
         expression: high
         chain:
-          # An internal insertion into a single UniProt sequence is represented here as a tandem fusion 
-          # of the protein sequence flanking the cleavage site.
           - gene:
-              id: "P06654"
-              source: "uniprot"
-          - cleavage_site: "TEV"
-          - gene:
-              id: "P06654"
-              source: "uniprot"
-    - terminator: "T7term"
+              id: protein_G
+              source: uniprot
+              # TEV cleavage site (ENLYFQ-G) inserted in-frame at desired position
+              # User must specify insertion point; defaulting to N-terminal insertion
+              insertion:
+                position: N-terminal
+                sequence: ENLYFQG
+
+    - terminator: rrnB_T1

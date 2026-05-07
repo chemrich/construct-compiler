@@ -1,26 +1,47 @@
 construct:
   name: "genetic_toggle_switch_insulated"
-  host: e_coli
+  host: e_coli_bl21
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - spacer: 42
+    - insulator: BBa_J61130
+
     - promoter: lacUV5
+      operator: lacO
+      insulator: BBa_J61131
+
     - cistron:
-        label: tetR_repressor
-        expression: medium
+        label: repressor_1
+        expression: high
         gene:
-          id: P04483
+          id: tetR
           source: uniprot
+
+    - insulator: BBa_J61132
+
+    - spacer: 25
+
+    - insulator: BBa_J61133
+
+    - promoter: tetR_operator
+      operator: tetO
+      insulator: BBa_J61134
+
+    - cistron:
+        label: repressor_2
+        expression: high
+        gene:
+          id: cI
+          source: uniprot
+
+    - insulator: BBa_J61135
+
+    - spacer: 25
+
+    - insulator: BBa_J61136
+
     - terminator: rrnB_T1
-    - spacer: 57
-    - promoter: pTet
-    - cistron:
-        label: lacI_repressor
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: BBa_B0015

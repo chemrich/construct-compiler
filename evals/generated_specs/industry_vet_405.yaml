@@ -1,17 +1,21 @@
 construct:
-  name: "his_tev_cleavable_target_protein"
-  host: e_coli_bl21
+  name: "protein_with_TEV_cleavable_Histag"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: goi
+              source: uniprot
+          - cleavage_site: TEV
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

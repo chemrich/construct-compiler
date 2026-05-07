@@ -1,22 +1,34 @@
 construct:
-  name: "therapeutic_fusion_hek293"
+  name: "therapeutic_protein_targeted_degradable"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: therapeutic
         expression: high
         chain:
-          - tag: NLS
           - tag: 6xHis
-          - cleavage_site: TEV
+          - cleavage_site: 3C
           - gene:
-              id: P01375
+              id: targeting_peptide
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: PEST
-    - terminator: BGH_pA
+              repeats: 1
+          - gene:
+              id: therapeutic_protein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: degron
+              source: uniprot
+
+    - terminator: rrnB_T1

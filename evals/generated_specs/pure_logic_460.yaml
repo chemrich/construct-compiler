@@ -1,34 +1,54 @@
 construct:
-  name: "split_t7_logic_and_gate"
-  host: e_coli
+  name: "genetic_AND_gate_high_dynamic_range"
+  host: e_coli_bl21_de3
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD # Input A sensor: Induced by L-arabinose
-    - cistron:
-        label: t7_rnap_n_fragment
-        expression: medium
-        gene:
-          id: T7RNAP_N
-          source: uniprot
-    - terminator: rrnB_T1
+    - promoter: araBAD
+      # Input A: L-arabinose activation of pBAD promoter
 
-    - promoter: tac # Input B sensor: Induced by IPTG
     - cistron:
-        label: t7_rnap_c_fragment
-        expression: medium
-        gene:
-          id: T7RNAP_C
-          source: uniprot
-    - terminator: rrnB_T1
-
-    - promoter: T7 # Logic gate output: Requires assembled T7 RNAP (A AND B)
-    - cistron:
-        label: reporter_output
+        label: input_A_sensor
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+              # AraC transcription factor - senses arabinose
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+      # Input B: IPTG activation of T7 RNA polymerase (via host DE3 lysogen)
+
+    - cistron:
+        label: input_B_integrase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cre
+              source: uniprot
+              # Cre recombinase - site-specific DNA recombination
+
+    - terminator: rrnB_T1
+
+    - promoter: J23100
+      # Static weak promoter driving output only when recombined
+
+    - cistron:
+        label: output_Y_AND_logic
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

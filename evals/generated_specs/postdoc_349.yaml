@@ -1,16 +1,21 @@
 construct:
-  name: "AntiCancerScFv_Secretion_HEK293"
+  name: "AntiCancerScFv_secreted_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: antibody_fragment
+        label: scfv
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgK
           - gene:
               id: AntiCancerScFv
-          - tag: Myc
-    - terminator: bGH_pA
+              source: uniprot
+          - tag: myc
+
+    - terminator: WPRE

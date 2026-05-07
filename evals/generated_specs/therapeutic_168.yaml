@@ -1,22 +1,30 @@
 construct:
-  name: therapeutic_peptide_bacterial_expression
+  name: therapeutic_peptide_MBP_fusion
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin # Rule 9: Defaulting to kanamycin; antibiotic resistance is required for plasmid selection in E. coli.
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac # Non-viral bacterial promoter used to comply with the "no viral sequences" constraint.
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
-          - cleavage_site: Enterokinase # Non-viral protease cleavage site (bovine-derived) used to comply with the "no viral" constraint.
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01275
+              id: therapeutic_peptide
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator used to avoid viral sequences (like T7term).
+
+    - terminator: rrnB_T1

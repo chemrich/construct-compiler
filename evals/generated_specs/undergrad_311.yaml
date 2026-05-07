@@ -1,36 +1,23 @@
 construct:
-  name: "yeast_two_hybrid_dual_expression"
+  name: Y2H_ProteinA_BD
   host: yeast
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
   cassette:
-    - promoter: ADH1
-    - cistron:
-        label: bait_fusion
-        expression: medium
-        chain:
-          - gene:
-              id: GAL4_BD
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: Protein_A
-    - terminator: CYC1_term
-    - promoter: ADH1
-    - cistron:
-        label: prey_fusion
-        expression: medium
-        chain:
-          - gene:
-              id: GAL4_AD
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: Protein_B
-    - terminator: CYC1_term
+  - promoter: GAL1
+  - cistron:
+      label: ProteinA_BD
+      expression: high
+      chain:
+      - gene:
+          id: proteinA
+          source: uniprot
+      - linker:
+          type: GS_flexible
+          repeats: 1
+      - gene:
+          id: DNA_binding_domain
+          source: uniprot
+  - terminator: rrnB_T1

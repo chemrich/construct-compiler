@@ -1,63 +1,63 @@
 construct:
-  name: "yeast_cellulose_degradation_system"
+  name: "yeast_cellulase_complex"
   host: yeast
 
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
 
   cassette:
     - promoter: GAL1
+
     - cistron:
         label: endoglucanase
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: endoglucanase
+              id: EG_Trichoderma_reesei
               source: uniprot
           - tag: HA
-    - terminator: CYC1
 
-    - spacer: 30
+    - spacer: 25
 
-    - promoter: GAL1
     - cistron:
         label: exoglucanase
         expression: high
+        fused: false
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: exoglucanase
+              id: EX_Trichoderma_reesei
               source: uniprot
           - tag: HA
-    - terminator: CYC1
 
-    - spacer: 30
+    - spacer: 25
 
-    - promoter: GAL1
     - cistron:
         label: beta_glucosidase
         expression: high
+        fused: false
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: beta_glucosidase
+              id: BGL_Aspergillus_niger
               source: uniprot
           - tag: HA
-    - terminator: CYC1
 
-    - spacer: 30
+    - spacer: 25
 
-    - promoter: GAL1
     - cistron:
         label: cellobiose_phosphorylase
         expression: high
+        fused: false
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: cellobiose_phosphorylase
+              id: CBP_Cellvibrio_vulgaris
               source: uniprot
           - tag: HA
+
     - terminator: CYC1

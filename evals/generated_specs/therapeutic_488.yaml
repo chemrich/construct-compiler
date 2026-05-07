@@ -1,16 +1,33 @@
 construct:
-  name: "yeast_galactose_inducible_mNeonGreen_biosensor"
+  name: "yeast_biosensor_fluorescent_reporter"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: hygromycin_B
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: reporter
+        label: sensor_protein
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: CYC1
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GAL4
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: fluorescent_reporter
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: CYC1_terminator

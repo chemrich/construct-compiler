@@ -1,14 +1,17 @@
 construct:
-  name: "ProteinB_C_terminal_His_TEV"
-  host: e_coli_bl21_de3
+  name: ProteinB_C_His6_TEV
+  host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
-    source: custom
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: target
+        label: ProteinB
         expression: high
         chain:
           - gene:
@@ -16,4 +19,5 @@ construct:
               source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
+    
     - terminator: T7term

@@ -1,24 +1,30 @@
 construct:
-  name: "aggroprotein_hsp70_coexpression"
+  name: AggroProtein_Hsp70_coexpression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: aggroprotein
+        label: AggroProtein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: AggroProtein
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: chaperone
-        expression: medium
+        label: Hsp70
+        expression: high
         fused: false
         gene:
-          id: P08107
+          id: HSPA1A
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

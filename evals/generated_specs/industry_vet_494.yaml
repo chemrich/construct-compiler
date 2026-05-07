@@ -1,16 +1,20 @@
 construct:
-  name: "Cre_dependent_GeneO_DIO"
+  name: "recombinase_dependent_GeneO_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "target_DIO"
-        # Note: Recombinase-dependent expression (Cre-Lox) is typically achieved via a Double-floxed Inverse Orientation (DIO) 
-        # or FLEx switch. As explicit LoxP site placement is not in the schema, this cassette is configured for the target gene.
+        label: GeneO
         expression: high
-        gene:
-          id: "GeneO"
-          source: uniprot
-    - terminator: SV40_polyA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneO
+              source: uniprot
+
+    - terminator: rrnB_T1

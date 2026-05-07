@@ -1,24 +1,56 @@
 construct:
-  name: "yeast_intracellular_multidomain_therapeutic"
+  name: "yeast_multi_domain_therapeutic_intracellular"
   host: yeast
+
   backbone:
-    resistance: none  # Auxotrophic marker (e.g., URA3) used for selection instead of antibiotics
-    ori: 2_micron
+    resistance: auxotrophic_marker  # URA3 or LEU2 (antibiotic-free)
+    ori: ARS  # Autonomously Replicating Sequence for yeast
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Robust constitutive yeast promoter for high-level expression
+    - promoter: GAL1  # Strong, inducible promoter for robust expression in S. cerevisiae
+
     - cistron:
-        label: therapeutic_fusion
+        label: domain_1
         expression: high
         chain:
           - gene:
-              id: P01375  # TNF domain example
+              id: domain_1
               source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 4  # Ensures independent domain folding
+
+    - linker:
+        type: GS_flexible
+        repeats: 3  # Longer flexible linker for independent domain folding
+
+    - cistron:
+        label: domain_2
+        expression: high
+        fused: false  # Independent translation ensures proper independent folding
+        chain:
           - gene:
-              id: P01857  # Fc domain example
+              id: domain_2
               source: uniprot
-          - tag: 8xHis  # C-terminal purification tag
-    - terminator: CYC1  # Standard yeast transcriptional terminator
+
+    - linker:
+        type: GS_flexible
+        repeats: 3
+
+    - cistron:
+        label: domain_3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: domain_3
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: purification_handle
+        expression: high
+        chain:
+          - tag: 6xHis  # C-terminal His tag for purification
+          - cleavage_site: TEV  # Removable cleavage site for tag removal if needed
+
+    - terminator: CYC1  # Strong transcription terminator for yeast

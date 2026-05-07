@@ -1,16 +1,45 @@
 construct:
-  name: "inflammatory_inducible_secreted_reporter"
+  name: inflammatory_responsive_secreted_bioluminescence
   host: HEK293
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
+    resistance: ampicillin
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: NF-kB  # Inducible inflammatory responsive promoter
+    - promoter: NF-kB_responsive
+      # High-sensitivity inducible promoter activated by TNF-α, IL-1β (inflammatory signals)
+
     - cistron:
-        label: secreted_luciferase
+        label: bioluminescent_reporter
         expression: high
+        chain:
+          - tag: SP_signal_peptide
+            # N-terminal secretion signal for mammalian ER targeting
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: Renilla_luciferase
+              source: uniprot
+              # Codon-optimized for mammalian expression
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+            # C-terminal His tag for purification and detection
+
+    - spacer: 30
+
+    - cistron:
+        label: control_constitutive
+        expression: medium
+        fused: false
         gene:
-          id: Q9BLZ2
+          id: Gaussia_luciferase
           source: uniprot
-    - terminator: hGH_pA  # Human growth hormone polyadenylation signal (non-viral)
+          # Constitutive control luciferase (naturally secreted, smaller)
+
+    - terminator: rrnB_T1

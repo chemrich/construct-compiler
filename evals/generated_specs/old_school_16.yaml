@@ -1,33 +1,28 @@
-```yaml
 construct:
-  name: dual_T7_protein_AB_his6
-  host: e_coli
-  
+  name: "dual_T7_proteinA_proteinB_his6"
+  host: e_coli_bl21
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-  
   cassette:
     - promoter: T7
     - cistron:
-        label: protein_A
+        label: proteinA
         expression: high
         chain:
           - gene:
-              id: P0A6X3  # placeholder - replace with actual UniProt ID
+              id: proteinA
               source: uniprot
           - tag: 6xHis
-    - terminator: rrnB_T1
-    
+    - terminator: T7term
     - promoter: T7
     - cistron:
-        label: protein_B
+        label: proteinB
         expression: high
         chain:
           - gene:
-              id: P0A6Y4  # placeholder - replace with actual UniProt ID
+              id: proteinB
               source: uniprot
           - tag: 6xHis
-    - terminator: rrnB_T1
-```
+    - terminator: T7term

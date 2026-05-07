@@ -1,17 +1,22 @@
 construct:
-  name: "cleavable_his_tagged_protein"
+  name: "cleavable_fusion_protein_ecoli"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: target_protein
+          - cleavage_site: 3C
+          - tag: 6xHis
+    
+    - terminator: rrnB_T1

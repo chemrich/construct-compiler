@@ -1,27 +1,35 @@
-```yaml
 construct:
-  name: "dual_expression_anti_recombination"
-  host: e_coli_bl21_de3
-
+  name: "ProteinX_reporter_dual_cassette"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
-  cassette:
+  cassette_1:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: ProteinX
         expression: high
-        gene:
-          id: ProteinX
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinX
+              source: uniprot
+
     - terminator: rrnB_T1
 
-    - promoter: araBAD  # completely different regulation mechanism from T7
+  cassette_2:
+    - promoter: araBAD
+    
     - cistron:
         label: reporter
         expression: medium
         gene:
           id: mScarlet
           source: fpbase
-    - terminator: BBa_B0015  # BioBrick terminator, phylogenetically distant from rrnB
-```
+
+    - terminator: T7term

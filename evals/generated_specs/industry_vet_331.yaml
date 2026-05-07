@@ -1,20 +1,32 @@
 construct:
-  name: "mammalian_coexpression_mCherry_eGFP"
+  name: "dual_fluorescent_reporter_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: red_reporter
-        gene:
-          id: mCherry
-          source: fpbase
-    - spacer: 580  # Representative length for an IRES sequence to facilitate internal ribosome entry
+        label: fluorescent_protein_1
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    # IRES enables cap-independent translation of second cistron from same mRNA
+    - spacer: 25  # IRES sequence placeholder
+
     - cistron:
-        label: green_reporter
+        label: fluorescent_protein_2
+        expression: high
         fused: false
-        gene:
-          id: eGFP
-          source: fpbase
-    - terminator: SV40_polyA
+        chain:
+          - gene:
+              id: eGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

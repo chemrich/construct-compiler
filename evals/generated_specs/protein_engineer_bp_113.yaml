@@ -1,19 +1,23 @@
 construct:
-  name: "pichia_pastoris_cytokine_secretion_PGCW14"
+  name: "pichia_cytokine_secretion_pgcw14"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pGCW14
     source: addgene
+
   cassette:
     - promoter: PGCW14
+
     - cistron:
-        label: target_cytokine
+        label: secreted_cytokine
         expression: high
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - gene:
-              id: IL2_HUMAN
+              id: cytokine
               source: uniprot
           - tag: Strep-II
-    - terminator: AOX1_term
+
+    - terminator: CYC1_TT

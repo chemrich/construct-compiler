@@ -1,41 +1,50 @@
 construct:
-  name: "reg_abcd_operon_srna_regulated"
+  name: "four_enzyme_operon_with_sRNA_regulation"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23106  # Medium constitutive promoter
+    - promoter: lacUV5
+    
     - cistron:
         label: RegA
         expression: medium
         gene:
           id: RegA
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: RegB
         expression: medium
-        fused: false
-        # The sRNA binding site for conditional repression is incorporated into the 5' UTR/RBS region of this cistron
+        # sRNA binding site in 5' UTR - represented as regulatory element upstream of translation
         gene:
           id: RegB
           source: uniprot
-    - spacer: 30
+        # Note: sRNA binding site (e.g., sRNA_bs) should be included in the 5' UTR sequence
+        # during compilation; complementary sRNA supplied on separate plasmid for conditional repression
+    
+    - spacer: 25
+    
     - cistron:
         label: RegC
         expression: medium
-        fused: false
         gene:
           id: RegC
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: RegD
         expression: medium
-        fused: false
         gene:
           id: RegD
           source: uniprot
+    
     - terminator: rrnB_T1

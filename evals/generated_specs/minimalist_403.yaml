@@ -1,23 +1,34 @@
 construct:
-  name: geneA_geneB_tandem_expression
+  name: GeneA_GeneB_dual_expression
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: GeneA
-        expression: medium
-        gene:
-          id: GeneA
-          source: uniprot
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneA
+              source: uniprot
+
     - spacer: 20
+
     - cistron:
         label: GeneB
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: GeneB
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneB
+              source: uniprot
+
     - terminator: rrnB_T1

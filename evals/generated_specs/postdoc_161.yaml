@@ -1,18 +1,22 @@
 construct:
-  name: "yeast_constitutive_peptide_expression"
+  name: yeast_therapeutic_peptide_expression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Standard constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
         label: therapeutic_peptide
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P01270  # Parathyroid hormone (PTH) selected as representative therapeutic peptide
+              id: therapeutic_peptide
               source: uniprot
-    - terminator: CYC1  # Common yeast terminator
+
+    - terminator: rrnB_T1

@@ -1,33 +1,57 @@
 construct:
-  name: "mammalian_sr_latch_secreted_mNeonGreen"
+  name: "mammalian_sr_latch_secreted"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE  # SET signal input: activated by Doxycycline/rtTA or repressed by TetR (Reset)
+    - promoter: CMV
+
     - cistron:
-        label: latch_repressor_lacI
-        expression: medium
-        gene:
-          id: LacI
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: secreted_output
+        label: SET_sensor
         expression: high
-        fused: false  # Independently translated via IRES or 2A peptide for mammalian host
         chain:
-          - tag: IgK_leader  # Secretion signal for mammalian cells
-          - cleavage_site: TEV
           - gene:
-              id: mNeonGreen
-              source: fpbase
-    - terminator: bGH_pA
-    - promoter: CMV_LacO  # RESET signal input: repressed by LacI (Output state)
+              id: dCas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: VP64
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: latch_repressor_tetR
-        expression: medium
-        gene:
-          id: TetR
-          source: uniprot
-    - terminator: bGH_pA
+        label: RESET_sensor
+        expression: high
+        chain:
+          - gene:
+              id: dCas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: KRAB
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: latch_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 2A
+          - solubility_tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: Insulin
+              source: uniprot
+
+    - terminator: rrnB_T1

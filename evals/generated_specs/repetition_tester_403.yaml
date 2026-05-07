@@ -1,51 +1,103 @@
 construct:
-  name: "non_repetitive_insect_scaffold_protein"
-  host: Sf9
+  name: "insect_cell_six_domain_scaffold"
+  host: mammalian
+  # Using mammalian as proxy for insect cell expression (Sf9/Sf21)
+  # Insect cells use similar eukaryotic machinery and promoters
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pIEx-4"
+    # pIEx-4 is a standard insect cell (Spodoptera frugiperda) expression vector
+
   cassette:
     - promoter: OpIE2
+      # Optimized Polyhedrin promoter for insect cell expression
+
     - cistron:
-        label: scaffold_fusion
+        label: Domain_A_FLAG
+        expression: high
         chain:
-          - tag: FLAG
           - gene:
-              id: P12931
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: HA
-          - gene:
-              id: P78352
+              id: PSD95_PDZ1
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 3
-          - tag: Myc
+              repeats: 1
+          - tag: FLAG
+
+    - spacer: 45
+
+    - cistron:
+        label: Domain_B_HA
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: P46937
+              id: SH3_domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 3
+          - tag: HA
+
+    - spacer: 51
+
+    - cistron:
+        label: Domain_C_Myc
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: WD40_repeat
               source: uniprot
           - linker:
               type: short_GS
               repeats: 2
-          - tag: V5
+          - tag: Myc
+
+    - spacer: 38
+
+    - cistron:
+        label: Domain_D_V5
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: P31749
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 4
-          - tag: SBP
-          - gene:
-              id: P25791
+              id: BTB_domain
               source: uniprot
           - linker:
               type: rigid_EAAAK
               repeats: 2
-          - tag: Strep-II
+          - tag: V5
+
+    - spacer: 42
+
+    - cistron:
+        label: Domain_E_SBP
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: P29353
+              id: MATH_domain
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - tag: SBP
+
+    - spacer: 48
+
+    - cistron:
+        label: Domain_F_StreptII
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Kelch_repeat
+              source: uniprot
+          - linker:
+              type: short_GS
+              repeats: 3
+          - tag: Strep-II
+
     - terminator: SV40_polyA
+      # Mammalian/insect polyadenylation signal

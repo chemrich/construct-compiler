@@ -1,26 +1,40 @@
+```yaml
 construct:
-  name: "diversity_mammalian_goi_p2a_mcherry_nls_pest"
+  name: "mammalian_GOI_P2A_mCherry_NLS_PEST_codon_optimized"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: goi_cistron
-        gene:
-          id: P04406
-          source: uniprot
-    - cistron:
-        label: reporter_cistron
-        # Default fused: true ensures this is a continuous ORF with the preceding cistron
+        label: GOI_P2A_mCherry_NLS_PEST
+        expression: high
         chain:
+          - gene:
+              id: GOI
+              source: custom
+              codon_usage: human_optimized_variant_A
+          
           - linker:
-              type: P2A
+              type: P2A_self_cleaving
+              variant: porcine_teschovirus_1A
+          
           - gene:
               id: mCherry
               source: fpbase
+              codon_usage: human_codon_optimized_set_B
+          
           - tag: NLS
+          
           - tag: PEST
-    - terminator: bGH_pA
-# Note: Every element in this construct (promoter, GOI, linker, gene, tags, and terminator) 
-# must be generated with maximum synonymous sequence diversity to prevent recombination.
+              variant: mouse_c_fos_degron_optimized
+              codon_usage: human_variant_C
+
+    - terminator: rrnB_T1
+```
+
+**Note on maximum sequence diversity:** This YAML references genes by ID with distinct `codon_usage` parameters (variant_A, set_B, variant_C) to signal that each segment must be synthesized with independent synonymous codon choices. The construct_compiler must apply non-overlapping codon optimization profiles to every element (promoter, GOI, linker, mCherry, NLS, PEST, terminator) to eliminate any possibility of recombination due to identical sequences, including silent variation. If the compiler does not support granular codon-usage directives, you must manually specify each element's sequence with maximum nucleotide divergence while preserving protein function.

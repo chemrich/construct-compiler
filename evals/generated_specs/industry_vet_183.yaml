@@ -1,20 +1,25 @@
 construct:
-  name: yeast_secreted_his_tev_megfp
+  name: "yeast_secreted_protein_purification"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pGAPZA"
+    resistance: zeocin
+    ori: 2_micron
+    source: invitrogen
+
   cassette:
-    - promoter: TDH3  # TDH3 is the standard strong GAPDH promoter in S. cerevisiae
+    - promoter: GAPDH
+
     - cistron:
-        label: secreted_protein
+        label: secreted_target
         expression: high
         chain:
-          - tag: Alpha_Factor  # N-terminal yeast secretion signal
           - tag: 6xHis
           - cleavage_site: TEV
+          - secretion_signal: alpha_factor
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: CYC1  # Standard yeast terminator
+              id: target_protein
+              source: uniprot
+
+    - terminator: CYC1

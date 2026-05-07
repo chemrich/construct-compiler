@@ -1,19 +1,24 @@
 construct:
-  name: "hsa_production_pichia_ost1"
+  name: "pichia_pastoris_HSA_Ost1_FLAG"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: hsa_production
+        label: HSA_secreted
         expression: high
         chain:
-          - tag: Ost1
+          - secretion_signal: Ost1
           - gene:
               id: P02768
               source: uniprot
           - tag: FLAG
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

@@ -1,32 +1,31 @@
-```yaml
 construct:
-  name: dual_tag_tev_cleavable_protein
+  name: "dual_affinity_His6_StrepII_TEV"
   host: e_coli_bl21_de3
-
+  
   backbone:
     catalog_vector: "pET-28b(+)"
-
+  
   cassette:
     - promoter: T7
-
+    
     - cistron:
-        label: target
+        label: target_dual_tagged
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - cleavage_site: TEV
           - linker:
               type: rigid_EAAAK
               repeats: 2
-          - gene:
-              id: your_protein_id  # Replace with actual protein ID
-              source: uniprot
-          - linker:
-              sequence: SGTASGSPVAT  # Custom non-homologous linker
           - tag: Strep-II
-
+          - linker:
+              type: short_GS
+              repeats: 1
+          - gene:
+              id: your_protein_name
+              source: uniprot
+    
     - terminator: rrnB_T1
-```

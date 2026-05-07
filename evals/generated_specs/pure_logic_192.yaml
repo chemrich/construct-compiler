@@ -1,32 +1,60 @@
 construct:
-  name: "T7_autocatalytic_positive_feedback_loop"
-  host: e_coli_bl21
+  name: "positive_feedback_amplifier_for_differentiation"
+  host: mammalian
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: CMV
+
     - cistron:
-        label: trigger_t7
-        expression: low
-        gene:
-          id: P00573
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7
-    - cistron:
-        label: feedback_t7
+        label: transcription_factor
         expression: high
-        gene:
-          id: P00573
-          source: uniprot
-    - spacer: 35
+        chain:
+          - tag: FLAG
+          - gene:
+              id: VP16_activation_domain
+              source: uniprot
+              # VP16 strong activation domain for robust TF activity
+
+    - spacer: 25
+
     - cistron:
         label: gene_of_interest
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Input_Inducer
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: positive_feedback_amplifier
+        expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        # This cistron produces the feedback TF that binds its own promoter
+        chain:
+          - tag: HA
+          - gene:
+              id: dCas9_VP64
+              source: uniprot
+              # dCas9-VP64 provides robust feedback amplification via synthetic activation
+
+    - spacer: 25
+
+    - cistron:
+        label: self_amplifying_loop
+        expression: medium
+        fused: false
+        # gRNA targeting the positive_feedback_amplifier promoter region
+        # This creates the self-sustaining loop
+        chain:
+          - gene:
+              id: sgRNA_custom
+              source: uniprot
+
+    - terminator: rrnB_T1

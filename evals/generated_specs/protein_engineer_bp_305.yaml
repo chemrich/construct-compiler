@@ -1,20 +1,25 @@
 construct:
-  name: "P_pastoris_AOX1_fungal_amylase"
+  name: "pastoris_amylase_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: PAOX1
+
     - cistron:
-        label: amylase_expression
+        label: amylase
         expression: high
         chain:
-          - tag: Ost1-alpha-factor
+          - tag: alpha_factor
           - cleavage_site: TEV
           - tag: Twin-Strep
           - gene:
-              id: P0C1B3
+              id: amylase
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

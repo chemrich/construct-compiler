@@ -1,54 +1,84 @@
 construct:
-  name: "six_enzyme_precursor_pathway_operon"
+  name: "six_enzyme_operon_complex_precursor"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: Ealpha
         expression: high
-        gene:
-          id: Ealpha
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Ealpha
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Ebeta
         expression: high
         fused: false
-        gene:
-          id: Ebeta
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Ebeta
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Egamma
         expression: high
         fused: false
-        gene:
-          id: Egamma
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Egamma
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Edelta
         expression: high
         fused: false
-        gene:
-          id: Edelta
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Edelta
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Epsilon
         expression: high
         fused: false
-        gene:
-          id: Epsilon
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Epsilon
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: Ezeta
         expression: high
         fused: false
-        gene:
-          id: Ezeta
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Ezeta
+              source: uniprot
+
+    - terminator: rrnB_T1
+    - terminator: T7term

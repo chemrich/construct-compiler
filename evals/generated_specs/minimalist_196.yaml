@@ -1,24 +1,33 @@
 construct:
-  name: "repressor_r_and_gene_t_expression"
-  host: e_coli
+  name: "repressor_R_target_gene_T"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: repressor_r
-        expression: medium
-        gene:
-          id: lacI
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: target_gene_t
+        label: repressor_R
         expression: high
-        fused: false
-        gene:
-          id: gene_t
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: repressor_R
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: T7lac
+
+    - cistron:
+        label: target_gene_T
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: target_gene_T
+              source: uniprot
+
     - terminator: rrnB_T1

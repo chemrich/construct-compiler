@@ -1,15 +1,22 @@
 construct:
-  name: "yeast_high_brightness_mEGFP_expression"
+  name: "high_copy_GFP_yeast_sorter"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2u
+    resistance: ampicillin
+    ori: CloDF13  # high-copy ori for yeast
+    source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1  # strong inducible yeast promoter, can reach very high expression with galactose
+
     - cistron:
-        label: target
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: CYC1_term
+        chain:
+          - tag: 8xHis
+          - gene:
+              id: sfGFP  # superfolder GFP - superior brightness and folding kinetics in yeast
+              source: fpbase
+
+    - terminator: rrnB_T1

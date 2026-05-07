@@ -1,26 +1,34 @@
 construct:
-  name: "secreted_dual_domain_fusion_HEK293"
+  name: "secreted_multidomain_protein_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: secreted_fusion_protein
+        label: secreted_multidomain
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IL2
+            # IL-2 signal peptide: MYRMQLLSCIALsl
           - gene:
-              id: P01133
+              id: domain_a
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
+              # Seq: (GGGGS)×3 - standard GS linker
           - gene:
-              id: P01588
+              id: domain_b
               source: uniprot
           - linker:
-              type: short_GS
-              repeats: 3
+              type: rigid_EAAAK
+              repeats: 2
+              # Seq: (EAAAK)×2 - charged helical linker, distinct from GS
           - tag: FLAG
-    - terminator: bGH_pA
+            # FLAG epitope: DYKDDDDK - distinct from His/Strep
+
+    - terminator: rrnB_T1

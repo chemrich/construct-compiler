@@ -1,25 +1,33 @@
 construct:
-  name: "muscle_specific_gene_therapy"
+  name: "muscle_specific_gene_therapy_vector"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pTwist CMV"
+    resistance: neomycin
     source: addgene
+
   cassette:
-    - promoter: Desmin  # Muscle-specific promoter for tissue-specific expression
+    - promoter: MCK  # Muscle Creatine Kinase promoter for muscle-specific expression
+
     - cistron:
         label: therapeutic_gene
         expression: high
-        gene:
-          id: target_gene
-          source: uniprot
-    - spacer: 60
-    - promoter: SV40  # Constitutive promoter for the selection marker
+        chain:
+          - gene:
+              id: null  # User to specify their gene ID or provide sequence via external reference
+
+    - terminator: SV40_polyA  # SV40 poly(A) signal for mammalian mRNA stability
+
+    - promoter: CMV  # Constitutive promoter for selection marker
+
     - cistron:
         label: selection_marker
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: NeoR  # Gene conferring resistance to G418/Neomycin
-          source: uniprot
-    - terminator: bGH_polyA  # Standard mammalian polyadenylation signal
+        chain:
+          - gene:
+              id: neo
+              source: uniprot  # Neomycin phosphotransferase II (G418 resistance)
+
+    - terminator: SV40_polyA

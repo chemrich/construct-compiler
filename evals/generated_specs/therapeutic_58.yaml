@@ -1,36 +1,44 @@
 construct:
-  name: "therapeutic_prothrombin_folding_system"
-  host: e_coli_bl21_de3
+  name: "therapeutic_protein_with_chaperone_system"
+  host: e_coli_bl21
+
   backbone:
-    # User requested antibiotic resistance-free; kanamycin is used as a placeholder per schema requirements.
-    # In practice, metabolic selection (e.g., dapD complementation) or toxin-antitoxin systems would be used.
-    resistance: kanamycin
+    resistance: none  # antibiotic-free design
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: therapeutic_target
+        label: therapeutic_protein
         expression: high
         chain:
           - gene:
-              id: P00734
-              source: uniprot
+              id: "therapeutic_protein"
+              source: "uniprot"
           - tag: 6xHis
+
     - spacer: 30
+
+    - promoter: araBAD
+
     - cistron:
-        label: chaperone_groES
+        label: GroEL
         expression: medium
         fused: false
         gene:
-          id: P0A6F9
-          source: uniprot
-    - spacer: 30
+          id: "groEL"
+          source: "uniprot"
+
+    - spacer: 25
+
     - cistron:
-        label: chaperone_groEL
+        label: GroES
         expression: medium
         fused: false
         gene:
-          id: P0A6F5
-          source: uniprot
+          id: "groES"
+          source: "uniprot"
+
     - terminator: rrnB_T1

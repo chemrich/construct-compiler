@@ -1,29 +1,31 @@
-```yaml
 construct:
-  name: therapeutic_scFv_expression
+  name: "scFv_therapeutic_soluble_Cterminal_His"
   host: e_coli_bl21_de3
 
   backbone:
-    resistance: kanamycin  # Required for selection despite user preference
+    resistance: null
     ori: pBR322
     source: addgene
+    # Note: No antibiotic resistance marker included per specifications
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: therapeutic_scFv
+        label: scFv
         expression: high
         chain:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: scFv_template  # User must provide specific scFv sequence
+              id: scFv_therapeutic
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - cleavage_site: TEV
           - tag: 6xHis
 
     - terminator: rrnB_T1
-```

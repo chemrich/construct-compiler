@@ -1,17 +1,35 @@
 construct:
-  name: "logic_or_gate_ara_iptg"
-  host: e_coli_bl21
+  name: OR_gate_dual_inducible
+  host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD # Input A: Induced by Arabinose
-    - promoter: tac    # Input B: Induced by IPTG; tandem arrangement creates OR logic
+    - promoter: araBAD
+      label: INPUT_A_responsive
+
     - cistron:
-        label: or_gate_output
+        label: OUTPUT_from_A
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: lacZ_alpha
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: rhamnose
+      label: INPUT_B_responsive
+
+    - cistron:
+        label: OUTPUT_from_B
+        expression: high
+        chain:
+          - gene:
+              id: lacZ_alpha
+              source: uniprot
+
     - terminator: rrnB_T1

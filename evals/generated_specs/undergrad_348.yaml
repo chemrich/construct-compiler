@@ -1,21 +1,25 @@
 construct:
   name: "shRNA_GeneZ_knockdown"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: neomycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
         label: shRNA_GeneZ
         expression: high
-        gene:
-          id: GeneZ_shRNA
-    - terminator: polyT  # Standard Pol III termination signal (5-6 Thymidines)---
-title: "Project Alpha"
-date: "2023-10-27"
-author: "Zhuo-Li He"
----
+        chain:
+          - gene:
+              id: shRNA_GeneZ_targeting_sequence
+              source: custom
+              # Note: User should provide the actual 21-22 nt target sequence
+              # Format: 5'-sense-loop-antisense-3' under U6 promoter
+              # Typical loop: TTCAAGAGA or CTCGAG
 
-Welcome to Project Alpha.
+    - terminator: U6_terminator

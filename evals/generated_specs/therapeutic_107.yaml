@@ -1,18 +1,22 @@
 construct:
-  name: clinical_nonviral_factor_IX_expression_system
+  name: "therapeutic_proprotein_mammalian_expression"
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Note: For clinical applications, antibiotic-free selection systems like pFAR or pORT (sucrose/RNA-based) would be substituted for kanamycin.
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    # No antibiotic resistance for clinical safety; selection via non-antibiotic methods
+
   cassette:
-    - promoter: EF1_alpha # Safe, non-viral mammalian promoter for stable clinical expression
+    - promoter: CMV
+
     - cistron:
-        label: factor_IX_therapeutic
+        label: therapeutic_proprotein
         expression: high
         chain:
-          - tag: IL2_signal_peptide # High-efficiency secretion signal for mammalian systems
+          - tag: signal_peptide_leader  # N-terminal signal peptide for ER/secretion pathway
           - gene:
-              id: P00740 # Human Coagulation Factor IX (pro-protein requiring proteolytic maturation)
+              id: "proprotein_therapeutic"
               source: uniprot
-    - terminator: bGH_polyA # Non-viral polyadenylation signal for mRNA stability and termination
+          - tag: c_KDEL  # Optional ER retention if needed, or omit for secretion
+
+    - terminator: SV40_polyA  # Mammalian polyadenylation signal

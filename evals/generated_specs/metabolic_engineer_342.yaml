@@ -1,57 +1,82 @@
 construct:
-  name: "carotenoid_pathway_operon_p_putida"
-  host: e_coli  # Substituted e_coli for P. putida as the closest supported host; tac promoter is used for compatibility.
+  name: carotenoid_synthesis_operon_Pp
+  host: pseudomonas_putida
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: gentamicin
+    ori: pBBR1
     source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: Pp_araBAD
+
     - cistron:
-        label: crtE
-        expression: low  # Stoichiometry 1
+        label: CrtE
+        expression: high
+        rbs_strength: 0.5
+        gene:
+          id: CrtE
+          source: uniprot
+          organism: Pseudomonas_putida
+
+    - spacer: 25
+
+    - cistron:
+        label: CrtB
+        expression: very_high
+        rbs_strength: 1.0
         fused: false
         gene:
-          id: crtE
+          id: CrtB
           source: uniprot
-    - spacer: 30
+          organism: Pseudomonas_putida
+
+    - spacer: 25
+
     - cistron:
-        label: crtB
-        expression: medium  # Stoichiometry 2
+        label: CrtI
+        expression: high
+        rbs_strength: 0.5
         fused: false
         gene:
-          id: crtB
+          id: CrtI
           source: uniprot
-    - spacer: 30
+          organism: Pseudomonas_putida
+
+    - spacer: 25
+
     - cistron:
-        label: crtI
-        expression: low  # Stoichiometry 1
+        label: CrtY
+        expression: very_high
+        rbs_strength: 1.5
         fused: false
         gene:
-          id: crtI
+          id: CrtY
           source: uniprot
-    - spacer: 30
+          organism: Pseudomonas_putida
+
+    - spacer: 25
+
     - cistron:
-        label: crtY
-        expression: high  # Stoichiometry 3
+        label: CrtZ
+        expression: high
+        rbs_strength: 0.5
         fused: false
         gene:
-          id: crtY
+          id: CrtZ
           source: uniprot
-    - spacer: 30
+          organism: Pseudomonas_putida
+
+    - spacer: 25
+
     - cistron:
-        label: crtZ
-        expression: low  # Stoichiometry 1
+        label: CrtX
+        expression: very_high
+        rbs_strength: 1.0
         fused: false
         gene:
-          id: crtZ
+          id: CrtX
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: crtX
-        expression: medium  # Stoichiometry 2
-        fused: false
-        gene:
-          id: crtX
-          source: uniprot
-    - terminator: BBa_B0015
+          organism: Pseudomonas_putida
+
+    - terminator: rrnB_T1

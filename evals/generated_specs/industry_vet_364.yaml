@@ -1,29 +1,50 @@
 construct:
-  name: "AAV2_VP1_VP2_VP3_Stoichiometric_Sf9"
-  host: Sf9  # Specific insect cell line used for AAV capsid production
+  name: "AAV_capsid_VP123_insect"
+  host: insect_sf9
+  
   backbone:
     resistance: ampicillin
-    ori: pUC
-    source: custom
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: OpIE2  # Strong constitutive promoter for expression in insect cells
+    - promoter: p10
+    
     - cistron:
-        label: "VP_polyprotein"
+        label: VP1
         expression: high
         chain:
-          - tag: 8xHis
-          - cleavage_site: TEV
+          - tag: 6xHis
           - gene:
-              id: "P03135"
-              source: "uniprot"
-          - linker:
-              type: P2A
+              id: VP1
+              source: uniprot
+    
+    - spacer: 20
+    
+    - cistron:
+        label: VP2_self_cleaving
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: "P03135"
-              source: "uniprot"
-          - linker:
-              type: P2A
+              id: "P2A"
+              note: "self-cleaving peptide for stoichiometric expression"
           - gene:
-              id: "P03135"
-              source: "uniprot"
+              id: VP2
+              source: uniprot
+    
+    - spacer: 20
+    
+    - cistron:
+        label: VP3_self_cleaving
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: "P2A"
+              note: "self-cleaving peptide for stoichiometric expression"
+          - gene:
+              id: VP3
+              source: uniprot
+    
     - terminator: SV40_polyA

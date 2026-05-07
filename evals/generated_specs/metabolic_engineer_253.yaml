@@ -1,51 +1,70 @@
 construct:
-  name: "iptg_inducible_toxin_mitigation_operon"
+  name: "E_coli_toxin_mitigation_operon"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: input_enzyme
-        expression: medium
+        label: InputE
+        expression: high
         chain:
           - gene:
               id: InputE
+              source: uniprot
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: tox_reduc_1
-        expression: high
+        label: ToxE1
+        expression: very_high
         fused: false
         chain:
           - gene:
               id: ToxE1
+              source: uniprot
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: tox_reduc_2
-        expression: high
+        label: ToxE2
+        expression: very_high
         fused: false
         chain:
           - gene:
               id: ToxE2
+              source: uniprot
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: prod_enzyme_1
-        expression: medium
+        label: ProdE1
+        expression: high
         fused: false
         chain:
           - gene:
               id: ProdE1
+              source: uniprot
           - tag: 6xHis
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: prod_enzyme_2
-        expression: medium
+        label: ProdE2
+        expression: high
         fused: false
         chain:
           - gene:
               id: ProdE2
+              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

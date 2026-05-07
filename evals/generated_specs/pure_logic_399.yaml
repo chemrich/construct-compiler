@@ -1,16 +1,54 @@
 construct:
-  name: proportional_analog_controller
-  host: e_coli_bl21
+  name: proportional_controller_analog
+  host: in_vitro
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7
+
     - cistron:
-        label: analog_output
+        label: input_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PhoQ
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: signal_integrator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CheY
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_actuator
         expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_reporter
+        expression: medium
+        fused: false
         gene:
-          id: sfGFP
+          id: mVenus
           source: fpbase
+
     - terminator: rrnB_T1

@@ -1,20 +1,27 @@
 construct:
-  name: "mammalian_gRNA_mNeonGreen_expression"
+  name: "mammalian_CRISPR_gRNA_GFP"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: U6
     - cistron:
         label: gRNA
         gene:
-          id: sgRNA_scaffold
-    - terminator: BBa_B0015 # Placeholder for Pol III terminator (Poly-T)
+          id: SpCas9_gRNA
+          source: uniprot
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
     - promoter: CMV
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
         gene:
-          id: mNeonGreen
+          id: sfGFP
           source: fpbase
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1

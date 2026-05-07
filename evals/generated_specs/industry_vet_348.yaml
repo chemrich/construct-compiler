@@ -1,19 +1,23 @@
 construct:
-  name: yeast_constitutive_target_expression
+  name: "yeast_protein_expression_his_tag"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - gene:
-              id: target_protein
+              id: PROTEIN_ID
               source: uniprot
           - cleavage_site: 3C
           - tag: 6xHis
+
     - terminator: CYC1

@@ -1,17 +1,51 @@
 construct:
-  name: "or_gate_z_logic"
+  name: "OR_logic_gate_Z_output"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
-    - promoter: tac
+
     - cistron:
-        label: output_z
+        label: input_D_sensor
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - promoter: T7lac
+
+    - cistron:
+        label: input_E_sensor
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - promoter: araBAD
+      # This promoter is activated by araC (input D) OR repressed by tetR (input E)
+      # When araC is present, promoter is ON. When tetR is absent, promoter is ON.
+      # This creates OR logic: promoter active if D present OR E absent
+
+    - cistron:
+        label: output_Z
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - terminator: rrnB_T1

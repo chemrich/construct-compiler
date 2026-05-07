@@ -1,41 +1,52 @@
 construct:
-  name: "cyanophycin_high_yield_operon_synechocystis"
-  host: synechocystis_pcc_6803
+  name: synechocystis_cyanophycin_biosynthesis_operon
+  host: algae
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: cphA1
-        expression: high
+        label: cyanophycin_synthetase
+        expression: very_high
         chain:
           - tag: 6xHis
           - gene:
-              id: P73468
+              id: cphA
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: carB
-        expression: high
+        label: carbamoyl_phosphate_synthetase
+        expression: very_high
         fused: false
         gene:
-          id: P74751
+          id: carA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: lysC
-        expression: high
+        label: aspartate_kinase
+        expression: very_high
         fused: false
         gene:
-          id: P74351
+          id: ask
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: gltB
-        expression: high
+        label: glutamate_synthase
+        expression: very_high
         fused: false
         gene:
-          id: P74364
+          id: gltD
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

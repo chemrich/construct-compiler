@@ -1,25 +1,25 @@
-```yaml
 construct:
-  name: self_assembling_peptide_therapeutic
+  name: "self_assembling_peptide_therapeutic_delivery"
   host: e_coli_bl21_de3
-
+  
   backbone:
-    resistance: none
+    resistance: null
     ori: pBR322
     source: custom
-
+    comment: "Antibiotic-free backbone for therapeutic applications"
+  
   cassette:
     - promoter: T7lac
-
+    
     - cistron:
-        label: therapeutic_peptide
+        label: therapeutic_sap
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-            id: P12345
-            source: uniprot
-
+              id: self_assembling_peptide_sap
+              source: uniprot
+              comment: "User-defined SAP sequence for therapeutic delivery"
+    
     - terminator: rrnB_T1
-```

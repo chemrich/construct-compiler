@@ -1,13 +1,17 @@
 construct:
-  name: "protein_X_cds_expression"
-  host: e_coli
+  name: protein_X_expression
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac # Added to conform to schema requirement for expression; default for E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: protein_X
+        expression: high
         gene:
-          id: X
-    - terminator: rrnB_T1 # Added per Rule 10 to ensure a valid construct spec
+          id: protein_X
+
+    - terminator: rrnB_T1

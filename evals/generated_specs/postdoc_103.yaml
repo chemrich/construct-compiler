@@ -1,30 +1,44 @@
 construct:
-  name: "mammalian_polycistronic_expression"
+  name: mammalian_GeneA_GeneB_GeneC_triexpress
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gene_a
+        label: GeneA
         expression: high
-        gene:
-          id: GeneA
-          source: uniprot
-    - spacer: 30 # IRES is incompatible with E. coli; substituted with intergenic spacers for RBS-mediated polycistronic translation
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneA
+              source: uniprot
+
+    # IRES for polycistronic translation in E. coli (note: IRES is mammalian element; 
+    # E. coli uses RBS instead. This design uses synthetic RBS spacing for prokaryotic polycistronic expression.)
+    - spacer: 35
+
     - cistron:
-        label: gene_b
+        label: GeneB
         expression: high
         fused: false
         gene:
           id: GeneB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 35
+
     - cistron:
-        label: gene_c
+        label: GeneC
         expression: high
         fused: false
         gene:
           id: GeneC
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

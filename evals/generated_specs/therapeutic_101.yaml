@@ -1,26 +1,35 @@
 construct:
-  name: "secreted_human_scfv_therapeutic_system"
-  host: CHO
+  name: secreted_human_scFv_mammalian_expression
+  host: HEK293
+
   backbone:
-    resistance: kanamycin  # Required for E. coli cloning stage; host selection is metabolic
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: blasticidin  # non-antibiotic selection marker
+
   cassette:
-    - promoter: EF1_alpha  # Robust mammalian promoter, non-viral
+    - promoter: CMV
+
     - cistron:
-        label: scFv_therapeutic
+        label: secreted_scFv
         expression: high
         chain:
-          - tag: Igk_leader  # N-terminal secretion signal for supernatant export
+          - tag: signal_peptide_myeloma  # N-terminal secretion signal (IgG kappa leader sequence)
           - gene:
-              id: scFv_human_therapeutic
+              id: human_scFv
               source: uniprot
-    - spacer: 40  # Minimum 20 bp spacer for polycistronic organization
+          - tag: His6  # C-terminal purification tag
+          - tag: KDEL  # optional ER retention/retrieval signal for enhanced secretion
+
+    - terminator: SV40_pA  # mammalian polyadenylation signal
+
+    - spacer: 50
+
     - cistron:
         label: selection_marker
         expression: medium
-        fused: false  # Independent translation for the metabolic marker
+        fused: false
         gene:
-          id: DHFR  # Dihydrofolate reductase for non-antibiotic metabolic selection
+          id: blasticidin_S_deaminase
           source: uniprot
-    - terminator: bGH_polyA  # Non-viral mammalian polyadenylation signal
+
+    - terminator: SV40_pA

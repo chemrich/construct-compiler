@@ -1,18 +1,23 @@
 construct:
-  name: "Bacillus_subtilis_Chitinase_P43_Secretion"
+  name: "Bacillus_chitinase_secretion_P43"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
-        label: chitinase_secretion
+        label: chitinase_secreted
         expression: high
         chain:
-          - tag: YncM
+          - signal_peptide: YncM
           - gene:
-              id: P0C1M4
+              id: chitinase_codon_optimized
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

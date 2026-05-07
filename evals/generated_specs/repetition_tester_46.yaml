@@ -1,28 +1,51 @@
 construct:
-  name: triple_target_crispr_array_yeast
+  name: "CRISPR_array_three_loci_S_cerevisiae"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: URA3
+    ori: CEN6
     source: addgene
 
   cassette:
+    - promoter: SNR52
+
+    - cistron:
+        label: CRISPR_array
+        expression: high
+        chain:
+          - gene:
+              id: Cas9
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+
+    - terminator: T7term
+
     - promoter: U6
 
     - cistron:
-        label: crispr_array
+        label: gRNA_array
         expression: high
-        gene:
-          # Custom CRISPR array with varied repeats to minimize repetitive elements
-          # Repeat1: GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC
-          # Spacer1: GCATACGTGCATACGTGCAT (20bp targeting locus 1)
-          # Repeat2: GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCT
-          # Spacer2: ATGCTAGCATGCTAGCATGC (20bp targeting locus 2)  
-          # Repeat3: GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCC
-          # Spacer3: CGTAGCGTAGCGTAGCGTAG (20bp targeting locus 3)
-          # Final repeat: GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC
-          id: custom_triple_crispr_array
-          sequence: GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCGCATACGTGCATACGTGCATGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTATGCTAGCATGCTAGCATGCGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCCCGTAGCGTAGCGTAGCGTAGGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC
+        chain:
+          - gene:
+              id: "spacer_1_GCTAGCTAGCTAGCTAGCTAGCTA"
+              source: custom
+          - gene:
+              id: "repeat_variant_1"
+              source: custom
+          - gene:
+              id: "spacer_2_ATGATGATGATGATGATGATGATG"
+              source: custom
+          - gene:
+              id: "repeat_variant_2"
+              source: custom
+          - gene:
+              id: "spacer_3_CGCGCGCGCGCGCGCGCGCGCGCG"
+              source: custom
+          - gene:
+              id: "repeat_variant_3"
+              source: custom
 
     - terminator: rrnB_T1

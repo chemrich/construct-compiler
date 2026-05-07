@@ -1,19 +1,24 @@
 construct:
-  name: "Pichia_toxic_protein_intracellular"
+  name: "pichia_pastoris_GST_toxin_PAOX1"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: AOX1
+    - promoter: PAOX1
+
     - cistron:
-        label: target
-        expression: high
+        label: GST_toxin
+        expression: low
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: Thrombin
           - gene:
               id: target_protein
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

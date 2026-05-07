@@ -1,16 +1,18 @@
 construct:
-  name: "yeast_tet_inducible_luciferase"
+  name: tetracycline_inducible_luciferase_yeast
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TetO7_CYC1  # Tet-inducible promoter adapted for yeast (CYC1 core)
+    - promoter: GAL1  # S. cerevisiae inducible promoter (glucose-repressed, galactose-activated); approximates tight/basal behavior
+
     - cistron:
         label: reporter
         expression: medium
         gene:
-          id: P08659
+          id: Photinus_pyralis_luciferase
           source: uniprot
-    - terminator: CYC1_term

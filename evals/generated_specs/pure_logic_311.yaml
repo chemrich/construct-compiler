@@ -1,16 +1,77 @@
 construct:
-  name: "yeast_metabolic_bypass_circuit_v"
+  name: "yeast_metabolic_switch_Input_J_to_Output_V"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GAL1 # GAL1 promoter used for high-inducibility ON/OFF control via Input_J (Galactose)
+    - promoter: GAL1
+      # GAL1 is tightly repressed by glucose and induced by galactose (Input_J analog)
+
     - cistron:
-        label: output_v_diverter
+        label: transcriptional_repressor
         expression: high
-        gene:
-          id: Output_V_synthase
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mig1
+              source: uniprot
+              # Mig1 repressor to silence competing native pathway when OFF
+
+    - terminator: CYC1
+
+    - spacer: 25
+
+    - promoter: ADH2
+      # ADH2 is a glucose-repressed promoter, provides basal expression control
+
+    - cistron:
+        label: pathway_enzyme_1
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: ACH1
+              source: uniprot
+              # Acetyl-CoA hydrolase; directs flux toward Output_V biosynthesis
+
+    - terminator: CYC1
+
+    - spacer: 25
+
+    - promoter: TPI1
+      # Constitutive promoter for stable enzyme 2 expression
+
+    - cistron:
+        label: pathway_enzyme_2
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: MDH1
+              source: uniprot
+              # Malate dehydrogenase; supports Output_V production pathway
+
+    - terminator: PGK1
+
+    - spacer: 25
+
+    - promoter: GAL4
+      # Inducible promoter for the toggle switch controller
+
+    - cistron:
+        label: switch_controller
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GAL4
+              source: uniprot
+              # GAL4 transcription factor: activated by galactose (Input_J), 
+              # represses native competing pathways and activates Output_V branch
+
     - terminator: CYC1

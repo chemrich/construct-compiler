@@ -1,24 +1,64 @@
 construct:
-  name: "c1_ffl_persistence_detector"
-  host: e_coli
+  name: "Type1_Coherent_FeedForward_Loop_C1FFL"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: activator_x
-        expression: medium
-        gene:
-          id: luxR
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: lux
-    - cistron:
-        label: output_y
+        label: INPUT
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: X_intermediate_activator
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: OUTPUT
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: regulatory_region_INPUT_to_X
+        expression: very_low
+        fused: false
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+          id: araBAD_promoter_element
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: regulatory_region_INPUT_and_X_to_OUTPUT
+        expression: very_low
+        fused: false
+        gene:
+          id: dual_control_promoter_element
+          source: uniprot
+
+    - terminator: rrnB_T1

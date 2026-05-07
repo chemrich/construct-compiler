@@ -1,16 +1,20 @@
 construct:
-  name: "FactorX_Secretion_HEK293"
+  name: "FactorX_secreted_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: FactorX_secreted
+        label: FactorX
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IL2  # N-terminal signal peptide for ER targeting and secretion
           - gene:
               id: FactorX
               source: uniprot
-    - terminator: BGH_pA
+
+    - terminator: SV40_polyA

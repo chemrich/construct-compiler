@@ -1,29 +1,102 @@
 construct:
-  name: "three_input_majority_gate_logic"
+  name: "majority_logic_circuit_ABC"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7  # Logic: Responds to MAJ(A,B,C) activation
+    - promoter: T7lac
+
+    # Input sensors A, B, C — expressed constitutively at low level
+    - cistron:
+        label: sensor_A
+        expression: low
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: sensor_B
+        expression: low
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: sensor_C
+        expression: low
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    # Integrase-based majority gate logic:
+    # Bxb1 integrase activated by A AND B promotes P expression
+    - cistron:
+        label: integrase_AB
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: bxb1
+              source: uniprot
+
+    - spacer: 25
+
+    # Tp901-1 integrase activated by B AND C promotes P expression
+    - cistron:
+        label: integrase_BC
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tp901_1
+              source: uniprot
+
+    - spacer: 25
+
+    # Recombinase co-expression (VCre) to enable dual-input logic
+    - cistron:
+        label: recombinase
+        expression: medium
+        chain:
+          - gene:
+              id: vcre
+              source: uniprot
+
+    - spacer: 25
+
+    # Output P — expressed when two or more inputs present (via integrase-mediated recombination)
     - cistron:
         label: output_P
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: sfGFP
+              id: mNeonGreen
               source: fpbase
-    - terminator: T7term
-    - spacer: 50
-    - promoter: tac  # Logic: Negation gate; active when majority logic is low
+
+    - spacer: 25
+
+    # Output Q — expressed when fewer than two inputs present (default output)
     - cistron:
         label: output_Q
-        expression: medium
-        fused: false
+        expression: high
         chain:
-          - tag: Twin-Strep
+          - tag: 6xHis
           - gene:
               id: mScarlet
               source: fpbase
+
     - terminator: rrnB_T1

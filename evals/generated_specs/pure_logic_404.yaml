@@ -1,41 +1,68 @@
 construct:
-  name: "genetic_toggle_switch_lacI_tetR"
-  host: e_coli
+  name: "bistable_toggle_switch"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac  # LacI-repressible promoter (Induced by IPTG)
+    - promoter: araBAD
+      # State 1: araBAD-driven repressor (LacI) inhibits State 2
+      
     - cistron:
-        label: repressor_1
+        label: state1_repressor
         expression: high
-        gene:
-          id: P04483  # TetR repressor protein
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reporter_1
-        expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+              # UniProt: P03023 (E. coli lac repressor)
+
     - terminator: rrnB_T1
-    - spacer: 50
-    - promoter: J23100 # Substitution: J23100 used as placeholder for a TetR-repressible promoter (e.g., P_L_tetO-1), induced by aTc
+
+    - promoter: lacUV5
+      # State 2: lacUV5-driven repressor (TetR) inhibits State 1
+      
     - cistron:
-        label: repressor_2
+        label: state2_repressor
         expression: high
-        gene:
-          id: P03023  # LacI repressor protein
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+              # UniProt: P04483 (Tet repressor from Tn10)
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+      # Operator sites and mutual repression circuit
+      # LacI binds to araBAD promoter region, blocking TetR expression
+      # TetR binds to lacUV5 promoter region, blocking LacI expression
+      # Transient IPTG pulse → inhibit LacI → depress lacUV5 → TetR rises → represses araBAD
+      # Transient aTc pulse → inhibit TetR → depress araBAD → LacI rises → represses lacUV5
+      
     - cistron:
-        label: reporter_2
+        label: state_reporter_1
         expression: medium
         fused: false
         gene:
-          id: mEGFP
+          id: mGFP
           source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD
+
+    - cistron:
+        label: state_reporter_2
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: rrnB_T1

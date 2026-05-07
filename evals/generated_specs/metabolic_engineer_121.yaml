@@ -1,14 +1,17 @@
 construct:
-  name: "polyketide_pathway_inducible_operon"
-  host: e_coli_bl21_de3
+  name: "polyketide_five_gene_operon"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: gene_x
+        label: GeneX
         expression: high
         chain:
           - gene:
@@ -16,36 +19,45 @@ construct:
               source: uniprot
           - tag: Strep-II
           - cleavage_site: TEV
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: gene_y
+        label: GeneY
         expression: high
         fused: false
         gene:
           id: GeneY
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: gene_z
+        label: GeneZ
         expression: medium
         fused: false
         gene:
           id: GeneZ
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: gene_w
+        label: GeneW
         expression: medium
         fused: false
         gene:
           id: GeneW
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: gene_v
+        label: GeneV
         expression: low
         fused: false
         gene:
           id: GeneV
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

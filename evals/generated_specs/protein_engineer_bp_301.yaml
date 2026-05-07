@@ -1,20 +1,25 @@
 construct:
-  name: "Pichia_PAOX1_HSA_Secretion"
+  name: pichia_pastoris_HSA_secretion
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: AOX1
+    - promoter: PAOX1
+
     - cistron:
-        label: target
+        label: HSA_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - tag: FLAG
           - cleavage_site: Kex2
           - gene:
               id: P02768
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1

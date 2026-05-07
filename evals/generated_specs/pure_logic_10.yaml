@@ -1,66 +1,72 @@
-```yaml
 construct:
-  name: genetic_latch_circuit
-  host: e_coli
+  name: "genetic_latch_bistable_switch"
+  host: e_coli_bl21
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pSC101"
+    resistance: ampicillin
+    ori: SC101
     source: addgene
 
   cassette:
-    - promoter: J23100
+    - promoter: araBAD
+      label: "set_input"
 
     - cistron:
-        label: latch_repressor
+        label: "CI_repressor"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "CI"
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 40
+
+    - promoter: lacUV5
+      label: "cro_locus"
+
+    - cistron:
+        label: "Cro_repressor"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "Cro"
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 40
+
+    - promoter: T7lac
+      label: "reporter_locus"
+
+    - cistron:
+        label: "ON_state_reporter"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "mCherry"
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    - spacer: 40
+
+    - promoter: araBAD
+      label: "reset_input"
+
+    - cistron:
+        label: "FLP_recombinase"
         expression: medium
-        gene:
-          id: P0440  # CI repressor
-          source: uniprot
-
-    - spacer: 25
-
-    - cistron:
-        label: set_activator
-        expression: medium
-        fused: false
-        gene:
-          id: P03023  # CAP-cAMP activator
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "FLP"
+              source: uniprot
 
     - terminator: rrnB_T1
-
-    - promoter: araBAD  # SET input promoter
-
-    - cistron:
-        label: set_circuit
-        expression: high
-        gene:
-          id: P0440  # CI repressor for self-reinforcement
-          source: uniprot
-
-    - terminator: rrnB_T1
-
-    - promoter: lacUV5  # RESET input promoter
-
-    - cistron:
-        label: reset_circuit
-        expression: high
-        gene:
-          id: P06959  # Cro repressor to inhibit CI
-          source: uniprot
-
-    - terminator: rrnB_T1
-
-    - promoter: tac  # Output promoter (repressed by CI when latch is OFF)
-
-    - cistron:
-        label: luminescent_output
-        expression: high
-        fused: false
-        gene:
-          id: mNeonGreen  # Luminescent reporter
-          source: fpbase
-
-    - terminator: rrnB_T1
-```

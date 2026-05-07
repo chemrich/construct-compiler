@@ -1,50 +1,63 @@
 construct:
   name: "Pseudomonas_putida_plastic_degradation_operon"
-  host: e_coli  # Pseudomonas putida not in supported list; e_coli used as a compatible Gram-negative proxy
+  host: pseudomonas_putida
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pBBR1
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive Anderson promoter suitable for P. putida
+    - promoter: Pm  # Pseudomonas constitutive promoter
+
     - cistron:
-        label: Deg1
-        expression: medium
+        label: Deg1_secreted
+        expression: high
         chain:
-          - tag: PelB  # N-terminal secretion signal for periplasmic localization
+          - secretion_signal: tat_signal_peptide  # Twin-arginine translocation for periplasmic targeting
           - tag: FLAG
           - gene:
               id: Deg1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: Deg2
-        expression: medium
+        label: Deg2_cytosolic
+        expression: high
         fused: false
         gene:
           id: Deg2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: Deg3
-        expression: medium
+        label: Deg3_cytosolic
+        expression: high
         fused: false
         gene:
           id: Deg3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: Deg4
-        expression: medium
+        label: Deg4_cytosolic
+        expression: high
         fused: false
         gene:
           id: Deg4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: Deg5
-        expression: medium
+        label: Deg5_cytosolic
+        expression: high
         fused: false
         gene:
           id: Deg5
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

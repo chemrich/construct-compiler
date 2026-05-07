@@ -1,21 +1,30 @@
 construct:
-  name: therapeutic_cpp_nonviral
-  host: mammalian
+  name: "mammalian_CPP_therapeutic_cytoplasmic_delivery"
+  host: HEK293
+
   backbone:
-    resistance: none # User requested a construct free of antibiotic resistance genes
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # No antibiotic resistance: using mammalian selection-free vector
+    ori: null
+    source: addgene
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: therapeutic_effector
+        label: therapeutic_protein
         expression: high
         chain:
-          - tag: 9xArg # Synthetic non-viral cell-penetrating peptide
+          - tag: NLS
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P04637
+              id: THRAP3
               source: uniprot
-    - terminator: bGH_polyA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: TAT_CPP
+
+    - terminator: polyA

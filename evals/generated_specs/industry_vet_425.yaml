@@ -1,21 +1,31 @@
 construct:
-  name: "MyEnzyme_CFlag_T2A_mNeonGreen"
+  name: MyEnzyme_Flag_T2A_mNeonGreen
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: enzyme_reporter_cassette
+        label: MyEnzyme_Flag
         expression: high
         chain:
           - gene:
               id: MyEnzyme
               source: uniprot
           - tag: FLAG
-          - linker:
-              type: T2A
+
+    - cistron:
+        label: mNeonGreen
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: T2A
           - gene:
               id: mNeonGreen
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

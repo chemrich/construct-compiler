@@ -1,22 +1,27 @@
 construct:
-  name: "e_coli_surface_display_ProteinN"
-  host: e_coli_bl21_de3
+  name: "surface_display_proteinN_ecoli"
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: surface_display_construct
-        expression: medium
+        label: surface_display
+        expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Lpp_OmpA
+              id: ompA_signal_peptide
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: ProteinN
               source: uniprot
-          - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

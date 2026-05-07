@@ -1,16 +1,22 @@
 construct:
-  name: "enzyme_a_purification_construct"
+  name: "Enzyme_A_His_tag"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: Enzyme_A
         expression: high
         chain:
-          - tag: 6xHis
           - gene:
               id: Enzyme_A
               source: uniprot
-    - terminator: T7term
+          - tag: 6xHis
+    
+    - terminator: rrnB_T1

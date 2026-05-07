@@ -1,18 +1,28 @@
 construct:
-  name: "bacterial_domain_solubility_optimized_NMR"
+  name: "GST_TEV_domain_6xHis_NMR"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pGEX-6P-1"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: target_domain
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: TEV
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: bacterial_domain
+              id: domain_protein
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,15 +1,28 @@
 construct:
-  name: "viral_protein_baculovirus_transfer_vector"
-  host: e_coli  # Maintenance host for the transfer plasmid as per user request
+  name: baculovirus_transfer_vector_ViralProtein
+  host: e_coli
+  
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+    # Note: This is an E. coli maintenance backbone for baculovirus transfer vector
+    # Homologous recombination flanking regions (HR-L and HR-R) should flank the expression cassette
+    
   cassette:
-    - promoter: polh  # Polyhedrin promoter for high-level expression in insect cells
+    - hr_region: left
+      # Homologous recombination left flanking region for baculovirus genome insertion
+      
+    - promoter: Polyhedrin
+      
     - cistron:
-        label: target
+        label: ViralProtein
+        expression: high
         gene:
           id: ViralProtein
           source: uniprot
-    - terminator: SV40  # Standard terminator for baculovirus transfer vectors
+          
+    - terminator: SV40_polyA
+      
+    - hr_region: right
+      # Homologous recombination right flanking region for baculovirus genome insertion

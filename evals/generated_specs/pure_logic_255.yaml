@@ -1,17 +1,36 @@
 construct:
-  name: "nand_gate_output_r"
-  host: e_coli_bl21_de3
+  name: genetic_NAND_gate
+  host: e_coli
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: tac  # Inducible promoter often used in E. coli logic circuits
+    - promoter: T7lac
     - cistron:
-        label: target_R
+        label: repressor_S
         expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+    - spacer: 25
+    - cistron:
+        label: repressor_T
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+    - spacer: 25
+    - promoter: araBAD
+    - cistron:
+        label: output_R
+        expression: medium
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: mScarlet
+              id: msfGFP
               source: fpbase
-    - terminator: T7term
+    - terminator: rrnB_T1

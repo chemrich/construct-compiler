@@ -1,32 +1,48 @@
 construct:
-  name: "cooperative_activator_and_gate"
-  host: e_coli
+  name: "AND_gate_two_input_cooperative"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Activated by Input A: L-arabinose
+    - promoter: T7lac
+
     - cistron:
-        label: activator_a_hrpR
+        label: ActivatorA
         expression: medium
-        gene:
-          id: P27708
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac     # Activated by Input B: IPTG
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+        # luxR senses acyl-homoserine lactone (INPUT_A)
+
+    - spacer: 25
+
     - cistron:
-        label: activator_b_hrpS
+        label: ActivatorB
         expression: medium
-        gene:
-          id: P27707
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: hrpL    # AND-gate promoter: requires both HrpR and HrpS for activation
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+        # araC senses L-arabinose (INPUT_B)
+
+    - spacer: 25
+
     - cistron:
-        label: reporter_output
+        label: OUTPUT
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+        # Driven by pLux-ara hybrid promoter requiring both ActivatorA-INPUT_A and ActivatorB-INPUT_B
+
+    - terminator: rrnB_T1

@@ -1,13 +1,17 @@
 construct:
-  name: "six_enzyme_bioconversion_pathway"
-  host: b_subtilis
+  name: "Bacillus_six_enzyme_bioconversion_pathway"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Pgrac  # Strong, IPTG-tunable promoter suitable for B. subtilis
+    - promoter: araBAD
+
     - cistron:
-        label: hydrolase_dh1_fusion
+        label: Hydrolase_Dehydrogenase1_fusion
         expression: high
         chain:
           - tag: 6xHis
@@ -16,37 +20,45 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: Dehydrogenase1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: isomerase
+        label: Isomerase
         expression: high
         fused: false
         gene:
           id: Isomerase
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: dehydrogenase2
+        label: Dehydrogenase2
         expression: high
         fused: false
         gene:
           id: Dehydrogenase2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: reductase
+        label: Reductase
         expression: high
         fused: false
         gene:
           id: Reductase
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: ligase
+        label: Ligase
         expression: high
         fused: false
         chain:
@@ -54,4 +66,5 @@ construct:
               id: Ligase
               source: uniprot
           - tag: Strep-II
+
     - terminator: rrnB_T1

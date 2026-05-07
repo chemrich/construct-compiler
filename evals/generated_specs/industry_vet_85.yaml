@@ -1,33 +1,33 @@
 construct:
-  name: "subunit_a_b_mammalian_coexpression"
+  name: "mammalian_protein_complex_dual_subunit"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: subunit_a
+        label: Subunit_A
         expression: high
         chain:
           - gene:
-              id: SUBUNIT_A
+              id: subunit_a
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - tag: FLAG
-    - spacer: 50
-    - promoter: CMV
+
+    - spacer: 30
+
     - cistron:
-        label: subunit_b
-        expression: high
+        label: IRES_separator
         fused: false
+        expression: high
         chain:
           - gene:
-              id: SUBUNIT_B
+              id: subunit_b
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - tag: HA
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

@@ -1,29 +1,30 @@
 construct:
-  name: "non_repetitive_bacterial_cluster_reconstitution"
-  host: e_coli
+  name: "bacterial_cluster_minimal_recombination"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: p15A  # Selected p15A for lower copy number and reduced recombination risk
+    ori: p15A
     source: addgene
-
+  
   cassette:
-    - promoter: araBAD  # araBAD is used to avoid common T7 or lac-based system crosstalk
-
+    - promoter: araBAD
+    
     - cistron:
-        label: gene_A
-        expression: medium
+        label: gene_1
+        expression: high
         gene:
-          id: P21683
+          id: cluster_gene_1
           source: uniprot
-
-    - spacer: 35  # Defined spacer to ensure distinct intergenic distance
-
+    
+    - spacer: 35
+    
     - cistron:
-        label: gene_B
-        expression: high  # Different expression level used to ensure distinct RBS sequence selection
-        fused: false      # Ensures independent translation with its own RBS
+        label: gene_2
+        expression: high
+        fused: false
         gene:
-          id: P21684
+          id: cluster_gene_2
           source: uniprot
-
+    
     - terminator: rrnB_T1

@@ -1,34 +1,48 @@
 construct:
-  name: "genetic_memory_toggle_switch"
-  host: e_coli_bl21
+  name: genetic_memory_SR_latch
+  host: mammalian
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: tac # Substituted for a TetR-repressible promoter (SET arm) to fulfill the toggle logic within allowed schema options
+    - promoter: CMV
+
     - cistron:
-        label: repressor_lacI
+        label: SET_input_responsive
         expression: high
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: growth_factor_output
-        expression: high
-        fused: false # Independent translation for second protein in the SET operon
         chain:
-          - tag: PelB # Secretion signal for E. coli
           - gene:
-              id: P01133 # Human Epidermal Growth Factor (hEGF)
+              id: rtTA
               source: uniprot
-    - spacer: 50
-    - promoter: lacUV5 # RESET arm (LacI-repressible)
+
+    - spacer: 30
+
     - cistron:
-        label: repressor_tetR
+        label: memory_latch_output
         expression: high
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: rrnB_T1
+        chain:
+          - tag: signal_peptide_IgK
+          - gene:
+              id: VEGF_A
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: RESET_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: Gal4_DBD_fusion
+              source: uniprot
+
+    - terminator: SV40_poly_A
+
+  # Design notes:
+  # - This uses a doxycycline-inducible system (rtTA acts as SET signal responder)
+  # - VEGF_A with IgK signal peptide provides secreted growth factor output
+  # - Gal4_DBD fusion acts as RESET repressor to silence memory circuit
+  # - Once SET (dox added), rtTA activates VEGF output which is maintained via positive feedback
+  # - RESET input (removal of dox or addition of repressor ligand) silences the circuit
+  # - For true genetic bistability, implement with synthetic promoters containing both TRE (for rtTA) and GAL4 binding sites in cis-regulatory elements (not fully captured here but implied by construct purpose)

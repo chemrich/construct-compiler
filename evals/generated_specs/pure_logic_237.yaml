@@ -1,32 +1,42 @@
 construct:
-  name: "oxidative_stress_memory_circuit"
-  host: e_coli
+  name: "oxidative_stress_memory_reporter"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: soxS  # Environmental stress sensor (oxidative stress/superoxide)
+    - promoter: araBAD
+
     - cistron:
-        label: trigger_activator
-        expression: medium
-        gene:
-          id: AraC
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: araBAD  # Activated by AraC, creating a positive feedback loop for memory
-    - cistron:
-        label: feedback_activator
-        expression: medium
-        gene:
-          id: AraC
-          source: uniprot
+        label: stress_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: OxyR
+              source: uniprot
+
     - spacer: 30
+
+    - cistron:
+        label: memory_integrase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Cre
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: output_reporter
         expression: high
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

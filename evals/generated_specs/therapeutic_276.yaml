@@ -1,40 +1,44 @@
 construct:
-  name: non_viral_inducible_cytokine_msc
-  host: mammalian
+  name: "hMSC_inducible_cytokine_expression"
+  host: HEK293
+
   backbone:
-    # Requirement: No antibiotic resistance genes. Standard plasmids require selection for production; 
-    # kanamycin is provided here as a default placeholder for the cloning stage.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    resistance: null
+    ori: SC101
+    source: addgene
+    # SC101 is a mammalian-compatible low-copy origin; no antibiotic marker included per requirements
 
   cassette:
-    # Cistron 1: Constitutive expression of the non-viral transactivator (TetR-p65)
     - promoter: EF1_alpha
+      label: "regulatory_cassette"
+
     - cistron:
-        label: transactivator
+        label: rtTA_regulator
+        expression: medium
         chain:
+          - tag: NLS
           - gene:
-              id: TetR
-              source: uniprot # P04483
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: RELA
-              source: uniprot # Q04206 (p65 subunit of NF-kappaB)
-    
-    - terminator: rrnB_T1 # Bacterial terminator used as a transcription stop/insulator
+              id: "rtTA3"
+              source: uniprot
+          - tag: NLS
+
+    - terminator: rrnB_T1
 
     - spacer: 50
 
-    # Cistron 2: Inducible expression of the therapeutic cytokine
-    - promoter: TRE3G # Tet-responsive element (7xTetO + minimal promoter, non-viral)
+    - promoter: TRE
+      # TRE = Tetracycline Response Element (tet-on); non-viral synthetic element
+      label: "inducible_cytokine_cassette"
+
     - cistron:
         label: therapeutic_cytokine
         expression: high
-        gene:
-          id: IL10
-          source: uniprot # P22301
-          
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "P05112"
+              source: uniprot
+              # IL-6: therapeutic cytokine for immunomodulation in stem cells
+          - tag: NLS
+
     - terminator: rrnB_T1

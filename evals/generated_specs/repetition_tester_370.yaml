@@ -1,30 +1,52 @@
 construct:
-  name: "protein_l_isoform_sequential_ires"
-  host: mammalian
+  name: "mammalian_ProteinL_isoforms_triple_IRES"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_l_isoform_1
+        label: ProteinL_L1
         expression: high
-        gene:
-          id: ProteinL_L1
-          source: uniprot
-    - spacer: 584 # IRES_EMCV used to initiate translation of the second cistron independently
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinL_L1
+              source: uniprot
+
+    # IRES1: EMCV (Encephalomyocarditis virus) – distinct sequence
+    - spacer: 586  # EMCV IRES canonical length
+
     - cistron:
-        label: protein_l_isoform_2
-        expression: medium
-        fused: false
-        gene:
-          id: ProteinL_L2
-          source: uniprot
-    - spacer: 452 # IRES_EV71 used to initiate translation of the third cistron (non-homologous to EMCV)
+        label: ProteinL_L2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinL_L2
+              source: uniprot
+
+    # IRES2: CrPV (Cricket paralysis virus) – non-homologous to EMCV
+    - spacer: 372  # CrPV IRES canonical length
+
     - cistron:
-        label: protein_l_isoform_3
-        expression: low
-        fused: false
-        gene:
-          id: ProteinL_L3
-          source: uniprot
-    - terminator: hGH_pA
+        label: ProteinL_L3
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinL_L3
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # IMPORTANT: The spacer elements above represent distinct IRES sequences.
+  # Spacer 1 (586 bp) = EMCV IRES
+  # Spacer 2 (372 bp) = CrPV IRES
+  # These are structurally and sequentially non-homologous viral IRES elements
+  # that enable cap-independent translation of each downstream cistron.
+  # During compilation, replace these canonical spacer lengths with the actual
+  # EMCV and CrPV IRES sequences from standard molecular biology repositories.

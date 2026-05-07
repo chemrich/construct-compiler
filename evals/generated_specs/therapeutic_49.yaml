@@ -1,36 +1,40 @@
-```yaml
 construct:
-  name: therapeutic_heterodimer_alpha_beta_secreted
+  name: secreted_therapeutic_heterodimer_CHO
   host: CHO
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: EF1_alpha
 
     - cistron:
-        label: alpha_chain
+        label: Alpha_chain
         expression: high
         chain:
-          - tag: signal_peptide
+          - signal_peptide: SP_preproinsulin
           - gene:
-              id: alpha_chain
+              id: IGHG1
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
 
     - spacer: 30
 
     - cistron:
-        label: beta_chain
+        label: Beta_chain
         expression: high
         fused: false
         chain:
-          - tag: signal_peptide
+          - signal_peptide: SP_preproinsulin
           - gene:
-              id: beta_chain
+              id: IGKC
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
 
     - terminator: rrnB_T1
-```
