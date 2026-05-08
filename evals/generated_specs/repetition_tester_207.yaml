@@ -1,36 +1,51 @@
 construct:
-  name: "Multidomain_Diversified_Binding_Scaffold"
+  name: "multi_domain_scaffold_diversified"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: scaffold_fusion
+        label: scaffold
         expression: high
         chain:
-          - tag: Twin-Strep  # Sequence-diversified purification tag relative to standard His-tags
-          - tag: 8xHis
+          - tag: 6xHis
           - cleavage_site: TEV
-          - gene:
-              id: P12931  # BD1: Src SH3 domain
-              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3  # Unique linker 1
+              repeats: 1
           - gene:
-              id: P31016  # BD2: Syntrophin PDZ domain
-              source: uniprot
+              id: BD1_codon_optimized_variant_A
+              source: custom
+              codon_bias: "extreme_synonymous_diversity"
           - linker:
               type: rigid_EAAAK
-              repeats: 2  # Unique linker 2 (structural variation)
+              repeats: 2
+              custom_sequence: "GGSGGSGGAGGSGGS"
           - gene:
-              id: P46937  # BD3: YAP1 WW domain
-              source: uniprot
+              id: BD2_codon_optimized_variant_B
+              source: custom
+              codon_bias: "extreme_synonymous_diversity"
           - linker:
-              type: short_GS
-              repeats: 2  # Unique linker 3 (length variation)
+              type: GS_flexible
+              repeats: 3
+              custom_sequence: "GSGSGSGSGSGSGSGSGSGSG"
           - gene:
-              id: P60468  # BD4: VASP EVH1 domain
-              source: uniprot
-    - terminator: T7term # Standard for pET-based expression in E. coli BL21(DE3)
+              id: BD3_codon_optimized_variant_C
+              source: custom
+              codon_bias: "extreme_synonymous_diversity"
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+              custom_sequence: "GGAGGCGGAGGTGG"
+          - gene:
+              id: BD4_codon_optimized_variant_D
+              source: custom
+              codon_bias: "extreme_synonymous_diversity"
+
+    - terminator: rrnB_T1

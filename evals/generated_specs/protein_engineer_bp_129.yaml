@@ -1,23 +1,29 @@
 construct:
-  name: "bacillus_subtilis_esterase_secretion"
+  name: "bacillus_lipase_extracellular_esterase"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110  # Using pUB110 as it is a standard origin for Bacillus subtilis
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
+    - rbs: RBS_bacillus_consensus
+
     - cistron:
-        label: secreted_esterase
-        expression: high  # Selected to ensure strong Bacillus consensus RBS
+        label: esterase
+        expression: high
         chain:
-          - tag: LipA_signal_peptide
+          - signal_peptide: LipA
           - gene:
-              id: estA
+              id: lipA_esterase
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - cleavage_site: TEV
           - tag: 6xHis
+
     - terminator: rrnB_T1

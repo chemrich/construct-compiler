@@ -1,13 +1,24 @@
 construct:
-  name: "gRNA_GeneX_High_Activity"
+  name: "gRNA_GeneX_HEK293"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    # pX330 is optimized for U6-driven gRNA expression in mammalian cells
+
   cassette:
     - promoter: U6
+      # U6 is a Pol III promoter for high-level gRNA expression in mammalian cells
+
     - cistron:
-        label: sgRNA
+        label: gRNA
         expression: high
-        gene:
-          id: "GeneX_sgRNA"
-    - terminator: BBa_B0015 # Standard terminator used here, though U6 typically utilizes a Poly-T stretch.
+        chain:
+          - gene:
+              id: GeneX_targeting_gRNA
+              source: uniprot
+              # User should specify the actual 20bp target sequence for GeneX
+              # or provide the gRNA design separately
+
+    - terminator: U6_term
+      # Pol III termination signal (typically TTTTTT)

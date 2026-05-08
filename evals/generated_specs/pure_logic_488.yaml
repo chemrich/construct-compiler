@@ -1,36 +1,69 @@
 construct:
-  name: "yeast_3pulse_event_counter"
+  name: "yeast_event_counter_three_state"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2-micron
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: CUP1  # Activated by transient 'SignalP' pulses
+    - promoter: GAL1
+
     - cistron:
-        label: pulse_1_green
+        label: SignalP_receptor
         expression: high
+        chain:
+          - gene:
+              id: STE2
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: ADH1
+
+    - cistron:
+        label: memory_counter_module
+        expression: high
+        chain:
+          - gene:
+              id: cre_recombinase
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: TEF1
+
+    - cistron:
+        label: state_0_reporter_green
+        expression: high
+        fused: false
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
-    - spacer: 40  # Spacer provides modular interface for recombinase logic integration
+
+    - terminator: rrnB_T1
+
+    - promoter: TEF1
+
     - cistron:
-        label: pulse_2_blue
-        expression: medium
+        label: state_1_reporter_blue
+        expression: high
         fused: false
-        chain:
-          - tag: P2A  # 2A peptide for polycistronic processing in yeast
-          - gene:
-              id: mTagBFP2
-              source: fpbase
-    - spacer: 40
+        gene:
+          id: mTagBFP2
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+    - promoter: TEF1
+
     - cistron:
-        label: pulse_3_red
-        expression: low
+        label: state_2_reporter_red
+        expression: high
         fused: false
-        chain:
-          - tag: P2A
-          - gene:
-              id: mScarlet
-              source: fpbase
-    - terminator: ADH1
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: rrnB_T1

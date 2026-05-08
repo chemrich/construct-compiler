@@ -1,17 +1,21 @@
 construct:
-  name: "mammalian_secretion_his_tag"
+  name: "mammalian_secreted_protein_His"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # IgG signal peptide for mammalian secretion
           - gene:
-              id: IL6
+              id: null
               source: uniprot
           - tag: 6xHis
-    - terminator: bGH_polyA
+
+    - terminator: polyA

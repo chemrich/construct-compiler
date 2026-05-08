@@ -1,24 +1,46 @@
 construct:
-  name: "therapeutic_ires_dual_t_cell"
-  host: human_t_cell
+  name: "T_cell_dual_therapeutic_IRES"
+  host: HEK293
+
   backbone:
-    resistance: kanamycin # Substitution: Placeholder for cloning; user requested antibiotic-free for clinical use
+    catalog_vector: "pTwist CMV"
+    resistance: null
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha # Human non-viral promoter optimal for sustained expression in T-cells
+    - promoter: CMV
+
     - cistron:
-        label: protein_a
+        label: protein_A
         expression: high
-        gene:
-          id: PROTEIN_A
-          source: uniprot
-    - spacer: 585 # Length allocated for a cellular IRES to facilitate non-viral internal translation initiation
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: protein_A
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: protein_b
+        label: IRES_element
         expression: high
-        fused: false # Indicates independent translation via the IRES element in the spacer
-        gene:
-          id: PROTEIN_B
-          source: uniprot
-    - terminator: bGH_polyA # Standard mammalian polyadenylation signal for transcript stability
+        fused: false
+        chain:
+          - gene:
+              id: EMCV_IRES
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: protein_B
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: protein_B
+              source: uniprot
+
+    - terminator: rrnB_T1

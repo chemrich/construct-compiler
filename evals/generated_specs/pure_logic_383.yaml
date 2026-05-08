@@ -1,30 +1,44 @@
 construct:
-  name: genetic_xor_gate_ara_iptg
-  host: e_coli_bl21
+  name: two_input_XOR_gate
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
-        label: sensor_A_repressor
-        expression: medium
-        gene:
-          id: P0C1V1
-          source: uniprot
-    - terminator: BBa_B0015
-    - promoter: lacUV5
-    - cistron:
-        label: sensor_B_repressor
-        expression: medium
-        gene:
-          id: Q6S388
-          source: uniprot
-    - terminator: BBa_B0015
-    - promoter: J23100
-    - cistron:
-        label: xor_output_reporter
+        label: input_A_sensor
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: input_B_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tet_repressor_TetR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: XOR_output
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+    
     - terminator: rrnB_T1

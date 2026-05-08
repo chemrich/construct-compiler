@@ -1,17 +1,23 @@
 construct:
-  name: "secreted_GrowthFactorZ_production"
+  name: "GrowthFactorZ_secreted_AAV"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: GrowthFactorZ
         expression: high
         chain:
-          - tag: IgK_leader  # Secretion signal peptide for export to media
           - tag: Strep-II
+          - secretion_signal: SP_IgG  # IgG signal peptide for mammalian secretion
           - gene:
               id: GrowthFactorZ
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

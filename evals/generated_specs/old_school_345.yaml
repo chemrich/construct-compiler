@@ -1,17 +1,24 @@
 construct:
-  name: "StickyProtein_GST_Purification"
-  host: e_coli_bl21_de3
+  name: "GST_StickyProtein_expression"
+  host: e_coli_bl21
+
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: GST_StickyProtein
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
+          - cleavage_site: Thrombin
           - gene:
               id: StickyProtein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

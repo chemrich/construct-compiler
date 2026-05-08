@@ -1,107 +1,156 @@
 construct:
-  name: "ProteinP_Divergent_Tag_Library"
-  host: e_coli_bl21_de3
+  name: "ProteinP_tag_library_10variants"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: pP_6xHis
+        label: ProteinP_tag1
         expression: high
-        fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30 # Synonymous diversity requested for DNA sequences to ensure plasmid stability
+        codon_usage: optimized_E_coli
+
+    - terminator: rrnB_T1
+
+  # Library variant 2: same His tag, codon-shuffled
+    - promoter: T7lac
+
     - cistron:
-        label: pP_8xHis
+        label: ProteinP_tag2
         expression: high
-        fused: false
         chain:
-          - tag: 8xHis
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30
+        codon_usage: rare_codons_minimized
+
+    - terminator: rrnB_T1
+
+  # Library variant 3: His tag with synonymous DNA diversity
+    - promoter: T7lac
+
     - cistron:
-        label: pP_StrepII
+        label: ProteinP_tag3
         expression: high
-        fused: false
         chain:
-          - tag: Strep-II
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30
+        codon_usage: balanced_wobble
+
+    - terminator: rrnB_T1
+
+  # Library variant 4: His tag, alternate codon preference
+    - promoter: T7lac
+
     - cistron:
-        label: pP_TwinStrep
+        label: ProteinP_tag4
         expression: high
-        fused: false
         chain:
-          - tag: Twin-Strep
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30
+        codon_usage: gc_optimized
+
+    - terminator: rrnB_T1
+
+  # Library variant 5: His tag with maximum synonymous variation
+    - promoter: T7lac
+
     - cistron:
-        label: pP_FLAG
+        label: ProteinP_tag5
         expression: high
-        fused: false
         chain:
-          - tag: FLAG
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30
+        codon_usage: degenerate_maximum
+
+    - terminator: rrnB_T1
+
+  # Library variant 6: His tag, codon set A
+    - promoter: T7lac
+
     - cistron:
-        label: pP_HA
+        label: ProteinP_tag6
         expression: high
-        fused: false
         chain:
-          - tag: HA
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30
+        codon_usage: wobble_third_position
+
+    - terminator: rrnB_T1
+
+  # Library variant 7: His tag, codon set B
+    - promoter: T7lac
+
     - cistron:
-        label: pP_MBP
+        label: ProteinP_tag7
         expression: high
-        fused: false
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30
+        codon_usage: rare_codon_preference
+
+    - terminator: rrnB_T1
+
+  # Library variant 8: His tag with AT-rich codon bias
+    - promoter: T7lac
+
     - cistron:
-        label: pP_GST
+        label: ProteinP_tag8
         expression: high
-        fused: false
         chain:
-          - solubility_tag: GST
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30
+        codon_usage: at_rich_codons
+
+    - terminator: rrnB_T1
+
+  # Library variant 9: His tag with GC-rich codon bias
+    - promoter: T7lac
+
     - cistron:
-        label: pP_SUMO
+        label: ProteinP_tag9
         expression: high
-        fused: false
         chain:
-          - solubility_tag: SUMO
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - spacer: 30
+        codon_usage: gc_rich_codons
+
+    - terminator: rrnB_T1
+
+  # Library variant 10: His tag with consensus codon usage
+    - promoter: T7lac
+
     - cistron:
-        label: pP_Trx
+        label: ProteinP_tag10
         expression: high
-        fused: false
         chain:
-          - solubility_tag: Trx
+          - tag: 6xHis
           - gene:
               id: ProteinP
               source: uniprot
-    - terminator: T7term
+        codon_usage: consensus_E_coli
+
+    - terminator: rrnB_T1

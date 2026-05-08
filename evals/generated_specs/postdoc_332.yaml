@@ -1,16 +1,23 @@
 construct:
-  name: "prolactin_ss_secreted_peptide"
-  host: e_coli_bl21_de3
+  name: "secreted_peptide_with_HA"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: prolactin_signal_peptide
           - gene:
-              id: P01236 # Using prolactin sequence as requested for its signal peptide; note that mammalian signal peptides may exhibit suboptimal performance in E. coli compared to PelB or OmpA.
+              id: custom_peptide
               source: uniprot
           - tag: HA
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

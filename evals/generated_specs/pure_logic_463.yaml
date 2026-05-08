@@ -1,24 +1,62 @@
 construct:
-  name: "mammalian_egf_oscillator"
+  name: "mammalian_growth_factor_oscillator"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "growth_factor_payload"
-        expression: high
-        chain:
-          - tag: "IgK_leader" # Secretion signal for mammalian export
-          - gene:
-              id: "P01133" # Human Epidermal Growth Factor (EGF)
-              source: uniprot
-    - spacer: 30 # Space for IRES-mediated translation initiation
-    - cistron:
-        label: "oscillator_driver"
+        label: growth_factor
         expression: medium
-        fused: false # Independent translation via internal ribosome entry
-        gene:
-          id: "Q14469" # Human HES1 (canonical mammalian oscillatory protein)
-          source: uniprot
-    - terminator: BGH_polyA
+        chain:
+          - tag: 6xHis
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: P10914
+              source: uniprot
+        # P10914 is PDGF-A, a canonical mammalian growth factor
+
+    - spacer: 25
+
+    - cistron:
+        label: negative_feedback_repressor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P03372
+              source: uniprot
+        # P03372 is a mammalian transcriptional repressor (typical repressor domain)
+
+    - spacer: 25
+
+    - cistron:
+        label: growth_factor_inhibitor
+        expression: medium
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P01130
+              source: uniprot
+        # P01130 is PDGF receptor (acts as decoy/sequestration)
+
+    - spacer: 25
+
+    - cistron:
+        label: timing_controller
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: P24385
+              source: uniprot
+        # P24385 is aryl hydrocarbon receptor nuclear translocator (ARNT) for temporal control
+
+    - terminator: rrnB_T1

@@ -1,17 +1,22 @@
 construct:
-  name: "secreted_mEGFP_hek293"
+  name: "secreted_protein_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: IgK_leader
+          - signal_peptide: IgE  # N-terminal secretion signal for mammalian ER/Golgi trafficking
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_pA
+              id: target_protein
+              source: uniprot
+
+    - terminator: WPRE  # Woodchuck Posttranscriptional Regulatory Element for mammalian expression

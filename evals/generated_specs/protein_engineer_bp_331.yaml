@@ -1,31 +1,44 @@
 construct:
   name: "bacillus_isomerase_groESL_operon"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: chloramphenicol
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
         label: isomerase
         expression: high
+        codon_optimization: bacillus_subtilis
         gene:
-          id: PPIA
+          id: isomerase
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: chaperone_groES
+        label: groES
         expression: high
         fused: false
+        codon_optimization: bacillus_subtilis
+        rbs_strength: strong_synthetic
         gene:
-          id: groS
+          id: groES
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: chaperone_groEL
+        label: groEL
         expression: high
         fused: false
+        codon_optimization: bacillus_subtilis
         gene:
-          id: groL
+          id: groEL
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

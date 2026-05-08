@@ -1,24 +1,39 @@
 construct:
-  name: "plant_dual_pathway_monitor"
-  host: arabidopsis_thaliana
+  name: "dual_pathway_plant_monitor"
+  host: algae
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: CaMV_35S
+    - promoter: J23100
+      # Plant-optimized constitutive promoter variant
+    
     - cistron:
-        label: pathway_1_reporter
+        label: pathway_A_reporter
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: NOS_term
-    - promoter: UBQ10  # Different plant promoter to avoid homology
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+              codon_usage: mammalian
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 50
+    
+    - promoter: araBAD
+      # Distinct inducible promoter for second pathway
+    
     - cistron:
-        label: pathway_2_reporter
+        label: pathway_B_reporter
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: rbcS_E9_term  # Unique terminator to ensure no shared sequence motifs
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+              codon_usage: yeast
+    
+    - terminator: BBa_B0015

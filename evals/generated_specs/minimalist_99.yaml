@@ -1,24 +1,31 @@
 construct:
-  name: "ampicillin_sacB_dual_selection_vector"
+  name: cloning_vector_ampicillin_sacB
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: lacUV5
+
     - cistron:
         label: ampicillin_resistance
-        expression: medium
+        expression: high
         gene:
-          id: P00810
+          id: bla
           source: uniprot
-    - spacer: 35
+
+    - spacer: 30
+
+    - promoter: lacUV5
+
     - cistron:
-        label: counter_selection_marker
-        expression: medium
-        fused: false
+        label: sacB_counter_selection
+        expression: high
         gene:
-          id: P05655
+          id: sacB
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

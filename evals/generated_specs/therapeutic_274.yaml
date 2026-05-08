@@ -1,27 +1,31 @@
 construct:
-  name: "bi_functional_fusion_construct"
-  host: e_coli_bl21
+  name: bifunctional_fusion_protein_expression
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Defaulting to kanamycin as tool requires resistance; user requested no antibiotics
+    resistance: chloramphenicol
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD # Non-viral bacterial inducible promoter
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: bifunctional_fusion
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P01133
+              id: domain_1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: P01375
+              id: domain_2
               source: uniprot
           - cleavage_site: 3C
-          - solubility_tag: MBP
-    - terminator: rrnB_T1 # Bacterial terminator (non-viral)
+          - solubility_tag: SUMO
+
+    - terminator: rrnB_T1

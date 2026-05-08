@@ -1,14 +1,20 @@
 construct:
-  name: "high_yield_t7_expression_system"
+  name: "high_yield_T7_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
         label: target
         expression: high
-        gene:
-          id: GOI
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GOI
+              source: uniprot
+
+    - terminator: rrnB_T1

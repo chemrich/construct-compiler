@@ -1,49 +1,63 @@
 construct:
-  name: "Pseudomonas_putida_pollutant_degradation_operon"
-  host: e_coli  # Pseudomonas putida not in schema; using e_coli as compatible Gram-negative proxy
+  name: "pseudomonas_putida_pollutant_degradation_operon"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter
+    - promoter: J23100
+
     - cistron:
         label: enzyme_1
         expression: high
+        fused: false
         gene:
-          id: P06622
+          id: alkB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_2
         expression: high
         fused: false
         gene:
-          id: P43256
+          id: almA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_3
         expression: high
         fused: false
         chain:
           - gene:
-              id: P43257
+              id: catA
               source: uniprot
           - tag: FLAG
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_4
         expression: high
         fused: false
         gene:
-          id: P43258
+          id: xylE
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_5
         expression: high
         fused: false
         gene:
-          id: P43259
+          id: todC
           source: uniprot
-    - terminator: BBa_B0015  # Strong Rho-independent terminator
+
+    - terminator: rrnB_T1

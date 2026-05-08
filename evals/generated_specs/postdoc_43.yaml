@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: His_tagged_enzyme_yeast
+  name: "His_tagged_enzyme_yeast_stable"
   host: yeast
 
   backbone:
@@ -9,19 +8,19 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: GAL1
 
     - cistron:
-        label: target_enzyme
+        label: enzyme
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
+          - solubility_tag: SUMO
           - gene:
-              id: # Need enzyme ID and source to be specified
+              id: enzyme
               source: uniprot
 
     - terminator: rrnB_T1
-```

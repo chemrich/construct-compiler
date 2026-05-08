@@ -1,28 +1,44 @@
 construct:
-  name: "nand_gate_sfGFP"
-  host: e_coli_bl21_de3
+  name: two_input_NAND_gate
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23106
+    - promoter: araBAD
+    
     - cistron:
-        label: Input_A_sensor
+        label: Input_A_repressor
         expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - promoter: J23106
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 30
+    
     - cistron:
-        label: Input_B_sensor
+        label: Input_B_repressor
         expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - promoter: J23100  # Represents the NAND logic promoter (repressed by both inputs)
+        fused: false
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+    
+    - spacer: 30
+    
     - cistron:
         label: Output_Z
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - terminator: rrnB_T1

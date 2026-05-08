@@ -1,40 +1,73 @@
 construct:
-  name: "bistable_toggle_switch"
+  name: bistable_toggle_switch
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tetO
-    - cistron:
-        label: lacI_repressor
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 30
+    - promoter: lacUV5
+      label: promoter_A
+      # Repressed by LacI (from B), activated by AraC (pulse C1)
+
     - cistron:
         label: output_A
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
-    - promoter: lacUV5
-    - cistron:
-        label: tetR_repressor
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+              # AraC activates pBAD (promoter for B) and is itself regulated by LacI
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: pBAD
+      label: promoter_B
+      # Activated by AraC (from A via C1 pulse), repressed by TetR (from B)
+
     - cistron:
         label: output_B
         expression: high
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+              # TetR represses pTet (promoter for A) and is itself activated by AraC
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: lacUV5
+      label: promoter_C1
+      # Input: pulse C1 to induce AraC production (activate B, repress A)
+
+    - cistron:
+        label: input_C1
+        expression: medium
+        chain:
+          - gene:
+              id: araBAD
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: lacUV5
+      label: promoter_C2
+      # Input: pulse C2 to induce LacI production (activate A, repress B)
+
+    - cistron:
+        label: input_C2
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
     - terminator: rrnB_T1

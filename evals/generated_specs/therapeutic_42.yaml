@@ -1,19 +1,18 @@
-```yaml
 construct:
-  name: therapeutic_proteins_A_B_yeast_coexpression
+  name: "yeast_dual_therapeutic_AB_SUMO_Myc"
   host: yeast
 
   backbone:
     resistance: none
-    ori: ARS_CEN
-    source: yeast_shuttle
+    ori: pRS426
+    source: addgene
 
   cassette:
-    - promoter: ADH1
+    - promoter: GAL1
 
     - cistron:
         label: protein_A
-        expression: medium
+        expression: high
         chain:
           - solubility_tag: SUMO
           - gene:
@@ -24,7 +23,7 @@ construct:
 
     - cistron:
         label: protein_B
-        expression: medium
+        expression: high
         fused: false
         chain:
           - gene:
@@ -32,5 +31,4 @@ construct:
               source: uniprot
           - tag: Myc
 
-    - terminator: ADH1_term
-```
+    - terminator: rrnB_T1

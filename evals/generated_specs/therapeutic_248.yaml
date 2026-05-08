@@ -1,18 +1,32 @@
 construct:
-  name: "secreted_non_immunogenic_reporter_hek293"
+  name: "mammalian_secreted_reporter_minimal_inducible"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: EF1_alpha
+      # Minimal mammalian promoter; stable housekeeping expression
+      # Can be paired with enhancers for tissue-specificity
+
     - cistron:
-        label: SEAP_reporter
+        label: secreted_reporter
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_SP
+            # Mammalian secretion signal (e.g., IgG leader sequence or SP)
           - gene:
-              id: ALPP
-              source: uniprot
-    - terminator: bGH_polyA
+              id: ReporterProteinN
+              # Non-immunogenic secreted alkaline phosphatase or equivalent
+              # User-supplied sequence; sourced externally if needed
+          - linker:
+              type: GS_flexible
+              repeats: 1
+
+    - terminator: SV40_polyA
+      # Mammalian polyadenylation signal (SV40 late polyA)
+      # Enhances mRNA stability and translation efficiency

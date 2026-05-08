@@ -1,18 +1,23 @@
 construct:
-  name: "subtilisin_native_overexpression_bacillus"
+  name: "Bacillus_subtilis_native_subtilisin_His6"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: aprE  # Native subtilisin promoter for Bacillus subtilis
+    - promoter: aprE_native  # Native Bacillus subtilis aprE (alkaline protease/subtilisin) promoter
+
     - cistron:
-        label: subtilisin_E
+        label: subtilisin
         expression: high
         chain:
+          - signal_peptide: aprE_signal  # Native aprE secretion signal for Bacillus
           - gene:
-              id: P00782  # UniProt ID for Bacillus subtilis Subtilisin E (AprE), includes native signal peptide
+              id: aprE
               source: uniprot
-          - tag: 6xHis  # C-terminal His-tag for purification
-    - terminator: BBa_B0015
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

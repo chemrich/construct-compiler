@@ -1,32 +1,61 @@
 construct:
-  name: "sender_receiver_logic_circuit"
-  host: e_coli_bl21
+  name: "E_coli_sender_receiver_communication_system"
+  host: e_coli
+
   backbone:
-    resistance: chloramphenicol
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
-    - cistron:
-        label: quorum_receptor
-        expression: medium
-        gene:
-          id: P12747
-          source: uniprot
-    - terminator: BBa_B0015
+    # SENDER CONSTRUCT
     - promoter: araBAD
+      # Environmental sensor: araBAD responds to arabinose (P_ENV)
+
     - cistron:
-        label: signal_generator
-        expression: high
-        gene:
-          id: P12746
-          source: uniprot
+        label: sender_histidine_kinase
+        expression: medium
+        chain:
+          - gene:
+              id: luxI
+              source: uniprot
+              # LuxI synthase produces the diffusible autoinducer (M_SIGNAL)
+
     - terminator: rrnB_T1
-    - promoter: pLux
+
+    # SPACER between independent expression units
+    - spacer: 30
+
+    # RECEIVER CONSTRUCT
+    - promoter: T7lac
+      # Constitutive/inducible promoter for receiver circuit
+
     - cistron:
-        label: resistance_marker
+        label: receiver_response_regulator
+        expression: medium
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+              # LuxR binds M_SIGNAL (acyl-homoserine lactone)
+
+    - terminator: rrnB_T1
+
+    # SPACER
+    - spacer: 30
+
+    # OUTPUT: Drug resistance marker controlled by LuxR-M_SIGNAL complex
+    - promoter: J23100
+      # Constitutive promoter; ideally should be a Lux-box promoter
+      # Using J23100 as placeholder; in practice use lux-responsive promoter
+
+    - cistron:
+        label: antibiotic_resistance
         expression: high
-        gene:
-          id: P00552
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: kanR
+              source: uniprot
+              # Kanamycin resistance; activated by receiver circuit
+
+    - terminator: rrnB_T1

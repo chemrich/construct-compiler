@@ -1,50 +1,71 @@
 construct:
-  name: "Rhodobacter_isoprenoid_operon"
-  host: e_coli  # Rhodobacter sphaeroides not in schema; using e_coli as bacterial proxy
+  name: "Rhodobacter_sphaeroides_isoprenoid_operon"
+  host: rhodobacter_sphaeroides
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pBBR1
     source: addgene
+    # Integration vector for Rhodobacter chromosome integration via homologous recombination
+
   cassette:
-    - promoter: J23100  # Strong constitutive bacterial promoter
+    - promoter: J23100
+      # Strong constitutive promoter, well-characterized in photosynthetic bacteria
+
     - cistron:
-        label: dxs
+        label: DXS
         expression: high
-        gene:
-          id: Q3J0W5
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: DXS
+              source: uniprot
+              organism: "Rhodobacter sphaeroides"
+
+    - spacer: 25
+      # Optimized RBS + intergenic region for efficient ribosome binding and polycistronic translation
+
     - cistron:
-        label: dxr
-        expression: high
-        fused: false
-        gene:
-          id: Q3IZL5
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: ispD
-        expression: high
-        fused: false
-        gene:
-          id: Q3IYP8
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: ispE
+        label: DXR
         expression: high
         fused: false
         gene:
-          id: Q3IYP7
+          id: DXR
           source: uniprot
-    - spacer: 30
+          organism: "Rhodobacter sphaeroides"
+
+    - spacer: 25
+
     - cistron:
-        label: ispF
+        label: IspD
+        expression: high
+        fused: false
+        gene:
+          id: IspD
+          source: uniprot
+          organism: "Rhodobacter sphaeroides"
+
+    - spacer: 25
+
+    - cistron:
+        label: IspE
+        expression: high
+        fused: false
+        gene:
+          id: IspE
+          source: uniprot
+          organism: "Rhodobacter sphaeroides"
+
+    - spacer: 25
+
+    - cistron:
+        label: IspF
         expression: high
         fused: false
         chain:
-          - solubility_tag: SUMO
+          - tag: SUMO
           - gene:
-              id: Q3IYP6
+              id: IspF
               source: uniprot
+              organism: "Rhodobacter sphaeroides"
+
     - terminator: rrnB_T1

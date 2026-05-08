@@ -1,22 +1,27 @@
 construct:
   name: "plant_transient_therapeutic_expression"
-  host: nicotiana_benthamiana
+  host: algae
+
   backbone:
     resistance: kanamycin
-    ori: pVS1  # pVS1 is the standard binary vector origin for plant transformation
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: CaMV35S  # Strong constitutive plant promoter (Cauliflower Mosaic Virus 35S)
+    - promoter: CaMV_35S
 
     - cistron:
-        label: epo_therapeutic
+        label: therapeutic
         expression: high
         chain:
-          - tag: PR1a_signal_peptide # Tobacco PR1a signal peptide for secretion into the apoplast
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: P01588 # Human Erythropoietin (EPO)
+              id: GH3
               source: uniprot
-          - tag: SEKDEL # C-terminal ER retention signal for high protein accumulation
 
-    - terminator: NOS_term # Nopaline synthase terminator, standard for plant expression systems
+    - terminator: nos_poly_A

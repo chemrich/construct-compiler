@@ -1,72 +1,76 @@
-```yaml
 construct:
-  name: six_enzyme_signaling_cascade
+  name: "synthetic_signaling_cascade_6enzyme_rhamnose_inducible"
   host: e_coli
-
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-
+  
   cassette:
-    - promoter: rhaBAD  # L-Rhamnose inducible for dose-dependent control
-
+    - promoter: rhamnose  # L-rhamnose inducible for dose-dependent control
+    
     - cistron:
-        label: enzyme1
-        expression: very_low
+        label: enzyme_1
+        expression: very_high
+        rbs_strength: strong
         gene:
-          id: P0A6F5  # example enzyme
+          id: histidine_kinase_component
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
-        label: enzyme2
-        expression: low
-        fused: false
-        gene:
-          id: P0A6G7
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: enzyme3
-        expression: medium
-        fused: false
-        gene:
-          id: P0A6H1
-          source: uniprot
-
-    - spacer: 25
-
-    - cistron:
-        label: enzyme4
+        label: enzyme_2
         expression: high
+        rbs_strength: medium_strong
         fused: false
         gene:
-          id: P0A6I3
+          id: response_regulator_component
           source: uniprot
-
-    - spacer: 35
-
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme5
+        label: enzyme_3
         expression: medium
+        rbs_strength: medium
         fused: false
         gene:
-          id: P0A6J5
+          id: phosphatase_component
           source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme6
-        expression: low
+        label: enzyme_4
+        expression: medium
+        rbs_strength: medium_weak
         fused: false
         gene:
-          id: P0A6K7
+          id: kinase_component
           source: uniprot
-
+    
+    - spacer: 25
+    
+    - cistron:
+        label: enzyme_5
+        expression: low
+        rbs_strength: weak
+        fused: false
+        gene:
+          id: protease_component
+          source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: enzyme_6
+        expression: very_low
+        rbs_strength: very_weak
+        fused: false
+        gene:
+          id: output_enzyme_component
+          source: uniprot
+    
     - terminator: rrnB_T1
-```

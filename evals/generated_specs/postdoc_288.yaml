@@ -1,19 +1,24 @@
 construct:
-  name: "mitochondrial_protein_i_yeast_expression"
+  name: "mitochondrial_protein_I_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: protein_I_mitochondrial
         expression: high
         chain:
-          - tag: MTS_Su9
           - tag: HA
+          - mitochondrial_targeting_sequence: cox4_mts
           - gene:
-              id: Protein_I
+              id: protein_I
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1_terminator

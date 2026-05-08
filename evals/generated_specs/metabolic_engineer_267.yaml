@@ -1,49 +1,50 @@
 construct:
-  name: "vitamin_b_precursor_operon"
-  host: e_coli
+  name: "vitamin_B_operon_E_coli"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for high-level expression
+    - promoter: trc  # Strong constitutive promoter for high-level expression
+
     - cistron:
-        label: gtp_cyclohydrolase_i
+        label: gtp_cyclohydrolase_I
         expression: high
         gene:
-          id: "P0A6T5"
-          source: "uniprot"
-    - spacer: 30
+          id: gch1
+          source: uniprot
+
     - cistron:
         label: ptp_synthase
         expression: high
-        fused: false
         gene:
-          id: "P0A9L0"
-          source: "uniprot"
-    - spacer: 30
+          id: ptps
+          source: uniprot
+
     - cistron:
         label: dhna_kinase
         expression: high
-        fused: false
         gene:
-          id: "P0AB89"
-          source: "uniprot"
-    - spacer: 30
+          id: rbsk
+          source: uniprot
+
     - cistron:
         label: lumazine_synthase
         expression: high
-        fused: false
         gene:
-          id: "P0A720"
-          source: "uniprot"
-    - spacer: 30
+          id: ribh
+          source: uniprot
+
     - cistron:
         label: riboflavin_synthase
         expression: high
-        fused: false
         chain:
           - gene:
-              id: "P0A722"
-              source: "uniprot"
+              id: riba
+              source: uniprot
           - tag: 6xHis
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

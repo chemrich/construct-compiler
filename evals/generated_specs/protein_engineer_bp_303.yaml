@@ -1,28 +1,34 @@
 construct:
-  name: "Pichia_IgG_Secretion_PGAP"
+  name: "pichia_antibody_bicistronic_light_heavy"
   host: yeast
+
   backbone:
-    catalog_vector: "pGAPZ_A"
+    resistance: zeocin
+    ori: pPIC9
+    source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: IgG1_LC
+              id: antibody_light_chain
               source: uniprot
-    - terminator: CYC1_term
-    - spacer: 40
-    - promoter: PGAP
+
+    - spacer: 30
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: IgG1_HC
+              id: antibody_heavy_chain
               source: uniprot
           - tag: Strep-II
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

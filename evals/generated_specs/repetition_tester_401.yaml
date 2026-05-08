@@ -1,28 +1,40 @@
 construct:
-  name: "tandem_triple_fp_fusion_unique_dna"
+  name: "HEK293_tricolor_FP_tandem_unique_linkers"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: triple_reporter_fusion
+        label: tricolor_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: mEGFP
               source: fpbase
+              codon_optimization: unique_variant_1
           - linker:
               type: GS_flexible
-              repeats: 3
+              sequence: "GGTGGTGGTGGTGGC"
+              # Custom unique linker 1: divergent GS-rich sequence
           - gene:
               id: mCherry
               source: fpbase
+              codon_optimization: unique_variant_2
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              type: GS_flexible
+              sequence: "GGCGGTGGCGGTGGT"
+              # Custom unique linker 2: distinct permutation
           - gene:
               id: mTagBFP2
               source: fpbase
-        # The compiler will apply unique synonymous codon optimization to each domain to maximize sequence divergence and prevent recombination/deletion.
-    - terminator: hGH_polyA
+              codon_optimization: unique_variant_3
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: "protein_i_his_prep"
-  host: e_coli_bl21
+  name: ProteinI_His_pulldown
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: lacUV5
+    
     - cistron:
-        label: target
+        label: ProteinI
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: ProteinI
+              source: uniprot
+    
     - terminator: rrnB_T1

@@ -1,54 +1,49 @@
-```yaml
 construct:
-  name: cofactor_synthesis_pathway_araBAD
+  name: "arabinose_inducible_4enzyme_cofactor_pathway"
   host: e_coli
-
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-
+  
   cassette:
     - promoter: araBAD
-
+    
     - cistron:
         label: enzyme1
-        expression: medium
+        expression: high
         gene:
-          id: P0A6E4  # folA (dihydrofolate reductase)
+          id: thrA
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
         label: enzyme2
-        expression: medium
-        fused: false
+        expression: high
         gene:
-          id: P0AC13  # folB (dihydroneopterin aldolase)
+          id: thrB
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
         label: enzyme3
-        expression: medium
-        fused: false
+        expression: high
         gene:
-          id: P0AC17  # folK (2-amino-4-hydroxy-6-hydroxymethyldihydropteridine pyrophosphokinase)
+          id: thrC
           source: uniprot
-
+    
     - spacer: 25
-
+    
     - cistron:
         label: enzyme4
-        expression: medium
-        fused: false
+        expression: high
         chain:
           - gene:
-              id: P0AC19  # folP (dihydropteroate synthase)
+              id: thrD
               source: uniprot
-          - tag: LVA
-
+          - degradation_tag: LVA  # C-terminal LVA tag for rapid turnover
+    
     - terminator: rrnB_T1
-```

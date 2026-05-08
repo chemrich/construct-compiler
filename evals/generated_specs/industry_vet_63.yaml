@@ -1,17 +1,23 @@
 construct:
-  name: gst_tev_solubility_fusion
+  name: "high_yield_GST_fusion_expression"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: uniprot_placeholder
+              source: uniprot
+    
+    - terminator: rrnB_T1

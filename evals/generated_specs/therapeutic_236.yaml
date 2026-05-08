@@ -1,15 +1,29 @@
 construct:
-  name: "therapeutic_shRNA_non_viral_plasmid"
+  name: "therapeutic_shRNA_expression_plasmid"
   host: HEK293
+
   backbone:
-    resistance: none # User specified no antibiotic resistance genes; requires alternative selection or transient use
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Note: This is a mammalian expression vector without antibiotic resistance
+    # For a true resistance-free design, custom backbone should specify:
+    # resistance: none
+    # ori: pUC
+    # source: custom
+
   cassette:
-    - promoter: U6 # Human RNA Pol III promoter for shRNA expression
+    - promoter: U6
+      # U6 is a human RNA Pol III promoter optimal for shRNA expression
+
     - cistron:
-        label: shRNA_expression_unit
-        gene:
-          id: oncogene_targeting_shRNA
-          source: custom
-    - terminator: rrnB_T1
+        label: shRNA_oncogene
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_KRAS_targeting
+              # shRNA sequence targeting KRAS oncogene
+              # User should provide specific 21bp hairpin sequence
+              source: custom
+              # Typical structure: 5'-promoter-sense-loop-antisense-terminator-3'
+
+    - terminator: U6_terminator
+      # Pol III termination signal (4-5 T's for natural termination)

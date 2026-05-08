@@ -1,17 +1,48 @@
 construct:
-  name: "yeast_metabolic_flux_switch_ERG10"
+  name: "yeast_metabolic_flux_switch"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS406"  # Integrative yeast vector for stable genomic expression
+    resistance: nourseothricin
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: GAL1  # Galactose-inducible switch for metabolic control
+    - promoter: GAL1
+
     - cistron:
-        label: metabolic_enzyme
+        label: sensor_regulator
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q06278
+              source: uniprot
+        # Binds small molecule ligand and undergoes conformational change
+
+    - spacer: 30
+
+    - cistron:
+        label: pathway_enzyme
         expression: high
         chain:
           - tag: FLAG
+          - cleavage_site: TEV
           - gene:
-              id: P07146  # Saccharomyces cerevisiae ERG10 (Acetoacetyl-CoA thiolase)
+              id: P09622
               source: uniprot
-    - terminator: CYC1_term
+        # Target biosynthetic enzyme; activity modulated by sensor-ligand complex
+
+    - spacer: 30
+
+    - cistron:
+        label: destabilizing_tag
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: degron_CLN2
+              source: uniprot
+        # Degron for ligand-dependent proteolysis; stabilized when sensor binds ligand
+
+    - terminator: CYC1

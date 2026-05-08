@@ -1,10 +1,11 @@
-```yaml
 construct:
-  name: dual_payload_coexpression
-  host: e_coli_bl21_de3
+  name: "dual_protein_payload_ecoli"
+  host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
@@ -15,20 +16,19 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A6X3  # Example payload - replace with actual protein
-              source: uniprot
+              id: mEGFP
+              source: fpbase
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: payload_2
         expression: high
-        fused: false  # Independent translation - gets own RBS
+        fused: false
         chain:
-          - tag: Strep-II
+          - tag: 6xHis
           - gene:
-              id: P0A6Y2  # Example payload - replace with actual protein
-              source: uniprot
+              id: mScarlet
+              source: fpbase
 
     - terminator: rrnB_T1
-```

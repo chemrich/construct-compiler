@@ -1,48 +1,48 @@
-```yaml
 construct:
-  name: mammalian_cascade_amplifier
+  name: mammalian_cascade_amplifier_P_to_Q
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
-    - promoter: CMV  # Initial weak promoter for input P
+    - promoter: CMV
 
     - cistron:
-        label: stage1_transcription_factor
+        label: stage1_intermediate
         expression: medium
         chain:
           - tag: FLAG
+          - cleavage_site: 3C
           - gene:
-              id: Gal4-VP64  # Transcriptional activator
+              id: VP16_activation_domain
               source: uniprot
+        fused: false
 
-    - terminator: rrnB_T1
-
-    - promoter: UAS  # Gal4 responsive promoter - amplifies stage 1 signal
+    - spacer: 25
 
     - cistron:
-        label: stage2_transcription_factor  
+        label: stage2_intermediate
         expression: high
         chain:
           - tag: HA
+          - cleavage_site: 3C
           - gene:
-              id: dCas9-VPR  # Strong transcriptional activator
+              id: synthetic_transactivator
               source: uniprot
+        fused: false
 
-    - terminator: rrnB_T1
-
-    - promoter: dCas9_target  # Multiple gRNA target sites - strong amplification
+    - spacer: 25
 
     - cistron:
-        label: final_output_Q
-        expression: high
+        label: stage3_output_Q
+        expression: very_high
         chain:
-          - tag: 6xHis
+          - tag: Strep-II
+          - cleavage_site: TEV
           - gene:
-              id: mNeonGreen  # Bright fluorescent readout
+              id: mScarlet
               source: fpbase
+        fused: false
 
     - terminator: rrnB_T1
-```

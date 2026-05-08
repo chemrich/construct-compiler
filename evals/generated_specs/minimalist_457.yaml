@@ -1,14 +1,20 @@
 construct:
-  name: "High_Expression_ProteinT_Mammalian"
+  name: "ProteinT_mammalian_high_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_t
+        label: ProteinT
         expression: high
-        gene:
-          id: ProteinT
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinT
+              source: uniprot
+
+    - terminator: rrnB_T1

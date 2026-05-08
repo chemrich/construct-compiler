@@ -1,16 +1,22 @@
 construct:
-  name: "mammalian_firefly_luciferase_reporter"
+  name: mammalian_firefly_luciferase_reporter
   host: HEK293
+
   backbone:
-    resistance: dhfr
-    ori: pUC
-    source: custom
+    resistance: DHFR
+    ori: SV40
+    source: addgene
+
   cassette:
-    - promoter: CMV  # Placeholder for user-defined cloning site/promoter
+    - promoter_cloning_site: MCS  # User-provided promoter sequence to be inserted here
+
     - cistron:
-        label: reporter
+        label: luciferase
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: SV40_polyA
+        chain:
+          - kozak_sequence: GCCRCCATGG
+          - gene:
+              id: firefly_luciferase
+              source: uniprot
+
+    - polya_signal: SV40

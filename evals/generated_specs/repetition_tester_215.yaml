@@ -1,38 +1,50 @@
 construct:
-  name: triple_secreted_diversified_expression
-  host: e_coli_bl21_de3
+  name: "E_coli_triple_secreted_diverse_expression"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7
+    - promoter: T7lac
+
     - cistron:
-        label: component_x
+        label: SecretedProteinX
         expression: high
         chain:
-          - tag: pelB
+          - signal_peptide: PelB
           - gene:
-              id: SecretedProteinX
-              source: uniprot
-    - terminator: T7term
-    - promoter: araBAD
-    - cistron:
-        label: component_y
-        expression: high
-        chain:
-          - tag: ompA
-          - gene:
-              id: SecretedPeptideY
-              source: uniprot
+              id: SecretedProteinX_syn_v1
+              source: custom
+
     - terminator: rrnB_T1
+
+  cassette:
     - promoter: tac
+
     - cistron:
-        label: component_z
+        label: SecretedPeptideY
         expression: high
         chain:
-          - tag: DsbA
+          - signal_peptide: OmpA
           - gene:
-              id: SecretedEnzymeZ
-              source: uniprot
-    - terminator: lambda_t0
+              id: SecretedPeptideY_syn_v2
+              source: custom
+
+    - terminator: T7term
+
+  cassette:
+    - promoter: araBAD
+
+    - cistron:
+        label: SecretedEnzymeZ
+        expression: high
+        chain:
+          - signal_peptide: MalE
+          - gene:
+              id: SecretedEnzymeZ_syn_v3
+              source: custom
+
+    - terminator: BBa_B0015

@@ -1,28 +1,27 @@
-```yaml
 construct:
-  name: "stabilized_kinase_secretion_pichia"
+  name: "pichia_secreted_GST_kinase_myc"
   host: yeast
-
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-
+  
   cassette:
     - promoter: TEF1
-
+    
     - cistron:
-        label: target_kinase
-        expression: medium
+        label: secreted_kinase
+        expression: high
+        codon_optimization: pichia_pastoris
         chain:
           - secretion_signal: Ost1_alpha_factor
           - tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: your_kinase_id  # Replace with actual kinase UniProt ID
+              id: kinase
               source: uniprot
-              codon_optimize: P_pastoris
+              note: "aggregation-prone kinase - user-specified sequence"
           - tag: Myc
-
+    
     - terminator: rrnB_T1
-```

@@ -1,27 +1,34 @@
 construct:
-  name: "non_homologous_dual_expression_ProteinA_ProteinB"
+  name: "ProteinA_StrepTag_ProteinB_FlagTag_coexpression"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_a_cistron
+        label: ProteinA_with_C_terminal_Strep
         expression: high
         chain:
           - gene:
               id: ProteinA
               source: uniprot
           - tag: Strep-II
-    - spacer: 40
-    - promoter: tac # Using a non-homologous promoter to satisfy the recombination constraint
+
+    - spacer: 35
+
     - cistron:
-        label: protein_b_cistron
+        label: ProteinB_with_N_terminal_Flag
         expression: high
-        fused: false # Ensures independent translation with its own RBS
+        fused: false
         chain:
           - tag: FLAG
           - gene:
               id: ProteinB
               source: uniprot
+
     - terminator: rrnB_T1

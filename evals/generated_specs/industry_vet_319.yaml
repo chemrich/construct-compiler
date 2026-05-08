@@ -1,14 +1,24 @@
 construct:
-  name: "mammalian_cell_specific_luciferase_reporter"
+  name: mammalian_promoter_characterization_luciferase
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Cell_Specific_Promoter
+    - promoter: CMV
+      # User's custom promoter would replace CMV in actual implementation
+      # This is a placeholder for "cell-specific promoter" evaluation
+
     - cistron:
-        label: reporter
+        label: luciferase_reporter
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: Renilla_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

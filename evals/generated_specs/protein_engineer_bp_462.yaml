@@ -1,16 +1,25 @@
 construct:
-  name: "intracellular_cellulase_sumo_pichia"
+  name: "Pichia_cellulase_SUMO_cytosolic"
   host: yeast
+
   backbone:
-    catalog_vector: "pGAPZ"
+    resistance: zeocin
+    ori: 2_micron
+    source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: cellulase_target
+        label: cellulase_SUMO
         expression: high
         chain:
-          - solubility_tag: SUMO
+          - tag: SUMO
+          - cleavage_site: 3C
           - gene:
-              id: Cel7A
+              id: cellulase
               source: uniprot
-    - terminator: CYC1_term
+              codon_optimized: true
+              organism: pichia_pastoris
+
+    - terminator: CYC1_TT

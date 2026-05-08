@@ -1,27 +1,48 @@
 construct:
-  name: "tandem_domainD_extreme_diversity_mammalian"
+  name: "DomainD_tandem_triplicate_diverse"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: tandem_domainD_fusion
+        label: DomainD_copy1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: DomainD
+              source: uniprot
+              codon_optimization: high_diversity_v1
+              rare_cutters: SfiI_upstream
+
+    - spacer: 25
+
+    - cistron:
+        label: DomainD_copy2
         expression: high
         chain:
           - gene:
               id: DomainD
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+              codon_optimization: high_diversity_v2
+              rare_cutters: BsaI_upstream
+
+    - spacer: 25
+
+    - cistron:
+        label: DomainD_copy3
+        expression: high
+        fused: false
+        chain:
           - gene:
               id: DomainD
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: DomainD
-              source: uniprot
-    - terminator: hGH_polyA  # Distinct poly-A signal for mammalian stability and diversity from bGH/SV40 standard tails
+              codon_optimization: high_diversity_v3
+              rare_cutters: BbsI_upstream
+
+    - terminator: synthetic_polyA_variant_HEK_custom

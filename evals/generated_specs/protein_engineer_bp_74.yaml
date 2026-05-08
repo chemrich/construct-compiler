@@ -1,19 +1,23 @@
 construct:
-  name: "Pichia_PGAP_Xylanase_Secretion_10xHis"
-  host: pichia_pastoris
+  name: Pichia_xylanase_secretion_PGAP
+  host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: ampicillin
     ori: pBR322
-    source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
-        label: xylanase_target
+        label: xylanase
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: P40943
+              id: xylanase
               source: uniprot
           - tag: 10xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

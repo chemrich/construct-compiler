@@ -1,29 +1,42 @@
 construct:
-  name: "non_homologous_lbd_activator_biosensor"
+  name: "bacterial_biosensor_ligand_activated_GFP"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: sensor_fusion
-        expression: medium
+        label: biosensor_fusion
+        expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P12746
+              id: LBD_synthetic
               source: uniprot
           - linker:
-              type: rigid_EAAAK
-              repeats: 5
+              type: GS_flexible
+              repeats: 4
           - gene:
-              id: P04150
+              id: TranscriptionalActivator_synthetic
               source: uniprot
-    - spacer: 45
+
+    - terminator: rrnB_T1
+
+    - promoter: J23100
+      # Custom operator sequence upstream for ligand-responsive activation
+      # Operator: synthetic, non-homologous DNA to prevent recombination
+
     - cistron:
         label: reporter
-        expression: high
-        fused: false
+        expression: medium
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
-    - terminator: rrnB_T1
+
+    - terminator: T7term

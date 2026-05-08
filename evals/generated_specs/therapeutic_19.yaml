@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: "therapeutic_protein_gut_secretion"
+  name: therapeutic_protein_secreted_commensal
   host: e_coli
 
   backbone:
@@ -9,16 +8,16 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: J23106  # Constitutive, moderate strength
+    - promoter: lacUV5
 
     - cistron:
         label: therapeutic
-        expression: medium
+        expression: low
         chain:
-          - secretion_signal: pelB  # Bacterial periplasmic secretion
+          - tag: 6xHis
+          - secretion_signal: pelB
           - gene:
-            id: P01308  # Human insulin as example therapeutic
-            source: uniprot
+              id: lysozyme
+              source: uniprot
 
     - terminator: rrnB_T1
-```

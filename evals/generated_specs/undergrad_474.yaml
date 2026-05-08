@@ -1,17 +1,21 @@
 construct:
-  name: "FragileProt_PEST_Fast_Turnover"
+  name: "FragileProt_PEST_degradation"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: FragileProt
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: FragileProt
-          - linker:
-              type: short_GS
-          - tag: PEST
-    - terminator: hGH_pA
+              source: uniprot
+          - degron: PEST
+
+    - terminator: rrnB_T1

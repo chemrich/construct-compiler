@@ -1,18 +1,24 @@
 construct:
-  name: "pFLD1_Ost1_target_secretion_Pichia"
+  name: pFLD1_secreted_enzyme_his
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pPICZ-A"
+    resistance: zeocin
+    ori: ARS4
     source: addgene
+
   cassette:
     - promoter: pFLD1
+
     - cistron:
-        label: target_enzyme_secretion
+        label: secreted_target
         expression: high
         chain:
-          - tag: Ost1
+          - secretion_signal: Ost1
           - gene:
               id: target_enzyme
+              source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

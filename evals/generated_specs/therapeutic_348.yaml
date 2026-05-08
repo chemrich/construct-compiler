@@ -1,18 +1,24 @@
 construct:
-  name: "nonviral_therapeutic_glycoprotein_cho"
+  name: "CHO_therapeutic_glycoprotein_secretion"
   host: CHO
+
   backbone:
-    resistance: none  # User requested free from antibiotic resistance markers
+    catalog_vector: "pTwist CMV"
+    # Non-viral backbone; antibiotic resistance removed via custom specification
+    resistance: none
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral, mammalian constitutive promoter
+    - promoter: EF1_alpha
+
     - cistron:
         label: therapeutic_glycoprotein
         expression: high
         chain:
-          - tag: IgK_leader  # Signal peptide for secretion in CHO cells
+          - tag: SP_alpha_factor  # mammalian secretion signal peptide for CHO cells
           - gene:
-              id: P01588  # Human Erythropoietin (EPO) UniProt ID as a model therapeutic glycoprotein
+              id: human_IgG1_Fc
               source: uniprot
-    - terminator: bGH_pA  # Non-viral, mammalian polyadenylation signal
+
+    - terminator: SV40_polyA  # mammalian polyadenylation signal

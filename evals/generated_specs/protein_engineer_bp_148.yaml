@@ -1,22 +1,26 @@
 construct:
-  name: "FLD1_HSA_IL2_Pichia_Secretion"
+  name: "Pichia_FLD1_alphafactor_cytokine_HSA"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    resistance: zeocin
+    ori: ARS
+    source: pichia_expression_vector
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: stabilized_cytokine
+        label: secreted_cytokine_HSA
         expression: high
         chain:
-          - tag: alpha_factor
-          - solubility_tag: HSA
+          - secretion_signal: alpha_factor_prepro
+          - gene:
+              id: cytokine
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
-          - gene:
-              id: P60568
-              source: uniprot
-    - terminator: AOX1
+          - solubility_tag: HSA_domain
+
+    - terminator: rrnB_T1

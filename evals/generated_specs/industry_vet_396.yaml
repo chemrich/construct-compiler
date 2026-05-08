@@ -1,16 +1,24 @@
 construct:
-  name: "mammalian_aav_like_transgene_expression"
+  name: "mammalian_transgene_expression_cassette"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: transgene_expression
+        label: transgene
         expression: high
         chain:
           - gene:
               id: transgene
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: HA
-    - terminator: bgh_pA
+
+    - terminator: BGH_polyA

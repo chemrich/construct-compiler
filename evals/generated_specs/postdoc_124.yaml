@@ -1,22 +1,30 @@
 construct:
-  name: "yeast_two_hybrid_inducible_reporter_activator"
+  name: "yeast_two_hybrid_reporter_activator"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+    
     - cistron:
-        label: "ReporterA"
+        label: ReporterA
         expression: high
         gene:
-          id: "ReporterA"
+          id: ReporterA
+          source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: "ActivatorB"
+        label: ActivatorB
         expression: high
         fused: false
         gene:
-          id: "ActivatorB"
-    - terminator: CYC1
+          id: ActivatorB
+          source: uniprot
+
+    - terminator: rrnB_T1

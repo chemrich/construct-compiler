@@ -1,32 +1,58 @@
 construct:
-  name: "transcriptional_and_gate_split_t7"
+  name: "transcriptional_AND_gate"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+      # InputA: arabinose-inducible promoter (arabinose required)
+
     - cistron:
-        label: input_a_component
-        expression: medium
-        gene:
-          id: T7RNAP_N
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: lacUV5
-    - cistron:
-        label: input_b_component
-        expression: medium
-        gene:
-          id: T7RNAP_C
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7
-    - cistron:
-        label: output_reporter
+        label: InputA_TF
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+              # araC protein acts as transcriptional factor
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: lacUV5
+      # InputB: IPTG-inducible promoter (IPTG required)
+
+    - cistron:
+        label: InputB_TF
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+              # lacI repressor protein acts as transcriptional factor
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: J23100
+      # OutputReporter: constitutive promoter controlling output
+      # This promoter is positioned downstream and regulated by both InputA and InputB
+      # Design intent: araC (InputA) and lacI (InputB) are wired to control this promoter
+      # In practice, the promoter region would contain araC and lacI operator sites
+
+    - cistron:
+        label: OutputReporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,20 +1,23 @@
 construct:
-  name: toxin_A_low_noise
+  name: "E_coli_ToxinA_low_noise"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: p15A
+    source: addgene
 
   cassette:
-    - promoter: J23106  # Low-strength constitutive promoter for minimal noise
-    
+    - promoter: lacUV5
+
     - cistron:
-        label: toxin_A
-        expression: very_low  # Minimize expression for toxicity concerns
+        label: ToxinA
+        expression: very_low
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P16562  # Clostridium difficile Toxin A
+              id: ToxinA
               source: uniprot
-    
+
     - terminator: rrnB_T1

@@ -1,19 +1,22 @@
 construct:
-  name: "inducible_drug_synthesis_operon"
+  name: "inducible_KLMN_drug_synthesis_operon"
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: enzyme_K
         expression: medium
         gene:
           id: enzyme_K
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_L
         expression: medium
@@ -21,7 +24,9 @@ construct:
         gene:
           id: enzyme_L
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_M
         expression: medium
@@ -29,9 +34,11 @@ construct:
         gene:
           id: enzyme_M
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_N_GFP_fusion
+        label: enzyme_N_GFP
         expression: medium
         fused: false
         chain:
@@ -40,8 +47,10 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: sfGFP
-              source: fpbase
+              repeats: 1
+          - tag: GFP
+            location: c_terminus
+            id: mEGFP
+            source: fpbase
+
     - terminator: rrnB_T1

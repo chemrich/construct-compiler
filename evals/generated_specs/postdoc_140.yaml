@@ -1,17 +1,22 @@
 construct:
-  name: "mEGFP_secretion_E_coli"
-  host: e_coli
+  name: "E_coli_GFP_secretion"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100  # CMV is a mammalian promoter; substituted with strong constitutive E. coli promoter J23100 as requested.
+    - promoter: lacUV5
+    
     - cistron:
-        label: target
+        label: secreted_GFP
         expression: high
         chain:
-          - tag: PelB  # Signal peptide for periplasmic secretion in E. coli
+          - tag: OmpA_signal_peptide
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
+    
     - terminator: rrnB_T1

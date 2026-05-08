@@ -1,20 +1,32 @@
 construct:
-  name: "cmv_bicistronic_ires_reporter"
+  name: dual_expression_CMV_IRES_GFP
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
-        gene:
-          id: P04406
-          source: uniprot
-    - spacer: 500 # Spacer acts as an IRES for independent translation of the second cistron
+        label: main_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: example_protein
+              source: uniprot
+
+    # IRES enables cap-independent translation of downstream gene
+    - spacer: 50
+
     - cistron:
-        label: reporter
+        label: GFP_reporter
+        expression: medium
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

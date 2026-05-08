@@ -1,25 +1,39 @@
 construct:
-  name: "inducible_therapeutic_HEK293_design"
+  name: "chemically_inducible_therapeutic_mammalian"
   host: HEK293
+
   backbone:
-    # ARG-free requirement: kanamycin used for cloning/amplification; backbone is non-viral
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
         label: activator
-        expression: medium
-        gene:
-          id: rtTA3
-    - terminator: SV40_pA
-    - spacer: 100
-    - promoter: TRE3G
-    - cistron:
-        label: therapeutic_payload
         expression: high
-        gene:
-          id: P60568
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: FLAG
+          - gene:
+              id: rtTA3
+              source: uniprot
+        # rtTA3 is the reverse tetracycline transactivator (tTA variant)
+        # responds to doxycycline/anhydrotetracycline for inducible control
+
+    - spacer: 30
+
+    - cistron:
+        label: therapeutic_protein
+        expression: medium
+        fused: false
+        # This cistron uses its own promoter (tetracycline-responsive element, TRE)
+        # In practice, the TRE promoter should be placed before this cistron
+        # For this schema, we note that rtTA3 binds TRE sequences upstream
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: IL12B
+              source: uniprot
+        # IL12B (IL-12 p40 subunit) as example therapeutic protein
+
+    - terminator: rrnB_T1

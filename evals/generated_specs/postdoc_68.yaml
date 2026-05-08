@@ -1,18 +1,22 @@
 construct:
-  name: "MyYeastEnzyme_Constitutive_Yeast_Expression"
+  name: "MyYeastEnzyme_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: kanMX
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: TEF1 # Strong constitutive promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
         label: target
-        expression: high # Note: Using yeast-optimized consensus initiation (AAAAAAATGT) instead of mammalian Kozak (GCCRCCATGG) for S. cerevisiae host
+        expression: high
         chain:
           - gene:
               id: MyYeastEnzyme
               source: uniprot
           - tag: 6xHis
+
     - terminator: CYC1

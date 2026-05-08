@@ -1,16 +1,30 @@
 construct:
-  name: "CAR_TargetY_NonViral_Tcell"
-  host: mammalian
+  name: CAR_TargetY_transient_T_cell
+  host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic resistance; typically used for minicircle or specialized non-viral vectors
+    # Non-viral backbone for mammalian transient expression
+    # No antibiotic resistance; selection via post-transfection sorting
     ori: pUC
-    source: custom
+    source: synthetic
+
   cassette:
-    - promoter: EF1_alpha # T-cell specific/high expression mammalian promoter, non-viral
+    - promoter: EF1_alpha
+      # EF1α provides strong, constitutive expression in T cells
+      # Non-viral, minimizes immunogenicity compared to CMV
+
     - cistron:
         label: CAR_TargetY
         expression: high
-        gene:
-          id: CAR_TargetY
-          source: uniprot
-    - terminator: bGH_polyA # Bovine growth hormone polyadenylation signal, non-viral mammalian terminator
+        chain:
+          - linker:
+              type: Kozak
+              # Kozak sequence ensures efficient translation initiation in mammalian cells
+          - gene:
+              id: CAR_TargetY
+              # User-defined CAR construct; compiler will handle sequence resolution
+              source: uniprot
+
+    - terminator: polyA_BGH
+      # BGH polyadenylation signal; standard for mammalian transient expression
+      # Enhances mRNA stability and translation efficiency

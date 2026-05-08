@@ -1,22 +1,33 @@
 construct:
-  name: "aav_rep_cap_ires_expression_system"
+  name: Rep_Cap_mammalian_IRES
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: rep_protein
+        label: Rep
         expression: high
-        gene:
-          id: P03134
-          source: uniprot
-    - spacer: 500
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Rep
+              source: uniprot
+
+    - spacer: 27
+      # IRES (Internal Ribosome Entry Site) inserted here for cap-independent translation
+
     - cistron:
-        label: cap_protein
-        expression: medium
+        label: Cap
+        expression: high
         fused: false
-        gene:
-          id: P04133
-          source: uniprot
-    - terminator: SV40_pA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Cap
+              source: uniprot
+
+    - terminator: rrnB_T1

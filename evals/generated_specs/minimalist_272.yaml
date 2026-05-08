@@ -1,21 +1,24 @@
 construct:
-  name: "protein_aggregator_x_solubilized"
-  host: e_coli_bl21_de3
+  name: "Protein_Aggregator_X_soluble"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: aggregator_x
         expression: medium
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: SUMO
           - gene:
-              id: protein_aggregator_x
+              id: aggregator_x
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

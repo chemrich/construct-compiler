@@ -1,55 +1,73 @@
 construct:
-  name: "pseudomonas_aromatic_degradation_operon"
-  host: e_coli  # Pseudomonas putida not in specific list; e_coli used as a compatible proteobacterial surrogate
+  name: "Pseudomonas_putida_aromatic_degradation_operon"
+  host: pseudomonas_putida
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: gentamicin
+    ori: pBBR1
+    source: addgene
+
   cassette:
-    - promoter: Pm  # XylS-inducible strong promoter from the P. putida TOL plasmid pathway
+    - promoter: Psal  # Salicylate-inducible promoter from P. putida; strong and substrate-responsive
+
     - cistron:
-        label: nahAa
-        expression: high
+        label: D1
+        expression: very_high
         gene:
-          id: P0A110
+          id: salA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahAb
-        expression: high
-        fused: false
-        gene:
-          id: P0A111
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: nahAc
+        label: D2
         expression: high
         fused: false
         gene:
-          id: P0A112
+          id: salB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahAd
+        label: D3
         expression: high
         fused: false
         gene:
-          id: P0A113
+          id: salC
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahB
+        label: D4
         expression: medium
         fused: false
         gene:
-          id: P0A114
+          id: salD
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: nahC
+        label: D5
         expression: medium
         fused: false
         gene:
-          id: P0A115
+          id: salE
           source: uniprot
-    - terminator: rrnB_T1
+
+    - spacer: 25
+
+    - cistron:
+        label: D6
+        expression: medium
+        fused: false
+        linker:
+          type: GS_flexible
+          repeats: 1
+        gene:
+          id: salF
+          source: uniprot
+
+    - terminator: rrnB_T2  # Strong Pseudomonas-compatible terminator

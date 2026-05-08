@@ -1,13 +1,19 @@
 construct:
-  name: "mammalian_actin_gfp_reporter"
-  host: mammalian
+  name: "mammalian_actin_GFP_reporter"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    # Using catalog vector as base; actin promoter will replace CMV in cassette
+
   cassette:
-    - promoter: ACTB
+    - promoter: actin  # Constitutive mammalian promoter (minimal actin)
+
     - cistron:
-        label: reporter
+        label: GFP
+        expression: high
         gene:
-          id: mEGFP
+          id: sfGFP
           source: fpbase
-    - terminator: SV40_polyA
+
+    - terminator: polyA  # polyA tail for mRNA stability and export

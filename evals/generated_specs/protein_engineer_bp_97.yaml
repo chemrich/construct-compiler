@@ -1,19 +1,25 @@
 construct:
-  name: Bacillus_licheniformis_esterase_expression
+  name: "Bacillus_licheniformis_esterase_Pgrac100_Trx"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
-    source: custom
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pgrac100
+
+    - rbs: RBS_B0034  # optimal RBS for Bacillus
+
     - cistron:
-        label: target_esterase
+        label: esterase
         expression: high
         chain:
-          - solubility_tag: Trx
+          - tag: Trx
           - cleavage_site: Thrombin
           - gene:
-              id: esterase
+              id: esterase_BL
               source: uniprot
+
     - terminator: rrnB_T1

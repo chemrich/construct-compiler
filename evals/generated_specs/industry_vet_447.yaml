@@ -1,19 +1,24 @@
 construct:
-  name: "HEK293_TetOn3G_Inducible_Caspase3"
+  name: "inducible_cytotoxic_protein_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G  # High-tightness 3rd generation Tet-Responsive Element to minimize basal toxicity
+    - promoter: TRE3G
+      # TRE3G: tetracycline response element for tight, doxycycline-inducible control
+
     - cistron:
-        label: cytotoxic_effector
+        label: cytotoxic_target
         expression: high
         chain:
-          - tag: FLAG
-          - linker:
-              type: short_GS
-              repeats: 1
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P42574  # Human Caspase-3 (UniProt)
+              id: caspase_3
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40_pA
+      # Mammalian polyadenylation signal for stable expression

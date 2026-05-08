@@ -1,16 +1,24 @@
 construct:
-  name: "yeast_ura3_knockout_cassette"
+  name: "yeast_URA3_knockout_cassette"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - homology_arm_5prime: "500bp_upstream_of_target_locus"
+
+    - promoter: GAL1
+
     - cistron:
         label: selection_marker
-        expression: medium
+        expression: high
         gene:
           id: URA3
           source: uniprot
-    - terminator: CYC1_term # Standard yeast terminator for expression cassettes
+
+    - terminator: CYC1
+
+    - homology_arm_3prime: "500bp_downstream_of_target_locus"

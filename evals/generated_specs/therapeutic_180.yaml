@@ -1,19 +1,26 @@
 construct:
-  name: "human_enzyme_x_therapeutic_production"
+  name: "ERT_EnzymeX_secretion_purification"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_x_expression
+        label: EnzymeX_therapeutic
         expression: high
         chain:
-          - tag: PelB
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: EnzymeX
+              id: P12345
               source: uniprot
-    - terminator: T7term
+        secretion_signal: pelB
+
+    - terminator: rrnB_T1

@@ -1,15 +1,18 @@
 construct:
-  name: "sgRNA_expression_coli"
+  name: "sgRNA_CRISPR_expression"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
-    - cistron:
-        label: sgRNA_target
-        expression: high
-        # Note: cistron used to define the template for non-coding sgRNA expression
-        gene:
-          id: sgRNA_spacer_scaffold
+    - promoter: T7
+    
+    - rna:
+        label: sgRNA
+        type: CRISPR_guide
+        sequence: "GGUUUUCCGUUCUGCGCCUGUUU"
+    
     - terminator: rrnB_T1

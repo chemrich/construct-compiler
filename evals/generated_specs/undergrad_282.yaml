@@ -1,25 +1,33 @@
 construct:
-  name: HEK293_therapeutic_selection_construct
+  name: HEK293_therapeutic_with_selection
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: puromycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P60568
+              id: therapeutic_protein
               source: uniprot
-    - spacer: 50
+
+    - spacer: 30
+
+    - promoter: SV40
+
     - cistron:
         label: selection_marker
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: P13249
+          id: PuroR
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40_polyA

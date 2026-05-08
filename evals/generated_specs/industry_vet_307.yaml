@@ -1,16 +1,24 @@
 construct:
-  name: "aav_optimized_mammalian_expression"
+  name: "AAV_mammalian_transgene_HIS"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP # mEGFP used as placeholder for requested protein
-              source: fpbase
-    - terminator: bGH_polyA_terminator # Standard strong mammalian terminator for high expression
+              id: transgene
+              source: user_provided
+              codon_optimization: human
+
+    - terminator: rrnB_T1

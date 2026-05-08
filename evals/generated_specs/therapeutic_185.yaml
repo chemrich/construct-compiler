@@ -1,23 +1,32 @@
 construct:
-  name: "Cas9_sgRNA_GeneZ_Mammalian"
+  name: "Cas9_sgRNA_GeneZ_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cas9_expression
+        label: Cas9_nuclear
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-          - tag: NLS
-    - terminator: BGH_pA
+
+    - terminator: bGH_polyA
+
+    - spacer: 50
+
     - promoter: U6
-    - cistron:
-        label: sgRNA_GeneZ
-        gene:
-          id: sgRNA_GeneZ
-    - terminator: polyT
+
+    - gene:
+        id: sgRNA_GeneZ
+        source: synthetic
+        description: "U6-driven sgRNA targeting GeneZ"
+
+    - terminator: U6_terminator

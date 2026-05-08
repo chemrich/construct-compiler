@@ -1,27 +1,31 @@
 construct:
-  name: "triple_epitope_tagged_expression_system"
-  host: e_coli_bl21
+  name: triple_epitope_tagged_protein
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target_triple_tagged
         expression: high
         chain:
           - tag: FLAG
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - tag: HA
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - tag: Myc
           - linker:
               type: short_GS
               repeats: 1
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: your_protein_id
+              source: uniprot
+
+    - terminator: rrnB_T1

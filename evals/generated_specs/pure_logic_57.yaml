@@ -1,35 +1,47 @@
 construct:
-  name: "three_stage_genetic_cascade"
+  name: three_stage_therapeutic_cascade
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+
     - cistron:
-        label: luxR_activator
-        expression: medium
-        gene:
-          id: P12746
-          source: uniprot
-    - spacer: 45
-    - promoter: pLux
-    - cistron:
-        label: t7_polymerase
-        expression: medium
-        fused: false
-        gene:
-          id: P00573
-          source: uniprot
-    - spacer: 45
-    - promoter: T7
-    - cistron:
-        label: therapeutic_enzyme
+        label: Gene1
         expression: high
-        fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P00639
+              id: araC
               source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Gene2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: araBAD
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Gene3_therapeutic
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: lacZ
+              source: uniprot
+
     - terminator: rrnB_T1

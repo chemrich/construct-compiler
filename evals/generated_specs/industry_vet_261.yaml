@@ -1,22 +1,40 @@
 construct:
-  name: mammalian_bicistronic_2A_proteinA_proteinB
+  name: "ProteinA_2A_ProteinB_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: bicistronic_payload
+        label: ProteinA
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: ProteinA
               source: uniprot
-          - linker:
-              type: P2A
-              repeats: 1
+
+    - spacer: 30
+
+    - cistron:
+        label: 2A_peptide
+        expression: high
+        fused: false
+        gene:
+          id: T2A
+          source: uniprot
+
+    - cistron:
+        label: ProteinB
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
           - gene:
               id: ProteinB
               source: uniprot
-    - terminator: BGH_pA
+
+    - terminator: rrnB_T1

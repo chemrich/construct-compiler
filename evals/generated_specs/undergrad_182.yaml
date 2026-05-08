@@ -1,16 +1,20 @@
 construct:
-  name: "Secreted_GrowthFactorX_Expression"
-  host: mammalian
+  name: GrowthFactorX_secreted
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: GrowthFactorX
         expression: high
         chain:
-          - tag: IgK_leader  # Standard signal peptide for mammalian secretion
+          - tag: signal_peptide_IgG  # N-terminal signal peptide for ER-directed secretion
           - gene:
               id: GrowthFactorX
               source: uniprot
-    - terminator: BGH_pA
+
+    - terminator: WPRE  # Woodchuck Post-transcriptional Regulatory Element for mammalian expression

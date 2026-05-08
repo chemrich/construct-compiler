@@ -1,40 +1,52 @@
 construct:
-  name: "anaerobic_H2_production_operon"
-  host: e_coli_bl21_de3
+  name: "hydrogen_production_operon_PFOR_HydEFG"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+    
     - cistron:
         label: PFOR
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: P94489
+              id: "P0AGI0"
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: HydE
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: Q9L6S1
+          id: "P0AGJ8"
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: HydF
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: Q9L6S0
+          id: "P0AGK3"
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: HydG
-        expression: medium
+        expression: high
         fused: false
         gene:
-          id: Q9L6R9
+          id: "P0AGK8"
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

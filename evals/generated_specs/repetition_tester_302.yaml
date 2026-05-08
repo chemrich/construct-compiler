@@ -1,30 +1,44 @@
 construct:
-  name: "yeast_mega_fusion_D1_D2_D3"
+  name: "yeast_mega_fusion_D1_D2_D3_codon_optimized"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: catalytic_fusion
+        label: mega_fusion_D1_D2_D3
         expression: high
-        # Note: Compiler should use synonymous codons for repeat avoidance as requested
         chain:
-          - gene:
-              id: P00330
-              source: uniprot
+          - tag: 6xHis
+          - cleavage_site: 3C
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 1
           - gene:
-              id: P00924
+              id: D1_yeast_codon_optimized_synonymous
               source: uniprot
+              codon_optimization: yeast_synthetic
+              repeat_avoidance: synonymous_codons
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 1
           - gene:
-              id: P00549
+              id: D2_yeast_codon_optimized_synonymous
               source: uniprot
-    - terminator: CYC1
+              codon_optimization: yeast_synthetic
+              repeat_avoidance: synonymous_codons
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: D3_yeast_codon_optimized_synonymous
+              source: uniprot
+              codon_optimization: yeast_synthetic
+              repeat_avoidance: synonymous_codons
+
+    - terminator: rrnB_T1

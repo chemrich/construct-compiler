@@ -1,14 +1,25 @@
 construct:
-  name: "G1_phase_specific_expression_system"
+  name: "G1_phase_specific_output_switch"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: CCND1  # Cyclin D1 promoter for G1-specific transcriptional activation
+    - promoter: G1_CDK2_responsive
+      # G1-specific promoter with CDK2-dependent E2F binding sites
+      # Active only when CDK2 is high (G1 phase)
+      # Repressed in S/G2/M when CDK2 activity drops or inhibitors accumulate
+
     - cistron:
         label: output_P
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_pA
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: output_reporter
+              # User should provide specific gene; using placeholder
+              # For fluorescent output, consider mNeonGreen (bright, monomeric)
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,47 +1,45 @@
 construct:
-  name: "yeast_recombination_resistant_multi_gene_cluster"
+  name: "artificial_operon_ABCD_yeast"
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
 
   cassette:
-    - promoter: GPD
-    - cistron:
-        label: cistron_A
+    - promoter: GAL1
+      cistron:
+        label: gene_A
+        expression: high
         gene:
           id: A
           source: uniprot
-    - terminator: CYC1_term
+      terminator: CYC1
 
-    - spacer: 30
-
-    - promoter: TEF1
-    - cistron:
-        label: cistron_B
+    - promoter: ADH1
+      cistron:
+        label: gene_B
+        expression: high
         gene:
           id: B
           source: uniprot
-    - terminator: ADH1_term
+      terminator: PGK1
 
-    - spacer: 30
-
-    - promoter: ADH1
-    - cistron:
-        label: cistron_C
+    - promoter: TEF1
+      cistron:
+        label: gene_C
+        expression: high
         gene:
           id: C
           source: uniprot
-    - terminator: TEF1_term
+      terminator: TPI1
 
-    - spacer: 30
-
-    - promoter: CYC1
-    - cistron:
-        label: cistron_D
+    - promoter: RPL18B
+      cistron:
+        label: gene_D
+        expression: high
         gene:
           id: D
           source: uniprot
-    - terminator: PGK1_term
+      terminator: RPS13

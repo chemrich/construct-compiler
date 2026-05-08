@@ -1,24 +1,43 @@
 construct:
   name: "dox_inducible_cytotoxic_therapeutic"
-  host: mammalian
+  host: HEK293
+
   backbone:
-    resistance: none # Antibiotic resistance markers excluded for therapeutic safety
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector; no antibiotic resistance for therapeutic use
+    ori: SC101
+    source: addgene
+
   cassette:
     - promoter: TRE3G
+      # Tetracycline Response Element 3G: tight, doxycycline-inducible promoter
+      # Requires co-expression of rtTA3 (reverse tTA) transactivator from constitutive promoter
+
     - cistron:
-        label: cytotoxic_effector
-        expression: high
-        gene:
-          id: P00588
-          source: uniprot
-    - terminator: bGH_PA
-    - spacer: 60 # Physical separation to prevent transcriptional interference
-    - promoter: EF1_alpha
-    - cistron:
-        label: tet_on_transactivator
+        label: rtTA3_transactivator
         expression: medium
-        gene:
-          id: rtTA3
-    - terminator: hGH_PA
+        chain:
+          - gene:
+              id: rtTA3
+              source: uniprot
+              # Reverse tTA: activated by doxycycline binding; allows tight OFF state without inducer
+
+    - terminator: WPRE
+      # Woodchuck Posttranscriptional Regulatory Element for enhanced stability
+
+    - promoter: EF1_alpha
+      # Constitutive mammalian promoter for stable rtTA3 expression
+
+    - cistron:
+        label: cytotoxic_payload
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: caspase3
+              source: uniprot
+              # Example cytotoxic protease; replace with specific therapeutic protein
+              # Doxycycline-dependent expression minimizes baseline toxicity
+
+    - terminator: WPRE

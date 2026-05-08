@@ -1,21 +1,32 @@
 construct:
-  name: "dual_polIII_shRNA_dissimilar_loop"
+  name: "dual_shRNA_silencing_H1_U6"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: "shRNA_target_A_loop1"
+      cistron:
+        label: shRNA_1
         expression: high
-        gene:
-          id: "shRNA_target_pos1"
-    - spacer: 50
-    - promoter: H1  # Using H1 promoter to ensure sequence dissimilarity from U6 and prevent recombination
-    - cistron:
-        label: "shRNA_target_A_loop2"
+        chain:
+          - gene:
+              id: shRNA_targeting_sequence_1
+              sequence: "GATCCCCGCTAGCTACGTACGATACTTCAAGAGAGTATCGTACGTAGCTAGCTTTTTGGAAA"
+              source: custom
+
+    - promoter: H1
+      cistron:
+        label: shRNA_2
         expression: high
-        fused: false
-        gene:
-          id: "shRNA_target_pos2"
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: shRNA_targeting_sequence_2
+              sequence: "GATCCCCGTAGACGTACGTAGCTATCTTCAAGAGAGATAGCTACGTACGTCTACTTTTTGGAAA"
+              source: custom
+
+  # Note: H1 is a Pol III promoter (alternative to U6) with different upstream regulatory elements.
+  # Using two distinct Pol III promoters (U6 and H1) with different hairpin loop sequences
+  # minimizes recombination risk and ensures independent, robust shRNA expression.

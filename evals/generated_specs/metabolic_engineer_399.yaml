@@ -1,49 +1,69 @@
 construct:
-  name: "rhodobacter_carotenoid_operon"
-  host: rhodobacter_sphaeroides # Custom host for carotenoid synthesis
+  name: "Rhodobacter_carotenoid_operon_five_enzyme"
+  host: rhodobacter_sphaeroides
+
   backbone:
     resistance: kanamycin
-    ori: pBBR1 # Broad-host-range origin for Rhodobacter sphaeroides
+    ori: pBBR1
+    source: addgene
+
   cassette:
-    - promoter: pPpsR # Light-inducible Rhodobacter-specific promoter
+    - promoter: pPpsR
+      # Light-inducible promoter native to Rhodobacter sphaeroides
+      # Ensures balanced expression under photosynthetic conditions
+
     - cistron:
-        label: carot_1
+        label: Carot_1
         expression: medium
+        codon_optimization: rhodobacter_sphaeroides
         chain:
           - tag: 6xHis
           - gene:
               id: Carot_1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: carot_2
+        label: Carot_2
         expression: medium
         fused: false
+        codon_optimization: rhodobacter_sphaeroides
         gene:
           id: Carot_2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: carot_3
+        label: Carot_3
         expression: medium
         fused: false
+        codon_optimization: rhodobacter_sphaeroides
         gene:
           id: Carot_3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: carot_4
+        label: Carot_4
         expression: medium
         fused: false
+        codon_optimization: rhodobacter_sphaeroides
         gene:
           id: Carot_4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: carot_5
+        label: Carot_5
         expression: medium
         fused: false
+        codon_optimization: rhodobacter_sphaeroides
         gene:
           id: Carot_5
           source: uniprot
+
     - terminator: rrnB_T1

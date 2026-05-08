@@ -1,22 +1,27 @@
 construct:
-  name: "y2h_bait_gal4_fusion_trp1"
+  name: yeast_two_hybrid_bait
   host: yeast
+
   backbone:
-    # pGBKT7 is a standard yeast two-hybrid bait vector containing the TRP1 marker and GAL4-DBD
-    catalog_vector: "pGBKT7"
+    resistance: trp1
+    ori: 2_micron
+    source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: bait_fusion
+        label: bait
         expression: medium
         chain:
           - gene:
-              id: GAL4
+              id: GAL4_DBD
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P04637
+              id: target
               source: uniprot
-    - terminator: ADH1_term
+
+    - terminator: CYC1

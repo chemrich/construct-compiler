@@ -1,30 +1,37 @@
 construct:
-  name: "mammalian_p2a_coexpression_system"
+  name: "dual_protein_2A_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: polyprotein_p2a
+        label: Protein_A
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: mEGFP
-              source: fpbase
-          - cleavage_site: P2A
-          - gene:
-              id: mCherry
-              source: fpbase
-    - terminator: bGH_polyA  # Substituted bGH_polyA for bacterial terminators to ensure functional mammalian termination
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+              id: ProteinA
+              source: uniprot
+
+    - cistron:
+        label: P2A_spacer
+        expression: high
+        fused: false
+        gene:
+          id: P2A
+          source: uniprot
+        # P2A self-cleaving peptide enables translational skipping
+
+    - cistron:
+        label: Protein_B
+        expression: high
+        fused: false
+        gene:
+          id: ProteinB
+          source: uniprot
+
+    - terminator: polyA

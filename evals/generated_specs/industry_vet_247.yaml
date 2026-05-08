@@ -1,26 +1,40 @@
 construct:
-  name: "mammalian_triple_2A_polyprotein"
-  host: mammalian
+  name: mammalian_triple_expression_CMV
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: triple_expression_unit
+        label: Protein_A
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinA
+              source: uniprot
+
+    - cistron:
+        label: Protein_B
         expression: high
         chain:
           - gene:
-              id: Protein_A
+              id: ProteinB
               source: uniprot
-          - linker:
-              type: P2A
+        # P2A self-cleaving peptide separates A from B
+        p2a_upstream: true
+
+    - cistron:
+        label: Protein_C
+        expression: high
+        chain:
           - gene:
-              id: Protein_B
+              id: ProteinC
               source: uniprot
-          - linker:
-              type: T2A
-          - gene:
-              id: Protein_C
-              source: uniprot
-    - terminator: bGH_polyA
+        # T2A self-cleaving peptide separates B from C
+        t2a_upstream: true
+
+    - terminator: polyA

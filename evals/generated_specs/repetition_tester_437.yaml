@@ -1,38 +1,39 @@
 construct:
-  name: "tandem_quad_amp_diversity_fusion"
-  host: e_coli_bl21_de3
+  name: "quad_AMP_codon_diverged"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: quad_amp_concatemer
+        label: AMP_quad
         expression: high
-        # Note: Four copies of P49913 are provided in the chain. 
-        # The compiler must use synonymous codons for each copy to maximize nucleotide divergence
-        # and unique linkers to prevent homologous recombination.
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P49913
-              source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - gene:
-              id: P49913
-              source: uniprot
+              id: "AMP_codon1_optimized"
+              source: "custom"
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P49913
-              source: uniprot
+              id: "AMP_codon2_diverged_v1"
+              source: "custom"
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P49913
-              source: uniprot
-    - terminator: T7term
+              id: "AMP_codon3_diverged_v2"
+              source: "custom"
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "AMP_codon4_diverged_v3"
+              source: "custom"
+
+    - terminator: rrnB_T1

@@ -1,16 +1,25 @@
 construct:
-  name: "inducible_reporter_non_viral"
+  name: mammalian_inducible_luciferase_reporter
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: TRE_minHSP70  # Tetracycline-responsive element with a minimal Heat Shock Protein 70 promoter to avoid viral components like CMV-min
+    - promoter: TRE  # Tetracycline Response Element - tight, inducible by doxycycline
+
     - cistron:
         label: luciferase_reporter
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: bGH_pA  # Bovine Growth Hormone polyadenylation signal (non-viral)
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+
+    - polyadenylation_signal: SV40_polyA  # Non-viral synthetic poly(A) signal
+
+    - terminator: rrnB_T1

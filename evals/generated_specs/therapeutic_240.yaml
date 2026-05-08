@@ -1,22 +1,27 @@
 construct:
-  name: "hEnzymeX_HighYield_Intracellular_Production"
-  host: e_coli_bl21
+  name: "hEnzymeX_high_yield_soluble"
+  host: e_coli
+
   backbone:
-    resistance: kanamycin # Substitution: Kanamycin included to satisfy tool requirements; antibiotic-free selection (e.g., auxotrophy or TA systems) recommended for clinical production.
+    resistance: null  # No antibiotic resistance; use auxotrophic selection or alternative
     ori: pBR322
+    source: custom
+
   cassette:
-    - promoter: J23100 # Robust constitutive promoter for non-inducible expression and avoidance of viral elements (e.g., T7).
+    - promoter: trc  # Strong, non-inducible constitutive promoter for high-yield expression
+
     - cistron:
-        label: therapeutic_enzyme
+        label: hEnzymeX
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
-          - cleavage_site: TEV
+              repeats: 1
           - gene:
               id: hEnzymeX
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator; non-viral origin.
+
+    - terminator: rrnB_T1

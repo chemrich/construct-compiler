@@ -1,17 +1,42 @@
 construct:
-  name: "genetic_or_gate_D_E"
+  name: genetic_OR_gate
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
-    - promoter: tac
+    
     - cistron:
-        label: output_z
+        label: Input_D_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: Input_E_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: Output_Z
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gfp
+              source: fpbase
+    
     - terminator: rrnB_T1

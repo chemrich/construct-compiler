@@ -1,18 +1,22 @@
 construct:
-  name: "GrowthFactorK_Secretion_HEK293"
+  name: "mammalian_GrowthFactorK_secreted"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_growth_factor
+        label: GrowthFactorK_secreted
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG_kappa
           - gene:
               id: GrowthFactorK
               source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
-    - terminator: bGH_polyA
+
+    - terminator: SV40_poly_A

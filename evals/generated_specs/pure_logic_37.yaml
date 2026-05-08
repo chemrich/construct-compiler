@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: dual_light_AND_gate_mammalian
+  name: light_inducible_AND_gate_mammalian
   host: HEK293
 
   backbone:
@@ -10,69 +9,44 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: CRY2_PHR
-        expression: medium
+        label: blue_light_sensor
+        expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: CRY2-PHR
+              id: CRY2
               source: uniprot
 
-    - spacer: 30
+    - terminator: WPRE
+
+  cassette_2:
+    - promoter: CMV
 
     - cistron:
-        label: CIB1_VP16
-        expression: medium
-        fused: false
-        chain:
-          - gene:
-              id: CIB1
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: VP16  # transcriptional activator domain
-
-    - spacer: 30
-
-    - cistron:
-        label: PhyB_DBD
-        expression: medium
-        fused: false
-        chain:
-          - gene:
-              id: PHYB
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: GAL4_DBD  # DNA binding domain
-
-    - spacer: 30
-
-    - cistron:
-        label: PIF3
-        expression: medium
-        fused: false
-        gene:
-          id: PIF3
-          source: uniprot
-
-    - terminator: BGH_pA
-
-    - promoter: GAL4_UAS  # synthetic promoter with GAL4 binding sites
-
-    - cistron:
-        label: output_protein
+        label: red_light_sensor
         expression: high
         chain:
+          - tag: HA
           - gene:
-              id: mScarlet
+              id: phyB
+              source: uniprot
+
+    - terminator: WPRE
+
+  cassette_3:
+    - promoter: CMV
+
+    - cistron:
+        label: output_AND_gate
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 1
-          - tag: NES  # Nuclear Export Signal
+          - tag: NES
 
-    - terminator: BGH_pA
-```
+    - terminator: WPRE

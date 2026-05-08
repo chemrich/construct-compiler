@@ -1,34 +1,54 @@
 construct:
-  name: "rudimentary_and_gate"
+  name: "E_coli_AND_gate_dual_repressor"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD
+    - promoter: J23100
+      rbs: BBa_B0030
+
     - cistron:
-        label: repressor_a
+        label: RepressorA
         expression: medium
-        gene:
-          id: lacI
-          source: uniprot
+        chain:
+          - gene:
+              id: tetR_codon_optimized_v1
+              source: uniprot
+              note: "Extensively codon-optimized TetR homolog with non-overlapping synonymous codons for RepressorA function"
+
+    - terminator: BBa_B0010
+
+    - spacer: 35
+
+    - promoter: J23106
+      rbs: BBa_B0034
+
+    - cistron:
+        label: RepressorB
+        expression: medium
+        chain:
+          - gene:
+              id: cI_codon_optimized_v1
+              source: uniprot
+              note: "Extensively codon-optimized cI homolog with non-overlapping synonymous codons for RepressorB function"
+
     - terminator: rrnB_T1
-    - spacer: 40
+
+    - spacer: 35
+
     - promoter: lacUV5
+      rbs: BBa_B0031
+
     - cistron:
-        label: repressor_b
-        expression: medium
-        gene:
-          id: tetR
-          source: uniprot
-    - terminator: T7term
-    - spacer: 40
-    - promoter: tac
-    - cistron:
-        label: reporter_lacz
+        label: LacZ_reporter
         expression: high
-        gene:
-          id: lacZ
-          source: uniprot
+        chain:
+          - gene:
+              id: lacZ
+              source: uniprot
+
     - terminator: BBa_B0015

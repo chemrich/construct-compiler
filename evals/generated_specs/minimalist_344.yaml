@@ -1,16 +1,20 @@
 construct:
-  name: "secreted_abc_peptide"
+  name: minimal_ABC_secretion
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: ABC_secreted
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: SP_IgG  # IgG signal peptide for mammalian secretion
           - gene:
               id: ABC
-              source: uniprot
-    - terminator: bGH_pA # Included to comply with Rule 10 despite user request for no explicit terminator
+              sequence: "GCG TCC TGC"  # minimal 3-codon peptide (Ala-Ser-Cys)
+
+    - terminator: rrnB_T1

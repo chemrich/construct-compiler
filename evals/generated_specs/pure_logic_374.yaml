@@ -1,18 +1,42 @@
 construct:
-  name: plant_drought_pathogen_and_gate_resist_g
-  host: plant  # Host is a plant as requested; using standard plant regulatory elements
+  name: "plant_drought_pathogen_AND_circuit"
+  host: algae
+
   backbone:
-    resistance: kanamycin
-    ori: pVS1
+    resistance: spectinomycin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: Drought_Pathogen_AND_responsive
+    - promoter: J23106
+
     - cistron:
-        label: chloroplast_targeted_resistance
+        label: AND_gate_input_D
+        expression: medium
+        chain:
+          - gene:
+              id: Input_D
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: AND_gate_input_P
+        expression: medium
+        chain:
+          - gene:
+              id: Input_P
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Resist_G
         expression: high
         chain:
-          - tag: CTP  # Chloroplast Transit Peptide for targeting to the chloroplast
+          - tag: chloroplast_transit_peptide
           - gene:
               id: Resist_G
               source: uniprot
-    - terminator: nos_T
+
+    - terminator: rrnB_T1

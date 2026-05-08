@@ -1,24 +1,41 @@
 construct:
-  name: "lentiviral_therapeutic_EF1a_ADA_IRES_Puro"
+  name: lentiviral_therapeutic_IRES_marker
   host: HEK293
+
   backbone:
+    catalog_vector: pTwist CMV
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: EF1_alpha  # Human non-viral constitutive promoter to prevent recombination
+    - promoter: EF1_alpha
+      # Non-viral constitutive mammalian promoter (distinct from CMV/SV40)
+
     - cistron:
-        label: therapeutic_gene
+        label: therapeutic
         expression: high
-        gene:
-          id: ADA
-          source: uniprot
-    - spacer: 585  # Approximate length for a non-viral IRES-like sequence to facilitate independent translation
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: VEGFA
+              # User must provide or specify actual therapeutic gene ID
+              source: uniprot
+
+    # IRES element represented as spacer with annotation
+    # Note: Using a synthetic, non-viral IRES (e.g., EMCV variant or synthetic designer IRES)
+    # This must be manually inserted as a custom DNA element post-compilation
+    - spacer: 50
+      # Placeholder for custom synthetic IRES element — not a standard viral sequence
+
     - cistron:
         label: selectable_marker
-        expression: low
-        fused: false  # Ensures independent translation initiation
+        expression: high
+        fused: false
         gene:
-          id: PAC
-          source: uniprot  # Puromycin acetyltransferase, to be codon-optimized synonymously
-    - terminator: SV40_pA
+          id: NEOMYCIN_PHOSPHOTRANSFERASE_CODON_OPTIMIZED
+          # Codon-optimized synonymous variant, distinct from wild-type and helper sequences
+          source: uniprot
+
+    - terminator: rrnB_T1

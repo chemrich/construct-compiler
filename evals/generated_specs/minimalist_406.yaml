@@ -1,31 +1,46 @@
 construct:
-  name: "polycistronic_enzyme_expression_1_2_3"
-  host: e_coli
+  name: "polycistronic_enzyme_cascade"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enzyme_1
-        expression: medium
-        gene:
-          id: Enzyme1
-          source: uniprot
+        label: Enzyme1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Enzyme1
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: enzyme_2
-        expression: medium
+        label: Enzyme2
+        expression: high
         fused: false
-        gene:
-          id: Enzyme2
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Enzyme2
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: enzyme_3
-        expression: medium
+        label: Enzyme3
+        expression: high
         fused: false
-        gene:
-          id: Enzyme3
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Enzyme3
+              source: uniprot
+    
     - terminator: rrnB_T1

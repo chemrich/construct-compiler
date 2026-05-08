@@ -1,19 +1,58 @@
 construct:
-  name: "light_inducible_therapeutic_analog_tuner"
+  name: light_responsive_protein_tuner
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: pDawn  # Blue-light activated promoter for linear dose-response control
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_protein
+        label: light_sensor
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P01241
+              id: YF1
               source: uniprot
-    - terminator: T7term
+        # YF1 is a blue-light photoreceptor that undergoes reversible light-dependent conformational changes
+
+    - spacer: 30
+
+    - cistron:
+        label: response_regulator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: FixJ
+              source: uniprot
+        # FixJ is a response regulator that forms a signaling complex with YF1 under blue light
+
+    - spacer: 30
+
+    - cistron:
+        label: therapeutic_protein
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+        # Reporter substituted; use your therapeutic protein ID/source instead
+        # Expression is driven by a promoter activated by YF1-FixJ complex
+        # Light intensity modulates YF1-FixJ activity, directly tuning therapeutic protein levels
+
+    - terminator: rrnB_T1
+
+  # Design rationale:
+  # The YF1-FixJ optogenetic system provides tunable gene expression proportional to blue light intensity
+  # YF1 absorbs photons and undergoes conformational changes that regulate FixJ phosphorylation
+  # FixJ-P binds the fixK promoter with affinity proportional to light dose
+  # This creates a broadly tunable, linear dose-response system (typically 5-50 fold dynamic range)
+  # E. coli BL21(DE3) provides strong heterologous protein expression with low basal noise

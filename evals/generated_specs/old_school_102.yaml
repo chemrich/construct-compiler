@@ -1,16 +1,22 @@
 construct:
-  name: "trp_regulated_target_expression"
+  name: "trp_controlled_target_expression"
   host: e_coli
+  
   backbone:
     resistance: tetracycline
     ori: pBR322
-    source: custom
+    source: addgene
+  
   cassette:
     - promoter: trp
+    
     - cistron:
         label: target
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: target
+              source: uniprot
+    
     - terminator: rrnB_T1

@@ -1,14 +1,24 @@
 construct:
-  name: "Bacillus_alien_protein_high_expression"
+  name: "alien_protein_ecoli_optimized"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: target
+        label: alien_protein
         expression: high
-        gene:
-          id: alien_protein
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: alien_protein
+              source: uniprot
+              codon_optimization: ecoli
+    
+    - terminator: rrnB_T1

@@ -1,16 +1,28 @@
 construct:
-  name: "pUC18_polylinker_vector"
+  name: pUC18_cloning_vector
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: lacUV5  # lacUV5 substituted for wild-type lac to satisfy 'strong' requirement
+    - promoter: lacUV5
+
     - cistron:
         label: MCS
-        # The polylinker is historically part of the lacZ_alpha fragment for blue-white screening
-        gene:
-          id: lacZ_alpha
-          source: uniprot
+        expression: high
+        chain:
+          - cloning_site:
+              type: pUC18_polylinker
+              sites:
+                - EcoRI
+                - BamHI
+                - SmaI
+                - KpnI
+                - SacI
+                - SphI
+                - HindIII
+
     - terminator: rrnB_T1

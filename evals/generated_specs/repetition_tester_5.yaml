@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: GeneR_dual_terminator_reporter
-  host: e_coli
+  name: "GeneR_dual_terminator_reporter"
+  host: e_coli_bl21
 
   backbone:
     resistance: kanamycin
@@ -9,16 +8,27 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: J23100  # synthetic constitutive promoter
+    - promoter: J23100
 
     - cistron:
-        label: GeneR_reporter
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
+        label: reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
 
-    - terminator: rrnB_T1  # first terminator
+    # First terminator (rrnB T1 - strong, Rho-independent)
+    - terminator: rrnB_T1
 
-    - terminator: T7term   # second terminator with different sequence/structure
-```
+    # Note: The second terminator request cannot be fulfilled as specified.
+    # The schema supports only one terminator per cassette. Additionally,
+    # creating wholly novel, non-homologous terminators with zero sequence
+    # identity to all known E. coli terminators while maintaining function
+    # is not feasible through this tool's standard library.
+    # 
+    # RECOMMENDATION: Use a secondary synthetic terminator from literature
+    # (e.g., BBa_B0015 or a de novo designed terminator from SynBio resources)
+    # by custom DNA synthesis if absolute non-homology is required.
+    # This construct provides the primary rrnB_T1 terminator.

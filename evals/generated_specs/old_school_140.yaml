@@ -1,15 +1,23 @@
 construct:
-  name: "pBR322_tac_high_expression_vector"
+  name: "high_expression_pbr322_tac"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
-        label: target_insert
+        label: target
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: insert
+              source: custom
+              # Compiler will add Shine-Dalgarno RBS upstream automatically
+              # for E. coli tac/T7 promoter configurations
+
     - terminator: rrnB_T1

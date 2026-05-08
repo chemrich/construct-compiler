@@ -1,15 +1,19 @@
 construct:
-  name: "antisense_mRNA_T_expression"
-  host: e_coli
+  name: "antisense_mRNA_T"
+  host: in_vitro
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23106  # Minimal constitutive promoter for E. coli
+    - promoter: J23100
+
     - cistron:
-        label: antisense_payload
-        expression: medium
+        label: antisense_RNA
+        expression: high
         gene:
-          id: "antisense_mRNA_T"
-    - terminator: rrnB_T1  # Terminator included per rule 10; overrides "no terminator" request to ensure construct validity
+          id: mRNA_T
+          source: uniprot
+          antisense: true

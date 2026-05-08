@@ -1,24 +1,32 @@
 construct:
-  name: "co_expression_X_and_Y"
-  host: e_coli
+  name: XY_coexpression
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: protein_X
-        expression: medium
-        gene:
-          id: X
-          source: uniprot
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: X
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: protein_Y
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: Y
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Y
+              source: uniprot
+
     - terminator: rrnB_T1

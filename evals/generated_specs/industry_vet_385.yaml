@@ -1,19 +1,26 @@
 construct:
-  name: "yeast_solubility_optimized_transgene"
+  name: "yeast_transgene_solubility"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: transgene
         expression: high
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: TEV
+          - tag: 6xHis
+          - solubility_tag: SUMO
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: transgene
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

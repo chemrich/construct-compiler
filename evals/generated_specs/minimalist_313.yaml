@@ -1,15 +1,20 @@
 construct:
-  name: "gene_P_thermal_induction"
+  name: "temperature_induced_P_expression"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: pL  # Induced at 42C via cI857 repressor system
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: P
         expression: high
         gene:
           id: P
           source: uniprot
+    
     - terminator: rrnB_T1

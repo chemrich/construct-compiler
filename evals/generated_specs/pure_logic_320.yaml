@@ -1,26 +1,32 @@
 construct:
-  name: "not_gate_lac_repression"
-  host: e_coli_bl21
+  name: "NOT_gate_A_represses_B"
+  host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: input_repressor_A
-        expression: medium
-        fused: false
-        gene:
-          id: P03023
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac
+        label: repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: output_reporter_B
+        label: output_B
         expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - promoter: lacUV5
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

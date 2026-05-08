@@ -1,28 +1,39 @@
 construct:
-  name: clinical_therapeutic_secreted_dimer
+  name: "dual_subunit_therapeutic_mammalian_secreted"
   host: HEK293
+
   backbone:
-    resistance: none # Required for human clinical use to avoid antibiotic resistance markers
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: none
+    ori: mammalian
+
   cassette:
-    - promoter: EF1_alpha # Human-derived promoter used to avoid viral sequences like CMV
+    - promoter: CMV
+
     - cistron:
-        label: alpha_subunit
+        label: subunit_A
         expression: high
         chain:
-          - tag: IgK_leader # Human-compatible signal peptide for secretion
+          - tag: signal_peptide_human_IgG
           - gene:
-              id: therapeutic_subunit_alpha
+              id: "therapeutic_subunit_A"
               source: uniprot
-    - spacer: 50
+
+    - spacer: 30
+
     - cistron:
-        label: beta_subunit
+        label: IRES
+        fused: false
+
+    - spacer: 30
+
+    - cistron:
+        label: subunit_B
         expression: high
-        fused: false # Ensures independent translation of the second subunit
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_human_albumin
           - gene:
-              id: therapeutic_subunit_beta
+              id: "therapeutic_subunit_B"
               source: uniprot
-    - terminator: hGH_pA # Human growth hormone polyadenylation signal; non-viral human-compatible terminator
+
+    - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: nisin_secretion_construct
-  host: e_coli_bl21_de3
+  name: "nisin_secretion"
+  host: bacillus
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
-        label: nisin_A
+        label: nisin
         expression: high
         chain:
-          - tag: pelB  # Signal peptide for periplasmic secretion in E. coli
+          - tag: AmyE
           - gene:
-              id: P0C0L8
+              id: P05087
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,16 +1,24 @@
 construct:
-  name: "BacterialProteinZ_Mammalian_UTR_Control"
-  host: e_coli_bl21_de3
+  name: "BacterialProteinZ_mammalian_UTRs"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac # Substitution: Mammalian beta-actin 5' UTR replaced with T7lac to ensure expression in E. coli host.
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: BacterialProteinZ
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: BacterialProteinZ
               source: uniprot
-    - terminator: rrnB_T1 # Substitution: Mammalian beta-actin 3' UTR replaced with rrnB_T1 for efficient termination in E. coli.
+              # Note: mammalian beta-actin 5' and 3' UTRs will be added
+              # via synthetic DNA synthesis or ligation post-compilation.
+              # E. coli ribosomes have limited compatibility with mammalian UTRs;
+              # consider using optimized hybrid UTRs for best results.
+
+    - terminator: rrnB_T1

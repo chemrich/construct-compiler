@@ -1,24 +1,23 @@
 construct:
-  name: "SecretedProteinY_yeast_secretion"
+  name: "yeast_secreted_protein_y_his"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - gene:
-              id: alpha_mating_factor_signal_peptide
-              source: uniprot
           - tag: 6xHis
-          - linker:
-              type: short_GS
-              repeats: 1
+          - cleavage_site: Kex2
+          - secretion_signal: alpha_factor
           - gene:
               id: SecretedProteinY
               source: uniprot
-    - terminator: CYC1_terminator
+
+    - terminator: CYC1_poly_A

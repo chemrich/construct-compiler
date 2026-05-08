@@ -1,27 +1,37 @@
 construct:
-  name: "monoclonal_antibody_pichia_dual_cassette"
-  host: yeast
+  name: "Pichia_mAb_Light_Heavy_Chain"
+  host: pichia_pastoris
+
   backbone:
+    catalog_vector: "pPIC9K"
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: antibody_light_chain
+        label: light_chain
         expression: high
         chain:
-          - tag: alpha-factor
+          - signal_peptide: alpha-factor
           - gene:
-              id: mAb_Light_Chain
+              id: antibody_light_chain
               source: uniprot
+
     - terminator: CYC1
+
+  cassette_2:
     - promoter: AOX1
+
     - cistron:
-        label: antibody_heavy_chain
+        label: heavy_chain
         expression: high
         chain:
-          - tag: alpha-factor
+          - signal_peptide: alpha-factor
           - gene:
-              id: mAb_Heavy_Chain
+              id: antibody_heavy_chain
               source: uniprot
+
     - terminator: AOX1

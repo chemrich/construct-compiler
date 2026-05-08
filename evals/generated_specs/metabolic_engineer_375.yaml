@@ -1,45 +1,90 @@
 construct:
-  name: yeast_peroxisomal_fatty_acid_pathway
+  name: "yeast_fatty_acid_pathway_6enzyme"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: fatty_acid_operon
+        label: ACC1
         expression: high
         chain:
           - gene:
-              id: Q00682
+              id: ACC1
               source: uniprot
           - tag: PTS1
-          - linker:
-              type: P2A
+        codon_optimization: yeast
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_FAS1
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: 2A
           - gene:
-              id: P07149
+              id: FAS1
               source: uniprot
           - tag: PTS1
-          - linker:
-              type: T2A
+        codon_optimization: yeast
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_FAS2
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: 2A
           - gene:
-              id: P19097
+              id: FAS2
               source: uniprot
-          - linker:
-              type: E2A
+        codon_optimization: yeast
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_FASN
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: 2A
           - gene:
-              id: P49327
+              id: FASN
               source: uniprot
-          - linker:
-              type: F2A
+        codon_optimization: yeast
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_Desaturase
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: 2A
           - gene:
-              id: P21147
+              id: Desaturase
               source: uniprot
-          - linker:
-              type: P2A
+        codon_optimization: yeast
+
+    - spacer: 30
+
+    - cistron:
+        label: P2A_Reductase
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: 2A
           - gene:
-              id: P32471
+              id: Reductase
               source: uniprot
           - tag: PTS1
-    - terminator: ADH1_term
+        codon_optimization: yeast
+
+    - terminator: CYC1

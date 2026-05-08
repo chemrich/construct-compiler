@@ -1,19 +1,24 @@
 construct:
-  name: "PAOX1_scFv_secretion"
+  name: scFv_pichia_secreted
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: PAOX1
+
     - cistron:
-        label: scFv_target
+        label: scFv
         expression: high
         chain:
-          - tag: alpha-factor
           - tag: 6xHis
           - cleavage_site: Enterokinase
+          - secretion_signal: alpha_factor
           - gene:
               id: scFv
-    - terminator: AOX1_term
+              source: uniprot
+
+    - terminator: CYC1

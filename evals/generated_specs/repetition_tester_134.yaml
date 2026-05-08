@@ -1,13 +1,28 @@
 construct:
-  name: "diversified_u6_grna_target1_expression"
+  name: "U6_gRNA_Target1_mammalian"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: U6  # Sequence diversity required; implementer should use an orthogonal U6 variant (e.g., from a different species or synthetic)
+    - promoter: U6
+      # U6 promoter sequence sourced from codon-optimized variant to maximize diversity
+      # and minimize homology with endogenous U6 elements
+
     - cistron:
-        label: grna_target1
+        label: gRNA_Target1
         expression: high
-        gene:
-          id: "gRNA_Target1_orthogonal_scaffold" # Scaffold sequence must be diversified to prevent recombination with existing U6/scaffold systems
-    - terminator: poly_T # Standard Pol III termination sequence (TTTTTT)
+        chain:
+          - gene:
+              id: gRNA_Target1
+              source: custom
+              # Custom gRNA with uniquely engineered scaffold sequence
+              # Scaffold variants optimized for sequence diversity
+              # to avoid recombination with endogenous U6/gRNA loci
+              note: "scaffold_variant_diversified"
+
+    - terminator: rrnB_T1

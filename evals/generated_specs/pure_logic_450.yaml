@@ -1,24 +1,43 @@
 construct:
-  name: "dead_man_switch_logic"
-  host: e_coli_bl21
+  name: "deadmans_switch_safety_circuit"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: araBAD
+    - promoter: T7lac
+    
     - cistron:
-        label: output_Z
+        label: input_A_sensor
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mScarlet
-              source: fpbase
+              id: LuxR
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: logic_repressor_B
+        label: input_B_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TetR
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: safety_output_Z
         expression: medium
-        fused: false
-        gene:
-          id: tetR
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1

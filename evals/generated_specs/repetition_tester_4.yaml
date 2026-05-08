@@ -1,28 +1,29 @@
 construct:
-  name: "ProteinX_ProteinY_tandem_fusion"
+  name: ProteinX_ProteinY_tandem_fusion
   host: e_coli_bl21
-  
+
   backbone:
-    catalog_vector: "pET-28b(+)"
-  
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
-    
+
     - cistron:
         label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A6X3  # Example ProteinX - E. coli chaperonin GroEL
+              id: ProteinX
               source: uniprot
+          - cleavage_site: 3C
           - linker:
-              type: custom
-              sequence: "QNPDWLRAHSLTEQGGSGGSGG"  # Novel 22-residue non-repetitive linker
-          - cleavage_site: custom
-            sequence: "LVPRGS"  # HRV 3C protease site with custom flanking
+              type: custom_TPEAK
+              repeats: 1
           - gene:
-              id: P0A6F5  # Example ProteinY - E. coli chaperonin GroES
+              id: ProteinY
               source: uniprot
-    
+
     - terminator: rrnB_T1

@@ -1,27 +1,34 @@
-```yaml
 construct:
-  name: dual_orthogonal_shRNA_silencing
+  name: dual_orthogonal_shRNA_mammalian
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: ampicillin
 
   cassette:
     - promoter: U6
+      
     - cistron:
-        label: shRNA_target1
+        label: shRNA_1
         expression: high
         gene:
-          id: shRNA_hairpin_1
-          # Custom shRNA hairpin sequence - completely orthogonal design
-    - terminator: U6_polyT
+          id: shRNA_target_1
+          source: custom
+          sequence: GCTAGCCTAATACGACTCACTATAGGTGAAGCCGCAGTCTGTGAGTTTCAAGAGAACTCACAGACTGCGGCTTCTTTTTGGAAGG
 
-    - promoter: H1  # Orthogonal Pol III promoter, no homology to U6
+    - terminator: BBa_B0015
+
+    - spacer: 50
+
+    - promoter: H1
+      
     - cistron:
-        label: shRNA_target2
+        label: shRNA_2
         expression: high
         gene:
-          id: shRNA_hairpin_2
-          # Custom shRNA hairpin sequence - orthogonal to hairpin_1
-    - terminator: H1_polyT  # Orthogonal terminator, no homology to U6_polyT
-```
+          id: shRNA_target_2
+          source: custom
+          sequence: GGTACCCTAATACGACTCACTATAGGCGACTACGACGTCTAGCGATTTTAAGAGAATCGCTAGACGTCGTAGTCGTTTTTGGAAGG
+
+    - terminator: rrnB_T1

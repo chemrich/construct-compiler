@@ -1,19 +1,30 @@
 construct:
-  name: "n_terminal_peptide_fusion_assay"
-  host: e_coli_bl21_de3
+  name: "peptide_fusion_GOI_ecoli"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: peptide_fusion_target
+        label: target
         expression: high
         chain:
-          - tag: FLAG
+          - tag: 6xHis
+          - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: short_peptide
+              # User-supplied sequence context; adjust id/source as needed
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: GOI
+              # Replace with your actual gene of interest ID
+
+    - terminator: rrnB_T1

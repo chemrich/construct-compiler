@@ -1,24 +1,22 @@
 construct:
-  name: "periplasmic_aav_vp1_production"
-  host: e_coli_bl21_de3
+  name: "periplasmic_payload_expression"
+  host: e_coli_bl21
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: target
+        label: payload
         expression: high
         chain:
-          - tag: PelB  # Signal peptide for periplasmic targeting
-          - tag: 6xHis # Purification handle requested
+          - signal_peptide: PelB  # PelB periplasmic signal sequence
+          - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: VP1
+              id: payload
               source: uniprot
 
-    - terminator: T7term
+    - terminator: rrnB_T1

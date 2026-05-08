@@ -1,14 +1,21 @@
 construct:
-  name: "mammalian_u6_grna_puro"
-  host: mammalian
+  name: mammalian_U6_gRNA
+  host: HEK293
+
   backbone:
+    catalog_vector: pTwist CMV
     resistance: puromycin
     ori: pUC
-    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: gRNA
-        gene:
-          id: sgRNA_scaffold
-    - terminator: polyT # Standard termination for Pol III/U6 promoters
+        label: guide_RNA
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_scaffold
+              source: uniprot
+
+    - terminator: rrnB_T1

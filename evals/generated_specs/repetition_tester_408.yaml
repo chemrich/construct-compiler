@@ -1,24 +1,46 @@
 construct:
-  name: "mammalian_non_repetitive_2A_skip_expression"
+  name: "mammalian_dual_protein_2A_stoichiometric"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: skip_polypeptide
+        label: protein_A
         expression: high
         chain:
-          - gene:
-              id: Protein_A
-              source: uniprot
+          - tag: FLAG
           - linker:
               type: GS_flexible
-              repeats: 3
-          - cleavage_site: P2A
-          - linker:
-              type: short_GS
+              repeats: 1
           - gene:
-              id: Protein_B
+              id: protein_A
               source: uniprot
-    - terminator: bGH_polyA
+
+    - cistron:
+        label: 2A_peptide
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              sequence: "GGSGGS"
+          - gene:
+              id: T2A
+              source: uniprot
+
+    - cistron:
+        label: protein_B
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              sequence: "SSGSGSS"
+          - tag: 6xHis
+          - gene:
+              id: protein_B
+              source: uniprot
+
+    - terminator: rrnB_T1

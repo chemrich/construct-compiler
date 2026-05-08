@@ -1,17 +1,29 @@
 construct:
-  name: "aav_cag_6xhis_target_cassette"
+  name: "AAV_packaged_protein_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    # AAV Inverted Terminal Repeats (ITRs) are positioned flanking this expression cassette for viral packaging
     - promoter: CAG
+
+    - aav_itr:
+        position: 5prime
+        serotype: AAV2
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_polyA
+              id: unspecified_protein
+              source: uniprot
+
+    - aav_itr:
+        position: 3prime
+        serotype: AAV2
+
+    - terminator: rrnB_T1

@@ -1,14 +1,22 @@
 construct:
-  name: "pichia_aox1_his4_expression_system"
+  name: "pichia_pastoris_methanol_inducible"
   host: yeast
+
   backbone:
-    catalog_vector: "pPIC9" # Vector incorporates HIS4 selection marker as requested
+    resistance: HIS4
+    ori: 2_micron
+    source: addgene
+
   cassette:
     - promoter: AOX1
-      cistron:
-        label: target_protein
+
+    - cistron:
+        label: target
         expression: high
-        gene:
-          id: protein_of_interest
-          source: uniprot
-      terminator: AOX1_TT
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: AOX1
+              source: uniprot
+
+    - terminator: rrnB_T1

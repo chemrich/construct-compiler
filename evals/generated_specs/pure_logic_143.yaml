@@ -1,44 +1,52 @@
 construct:
-  name: "genetic_xor_gate_mcherry"
-  host: e_coli_bl21
+  name: XOR_gate_genetic_circuit
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: araBAD  # Signal A: Arabinose induced
+    - promoter: T7lac
+    
     - cistron:
-        label: "path_a_output"
+        label: NOT_A
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: NOT_B
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: AND_gate_controller
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: XOR_output_W
         expression: high
         fused: false
         chain:
-          - tag: 6xHis
           - gene:
               id: mCherry
               source: fpbase
-    - spacer: 30
-    - cistron:
-        label: "path_b_inhibitor"
-        expression: medium
-        fused: false
-        gene:
-          id: lacI
-          source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: lacUV5  # Signal B: IPTG induced; repressed by LacI from Path A
-    - cistron:
-        label: "path_b_output"
-        expression: high
-        fused: false
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: mCherry
-              source: fpbase
-    - spacer: 30
-    - cistron:
-        label: "path_a_inhibitor"
-        expression: medium
-        fused: false
-        gene:
-          id: araC  # AraC acts as a repressor in the absence of arabinose or at specific operator sites
-          source: uniprot
-    - terminator: T7term

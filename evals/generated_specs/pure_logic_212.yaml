@@ -1,22 +1,63 @@
 construct:
-  name: "frequency_dependent_gfp_detector"
+  name: frequency_detector_c1_pulse
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: araBAD  # Sensitive to input C1 (Arabinose)
+    - promoter: araBAD
+
     - cistron:
-        label: output_reporter
+        label: oscillator
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: timing_circuit
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cheZ
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: frequency_discriminator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: memory_element
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter
+        expression: high
+        fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - spacer: 30
-    - cistron:
-        label: frequency_regulator
-        expression: low
-        fused: false  # Independent translation for the repressor
-        gene:
-          id: lacI
-          source: uniprot
+
     - terminator: rrnB_T1

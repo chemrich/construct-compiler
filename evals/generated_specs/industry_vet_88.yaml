@@ -1,21 +1,25 @@
 construct:
-  name: "Mammalian_Target_mEGFP_C_terminal_Fusion"
+  name: mammalian_protein_GFP_fusion
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: protein_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: P53_HUMAN
+              id: target_protein
               source: uniprot
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

@@ -1,16 +1,20 @@
 construct:
-  name: "secreted_factor_mammalian_expression"
+  name: AAV_SecretedFactor_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: SecretedFactor
         expression: high
         chain:
-          - tag: IgK_leader
+          - signal_peptide: tissue_plasminogen_activator
           - gene:
               id: SecretedFactor
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

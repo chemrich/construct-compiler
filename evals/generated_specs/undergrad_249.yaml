@@ -1,14 +1,20 @@
 construct:
-  name: "super_expressor_protein_t7_system"
+  name: SuperExpressorProtein_T7_expression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
-    resistance: kanamycin
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target
+        label: SuperExpressorProtein
         expression: high
-        gene:
-          id: SuperExpressorProtein
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: SuperExpressorProtein
+              source: uniprot
+
+    - terminator: rrnB_T1

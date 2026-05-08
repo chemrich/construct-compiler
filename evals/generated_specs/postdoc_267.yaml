@@ -1,16 +1,24 @@
 construct:
-  name: "GF_Z_yeast_high_expression"
+  name: "yeast_GFZ_high_expression"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Substituted TDH3 for CMV as the strongest constitutive promoter available for yeast expression
+    - promoter: GAL1  # Strongest inducible promoter in yeast; for constitutive use PGK1
+    
     - cistron:
-        label: target
+        label: growth_factor_z
         expression: high
-        gene:
-          id: GF_Z
-          source: uniprot
-    - terminator: CYC1
+        chain:
+          - tag: 6xHis
+          - cleavage_site: KEX2  # Yeast-native protease for N-terminal processing
+          - tag: alpha_factor_secretion  # Yeast alpha-factor secretion signal for export
+          - gene:
+              id: GF_Z
+              source: uniprot  # Mammalian GF Z will be codon-optimized for yeast by compiler
+
+    - terminator: CYC1  # Yeast transcription terminator

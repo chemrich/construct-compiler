@@ -1,37 +1,26 @@
 construct:
-  name: "gene_to_be_knocked_out_ko_ura3"
+  name: "GeneToBeKnockedOut_knockout_cassette"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
 
   cassette:
-    - cistron:
-        label: homology_arm_5
-        fused: false # Homology arms are non-coding sequences; represented as cistrons for the compiler
-        gene:
-          id: "gene_to_be_knocked_out_5_prime"
-    
-    - spacer: 40
+    - homology_arm:
+        label: homology_left
+        length: 500
+        target_gene: GeneToBeKnockedOut
+        position: upstream
 
-    - promoter: TEF1 # Standard yeast constitutive promoter for selection markers
-
-    - cistron:
+    - marker:
         label: selection_marker
-        expression: medium
-        gene:
-          id: URA3
-          source: uniprot
+        type: URA3
+        selectable: true
 
-    - terminator: CYC1_term # Standard yeast terminator for transcription stop
-
-    - spacer: 40
-
-    - cistron:
-        label: homology_arm_3
-        fused: false # Homology arms are non-coding sequences; represented as cistrons for the compiler
-        gene:
-          id: "gene_to_be_knocked_out_3_prime"
-
-    - terminator: BBa_B0015
+    - homology_arm:
+        label: homology_right
+        length: 500
+        target_gene: GeneToBeKnockedOut
+        position: downstream

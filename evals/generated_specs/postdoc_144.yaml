@@ -1,37 +1,24 @@
 construct:
-  name: "yeast_secretion_fab_alpha_factor"
+  name: yeast_secreted_Fab
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2_micron
+    catalog_vector: "pPICZ_B"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: GPD  # High-power constitutive yeast promoter (TDH3)
+    - promoter: AOX1
 
     - cistron:
-        label: heavy_chain_Fd
+        label: secreted_Fab
         expression: high
         chain:
+          - secretion_signal: alpha_factor
           - gene:
-              id: P01149  # Alpha-mating factor leader sequence for yeast secretion
+              id: Fab_fragment
               source: uniprot
-          - gene:
-              id: antibody_heavy_chain_Fd
-              source: uniprot
+              description: "User-provided antibody Fab sequence"
 
-    - spacer: 30  # Polycistronic translation in yeast often requires an IRES or 2A peptide; spacer used here per schema for independent translation units
-
-    - cistron:
-        label: light_chain
-        expression: high
-        fused: false  # Independent translation unit
-        chain:
-          - gene:
-              id: P01149
-              source: uniprot
-          - gene:
-              id: antibody_light_chain
-              source: uniprot
-
-    - terminator: CYC1  # Standard yeast transcriptional terminator
+    - terminator: rrnB_T1

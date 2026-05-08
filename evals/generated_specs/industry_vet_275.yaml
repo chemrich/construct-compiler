@@ -1,14 +1,21 @@
 construct:
-  name: "MembraneProteinR_Mammalian_High_Expression"
-  host: mammalian
+  name: "MembraneProteinR_mammalian_expression"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    # CMV is a strong constitutive promoter suitable for mammalian protein expression
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: MembraneProteinR
         expression: high
-        gene:
-          id: MembraneProteinR
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: MembraneProteinR
+              source: uniprot
+
+    - terminator: polyA
+      # polyA signal for mammalian mRNA stability and export

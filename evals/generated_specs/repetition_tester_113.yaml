@@ -1,27 +1,37 @@
 construct:
-  name: yeast_dual_inducible_mEGFP_mScarlet
+  name: "S_cerevisiae_inducible_expression_system"
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target_gene
+        label: target_protein
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
+          - cleavage_site: 3C
           - gene:
-              id: mEGFP
+              id: GFP
               source: fpbase
+
     - terminator: CYC1
-    - promoter: CUP1
+
+    - spacer: 25
+
+    - promoter: MET25
+
     - cistron:
-        label: reporter_gene
+        label: selection_marker
         expression: medium
+        fused: false
         gene:
-          id: mScarlet
-          source: fpbase
+          id: URA3
+          source: uniprot
+
     - terminator: ADH1

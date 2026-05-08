@@ -1,14 +1,20 @@
 construct:
-  name: "high_intensity_gfp_expression"
-  host: e_coli_bl21_de3
+  name: high_brightness_gfp
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: reporter
+        label: gfp
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
+    - terminator: rrnB_T1

@@ -1,24 +1,37 @@
 construct:
-  name: "coexpression_A_B_polycistronic"
+  name: "dual_protein_A_B_IRES"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: protein_A
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: A
+              id: protein_A
               source: uniprot
-    - spacer: 30 # Substituted EMCV IRES with a 30bp spacer; IRES elements are eukaryotic, E. coli co-expression uses polycistronic spacers with internal RBS.
+
+    - spacer: 50
+
+    # EMCV IRES represented as a spacer element with note
+    # Note: EMCV IRES (Encephalomyocarditis virus IRES) included here
+    # In E. coli, IRES-mediated translation is limited; consider RBS-based polycistronic design instead
+    - spacer: 27
+
     - cistron:
         label: protein_B
         expression: high
         fused: false
         gene:
-          id: B
+          id: protein_B
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

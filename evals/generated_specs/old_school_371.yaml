@@ -1,26 +1,33 @@
 construct:
-  name: "HA_proteinI_IRES_proteinJ_expression"
-  host: mammalian
+  name: "proteinI_IRES_proteinJ_mammalian"
+  host: HEK293
+
   backbone:
-    resistance: neomycin # G418 selection uses the neomycin resistance gene
+    resistance: neomycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: proteinI_unit
+        label: proteinI
         expression: high
         chain:
           - tag: HA
           - gene:
               id: proteinI
               source: uniprot
-    - spacer: 585 # Typical length for an IRES element to allow internal ribosome entry
+
+    # IRES element for independent translation of second cistron from same mRNA
+    - spacer: 27
+
     - cistron:
-        label: proteinJ_unit
-        expression: medium
-        fused: false # Ensures independent translation initiation via the IRES
+        label: proteinJ
+        expression: high
+        fused: false
         gene:
           id: proteinJ
           source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

@@ -1,16 +1,33 @@
 construct:
-  name: "frequency_to_amplitude_integrator"
-  host: HEK293
+  name: "frequency_to_amplitude_secreted_converter"
+  host: mammalian
+  
   backbone:
     catalog_vector: "pTwist CMV"
+  
   cassette:
-    - promoter: NFAT  # NFAT promoter used to decode calcium pulse frequency into transcriptional amplitude
+    - promoter: CMV
+    
     - cistron:
-        label: secreted_signaling_output
+        label: frequency_sensor
         expression: high
         chain:
-          - tag: IgK_leader  # Secretion signal for mammalian host (Rule 18)
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P60568  # UniProt ID for Human Interleukin-2 (IL2), a signaling molecule
+              id: NFAT1
               source: uniprot
-    - terminator: SV40_polyA
+    
+    - spacer: 30
+    
+    - cistron:
+        label: secreted_output
+        expression: high
+        fused: false
+        chain:
+          - tag: signal_peptide
+          - gene:
+              id: IL2
+              source: uniprot
+    
+    - terminator: rrnB_T1

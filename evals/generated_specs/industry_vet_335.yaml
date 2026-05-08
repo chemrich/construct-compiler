@@ -1,19 +1,26 @@
 construct:
-  name: "enzyme_substrate_coexpression_system"
+  name: "enzyme_substrate_coexpression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: enzyme
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P00330
+              id: your_enzyme_id
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: substrate
         expression: high
@@ -21,6 +28,7 @@ construct:
         chain:
           - tag: 6xHis
           - gene:
-              id: P42212
+              id: your_substrate_id
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

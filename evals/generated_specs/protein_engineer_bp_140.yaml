@@ -1,19 +1,23 @@
 construct:
-  name: "pichia_aox1_lipasea_secretion"
+  name: "pichia_pastoris_lipaseA_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: autonomously_replicating_sequence
     source: addgene
+
   cassette:
     - promoter: AOX1
-      cistron:
-        label: secreted_lipase
+
+    - cistron:
+        label: lipaseA_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
               id: LipaseA
               source: uniprot
           - tag: 6xHis
-      terminator: AOX1_TT
+
+    - terminator: TT_AOX1

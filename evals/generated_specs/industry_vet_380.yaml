@@ -1,22 +1,22 @@
 construct:
-  name: "GPCR_X_Soluble_Production"
-  host: e_coli_bl21
+  name: "GPCR_X_soluble_purification"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: GPCR_X_therapeutic
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
-              id: GPCR-X
+              id: GPCR_X
               source: uniprot
+
     - terminator: rrnB_T1

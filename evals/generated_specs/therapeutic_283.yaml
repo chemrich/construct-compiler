@@ -1,22 +1,26 @@
 construct:
-  name: "yeast_scfv_surface_display"
+  name: yeast_scFv_surface_display
   host: yeast
+
   backbone:
-    resistance: URA3  # Non-antibiotic auxotrophic marker for yeast
-    ori: 2_micron     # High-copy yeast origin of replication
+    resistance: auxotrophic_uracil  # URA3 auxotrophic selection for yeast
+    ori: 2micron                     # High-copy yeast plasmid origin
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Constitutive yeast promoter
+    - promoter: GAL1  # Constitutive yeast promoter
+
     - cistron:
-        label: scfv_fusion
+        label: scFv_display
         expression: high
         chain:
-          - tag: alpha_factor  # Secretion signal for targeting to the secretory pathway
+          - tag: alpha_factor_signal  # N-terminal yeast secretion signal
           - gene:
-              id: therapeutic_scFv
+              id: scFv_therapeutic
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: Aga2p         # C-terminal anchor for Aga1p-Aga2p cell wall display
-    - terminator: CYC1         # Standard yeast terminator
+              repeats: 1
+          - tag: Aga2p  # C-terminal yeast cell wall anchoring domain for surface display
+
+    - terminator: CYC1  # Yeast transcription terminator

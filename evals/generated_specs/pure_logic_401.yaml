@@ -1,26 +1,36 @@
 construct:
-  name: "genetic_not_gate_inverter"
-  host: e_coli_bl21
+  name: "NOT_gate_input_repressed_output"
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Input signal: Arabinose presence activates this promoter
+    - promoter: lacUV5
+      label: "constitutive_repressor"
+
     - cistron:
-        label: inverter_repressor
-        expression: medium
-        fused: false
-        gene:
-          id: lacI
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac     # Output promoter: Repressed when LacI is produced (NOT logic)
-    - cistron:
-        label: output_reporter
+        label: repressor
         expression: high
-        fused: false
+        gene:
+          id: tetR
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+      label: "repressed_output"
+      regulation:
+        type: repressed_by
+        factor: tetR
+
+    - cistron:
+        label: output
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015
-# Note: The user's description (constitutive repressor inhibited by input) describes a YES gate (induction). 
-# This spec implements the requested NOT gate logic: Input (Arabinose) -> Repressor (LacI) expression -> Output (mEGFP) repression.
+
+    - terminator: rrnB_T1

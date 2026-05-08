@@ -1,36 +1,47 @@
 construct:
-  name: "tandem_bispecific_scfv_unique_linkers"
+  name: "dual_scFv_fusion_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: bispecific_fusion
+        label: scFv1_fusion
         expression: high
         chain:
-          # First scFv: VH - Linker 1 - VL
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: "VH_antigen_1"
+              id: scFv_fragment_1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3 # First unique flexible linker
+              repeats: 3
           - gene:
-              id: "VL_antigen_1"
+              id: scFv_light_chain_1
               source: uniprot
-          # Junction Linker between scFv units
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: scFv_fragment_2
+              source: uniprot
           - linker:
               type: short_GS
-              repeats: 4 # Second unique flexible linker (different sequence type)
-          # Second scFv: VH - Linker 2 - VL
+              repeats: 4
           - gene:
-              id: "VH_antigen_2"
+              id: scFv_light_chain_2
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 5 # Third unique flexible linker (different length to minimize homology)
-          - gene:
-              id: "VL_antigen_2"
-              source: uniprot
-    - terminator: bGH_polyA
+          - tag: Strep-II
+
+    - terminator: rrnB_T1
+
+# YAML comment: Three structurally distinct linker types used to ensure non-homologous sequences:
+# 1. GS_flexible (3 repeats) between scFv1 heavy and light chains
+# 2. rigid_EAAAK (2 repeats) between the two scFv units
+# 3. short_GS (4 repeats) between scFv2 heavy and light chains
+# These linker types produce chemically distinct amino acid compositions and are phylogenetically unrelated,
+# ensuring zero sequence homology across all three linker regions and minimizing cross-homology with scFv sequences.

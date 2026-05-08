@@ -1,42 +1,58 @@
 construct:
-  name: "yeast_carotenoid_biosynthesis_pathway"
+  name: carotenoid_pathway_4enzyme_yeast
   host: yeast
+
   backbone:
-    catalog_vector: "pYES2"
+    resistance: nourseothricin
+    ori: 2micron
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: crtB
+        label: CrtB
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: P21683
+              id: CrtB
               source: uniprot
-    - spacer: 30
+              codon_optimization: saccharomyces_cerevisiae
+
+    - spacer: 25
+
     - cistron:
-        label: crtI
+        label: CrtI
         expression: high
         fused: false
         gene:
-          id: P21684
+          id: CrtI
           source: uniprot
-    - spacer: 30
+          codon_optimization: saccharomyces_cerevisiae
+
+    - spacer: 25
+
     - cistron:
-        label: crtY
-        expression: high
+        label: CrtY
+        expression: medium
         fused: false
         gene:
-          id: P21685
+          id: CrtY
           source: uniprot
-    - spacer: 30
+          codon_optimization: saccharomyces_cerevisiae
+
+    - spacer: 25
+
     - cistron:
-        label: crtW
-        expression: high
+        label: CrtW
+        expression: medium
         fused: false
         chain:
           - gene:
-              id: Q9X9M4
+              id: CrtW
               source: uniprot
+              codon_optimization: saccharomyces_cerevisiae
           - tag: FLAG
-    - terminator: CYC1
+
+    - terminator: CYC1_terminator

@@ -1,21 +1,22 @@
 construct:
-  name: "ViralP_yeast_expression"
+  name: "yeast_ViralP_Strep"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: native_viral_promoter  # User-requested high-activity native viral internal promoter
+    - promoter: GAL1  # Native yeast strong promoter; viral promoter not directly compatible with yeast expression systems, substituting with GAL1
+
     - cistron:
-        label: target
+        label: ViralP
         expression: high
         chain:
           - gene:
               id: ViralP
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - tag: Strep-II
-    - terminator: CYC1_term
+
+    - terminator: CYC1

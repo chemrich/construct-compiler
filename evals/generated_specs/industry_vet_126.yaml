@@ -1,18 +1,25 @@
 construct:
-  name: "human_gene_x_solubility_optimized"
-  host: e_coli_bl21
+  name: "human_geneX_e_coli_highexpression"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: geneX
         expression: high
         chain:
-          - solubility_tag: MBP # Added to prevent inclusion bodies as requested
-          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: human_gene_x
+              id: geneX
               source: uniprot
-          - tag: Strep-II # C-terminal purification tag
-    - terminator: T7term
+          - cleavage_site: TEV
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

@@ -1,12 +1,19 @@
 construct:
-  name: "gRNA_targetA_mammalian_expression"
+  name: "gRNA_targetA_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: gRNA_expression_unit
-        gene:
-          id: gRNA_targetA
-    - terminator: BBa_B0015 # BBa_B0015 is used as a generic terminator; for Pol III, this would typically represent a Poly-T stretch.
+
+    - gene:
+        id: gRNA_targetA
+        source: custom
+        sequence: "GCTAGCTAGCTAGCTAGCTAGCTAGC"  # Replace with actual gRNA target sequence
+
+    - terminator: rrnB_T1

@@ -1,17 +1,22 @@
 construct:
-  name: "secreted_secretase_expression"
-  host: e_coli_bl21_de3
+  name: "e_coli_secretase_his_tag"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: secretase_target
+        label: secretase
         expression: high
         chain:
-          - tag: PelB  # PelB leader sequence for periplasmic secretion
           - tag: 6xHis
+          - signal_peptide: pelB  # E. coli outer membrane targeting
           - gene:
-              id: Secretase
+              id: secretase
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

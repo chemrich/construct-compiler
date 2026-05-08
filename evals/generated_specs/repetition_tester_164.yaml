@@ -1,27 +1,30 @@
 construct:
-  name: "TranscriptionFactorA_Triple_NLS_Fusion"
+  name: TranscriptionFactorA_tri_NLS_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: tf_nls_fusion
+        label: TFA_NLS1_NLS2_NLS3
         expression: high
         chain:
+          - tag: FLAG
           - gene:
               id: TranscriptionFactorA
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: NLS1
-          - linker:
-              type: rigid_EAAAK
-              repeats: 2
-          - tag: NLS2
-          - linker:
-              type: short_GS
               repeats: 1
-          - tag: NLS3
-    - terminator: bGH_polyA
+          - tag: NLS  # SV40 NLS (PKKKRKV)
+          - linker:
+              sequence: GGSGGA
+          - tag: NLS  # c-myc NLS (PAAKRVKLD)
+          - linker:
+              sequence: SGSGGS
+          - tag: NLS  # nucleoplasmin NLS (KRXR)
+
+    - terminator: rrnB_T1

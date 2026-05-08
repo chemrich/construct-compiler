@@ -1,19 +1,24 @@
 construct:
-  name: "periplasmic_nanoparticle_linker"
+  name: "periplasmic_linker_protein_nanoparticle_coating"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
     - cistron:
-        label: target_linker
+        label: linker_protein
         expression: high
         chain:
-          - tag: PelB
+          - signal_peptide: pelB
           - gene:
-              id: P02974
+              id: linker_protein
               source: uniprot
+          - cleavage_site: TEV
           - tag: 6xHis
+
     - terminator: rrnB_T1

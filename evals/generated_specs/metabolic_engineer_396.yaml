@@ -1,63 +1,74 @@
 construct:
-  name: "operon_gradient_E1_E5"
+  name: "E_coli_five_enzyme_operon_expression_gradient"
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
-
+  
   cassette:
-    - promoter: tac  # tac is functionally equivalent to pTrc for IPTG induction
-
+    - promoter: trc
+    
     - cistron:
         label: E1
-        expression: high
+        expression: very_high
+        rbs_strength: strong
+        start_codon: ATG
         chain:
           - tag: 6xHis
           - gene:
               id: E1
               source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
         label: E2
-        expression: medium
+        expression: high
+        rbs_strength: medium
+        start_codon: ATG
         fused: false
         gene:
           id: E2
           source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
         label: E3
         expression: medium
+        rbs_strength: weak
+        start_codon: GTG
         fused: false
         gene:
           id: E3
           source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
         label: E4
         expression: low
+        rbs_strength: weak
+        start_codon: TTG
         fused: false
         gene:
           id: E4
           source: uniprot
-
-    - spacer: 30
-
+    
+    - spacer: 25
+    
     - cistron:
         label: E5
         expression: very_low
+        rbs_strength: very_weak
+        start_codon: TTG
         fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: E5
               source: uniprot
-
+    
     - terminator: rrnB_T1

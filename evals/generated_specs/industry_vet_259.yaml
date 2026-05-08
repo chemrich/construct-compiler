@@ -1,17 +1,22 @@
 construct:
-  name: "GOI_cytoplasmic_solubility_design"
-  host: e_coli_bl21_de3
+  name: "soluble_GOI_His_SUMO"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: GOI_soluble
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: GOI
-              source: uniprot
           - solubility_tag: SUMO
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

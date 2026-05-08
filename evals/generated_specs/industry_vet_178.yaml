@@ -1,22 +1,26 @@
 construct:
-  name: "therapeutic_peptide_fc_fusion"
+  name: "SmallPeptide_IgGFc_fusion_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: peptide_fc_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: "SmallPeptide"
+              id: IGHG1_Fc
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 1
           - gene:
-              id: "P01857"
+              id: SmallPeptide
               source: uniprot
           - tag: 6xHis
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

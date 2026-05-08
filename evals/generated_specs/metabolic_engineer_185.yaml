@@ -1,22 +1,28 @@
 construct:
-  name: "balanced_four_enzyme_operon_araBAD"
+  name: "four_enzyme_pathway_araBAD_MBP_EnzB"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: enzyme_A
+        label: EnzA
         expression: medium
         chain:
           - gene:
               id: EnzA
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_B
+        label: EnzB
         expression: medium
         fused: false
         chain:
@@ -25,9 +31,12 @@ construct:
           - gene:
               id: EnzB
               source: uniprot
-    - spacer: 30
+          - tag: 6xHis
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_C
+        label: EnzC
         expression: medium
         fused: false
         chain:
@@ -35,9 +44,11 @@ construct:
               id: EnzC
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_D
+        label: EnzD
         expression: medium
         fused: false
         chain:
@@ -45,4 +56,5 @@ construct:
               id: EnzD
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

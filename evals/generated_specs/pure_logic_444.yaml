@@ -1,17 +1,42 @@
 construct:
-  name: "or_gate_tandem_promoter"
-  host: e_coli
+  name: "OR_gate_minimal"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Input A: Arabinose
-    - promoter: tac     # Input B: IPTG
+    - promoter: araBAD
+
+    - cistron:
+        label: input_A_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: input_B_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: malT
+              source: uniprot
+
+    - spacer: 20
+
     - cistron:
         label: output_Z
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

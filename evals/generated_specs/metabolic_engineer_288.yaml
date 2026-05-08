@@ -1,54 +1,80 @@
 construct:
   name: "PHA_biosynthesis_operon_phaA_F"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7
+
+    - rbs: BBa_B0034  # Strong RBS for high expression
+
     - cistron:
         label: phaA
         expression: high
-        gene:
-          id: phaA
-          source: uniprot
-    - spacer: 50 # Includes self-cleaving ribozyme and RNA stabilizing elements
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: phaA
+              source: uniprot
+
+    - ribozyme: Twister_Sister  # Self-cleaving ribozyme for stoichiometric release
+
     - cistron:
         label: phaB
         expression: high
         fused: false
-        gene:
-          id: phaB
-          source: uniprot
-    - spacer: 50 # Includes self-cleaving ribozyme and RNA stabilizing elements
+        chain:
+          - gene:
+              id: phaB
+              source: uniprot
+
+    - ribozyme: Twister_Sister
+
     - cistron:
         label: phaC
         expression: high
         fused: false
-        gene:
-          id: phaC
-          source: uniprot
-    - spacer: 50 # Includes self-cleaving ribozyme and RNA stabilizing elements
+        chain:
+          - gene:
+              id: phaC
+              source: uniprot
+
+    - ribozyme: Twister_Sister
+
     - cistron:
         label: phaD
         expression: high
         fused: false
-        gene:
-          id: phaD
-          source: uniprot
-    - spacer: 50 # Includes self-cleaving ribozyme and RNA stabilizing elements
+        chain:
+          - gene:
+              id: phaD
+              source: uniprot
+
+    - ribozyme: Twister_Sister
+
     - cistron:
         label: phaE
         expression: high
         fused: false
-        gene:
-          id: phaE
-          source: uniprot
-    - spacer: 50 # Includes self-cleaving ribozyme and RNA stabilizing elements
+        chain:
+          - gene:
+              id: phaE
+              source: uniprot
+
+    - ribozyme: Twister_Sister
+
     - cistron:
         label: phaF
         expression: high
         fused: false
-        gene:
-          id: phaF
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: phaF
+              source: uniprot
+
+    - terminator: rrnB_T1

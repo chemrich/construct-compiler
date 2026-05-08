@@ -1,16 +1,22 @@
 construct:
   name: "CoolEnzyme_Cterm_FLAG"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: CoolEnzyme
         expression: high
         chain:
           - gene:
               id: CoolEnzyme
               source: uniprot
-          - tag: FLAG
+          - tag: FLAG  # C-terminal FLAG tag
+
     - terminator: rrnB_T1

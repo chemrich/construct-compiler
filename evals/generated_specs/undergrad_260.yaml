@@ -1,16 +1,22 @@
 construct:
-  name: "AwesomeProtein_constitutive_expression"
+  name: "AwesomeProtein_expression"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: tac
+    
     - cistron:
-        label: target
+        label: AwesomeProtein
         expression: high
-        gene:
-          id: AwesomeProtein
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: AwesomeProtein
+              source: uniprot
+    
     - terminator: rrnB_T1

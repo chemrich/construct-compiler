@@ -1,14 +1,43 @@
 construct:
-  name: "negative_feedback_protein_l_autoregulation"
-  host: e_coli_bl21_de3
+  name: "protein_L_negative_feedback_loop"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac  # T7lac is repressed by LacI, creating the negative feedback loop
+    - promoter: T7lac
+
     - cistron:
-        label: protein_l_regulator
+        label: L_main
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: L_repressor_target
         expression: medium
-        gene:
-          id: P03023  # LacI is used as the regulator protein 'L' to implement negative feedback on the T7lac promoter
-          source: uniprot
-    - terminator: T7term
+        fused: false
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: feedback_sensor
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - terminator: rrnB_T1

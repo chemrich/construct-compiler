@@ -1,27 +1,35 @@
 construct:
-  name: "therapeutic_protease_substrate_coexpression"
-  host: e_coli_bl21_de3
+  name: "dual_protease_substrate_expression"
+  host: e_coli_bl21
+
   backbone:
-    # Note: User requested no antibiotic pressure. Standard plasmids require a marker; pET-28b(+) (kanamycin) is used here as a placeholder for a balanced-lethal or auxotrophic system.
-    catalog_vector: "pET-28b(+)"
+    resistance: chloramphenicol
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: therapeutic_protease
+        label: protease
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P00742  # Factor Xa
+              id: TEV_protease
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: protein_substrate
+        label: substrate
         expression: high
         fused: false
         chain:
           - tag: Strep-II
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: target_substrate
+              source: uniprot
+
+    - terminator: rrnB_T1

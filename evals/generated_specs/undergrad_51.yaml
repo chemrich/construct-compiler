@@ -1,20 +1,23 @@
 construct:
-  name: "speedy_degron_mammalian_expression"
+  name: "Speedy_Degron_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: hygromycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: Speedy_Degron
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: Speedy_Degron
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: ODC_degron
-    - terminator: bGH_pA  # Standard mammalian terminator for use with CMV promoter
+              source: uniprot
+          - degron: PEST  # C-terminal PEST degron for rapid proteasomal degradation
+
+    - terminator: rrnB_T1

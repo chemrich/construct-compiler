@@ -1,19 +1,24 @@
 construct:
-  name: "p_pastoris_er_retention_study"
+  name: "Pichia_pastoris_ER_retention_Ost1_HDEL"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: glycoprotein_target
+        label: target_glycoprotein
         expression: high
         chain:
-          - tag: Ost1 # N-terminal Ost1 signal peptide for ER translocation
+          - tag: Ost1_signal_peptide
           - gene:
-              id: SUC2 # Yeast invertase used as a model glycoprotein for folding studies
+              id: GCN4
               source: uniprot
-          - tag: HDEL # C-terminal ER retention signal
-    - terminator: AOX1_term
+          - tag: HDEL
+
+    - terminator: rrnB_T1

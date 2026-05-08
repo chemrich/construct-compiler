@@ -1,16 +1,21 @@
 construct:
-  name: "MyProteinA_expression_inducible"
-  host: e_coli_bl21_de3
+  name: MyProteinA_His6_expression
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: MyProteinA
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: MyProteinA
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

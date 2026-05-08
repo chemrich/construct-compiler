@@ -1,27 +1,26 @@
-```yaml
 construct:
-  name: kinase_secretion_sumo_construct
+  name: "pichia_kinase_secretion_sumo"
   host: yeast
-
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pARS
     source: addgene
-
+  
   cassette:
     - promoter: FLD1
-
+    
     - cistron:
-        label: target_kinase
+        label: secreted_kinase
         expression: high
         chain:
-          - tag: alpha_factor  # secretion signal for yeast
+          - signal_peptide: alpha-factor
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: kinase_gene  # replace with actual kinase ID
+              id: kinase
               source: uniprot
           - tag: c-myc
-
+    
     - terminator: rrnB_T1
-```

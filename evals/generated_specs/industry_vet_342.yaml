@@ -1,22 +1,26 @@
 construct:
-  name: "yeast_therapeutic_mbp_fusion"
+  name: "yeast_antibody_fragment_solubility_fusion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: therapeutic_fusion
+        label: fusion_protein
         expression: high
         chain:
-          - solubility_tag: MBP
+          - gene:
+              id: antibody_fragment
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - gene:
-              id: Trastuzumab_scFv
-              source: uniprot
+              repeats: 2
+          - solubility_tag: MBP
           - tag: 6xHis
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

@@ -1,21 +1,26 @@
 construct:
-  name: "HEK293_mEGFP_TargetC_fusion"
+  name: TargetC_GFP_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: TargetC_GFP
         expression: high
         chain:
           - gene:
-              id: mEGFP
-              source: fpbase
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
               id: TargetC
               source: uniprot
-    - terminator: BGH_pA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

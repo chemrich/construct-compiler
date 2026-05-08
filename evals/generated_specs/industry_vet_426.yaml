@@ -1,18 +1,24 @@
 construct:
-  name: "AAV_VP3_Fragment_GST_Fusion"
-  host: e_coli_bl21_de3
+  name: "VP3_Fragment_GST_TEV"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: VP3_Fragment
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
               id: VP3_Fragment
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

@@ -1,16 +1,21 @@
 construct:
-  name: "hsp70_egfp_stable_human"
+  name: hsp70_EGFP_mammalian_stable
   host: HEK293
+
   backbone:
     resistance: neomycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: HSP70
+    - promoter: hsp70
+
     - cistron:
-        label: reporter
+        label: EGFP
         expression: high
-        gene:
-          id: EGFP
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - gene:
+              id: EGFP
+              source: uniprot
+
+    - terminator: rrnB_T1

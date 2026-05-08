@@ -1,23 +1,27 @@
 construct:
-  name: "yeast_surface_display_aga2p_fusion"
+  name: "yeast_surface_display_peptide_Aga2p"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GAL1 # Inducible promoter standard for Aga2p yeast display
+    - promoter: GAL1
+
     - cistron:
-        label: yeast_display_anchor
+        label: surface_display
         expression: high
         chain:
           - gene:
-              id: AGA2
+              id: Aga2p
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: target_peptide
+              id: your_peptide
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

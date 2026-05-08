@@ -1,27 +1,30 @@
 construct:
-  name: "bifunctional_diagnostic_fusion"
+  name: targeting_enzyme_reporter_fusion
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: targeting_reporter_fusion
+        label: bifunctional_enzyme
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
-          - cleavage_site: TEV
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: A0A1B0GRW1
+              id: targeting_domain
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: Q9GV45
+              id: horseradish_peroxidase
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

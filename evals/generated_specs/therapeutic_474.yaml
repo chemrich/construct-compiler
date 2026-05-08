@@ -1,17 +1,22 @@
 construct:
-  name: "intracellular_peptide_release_system"
+  name: therapeutic_peptide_self_cleaving
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "peptide_precursor"
+        label: precursor
         expression: high
         chain:
-          - solubility_tag: SUMO
-          - cleavage_site: P2A
+          - tag: FLAG
           - gene:
-              id: "GLP1"
+              id: therapeutic_peptide_precursor
               source: uniprot
-    - terminator: bGH_PA
+          - cleavage_site: 2A_T2A
+          - tag: HA
+
+    - terminator: rrnB_T1

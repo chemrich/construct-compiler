@@ -1,22 +1,30 @@
 construct:
-  name: "yeast_dual_trna_recombination_resistant"
+  name: "dual_tRNA_yeast_pol3"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pRS426"
+    resistance: uracil
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: SNR52
-    - cistron:
-        label: trna_unit_1
-        gene:
-          id: tRNA_1
-    - terminator: SUP4_term
-    - spacer: 50
-    - promoter: RPR1
-    - cistron:
-        label: trna_unit_2
-        fused: false
-        gene:
-          id: tRNA_2
-    - terminator: SNR52_term
+    - promoter: SNR52  # Pol III promoter for tRNA
+      
+    - gene:
+        id: tRNA_Lys_TTT
+        source: uniprot
+        note: "First tRNA under SNR52 promoter"
+    
+    - terminator: tRNA_T1  # Pol III terminator (4 T's)
+    
+    - spacer: 80  # Large spacer with high GC content to prevent recombination
+    
+    - promoter: U6  # Alternative Pol III promoter (structurally distinct from SNR52)
+      
+    - gene:
+        id: tRNA_Gly_GCC
+        source: uniprot
+        note: "Second tRNA under U6 promoter"
+    
+    - terminator: tRNA_rho_indep  # Alternative Pol III terminator (different mechanism)

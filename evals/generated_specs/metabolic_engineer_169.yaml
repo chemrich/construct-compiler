@@ -1,40 +1,51 @@
 construct:
-  name: "precursor_biosynthesis_operon_PreE1_PreE4"
+  name: "PreE_quad_operon_balanced_expression"
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23106  # Constitutive medium-strength promoter for E. coli
+    - promoter: tac
+
     - cistron:
-        label: enzyme_1
+        label: PreE1
         expression: medium
-        gene:
-          id: PreE1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: PreE1_eco_opt
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
-        expression: medium
-        fused: false
-        gene:
-          id: PreE2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enzyme_3
+        label: PreE2
         expression: medium
         fused: false
         gene:
-          id: PreE3
+          id: PreE2_eco_opt
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_4
+        label: PreE3
         expression: medium
         fused: false
         gene:
-          id: PreE4
+          id: PreE3_eco_opt
           source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: PreE4
+        expression: medium
+        fused: false
+        gene:
+          id: PreE4_eco_opt
+          source: uniprot
+
     - terminator: rrnB_T1

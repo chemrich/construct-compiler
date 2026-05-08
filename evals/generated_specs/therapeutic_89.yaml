@@ -1,34 +1,36 @@
 construct:
-  name: bicistronic_nonviral_interaction_system
-  host: e_coli
+  name: "bicistronic_proteinX_proteinY_purification"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin # Defaulting per Rule 9; selection marker required for plasmid spec
+    resistance: null
     ori: pBR322
-    source: addgene
+    source: custom
+
   cassette:
-    - promoter: araBAD # Bacterial inducible promoter (non-viral)
+    - promoter: T7lac
+
     - cistron:
-        label: protein_x
-        expression: medium
+        label: proteinX
+        expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - cleavage_site: TEV
           - gene:
-              id: P0A7E3
+              id: proteinX
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: protein_y
-        expression: medium
-        fused: false # Separate translation units for bicistronic expression
+        label: proteinY
+        expression: high
+        fused: false
         chain:
-          - tag: Strep-II
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0A8T7
+              id: proteinY
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator (non-viral)
+
+    - terminator: rrnB_T1

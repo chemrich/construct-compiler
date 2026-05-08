@@ -1,24 +1,54 @@
 construct:
-  name: "robust_z_persistence_filter"
-  host: e_coli_bl21_de3
+  name: Robust_Z_self_correction_module
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: In_Stable
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
-    - spacer: 30
-    - cistron:
-        label: Robust_Z
+        label: In_Stable_sensor
         expression: high
-        fused: false # Independent translation to allow for separate regulation or stoichiometric control
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: rrnB_T1 # Standard rho-independent terminator for E. coli systems
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: noise_filter
+        expression: medium
+        chain:
+          - gene:
+              id: cheZ
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: threshold_comparator
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Robust_Z_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

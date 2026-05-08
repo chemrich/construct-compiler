@@ -1,15 +1,38 @@
 construct:
-  name: "proteink_negative_feedback_loop"
-  host: e_coli
+  name: "ProteinK_self_regulating_feedback_loop"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: lacUV5 # Negative feedback: ProteinK is designed to bind the operator in this promoter to repress its own transcription
+    - promoter: T7lac
+
     - cistron:
-        label: ProteinK_expression
-        expression: medium
-        gene:
-          id: ProteinK
+        label: ProteinK_repressor
+        expression: high
+        chain:
+          - gene:
+              id: ProteinK
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: operator_binding_domain
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - spacer: 30
+
+    # Native T7lac operator sequence integrated upstream of ProteinK
+    # ProteinK product acts as repressor by binding DNA operator sequences
+    # This creates negative feedback: high ProteinK → repression of ProteinK expression
+
     - terminator: rrnB_T1

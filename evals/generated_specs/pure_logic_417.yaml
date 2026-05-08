@@ -1,25 +1,68 @@
 construct:
-  name: "environmental_sensor_logic_array"
-  host: e_coli_bl21
+  name: "multi_input_sensor_array"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: "P_TempHigh_AND_pHLow" # Logic AND: requires both activator proteins
+    - promoter: T7lac
+    
     - cistron:
-        label: output_a
-        expression: medium
-        gene:
-          id: mCherry
-          source: fpbase
+        label: Temp_HIGH_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TlpA
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: pH_LOW_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CadC
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: Gluc_LOW_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CreB
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: AND_gate_TempHigh_pHLow
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: OUTPUT_A
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: OR_gate_TempHigh_GlucLow
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: OUTPUT_B
+              source: uniprot
+    
     - terminator: rrnB_T1
-    - promoter: "P_TempHigh" # Logic OR - Part 1: initiates transcription of Output B
-    - promoter: "P_GlucLow"  # Logic OR - Part 2: initiates transcription of Output B (tandem architecture)
-    - cistron:
-        label: output_b
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term

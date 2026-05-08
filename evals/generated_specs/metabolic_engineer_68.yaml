@@ -1,37 +1,48 @@
 construct:
-  name: "polyketide_synthase_6_enzyme_operon"
+  name: polyketide_synthase_operon_6enzyme
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: pks1
+        label: PKS1
         expression: high
         chain:
           - tag: Twin-Strep
           - gene:
               id: PKS1
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pks2
+        label: PKS2
         expression: high
         fused: false
         gene:
           id: PKS2
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pks3
+        label: PKS3
         expression: high
         fused: false
         gene:
           id: PKS3
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pks4
+        label: PKS4
         expression: high
         fused: false
         chain:
@@ -39,20 +50,25 @@ construct:
           - gene:
               id: PKS4
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pks5
+        label: PKS5
         expression: high
         fused: false
         gene:
           id: PKS5
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: pks6
+        label: PKS6
         expression: high
         fused: false
         gene:
           id: PKS6
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

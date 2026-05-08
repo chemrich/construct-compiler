@@ -1,16 +1,38 @@
 construct:
-  name: yeast_negative_feedback_protein_Q
+  name: "S_cerevisiae_Q_negative_feedback_loop"
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: pTEF1  # Standard yeast promoter, typically modified with operator sites for autoregulation
+    - promoter: GAL1
+
     - cistron:
-        label: protein_Q
+        label: Q_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q_repressor
+              source: uniprot
+
+    - terminator: CYC1
+
+    - spacer: 25
+
+    - promoter: pGAL4_UAS_minimal
+      # Minimal GAL4 promoter with upstream activation sequences (UAS) to enable protein Q-mediated repression
+
+    - cistron:
+        label: Q_production
         expression: low
-        gene:
-          id: tetR # Using TetR as a functional representative for an autorepressive "Protein Q"
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - gene:
+              id: Q_repressor
+              source: uniprot
+          - cleavage_site: 3C
+
+    - terminator: CYC1

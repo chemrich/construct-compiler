@@ -1,17 +1,54 @@
 construct:
-  name: "yeast_or_gate_metX_drugY"
+  name: "yeast_OR_gate_metabolite_X_drug_Y"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pRS426"
+    resistance: uracil
+    ori: 2μ
     source: addgene
+
   cassette:
-    - promoter: "pOR_metX_drugY" # Chimeric yeast promoter containing binding sites for metabolite_X and drug_Y response factors to implement OR logic
+    - promoter: GAL1
+
+    - cistron:
+        label: sensor_metabolite_X
+        expression: high
+        chain:
+          - gene:
+              id: SNF3
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: sensor_drug_Y
+        expression: high
+        chain:
+          - gene:
+              id: PDR5
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: transcription_factor_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GAL4
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: reporter
         expression: high
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: CYC1_term
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1

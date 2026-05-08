@@ -1,50 +1,26 @@
-```yaml
 construct:
-  name: sender_cell_Y_to_signal
+  name: sender_receiver_system_part1
   host: e_coli
-
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-
   cassette:
-    - promoter: araBAD  # Y input sensor
-
-    - cistron:
-        label: signal_peptide
-        expression: high
-        chain:
-          - tag: pelB  # secretion signal for E. coli
-          - cleavage_site: TEV
-          - gene:
-              id: AHL_synthase  # quorum sensing signal
-              source: uniprot
-
-    - terminator: rrnB_T1
-
----
-
-construct:
-  name: receiver_cell_signal_to_Z
-  host: e_coli
-
-  backbone:
-    resistance: ampicillin  # different resistance for co-culture
-    ori: p15A  # different ori for compatibility
-    source: addgene
-
-  cassette:
-    - promoter: luxI  # AHL-responsive promoter
-
-    - cistron:
-        label: output_enzyme
-        expression: high
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: beta_galactosidase
-              source: uniprot
-
-    - terminator: rrnB_T1
-```
+  - promoter: araBAD
+  - cistron:
+      label: input_sensor
+      expression: high
+      chain:
+      - gene:
+          id: luxR
+          source: uniprot
+  - spacer: 30
+  - cistron:
+      label: signal_molecule
+      expression: high
+      chain:
+      - cleavage_site: TEV
+      - gene:
+          id: luxI
+          source: uniprot
+  - terminator: rrnB_T1

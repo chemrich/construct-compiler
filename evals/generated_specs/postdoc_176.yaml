@@ -1,16 +1,22 @@
 construct:
-  name: "yeast_gal_inducible_his_tagged_expression"
+  name: "yeast_gal_his_protein"
   host: yeast
+
   backbone:
-    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: GAL1  # Strong galactose-inducible promoter in yeast
+    - promoter: GAL1
+
     - cistron:
         label: target
-        expression: high  # High expression setting triggers optimized Kozak-like sequence for yeast
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP # Defaulting to mEGFP as no protein was specified
-              source: fpbase
-    - terminator: CYC1_term
+              id: unknown
+              source: uniprot
+
+    - terminator: rrnB_T1

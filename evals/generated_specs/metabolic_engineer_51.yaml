@@ -1,31 +1,54 @@
 construct:
-  name: metabolic_disorder_gene_therapy
+  name: metabolic_therapy_multi_enzyme_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: metabolic_enzyme_polyprotein
+        label: enzyme_x
         expression: high
         chain:
           - gene:
-              id: Enzyme_X
+              id: enzyme_x
               source: uniprot
-          - tag: HA
-          - cleavage_site: P2A
-          - gene:
-              id: Enzyme_Y
-              source: uniprot
-          - tag: HA
           - cleavage_site: T2A
+          - tag: HA
+
+    - cistron:
+        label: enzyme_y
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: Enzyme_Z
+              id: enzyme_y
+              source: uniprot
+          - cleavage_site: T2A
+          - tag: HA
+
+    - cistron:
+        label: enzyme_z
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: enzyme_z
+              source: uniprot
+          - cleavage_site: T2A
+          - tag: HA
+
+    - cistron:
+        label: cofactor_recycler
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: cofactor_recycler
               source: uniprot
           - tag: HA
-          - cleavage_site: P2A
-          - gene:
-              id: Cofactor_Recycler
-              source: uniprot
-          - tag: HA
-    - terminator: bGH_pA
+
+    - terminator: SV40_poly_A

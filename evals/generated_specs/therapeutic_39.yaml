@@ -1,22 +1,28 @@
-```yaml
 construct:
-  name: "therapeutic_protein_degrader"
+  name: "mammalian_targeted_degradation_recruiter"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    # Note: pTwist CMV is antibiotic-free backbone suitable for therapeutic applications
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
 
     - cistron:
-        label: therapeutic_degrader
-        expression: medium
+        label: degradation_recruiter
+        expression: high
         chain:
           - tag: NLS
           - gene:
-              id: P62987  # UBQLN2 - ubiquilin-2, involved in protein degradation
+              id: VHL_binding_domain
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: therapeutic_target_binding
+              source: uniprot
+          - tag: FLAG
 
     - terminator: rrnB_T1
-```

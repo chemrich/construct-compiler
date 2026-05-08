@@ -1,62 +1,65 @@
 construct:
-  name: "Pseudomonas_putida_Xyl_Pathway_Operon"
-  # Pseudomonas putida not in host list; defaulting to e_coli as a gram-negative proxy
-  host: e_coli
+  name: "pseudomonas_putida_xylose_degradation_operon"
+  host: bacillus  # P. putida is gram-negative; using bacillus as closest available for non-E. coli gram-negative
+  
   backbone:
     resistance: kanamycin
-    ori: pBBR1 # Broad-host-range origin for Pseudomonas
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: tac # Strong inducible promoter for gram-negative hosts
+    - promoter: tac  # Strong inducible promoter suitable for gram-negative bacteria
+    
     - cistron:
-        label: xylA
+        label: XylA
         expression: high
         chain:
           - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P0A113
+              id: XylA
               source: uniprot
-    - spacer: 30
+    
     - cistron:
-        label: xylB
+        label: XylB
+        expression: high
+        fused: false
+        gene:
+          id: XylB
+          source: uniprot
+    
+    - cistron:
+        label: XylC
         expression: medium
         fused: false
         gene:
-          id: P0A115
+          id: XylC
           source: uniprot
-    - spacer: 30
+    
     - cistron:
-        label: xylC
+        label: XylD
         expression: medium
         fused: false
         gene:
-          id: P0A116
+          id: XylD
           source: uniprot
-    - spacer: 30
+    
     - cistron:
-        label: xylD
+        label: XylE
         expression: low
         fused: false
         gene:
-          id: P0A118
+          id: XylE
           source: uniprot
-    - spacer: 30
+    
     - cistron:
-        label: xylE
+        label: XylF
         expression: low
         fused: false
         gene:
-          id: P06624
+          id: XylF
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: xylF
-        expression: very_low
-        fused: false
-        gene:
-          id: P19016
-          source: uniprot
+    
     - terminator: rrnB_T1

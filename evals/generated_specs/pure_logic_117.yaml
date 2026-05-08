@@ -1,26 +1,43 @@
 construct:
-  name: "feedback_regulated_production_system"
+  name: feedback_regulated_ProductX_production
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: feedback_repressor
-        expression: medium
-        gene:
-          id: "P0AD28"
-          source: uniprot
-    - spacer: 40
-    - promoter: trp # Feedback-regulated promoter: inhibited by TrpR (P0AD28) when ProductX (tryptophan) is high
-    - cistron:
-        label: product_x_synthase
+        label: ProductX
         expression: high
-        fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: "P0A877"
+              id: ProductX
               source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: feedback_sensor
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: AraC
+              source: uniprot
+
     - terminator: rrnB_T1

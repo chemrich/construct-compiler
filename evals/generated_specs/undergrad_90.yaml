@@ -1,17 +1,23 @@
 construct:
-  name: "small_peptide_periplasmic_expression"
-  host: e_coli_bl21_de3
+  name: SmallPeptide_periplasmic_Strep
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target_peptide
+        label: target
         expression: high
         chain:
-          - tag: PelB  # Signal peptide for periplasmic translocation
+          - signal_peptide: pelB  # pelB signal sequence for periplasmic targeting
           - tag: Strep-II
           - gene:
               id: SmallPeptide
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

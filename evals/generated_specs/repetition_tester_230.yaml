@@ -1,40 +1,50 @@
 construct:
-  name: "synonymous_tandem_peptide_repeats"
-  host: e_coli_bl21_de3
+  name: "five_tandem_peptide_repeats_synonymous"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: repeat_peptide_fusion
+        label: repeat_cassette
         expression: high
-        # Note: Each gene repeat unit must be synonymously codon-optimized by the compiler to prevent DNA recombination.
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01275
-              source: uniprot
+              id: "peptide_repeat_1_codon_set_A"
+              source: "custom"
+              note: "First synonymous encoding of target peptide"
           - linker:
-              type: GS_flexible
-              repeats: 2
+              type: "custom_linker_1"
+              sequence: "GGTGGTGGT"
           - gene:
-              id: P01275
-              source: uniprot
+              id: "peptide_repeat_2_codon_set_B"
+              source: "custom"
+              note: "Second synonymous encoding (alt codons) of target peptide"
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              type: "custom_linker_2"
+              sequence: "GGCGGCGGC"
           - gene:
-              id: P01275
-              source: uniprot
+              id: "peptide_repeat_3_codon_set_C"
+              source: "custom"
+              note: "Third synonymous encoding (alt codons) of target peptide"
           - linker:
-              type: short_GS
-              repeats: 1
+              type: "custom_linker_3"
+              sequence: "AGCAGCAGC"
           - gene:
-              id: P01275
-              source: uniprot
+              id: "peptide_repeat_4_codon_set_D"
+              source: "custom"
+              note: "Fourth synonymous encoding (alt codons) of target peptide"
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: "custom_linker_4"
+              sequence: "AGTCGACCC"
           - gene:
-              id: P01275
-              source: uniprot
-    - terminator: T7term
+              id: "peptide_repeat_5_codon_set_E"
+              source: "custom"
+              note: "Fifth synonymous encoding (alt codons) of target peptide"
+
+    - terminator: rrnB_T1

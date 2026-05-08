@@ -1,39 +1,69 @@
 construct:
-  name: yeast_bistable_toggle_latch
+  name: "yeast_bistable_toggle_switch"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2_micron
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Synthetic promoter repressed by LacI (State B repressor)
+    - promoter: GAL4_UAS
+      label: "state_A_promoter"
+
     - cistron:
-        label: state_A_unit
-        expression: high
-        chain:
-          - gene:
-              id: TetR
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: BBa_B0015
-    - spacer: 50
-    - promoter: J23106  # Synthetic promoter repressed by TetR (State A repressor)
-    - cistron:
-        label: state_B_unit
+        label: "repressor_B"
         expression: high
         chain:
           - gene:
               id: LacI
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: GAL1_UAS
+      label: "state_B_promoter"
+
+    - cistron:
+        label: "repressor_A"
+        expression: high
+        chain:
+          - gene:
+              id: TetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: GAL4_UAS
+      label: "reporter_A_promoter"
+
+    - cistron:
+        label: "fluorescent_protein_A"
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: GAL1_UAS
+      label: "reporter_B_promoter"
+
+    - cistron:
+        label: "fluorescent_protein_B"
+        expression: high
+        chain:
+          - tag: 6xHis
           - gene:
               id: mScarlet
               source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

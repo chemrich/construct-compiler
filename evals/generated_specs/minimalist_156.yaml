@@ -1,23 +1,25 @@
 construct:
-  name: "nuclear_cytoplasmic_shuttle_mEGFP"
+  name: nuclear_cytoplasmic_shuttle_protein
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: shuttling_reporter
+        label: shuttle_protein
         expression: high
         chain:
           - tag: NLS
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - cleavage_site: 3C
           - gene:
-              id: mEGFP
+              id: eGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: NES
-    - terminator: SV40_polyA
+              repeats: 1
+          - tag: NLS
+
+    - terminator: rrnB_T1

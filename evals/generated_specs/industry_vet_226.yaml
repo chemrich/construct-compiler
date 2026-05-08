@@ -1,22 +1,22 @@
 construct:
-  name: "AAV2_VP1_mEGFP_fusion_IVT"
+  name: "AAV_fusion_protein_IVT"
   host: in_vitro
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_fusion
+        label: AAV_fusion
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P03135
+              id: AAV2_capsid
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: mEGFP
-              source: fpbase
+
     - terminator: T7term

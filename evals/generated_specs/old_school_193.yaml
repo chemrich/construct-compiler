@@ -1,22 +1,41 @@
 construct:
-  name: phage_display_gIII_vector
+  name: phage_display_M13_gIII_peptide_library
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: gIII_display_fusion
-        expression: medium
+        label: gIII_N_terminal
+        expression: high
         chain:
-          - tag: PelB
-          - tag: FLAG  # Placeholder for the screening peptide sequence
-          - linker:
-              type: GS_flexible
-              repeats: 3
           - gene:
-              id: P69168
+              id: M13_gIII_N_terminal
               source: uniprot
-    - terminator: BBa_B0015
+
+    - spacer: 20
+
+    - cistron:
+        label: peptide_insert
+        expression: high
+        fused: true
+        gene:
+          id: peptide_library
+          source: user_defined
+
+    - spacer: 20
+
+    - cistron:
+        label: gIII_C_terminal
+        expression: high
+        fused: true
+        gene:
+          id: M13_gIII_C_terminal
+          source: uniprot
+
+    - terminator: rrnB_T1

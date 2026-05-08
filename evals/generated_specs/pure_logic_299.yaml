@@ -1,14 +1,62 @@
 construct:
-  name: "diagnostic_logic_and_gate"
+  name: "cell_free_AND_logic_diagnostic"
   host: in_vitro
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    # Cell-free systems use linear DNA or plasmid templates
+    # Representing as a minimal expression cassette suitable for IVT
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7  # Logic (M1 AND M2) is assumed to be implemented via logic-gated T7 polymerase or toehold switches in the cell-free extract.
+    - promoter: T7
+
+    # First cistron: M1-responsive transcription factor (TF1)
+    # Detects biomarker M1 and produces an activator
     - cistron:
-        label: "COLOR_OUT"
+        label: M1_sensor
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TF1_M1_binding
+              source: uniprot
+              # Note: This represents a biomarker-responsive transcription factor
+              # In practice, this would be a protein engineered to bind M1
+
+    - spacer: 25
+
+    # Second cistron: M2-responsive transcription factor (TF2)
+    # Detects biomarker M2 and produces a co-activator
+    - cistron:
+        label: M2_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TF2_M2_binding
+              source: uniprot
+              # Represents a biomarker-responsive transcription factor
+              # Engineered to bind M2
+
+    - spacer: 25
+
+    # Third cistron: AND-gate output reporter
+    # Encodes a colorimetric enzyme (e.g., horseradish peroxidase or beta-galactosidase)
+    # Expression is controlled by a synthetic promoter requiring BOTH TF1 AND TF2 activation
+    - cistron:
+        label: COLOR_OUT
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: HRP
+              source: uniprot
+              # Horseradish peroxidase catalyzes colorimetric conversion
+              # (e.g., TMB to colored product)
+        # Note: This cistron would be under control of a synthetic AND-gate promoter
+        # in actual implementation (e.g., dual TF1/TF2 binding sites)
+
+    - terminator: rrnB_T1

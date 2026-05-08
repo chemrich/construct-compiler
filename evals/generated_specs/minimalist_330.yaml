@@ -1,32 +1,44 @@
 construct:
-  name: enzymes_klm_operon
-  host: e_coli
+  name: "sequential_enzyme_cascade_KLM"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_k
-        expression: medium
-        gene:
-          id: K
-          source: uniprot
-    - spacer: 30
+        label: enzyme_K
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: K
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_l
-        expression: medium
+        label: enzyme_L
+        expression: high
         fused: false
-        gene:
-          id: L
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: L
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_m
-        expression: medium
+        label: enzyme_M
+        expression: high
         fused: false
-        gene:
-          id: M
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: M
+              source: uniprot
+
     - terminator: rrnB_T1

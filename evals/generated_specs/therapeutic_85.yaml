@@ -1,19 +1,29 @@
 construct:
-  name: "non_viral_cas9_nls_flag"
+  name: "mammalian_CRISPR_Cas9_transient"
   host: HEK293
+
   backbone:
-    resistance: none # Requirement for no antibiotic resistance markers implies a minicircle or nanoplasmid system
-    ori: none        # Requirement for no viral replication origins
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Note: pTwist CMV is a mammalian expression vector without antibiotic resistance markers
+    # suitable for transient transfection. No viral replication origins included.
+
   cassette:
     - promoter: EF1_alpha
+      # Strong, constitutive mammalian promoter; alternative to CMV for robust non-viral expression
+
     - cistron:
-        label: cas9_effector
+        label: CRISPR_Cas9
         expression: high
         chain:
           - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-    - terminator: hGH_pA
+              # UniProt ID: P69827 (Streptococcus pyogenes Cas9)
+
+    - terminator: bGH_polyA
+      # Bovine growth hormone polyadenylation signal for mammalian expression

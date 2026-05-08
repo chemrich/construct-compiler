@@ -1,23 +1,32 @@
 construct:
-  name: "AAV_Rep_Stable_Expression_HEK293"
+  name: "AAV_rep_stable_producer_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: puromycin
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: AAV_Rep
+        label: AAV_rep
         expression: high
-        gene:
-          id: P03131
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: "AAV2_rep"
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: Puromycin_Selection
-        expression: medium
+        label: selection_marker
+        expression: high
         fused: false
         gene:
-          id: P13249
+          id: "PuroR"
           source: uniprot
-    - terminator: BBa_B0015 # Standard terminator used as polyA signal in this context; BGH_polyA is also standard for mammalian but BBa_B0015 is in the schema list.
+
+    - terminator: rrnB_T1

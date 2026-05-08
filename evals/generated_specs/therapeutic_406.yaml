@@ -1,30 +1,38 @@
 construct:
-  name: "metabolic_pathway_C1_C2_C3_expression"
-  host: e_coli_bl21_de3
+  name: "metabolic_pathway_three_enzymes"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_C1
+        label: C1
         expression: high
         gene:
           id: C1
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_C2
+        label: C2
         expression: high
         fused: false
         gene:
           id: C2
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_C3
+        label: C3
         expression: high
         fused: false
         gene:
           id: C3
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,17 +1,20 @@
 construct:
-  name: AAV2_VP1_Purification_Ecoli
-  host: e_coli_bl21_de3
+  name: "protein_his_tag_purification"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: AAV2_VP1
+        label: target
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: P03135
+              id: protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

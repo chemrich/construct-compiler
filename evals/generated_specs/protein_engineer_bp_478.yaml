@@ -1,26 +1,30 @@
 construct:
-  name: "Bacillus_subtilis_lipase_folding_operon"
+  name: "bacillus_lipase_chaperone_operon"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: molecular_chaperone
+        label: chaperone
         expression: high
         gene:
-          id: P15874 # Bacillus subtilis DnaK
+          id: groES
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: target_lipase
-        expression: medium
+        label: lipase
+        expression: high
         fused: false
-        chain:
-          - tag: AmyE # Bacillus secretion signal
-          - gene:
-              id: P37957 # Bacillus subtilis LipA
-              source: uniprot
+        gene:
+          id: lipase
+          source: uniprot
+
     - terminator: rrnB_T1

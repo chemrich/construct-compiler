@@ -1,19 +1,24 @@
 construct:
-  name: "human_scFv_pichia_expression"
+  name: "Pichia_pastoris_scFv_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: scFv_target
+        label: scFv_secreted
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: FLAG
           - cleavage_site: TEV
           - gene:
-              id: human_scFv
+              id: scFv_human
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

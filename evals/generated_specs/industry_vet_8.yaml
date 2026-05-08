@@ -1,30 +1,30 @@
-```yaml
 construct:
-  name: "Protein_D_IRES_Protein_E_bicistronic"
+  name: "CMV_ProteinD_IRES_ProteinE_AAV"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: protein_d
+        label: Protein_D
         expression: high
         gene:
           id: Protein_D
           source: uniprot
 
-    - spacer: 30  # IRES element - enables independent translation of downstream cistron
+    # IRES for cap-independent translation initiation
+    - spacer: 120  # IRES element (~120 bp)
 
     - cistron:
-        label: protein_e
-        expression: medium
-        fused: false  # independent translation via IRES
+        label: Protein_E
+        expression: high
+        fused: false
         gene:
           id: Protein_E
           source: uniprot
 
-    - terminator: polyA
-```
+    - terminator: polyA  # SV40 or WPRE polyA signal for mammalian/AAV

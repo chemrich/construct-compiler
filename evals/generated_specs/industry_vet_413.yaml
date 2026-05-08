@@ -1,17 +1,22 @@
 construct:
-  name: "periplasmic_export_sfGFP"
+  name: "periplasmic_export_protein"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: PelB
+          - tag: periplasmic_pelB  # pelB leader peptide for periplasmic targeting
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: target_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: five_GFP_variants_distinct_promoters
-  host: e_coli
+  name: "five_GFP_variants_multi_promoter"
+  host: e_coli_bl21
 
   backbone:
     resistance: kanamycin
@@ -10,47 +9,64 @@ construct:
 
   cassette:
     - promoter: J23100
-      cistron:
+    - rbs: RBS_1
+    - cistron:
         label: GFP1
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-      terminator: rrnB_T1
+
+    - terminator: rrnB_T1
+
+    - spacer: 100
 
     - promoter: J23106
-      cistron:
+    - rbs: RBS_2
+    - cistron:
         label: GFP2
-        expression: medium
+        expression: high
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: rrnB_T1
+
+    - spacer: 100
+
+    - promoter: J23119
+    - rbs: RBS_3
+    - cistron:
+        label: GFP3
+        expression: high
         gene:
           id: sfGFP
           source: fpbase
-      terminator: T7term
 
-    - promoter: lacUV5
-      cistron:
-        label: GFP3
-        expression: medium
-        gene:
-          id: mNeonGreen
-          source: fpbase
-      terminator: BBa_B0015
+    - terminator: rrnB_T1
 
-    - promoter: tac
-      cistron:
+    - spacer: 100
+
+    - promoter: araBAD
+    - rbs: RBS_4
+    - cistron:
         label: GFP4
         expression: high
         gene:
-          id: mClover3
+          id: mNeonGreen
           source: fpbase
-      terminator: rrnB_T1
 
-    - promoter: araBAD
-      cistron:
+    - terminator: rrnB_T1
+
+    - spacer: 100
+
+    - promoter: tac
+    - rbs: RBS_5
+    - cistron:
         label: GFP5
-        expression: medium
+        expression: high
         gene:
-          id: Venus
+          id: mTagBFP2
           source: fpbase
-      terminator: T7term
-```
+
+    - terminator: rrnB_T1

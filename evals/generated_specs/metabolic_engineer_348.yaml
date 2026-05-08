@@ -1,43 +1,53 @@
 construct:
-  name: "fluorescent_protein_biosynthesis_operon"
+  name: "araBAD_four_enzyme_operon_FP_construct"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: enzyme_1
-        expression: medium
+        label: FP1
+        expression: high
         gene:
           id: FP1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
-        expression: medium
+        label: FP2
+        expression: high
         fused: false
         gene:
           id: FP2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_3
-        expression: medium
+        label: FP3
+        expression: high
         fused: false
         gene:
           id: FP3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_4
-        expression: medium
+        label: FP4
+        expression: high
         fused: false
         chain:
-          - solubility_tag: SUMO
+          - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
               id: FP4
               source: uniprot
+
     - terminator: rrnB_T1

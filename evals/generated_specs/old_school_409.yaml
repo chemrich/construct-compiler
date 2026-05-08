@@ -1,19 +1,23 @@
 construct:
-  name: "ompA_protein_export_system"
-  host: e_coli_bl21_de3
+  name: "OmpA_secretion_His_tag"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
-          - tag: OmpA
+          - signal_peptide: OmpA
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: unspecified
+              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

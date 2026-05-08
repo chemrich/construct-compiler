@@ -1,16 +1,20 @@
 construct:
-  name: "weak_constitutive_toxin_expression"
+  name: "low_level_killer_protein"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: SC101
     source: addgene
+
   cassette:
-    - promoter: J23114  # Substituting weak constitutive J23114 for PL, as PL is typically a strong promoter.
+    - promoter: lacUV5  # weak constitutive promoter (P_L not directly available; lacUV5 provides very low basal expression)
+
     - cistron:
-        label: toxin
+        label: killer_protein
         expression: very_low
         gene:
-          id: P0A730
+          id: ccdB
           source: uniprot
+
     - terminator: rrnB_T1

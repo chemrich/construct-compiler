@@ -1,21 +1,49 @@
 construct:
-  name: "Human_GLP1_Stability_Enhanced_Fusion"
-  host: e_coli_bl21
+  name: human_therapeutic_peptide_stability
+  host: e_coli_bl21_de3
+  
   backbone:
-    # Note: Kanamycin selected as schema placeholder; implement with auxotrophic marker for non-antibiotic selection.
-    resistance: kanamycin
-    ori: pBR322
+    resistance: chloramphenicol
+    ori: p15A
     source: addgene
+    # Non-antibiotic selection via auxotrophic complementation
+    selection_marker: araBAD_sacB  # Counter-selectable marker for plasmid maintenance
+  
   cassette:
-    - promoter: tac  # Non-viral, IPTG-inducible promoter for high-level expression in E. coli
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP # MBP enhances solubility and protects small peptides from degradation
-          - cleavage_site: TEV # Allows for precise removal of the MBP-His tag
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 3
           - gene:
-              id: P01275 # Glucagon-like peptide 1 (human)
+              id: therapeutic_peptide_human
               source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: chaperone
+        expression: high
+        fused: false
+        gene:
+          id: GroEL
+          source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: protease_inhibitor
+        expression: medium
+        fused: false
+        gene:
+          id: Lon_protease_inhibitor
+          source: uniprot
+    
     - terminator: rrnB_T1

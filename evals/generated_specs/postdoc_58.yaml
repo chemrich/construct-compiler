@@ -1,16 +1,24 @@
 construct:
-  name: mammalian_luciferase_reporter_custom
+  name: "mammalian_luciferase_reporter"
   host: HEK293
+
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: minCMV  # Using minimal CMV as the base for the reporter construct
+    - promoter: SV40  # Minimal mammalian promoter, similar to pGL3-Basic
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: luciferase
+        expression: high
         gene:
-          id: P08659  # Firefly luciferase (Photinus pyralis)
+          id: "P08659"  # Firefly luciferase (Photinus pyralis)
           source: uniprot
-    - terminator: SV40_polyA  # Standard polyadenylation signal for mammalian expression
+
+    - polya: SV40  # SV40 late polyadenylation signal, standard in pGL3
+
+  # Note: Custom enhancer elements should be cloned upstream of SV40 promoter
+  # during vector construction. Add them to the cassette as separate elements
+  # if they are part of the compiled sequence.

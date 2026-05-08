@@ -1,32 +1,55 @@
 construct:
-  name: "diverse_yeast_metabolic_operon"
+  name: "yeast_triple_enzyme_operon_codon_optimized"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: p15A
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Functionally equivalent to other strong constitutive yeast promoters
+    - promoter: GAL1
+
     - cistron:
-        label: synthase_x
+        label: SynthaseX
         expression: high
-        gene:
-          id: SynthaseX
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: SynthaseX
+              source: uniprot
+              codon_optimization: "yeast_maximal_diversity_v1"
+
+    - spacer: 45
+      comment: "Functionally equivalent RBS + terminator region with sequence variant A; genetically distinct from downstream spacers"
+
+    - cistron:
+        label: KinaseY
+        expression: high
+        fused: false
+        chain:
+          - tag: 8xHis
+          - cleavage_site: TEV
+          - gene:
+              id: KinaseY
+              source: uniprot
+              codon_optimization: "yeast_maximal_diversity_v2"
+
+    - spacer: 45
+      comment: "Functionally equivalent RBS + terminator region with sequence variant B; distinct from variant A"
+
+    - cistron:
+        label: ReductaseZ
+        expression: high
+        fused: false
+        chain:
+          - tag: Strep-II
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: ReductaseZ
+              source: uniprot
+              codon_optimization: "yeast_maximal_diversity_v3"
+
     - terminator: CYC1
-    - promoter: TEF1  # Genetically distinct but functionally high expression
-    - cistron:
-        label: kinase_y
-        expression: high
-        gene:
-          id: KinaseY
-          source: uniprot
-    - terminator: ADH1  # Genetically distinct terminator
-    - promoter: PGK1  # Third distinct strong constitutive promoter
-    - cistron:
-        label: reductase_z
-        expression: high
-        gene:
-          id: ReductaseZ
-          source: uniprot
-    - terminator: ENO2  # Third distinct terminator
+      comment: "Yeast transcriptional terminator; sequence variant C, distinct from upstream spacers"

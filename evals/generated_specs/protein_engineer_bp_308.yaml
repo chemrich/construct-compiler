@@ -1,26 +1,33 @@
 construct:
-  name: "bacillus_enzyme_coexpression"
+  name: "bacillus_dual_metabolic_enzymes"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: enzyme_a
-        expression: medium
+        label: enzyme_A
+        expression: high
         gene:
-          id: enzyme_a
+          id: enzyme_A
           source: uniprot
-    - spacer: 50
+
+    - spacer: 30
+
     - promoter: Pxyl
+
     - cistron:
-        label: enzyme_b
-        expression: medium
+        label: enzyme_B
+        expression: high
         chain:
           - gene:
-              id: enzyme_b
+              id: enzyme_B
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

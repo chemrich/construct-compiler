@@ -1,25 +1,55 @@
 construct:
-  name: "yeast_orthogonal_dual_reporter_sensor"
+  name: "S_cerevisiae_dual_reporter_sensor"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+      # Sensor component: GAL4-responsive promoter for first activation pathway
+
     - cistron:
-        label: egfp_expression
-        expression: high
+        label: transcription_factor
+        expression: medium
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: TEF1
+          id: GAL4
+          source: uniprot
+        # GAL4 is the master activator for the dual-promoter system
+
+    - terminator: CYC1
+      # Non-homologous terminator for sensor component
+
+    - promoter: ADH2
+      # Independent, different-strength promoter (constitutive but weaker than GAL1)
+
     - cistron:
-        label: mcherry_expression
+        label: reporter_EGFP
         expression: high
+        fused: false
         gene:
-          id: mCherry
+          id: EGFP_yeast_codon_optimized
           source: fpbase
-    - terminator: ADH1_term
+          # Yeast codon optimization for maximal expression and sequence divergence
+
+    - terminator: TDH3
+      # Non-homologous terminator (different from CYC1)
+
+    - spacer: 30
+
+    - promoter: HO
+      # Third independent promoter (cell-type or stress-responsive) for diversification
+
+    - cistron:
+        label: reporter_mCherry
+        expression: high
+        fused: false
+        gene:
+          id: mCherry_synthetic_variant
+          source: fpbase
+          # Synthetic codon optimization variant for maximal sequence divergence from EGFP
+
+    - terminator: PGK1
+      # Non-homologous terminator (different from CYC1 and TDH3)

@@ -1,23 +1,27 @@
 construct:
-  name: "GAL4_DBD_GOI_Y2H_Bait"
+  name: "yeast_two_hybrid_GAL4_DBD_fusion"
   host: yeast
+
   backbone:
-    resistance: TRP1
-    ori: 2_micron
+    resistance: trp1
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: bait_fusion
-        expression: medium
+        label: GAL4_DBD_fusion
+        expression: high
         chain:
           - gene:
               id: GAL4_DBD
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: GOI
+              id: "user_gene_of_interest"
               source: uniprot
+
     - terminator: CYC1

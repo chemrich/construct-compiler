@@ -1,19 +1,20 @@
 construct:
-  name: "GST_TEV_IGF1_fusion"
-  host: e_coli_bl21_de3
+  name: "kanamycin_resistance_cassette"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: igf1_fusion
+        label: kan_resistance
         expression: high
-        chain:
-          - solubility_tag: GST
-          - cleavage_site: TEV
-          - gene:
-              id: P01343
-              source: uniprot
-    - terminator: T7term
+        gene:
+          id: neo
+          source: uniprot
+    
+    - terminator: rrnB_T1

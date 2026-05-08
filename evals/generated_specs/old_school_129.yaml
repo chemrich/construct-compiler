@@ -1,17 +1,24 @@
 construct:
-  name: "proteinF_MBP_solubility_fusion"
-  host: e_coli_bl21_de3
+  name: "proteinF_MBP_fusion"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: target
+        label: proteinF_MBP
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
               id: proteinF
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

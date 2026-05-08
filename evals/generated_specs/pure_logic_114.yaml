@@ -1,29 +1,32 @@
 construct:
-  name: "simple_not_gate_logic"
-  host: e_coli
+  name: "NOT_gate_logic_circuit"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive promoter to express the InputSignal repressor
+    - promoter: T7lac
+
     - cistron:
-        label: "InputSignal"
-        expression: medium
+        label: repressor
+        expression: high
         gene:
-          id: lacI
+          id: tetR
           source: uniprot
-    - terminator: BBa_B0015
-    - promoter: tac  # This promoter is repressed by LacI, creating the NOT gate logic
+
+    - spacer: 30
+
     - cistron:
-        label: "OutputProtein"
+        label: output
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: OutputProtein
+              source: uniprot
+
     - terminator: rrnB_T1

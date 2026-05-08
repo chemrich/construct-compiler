@@ -1,23 +1,34 @@
 construct:
-  name: tet_off_protein_b_expression
+  name: "Tet_Off_ProteinB_system"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
+
   cassette:
     - promoter: CMV
+      comment: "Constitutive CMV drives TetR expression"
+
     - cistron:
-        label: regulator
+        label: TetR
+        expression: high
         gene:
-          id: tTA
-          source: uniprot
-    - terminator: bGH_polyA
-    - spacer: 100
-    - promoter: TRE
+          id: "TetR"
+          source: "uniprot"
+
+    - terminator: SV40_polyA
+
+    - spacer: 30
+
+    - promoter: TetO_minimal
+      comment: "TetO sites upstream; active when TetR absent (Tet-Off logic)"
+
     - cistron:
-        label: target
-        fused: false
+        label: ProteinB
+        expression: high
         gene:
-          id: ProteinB
-          source: uniprot
+          id: "ProteinB"
+          source: "uniprot"
+
     - terminator: SV40_polyA

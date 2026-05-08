@@ -1,16 +1,26 @@
 construct:
-  name: "human_p53_expression_construct"
+  name: "codon_optimized_human_gene_ecoli"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
+        codon_optimization:
+          organism: e_coli
+          bias: balanced_mammalian
+          description: "Optimized for E. coli expression with preference for codons common in highly expressed mammalian genes to maintain balanced tRNA usage"
         chain:
           - tag: 6xHis
           - gene:
-              id: P53_HUMAN
+              id: human_gene
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

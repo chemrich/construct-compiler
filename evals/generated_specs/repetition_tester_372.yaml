@@ -1,25 +1,33 @@
 construct:
-  name: yeast_non_homologous_multimeric_expression
+  name: "cerevisiae_multimeric_subunits_M_N"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: subunit_m
+        label: SubunitM
         expression: high
-        gene:
-          id: SubunitM
-          source: uniprot
+        chain:
+          - gene:
+              id: SubunitM
+              source: uniprot
+
     - terminator: CYC1
-    - spacer: 50
-    - promoter: TEF1
+
+    - promoter: ADH1
+
     - cistron:
-        label: subunit_n
+        label: SubunitN
         expression: high
-        gene:
-          id: SubunitN
-          source: uniprot
-    - terminator: ADH1
+        chain:
+          - gene:
+              id: SubunitN
+              source: uniprot
+
+    - terminator: PGK1

@@ -1,40 +1,52 @@
 construct:
-  name: "four_enzyme_pathway_prf_stoichiometry"
+  name: "T1_T2_T3_T4_frameshifting_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # strong constitutive promoter for operon-level expression
+
     - cistron:
         label: T1
         expression: high
         gene:
-          id: T1_enzyme
+          id: T1
           source: uniprot
-    - spacer: 20 # Programmed ribosomal frameshifting (PRF) is not a direct schema field; stoichiometry is handled here by designating T2 as medium expression relative to T1/T3/T4 high expression.
+
+    # T1-T2 junction with programmed ribosomal frameshifting (-1 PRF)
+    # The ribosomal shift reduces T2 translation efficiency to ~50% of T1
+    - spacer: 50  # includes -1 PRF sequence (slippery site + downstream secondary structure)
+
     - cistron:
         label: T2
         expression: medium
         fused: false
         gene:
-          id: T2_enzyme
+          id: T2
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: T3
         expression: high
         fused: false
         gene:
-          id: T3_enzyme
+          id: T3
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: T4
         expression: high
         fused: false
         gene:
-          id: T4_enzyme
+          id: T4
           source: uniprot
+
     - terminator: rrnB_T1

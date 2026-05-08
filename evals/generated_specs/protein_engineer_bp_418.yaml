@@ -1,29 +1,38 @@
 construct:
-  name: "Pichia_scFv_PDI_secretion_folding"
+  name: "scFv_secretion_PDI_chaperone_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: secreted_scFv
+        label: scFv_secreted
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: scFv
               source: uniprot
+
+    - terminator: rrnB_T1
+
     - spacer: 50
+
     - promoter: AOX1
+
     - cistron:
-        label: folding_chaperone
+        label: PDI_chaperone
         expression: high
         fused: false
         gene:
-          id: PDI1_YEAST
+          id: PDI
           source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

@@ -1,19 +1,27 @@
 construct:
-  name: "temperature_regulated_P_mammalian"
+  name: "temperature_responsive_protein_P_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: CMV  # Constitutively active promoter as requested
+    - promoter: CMV
+
     - cistron:
-        label: protein_P
+        label: target
         expression: high
         chain:
-          - tag: NLS
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-        # Note: Restricting constitutive expression to a 30-37°C band-pass range in mammalian cells 
-        # requires a temperature-sensitive degron (e.g., TS-DHFR) or a temperature-sensitive 
-        # intein to ensure protein stability/function is lost outside the permissive range.
-    - terminator: BBa_B0015
+              id: HSPA1A
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: P
+              source: uniprot
+
+    - terminator: rrnB_T1

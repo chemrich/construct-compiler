@@ -1,15 +1,48 @@
 construct:
-  name: "negative_feedback_homeostasis"
-  host: e_coli
+  name: "negative_feedback_protein_X_homeostasis"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+
+    - cistron:
+        label: repressor_operator_fusion
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: protein_X
         expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_X
+              source: uniprot
+        # Note: The lacI repressor produced above binds to the operator sequence
+        # within this cistron's regulatory region (integrated into promoter design).
+        # As protein_X accumulates, it may allosterically enhance lacI repression
+        # or the system relies on basal lacI expression to titrate inducer.
+
+    - spacer: 30
+
+    - cistron:
+        label: feedback_enhancer
+        expression: low
+        fused: false
         gene:
-          id: P03023
+          id: araBAD
           source: uniprot
+        # araBAD system allows tuning of feedback strength via arabinose concentration.
+        # High protein_X can be engineered to induce araBAD expression of additional
+        # repressor or small RNA sponge to further dampen its own production.
+
     - terminator: rrnB_T1

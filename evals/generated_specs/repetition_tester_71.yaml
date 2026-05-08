@@ -1,24 +1,23 @@
 construct:
-  name: "bacillus_subtilis_recombination_resistant_biosensor"
+  name: "bacillus_dual_sensor_orthogonal"
   host: bacillus
-  backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: P_veg
-    - cistron:
-        label: sfGFP_reporter
-        expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+    - promoter: PxylA
+    - gene:
+        id: sfGFP
+        source: fpbase
     - terminator: rrnB_T1
-    - promoter: P_gracilis
-    - cistron:
-        label: chloramphenicol_resistance
-        expression: medium
-        gene:
-          id: P00486
-          source: uniprot
-    - terminator: BBa_B1006
+
+    - spacer: 30
+
+    - promoter: PsigA
+    - gene:
+        id: cat
+        source: uniprot
+    - terminator: T7term
+
+  backbone:
+    resistance: chloramphenicol
+    ori: pAMβ1
+    source: addgene

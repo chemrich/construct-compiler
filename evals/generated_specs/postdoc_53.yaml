@@ -1,12 +1,19 @@
 construct:
-  name: "sgRNA_HEK293_expression"
+  name: "HEK_sgRNA_CRISPR"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: U6
+
     - cistron:
         label: sgRNA
+        expression: high
         gene:
-          id: sgRNA_scaffold
-    - terminator: poly_T
+          id: sgRNA_CRISPR
+          source: uniprot
+
+    - terminator: rrnB_T1

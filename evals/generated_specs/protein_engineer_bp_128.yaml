@@ -1,20 +1,24 @@
 construct:
-  name: "Pichia_secretion_biosensor"
+  name: "Pichia_pastoris_fluorescent_biosensor_secreted"
   host: yeast
+
   backbone:
     resistance: zeocin
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
         label: biosensor
         expression: high
         chain:
-          - tag: Ost1-alpha-factor
+          - secretion_signal: Ost1_alpha_factor_hybrid
           - gene:
-              id: mNeonGreen
-              source: fpbase
+              id: biosensor
+              source: custom
           - cleavage_site: 3C
           - tag: Twin-Strep
-    - terminator: AOX1
+
+    - terminator: rrnB_T1

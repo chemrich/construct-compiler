@@ -1,24 +1,37 @@
 construct:
-  name: "ahl_responsive_gfp_detector"
+  name: "quorum_sensing_detector_ahl_gfp"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: lacUV5
+      # lacUV5 provides constitutive low-level expression of QS receptor
+
     - cistron:
-        label: luxR_regulator
+        label: ahl_receptor
         expression: medium
         gene:
-          id: P12746
+          id: luxR
           source: uniprot
-    - terminator: BBa_B0015
-    - promoter: pLux  # AHL-LuxR inducible promoter
+          # luxR encodes the AHL-binding transcriptional regulator
+
+    - terminator: rrnB_T1
+
+    - promoter: luxO
+      # luxO is the AHL-responsive promoter (activated when luxR binds AHL)
+      # This promoter is activated only when the AHL threshold is exceeded
+
     - cistron:
-        label: gfp_reporter
+        label: reporter
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

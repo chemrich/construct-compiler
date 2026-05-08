@@ -1,17 +1,22 @@
 construct:
-  name: "GFP_FLAG_fusion"
-  host: e_coli
+  name: GFP_FLAG_fusion
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: GFP_FLAG
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: sfGFP
+              id: mEGFP
               source: fpbase
           - tag: FLAG
-    - terminator: T7term
+
+    - terminator: rrnB_T1

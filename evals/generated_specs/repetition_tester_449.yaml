@@ -1,25 +1,41 @@
 construct:
-  name: "yeast_orthogonal_inducible_pathway"
+  name: "dual_orthogonal_pathway_yeast"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+      label: "inducible_system_1_promoter"
+
     - cistron:
-        label: acetyl_coa_acetyltransferase
-        expression: medium
-        gene:
-          id: P41338
-          source: uniprot
-    - terminator: CYC1_term
+        label: enzyme_1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: ADH1
+              source: uniprot
+
+    - terminator: CYC1
+
     - spacer: 100
-    - promoter: CUP1
+
+    - promoter: MET25
+      label: "inducible_system_2_promoter"
+
     - cistron:
-        label: hmg_coa_synthase
-        expression: medium
-        gene:
-          id: P54839
-          source: uniprot
-    - terminator: ADH1_term
+        label: enzyme_2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: PDC1
+              source: uniprot
+
+    - terminator: ADH1_terminator

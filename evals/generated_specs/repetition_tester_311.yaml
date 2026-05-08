@@ -1,26 +1,41 @@
 construct:
-  name: diversified_sgrna_array_expression
+  name: "triple_sgRNA_array_diverse_scaffolds"
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: araBAD
+    
     - cistron:
-        label: sgrna_unit_1
+        label: sgRNA_1
+        expression: high
         gene:
-          id: sgrna_target_1_scaffold_v1
-    - spacer: 35
+          id: sgRNA_spacer_1_scaffold_variant_A
+          source: custom
+          # Note: User must provide sgRNA_1 with unique spacer and scaffold sequence A (synonymous codon usage optimized)
+    
+    - spacer: 40
+    
     - cistron:
-        label: sgrna_unit_2
-        fused: true
+        label: sgRNA_2
+        expression: high
         gene:
-          id: sgrna_target_2_scaffold_v2
-    - spacer: 35
+          id: sgRNA_spacer_2_scaffold_variant_B
+          source: custom
+          # Note: User must provide sgRNA_2 with unique spacer and scaffold sequence B (synonymous codon usage optimized differently)
+    
+    - spacer: 40
+    
     - cistron:
-        label: sgrna_unit_3
-        fused: true
+        label: sgRNA_3
+        expression: high
         gene:
-          id: sgrna_target_3_scaffold_v3
-    - terminator: BBa_B0015
+          id: sgRNA_spacer_3_scaffold_variant_C
+          source: custom
+          # Note: User must provide sgRNA_3 with unique spacer and scaffold sequence C (synonymous codon usage optimized differently)
+    
+    - terminator: rrnB_T1

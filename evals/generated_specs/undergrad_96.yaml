@@ -1,16 +1,22 @@
 construct:
-  name: "lentiviral_therapy_vector"
+  name: lentiviral_TherapyGene_expression_vector
   host: HEK293
+
   backbone:
-    catalog_vector: "pLenti6.3/V5-DEST"
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapy_payload
+        label: TherapyGene
         expression: high
-        gene:
-          id: TherapyGene
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: TherapyGene
+              source: uniprot
+
+    - terminator: BBa_B0015

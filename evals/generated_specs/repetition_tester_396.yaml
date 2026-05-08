@@ -1,23 +1,23 @@
 construct:
-  name: "FLAG_GeneT_Strep_Fusion"
-  host: e_coli
+  name: GeneT_FLAG_Strep_fusion
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
   cassette:
     - promoter: T7lac
     - cistron:
-        label: gene_t_target
+        label: GeneT_tagged
         expression: high
         chain:
           - tag: FLAG
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
               id: GeneT
               source: uniprot
           - linker:
-              type: short_GS
-              repeats: 1  # Using a distinct linker type to ensure DNA sequence divergence from the N-terminal linker
+              type: rigid_EAAAK
+              repeats: 2
           - tag: Strep-II
-    - terminator: T7term
+    - terminator: rrnB_T1

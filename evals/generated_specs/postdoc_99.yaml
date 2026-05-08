@@ -1,17 +1,26 @@
 construct:
-  name: "T7lac_NusA_ToxicProteinT_3C"
+  name: ToxicProteinT_NusA_fusion_tight_expression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
-        expression: high
+        label: ToxicProteinT
+        expression: very_low
         chain:
+          - tag: 6xHis
           - solubility_tag: NusA
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - cleavage_site: 3C
           - gene:
               id: ToxicProteinT
               source: uniprot
-    - terminator: T7term
+              codon_optimize: e_coli
+
+    - terminator: rrnB_T1

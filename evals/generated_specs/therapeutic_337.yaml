@@ -1,13 +1,36 @@
 construct:
-  name: "therapeutic_rna_aptamer_pol_iii_expression"
+  name: "mammalian_RNA_aptamer_Pol3"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: U6  # Pol III promoter for high-level constitutive RNA expression
+    - promoter: U6
+      # U6 is a Pol III promoter for constitutive, high-level RNA expression in mammalian cells
+
     - cistron:
-        label: therapeutic_aptamer
+        label: aptamer_construct
         expression: high
-        gene:
-          id: "therapeutic_aptamer_flanked_by_stabilizing_stem_loops"
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: aptamer_5p_stem_loop
+              source: synthetic
+          - linker:
+              type: GS_flexible
+              repeats: 0
+          - gene:
+              id: therapeutic_aptamer
+              source: synthetic
+          - linker:
+              type: GS_flexible
+              repeats: 0
+          - gene:
+              id: aptamer_3p_stem_loop
+              source: synthetic
+
+    - terminator: rrnB_T1
+      # rrnB_T1 provides efficient transcription termination for Pol III-driven RNA constructs

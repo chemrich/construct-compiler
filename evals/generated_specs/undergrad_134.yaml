@@ -1,18 +1,23 @@
 construct:
-  name: "protein_m_secretion_yeast"
+  name: "yeast_secreted_protein_m"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: protein_m
-        expression: medium
+        label: secreted_protein_m
+        expression: high
         chain:
-          - tag: Alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: Protein_M
+              id: protein_m
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: ADH1_terminator

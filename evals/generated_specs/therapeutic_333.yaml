@@ -1,19 +1,29 @@
 construct:
-  name: "nicotiana_hSA_secretion_construct"
-  host: nicotiana_benthamiana
+  name: plant_secreted_pharmaceutical_high_yield
+  host: plant_nicotiana_benthamiana
+
   backbone:
-    catalog_vector: "pEAQ-HT"
+    catalog_vector: pEAQ-HT
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: CaMV_35S
+    - promoter: CaMV35S
+
     - cistron:
-        label: pharmaceutical_protein
+        label: target_pharmaceutical
         expression: high
         chain:
-          - tag: PR1a_signal
           - tag: 6xHis
           - cleavage_site: TEV
+          - secretion_signal: plant_signal_peptide
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P02768
+              id: target_protein
               source: uniprot
-    - terminator: NOS_term
+        secretion: true
+
+    - terminator: Ocs_poly_A

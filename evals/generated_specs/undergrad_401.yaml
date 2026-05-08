@@ -1,14 +1,27 @@
 construct:
-  name: "dox_inducible_megfp_hek293"
+  name: "inducible_GFP_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TRE3G # Doxycycline-inducible promoter (Tet-On system)
+    - promoter: TRE_tight
+      # TRE (Tetracycline Response Element) drives expression only in presence of doxycycline
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: bGH_polyA
+      # Mammalian polyadenylation signal for proper mRNA stability and translation
+
+  # Note: This design requires co-expression of the TetR transactivator (rtTA or tTA)
+  # which can be on the same plasmid with a separate CMV promoter or on a separate vector.
+  # Doxycycline addition activates the TRE promoter and induces GFP expression.

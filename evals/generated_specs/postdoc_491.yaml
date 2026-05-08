@@ -1,18 +1,23 @@
 construct:
-  name: "mammalian_secreted_ligand_construct"
+  name: "mammalian_secreted_ligand_CMV"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: secreted_ligand
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal secretion signal
           - gene:
               id: ligand
               source: uniprot
           - cleavage_site: TEV
           - tag: FLAG
-    - terminator: bGH_pA
+
+    - terminator: SV40_poly_A

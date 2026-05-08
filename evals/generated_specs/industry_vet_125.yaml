@@ -1,16 +1,21 @@
 construct:
-  name: "syn_promoter_screening_mEGFP"
+  name: SynPromoter_GFP_AAV
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: SynPromoter
+
     - cistron:
-        label: reporter
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: SV40_polyA

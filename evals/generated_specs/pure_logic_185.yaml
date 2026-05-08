@@ -1,62 +1,53 @@
 construct:
-  name: "optogenetic_and_gate_blue_red"
-  host: HEK293
+  name: optogenetic_AND_gate
+  host: mammalian
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: dna_anchor_gal4
-        expression: medium
-        chain:
-          - tag: NLS
-          - gene:
-              id: P04386
-              source: uniprot
-    - cistron:
-        label: anchor_cib1_fusion
-        fused: true
-        gene:
-          id: Q9FIE3
-          source: uniprot
-    - terminator: bGH_polyA
-    - promoter: CMV
-    - cistron:
-        label: light_bridge_cry2
-        expression: medium
-        chain:
-          - tag: NLS
-          - gene:
-              id: P93032
-              source: uniprot
-    - cistron:
-        label: bridge_phyb_fusion
-        fused: true
-        gene:
-          id: P14713
-          source: uniprot
-    - terminator: bGH_polyA
-    - promoter: CMV
-    - cistron:
-        label: activator_pif6
-        expression: medium
-        chain:
-          - tag: NLS
-          - gene:
-              id: O48957
-              source: uniprot
-    - cistron:
-        label: activator_vp16_fusion
-        fused: true
-        gene:
-          id: P03174
-          source: uniprot
-    - terminator: bGH_polyA
-    - promoter: UAS  # Gal4-responsive promoter substituted for activation by the logic gate
-    - cistron:
-        label: target_output
+        label: blue_light_sensor
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_polyA
+        chain:
+          - tag: FLAG
+          - gene:
+              id: CRY2
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: red_light_sensor
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: PhyB
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: transcriptional_activator
+        expression: high
+        chain:
+          - gene:
+              id: VP16
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: output_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1

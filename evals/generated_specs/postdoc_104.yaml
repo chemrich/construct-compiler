@@ -1,18 +1,23 @@
 construct:
-  name: "cytokinex_secretion_yeast"
+  name: "CytokineX_secreted_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: CytokineX_secreted
         expression: high
         chain:
+          - secretion_signal: native_mammalian_signal_peptide
           - gene:
               id: CytokineX
               source: uniprot
           - tag: FLAG
-    - terminator: CYC1
+
+    - terminator: CYC1_poly_A

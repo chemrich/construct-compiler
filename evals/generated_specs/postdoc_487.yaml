@@ -1,22 +1,27 @@
 construct:
-  name: "ProtX_Strep_sfGFP_fusion"
+  name: ProtX_sfGFP_HEK293
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha
+
     - cistron:
-        label: target_fusion
+        label: ProtX_sfGFP_fusion
         expression: high
         chain:
           - gene:
               id: ProtX
               source: uniprot
-          - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: sfGFP
               source: fpbase
-    - terminator: bGH_PA
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

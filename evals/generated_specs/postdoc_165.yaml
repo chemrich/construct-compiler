@@ -1,17 +1,23 @@
 construct:
-  name: "bacterial_fusion_protein_expression"
-  host: e_coli_bl21_de3
+  name: "bacterial_expression_CMV_fusion"
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: T7lac  # Substituted T7lac for CMV because CMV is a mammalian promoter and will not function in E. coli
+    - promoter: T7lac
+      # Note: CMV is a mammalian promoter and not functional in bacteria.
+      # Substituted T7lac for proper bacterial expression.
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term  # Substituted T7term for poly-A tail as bacteria use specific rho-independent/dependent terminators rather than polyadenylation signals for mRNA stability
+              id: placeholder_protein
+              source: uniprot
+    - terminator: rrnB_T1
+      # Note: poly-A tails are not used in bacterial expression systems.
+      # rrnB_T1 terminator provides efficient transcription termination in E. coli.

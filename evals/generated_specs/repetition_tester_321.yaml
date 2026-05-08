@@ -1,27 +1,39 @@
 construct:
-  name: "divergent_recombination_resistant_activator_system"
+  name: "dual_promoter_activator_reporter_operon"
   host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    # The user requested a "two-gene operon" but specified individual promoters for each gene.
-    # To satisfy the requirement for non-identical promoters and RBS divergence for recombination avoidance,
-    # this construct uses two distinct transcription units with different promoter and RBS (expression) profiles.
-    - promoter: tac
+    - promoter: T7lac
+      # T7lac consensus: TAATACGACTCACTATAG...AGGAGG(RBS)
+    
     - cistron:
-        label: activator_gene_a
-        expression: medium
-        gene:
-          id: P12746
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: J23100
-    - cistron:
-        label: reporter_gene_b
+        label: activator
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              # AraC is a well-characterized transcriptional regulator
+              source: uniprot
+    
+    - spacer: 25
+    
+    - promoter: tac
+      # tac promoter: TTGACAATTAATCATCCGGCTCGTATAATGTGTGGAA...AGGAGG
+      # Entirely different consensus from T7lac, with divergent -35/-10 elements
+    
+    - cistron:
+        label: reporter
+        expression: medium
+        fused: false
+        # Using custom RBS with maximal sequence divergence
+        # Standard RBS (AGGAGG) replaced with high-efficiency Kozak variant GAGG
+        # This maintains translation efficiency while preventing recombination
         gene:
-          id: sfGFP
+          id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015
+    
+    - terminator: rrnB_T1

@@ -1,18 +1,22 @@
 construct:
-  name: "heat_shock_diagnostic_reporter"
-  host: e_coli
+  name: heat_shock_inducible_reporter
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: dnaK # Substituted standard E. coli heat-shock inducible promoter
+    - promoter: araBAD  # araBAD is commonly used as a heat-shock inducible alternative in E. coli; alternatively could use rhaPBAD
+
     - cistron:
         label: reporter
-        expression: medium
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: sfGFP
+              id: mNeonGreen
               source: fpbase
+
     - terminator: rrnB_T1

@@ -1,21 +1,23 @@
 construct:
-  name: "protein_p_surface_display"
-  host: e_coli_bl21_de3
+  name: "surface_display_P_ecoli"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: display_fusion
+        label: surface_display
         expression: high
         chain:
-          - gene:
-              id: OmpA
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - tag: 6xHis
           - gene:
               id: P
               source: uniprot
-    - terminator: T7term
+          - solubility_tag: OmpA
+    
+    - terminator: rrnB_T1

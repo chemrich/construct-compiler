@@ -1,38 +1,23 @@
 construct:
-  name: yeast_two_hybrid_dual_expression_system
+  name: yeast_two_hybrid_bait_AD
   host: yeast
   backbone:
-    resistance: ampicillin  # Bacterial selection; yeast auxotrophic markers (LEU2/TRP1) implied by backbone source
-    ori: pUC
+    resistance: leucine
+    ori: 2-micron
     source: addgene
   cassette:
-    - promoter: ADH1
-    - cistron:
-        label: bait_fusion
-        expression: high
-        chain:
-          - gene:
-              id: GAL4_AD
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: bait_protein
-              source: uniprot
-    - terminator: ADH1_term
-    - promoter: TDH3
-    - cistron:
-        label: prey_fusion
-        expression: high
-        chain:
-          - gene:
-              id: GAL4_BD
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: prey_protein
-              source: uniprot
-    - terminator: CYC1_term
+  - promoter: ADH1
+  - cistron:
+      label: bait_AD
+      expression: high
+      chain:
+      - gene:
+          id: GAL4_AD
+          source: uniprot
+      - linker:
+          type: GS_flexible
+          repeats: 1
+      - gene:
+          id: bait_protein
+          source: uniprot
+  - terminator: CYC1

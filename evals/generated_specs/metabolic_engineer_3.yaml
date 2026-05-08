@@ -1,61 +1,73 @@
-```yaml
 construct:
-  name: yeast_4enzyme_pharmaceutical_pathway
+  name: "yeast_4enzyme_pharmaceutical_pathway"
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: enzyme1
+        label: enzyme_1
         expression: high
         chain:
           - gene:
-              id: P450_CYP51
+              id: enzyme_1
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - solubility_tag: SUMO
+
     - terminator: CYC1
 
-    - spacer: 50
+    - promoter: GAL10
 
-    - promoter: ADH1
     - cistron:
-        label: enzyme2
+        label: enzyme_2
         expression: high
         chain:
           - gene:
-              id: ALDH2
+              id: enzyme_2
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - solubility_tag: MBP
-    - terminator: ADH1
 
-    - spacer: 50
-
-    - promoter: PGK1
-    - cistron:
-        label: enzyme3
-        expression: medium
-        chain:
-          - gene:
-              id: ALDH3A1
-              source: uniprot
-          - solubility_tag: SUMO
-    - terminator: PGK1
-
-    - spacer: 50
+    - terminator: CYC1
 
     - promoter: TPI1
+
     - cistron:
-        label: enzyme4
+        label: enzyme_3
         expression: medium
         chain:
           - gene:
-              id: ADH1B
+              id: enzyme_3
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - solubility_tag: SUMO
+
+    - terminator: CYC1
+
+    - promoter: PGK1
+
+    - cistron:
+        label: enzyme_4
+        expression: medium
+        chain:
+          - gene:
+              id: enzyme_4
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - solubility_tag: MBP
-    - terminator: TPI1
-```
+
+    - terminator: CYC1

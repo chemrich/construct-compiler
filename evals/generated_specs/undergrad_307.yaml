@@ -1,13 +1,22 @@
 construct:
-  name: "mammalian_u6_grna_expression"
+  name: "guide_RNA_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
         label: guide_RNA
         expression: high
-        gene:
-          id: sgRNA
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: CRISPR_guide_RNA
+              source: uniprot
+
+    - terminator: rrnB_T1

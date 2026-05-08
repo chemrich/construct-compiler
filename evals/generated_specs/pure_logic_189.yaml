@@ -1,15 +1,55 @@
 construct:
-  name: "cell_free_or_gate_diagnostic"
+  name: "cell_free_OR_gate_diagnostic"
   host: in_vitro
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: Luminescent_Reporter
+        label: OR_gate_scaffolding_protein
         expression: high
-        gene:
-          id: P0DI83
-          source: uniprot
-    - terminator: T7term
-# Note: OR gate logic (Target_RNA_1 OR Target_RNA_2) is implemented via pooled toehold sensors or multi-input sensing elements in the 5' UTR of the Luminescent_Reporter.
+        chain:
+          - gene:
+              id: MS2_coat_protein
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: target_RNA_1_sensor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: twisty_ribozyme_sensor_1
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: target_RNA_2_sensor
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: twisty_ribozyme_sensor_2
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: luminescent_reporter
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Nanoluciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

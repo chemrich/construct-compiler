@@ -1,17 +1,23 @@
 construct:
-  name: "his_tev_cleavable_fusion"
+  name: FusionProtein_TEV_cleavable
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: target
+        label: FusionProtein
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: FusionProtein
+              source: uniprot
+    
+    - terminator: rrnB_T1

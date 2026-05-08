@@ -1,26 +1,48 @@
 construct:
-  name: "metabolic_feedback_flux_control"
+  name: metabolic_feedback_control_loop
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: lacUV5  # Repressible promoter commonly used for feedback control loops
+    - promoter: T7lac
+    
+    - cistron:
+        label: metabolite_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TetR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: synthetic_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: LacI
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: biosynthetic_enzyme
         expression: high
         chain:
           - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P0ABD8  # Acetyl-CoA carboxylase carboxyltransferase subunit alpha (accA)
+              id: ADH1
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: feedback_regulator
-        expression: low
-        fused: false
-        gene:
-          id: P03023  # LacI repressor protein
-          source: uniprot
+    
     - terminator: rrnB_T1

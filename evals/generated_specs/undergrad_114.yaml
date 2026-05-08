@@ -1,16 +1,23 @@
 construct:
-  name: "Enzyme_B_High_Yield_Production"
+  name: "high_yield_enzyme_b"
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
-    source: custom
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for maximum yield
+    - promoter: J23100  # Strong constitutive promoter for maximum expression
+    
     - cistron:
-        label: target_enzyme
+        label: enzyme_b
         expression: high
-        gene:
-          id: Enzyme_B
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_b
+              source: uniprot
+    
     - terminator: rrnB_T1

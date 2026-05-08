@@ -1,14 +1,27 @@
 construct:
-  name: "aav_constitutive_expression_wpre"
-  host: HEK293
+  name: AAV_expression_vector
+  host: mammalian
+  
   backbone:
-    catalog_vector: "pAAV-CMV"
+    catalog_vector: pAAV-MCS
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: CMV
+    - ITR: AAV2_5prime
+    
+    - promoter: EF1_alpha
+    
     - cistron:
-        label: transgene
+        label: target
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: WPRE_bGH_polyA # WPRE included in 3' UTR before polyA for enhanced expression
+          id: generic_orf
+          source: uniprot
+    
+    - regulatory_element: WPRE
+    
+    - terminator: SV40_polyA
+    
+    - ITR: AAV2_3prime

@@ -1,21 +1,25 @@
 construct:
-  name: "stabilized_sfGFP_expression"
+  name: "stabilized_protein_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: your_protein_name
+              source: uniprot
+
+    - terminator: rrnB_T1

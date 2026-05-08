@@ -1,22 +1,36 @@
 construct:
-  name: "antisense_targetgene_knockdown"
+  name: "antisense_RNA_TargetGene_knockdown"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV
+    - promoter: U6
+
     - cistron:
-        label: antisense_rna
+        label: antisense_TargetGene
         expression: high
-        gene:
-          id: TargetGene
-          source: uniprot
+        chain:
+          - gene:
+              id: TargetGene_antisense
+              source: custom
+              # Note: User must provide the antisense sequence complementary to TargetGene mRNA
+
+    - terminator: U6term
+
     - spacer: 30
+
+    - promoter: CMV
+
     - cistron:
         label: selection_marker
-        expression: medium
-        fused: false
-        gene:
-          id: NeoR
-          source: uniprot
-    - terminator: bGH_pA # Standard mammalian polyadenylation signal/terminator</code>
+        expression: high
+        chain:
+          - gene:
+              id: PURO
+              source: uniprot
+              # Puromycin resistance for mammalian selection
+
+    - terminator: BHKS_polyA

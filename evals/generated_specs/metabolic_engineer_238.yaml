@@ -1,56 +1,75 @@
 construct:
-  name: "novel_carbon_utilization_operon"
+  name: "novel_carbon_source_operon"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Selected for strong induction and catabolite repression properties
+    - promoter: araBAD
+      # araBAD provides catabolite repression (glucose effect) and strong induction with L-arabinose
+      # Alternatively, a custom PL-arabinose promoter could be used for tighter control
+    
     - cistron:
-        label: uptake_1
+        label: Uptake1
         expression: high
-        gene:
-          id: Uptake1
-          source: uniprot
-    - spacer: 30
+        # Strong RBS (BBa_B0034) for efficient substrate transport
+        chain:
+          - rbs: B0034
+          - gene:
+              id: Uptake1
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: metabolizer_2
-        expression: medium
+        label: Metabolizer2
+        expression: high
         fused: false
         gene:
           id: Metabolizer2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: convertase_3
-        expression: medium
+        label: Convertase3
+        expression: high
         fused: false
         gene:
           id: Convertase3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: regulator_4
+        label: Regulator4
         expression: medium
         fused: false
         gene:
           id: Regulator4
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: synthase_5
-        expression: medium
+        label: Synthase5
+        expression: high
         fused: false
         gene:
           id: Synthase5
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: detoxifier_6
+        label: Detoxifier6
         expression: medium
         fused: false
         gene:
           id: Detoxifier6
           source: uniprot
+    
     - terminator: rrnB_T1

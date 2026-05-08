@@ -1,78 +1,77 @@
 construct:
-  name: "mammalian_complex_reconstitution_ecoli"
+  name: mammalian_complex_with_chaperones
   host: e_coli_bl21_de3
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
     resistance: kanamycin
-    ori: pBR322
 
   cassette:
-    - promoter: T7lac
+    - promoter: T7
 
     - cistron:
-        label: subunit_1_h2a
+        label: complex_protein_1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P04908
+              id: P0DMV8
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: subunit_2_h2b
+        label: complex_protein_2
         expression: high
         fused: false
         chain:
           - tag: FLAG
           - gene:
-              id: P06899
+              id: P63104
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: subunit_3_h3
+        label: complex_protein_3
         expression: high
         fused: false
         chain:
           - tag: Myc
           - gene:
-              id: P68431
+              id: P12931
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: subunit_4_h4
+        label: complex_protein_4
         expression: high
         fused: false
         chain:
           - tag: Strep-II
           - gene:
-              id: P62805
+              id: P04637
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: chaperone_hsp70
-        expression: medium
+        label: Hsp70
+        expression: high
         fused: false
         gene:
-          id: P0DMV8
+          id: P08107
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: chaperone_hsp90
-        expression: medium
+        label: Hsp90
+        expression: high
         fused: false
         gene:
           id: P07900
           source: uniprot
 
-    - terminator: T7term
+    - terminator: rrnB_T1

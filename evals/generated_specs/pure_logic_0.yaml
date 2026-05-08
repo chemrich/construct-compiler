@@ -1,32 +1,34 @@
-```yaml
 construct:
-  name: NOT_gate_fluorescent_repressor
-  host: e_coli
-
+  name: NOT_gate_GFP_repressor
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
-
+  
   cassette:
     - promoter: T7lac
-
+    
     - cistron:
-        label: repressor
-        expression: medium
-        gene:
-          id: P0451  # LacI repressor
-          source: uniprot
-
-    - spacer: 50
-
-    - promoter: lacUV5  # repressible by LacI
-
+        label: repressor_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - promoter: tetO
+    
     - cistron:
-        label: output
+        label: output_GFP
         expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
     - terminator: rrnB_T1
-```

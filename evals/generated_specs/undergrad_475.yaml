@@ -1,20 +1,20 @@
 construct:
-  name: "CPP_CargoProt_Purification"
-  host: e_coli_bl21_de3
+  name: "CargoProt_with_TAT_CPP"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: CargoProt_CPP
         expression: high
         chain:
-          - tag: 6xHis
-          - tag: TAT
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - tag: TAT_CPP
           - gene:
               id: CargoProt
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

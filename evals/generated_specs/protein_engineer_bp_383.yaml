@@ -1,28 +1,36 @@
 construct:
-  name: "Pichia_mAb_secretion_GAP"
+  name: "pichia_pastoris_dual_antibody_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: ARS
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P01857
+              id: antibody_heavy_chain
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1
+
+  cassette_2:
     - promoter: GAP
+
     - cistron:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P01834
+              id: antibody_light_chain
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1

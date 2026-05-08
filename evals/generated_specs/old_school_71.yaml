@@ -1,20 +1,37 @@
 construct:
-  name: "shRNA_knockdown_PGK_Puro"
-  host: mammalian
+  name: shRNA_gene_knockdown_mammalian
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: puromycin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: shRNA_expression
-        gene:
-          id: shRNA_target
-    - promoter: PGK
-    - cistron:
-        label: puromycin_selection
-        expression: medium
-        fused: false
-        gene:
-          id: P13249
-          source: uniprot
+        label: shRNA
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_target
+              source: custom
+              note: "User must specify target sequence; scaffold will be auto-generated"
+
     - terminator: BBa_B0015
+
+    - spacer: 50
+
+    - promoter: PGK
+
+    - cistron:
+        label: puromycin_resistance
+        expression: high
+        chain:
+          - gene:
+              id: PuroR
+              source: uniprot
+
+    - terminator: rrnB_T1

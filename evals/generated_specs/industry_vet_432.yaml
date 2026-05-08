@@ -1,16 +1,22 @@
 construct:
-  name: "ViralReplicase_C_terminal_V5_Mammalian"
+  name: "ViralReplicase_mammalian_optimized"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: viral_replicase
+        label: ViralReplicase
         expression: high
         chain:
           - gene:
               id: ViralReplicase
               source: uniprot
+              codon_optimization: human
           - tag: V5
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

@@ -1,24 +1,32 @@
 construct:
-  name: "bicistronic_protein_i_marker_j"
+  name: "bicistronic_protein_I_resistance_J"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_i
+        label: protein_I
         expression: high
-        gene:
-          id: protein_I
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_I
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: marker_j
+        label: resistance_J
         expression: medium
         fused: false
         gene:
-          id: marker_J
+          id: resistance_J
           source: uniprot
+
     - terminator: rrnB_T1

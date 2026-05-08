@@ -1,18 +1,20 @@
 construct:
-  name: "AwesomeEnzyme_Constitutive_Purification"
+  name: AwesomeEnzyme_His6_tag
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: J23100 # Standard constitutive promoter for E. coli
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: AwesomeEnzyme
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: AwesomeEnzyme
               source: uniprot
+    
     - terminator: rrnB_T1

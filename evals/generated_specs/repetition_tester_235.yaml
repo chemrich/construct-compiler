@@ -1,51 +1,49 @@
 construct:
-  name: "divergent_dual_scfv_bacterial_expression"
+  name: "dual_scFv_fusion_constructs_divergent"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: "scfv_fmc63_vh"
+        label: scFv_construct_1
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
+          - cleavage_site: TEV
           - gene:
-              id: "FMC63_VH"
+              id: VH_domain_1
               source: uniprot
-    - cistron:
-        label: "scfv_fmc63_vl"
-        expression: high
-        fused: true
-        chain:
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: "FMC63_VL"
+              id: VL_domain_1
               source: uniprot
-    - terminator: T7term
-    - spacer: 50
+    
+    - terminator: rrnB_T1
+
     - promoter: tac
+    
     - cistron:
-        label: "scfv_trastuzumab_vh"
-        expression: medium
+        label: scFv_construct_2
+        expression: high
         chain:
-          - tag: Twin-Strep
-          - solubility_tag: GST
+          - tag: Strep-II
+          - cleavage_site: 3C
           - gene:
-              id: "Trastuzumab_VH"
+              id: VH_domain_2
               source: uniprot
-    - cistron:
-        label: "scfv_trastuzumab_vl"
-        expression: medium
-        fused: true
-        chain:
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 1
           - gene:
-              id: "Trastuzumab_VL"
+              id: VL_domain_2
               source: uniprot
-    - terminator: rrnB_T1
+    
+    - terminator: T7term

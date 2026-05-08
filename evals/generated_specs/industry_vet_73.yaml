@@ -1,28 +1,34 @@
 construct:
-  name: "yeast_bicistronic_his_goi"
+  name: bicistronic_GOI1_GOI2_yeast
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: target_1
+        label: GOI1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: GOI1
               source: uniprot
-    - spacer: 30 # Intercistronic region configured for IRES-mediated translation initiation
+
+    - spacer: 50
+
     - cistron:
-        label: target_2
+        label: GOI2
         expression: high
-        fused: false # Indicates independent translation initiation for the second cistron
+        fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: GOI2
               source: uniprot
+
     - terminator: CYC1

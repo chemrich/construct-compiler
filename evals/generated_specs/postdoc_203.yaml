@@ -1,26 +1,37 @@
 construct:
-  name: "yeast_tet_on_system_Z"
+  name: "yeast_tetOn_Z_inducible"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TRE
+    - promoter: tetO_minimal
+      # Tet-responsive minimal promoter for yeast (bidirectional or unidirectional variant)
+
     - cistron:
-        label: target_Z
+        label: Z
         expression: high
         gene:
           id: Z
           source: uniprot
-    - terminator: ADH1
-    - spacer: 50
-    - promoter: TEF1
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: GAL4
+      # Constitutive/inducible promoter for transactivator expression in yeast
+
     - cistron:
-        label: rtTA_transactivator
+        label: tTA
         expression: medium
-        fused: false
-        gene:
-          id: rtTA
-          source: uniprot
-    - terminator: CYC1
+        chain:
+          - gene:
+              id: tTA
+              source: uniprot
+          # tTA (tetracycline-controlled transactivator) activates tetO in presence of doxycycline/tetracycline
+
+    - terminator: rrnB_T1

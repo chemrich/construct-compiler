@@ -1,16 +1,24 @@
 construct:
-  name: "environmental_safe_metabolic_reporter"
+  name: metabolic_reporter_mCherry_safe
   host: e_coli
+
   backbone:
-    resistance: kanamycin # Substituted for antibiotic-free system (e.g., thyA or dapD auxotrophy) as requested for environmental safety
-    ori: p15A
-    source: custom
+    resistance: none
+    ori: pSC101
+    source: addgene
+    # pSC101 is a low-copy-number origin; naturally low expression burden
+    # No antibiotic resistance marker for environmental safety
+
   cassette:
-    - promoter: araBAD # Tunable bacterial promoter (arabinose inducible), free of viral elements
+    - promoter: araBAD
+      # araBAD is tunable via L-arabinose concentration; ideal for metabolic pathway sensing
+
     - cistron:
-        label: activity_reporter
+        label: reporter
         expression: medium
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: rrnB_T1 # Bacterial terminator, avoids viral T7term
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

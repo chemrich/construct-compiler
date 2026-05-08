@@ -1,41 +1,62 @@
 construct:
-  name: "synechocystis_photosynthetic_enhancement"
-  host: algae  # Synechocystis PCC 6803 is a cyanobacterium; algae is the closest schema match.
+  name: "Synechocystis_photosynthetic_efficiency_pathway"
+  host: cyanobacteria  # Synechocystis PCC 6803
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene  # Standard for chromosomal integration vectors like pAM1579
+    resistance: spectinomycin  # standard for cyanobacterial selection
+    ori: neutral_site  # chromosomal integration vector (no replicating ori)
+    source: addgene
+
   cassette:
-    - promoter: PpsbA2  # Strong, light-inducible promoter specific to Synechocystis
+    - promoter: PpsbA  # strong, light-inducible promoter (photosystem II promoter in cyanobacteria)
+
     - cistron:
         label: rubisco_variant
         expression: high
-        fused: false
-        gene:
-          id: rbcL
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: rbcL_synechocystis_optimized
+              source: uniprot  # cyanobacterial Rubisco large subunit variant
+
+    - spacer: 35
+
     - cistron:
-        label: shell_protein
+        label: carboxysome_shell
         expression: high
         fused: false
         gene:
-          id: ccmK2
-          source: uniprot
-    - spacer: 30
+          id: ccmK_synechocystis
+          source: uniprot  # carboxysome shell protein
+
+    - spacer: 35
+
     - cistron:
         label: carbonic_anhydrase
         expression: high
         fused: false
-        gene:
-          id: ccaA
-          source: uniprot
-    - spacer: 30
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ccaA_synechocystis
+              source: uniprot  # carbonic anhydrase for CO2 fixation
+
+    - spacer: 35
+
     - cistron:
         label: rubisco_chaperone
-        expression: high
+        expression: medium
         fused: false
-        gene:
-          id: rbcX
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - solubility_tag: Trx  # Thioredoxin enhances folding and assembly
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: groES_synechocystis
+              source: uniprot  # chaperone for Rubisco complex assembly
+
+    - terminator: rrnB_T1

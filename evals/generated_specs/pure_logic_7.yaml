@@ -1,5 +1,5 @@
 construct:
-  name: positive_feedback_signal_amplifier
+  name: positive_feedback_amplifier_mammalian
   host: HEK293
 
   backbone:
@@ -9,48 +9,37 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: transcriptional_activator
+        label: receptor
         expression: medium
         chain:
+          - tag: FLAG
           - gene:
-              id: VP64-dCas9
+              id: EGFR
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P2A  # self-cleaving peptide for polycistronic expression
-              source: uniprot
+
+    - spacer: 25
 
     - cistron:
         label: growth_factor
         expression: high
-        fused: false
         chain:
-          - tag: signal_peptide  # for secretion
-          - gene:
-              id: PDGF-BB
-              source: uniprot
+          - tag: 6xHis
+          - cleavage_site: 3C
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: T2A  # self-cleaving peptide
+              id: FGF2
               source: uniprot
+
+    - spacer: 25
 
     - cistron:
-        label: feedback_sensor
+        label: transcription_factor
         expression: medium
-        fused: false
         chain:
           - gene:
-              id: PDGFR-beta
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - gene:
-              id: gRNA_scaffold
+              id: STAT3
               source: uniprot
 
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1

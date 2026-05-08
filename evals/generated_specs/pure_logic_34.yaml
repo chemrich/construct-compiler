@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: genetic_event_counter_3pulse
-  host: e_coli_bl21_de3
+  name: "event_counter_3pulse_detector"
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -10,28 +9,41 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: counter_integrase
+        label: counter_kinase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: histidine_kinase_counter
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: response_regulator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: response_regulator_phosphatase
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_reporter
         expression: medium
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P1_CRE
-              source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: output_protein
-        expression: high
-        fused: false
-        chain:
-          - gene:
-              id: mScarlet
+              id: mNeonGreen
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 1
-          - tag: ssrA  # degradation tag for pulse counting reset
+          - tag: ssrA  # C-terminal degradation tag for rapid turnover
 
     - terminator: rrnB_T1
-```

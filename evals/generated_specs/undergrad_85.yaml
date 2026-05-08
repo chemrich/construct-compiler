@@ -1,22 +1,34 @@
 construct:
-  name: "polycistronic_enzymex_helperproteiny"
-  host: e_coli_bl21_de3
+  name: "dual_expression_EnzymeX_HelperProteinY"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_x
+        label: EnzymeX
         expression: high
-        gene:
-          id: EnzymeX
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeX
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: helper_protein_y
-        expression: medium
+        label: HelperProteinY
+        expression: high
         fused: false
-        gene:
-          id: HelperProteinY
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: HelperProteinY
+              source: uniprot
+
+    - terminator: rrnB_T1

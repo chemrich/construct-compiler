@@ -1,19 +1,25 @@
 construct:
-  name: "pGAP_alpha_GFPnb_6xHis"
+  name: "Pichia_PGAP_GFP_nanobody_His"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pGAPZα"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
-        label: secreted_nanobody
+        label: GFP_nanobody
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_mating_factor
           - gene:
-              id: GFP-nanobody
+              id: GFP_nanobody
               source: uniprot
+              codon_optimization: pichia_pastoris
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

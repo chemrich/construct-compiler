@@ -1,44 +1,57 @@
 construct:
-  name: "4_enzyme_HTS_operon"
+  name: "HTS_enzyme_operon_4x_GFP_reporter"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
         label: HTS_E1
         expression: high
-        gene:
-          id: HTS_E1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: HTS_E1
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: HTS_E2
         expression: medium
-        gene:
-          id: HTS_E2
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: HTS_E2
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: HTS_E3
-        expression: low
-        gene:
-          id: HTS_E3
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: HTS_E4_reporter
         expression: medium
+        chain:
+          - gene:
+              id: HTS_E3
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: HTS_E4_GFP
+        expression: high
         chain:
           - gene:
               id: HTS_E4
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
+    
     - terminator: rrnB_T1

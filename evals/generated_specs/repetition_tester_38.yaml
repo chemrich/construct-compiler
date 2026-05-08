@@ -1,9 +1,11 @@
 construct:
-  name: therapeutic_protein_T_high_yield_optimized
+  name: "high_yield_therapeutic_T_optimized"
   host: e_coli_bl21_de3
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
@@ -15,12 +17,16 @@ construct:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-            id: # UniProt ID for protein T required
-            source: uniprot
-            codon_optimization: strict  # strict repeat avoidance and E. coli codon bias
-            repeat_screening: true      # scan for direct and inverted repeats
+              id: T
+              source: uniprot
+              # NOTE: User must perform manual codon optimization post-compilation:
+              # 1. Scan entire sequence (promoter through terminator) for direct repeats (≥15 bp)
+              # 2. Scan for inverted repeats that could form secondary structures
+              # 3. Perform codon harmonization using E. coli BL21(DE3) codon bias tables
+              # 4. Use tools like IDT CodonOpt, Snapgene, or local scripts to identify repeat regions
+              # 5. Resolve repeats via synonymous substitutions, prioritizing rare codons in repeats
+              # 6. Validate GC content (target 40-55% for E. coli)
+              # 7. Remove cryptic RBS/promoter motifs and rare restriction sites
+              # This YAML spec defines the logical design; sequence-level optimization must follow
 
     - terminator: rrnB_T1
-    
-# Note: Actual UniProt ID for therapeutic protein T must be specified
-# All sequences will undergo rigorous repeat screening and synonymous codon optimization

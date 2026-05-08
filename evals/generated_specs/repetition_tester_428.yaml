@@ -1,24 +1,29 @@
 construct:
-  name: "mEGFP_dual_degron_fusion"
+  name: "dual_degradation_tag_protein"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - tag: PEST
           - linker:
-              type: short_GS
-              repeats: 2
-          - tag: Ubiquitin
-    - terminator: T7term
+              type: rigid_EAAAK
+              repeats: 1
+          - tag: degron_ubiquitination
+
+    - terminator: rrnB_T1

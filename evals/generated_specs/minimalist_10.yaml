@@ -1,27 +1,27 @@
-```yaml
 construct:
-  name: "antigenA_surface_display"
+  name: "ecoli_surface_display_antigenA"
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
         label: surface_display
-        expression: medium
+        expression: high
         chain:
           - gene:
-              id: P1NTL7N6
-              source: uniprot  # OmpA signal peptide + transmembrane domain for surface display
+              id: antigenA
+              source: uniprot
           - linker:
               type: GS_flexible
               repeats: 1
           - gene:
-              id: antigenA
+              id: OmpA_C_terminal
               source: uniprot
 
     - terminator: rrnB_T1
-```

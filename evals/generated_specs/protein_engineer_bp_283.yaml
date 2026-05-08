@@ -1,19 +1,23 @@
 construct:
-  name: "Bacillus_secretory_cellulase_Pxyl"
+  name: Bacillus_cellulase_secretion_IMAC
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: cellulase_target
-        expression: medium
+        label: cellulase
+        expression: high
         chain:
-          - tag: Vpr_signal_peptide
+          - secretion_signal: Vpr
           - gene:
-              id: cel5A
+              id: cellulase
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

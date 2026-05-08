@@ -1,22 +1,29 @@
 construct:
-  name: "mammalian_ires_delta_epsilon"
-  host: mammalian
+  name: "Delta_Epsilon_IRES_mammalian"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: delta
-        expression: medium
+        label: Delta
+        expression: high
         gene:
           id: Delta
           source: uniprot
-    - spacer: 500  # IRES element for internal ribosome entry
+
+    # IRES allows cap-independent translation of second cistron at similar levels
+    - spacer: 27
+
     - cistron:
-        label: epsilon
-        expression: medium
+        label: Epsilon
+        expression: high
         fused: false
         gene:
           id: Epsilon
           source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

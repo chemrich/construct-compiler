@@ -1,24 +1,16 @@
 construct:
-  name: "human_kinase_a_ecoli_expression"
+  name: "hsPKA_FLAG_E_coli"
   host: e_coli_bl21_de3
-  
   backbone:
     catalog_vector: "pET-28b(+)"
-  
   cassette:
     - promoter: T7lac
-    
     - cistron:
-        label: kinase_a
+        label: hsPKA
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: PRKACA  # human protein kinase cAMP-activated catalytic subunit alpha
+              id: "P17612"
               source: uniprot
-    
     - terminator: rrnB_T1
-
-# Note: E. coli cannot perform eukaryotic glycosylation or complex folding like HEK293 cells
-# Kozak sequences are eukaryotic translation initiation elements not used in prokaryotes
-# Consider co-expression with chaperones or refolding from inclusion bodies if needed

@@ -1,20 +1,50 @@
 construct:
-  name: "therapeutic_logic_gate_circuit"
+  name: "conditional_therapeutic_cargo_circuit"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: "logic_A_notB_OR_CD" # Custom hybrid promoter implementing (A AND NOT B) OR (C AND D) logic
+    - promoter: araBAD
+
     - cistron:
-        label: "stabilized_therapeutic_cargo"
+        label: signal_integrator
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: logic_controller
+        expression: high
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: cargo_output
+        expression: medium
         chain:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
-          - cleavage_site: TEV
+              repeats: 1
           - gene:
-              id: P01241 # human Growth Hormone (hGH)
+              id: IL6
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - solubility_tag: Trx
+
     - terminator: rrnB_T1

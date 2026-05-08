@@ -1,25 +1,53 @@
 construct:
-  name: "starvation_induced_autolysis_cascade"
+  name: starvation_triggered_genetic_lysis_system
   host: e_coli
+
   backbone:
-    resistance: kanamycin # Required for plasmid maintenance during development; system design is for chromosomal integration or markerless maintenance
+    resistance: null  # No antibiotic selection - use alternative verification
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: "P_bolA" # Starvation and stationary phase-responsive promoter in E. coli
+    - promoter: araBAD  # Arabinose-inducible for tight OFF state during production
+
     - cistron:
-        label: "signal_amplifier"
+        label: sensor_histidine_kinase
         expression: medium
-        gene:
-          id: "P0AFG3" # rpoE (RNA polymerase sigma-E factor), endogenous stress response regulator
-          source: uniprot
-    - spacer: 30
-    - promoter: "P_degP" # Sigma-E dependent promoter to amplify the starvation signal
+        chain:
+          - gene:
+              id: phoQ
+              source: uniprot  # Phosphate starvation sensor (EnvZ/OmpR family)
+
+    - spacer: 25
+
     - cistron:
-        label: "autolysis_effector"
+        label: response_regulator
+        expression: medium
+        chain:
+          - gene:
+              id: phoP
+              source: uniprot  # Transcriptional regulator activated by PhoQ
+
+    - spacer: 25
+
+    - promoter: lacUV5  # Constitutive weak promoter for basal expression
+
+    - cistron:
+        label: lysis_effector
         expression: high
-        fused: false
-        gene:
-          id: "P06132" # amiA (N-acetylmuramoyl-L-alanine amidase), an endogenous autolysin
-          source: uniprot
+        chain:
+          - gene:
+              id: holin_S21
+              source: uniprot  # Lambda-like holin for membrane disruption (non-toxin)
+
+    - spacer: 25
+
+    - cistron:
+        label: spanin_murein_hydrolase
+        expression: high
+        chain:
+          - gene:
+              id: endolysin_R
+              source: uniprot  # Spanin endolysin - degrades peptidoglycan layer
+
     - terminator: rrnB_T1

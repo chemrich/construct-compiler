@@ -1,24 +1,22 @@
 construct:
-  name: ultra_high_yield_expression_system
+  name: "high_titer_AAV_expression"
   host: e_coli_bl21_de3
+
   backbone:
-    # High-copy pUC origin and kanamycin selection maximize plasmid yield and stability for high protein production
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: AAV_capsid
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: AAV2_capsid
+              source: uniprot
+
+    - terminator: rrnB_T1

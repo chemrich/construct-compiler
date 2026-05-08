@@ -1,18 +1,22 @@
 construct:
-  name: "ENZ_X_high_expression_solubility_construct"
+  name: "ENZ_X_high_expression_soluble"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_enzyme
+        label: ENZ_X
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - gene:
               id: ENZ_X
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

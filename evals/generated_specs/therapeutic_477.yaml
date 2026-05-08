@@ -1,21 +1,36 @@
 construct:
-  name: "TCR_alpha_beta_2A_mammalian"
-  host: mammalian
+  name: "dual_TCR_2A_HEK293"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: TCR_complex
+        label: TCR_alpha
         expression: high
         chain:
+          - tag: FLAG
           - gene:
-              id: P01848
+              id: TRAC
               source: uniprot
-          - linker:
-              type: P2A
-              repeats: 1
+
+    - spacer: 21
+      # Self-cleaving 2A peptide (P2A) for equimolar expression
+      label: P2A_linker
+
+    - cistron:
+        label: TCR_beta
+        expression: high
+        fused: false
+        chain:
+          - tag: HA
           - gene:
-              id: P01850
+              id: TRBC
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

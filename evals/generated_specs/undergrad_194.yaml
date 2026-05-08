@@ -1,16 +1,19 @@
 construct:
-  name: "lacZ_promoter_activity_reporter"
+  name: promoter_strength_reporter_lacZ
   host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac # Defaulted to T7lac per instructions; replace with specific promoter name if known
+    - promoter: custom_promoter
+      sequence: "PLACEHOLDER_INSERT_YOUR_PROMOTER_SEQUENCE_HERE"
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: lacZ_reporter
+        expression: high
         gene:
-          id: P00722
+          id: lacZ
           source: uniprot
+
     - terminator: rrnB_T1

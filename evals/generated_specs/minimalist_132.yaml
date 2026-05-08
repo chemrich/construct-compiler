@@ -1,16 +1,23 @@
 construct:
-  name: "protein_m_periplasmic_export"
-  host: e_coli_bl21_de3
+  name: "e_coli_periplasmic_protein_M"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: protein_M
         expression: high
         chain:
-          - tag: PelB
+          - signal_peptide: pelB  # pelB signal sequence for periplasmic export
           - gene:
-              id: Protein_M
+              id: protein_M
               source: uniprot
-    - terminator: T7term
+          - tag: 6xHis
+    
+    - terminator: rrnB_T1

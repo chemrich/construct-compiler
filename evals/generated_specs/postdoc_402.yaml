@@ -1,22 +1,27 @@
 construct:
-  name: "human_glycoprotein_ecoli_production"
+  name: "human_glycoprotein_ecoli_soluble"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: glycoprotein_target
+        label: glycoprotein
         expression: high
         chain:
-          - solubility_tag: MBP  # Added MBP to ensure high solubility in E. coli as requested
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P02763
+              id: human_glycoprotein
               source: uniprot
-          - tag: 6xHis          # C-terminal His-tag for purification
-    - terminator: T7term
-# Note: E. coli lacks the mammalian machinery (ER/Golgi) required for post-translational glycosylation. 
-# While glycosylation motifs are present in the gene sequence, the protein will not be glycosylated in this host.
+          - cleavage_site: TEV
+          - tag: 6xHis
+    
+    - terminator: rrnB_T1

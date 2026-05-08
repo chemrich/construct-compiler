@@ -1,25 +1,43 @@
 construct:
-  name: "homeostatic_mEGFP_feedback_loop"
-  host: e_coli
+  name: homeostatic_GFP_negative_feedback
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: lacUV5
+    - promoter: T7lac
+
     - cistron:
-        label: reporter_output
+        label: target_fluorescent_protein
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
+
     - spacer: 30
+
     - cistron:
-        label: feedback_repressor
+        label: repressor_transcription_factor
         expression: medium
         fused: false
-        gene:
-          id: P03023
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: destabilizing_degron_tag
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: ssrA_tag
+              source: uniprot
+
     - terminator: rrnB_T1

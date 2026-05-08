@@ -1,15 +1,23 @@
 construct:
-  name: "crispr_guide_gene_q"
-  host: e_coli
+  name: CRISPR_guide_Q
+  host: in_vitro
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100 # Standard constitutive promoter for guide RNA expression in E. coli
+    - promoter: T7
+
     - cistron:
-        label: sgRNA_target_Q
+        label: guide_RNA
         expression: high
-        gene:
-          id: sgRNA_Gene_Q
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: CRISPR_gRNA_Q
+              source: uniprot
+              # Note: This represents a synthetic guide RNA scaffold targeting gene Q
+              # Actual target sequence must be designed based on PAM sites in the Q gene
+
+    - terminator: T7term

@@ -1,14 +1,21 @@
 construct:
-  name: "aav2_vp3_assembly_study"
+  name: "truncated_AAV_VP3_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: vp3
+        label: VP3
         expression: high
-        gene:
-          id: P03135 # P03135 is the UniProt ID for AAV2 Cap; VP3 corresponds to the C-terminal residues 203-735.
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: AAV2_VP3
+              source: uniprot
+
+    - terminator: rrnB_T1

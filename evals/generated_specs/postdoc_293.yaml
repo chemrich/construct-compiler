@@ -1,19 +1,21 @@
 construct:
-  name: "periplasmic_protein_O_expression"
-  host: e_coli_bl21_de3
+  name: "protein_O_periplasmic_FLAG"
+  host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: protein_O
         expression: high
         chain:
-          - tag: pelB  # Signal peptide for periplasmic translocation
           - tag: FLAG
+          - signal_peptide: pelB
           - gene:
-              id: P03688
+              id: protO
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

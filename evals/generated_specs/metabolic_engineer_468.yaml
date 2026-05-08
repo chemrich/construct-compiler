@@ -1,63 +1,72 @@
 construct:
-  name: "pth_constitutive_6enzyme_pathway"
+  name: "Pth1_to_Pth6_pathway_with_GFP_Pth3_fusion"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100 # Strong constitutive Anderson promoter
+    - promoter: J23100
+
     - cistron:
-        label: pth1
-        expression: medium
-        fused: false
+        label: Pth1
+        expression: high
         gene:
           id: Pth1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: pth2
-        expression: medium
-        fused: false
+        label: Pth2
+        expression: high
         gene:
           id: Pth2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: pth3_reporter
-        expression: high # Increased to high to compensate for poor expression and achieve balance
-        fused: false
+        label: Pth3_GFP_fusion
+        expression: high
         chain:
           - gene:
               id: Pth3
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: pth4
-        expression: medium
-        fused: false
+        label: Pth4
+        expression: high
         gene:
           id: Pth4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: pth5
-        expression: medium
-        fused: false
+        label: Pth5
+        expression: high
         gene:
           id: Pth5
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: pth6
-        expression: medium
-        fused: false
+        label: Pth6
+        expression: high
         gene:
           id: Pth6
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

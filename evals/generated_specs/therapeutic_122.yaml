@@ -1,27 +1,32 @@
 construct:
-  name: bacterial_periplasmic_fab_production
+  name: "Fab_periplasmic_expression"
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: none # Specified as antibiotic-free; requires alternative selection like auxotrophic complementation
-    ori: pUC # High-copy origin to maximize DNA template for yield
-    source: custom
+    resistance: null
+    ori: pBR322
+    source: addgene
+    # Note: Antibiotic-free backbone selection requires custom vector without selection marker
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: light_chain
+        label: Fab_fragment
         expression: high
         chain:
-          - tag: pelB # N-terminal signal peptide for periplasmic secretion
+          - signal_peptide: pelB
           - gene:
-              id: antibody_light_chain
-    - spacer: 30
-    - cistron:
-        label: heavy_chain_fd
-        expression: high
-        fused: false # Independent translation for polycistronic assembly
-        chain:
-          - tag: pelB # N-terminal signal peptide for periplasmic secretion
+              id: Fab_light_chain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: antibody_heavy_chain_fd
-          - tag: 6xHis # C-terminal purification tag
-    - terminator: T7term
+              id: Fab_heavy_chain
+              source: uniprot
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+
+    - terminator: rrnB_T1

@@ -1,57 +1,66 @@
 construct:
-  name: "cellulose_degradation_operon_b_subtilis"
-  host: e_coli  # B. subtilis host not in standard list, using e_coli with Bacillus-specific parts
+  name: "bacillus_cellulose_degradation_operon"
+  host: bacillus
+
   backbone:
-    resistance: chloramphenicol
+    resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: P_veg  # Strong constitutive promoter for Bacillus subtilis
+    - promoter: P_veg  # strong, constitutive Bacillus promoter
+
     - cistron:
         label: endoglucanase
         expression: high
         chain:
-          - tag: Signal_Peptide_AmyE
+          - secretion_signal: amyE_signal  # Bacillus secretion signal
           - gene:
-              id: P06210
+              id: endoglucanase_cel8A
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: exoglucanase
         expression: high
-        fused: false
         chain:
-          - tag: Signal_Peptide_AmyE
+          - secretion_signal: amyE_signal
           - gene:
-              id: P18126
+              id: exoglucanase_cel6A
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: beta_glucosidase
         expression: high
-        fused: false
         chain:
-          - tag: Signal_Peptide_AmyE
+          - secretion_signal: amyE_signal
           - gene:
-              id: P0C0A3
+              id: beta_glucosidase_bgl1A
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: xylanase
         expression: high
-        fused: false
         chain:
-          - tag: Signal_Peptide_AmyE
+          - secretion_signal: amyE_signal
           - gene:
-              id: P18429
+              id: xylanase_xyn10A
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: esterase
         expression: high
-        fused: false
         chain:
-          - tag: Signal_Peptide_AmyE
+          - secretion_signal: amyE_signal
           - gene:
-              id: O31551
+              id: esterase_cxe1
               source: uniprot
+
     - terminator: rrnB_T1

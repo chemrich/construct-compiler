@@ -1,24 +1,52 @@
 construct:
   name: "yeast_bistable_toggle_switch"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: pCYC1_tetO  # Repressed by TetR (Protein B)
+    - promoter: GAL4_UAS
+      label: "state_A_promoter"
+
     - cistron:
-        label: Protein_A
-        expression: medium
-        gene:
-          id: P03023  # LacI (represses Protein B promoter)
-          source: uniprot
-    - terminator: CYC1_term
-    - promoter: pCYC1_lacO  # Repressed by LacI (Protein A)
+        label: "protein_A"
+        expression: high
+        chain:
+          - gene:
+              id: "GAL80"
+              source: uniprot
+
+    - terminator: "CYC1_terminator"
+
+    - spacer: 50
+
+    - promoter: "ADH1"
+      label: "state_B_promoter"
+
     - cistron:
-        label: Protein_B
+        label: "protein_B"
+        expression: high
+        chain:
+          - gene:
+              id: "ASH1"
+              source: uniprot
+
+    - terminator: "CYC1_terminator"
+
+    - spacer: 50
+
+    - promoter: "GAL1"
+      label: "inducer_state_transition"
+
+    - cistron:
+        label: "toggle_controller"
         expression: medium
-        gene:
-          id: P04483  # TetR (represses Protein A promoter)
-          source: uniprot
-    - terminator: ADH1_term
+        chain:
+          - gene:
+              id: "MET3"
+              source: uniprot
+
+    - terminator: "CYC1_terminator"

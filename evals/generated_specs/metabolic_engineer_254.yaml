@@ -1,23 +1,27 @@
 construct:
-  name: "purif_pathway_operon"
-  host: e_coli_bl21
+  name: "four_enzyme_pathway_arabinose_inducible"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
         label: PurifE1
         expression: medium
-        fused: false
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: PurifE1
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: PurifE2
         expression: medium
@@ -28,7 +32,9 @@ construct:
           - gene:
               id: PurifE2
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: PurifE3
         expression: medium
@@ -39,7 +45,9 @@ construct:
           - gene:
               id: PurifE3
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: PurifE4
         expression: medium
@@ -50,4 +58,5 @@ construct:
           - gene:
               id: PurifE4
               source: uniprot
+    
     - terminator: rrnB_T1

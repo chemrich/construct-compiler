@@ -1,18 +1,25 @@
 construct:
-  name: "mito_therapeutic_enzyme_SOD2"
+  name: mitochondrial_therapeutic_enzyme_expression
   host: HEK293
+
   backbone:
-    resistance: none # Clinical safety: exclusion of antibiotic resistance genes for human therapeutic use.
-    ori: pBR322
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # No resistance marker for clinical safety
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: SOD2_expression
+        label: mitochondrial_enzyme
         expression: high
         chain:
-          - tag: MTS # Mitochondrial Targeting Sequence (e.g., from SOD2 or COX4)
+          - tag: MTS_Cox8a  # N-terminal mitochondrial targeting sequence from Cox8a
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: SOD2
+              id: P12345
               source: uniprot
+              # Replace P12345 with actual therapeutic enzyme UniProt ID
+
     - terminator: bGH_polyA

@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: polycistronic_GeneA_GeneB_GeneC
-  host: e_coli
+  name: polycistronic_GeneA_GeneB_GeneC_ecoli
+  host: e_coli_bl21
 
   backbone:
     resistance: kanamycin
@@ -14,29 +13,37 @@ construct:
     - cistron:
         label: GeneA
         expression: high
-        gene:
-          id: GeneA
-          source: uniprot
+        rbs: BBa_B0034
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GeneA
+              source: uniprot
 
-    - spacer: 45  # unique spacer length
+    - spacer: 35
 
     - cistron:
         label: GeneB
-        expression: medium
-        fused: false  # independent translation with distinct RBS
-        gene:
-          id: GeneB
-          source: uniprot
+        expression: high
+        fused: false
+        rbs: BBa_B0030
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: GeneB
+              source: uniprot
 
-    - spacer: 32  # different spacer length
+    - spacer: 42
 
     - cistron:
         label: GeneC
-        expression: low
-        fused: false  # independent translation with distinct RBS
-        gene:
-          id: GeneC
-          source: uniprot
+        expression: high
+        fused: false
+        rbs: BBa_B0032
+        chain:
+          - tag: FLAG
+          - gene:
+              id: GeneC
+              source: uniprot
 
     - terminator: rrnB_T1
-```

@@ -1,26 +1,32 @@
 construct:
-  name: "SecretedProteinS_Dual_Secretion"
+  name: "dual_secreted_protein_S_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "S_protein_copy_1"
+        label: secreted_protein_S_v1
         expression: high
         chain:
-          - tag: IgK_leader
+          - signal_peptide: IgG_signal  # IgG leader sequence for mammalian secretion
           - gene:
-              id: "SecretedProteinS"
+              id: SecretedProteinS
               source: uniprot
-    - spacer: 40
+
+    - spacer: 30
+
     - cistron:
-        label: "S_protein_copy_2"
+        label: secreted_protein_S_v2
         expression: high
         fused: false
         chain:
-          - tag: IL2_leader
+          - signal_peptide: HPA_signal  # Human placental alkaline phosphatase signal peptide (structurally distinct)
           - gene:
-              id: "SecretedProteinS"
+              id: SecretedProteinS
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

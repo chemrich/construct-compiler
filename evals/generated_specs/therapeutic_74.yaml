@@ -1,19 +1,26 @@
 construct:
-  name: "pichia_secreted_vhh_therapeutic"
+  name: "Pichia_pastoris_secreted_VHH_purification"
   host: yeast
+
   backbone:
-    resistance: HIS4  # Using metabolic marker HIS4 to avoid antibiotic resistance markers
-    ori: pUC
-    source: custom
+    resistance: null  # No antibiotic resistance marker
+    ori: pUC  # Standard yeast shuttle vector backbone
+    source: addgene
+
   cassette:
-    - promoter: AOX1  # High-level inducible promoter for Pichia pastoris
+    - promoter: AOX1  # Alcohol oxidase 1 - strong inducible promoter for P. pastoris
+
     - cistron:
-        label: secreted_vhh
+        label: secreted_VHH
         expression: high
         chain:
-          - tag: alpha_factor  # Yeast secretion signal for export to supernatant
+          - tag: alpha_factor_signal  # Alpha-factor secretion signal for Pichia pastoris
           - gene:
-              id: VHH
+              id: VHH  # User-provided single-domain antibody variable domain
               source: uniprot
-          - tag: 8xHis  # C-terminal affinity tag for purification
-    - terminator: AOX1_term  # Standard Pichia pastoris terminator for high stability
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis  # C-terminal His-tag for purification
+
+    - terminator: rrnB_T1

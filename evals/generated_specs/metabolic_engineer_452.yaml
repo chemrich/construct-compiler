@@ -1,37 +1,59 @@
 construct:
-  name: "inducible_4_gene_z_operon"
-  host: e_coli_bl21_de3
+  name: "four_gene_operon_Z1_Z2_Z3_Z4"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: z1_z2_fusion
-        expression: medium
+        label: Z1
+        expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
               id: Z1
               source: uniprot
-          - cleavage_site: 3C
+
+    - spacer: 25
+
+    - cistron:
+        label: Z2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
           - gene:
               id: Z2
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: z3
-        expression: medium
+        label: Z3
+        expression: high
         fused: false
-        gene:
-          id: Z3
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Z3
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: z4
-        expression: medium
+        label: Z4
+        expression: high
         fused: false
-        gene:
-          id: Z4
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Z4
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,23 +1,29 @@
 construct:
-  name: protein_a_dual_tag_expression
-  host: e_coli
+  name: ProteinA_His_Strep_dual_tagged
+  host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target_protein
+        label: ProteinA
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: ProteinA
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - tag: Strep-II
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

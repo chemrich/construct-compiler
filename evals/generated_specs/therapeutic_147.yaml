@@ -1,15 +1,22 @@
 construct:
-  name: mammalian_sgRNA_expression_cassette
-  host: mammalian
+  name: "mammalian_crisprgRNA_expression"
+  host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic resistance genes
+    catalog_vector: "pTwist CMV"
+    # Note: Using pTwist as base; antibiotic resistance will be removed in custom modifications
+    resistance: null
     ori: pUC
-    source: custom
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: sgRNA
-        gene:
-          id: sgRNA_scaffold
-          source: custom
-    - terminator: BBa_B0015 # Standard terminator used as placeholder for Pol III termination sequence (typically Poly-T)
+      # U6 is a Pol III promoter ideal for small RNA expression in mammalian cells
+
+    - gene:
+        id: crisprgRNA
+        sequence: "GGTGTTTAATTACGAGTGCTGATGAGTTTGATGCTGATGTACTGGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTTTTTT"
+        # Standard 20bp gRNA spacer region (user should customize spacer sequence)
+        # Followed by constant CRISPR repeat and termination signal
+
+    - terminator: rrnB_T1
+      # Pol III termination signal (6 consecutive T's for transcription termination)

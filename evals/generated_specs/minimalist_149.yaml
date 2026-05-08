@@ -1,14 +1,20 @@
 construct:
-  name: "lactose_inducible_lacZ_expression"
-  host: e_coli_bl21_de3
+  name: lacZ_lactose_inducible
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: lacUV5
+    
     - cistron:
-        label: lacZ_enzyme
+        label: lacZ
         expression: high
         gene:
-          id: P00722
+          id: lacZ
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

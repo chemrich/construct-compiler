@@ -1,25 +1,34 @@
 construct:
-  name: "protein_a_b_coexpression_operon"
+  name: "coexpression_GST_ProteinA_ProteinB"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_a
+        label: ProteinA
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
-              id: Protein_A
+              id: ProteinA
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: protein_b
+        label: ProteinB
         expression: high
         fused: false
         gene:
-          id: Protein_B
+          id: ProteinB
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

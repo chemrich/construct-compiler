@@ -1,16 +1,32 @@
 construct:
-  name: "nonviral_stable_integration_therapeutic_GLA"
+  name: "mammalian_piggyBac_therapeutic_enzyme"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    # Custom backbone for piggyBac transposon cargo
+    # No antibiotic resistance; integration via transposase provided externally
+    ori: null
+    resistance: null
     source: custom
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral constitutive promoter for stable expression
+    - comment: "5' piggyBac ITR (Inverted Terminal Repeat)"
+      feature: "piggyBac_ITR_5prime"
+
+    - promoter: EF1_alpha
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
-        gene:
-          id: P06280  # Human alpha-galactosidase A
-          source: uniprot
-    - terminator: bGH_polyA  # Standard non-viral mammalian polyadenylation signal
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: null
+              source: null
+              # User must specify the therapeutic enzyme gene ID and source
+
+    - terminator: rrnB_T1
+
+    - comment: "3' piggyBac ITR (Inverted Terminal Repeat)"
+      feature: "piggyBac_ITR_3prime"

@@ -1,22 +1,30 @@
 construct:
-  name: "bacillus_subtilis_metabolic_operon"
+  name: "bacillus_metabolic_operon_AB"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: enzyme_A
+        label: gene_A
         expression: high
         gene:
           id: gene_A
-    - spacer: 30
+          source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_B
+        label: gene_B
         expression: medium
         fused: false
         gene:
           id: gene_B
-    - terminator: BBa_B0015
+          source: uniprot
+
+    - terminator: rrnB_T1

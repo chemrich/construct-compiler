@@ -1,22 +1,36 @@
 construct:
-  name: "therapeutic_bicistronic_p2a_expression"
+  name: "dual_therapeutic_subunit_2A_expression"
   host: HEK293
+
   backbone:
-    resistance: none # Requirement for antibiotic-free selection; typically utilizes metabolic or RNA-based selection
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null  # No antibiotic resistance marker
+    ori: null
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_polyprotein
+        label: subunit_1
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: IL12A
+              id: therapeutic_subunit_1
               source: uniprot
-          - linker:
-              type: P2A
+
+    - spacer: 51  # P2A self-cleaving peptide (51 bp)
+
+    - cistron:
+        label: subunit_2
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: IL12B
+              id: therapeutic_subunit_2
               source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: rrnB_T1

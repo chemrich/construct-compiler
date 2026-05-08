@@ -1,12 +1,15 @@
 construct:
-  name: "MBP_solubility_fusion_yeast"
+  name: "protein_MBP_fusion_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: TEF1 # Substituted TEF1 for yeast host; default T7lac/CMV are not suitable for yeast
+    - promoter: GAL1
+
     - cistron:
         label: target
         expression: high
@@ -14,8 +17,9 @@ construct:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: CYC1_term # Yeast-specific terminator for mRNA stability and termination
+              id: target_protein
+              source: uniprot
+
+    - terminator: CYC1

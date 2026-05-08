@@ -1,23 +1,19 @@
 construct:
-  name: "geneX_lacZ_expression_system"
+  name: geneX_expression_ampicillin_bluewhite
   host: e_coli
+  
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
+    lacZ: true
+  
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: geneX
         expression: high
         gene:
           id: geneX
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: screening_reporter
-        expression: medium
-        fused: false
-        gene:
-          id: lacZ
-          source: uniprot
+    
     - terminator: rrnB_T1

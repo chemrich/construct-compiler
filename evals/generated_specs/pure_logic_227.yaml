@@ -1,32 +1,44 @@
 construct:
-  name: "xor_gate_recombinase_logic"
-  host: e_coli_bl21_de3
+  name: "two_input_XOR_gate"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Input A: L-arabinose inducible promoter
+    - promoter: T7lac
+
     - cistron:
-        label: input_a_processor
-        expression: medium
-        gene:
-          id: P0CH72  # Bxb1 recombinase (UniProt)
-          source: uniprot
-    - spacer: 40
-    - promoter: lacUV5  # Input B: IPTG inducible promoter
-    - cistron:
-        label: input_b_processor
-        expression: medium
-        fused: false
-        gene:
-          id: P06491  # Cre recombinase (UniProt)
-          source: uniprot
-    - spacer: 40
-    - promoter: J23100  # Constitutive promoter for the XOR logic gate output
-    - cistron:
-        label: output_z
+        label: Input_A_sensor
         expression: high
-        fused: false
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015  # Standard double terminator for transcriptional isolation
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LuxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Input_B_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Output_Z_XOR
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

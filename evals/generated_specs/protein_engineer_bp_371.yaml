@@ -1,27 +1,35 @@
 construct:
-  name: "pichia_heterodimer_dual_promoter"
+  name: "dual_promoter_heterodimer_Pichia_pastoris"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
+    ori: ARS
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: subunit_a
+        label: Protein_A
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: protein_a
+              id: "Protein_A"
               source: uniprot
+
     - terminator: CYC1
+
     - promoter: YPT1
+
     - cistron:
-        label: subunit_b
-        expression: medium
+        label: Protein_B
+        expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: protein_b
+              id: "Protein_B"
               source: uniprot
-    - terminator: AOX1
+
+    - terminator: CYC1

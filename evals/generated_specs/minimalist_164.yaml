@@ -1,14 +1,22 @@
 construct:
-  name: "tightly_controlled_toxin_a_expression"
-  host: e_coli_bl21_de3
+  name: "tight_control_ToxinA_expression"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+    
     - cistron:
-        label: toxin_a
-        expression: high
-        gene:
-          id: toxA
-          source: uniprot
-    - terminator: T7term
+        label: ToxinA
+        expression: low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ToxinA
+              source: uniprot
+    
+    - terminator: rrnB_T1

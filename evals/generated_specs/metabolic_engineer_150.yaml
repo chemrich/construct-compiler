@@ -1,36 +1,51 @@
 construct:
-  name: "bacillus_subtilis_biosynthetic_operon"
-  host: e_coli  # Bacillus subtilis not in supported host list; substituting e_coli with Gram-positive compatible elements
+  name: "biosynthetic_pathway_operon_four_enzymes"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: P_veg  # Standard constitutive promoter for Bacillus subtilis
+    - promoter: araBAD
+
     - cistron:
-        label: enzyme_alpha
+        label: Enzyme_alpha
         expression: high
-        gene:
-          id: Enzyme_alpha
-    - spacer: 30
+        chain:
+          - gene:
+              id: Enzyme_alpha
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_beta
+        label: Enzyme_beta
         expression: high
         fused: false
         gene:
           id: Enzyme_beta
-    - spacer: 30
+          source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_gamma
+        label: Enzyme_gamma
         expression: high
         fused: false
         gene:
           id: Enzyme_gamma
-    - spacer: 30
+          source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_delta
+        label: Enzyme_delta
         expression: high
         fused: false
         gene:
           id: Enzyme_delta
+          source: uniprot
+
     - terminator: rrnB_T1

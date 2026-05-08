@@ -1,19 +1,41 @@
 construct:
-  name: "dual_gRNA_U6_HEK293_recombination_safe"
+  name: "dual_gRNA_mammalian_U6"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: guide_RNA_1
+        label: gRNA1
         expression: high
-        gene:
-          id: "gRNA1_spacer_flanked_by_viral_E1_with_standard_scaffold"
-    - spacer: 35 # Unique viral-derived tRNA-like processing element to prevent recombination
+        chain:
+          - gene:
+              id: gRNA1_spacer_HSV1_flank
+              sequence: "GGTACCGTGGATGAACGCGGCGACTGAACGTCCGGACGGGTCCGTGGATGAACGCGGCGACTGAACGTCCG"
+              # 5' HSV-1 derived flank + gRNA1 spacer + 3' HSV-1 derived flank (non-repetitive)
+          - gene:
+              id: gRNA1_scaffold_loop1
+              sequence: "GTTTAAGAGCTATGCTGGAAACAGCATAGCAAGTTTAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC"
+              # Modified U6-driven gRNA scaffold with loop variant 1
+
+    - spacer: 25
+
     - cistron:
-        label: guide_RNA_2
+        label: gRNA2
         expression: high
-        gene:
-          id: "gRNA2_spacer_flanked_by_viral_E2_with_modified_loop_scaffold"
-    - terminator: BBa_B0015 # Pol III termination typically occurs at a T-stretch; BBa_B0015 contains multiple terminator elements
+        fused: false
+        chain:
+          - gene:
+              id: gRNA2_spacer_CMV_flank
+              sequence: "GGTACGCGGTACCGTGGATGAAGGTCCGGACGGGTCAAGGTCCGTGGATGAACGCGGCGAATGGTACGCG"
+              # 5' CMV-derived flank + gRNA2 spacer + 3' CMV-derived flank (distinct from HSV-1)
+          - gene:
+              id: gRNA2_scaffold_loop2
+              sequence: "GTTTAAGAGCTATGCTGGAAACAGCATAGCAAGTTTAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC"
+              # Standard U6-driven gRNA scaffold with loop variant 2
+
+    - terminator: poly_U_6

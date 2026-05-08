@@ -1,19 +1,24 @@
 construct:
-  name: "pichia_xylanase_intracellular_expression"
+  name: "xylanase_SUMO_optimized_Pichia"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pGAPZ"
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
-        label: SUMO_xylanase_fusion
+        label: xylanase_SUMO
         expression: high
         chain:
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: xynA
+              id: xylanase
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

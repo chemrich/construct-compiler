@@ -1,45 +1,43 @@
-```yaml
 construct:
-  name: programmable_amplifier_system
-  host: e_coli_bl21_de3
+  name: programmable_amplifier
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
 
   cassette:
-    - promoter: T7lac  # Weak input signal - IPTG inducible
+    - promoter: T7lac
 
     - cistron:
-        label: amplifier_module
+        label: input_signal_receptor
         expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A9B2  # LacI repressor
+              id: luxR
               source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: gain_controller
-        expression: low
-        fused: false
-        gene:
-          id: P03023  # CAT (chloramphenicol acetyltransferase) - third input control
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: output_reporter
-        expression: high
-        fused: false
+        label: gain_control_regulator
+        expression: medium
         chain:
-          - tag: 8xHis  # For purification
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: amplifier_output_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: mEGFP  # Strong amplified output signal
+              id: mNeonGreen
               source: fpbase
 
     - terminator: rrnB_T1
-```

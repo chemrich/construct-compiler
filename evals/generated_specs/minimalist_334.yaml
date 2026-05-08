@@ -1,16 +1,22 @@
 construct:
-  name: "short_lived_mEGFP_reporter"
+  name: Q_degron_short_lived
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: Q_protein
+        expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-          - tag: SsrA # C-terminal SsrA degradation tag (AANDENYALAA) for E. coli ClpXP proteolysis
+              id: Q
+              source: uniprot
+          - degradation_tag: ssrA
+
     - terminator: rrnB_T1

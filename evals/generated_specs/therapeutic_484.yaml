@@ -1,14 +1,15 @@
 construct:
-  name: "dCas9_KRAB_Epigenetic_Silencer"
+  name: dCas9_KRAB_gRNA_mammalian_silencing
   host: HEK293
+
   backbone:
-    resistance: kanamycin # Used for bacterial propagation; no viral selection markers included
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha # Non-viral mammalian promoter
+    - promoter: CMV
+
     - cistron:
-        label: dCas9_KRAB_effector
+        label: dCas9_KRAB
         expression: high
         chain:
           - tag: NLS
@@ -17,16 +18,22 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: KRAB
               source: uniprot
           - tag: NLS
-    - spacer: 50
-    - promoter: U6 # Pol III promoter for gRNA transcription
+
+    - spacer: 30
+
+    - promoter: U6
+
     - cistron:
         label: guide_RNA
-        fused: false # Independent transcription unit
+        expression: high
+        fused: false
         gene:
-          id: sgRNA_scaffold
-    - terminator: bGH_polyA
+          id: gRNA_scaffold
+          source: uniprot
+
+    - terminator: poly_A

@@ -1,18 +1,23 @@
 construct:
-  name: "mammalian_enzyme_max_yield_expression"
+  name: "high_yield_mammalian_enzyme_ecoli"
   host: e_coli_bl21_de3
+  
   backbone:
     resistance: kanamycin
-    ori: pUC # High-copy origin for maximum plasmid yield
+    ori: pUC
     source: addgene
+  
   cassette:
-    - promoter: T7 # Maximum strength promoter for E. coli expression
+    - promoter: T7
+    
     - cistron:
-        label: target_enzyme
+        label: mammalian_enzyme
         expression: high
-        # Note: Large complex mammalian proteins often require solubility tags (like MBP/SUMO) 
-        # or chaperones to fold correctly in E. coli, but these were omitted per user request.
-        gene:
-          id: P00533 # EGFR used as a representative large, complex mammalian enzyme
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: null
+              source: null
+    
+    - terminator: rrnB_T1

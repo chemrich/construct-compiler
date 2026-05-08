@@ -1,18 +1,20 @@
 construct:
-  name: gene_therapy_minimal_immunogenicity
+  name: "mammalian_gene_therapy_minimal_immunogenicity"
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"  # Will modify promoter below
-    
+    catalog_vector: "pTwist EF1a"
+    resistance: kanamycin
+
   cassette:
-    - promoter: EF1_alpha  # Human cellular promoter, less immunogenic than viral CMV
-    
+    - promoter: EF1_alpha
+
     - cistron:
         label: therapeutic_protein
-        expression: medium
-        gene:
-          id: # Gene ID needed - please specify target protein
-          source: uniprot
-    
-    - terminator: human_beta_globin_polyA  # Human-derived terminator for reduced immunogenicity
+        expression: high
+        chain:
+          - gene:
+              id: "LYST"
+              source: uniprot
+
+    - terminator: hBG_polyA

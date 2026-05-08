@@ -1,23 +1,27 @@
 construct:
-  name: "fusion_domainA_domainB_solubility_optimized"
-  host: e_coli_bl21_de3
+  name: DomainA_DomainB_GS_fusion
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target_fusion
+        label: fusion_protein
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 7
           - gene:
               id: DomainA
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 7
           - gene:
               id: DomainB
               source: uniprot
-    - terminator: T7term
+    - terminator: rrnB_T1

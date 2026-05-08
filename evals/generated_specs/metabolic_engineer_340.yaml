@@ -1,40 +1,63 @@
 construct:
-  name: "butanol_biosynthesis_constitutive_operon"
-  host: e_coli_bl21
+  name: "butanol_biosynthesis_operon_e_coli"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # Strong constitutive promoter for high expression
+
     - cistron:
         label: PDC
         expression: high
-        gene:
-          id: P06672
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: PDC
+              source: uniprot
+              # Pyruvate decarboxylase - initiates pathway
+
+    - spacer: 25
+
     - cistron:
         label: ADH
         expression: high
         fused: false
-        gene:
-          id: P00330
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ADH1
+              source: uniprot
+              # Alcohol dehydrogenase - converts acetaldehyde to ethanol intermediate
+
+    - spacer: 25
+
     - cistron:
         label: ALDH
         expression: medium
         fused: false
-        gene:
-          id: P00346
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ALDH
+              source: uniprot
+              # Aldehyde dehydrogenase - oxidizes aldehydes
+
+    - spacer: 25
+
     - cistron:
         label: ACN
         expression: medium
         fused: false
-        gene:
-          id: P15074
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ACN
+              source: uniprot
+              # Acyl-CoA dehydrogenase or acyl-CoA ligase - extends carbon chain
+
     - terminator: rrnB_T1

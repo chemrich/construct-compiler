@@ -1,26 +1,28 @@
 construct:
-  name: constitutive_membrane_receptor_ERBB2
+  name: "mammalian_membrane_receptor_caHER2"
   host: HEK293
 
   backbone:
-    # Kanamycin included for bacterial propagation as per schema; no selection marker added to expression cassette to satisfy "No ARGs" requirement.
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
 
   cassette:
-    - promoter: EF1_alpha  # Strong non-viral promoter
+    - promoter: EF1_alpha
 
     - cistron:
-        label: receptor_target
+        label: caHER2
         expression: high
         chain:
-          - solubility_tag: MBP  # N-terminal solubility tag
+          - tag: FLAG
+          - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: ERBB2  # Constitutively active receptor (HER2)
+              id: HER2_human
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: CAAX  # C-terminal CAAX prenylation motif for membrane anchoring
 
-    - terminator: SV40_polyA
+    - terminator: rrnB_T1

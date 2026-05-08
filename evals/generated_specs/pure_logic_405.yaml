@@ -1,33 +1,59 @@
 construct:
-  name: "relaxation_oscillator_protease_feedback"
-  host: e_coli_bl21_de3
+  name: "genetically_encoded_relaxation_oscillator"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: repressor
         expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: protease_degrader
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ssrA_tag_protease
+              source: uniprot
+        # Comment: ssrA-tagged proteins are degraded by Lon protease; this creates temporal delay
+
+    - spacer: 25
+
+    - cistron:
+        label: output_reporter
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: negative_feedback_link
+        expression: medium
         fused: false
         chain:
           - gene:
-              id: LacI
-              source: uniprot
-          - cleavage_site: TEV
-    - spacer: 30
-    - cistron:
-        label: protease
-        expression: medium
-        fused: false
-        gene:
-          id: TEV_protease
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reporter
-        expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+              id: gfp_ssrA_fusion
+              source: fpbase
+        # Comment: GFP with ssrA tag for Lon-mediated degradation creates delay loop back to repress reporter transcription through tetR repressor
+
+    - terminator: rrnB_T1

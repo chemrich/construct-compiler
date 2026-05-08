@@ -1,21 +1,27 @@
 construct:
-  name: "EnzymeA_EnzymeB_Polycistronic_Expression"
-  host: e_coli_bl21_de3
+  name: EnzymeA_EnzymeB_dual_expression
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: enzyme_a
+        label: EnzymeA
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: EnzymeA
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_b
+        label: EnzymeB
         expression: high
         fused: false
         chain:
@@ -23,4 +29,5 @@ construct:
               id: EnzymeB
               source: uniprot
           - tag: Myc
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

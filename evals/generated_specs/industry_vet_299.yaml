@@ -1,32 +1,65 @@
 construct:
-  name: "peptide_library_fusion_array"
+  name: "peptide_display_library"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: peptide_unit_1
+        label: display_fusion
         expression: high
         chain:
           - tag: 6xHis
-          - gene:
-              id: P0CG47
-              source: uniprot
-    - cistron:
-        label: peptide_unit_2
-        fused: true
-        chain:
           - cleavage_site: TEV
           - gene:
-              id: P01133
-              source: uniprot
+              id: peptide_1
+              source: custom
+
+    - spacer: 30
+
     - cistron:
-        label: peptide_unit_3
-        fused: true
+        label: peptide_2_with_2A
+        expression: high
+        fused: false
         chain:
-          - cleavage_site: TEV
           - gene:
-              id: P61278
-              source: uniprot
-    - terminator: T7term
+              id: P2A
+              source: custom
+          - gene:
+              id: peptide_2
+              source: custom
+
+    - spacer: 30
+
+    - cistron:
+        label: peptide_3_with_2A
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P2A
+              source: custom
+          - gene:
+              id: peptide_3
+              source: custom
+
+    - spacer: 30
+
+    - cistron:
+        label: peptide_4_with_2A
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P2A
+              source: custom
+          - gene:
+              id: peptide_4
+              source: custom
+
+    - terminator: rrnB_T1

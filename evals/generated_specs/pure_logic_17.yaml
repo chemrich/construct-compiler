@@ -1,38 +1,42 @@
-```yaml
 construct:
-  name: frequency_divider_circuit
-  host: e_coli
-
+  name: frequency_divider_fluorescent
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
-
+  
   cassette:
     - promoter: T7lac
-
+    
     - cistron:
-        label: toggle_switch_repressor_A
-        expression: medium
-        gene:
-          id: P0140  # LacI repressor
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: toggle_switch_repressor_B
-        expression: medium
-        gene:
-          id: P03023  # CI repressor (lambda)
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: fluorescent_reporter
+        label: toggle_switch_A
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: toggle_switch_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cI
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: frequency_reporter
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    
     - terminator: rrnB_T1
-```

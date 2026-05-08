@@ -1,22 +1,28 @@
 construct:
-  name: "constitutive_polycistronic_GOI1_GOI2"
-  host: e_coli
+  name: "dual_GOI_operon_HisStrep"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: GOI1_cistron
+        label: GOI1
         expression: high
         chain:
           - gene:
               id: GOI1
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: GOI2_cistron
+        label: GOI2
         expression: high
         fused: false
         chain:
@@ -24,4 +30,5 @@ construct:
           - gene:
               id: GOI2
               source: uniprot
+
     - terminator: rrnB_T1

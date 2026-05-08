@@ -1,20 +1,25 @@
 construct:
-  name: "pichia_aox1_secreted_dual_tagged_expression"
+  name: pichia_dual_tagged_secreted_protein
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPIC9"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: secreted_target
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: 6xHis
+          - secretion_signal: alpha_factor
           - gene:
-              id: target_gene
+              id: target_protein
               source: uniprot
-          - tag: Twin-Strep
-    - terminator: AOX1_term
+          - tag: Twin_Strep
+
+    - terminator: rrnB_T1

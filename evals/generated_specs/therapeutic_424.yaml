@@ -1,19 +1,28 @@
 construct:
-  name: "mitochondrial_matrix_targeted_enzyme_non_viral"
+  name: mitochondrial_matrix_enzyme_expression
   host: HEK293
+
   backbone:
-    resistance: none # Designed for antibiotic-free delivery (e.g., pFAR or minicircle)
+    catalog_vector: pTwist CMV
     ori: pUC
-    source: custom
+    # No antibiotic resistance marker - mammalian expression uses selection-free approach
+    source: addgene
+
   cassette:
-    - promoter: CMV
+    - promoter: EF1_alpha  # Strong constitutive mammalian promoter
+
     - cistron:
-        label: target_enzyme
+        label: mito_enzyme
         expression: high
         chain:
-          - tag: MTS # Mitochondrial Targeting Sequence
-          - tag: 6xHis
+          - tag: 6xHis                    # C-terminal purification tag for mammalian expression
+          - solubility_tag: SUMO          # Enhances expression and solubility in mammalian cells
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: MTS                      # Mitochondrial targeting sequence (N-terminal for matrix import)
           - gene:
-              id: SOD2
+              id: enzyme_of_interest
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

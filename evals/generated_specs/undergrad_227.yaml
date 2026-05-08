@@ -1,18 +1,24 @@
 construct:
-  name: "Awesome_Enzyme_Production"
+  name: "Awesome_Enzyme_SUMO_TEV"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_cistron
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
               id: Awesome_Enzyme
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

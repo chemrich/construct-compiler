@@ -1,19 +1,24 @@
 construct:
-  name: "pichia_pastoris_antigen_intracellular_fusion"
+  name: "Pichia_viral_antigen_intracellular"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pPIC9
+    source: addgene
+
   cassette:
     - promoter: TEF1
+
     - cistron:
-        label: antigen_fusion
+        label: viral_antigen
         expression: high
         chain:
           - tag: 8xHis
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: P0DTC2
+              id: viral_antigen_pp_codon_optimized
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

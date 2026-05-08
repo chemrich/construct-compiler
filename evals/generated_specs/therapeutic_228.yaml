@@ -1,16 +1,21 @@
 construct:
-  name: "synthetic_promoter_evaluation_fibroblast"
-  host: mammalian
+  name: synthetic_promoter_GFP_reporter_HEK293
+  host: HEK293
+
   backbone:
-    resistance: none  # User requested antibiotic-free construct
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+    resistance: null
+    ori: SC101
+
   cassette:
-    - promoter: synthetic_promoter  # Novel synthetic promoter as per request
+    - promoter: J23100
+
     - cistron:
         label: reporter
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_pA  # Non-viral mammalian polyadenylation signal
+        expression: high
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

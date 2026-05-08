@@ -1,48 +1,59 @@
 construct:
-  name: "yeast_peroxisomal_metabolic_pathway"
+  name: "peroxisomal_metabolic_pathway_4enzyme"
   host: yeast
+
   backbone:
-    resistance: uracil
-    ori: 2micron
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: CUP1
+
     - cistron:
-        label: "perox_enz1"
-        expression: medium
+        label: PeroxEnz1
+        expression: high
         chain:
-          - tag: "PTS2"
           - gene:
-              id: "PeroxEnz1"
+              id: PeroxEnz1
               source: uniprot
-    - spacer: 30
+          - tag: PTS1
+
+    - spacer: 25
+
     - cistron:
-        label: "perox_enz2"
-        expression: medium
+        label: PeroxEnz2
+        expression: high
         fused: false
         chain:
           - gene:
-              id: "PeroxEnz2"
+              id: PeroxEnz2
               source: uniprot
-          - tag: "PTS1"
-    - spacer: 30
+          - tag: PTS1
+
+    - spacer: 25
+
     - cistron:
-        label: "perox_enz3"
-        expression: medium
-        fused: false
-        chain:
-          - tag: "PTS2"
-          - gene:
-              id: "PeroxEnz3"
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: "perox_enz4"
-        expression: medium
+        label: PeroxEnz3
+        expression: high
         fused: false
         chain:
           - gene:
-              id: "PeroxEnz4"
+              id: PeroxEnz3
               source: uniprot
-          - tag: "PTS1"
-    - terminator: CYC1_term
+          - tag: PTS1
+
+    - spacer: 25
+
+    - cistron:
+        label: PeroxEnz4
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: PeroxEnz4
+              source: uniprot
+          - tag: PTS1
+
+    - terminator: CYC1_terminator

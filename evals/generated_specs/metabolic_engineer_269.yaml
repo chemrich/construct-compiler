@@ -1,51 +1,58 @@
 construct:
-  name: "tryptophan_analog_biosynthesis_operon"
+  name: "trp_analog_biosynthesis_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23106
+    - promoter: tac
+
     - cistron:
-        label: dahp_synthase
-        expression: medium
-        fused: false
+        label: dahp_synthase_fbr
+        expression: high
         gene:
-          id: aroG
+          id: aroG_fbr
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: chorismate_mutase
-        expression: medium
-        fused: false
+        expression: high
         gene:
-          id: aroQ
+          id: aroH
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: anthranilate_synthase
         expression: medium
-        fused: false
         gene:
           id: trpE
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: igp_synthase
+        label: indole3gp_synthase
         expression: medium
-        fused: false
         gene:
           id: trpC
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: trp_synthase_variant
-        expression: high
-        fused: false
+        expression: medium
         chain:
           - tag: 6xHis
           - gene:
-              id: trpB
+              id: trpB_variant
               source: uniprot
+
     - terminator: rrnB_T1

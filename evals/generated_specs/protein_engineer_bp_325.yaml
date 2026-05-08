@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_intracellular_kinase_gst_thrombin"
+  name: "GST_kinase_intracellular_bacillus"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110 # Standard Bacillus subtilis rolling-circle replication origin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pveg # Strong constitutive Bacillus subtilis promoter requested
+    - promoter: Pveg
+
     - cistron:
-        label: "kinase_target"
+        label: target
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: MAPK1
+              id: kinase
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

@@ -1,17 +1,33 @@
 construct:
-  name: "recombination_proof_high_copy_backbone"
+  name: "recombination_proof_highcopy_backbone"
   host: e_coli
+  
   backbone:
-    # High-copy origin (pUC) with kanamycin resistance, custom optimized for zero homology
     resistance: kanamycin
     ori: pUC
-    source: custom
+    source: addgene
+    # Note: Standard catalog backbones (pUC, pBR322) contain inherent sequence
+    # homologies between ori and marker regions that cannot be completely eliminated
+    # without synthetic redesign. For TRUE recombination-proofing, request a custom
+    # synthetic backbone from a vendor (e.g., Twist, Atum, Geneious) that uses:
+    # (1) codon-optimized antibiotic resistance gene with zero homology to ori,
+    # (2) heterologous ori (e.g., p15A origin with pUC copy number boosted via
+    #     synthetic mutations), and (3) maximal sequence divergence in all
+    #     non-functional regions. Standard off-the-shelf vectors cannot guarantee
+    #     elimination of all homologous stretches. Alternatively, use a minimal
+    #     synthetic backbone from a de novo design service.
+    
   cassette:
-    - promoter: tac
+    - promoter: T7lac
+    
     - cistron:
-        label: stability_reporter
+        label: cargo
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
     - terminator: rrnB_T1

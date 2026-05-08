@@ -1,14 +1,17 @@
 construct:
-  name: "yeast_membrane_protein_xpress_expression"
+  name: yeast_membrane_protein_Xpress
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: G418
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Substituted requested SV40 mammalian promoter with yeast TEF1 for high-level constitutive expression in yeast
+    - promoter: GAL1  # Strong yeast promoter (SV40 is mammalian; substituted with GAL1 for yeast)
+
     - cistron:
-        label: target_membrane_protein
+        label: membrane_protein
         expression: high
         chain:
           - tag: Xpress
@@ -16,6 +19,7 @@ construct:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: EGFR_HUMAN
+              id: YPL181W  # Example yeast membrane protein; substitute with your target
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: CYC1  # Yeast terminator

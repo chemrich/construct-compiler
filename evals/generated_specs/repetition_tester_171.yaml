@@ -1,28 +1,30 @@
 construct:
-  name: membrane_protein_a_tmd_variant_1
-  host: e_coli_bl21_de3
+  name: MembraneProteinA_TMD1_FluorescentTag
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
-    - promoter: T7lac
-    - cistron:
-        label: membrane_fusion_v1
-        expression: high
-        chain:
-          - gene:
-              id: P0AE08
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - gene:
-              id: P0A910
-              source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 2
-          - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+  - promoter: T7lac
+  - cistron:
+      label: MembraneProteinA_v1
+      expression: high
+      chain:
+      - gene:
+          id: MembraneProteinA
+          source: uniprot
+          codon_optimization: E_coli_v1
+      - linker:
+          type: GS_flexible
+          repeats: 1
+      - gene:
+          id: TransmembrainDomain_variant_1
+          source: uniprot
+      - linker:
+          type: rigid_EAAAK
+          repeats: 1
+      - gene:
+          id: mEGFP
+          source: fpbase
+  - terminator: rrnB_T1

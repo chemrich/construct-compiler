@@ -1,16 +1,22 @@
 construct:
-  name: "bactprotein_expression_ecoli"
-  host: e_coli
+  name: BactProtein_ecoli_expression
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac  # Substituted T7lac for CMV; CMV is a mammalian promoter and not functional in E. coli.
+    - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: BactProtein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: BactProtein
               source: uniprot
-    - terminator: T7term # Substituted T7term for SV40 polyA; SV40 polyA signals are for mRNA processing in eukaryotes.
+    
+    - terminator: rrnB_T1

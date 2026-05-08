@@ -1,18 +1,32 @@
 construct:
-  name: "yeast_mammalian_like_glycoprotein_expression"
+  name: "mammalian_glycoprotein_yeast_expression"
   host: yeast
+  # NOTE: S. cerevisiae performs N-linked glycosylation at the consensus sequence N-X-S/T,
+  # but adds high-mannose oligosaccharides (Man8-14GlcNAc2) rather than complex biantennary
+  # glycans typical of mammalian cells. For mammalian-type glycosylation (bisected, fucosylated,
+  # galactosylated structures), HEK293 or CHO mammalian cells are required. If yeast is necessary
+  # for other reasons, consider engineered yeast strains (e.g., Pichia pastoris with humanized
+  # glycosylation pathways) or post-translational enzymatic modification of yeast-produced protein.
+  # This spec uses S. cerevisiae with a signal peptide for ER targeting and proper folding.
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
 
   cassette:
-    - promoter: GPD # High-strength constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: glycoprotein_target
+        label: glycoprotein
         expression: high
         chain:
+          - tag: 6xHis
+          - signal_peptide: alpha_factor  # ER targeting and signal peptidase cleavage in S. cerevisiae
           - gene:
-              id: P01588 # Human Erythropoietin (EPO), a protein requiring specific N-linked glycosylation
+              id: target_glycoprotein
               source: uniprot
-    - terminator: CYC1 # Standard yeast terminator for transcription cessation; note: mammalian-like glycosylation patterns in S. cerevisiae typically require the use of glyco-engineered strains (e.g., GlycoSwitch) as wild-type yeast perform hypermannosylation.
+        # Note: Ensure the target protein contains N-X-S/T consensus sequences for N-linked glycosylation.
+        # Yeast-mediated glycosylation will occur at these sites but will differ from mammalian patterns.
+
+    - terminator: rrnB_T1

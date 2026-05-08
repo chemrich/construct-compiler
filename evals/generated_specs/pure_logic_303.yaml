@@ -1,43 +1,64 @@
 construct:
-  name: "mammalian_toggle_switch"
+  name: "mammalian_bistable_toggle_switch"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE  # Repressed by TetR-NLS
+    - promoter: CMV
+
     - cistron:
-        label: laci_repressor
-        expression: medium
+        label: repressor_A
+        expression: high
         chain:
-          - tag: NLS
+          - tag: HA
           - gene:
-              id: "P03023"
+              id: tetR
               source: uniprot
-    - spacer: 30  # Represents IRES for independent translation of reporter
+
+    - terminator: bGH_polyA
+
+    - spacer: 30
+
+    - promoter: TRE  # Tetracycline Response Element
+
     - cistron:
-        label: state_a_reporter
+        label: repressor_B
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - terminator: bGH_polyA
+
+    - spacer: 30
+
+    - promoter: CMV
+
+    - cistron:
+        label: state_indicator_on
+        expression: medium
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: bGH_polyA
+
+    - spacer: 30
+
+    - promoter: TRE
+
+    - cistron:
+        label: state_indicator_off
         expression: medium
         fused: false
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: SV40_polyA
 
-    - promoter: CMV_LacO  # Repressed by LacI-NLS
-    - cistron:
-        label: tetr_repressor
-        expression: medium
-        chain:
-          - tag: NLS
-          - gene:
-              id: "P03006"
-              source: uniprot
-    - spacer: 30  # Represents IRES for independent translation of reporter
-    - cistron:
-        label: state_b_reporter
-        expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
     - terminator: bGH_polyA

@@ -1,23 +1,26 @@
 construct:
-  name: "ComplexX_Polycistronic_Expression"
+  name: ComplexX_two_subunit_IRES
   host: e_coli_bl21
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: subunit_a
+        label: SubunitA
         expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: SubunitA
               source: uniprot
-    - spacer: 30 # Replaced eukaryotic IRES with a spacer for prokaryotic polycistronic expression
+    # Note: IRES (Internal Ribosome Entry Site) elements are primarily functional in eukaryotic systems.
+    # In E. coli, they do not function efficiently. This construct uses an IRES placeholder for documentation,
+    # but translation of SubunitB will likely be minimal or absent in prokaryotic systems.
+    # For E. coli, consider using a spacer with a ribosome binding site (RBS) and separate start codon instead.
+    - spacer: 30
     - cistron:
-        label: subunit_b
-        expression: high
+        label: SubunitB
+        expression: low
         fused: false
         gene:
           id: SubunitB

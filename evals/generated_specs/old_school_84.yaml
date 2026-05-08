@@ -1,24 +1,29 @@
 construct:
-  name: "dual_t7_activator_reporter_construct"
+  name: "dual_T7_activator_reporter"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: activator_protein_a
+        label: activator
         expression: high
         gene:
-          id: araC
+          id: activator
           source: uniprot
+
     - terminator: T7term
-    - spacer: 30
-    - promoter: T7lac
+
+    - promoter: T7
+
     - cistron:
-        label: reporter_protein_b
+        label: reporter
         expression: high
-        fused: false
         gene:
-          id: sfGFP
-          source: fpbase
+          id: reporter
+          source: uniprot
+
     - terminator: T7term

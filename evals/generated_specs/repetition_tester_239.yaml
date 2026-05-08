@@ -1,23 +1,36 @@
 construct:
-  name: "dual_utr_reporter_independence_study"
+  name: "dual_luciferase_UTR_comparison_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
-    - cistron:
-        label: "firefly_luciferase_UTR_set_1"
+      cistron:
+        label: luciferase_UTR1
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: BGH_polyA
-    - spacer: 100 # Physical separation to prevent transcriptional interference
-    - promoter: EF1_alpha # Non-identical promoter to ensure independence
-    - cistron:
-        label: "firefly_luciferase_UTR_set_2"
+        chain:
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+      utr_5prime: "GCCACCGCTAGCTAGCTGCGCGCTAGC"
+      utr_3prime: "AATAGTACGTACGTACGTACGTACGTA"
+      polya_signal: SV40
+
+    - spacer: 300
+
+    - promoter: EF1_alpha
+      cistron:
+        label: luciferase_UTR2
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: SV40_polyA # Non-identical polyA signal to ensure independence
+        chain:
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+      utr_5prime: "TACGACTACGACTACGACTACGATACGA"
+      utr_3prime: "CGTAGCTAGCTAGCTAGCTAGCTAGCTA"
+      polya_signal: WPRE
+
+    - terminator: rrnB_T1

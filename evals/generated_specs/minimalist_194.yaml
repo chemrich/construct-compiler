@@ -1,14 +1,20 @@
 construct:
-  name: "inducible_expression_of_protein_I"
+  name: "inducible_expression_I"
   host: e_coli_bl21_de3
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: I
         expression: high
-        gene:
-          id: I
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: I
+              source: uniprot
+    
+    - terminator: rrnB_T1

@@ -1,22 +1,31 @@
 construct:
-  name: "mammalian_bicistronic_gfp_rfp"
+  name: dual_fluorescent_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: gfp_cistron
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    # IRES enables cap-independent translation of downstream cistron in mammalian cells
+    - spacer: 50
+
     - cistron:
-        label: rfp_cistron
+        label: RFP
         expression: high
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

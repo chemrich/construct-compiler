@@ -1,19 +1,23 @@
 construct:
-  name: "yeast_secreted_scfv_expression"
+  name: "scFv_secreted_yeast"
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: secreted_scfv
+        label: scFv
         expression: high
         chain:
-          - tag: alpha_mating_factor
+          - tag: alpha_factor_signal_peptide
           - gene:
-              id: scFv
+              id: scFv_vh_vl
               source: uniprot
-          - tag: 6xHis
-    - terminator: CYC1_term
+          - tag: His6
+
+    - terminator: CYC1

@@ -1,30 +1,53 @@
 construct:
-  name: "sequential_logic_secretion_antibody"
-  host: HEK293
+  name: "sequential_logic_circuit_antibody"
+  host: mammalian
   backbone:
     catalog_vector: "pTwist CMV"
   cassette:
-    # Input A Cassette: Expresses Cre recombinase to enable the logic gate
     - promoter: CMV
     - cistron:
-        label: logic_gate_recombinase
+        label: memory_protein_A
         expression: medium
-        gene:
-          id: P06023
-          source: uniprot
-    - terminator: BBa_B0015
-    # Input B Cassette: Expresses the therapeutic antibody fragment
-    # In a physical implementation, this promoter is separated from the gene by a floxed-STOP cassette
-    # that is removed only after Input A (Cre) is active.
+        chain:
+          - gene:
+              id: dCas9
+              source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 30
     - promoter: EF1_alpha
     - cistron:
-        label: therapeutic_antibody_fragment
-        expression: high
-        fused: false
+        label: input_sensor_A
+        expression: medium
         chain:
-          - tag: Igk_leader  # Secretion signal for HEK293 host
           - gene:
-              id: P0DOX5
+              id: rtTA3
               source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 30
+    - promoter: EF1_alpha
+    - cistron:
+        label: input_sensor_B
+        expression: medium
+        chain:
+          - gene:
+              id: M2rtTA
+              source: uniprot
+    - terminator: rrnB_T1
+    - spacer: 30
+    - promoter: TRE3G
+    - cistron:
+        label: anti_HER2_scFv
+        expression: high
+        chain:
           - tag: 6xHis
-    - terminator: BBa_B0015  # Using standard terminator as SV40/bGH is not in specified list
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: trastuzumab_scFv
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: ER_signal_peptide
+    - terminator: rrnB_T1

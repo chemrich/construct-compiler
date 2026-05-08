@@ -1,40 +1,51 @@
 construct:
-  name: "synthetic_quorum_sensing_operon"
+  name: synthetic_QS_module_luxI_luxR_mCherry_feedback
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23106  # Moderately strong constitutive promoter
+    - promoter: J23106
+      utr_5: RBS_strong
+
     - cistron:
-        label: luxi_synthase
-        expression: high  # Strong RBS as requested
-        # Note: 5' UTR stabilizing sequence (e.g., T7g10) to be included in the leader sequence
+        label: LuxI
+        expression: high
         gene:
-          id: LuxI
+          id: luxI
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: luxr_receptor
+        label: LuxR
         expression: medium
         fused: false
         gene:
-          id: LuxR
+          id: luxR
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: mcherry_reporter
+        label: mCherry
         expression: medium
         fused: false
         gene:
           id: mCherry
           source: fpbase
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: qs_feedback_inhibitor
+        label: QS_feedback
         expression: medium
         fused: false
         gene:
           id: QS_feedback
           source: uniprot
+
     - terminator: rrnB_T1

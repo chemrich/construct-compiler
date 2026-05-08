@@ -1,14 +1,21 @@
 construct:
-  name: "super_stable_mcherry_collagen"
-  host: e_coli_bl21_de3
+  name: "super_stable_fluorescent_reporter"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: fusion_reporter
+        label: stable_reporter
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: mCherry
               source: fpbase
@@ -16,12 +23,13 @@ construct:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: Q8RP04
+              id: collagen_Scl2
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 2
           - gene:
-              id: P06654
+              id: MoxR_AAA_ATPase
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

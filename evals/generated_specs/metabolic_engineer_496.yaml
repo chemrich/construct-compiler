@@ -1,48 +1,79 @@
 construct:
-  name: "eta_pathway_constitutive_operon"
+  name: "five_enzyme_pathway_operon_variant_A"
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # strong constitutive promoter for high-throughput screening
+
     - cistron:
-        label: eta1
+        label: barcode_5prime
         expression: high
         gene:
-          id: Eta1
-          source: uniprot
-    - spacer: 30
+          id: AAAACCCGGGAAACCCGGG  # 5' variant barcode sequence
+          source: custom
+
+    - spacer: 20
+
     - cistron:
-        label: eta2
-        expression: high
-        fused: false
-        gene:
-          id: Eta2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: eta3
+        label: Eta1
         expression: high
         fused: false
         gene:
-          id: Eta3
+          id: eta1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 20
+
     - cistron:
-        label: eta4
+        label: Eta2
         expression: high
         fused: false
         gene:
-          id: Eta4
+          id: eta2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 20
+
     - cistron:
-        label: eta5
+        label: Eta3
         expression: high
         fused: false
         gene:
-          id: Eta5
+          id: eta3
           source: uniprot
-    - terminator: BBa_B0015
+
+    - spacer: 20
+
+    - cistron:
+        label: Eta4
+        expression: high
+        fused: false
+        gene:
+          id: eta4
+          source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: Eta5
+        expression: high
+        fused: false
+        gene:
+          id: eta5
+          source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: barcode_3prime
+        expression: high
+        gene:
+          id: TTTGGGCCCTTTGGGCCC  # 3' variant barcode sequence (reverse complement variant)
+          source: custom
+
+    - terminator: rrnB_T1

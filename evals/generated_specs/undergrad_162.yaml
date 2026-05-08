@@ -1,18 +1,23 @@
 construct:
-  name: "FungiEnzymeX_secretion_yeast"
+  name: "yeast_secreted_FungiEnzymeX"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: secreted_enzyme
         expression: high
         chain:
-          - tag: alpha_factor  # Secretion signal for yeast
+          - tag: alpha_factor_signal
           - gene:
               id: FungiEnzymeX
               source: uniprot
-    - terminator: CYC1_term # Standard yeast terminator
+
+    - terminator: CYC1_terminator

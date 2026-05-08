@@ -1,18 +1,42 @@
 construct:
-  name: "e_coli_chromosomal_lac_GFP_integration"
+  name: "e_coli_chromosomal_GFP_lac"
   host: e_coli
+  
   backbone:
-    # Recombination arms for chromosomal integration are typically flanking the cassette;
-    # specific arms are handled by the assembly tool based on the target locus.
     resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    ori: null  # No plasmid origin; chromosomal integration only
+    source: custom
+  
   cassette:
-    - promoter: lac
+    - homology_arm:
+        label: upstream
+        length: 1000
+        target_locus: "lacZ"  # Common integration site in E. coli chromosome
+    
+    - promoter: lacUV5
+    
     - cistron:
-        label: target
-        expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
+        label: gfp
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
     - terminator: rrnB_T1
+    
+    - cassette:
+        - promoter: constitutive  # For kanamycin resistance
+        - cistron:
+            label: kanR
+            expression: high
+            gene:
+              id: neo
+              source: uniprot
+        - terminator: rrnB_T1
+    
+    - homology_arm:
+        label: downstream
+        length: 1000
+        target_locus: "lacZ"

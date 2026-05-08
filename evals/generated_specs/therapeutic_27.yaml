@@ -1,20 +1,22 @@
-```yaml
 construct:
-  name: "constitutive_fluorescent_reporter_mammalian"
+  name: "mammalian_fluorescent_reporter_no_ARG"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    ori: pUC
+    source: addgene
+    # Note: pTwist CMV is antibiotic-free; uses selection-free mammalian expression
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
 
     - cistron:
-        label: reporter
+        label: fluorescent_reporter
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
 
-    - terminator: SV40_polyA
-```
+    - terminator: rrnB_T1

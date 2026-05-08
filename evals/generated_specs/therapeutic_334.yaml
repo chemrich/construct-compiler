@@ -1,18 +1,33 @@
 construct:
-  name: "CHO_ERT_Human_GLA_Secretion"
+  name: "humanized_lysosomal_enzyme_CHO_expression"
   host: CHO
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: lysosomal_enzyme
         expression: high
         chain:
-          - tag: IgK_leader
-          - tag: Twin-Strep
-          - cleavage_site: TEV
+          - tag: 8xHis
+          - cleavage_site: 3C
+          - solubility_tag: Trx
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P06280
+              id: "P10253"
               source: uniprot
-    - terminator: bGH_pA
+          - tag: M6P_targeting_signal
+
+    - terminator: rrnB_T1
+
+  # Note: The M6P_targeting_signal (mannose-6-phosphate) in the C-terminal position
+  # ensures lysosomal targeting via the M6P receptor pathway in mammalian cells.
+  # The Trx tag enhances solubility and expression in CHO secretory pathway.
+  # The N-terminal 8xHis and 3C cleavage site enable facile purification via IMAC
+  # with optional tag removal. This design balances secretion efficiency, stability,
+  # and purification from CHO cell culture medium.

@@ -1,12 +1,23 @@
 construct:
-  name: "human_shRNA_knockdown"
+  name: shRNA_gene_knockdown_HEK293
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTwist shRNA"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: U6  # U6 is a Pol III promoter required for shRNA transcription in mammalian cells
+    - promoter: U6
+
     - cistron:
-        label: shRNA_expression_unit
-        gene:
-          id: shRNA_target_sequence
-    - terminator: PolyT  # Standard termination signal for Pol III promoters (e.g., U6, H1)
+        label: shRNA
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_hairpin
+              sequence: "GCTAGCTAGCTACGTAGCTACGTAGCTACGTAGCTACGT"
+              source: custom
+
+    - terminator: U6_terminator

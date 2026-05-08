@@ -1,16 +1,20 @@
 construct:
-  name: "Bacillus_subtilis_ComK_expression"
-  host: Bacillus_subtilis # Host specific to the request; B. subtilis uses different origins and promoters than E. coli.
+  name: "ComK_expression_Bacillus"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pBR322 # Placeholder; B. subtilis typically requires pUB110 or pC194 origins for replication.
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_veg # Strong constitutive promoter for Bacillus subtilis.
+    - promoter: tac
+
     - cistron:
-        label: comK
+        label: ComK
         expression: high
         gene:
-          id: P39138
+          id: ComK
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

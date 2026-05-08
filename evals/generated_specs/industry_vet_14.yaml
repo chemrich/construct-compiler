@@ -1,15 +1,19 @@
-```yaml
 construct:
-  name: "U6_sgRNA_K_expression"
-  host: HEK293
+  name: "U6_sgRNA_K"
+  host: mammalian
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: U6
-    - gene:
+
+    - rna:
+        label: sgRNA_K
+        type: guide_rna
         id: sgRNA_K
-        source: custom
-    - terminator: Pol_III_term
-```
+
+    - terminator: U6term

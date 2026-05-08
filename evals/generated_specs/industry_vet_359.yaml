@@ -1,20 +1,27 @@
 construct:
-  name: "therapeutic_strep_furin_fusion"
-  host: e_coli_bl21
+  name: "E_coli_dual_peptide_furin_cleavable"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: "therapeutic_precursor"
+        label: fusion_polyprotein
         expression: high
         chain:
           - tag: Strep-II
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01133
+              id: therapeutic_peptide_A
               source: uniprot
           - cleavage_site: Furin
           - gene:
-              id: P01308
+              id: therapeutic_peptide_B
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

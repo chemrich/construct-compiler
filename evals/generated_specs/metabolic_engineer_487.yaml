@@ -1,50 +1,58 @@
 construct:
-  name: "R1_R5_metabolic_operon"
-  host: e_coli
+  name: "R1_R2_R3_R4_R5_operon_with_degradation_control"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # Strong, constitutive Anderson promoter
+    
     - cistron:
         label: R1
-        expression: medium
+        expression: high
         gene:
           id: R1
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: R2
-        expression: medium
-        fused: false
+        expression: high
         gene:
           id: R2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: R3
-        expression: medium
-        fused: false
+        expression: high
         gene:
           id: R3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: R4
-        expression: medium
-        fused: false
+        expression: high
         gene:
           id: R4
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: R5
-        expression: medium
-        fused: false
+        expression: high
         chain:
           - gene:
               id: R5
               source: uniprot
-          - tag: LVA
+          - degradation_tag: LVA  # C-terminal degradation tag for rapid turnover
+    
     - terminator: rrnB_T1

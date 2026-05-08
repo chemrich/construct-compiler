@@ -1,64 +1,64 @@
-```yaml
 construct:
-  name: doxycycline_inducible_drug_resistance_operon
+  name: "doxycycline_inducible_5enzyme_resistance_operon"
   host: e_coli_bl21
-  
+
   backbone:
-    catalog_vector: "pET-28b(+)"
-  
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tetR_TetA  # doxycycline-inducible promoter
-    
+    - promoter: tetR  # doxycycline-inducible (tight regulation)
+
     - cistron:
-        label: enzyme1
-        expression: medium
+        label: enzyme_1
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P0A9Q7  # beta-lactamase
+              id: "ENZYME1_RESISTANCE"
               source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
-        label: enzyme2
+        label: enzyme_2
+        expression: high
+        fused: false
+        gene:
+          id: "ENZYME2_RESISTANCE"
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_3
         expression: medium
         fused: false
         gene:
-          id: P00552  # chloramphenicol acetyltransferase
+          id: "ENZYME3_RESISTANCE"
           source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
-        label: enzyme3
+        label: enzyme_4
         expression: medium
         fused: false
         gene:
-          id: P00557  # aminoglycoside phosphotransferase
+          id: "ENZYME4_RESISTANCE"
           source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
-        label: enzyme4
-        expression: medium
-        fused: false
-        gene:
-          id: P04994  # tetracycline resistance protein
-          source: uniprot
-    
-    - spacer: 25
-    
-    - cistron:
-        label: enzyme5
-        expression: medium
+        label: enzyme_5
+        expression: low
         fused: false
         chain:
           - gene:
-              id: P20659  # streptomycin phosphotransferase
+              id: "ENZYME5_RESISTANCE"
               source: uniprot
           - tag: FLAG
-    
+
     - terminator: rrnB_T1
-```

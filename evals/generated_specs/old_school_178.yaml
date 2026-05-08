@@ -1,17 +1,21 @@
 construct:
-  name: "pUC19_T7_terminator_modified"
+  name: pUC19_with_T7terminator
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
-
+    # pUC19 backbone: lacZ alpha fragment retained, MCS present
+  
   cassette:
-    - promoter: lacUV5  # pUC19 utilizes the lac promoter system for the lacZ alpha fragment
+    - promoter: lacUV5
+    
     - cistron:
-        label: lacZ_alpha_target
+        label: insert
         expression: medium
         gene:
-          id: P00722 # UniProt ID for LacZ; the alpha fragment is the N-terminal portion
-          source: uniprot
-    - terminator: T7term # Bacteriophage T7 terminator added after the MCS to prevent read-through
+          id: USER_SUPPLIED
+          # User inserts gene into MCS
+    
+    - terminator: T7term

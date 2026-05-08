@@ -1,48 +1,60 @@
 construct:
-  name: "metabolic_operon_lambda_attB_integration"
+  name: "five_gene_metabolic_pathway_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
-    # Flanked by attB sites for lambda-integrase mediated chromosomal integration
+    ori: pBR322
+    source: addgene
+
   cassette:
+    - integration_site: attB_lambda
+      
     - promoter: J23100
+
     - cistron:
-        label: vioA
+        label: gene_1
+        expression: high
+        gene:
+          id: enzymeA
+          source: uniprot
+
+    - rbs: BBa_B0030
+
+    - cistron:
+        label: gene_2
+        expression: high
+        gene:
+          id: enzymeB
+          source: uniprot
+
+    - rbs: BBa_B0031
+
+    - cistron:
+        label: gene_3
         expression: medium
         gene:
-          id: P45696
+          id: enzymeC
           source: uniprot
-    - spacer: 30
+
+    - rbs: BBa_B0032
+
     - cistron:
-        label: vioB
+        label: gene_4
         expression: medium
-        fused: false
         gene:
-          id: P45697
+          id: enzymeD
           source: uniprot
-    - spacer: 30
+
+    - rbs: BBa_B0033
+
     - cistron:
-        label: vioC
-        expression: medium
-        fused: false
+        label: gene_5
+        expression: high
         gene:
-          id: P45698
+          id: enzymeE
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: vioD
-        expression: medium
-        fused: false
-        gene:
-          id: P45699
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: vioE
-        expression: medium
-        fused: false
-        gene:
-          id: P45700
-          source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+    
+    - integration_site: attB_lambda

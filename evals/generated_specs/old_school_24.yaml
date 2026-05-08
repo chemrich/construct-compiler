@@ -1,34 +1,32 @@
-```yaml
 construct:
-  name: "enzymeX_lacI_bicistronic_tac_regulated"
+  name: "EnzymeX_GST_LacI_self_repressed"
   host: e_coli
-
+  
   backbone:
     resistance: tetracycline
     ori: pBR322
     source: addgene
-
+  
   cassette:
     - promoter: tac
-
+    
     - cistron:
-        label: enzymeX
+        label: EnzymeX
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - gene:
               id: EnzymeX
               source: uniprot
-
+    
     - spacer: 30
-
+    
     - cistron:
-        label: lacI_repressor
+        label: LacI
         expression: medium
         fused: false
         gene:
           id: lacI
           source: uniprot
-
+    
     - terminator: rrnB_T1
-```

@@ -1,98 +1,106 @@
 construct:
-  name: "pla_degradation_operon_pseudomonas"
-  host: pseudomonas_putida  # Rule 15: Use specific host if requested
+  name: "plastic_degradation_operon_pla_pseudomonas"
+  host: pseudomonas_putida
+
   backbone:
-    resistance: kanamycin
-    ori: pBBR1  # Rule 15: Broad-host range origin for Pseudomonas
-    source: custom
+    resistance: gentamicin
+    ori: pBBR1
+    source: addgene
+
   cassette:
-    - promoter: tac  # Strong promoter commonly used in Pseudomonas
+    - promoter: trc
 
     - cistron:
-        label: plaA
+        label: PlaA
         expression: high
         chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: PlaA
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - tag: S-tag
+          - tag: S_tag
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: plaB
+        label: PlaB
         expression: high
-        fused: false  # Rule 4: independent translation for polycistronic
+        fused: false
         chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: PlaB
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - tag: S-tag
+          - tag: S_tag
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: plaC
+        label: PlaC
         expression: high
         fused: false
         chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: PlaC
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - tag: S-tag
+          - tag: S_tag
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: plaD
+        label: PlaD
         expression: high
         fused: false
         chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: PlaD
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - tag: S-tag
+          - tag: S_tag
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: plaE
+        label: PlaE
         expression: high
         fused: false
         chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: PlaE
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - tag: S-tag
+          - tag: S_tag
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: plaF
+        label: PlaF
         expression: high
         fused: false
         chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: PlaF
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - tag: S-tag
+          - tag: S_tag
 
     - terminator: rrnB_T1

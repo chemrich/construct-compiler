@@ -1,18 +1,24 @@
 construct:
-  name: "ShortHalfLifeT_Yeast_Degradation"
+  name: ShortHalfLifeT
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: J23100
+
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ShortHalfLifeT
               source: uniprot
-          - tag: PEST
-    - terminator: CYC1_term
+          - tag: CL1  # C-terminal degron for rapid proteasomal degradation
+
+    - terminator: rrnB_T1

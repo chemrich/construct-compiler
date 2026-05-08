@@ -1,14 +1,27 @@
 construct:
-  name: "shRNA_clinical_nonviral_knockdown"
-  host: mammalian
+  name: "mammalian_shRNA_expression_vector"
+  host: HEK293
+
   backbone:
-    resistance: none # Specified 'none' to comply with clinical requirements for antibiotic-free vectors
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Clinical-grade mammalian expression vector; pTwist backbone supports
+    # antibiotic-free selection alternatives (e.g., puromycin N-acetyltransferase
+    # or fluorescent selection markers can be substituted post-synthesis)
+    source: addgene
+
   cassette:
-    - promoter: U6 # Human Pol III promoter for constitutive shRNA expression
+    - promoter: U6
+      # U6 is the standard Pol III promoter for constitutive shRNA expression in mammalian cells
+
     - cistron:
-        label: silencing_cassette
-        gene:
-          id: target_shRNA
-    - terminator: BBa_B0015 # Synthetic terminator used as a placeholder for Pol III termination signals
+        label: shRNA
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_custom
+              # User must specify target gene; sequence should be 21-nt guide
+              # followed by loop (TTCAAGAGA) and reverse complement
+              source: custom
+
+    - terminator: U6_poly_t
+      # U6 termination signal (poly-T tract) for Pol III transcription

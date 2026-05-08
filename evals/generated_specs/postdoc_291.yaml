@@ -1,18 +1,22 @@
 construct:
-  name: "protein_m_his_tagged_ecoli"
+  name: "E_coli_M_His_tag"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: M_protein
         expression: high
-        # Note: Kozak sequences are specific to eukaryotes; substituted with a strong Shine-Dalgarno (RBS) for E. coli expression.
         chain:
           - tag: 6xHis
           - gene:
-              id: P0DTC5
+              id: M
               source: uniprot
-    # Note: Poly-A tails are for mammalian transcript stability; substituted with a T7 terminator for E. coli.
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,15 +1,25 @@
 construct:
-  name: "bacillus_promoter_reporter_sfgfp"
+  name: bacillus_synthetic_promoter_sfGFP_reporter
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100 # Used as a placeholder promoter for synthetic library testing
+    - promoter: synthetic_placeholder  # User-defined synthetic promoter for library testing
+
     - cistron:
-        label: reporter
+        label: sfGFP_reporter
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015 # Standard double terminator (rrnB T1 + T7 TE)
+        rbs: strong  # Strong RBS for Bacillus
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+              optimization: bacillus_codon_optimized
+
+    - terminator: rrnB_T1
+
+    - terminator: T7term

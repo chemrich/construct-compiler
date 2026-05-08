@@ -1,28 +1,40 @@
 construct:
-  name: "TRE_geneX_P2A_mCherry_U6_gRNA"
+  name: "dox_inducible_geneX_P2A_mCherry_CRISPR"
   host: HEK293
+
   backbone:
-    resistance: neomycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
-    - promoter: TRE
+    - promoter: TRE  # Tetracycline-responsive element (doxycycline-inducible)
+
     - cistron:
-        label: cargo_expression
+        label: gene_X
         expression: high
         chain:
           - gene:
               id: gene_X
               source: uniprot
-          - linker:
-              type: P2A
+
+    - spacer: 30
+
+    - cistron:
+        label: mCherry_reporter
+        expression: high
+        fused: false  # P2A enables independent translation
+        chain:
+          - p2a: true  # Self-cleaving P2A peptide
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: bGH_PA
-    - promoter: U6
-    - cistron:
-        label: guide_rna
-        gene:
-          id: target_sgRNA
-    - terminator: polyT
+
+    - terminator: rrnB_T1
+
+  # Note: For CRISPR-Cas9 stable integration, co-transfect this construct with:
+  # 1. A separate Cas9 expression plasmid (constitutive or inducible)
+  # 2. A gRNA plasmid targeting your desired genomic locus (specify gRNA sequence separately)
+  # This construct carries the cargo (gene_X with dox-inducible control + reporter).
+  # The guide RNA targeting sequence should be designed via CRISPOR or similar tools
+  # and cloned into a separate U6-driven gRNA expression vector.

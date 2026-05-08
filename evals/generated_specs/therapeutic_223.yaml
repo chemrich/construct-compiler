@@ -1,14 +1,21 @@
 construct:
-  name: "sgRNA_hMSC_U6_minimal"
-  host: human_MSC
+  name: "hMSC_sgRNA_U6"
+  host: HEK293
+
   backbone:
-    resistance: none # Removed per user requirement for no antibiotic resistance markers
-    ori: pUC
-    source: custom
+    resistance: null
+    ori: null
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: "sgRNA_element"
-        gene:
-          id: "sgRNA_scaffold"
-    - terminator: rrnB_T1
+        label: sgRNA
+        expression: high
+        chain:
+          - gene:
+              id: sgRNA_target
+              source: custom
+
+    - terminator: U6_term

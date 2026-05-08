@@ -1,25 +1,28 @@
 construct:
-  name: "tet_on_protein_y_expression_system"
+  name: "mammalian_tet_on_protein_y"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
-    - cistron:
+      cistron:
         label: tet_activator
-        expression: medium
-        gene:
-          id: rtTA3
-          source: uniprot
-    - terminator: bGH_pA
-    - spacer: 50
-    - promoter: TRE3G
-    - cistron:
-        label: target_protein
         expression: high
         gene:
-          id: ProteinY
+          id: tTA
           source: uniprot
-    - terminator: SV40_pA
+      terminator: WPRE
+
+    - promoter: tetO
+      # Comment: tetO is the tetracycline-responsive promoter element
+      # In Tet-On systems, tTA protein binds tetO in presence of tetracycline/doxycycline
+      cistron:
+        label: protein_y
+        expression: high
+        gene:
+          id: protein_y
+          source: uniprot
+      terminator: WPRE

@@ -1,17 +1,24 @@
 construct:
-  name: "ChunkyDomain_Solubility_Optimized"
+  name: "ChunkyDomain_MBP_fusion"
   host: e_coli_bl21_de3
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: ChunkyDomain_fusion
+        label: ChunkyDomain_MBP
         expression: high
         chain:
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: ChunkyDomain
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

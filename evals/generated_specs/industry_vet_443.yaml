@@ -1,16 +1,21 @@
 construct:
-  name: "secreted_antibody_fragment_payload"
+  name: "secreted_antibody_fragment_AAV_mimic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: antibody_payload
+        label: secreted_payload
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal secretion signal
           - gene:
-              id: P01857
+              id: antibody_fragment
               source: uniprot
-    - terminator: bGH_polyA
+          - tag: His6  # C-terminal purification tag
+
+    - terminator: bGH_poly_A

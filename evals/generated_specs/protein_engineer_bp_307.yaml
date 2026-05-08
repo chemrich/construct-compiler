@@ -1,20 +1,25 @@
 construct:
-  name: "pichia_gap_hsa_cytokine_secretion"
+  name: "Pichia_pastoris_secreted_cytokine_HSA_fusion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: secreted_cytokine
+        label: cytokine_secreted
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_mating_factor_pre_pro
           - solubility_tag: HSA
-          - cleavage_site: 3C
+          - cleavage_site: PreScission
           - tag: Myc
           - gene:
               id: cytokine
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

@@ -1,14 +1,20 @@
 construct:
-  name: "inducible_green_glow"
-  host: e_coli_bl21_de3
+  name: inducible_GFP_switch
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
-        label: egfp_target
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

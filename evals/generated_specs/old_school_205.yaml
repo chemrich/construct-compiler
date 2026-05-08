@@ -1,22 +1,30 @@
 construct:
-  name: trp_polycistronic_expression_A_B
+  name: "dual_gene_trp_expression"
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: trp
+    - promoter: trc  # trp-based strong promoter for E. coli
+    
     - cistron:
         label: gene_a
         expression: high
         gene:
-          id: Gene_A
+          id: gene_a
+          source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: gene_b
         expression: high
         fused: false
         gene:
-          id: Gene_B
+          id: gene_b
+          source: uniprot
+    
     - terminator: rrnB_T1

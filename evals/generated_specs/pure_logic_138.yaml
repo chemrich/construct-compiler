@@ -1,30 +1,80 @@
 construct:
-  name: "mammalian_graded_output_system"
+  name: "mammalian_graded_response_system"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G # Doxycycline-inducible promoter for graded response to input molecule concentration
+    - promoter: CMV
+
     - cistron:
-        label: high_state_output
+        label: input_sensor
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - spacer: 30 # Represents an IRES or 2A peptide for polycistronic expression
-    - cistron:
-        label: medium_state_output
-        expression: medium
-        fused: false # Independent translation start (e.g., via IRES)
-        gene:
-          id: mNeonGreen
-          source: fpbase
+        chain:
+          - tag: FLAG
+          - gene:
+              id: dCas9
+              source: uniprot
+
+    - terminator: rrnB_T1
+
     - spacer: 30
+
+    - promoter: U6
+
     - cistron:
-        label: low_state_output
+        label: guide_rna_low
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_weak_promoter
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: CMV
+
+    - cistron:
+        label: output_low
         expression: low
-        fused: false
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: SV40_pA # Standard mammalian polyadenylation signal for mRNA stability and termination
+        chain:
+          - tag: HA
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: CMV
+
+    - cistron:
+        label: output_medium
+        expression: medium
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: CMV
+
+    - cistron:
+        label: output_high
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

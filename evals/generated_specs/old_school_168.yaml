@@ -1,19 +1,22 @@
 construct:
-  name: diagnostic_antibody_fragment_c_flag
+  name: "antibody_fragment_T7_FLAG"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
           - gene:
-              id: scFv
-          - linker:
-              type: GS_flexible
-              repeats: 1
+              id: antibody_fragment
+              source: uniprot
           - tag: FLAG
+    
     - terminator: T7term

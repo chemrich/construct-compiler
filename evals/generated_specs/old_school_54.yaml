@@ -1,19 +1,23 @@
 construct:
-  name: "secreted_diagnostic_protein_hek293"
+  name: "HEK293_secreted_diagnostic_protein"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: zeocin
     ori: pUC
-    source: custom
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: diagnostic_antigen
+        label: diagnostic_protein
         expression: high
         chain:
-          - tag: Ig_kappa_leader
+          - signal_peptide: IgG_signal  # N-terminal secretion signal from immunoglobulin
           - gene:
               id: diagnostic_protein
               source: uniprot
-          - tag: 6xHis
-    - terminator: bGH_PA
+          - tag: 6xHis  # C-terminal His-tag for purification
+
+    - terminator: SV40_poly_A

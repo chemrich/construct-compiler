@@ -1,16 +1,21 @@
 construct:
-  name: plant_drought_resistance_dreb1a
-  host: algae # Plant host not explicitly in schema; algae used as photosynthetic proxy
+  name: drought_resistance_transgene
+  host: algae
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: CaMV_35S # CaMV 35S is a standard promoter for high expression in photosynthetic eukaryotes
+    - promoter: J23100
+
     - cistron:
-        label: DREB1A_factor
+        label: drought_resistance
         expression: high
-        gene:
-          id: P0C0S8
-          source: uniprot
-    - terminator: NOS_terminator
+        chain:
+          - gene:
+              id: rd29a
+              source: uniprot
+
+    - terminator: rrnB_T1

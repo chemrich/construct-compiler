@@ -1,19 +1,22 @@
 construct:
-  name: protein_e_intein_fusion
-  host: e_coli_bl21_de3
+  name: "ProteinE_with_intein"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_e
+        label: ProteinE_intein
         expression: high
-        gene:
-          id: P03641
-          source: uniprot
-    - cistron:
-        label: mxe_intein_tag
-        gene:
-          id: P0A3V0
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinE
+              source: uniprot
+          - intein: DnaE  # N-terminal intein domain for protein splicing
+
+    - terminator: rrnB_T1

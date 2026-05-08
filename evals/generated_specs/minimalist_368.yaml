@@ -1,24 +1,33 @@
 construct:
-  name: kinase_k_regulator_r_coexpression
-  host: e_coli_bl21_de3
+  name: Kinase_K_Regulator_R
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: kinase_k
+        label: Kinase_K
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Kinase_K
+              id: K
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: regulator_r
-        expression: medium
+        label: Regulator_R
+        expression: high
         fused: false
-        gene:
-          id: Regulator_R
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: R
+              source: uniprot
+
+    - terminator: rrnB_T1

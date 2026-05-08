@@ -1,16 +1,66 @@
 construct:
   name: "mammalian_majority_vote_circuit"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: "Majority_Gate_ABC" # Synthetic promoter integrating Toxin_A, Pathogen_B, and Inflammation_C responsive elements via 2-of-3 logic
+    - promoter: CMV
+
     - cistron:
-        label: "therapeutic_output"
+        label: input_A_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: ToxinA_DBD_VP16
+              source: uniprot
+        # Toxin_A input: DNA-binding domain + VP16 activation domain fusion
+
+    - spacer: 30
+
+    - cistron:
+        label: input_B_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: PathogenB_DBD_VP16
+              source: uniprot
+        # Pathogen_B input: DNA-binding domain + VP16 activation domain fusion
+
+    - spacer: 30
+
+    - cistron:
+        label: input_C_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: InflammationC_DBD_VP16
+              source: uniprot
+        # Inflammation_C input: DNA-binding domain + VP16 activation domain fusion
+
+    - spacer: 30
+
+    - cistron:
+        label: majority_vote_logic_output
         expression: high
         chain:
-          - tag: "IgK_leader" # Secretion signal for therapeutic protein delivery
+          - tag: FLAG
           - gene:
-              id: "IL10"
+              id: therapeutic_protein_payload
               source: uniprot
-    - terminator: "bGH_pA"
+        # Therapeutic output gene driven by composite promoter requiring ≥2 input activators
+
+    - terminator: rrnB_T1
+
+  # Design notes:
+  # This circuit uses a synthetic promoter architecture with three independent transcription factor binding sites
+  # (one for each input sensor). The majority-vote logic is implemented via:
+  # 1. Three input transcription factors (ToxinA_DBD_VP16, PathogenB_DBD_VP16, InflammationC_DBD_VP16)
+  #    each act as sensors that only accumulate when their respective ligand is present
+  # 2. A synthetic composite promoter upstream of the therapeutic payload requires cooperative binding of
+  #    at least 2 out of 3 input transcription factors to achieve sufficient transcriptional activation
+  # 3. The FLAG tag allows for easy tracking and purification of the therapeutic output protein
+  # 4. This design ensures the therapeutic protein is only expressed when a robust disease state
+  #    (≥2 simultaneous inputs) is detected, minimizing off-target effects

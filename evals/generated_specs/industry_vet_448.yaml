@@ -1,18 +1,21 @@
 construct:
-  name: chimeric_capsid_purification
+  name: chimeric_capsid_with_TEV_cleavage
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_capsid
+        label: chimeric_capsid
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P03135
+              id: chimeric_capsid
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

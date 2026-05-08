@@ -1,34 +1,33 @@
 construct:
-  name: mammalian_bicistronic_ires_vector
+  name: "bicistronic_AAV_mammalian"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pAAV"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: protein1
         expression: high
         chain:
-          - tag: 6xHis
+          - tag: FLAG
           - gene:
-              id: mEGFP
+              id: GFP
               source: fpbase
-    - spacer: 585  # Represents standard IRES element for bicistronic expression
+
+    # IRES enables cap-independent translation of second cistron
+    - spacer: 27  # IRES_EMCV consensus sequence length
+
     - cistron:
-        label: second_protein
+        label: protein2
         expression: high
         fused: false
         gene:
-          id: mScarlet
+          id: mCherry
           source: fpbase
-    - terminator: BBa_B0015
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+
+    - terminator: polyA

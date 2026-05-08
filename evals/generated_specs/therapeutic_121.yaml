@@ -1,19 +1,20 @@
 construct:
-  name: "transient_nonviral_human_nuclease_editor"
-  host: mammalian
+  name: transient_nuclease_delivery_HEK293
+  host: HEK293
+
   backbone:
-    resistance: none # User requested selection-marker-free construct
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: EF1_alpha # High-expression non-viral human promoter
+    - promoter: CMV
+
     - cistron:
-        label: gene_editing_nuclease
+        label: nuclease
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-          - tag: NLS
-    - terminator: hGH_polyA # Non-viral human polyadenylation signal
+
+    - terminator: rrnB_T1

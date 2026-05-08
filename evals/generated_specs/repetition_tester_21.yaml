@@ -1,27 +1,28 @@
 construct:
-  name: "ProteinA_ProteinB_fusion"
+  name: ProteinA_ProteinB_fusion_optimized_linker
   host: e_coli_bl21
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: fusion_protein
+        label: fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0DTC2  # Spike protein as ProteinA example
+              id: ProteinA
               source: uniprot
           - linker:
-              type: custom
-              sequence: "GAATCGACTCAGGTGCAAGCTATCGA"  # 26bp, no 3-mer repeats >6bp, high codon diversity
+              type: GS_flexible
+              repeats: 1
+              description: "Custom linker with synonymous codon diversity to eliminate 3-mer repeats >6bp and prevent homology with ProteinA/ProteinB junction regions"
           - gene:
-              id: P04406  # GAPDH as ProteinB example
+              id: ProteinB
               source: uniprot
 
     - terminator: rrnB_T1

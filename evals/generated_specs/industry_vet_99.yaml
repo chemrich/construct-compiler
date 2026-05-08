@@ -1,21 +1,28 @@
 construct:
-  name: "yeast_two_hybrid_bait_gal4_fusion"
+  name: yeast_two_hybrid_bait_gal4dbd
   host: yeast
+
   backbone:
+    catalog_vector: "pGBT9"
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: bait_fusion
-        expression: medium
+        label: bait
+        expression: high
         chain:
-          - tag: Gal4_DBD
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: bait_protein
+              id: AAV_entry_factor
               source: uniprot
-    - terminator: ADH1
+
+    - terminator: CYC1

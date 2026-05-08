@@ -1,32 +1,67 @@
 construct:
-  name: "synthetic_nutrient_sensing_operon"
+  name: "four_enzyme_nutrient_sensing_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: multi_enzyme_complex
+        label: enzyme_1
         expression: high
         chain:
-          - gene:
-              id: sensing_enzyme_1
-              source: uniprot
+          - tag: 6xHis
           - linker:
-              type: short_GS
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: sensing_enzyme_2
+              id: enzyme_1
               source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_2
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: sensing_enzyme_3
+              id: enzyme_2
               source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_3
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: sensing_enzyme_4
+              id: enzyme_3
               source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_4
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: enzyme_4
+              source: uniprot
+
     - terminator: BBa_B0015

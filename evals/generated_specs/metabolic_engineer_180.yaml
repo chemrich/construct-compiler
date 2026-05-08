@@ -1,48 +1,58 @@
 construct:
   name: "terpene_synthesis_operon"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: trc  # Strong, constitutive bacterial promoter
+
     - cistron:
-        label: gpps
-        expression: medium
+        label: GPPS
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: GPPS
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: fpps
-        expression: medium
+        label: FPPS
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: FDPS
+              id: FPPS
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: sqs
-        expression: medium
+        label: SQS
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: FDFT1
+              id: SQS
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: sqe
-        expression: medium
+        label: SQE
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: SQLE
+              id: SQE
               source: uniprot
+
     - terminator: rrnB_T1

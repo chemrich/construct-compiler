@@ -1,17 +1,22 @@
 construct:
-  name: "cell_free_therapeutic_peptide_production"
+  name: "cell_free_therapeutic_peptide"
   host: in_vitro
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
         label: therapeutic_peptide
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: GLP1_HUMAN
+              id: therapeutic_peptide
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

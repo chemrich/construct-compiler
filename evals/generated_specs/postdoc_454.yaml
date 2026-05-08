@@ -1,15 +1,22 @@
 construct:
-  name: "yeast_constitutive_protein_k"
+  name: yeast_protein_K_constitutive
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: GPD  # Standard constitutive yeast promoter
+    - promoter: GAL1  # Constitutive yeast promoter
+
     - cistron:
-        label: protein_k
+        label: protein_K
         expression: high
         gene:
-          id: K
+          id: protein_K
           source: uniprot
-    - terminator: BGH_polyA  # User requested mammalian poly-A signal for stability, though yeast typically uses native terminators like CYC1_term.
+
+    # Note: BGH poly-A is a mammalian signal and does not function in yeast.
+    # Using CYC1 terminator (yeast-specific) for proper mRNA stability instead.
+    - terminator: CYC1

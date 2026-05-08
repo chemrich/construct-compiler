@@ -1,18 +1,23 @@
 construct:
-  name: "human_gene_expression_hek293_hygromycin"
+  name: "human_gene_HEK293_expression"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: hygromycin
-    ori: pUC
-    source: addgene
+    # Note: using pTwist CMV as base; will customize for CAG promoter and hygromycin resistance
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: human_protein
+        label: human_target
         expression: high
         chain:
+          - cleavage_site: Kozak  # Kozak consensus sequence for efficient translation initiation
           - gene:
-              id: human_gene_of_interest
+              id: "HUMAN_GENE"
               source: uniprot
           - tag: 6xHis
+
     - terminator: SV40_polyA

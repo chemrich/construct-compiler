@@ -1,16 +1,16 @@
-```yaml
 construct:
-  name: "dual_expression_EnzymeA_RegulatorB_yeast"
+  name: "yeast_dual_expression_EnzymeA_RegulatorB"
   host: yeast
 
   backbone:
     resistance: ampicillin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
-  cassette:
-    - promoter: TEF1
-    - cistron:
+  cassettes:
+    - name: "EnzymeA_cassette"
+      promoter: TEF1
+      cistron:
         label: EnzymeA
         expression: high
         chain:
@@ -18,10 +18,11 @@ construct:
           - gene:
               id: EnzymeA
               source: uniprot
-    - terminator: CYC1
+      terminator: CYC1
 
-    - promoter: GAL1
-    - cistron:
+    - name: "RegulatorB_cassette"
+      promoter: GAL1
+      cistron:
         label: RegulatorB
         expression: high
         chain:
@@ -29,5 +30,4 @@ construct:
           - gene:
               id: RegulatorB
               source: uniprot
-    - terminator: ADH1
-```
+      terminator: CYC1

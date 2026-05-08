@@ -1,16 +1,20 @@
 construct:
-  name: "constitutive_sfGFP_expression"
+  name: "sfGFP_constitutive"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive J23 series promoter for E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: sfGFP_reporter
-        expression: medium
-        chain:
-          - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: BBa_B0015
+        label: sfGFP
+        expression: high
+        gene:
+          id: sfGFP
+          source: fpbase
+
+    - terminator: rrnB_T1

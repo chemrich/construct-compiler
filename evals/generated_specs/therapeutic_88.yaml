@@ -1,18 +1,21 @@
 construct:
-  name: "non_viral_mcherry_mammalian_expression"
-  host: mammalian
+  name: "mammalian_mCherry_constitutive_expression"
+  host: HEK293
+
   backbone:
-    # Rule 12: User requested no antibiotic resistance, but E. coli cloning requires a selection marker. 
-    # Kanamycin is used for vector preparation.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    ori: null
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: reporter
+        label: mCherry_reporter
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: WPRE_polyA

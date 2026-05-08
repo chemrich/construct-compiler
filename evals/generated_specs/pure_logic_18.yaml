@@ -1,20 +1,71 @@
 construct:
-  name: logic_multiplier_analog_concentrations
+  name: logic_multiplier_mammalian
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: multiplier_output
+        label: sensor_A
         expression: high
         chain:
-          - tag: signal_peptide  # secretion signal for mammalian cells
+          - tag: HA
           - gene:
-              id: P01375  # human TNF-alpha as secreted signaling molecule
+              id: GPCR_A
               source: uniprot
+        fused: false
+
+    - spacer: 25
+
+    - cistron:
+        label: sensor_B
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: GPCR_B
+              source: uniprot
+        fused: false
+
+    - spacer: 25
+
+    - cistron:
+        label: integrator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: SRF
+              source: uniprot
+        fused: false
+
+    - spacer: 25
+
+    - cistron:
+        label: output_signal
+        expression: high
+        chain:
+          - tag: HA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: BMP4
+              source: uniprot
+        fused: false
+
+    - spacer: 25
+
+    - cistron:
+        label: secretion_helper
+        expression: medium
+        chain:
+          - gene:
+              id: FURIN
+              source: uniprot
+        fused: false
 
     - terminator: rrnB_T1

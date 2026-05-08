@@ -1,15 +1,21 @@
 construct:
-  name: tet_off_toxink_expression
+  name: "tet_off_toxink_repressible"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Tet-OFF  # Logic: Repressed by Tet/aTet (typically requires revTetR)
+    - promoter: tetR_off
+      # tetR_off = Tet-repressible promoter; active without Tet, repressed when Tet present
+
     - cistron:
         label: toxin
         expression: high
         gene:
           id: ToxinK
           source: uniprot
+
     - terminator: rrnB_T1

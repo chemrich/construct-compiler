@@ -1,16 +1,23 @@
 construct:
-  name: "protein_N_overexpression_arabidopsis"
-  host: algae  # Arabidopsis is a plant host; algae is selected as the closest available category
+  name: "Arabidopsis_protein_N_overexpression"
+  host: plant
+
   backbone:
-    resistance: kanamycin  # Standard selection marker for Arabidopsis transformation
+    catalog_vector: "pEAQ-HT"
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: 35S  # Constitutive Cauliflower Mosaic Virus 35S promoter for high expression in plants
+    - promoter: CaMV_35S
+
     - cistron:
-        label: protein_N
+        label: target
         expression: high
-        gene:
-          id: Q40392
-          source: uniprot
-    - terminator: NOS_term  # Nopaline synthase terminator, standard for plant expression cassettes
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_N
+              source: uniprot
+
+    - terminator: nos

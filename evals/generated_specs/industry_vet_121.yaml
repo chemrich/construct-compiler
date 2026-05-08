@@ -1,22 +1,33 @@
 construct:
-  name: "mammalian_polycistronic_2A_expression"
+  name: "mammalian_dual_protein_2A"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: reporter_1
+        label: protein_1
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 60  # Length corresponding to a standard P2A peptide sequence
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    # 2A peptide enables ribosomal skipping for clean separation
+    - spacer: 24  # T2A is 24 bp, achieves post-translational cleavage
+
     - cistron:
-        label: reporter_2
+        label: protein_2
         expression: high
-        fused: false  # Facilitates separate protein products via IRES or 2A-mediated ribosomal skipping
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_polyA
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,19 +1,26 @@
 construct:
-  name: "pichia_pgap_mbp_tev_human_enzyme"
+  name: "Pichia_pastoris_intracellular_enzyme_MBP"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
-        label: intracellular_enzyme
+        label: enzyme
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: P00338  # Human Lactate Dehydrogenase A (LDHA) as a representative intracellular enzyme
+              id: human_enzyme
               source: uniprot
-    - terminator: CYC1_TT
+              codon_optimization: pichia_pastoris
+
+    - terminator: CYC1

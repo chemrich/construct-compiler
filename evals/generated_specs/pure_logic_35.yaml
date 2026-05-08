@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: temperature_controlled_genetic_switch
-  host: e_coli
+  name: "temperature_controlled_genetic_switch"
+  host: e_coli_bl21
 
   backbone:
     resistance: kanamycin
@@ -9,27 +8,27 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: araBAD  # Temperature-inducible promoter system
+    - promoter: araBAD
 
     - cistron:
-        label: temperature_sensor
-        expression: medium
+        label: thermosensor
+        expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P0A1X3  # E. coli TlpA thermosensor protein
+              id: cI857
               source: uniprot
 
     - spacer: 25
 
     - cistron:
-        label: output_protein
+        label: output
         expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP  # Visual output indicator
+              id: gfp
               source: fpbase
 
     - terminator: rrnB_T1
-```

@@ -1,16 +1,30 @@
 construct:
-  name: "SARS_CoV_2_Spike_mRNA_Vaccine_Template"
+  name: SARS_CoV2_mRNA_vaccine_template
   host: in_vitro
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    resistance: none
+    ori: none
+    source: synthetic
+
   cassette:
-    - promoter: T7
+    - utr_5:
+        type: Kozak_optimized
+        sequence: GCCGCCACCAUGG
+
     - cistron:
         label: spike_antigen
         expression: high
-        gene:
-          id: P0DTC2
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: SARS_CoV2_spike_RBD
+              source: uniprot
+              codon_optimization: mammalian
+
+    - utr_3:
+        type: beta_globin_derived
+        length: 64
+
+    - poly_a_tail:
+        length: 200
+        modified_nucleotides: m1pseudouridine

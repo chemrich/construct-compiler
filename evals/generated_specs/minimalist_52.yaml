@@ -1,15 +1,20 @@
 construct:
-  name: inducible_protein_I_system
-  host: e_coli_bl21_de3
+  name: inducible_protein_I_ecoli
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: pET-28b(+)
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: protein_I
         expression: high
-        gene:
-          id: sfGFP # Used sfGFP as a standard inducible target placeholder for 'Protein I'
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: protein_I
+              source: uniprot
+
+    - terminator: rrnB_T1

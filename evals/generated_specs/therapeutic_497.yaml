@@ -1,14 +1,31 @@
 construct:
-  name: "T_cell_IL15_persistence_nonviral"
-  host: mammalian
+  name: T_cell_autocrine_survival_signal
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: "IL15_cytokine"
+        label: IL15
         expression: high
-        gene:
-          id: P40933
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: signal_peptide_IL15
+          - gene:
+              id: IL15
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: CAR_TCR
+        expression: high
+        chain:
+          - tag: V5
+          - gene:
+              id: CAR_T_TCR_variant
+              source: uniprot
+
+    - terminator: rrnB_T1

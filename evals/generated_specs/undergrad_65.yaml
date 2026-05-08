@@ -1,21 +1,28 @@
 construct:
-  name: "dox_inducible_proteinz_mneongreen"
+  name: "Dox_inducible_ProteinZ_GFP_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TRE3G  # Drug-inducible (Dox) promoter for mammalian systems
+    - promoter: TRE3G  # Doxycycline-inducible (Tet-On 3G system)
+
     - cistron:
-        label: target_fusion
+        label: ProteinZ_sfGFP_fusion
         expression: high
         chain:
+          - tag: Kozak  # Kozak consensus for optimal translation in mammalian cells
           - gene:
               id: ProteinZ
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mNeonGreen
+              id: sfGFP
               source: fpbase
-    - terminator: bGH_pA
+          - tag: STOP
+
+    - terminator: SV40_polyA  # Mammalian-optimized polyadenylation signal

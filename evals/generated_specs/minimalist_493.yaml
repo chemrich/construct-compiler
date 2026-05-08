@@ -1,20 +1,21 @@
 construct:
-  name: "gst_ubiquitin_fusion"
-  host: e_coli
+  name: GST_ubiquitin_fusion
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pGEX-6P-1"
+
   cassette:
-    - promoter: T7lac
+    - promoter: tac
+
     - cistron:
-        label: target
+        label: GST_ubiquitin
         expression: high
         chain:
           - solubility_tag: GST
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - cleavage_site: 3C
           - gene:
-              id: P62988
+              id: P62633
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

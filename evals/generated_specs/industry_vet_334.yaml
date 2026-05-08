@@ -1,16 +1,23 @@
 construct:
-  name: "lentiviral_HA_protein_expression"
+  name: lentiviral_expression_HA_tagged
   host: HEK293
+
   backbone:
-    catalog_vector: "pLenti-CMV-Puro-DEST"
+    catalog_vector: pLenti-CMV-HA
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: HA_tagged_target
+        label: target
         expression: high
         chain:
           - tag: HA
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_pA
+              id: # user_insert_gene_id_here
+              source: uniprot
+
+    - terminator: WPRE

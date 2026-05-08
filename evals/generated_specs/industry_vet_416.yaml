@@ -1,19 +1,45 @@
 construct:
-  name: "mammalian_2A_bicistronic_ORF"
+  name: mammalian_2A_bicistronic_GOI
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: bicistronic_2A
+        label: GOI_A
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: GOI_A
               source: uniprot
-          - cleavage_site: P2A
+
+    - cistron:
+        label: P2A_spacer
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: P2A_peptide
+              source: uniprot
+              # Standard self-cleaving 2A peptide (EGRGSLLTCGDVEENPK)
+              # Enables ribosomal skipping between GOI_A and GOI_B
+
+    - cistron:
+        label: GOI_B
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
           - gene:
               id: GOI_B
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

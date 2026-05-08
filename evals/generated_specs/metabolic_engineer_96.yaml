@@ -1,14 +1,20 @@
 construct:
-  name: "fret_biosensor_four_gene_operon"
+  name: FRET_biosensor_operon_F1_F2_F3_F4
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: fret_fusion_f1_f2
+        label: F1_F2_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: F1
               source: uniprot
@@ -18,20 +24,25 @@ construct:
           - gene:
               id: F2
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: sensor_component_f3
+        label: F3
         expression: high
         fused: false
         gene:
           id: F3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: sensor_component_f4
+        label: F4
         expression: high
         fused: false
         gene:
           id: F4
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

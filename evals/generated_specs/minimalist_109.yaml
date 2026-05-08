@@ -1,17 +1,22 @@
 construct:
-  name: "solubility_enhanced_DifficultProtein"
-  host: e_coli_bl21_de3
+  name: "DifficultProtein_solubility_enhanced"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - gene:
               id: DifficultProtein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

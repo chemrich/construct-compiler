@@ -1,16 +1,47 @@
 construct:
-  name: "NAND_temp_ph_resistance_gate"
+  name: "NAND_gate_temperature_pH_antibiotic_resistance"
   host: e_coli_bl21
+
   backbone:
-    resistance: chloramphenicol
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pNAND_TlpA_Asr  # NAND logic: Inhibits expression only when High Temperature AND Low pH are detected
+    - promoter: araBAD
+
     - cistron:
-        label: resistance_marker
+        label: temperature_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: cI857
+              source: uniprot
+        # cI857 is a temperature-sensitive lambda repressor (inactive at high temp)
+
+    - spacer: 25
+
+    - cistron:
+        label: pH_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: cadBA
+              source: uniprot
+        # cadBA is pH-sensitive (active at low pH)
+
+    - spacer: 25
+
+    - cistron:
+        label: NAND_logic_output
         expression: high
-        gene:
-          id: P62593  # Beta-lactamase (Ampicillin resistance)
-          source: uniprot
+        chain:
+          - gene:
+              id: blaTEM
+              source: uniprot
+        # TEM beta-lactamase confers ampicillin resistance
+        # Logic: blaTEM transcription is repressed by both cI857 (at high temp) AND cadBA (at low pH)
+        # When BOTH conditions present (high temp AND low pH), repression is maximized
+        # Otherwise, at least one repressor is inactive, allowing blaTEM expression
+
     - terminator: rrnB_T1

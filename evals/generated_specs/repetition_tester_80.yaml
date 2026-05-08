@@ -1,24 +1,32 @@
 construct:
-  name: bicistronic_dual_constitutive_dissimilar
+  name: "bicistronic_dissimilar_promoters"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: protein_1
+        label: gene1
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 50
-    - promoter: proD # Selected proD for high constitutive strength and sequence dissimilarity from J23100 to prevent recombination
+          id: lacZ
+          source: uniprot
+
+    - spacer: 30
+
+    - promoter: J23106
+
     - cistron:
-        label: protein_2
+        label: gene2
         expression: high
         fused: false
         gene:
-          id: mScarlet
+          id: gfp
           source: fpbase
+
     - terminator: rrnB_T1

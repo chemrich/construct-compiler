@@ -1,32 +1,65 @@
 construct:
-  name: "multiplexer_priority_logic_A_over_C"
-  host: e_coli_bl21
+  name: "signal_multiplexer_circuit"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Signal A input
+    - promoter: araBAD
+      label: "signal_A_input"
+    
     - cistron:
-        label: output_B
+        label: "repressor_for_C"
         expression: high
         gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
-    - cistron:
-        label: priority_repressor_lacI
-        expression: high
-        fused: false  # Independently translated to repress the second promoter when Signal A is present
-        gene:
-          id: P00371
-          source: uniprot
+          id: "tetR"
+          source: "uniprot"
+    
     - terminator: rrnB_T1
-    - promoter: lacUV5  # Signal C input, repressed by LacI produced from the Signal A cassette
+    
+    - spacer: 30
+    
+    - promoter: lacUV5
+      label: "signal_C_input"
+    
     - cistron:
-        label: output_D
-        expression: medium
+        label: "anti_repressor"
+        expression: high
         gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BBa_B0015
+          id: "cI"
+          source: "uniprot"
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: T7lac
+      label: "output_B_promoter"
+    
+    - cistron:
+        label: "output_B"
+        expression: high
+        fused: false
+        gene:
+          id: "mScarlet"
+          source: "fpbase"
+    
+    - terminator: rrnB_T1
+    
+    - spacer: 30
+    
+    - promoter: tac
+      label: "output_D_promoter"
+    
+    - cistron:
+        label: "output_D"
+        expression: high
+        fused: false
+        gene:
+          id: "mNeonGreen"
+          source: "fpbase"
+    
+    - terminator: rrnB_T1

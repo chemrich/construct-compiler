@@ -1,16 +1,42 @@
 construct:
-  name: "deadman_switch_anaerobic_ccdB"
-  host: e_coli
+  name: oxygen_dependent_deadman_switch
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: PnirB  # Anaerobically induced promoter; active when oxygen (input) is removed, repressed when oxygen is present.
+    - promoter: araBAD
+    
     - cistron:
-        label: cytotoxin
+        label: fnr_repressor
         expression: high
-        gene:
-          id: ccdB
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: fnr
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: oxygen_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: arcA
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: cytotoxic_protein
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mazF
+              source: uniprot
+    
+    - terminator: rrnB_T1

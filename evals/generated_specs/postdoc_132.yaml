@@ -1,16 +1,21 @@
 construct:
-  name: "AntiTumorScFv_Secreted"
+  name: AntiTumorScFv_secreted_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: AntiTumorScFv
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_mammalian
           - gene:
               id: AntiTumorScFv
+              source: uniprot
           - tag: 6xHis
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

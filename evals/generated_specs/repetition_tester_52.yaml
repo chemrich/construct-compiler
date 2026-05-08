@@ -1,50 +1,55 @@
 construct:
-  name: "hexameric_amp_tandem_fusion"
+  name: "hexameric_AMP_polycistronic_unique_linkers"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: amp_tandem_repeat
+        label: AMP_poly_fusion
         expression: high
-        # Note: Interpreted "polycistronic mRNA" as a single cistron encoding a tandem-repeat 
-        # poly-protein to satisfy the requirement for "inter-peptide linkers" and a 
-        # "tag on the full poly-peptide".
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
-          - gene:
-              id: P11006
-              source: uniprot
           - linker:
-              type: GS_flexible
-              repeats: 2
+              type: custom
+              sequence: "GGSGGSGGS"
           - gene:
-              id: P11006
-              source: uniprot
+              id: AMP_copy_1
+              source: custom
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              type: custom
+              sequence: "GGTGGTGGT"
           - gene:
-              id: P11006
-              source: uniprot
+              id: AMP_copy_2
+              source: custom
           - linker:
-              type: short_GS
-              repeats: 2
+              type: custom
+              sequence: "GGATGGATGG"
           - gene:
-              id: P11006
-              source: uniprot
+              id: AMP_copy_3
+              source: custom
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: custom
+              sequence: "GGAGGGAGG"
           - gene:
-              id: P11006
-              source: uniprot
+              id: AMP_copy_4
+              source: custom
           - linker:
-              type: rigid_EAAAK
-              repeats: 3
+              type: custom
+              sequence: "GGTGATGGT"
           - gene:
-              id: P11006
-              source: uniprot
-    - terminator: T7term
+              id: AMP_copy_5
+              source: custom
+          - linker:
+              type: custom
+              sequence: "GGAGATGGA"
+          - gene:
+              id: AMP_copy_6
+              source: custom
+    
+    - terminator: rrnB_T1

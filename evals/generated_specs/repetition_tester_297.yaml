@@ -1,35 +1,49 @@
 construct:
-  name: "yeast_ethanol_pathway_xyz"
+  name: "ethanol_pathway_EnzymeX_EnzymeY_EnzymeZ"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS416"
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: enzyme_x
+        label: EnzymeX
         expression: high
-        fused: false
         gene:
-          id: EnzymeX
-          source: uniprot
-    - terminator: T_CYC1
-    - spacer: 32
+          id: EnzymeX_codon_optimized_yeast
+          source: custom
+        codon_optimization: yeast
+
+    - terminator: ADH1_terminator
+
+    - spacer: 42
+
     - promoter: TEF1
+
     - cistron:
-        label: enzyme_y
+        label: EnzymeY
         expression: high
-        fused: false
         gene:
-          id: EnzymeY
-          source: uniprot
-    - terminator: T_ADH1
-    - spacer: 47
+          id: EnzymeY_codon_optimized_yeast
+          source: custom
+        codon_optimization: yeast
+
+    - terminator: CYC1_terminator
+
+    - spacer: 51
+
     - promoter: PGK1
+
     - cistron:
-        label: enzyme_z
+        label: EnzymeZ
         expression: high
-        fused: false
         gene:
-          id: EnzymeZ
-          source: uniprot
-    - terminator: T_PGK1
+          id: EnzymeZ_codon_optimized_yeast
+          source: custom
+        codon_optimization: yeast
+
+    - terminator: PGK1_terminator

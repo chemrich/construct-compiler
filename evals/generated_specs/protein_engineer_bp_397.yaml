@@ -1,20 +1,24 @@
 construct:
-  name: "IFNA2_Pichia_Secretion_Construct"
+  name: "Pichia_IFN_alpha_secreted"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: interferon_alpha_secretion
+        label: IFN_alpha_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: IFNA2
+              id: interferon_alpha_2b
               source: uniprot
           - cleavage_site: Enterokinase
           - tag: 6xHis
-    - terminator: AOX1_TT
+
+    - terminator: TT_AOX1

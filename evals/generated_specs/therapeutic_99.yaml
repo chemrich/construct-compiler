@@ -1,23 +1,24 @@
 construct:
-  name: "yeast_secreted_human_collagen"
+  name: "yeast_secreted_collagen_fragment"
   host: yeast
 
   backbone:
-    resistance: none  # User requested no antibiotic resistance; typically implies auxotrophic selection
+    resistance: null
     ori: 2_micron
     source: addgene
 
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - promoter: GAL1
 
     - cistron:
-        label: secreted_collagen
+        label: collagen_fragment
         expression: high
         chain:
-          - tag: alpha_factor  # Standard optimized yeast secretion signal
+          - tag: alpha_factor_signal
           - gene:
-              id: COL1A1
+              id: "COL1A1_fragment"
               source: uniprot
-          - tag: 6xHis         # C-terminal purification tag
+          - cleavage_site: Kex2
+          - tag: 8xHis
 
-    - terminator: CYC1         # Standard yeast terminator
+    - terminator: CYC1_poly_A

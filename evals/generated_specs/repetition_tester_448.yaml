@@ -1,23 +1,27 @@
 construct:
-  name: "mammalian_fluorescent_timer"
+  name: "mammalian_fluorescent_timer_red_green"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: timer_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: mScarlet-I
+              id: mScarlet
               source: fpbase
           - linker:
-              # Using a high repeat count and rigid type to ensure DNA sequence uniqueness as requested
-              type: rigid_EAAAK
-              repeats: 5
+              type: custom_unique
+              sequence: "GGCAGCGGCTCCGGTGGTACGACCCGATGACCTACGTCGAGCTGAAGGACTACGACATCGACAAGATC"
           - gene:
-              id: EGFP
+              id: sfGFP
               source: fpbase
-        # Note: Each gene in the chain must be codon-optimized independently for mammalian expression to maximize DNA sequence dissimilarity.
-    - terminator: BGH_pA
+
+    - terminator: rrnB_T1

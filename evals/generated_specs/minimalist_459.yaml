@@ -1,23 +1,32 @@
 construct:
-  name: "bicistronic_expression_protein_v_w"
-  host: e_coli
+  name: ProteinV_ProteinW_bicistronic
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_v
-        expression: medium
-        gene:
-          id: ProteinV
-          source: uniprot
+        label: ProteinV
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinV
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: protein_w
-        expression: medium
+        label: ProteinW
+        expression: high
         fused: false
-        gene:
-          id: ProteinW
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinW
+              source: uniprot
+
     - terminator: rrnB_T1

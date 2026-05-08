@@ -1,27 +1,37 @@
 construct:
-  name: "tet_on_inducible_reporter_system"
+  name: "TetOn_inducible_reporter_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE
-    - cistron:
-        label: inducible_reporter
-        expression: high
-        chain:
-          - gene:
-              id: luciferase
-              source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - tag: mEGFP
-    - terminator: bGH_pA
     - promoter: EF1_alpha
+
     - cistron:
-        label: rtTA_driver
+        label: rtTA
         expression: medium
         gene:
           id: rtTA
           source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: WPRE
+
+    - spacer: 50
+
+    - promoter: TRE
+
+    - cistron:
+        label: ReporterProtein
+        expression: high
+        chain:
+          - gene:
+              id: ReporterProtein
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: GFP
+
+    - terminator: WPRE

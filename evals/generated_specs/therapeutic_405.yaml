@@ -1,25 +1,25 @@
 construct:
-  name: "exosome_targeted_therapeutic_IL10"
+  name: exosome_targeted_therapeutic_protein
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: therapeutic
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - cleavage_site: TEV
           - gene:
-              id: P22301
+              id: IL10
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: P08962
-              source: uniprot
-    - terminator: bGH_PA
+              repeats: 1
+          - tag: LDLR_targeting_motif
+
+    - terminator: WPRE

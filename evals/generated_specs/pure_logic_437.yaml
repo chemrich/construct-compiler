@@ -1,18 +1,25 @@
 construct:
   name: "temperature_sensitive_biosynthesis_switch"
-  host: e_coli
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: pL_lambda # Thermally regulated promoter; active at 37°C+ when cI857 repressor is present
+    - promoter: T7lac
+
     - cistron:
-        label: biosynthesis_enzyme
+        label: ts_enzyme
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P0A9A6
+              id: CI_temperature_sensitive
               source: uniprot
+              # Note: CI repressor with temperature-sensitive mutation (e.g., CI857)
+              # At 37°C, repression is relieved; below 37°C, repression maintains inactive state
+
     - terminator: rrnB_T1

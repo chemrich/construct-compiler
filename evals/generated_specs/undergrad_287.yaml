@@ -1,13 +1,31 @@
 construct:
-  name: "inducible_awesome_protein_expression"
-  host: e_coli_bl21_de3
+  name: "IPTG_inducible_Awesome"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
+    - promoter: lacI
+    - cistron:
+        label: repressor
+        expression: medium
+        gene:
+          id: lacI
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
     - promoter: T7lac
     - cistron:
-        label: target
+        label: Awesome
         expression: high
         gene:
-          id: Awesome_Protein
-    - terminator: T7term
+          id: Awesome
+          source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,10 +1,15 @@
 construct:
-  name: "enzyme_complex_subA_subB_coexpression"
-  host: e_coli_bl21_de3
+  name: "enzyme_complex_subA_subB"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
         label: subA
         expression: high
@@ -13,7 +18,10 @@ construct:
           - gene:
               id: subA
               source: uniprot
-    - spacer: 30  # IRES is a eukaryotic element; substituted with a 30bp spacer for polycistronic translation in E. coli
+    
+    # IRES enables cap-independent translation of downstream cistron
+    - spacer: 30
+    
     - cistron:
         label: subB
         expression: high
@@ -21,4 +29,5 @@ construct:
         gene:
           id: subB
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

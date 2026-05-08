@@ -1,16 +1,31 @@
 construct:
-  name: "SV40_Luciferase_BsdR_Reporter"
+  name: "SV40_Luciferase_mammalian_reporter"
   host: HEK293
+
   backbone:
     resistance: blasticidin
-    ori: pUC
+    ori: SV40
     source: addgene
+
   cassette:
     - promoter: SV40
+
     - cistron:
-        label: firefly_luciferase
+        label: luciferase
         expression: high
         gene:
-          id: P08659
+          id: Renilla_luciferase
           source: uniprot
+
+    - terminator: SV40_polyA
+
+    - promoter: SV40
+
+    - cistron:
+        label: selection_marker
+        expression: high
+        gene:
+          id: BsdR
+          source: uniprot
+
     - terminator: SV40_polyA

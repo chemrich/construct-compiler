@@ -1,22 +1,71 @@
 construct:
-  name: "time_delayed_transcriptional_cascade"
+  name: "time_delayed_gene_expression_circuit"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Initial trigger (Arabinose)
+    - promoter: T7lac
+
     - cistron:
-        label: trigger_relay
-        expression: low  # Low expression to increase the lag time of the cascade
-        gene:
-          id: P00573  # T7 RNA Polymerase
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7  # Activated only once T7 RNA Polymerase has accumulated
-    - cistron:
-        label: delay_out
+        label: trigger_sensor
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LuxR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+      # LuxR-activated intermediate promoter (produces delayed signal amplifier)
+
+    - cistron:
+        label: signal_amplifier
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CI_lambda
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - solubility_tag: Trx
+
+    - terminator: rrnB_T1
+
+    - promoter: J23106
+      # Weak constitutive promoter driving slow accumulation of AraC
+
+    - cistron:
+        label: delay_controller
+        expression: low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: AraC
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: TEV
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD
+      # AraC-activated output promoter (activated only after AraC accumulation delay)
+
+    - cistron:
+        label: DELAY_OUT
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1

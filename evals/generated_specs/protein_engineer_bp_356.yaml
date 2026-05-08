@@ -1,19 +1,25 @@
 construct:
-  name: "pichia_gap_phytase_secretion"
+  name: pichia_phytase_secretion
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
-      cistron:
-        label: phytase_expression
+
+    - cistron:
+        label: phytase
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha-factor
           - gene:
-              id: P07915
+              id: phytase
               source: uniprot
-          - tag: Myc
-      terminator: AOX1_term
+              codon_optimized: true
+          - tag: c-Myc
+
+    - terminator: rrnB_T1

@@ -1,18 +1,17 @@
-```yaml
 construct:
-  name: DrugTargetY_GFP_Myc_yeast
+  name: "DrugTargetY_GFP_Myc_yeast"
   host: yeast
 
   backbone:
     resistance: zeocin
-    ori: CEN
+    ori: CEN6/ARS4
     source: addgene
 
   cassette:
     - promoter: TEF1
 
     - cistron:
-        label: target_fusion
+        label: target_GFP_Myc
         expression: high
         chain:
           - gene:
@@ -20,14 +19,11 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: sfGFP
-              source: fpbase
+              repeats: 1
+          - tag: GFP
           - linker:
               type: short_GS
               repeats: 1
           - tag: Myc
 
     - terminator: CYC1
-```

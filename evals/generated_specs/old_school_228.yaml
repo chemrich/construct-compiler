@@ -1,24 +1,29 @@
 construct:
-  name: "CRISPR_Cas9_HEK293_Puro"
+  name: "HEK293_CRISPR_dual_cassette"
   host: HEK293
+
   backbone:
     resistance: puromycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: gRNA
-        gene:
-          id: sgRNA_scaffold
-    - spacer: 30
+    - gene:
+        id: guide_RNA
+        source: custom
+    - terminator: U6term
+
+    - spacer: 100
+
     - promoter: CMV
     - cistron:
         label: Cas9
+        expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
           - tag: NLS
-    - terminator: bGH_polyA
+    - terminator: SV40poly

@@ -1,12 +1,15 @@
 construct:
-  name: "membrane_anchoring_protein_eyfp_fusion"
-  host: mammalian
+  name: "MembraneAnchoringProtein_eYFP_fusion"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: localization_fusion
+        label: membrane_anchor_reporter
         expression: high
         chain:
           - gene:
@@ -14,8 +17,9 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: EYFP
+              id: eYFP
               source: fpbase
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

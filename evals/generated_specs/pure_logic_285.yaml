@@ -1,54 +1,69 @@
 construct:
-  name: "repressilator_oscillator"
-  host: e_coli
+  name: repressilator_GFP_oscillator
+  host: e_coli_bl21
+
   backbone:
-    resistance: ampicillin
-    ori: SC101
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
 
   cassette:
-    # TU 1: Repressor TetR (repressed by LacI from TU 3)
-    - promoter: lacUV5
-    - cistron:
-        label: node_1_tetR
-        expression: low
-        chain:
-          - tag: SsrA # Degradation tag to ensure rapid protein turnover for oscillation
-          - gene:
-              id: P04483
-              source: uniprot
-    - terminator: rrnB_T1
+    - promoter: araBAD
 
-    # TU 2: Repressor cI (repressed by TetR from TU 1)
-    - promoter: tetR_promoter
     - cistron:
-        label: node_2_cI
-        expression: low
-        chain:
-          - tag: SsrA
-          - gene:
-              id: P03034
-              source: uniprot
-    - terminator: rrnB_T1
-
-    # TU 3: Repressor LacI (repressed by cI from TU 2)
-    - promoter: lambda_PR
-    - cistron:
-        label: node_3_lacI
-        expression: low
-        chain:
-          - tag: SsrA
-          - gene:
-              id: P03023
-              source: uniprot
-    - terminator: rrnB_T1
-
-    # TU 4: Reporter GFP (repressed by TetR; oscillates in phase with cI)
-    - promoter: tetR_promoter
-    - cistron:
-        label: reporter_output
+        label: tetR_repressor
         expression: medium
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: lacUV5
+
+    - cistron:
+        label: cI_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: cI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: T7lac
+
+    - cistron:
+        label: lambda_cro_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: cro
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: J23100
+
+    - cistron:
+        label: GFP_reporter
+        expression: high
+        chain:
+          - gene:
+              id: EGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

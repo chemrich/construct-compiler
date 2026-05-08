@@ -1,12 +1,17 @@
 construct:
-  name: "FusionBuddy_BFP_Coexpression"
-  host: e_coli_bl21_de3
+  name: FusionBuddy_with_mTagBFP2
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: FusionBuddy
         expression: high
         chain:
           - tag: 6xHis
@@ -14,7 +19,9 @@ construct:
           - gene:
               id: FusionBuddy
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
         label: reporter
         expression: medium
@@ -22,4 +29,5 @@ construct:
         gene:
           id: mTagBFP2
           source: fpbase
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

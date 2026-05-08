@@ -1,23 +1,28 @@
 construct:
-  name: "non_viral_solubility_enhanced_human_expression"
-  host: e_coli
+  name: "E_coli_soluble_human_protein_expression"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: none # Antibiotic resistance marker excluded per user request
-    ori: pUC
-    source: custom
+    resistance: null
+    ori: pBR322
+    source: addgene
+    # Note: Antibiotic resistance marker excluded per specifications
+
   cassette:
-    - promoter: J23100 # Strong constitutive bacterial promoter to avoid viral T7/CMV
+    - promoter: T7lac
+
     - cistron:
-        label: target_human_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
-          - cleavage_site: Factor_Xa # Non-viral alternative to TEV or 3C protease sites
+              repeats: 3
           - gene:
-              id: P04637
+              id: human_target_protein
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator to avoid viral T7term
+
+    - terminator: rrnB_T1

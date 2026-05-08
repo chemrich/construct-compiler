@@ -1,18 +1,41 @@
 construct:
-  name: "circuit_breaker_mammalian_geneO"
+  name: "circuit_breaker_GeneO_dual_lox"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: "GeneO_expression_unit"
-        expression: high
+        label: loxP_upstream
+        expression: very_low
         chain:
-          - tag: "LoxP"  # N-terminal flanking site
           - gene:
-              id: "GeneO"
+              id: loxP_site_variant1
+              sequence: "ATAACTTCGTATA.ATTATACGTAT.CCTATACGTAT"
+              source: custom
+
+    - cistron:
+        label: GeneO_target
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: GeneO
               source: uniprot
-          - tag: "Lox2272"  # C-terminal flanking site (orthogonal to LoxP)
-    # Note: Conditional deletion using LoxP and Lox2272 requires an matching pair in the target locus for RMCE; they do not recombine with each other.
-    - terminator: bGH_pA
+
+    - cistron:
+        label: lox2272_downstream
+        expression: very_low
+        fused: false
+        chain:
+          - gene:
+              id: lox2272_site_variant2
+              sequence: "ATAACTTCGTATA.ATTATACGCAT.CCTATACGCAT"
+              source: custom
+
+    - terminator: rrnB_T1

@@ -1,58 +1,72 @@
 construct:
-  name: "bioremediation_deg_operon"
-  host: e_coli  # Pseudomonas putida substituted with E. coli as host list surrogate; tac promoter used for catabolite repression.
+  name: "Pseudomonas_putida_pollutant_degradation_operon"
+  host: pseudomonas_putida
+
   backbone:
-    resistance: kanamycin
-    ori: p15A
+    resistance: gentamicin
+    ori: pBBR1
+    source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: araBAD
+      # araBAD is catabolite-repressible in Pseudomonas; active only when glucose absent
+      # Alternative: Pm (methylamine utilization promoter) also works for catabolite repression
+
     - cistron:
-        label: deg1
-        expression: medium
-        fused: false
+        label: Deg1
+        expression: high
         chain:
           - gene:
               id: Deg1
               source: uniprot
-          - tag: Myc
-    - spacer: 30
+          - tag: myc
+
+    - spacer: 25
+
     - cistron:
-        label: deg2
-        expression: medium
+        label: Deg2
+        expression: high
         fused: false
         chain:
           - gene:
               id: Deg2
               source: uniprot
-          - tag: Myc
-    - spacer: 30
+          - tag: myc
+
+    - spacer: 25
+
     - cistron:
-        label: deg3
-        expression: medium
+        label: Deg3
+        expression: high
         fused: false
         chain:
           - gene:
               id: Deg3
               source: uniprot
-          - tag: Myc
-    - spacer: 30
+          - tag: myc
+
+    - spacer: 25
+
     - cistron:
-        label: deg4
-        expression: medium
+        label: Deg4
+        expression: high
         fused: false
         chain:
           - gene:
               id: Deg4
               source: uniprot
-          - tag: Myc
-    - spacer: 30
+          - tag: myc
+
+    - spacer: 25
+
     - cistron:
-        label: deg5
-        expression: medium
+        label: Deg5
+        expression: high
         fused: false
         chain:
           - gene:
               id: Deg5
               source: uniprot
-          - tag: Myc
+          - tag: myc
+
     - terminator: rrnB_T1

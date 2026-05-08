@@ -1,56 +1,80 @@
 construct:
-  name: "six_enzyme_metabolic_pathway_gradient"
+  name: "six_enzyme_pathway_ecoli"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # Strong constitutive promoter for E. coli
+    
     - cistron:
         label: kinase
         expression: high
-        gene:
-          id: P00558
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: kinase_ecoli
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: isomerase
         expression: medium
         fused: false
-        gene:
-          id: P0A6T1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: isomerase_ecoli
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: dehydrogenase
         expression: medium
         fused: false
-        gene:
-          id: P00350
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: dehydrogenase_ecoli
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: reductase
         expression: low
         fused: false
-        gene:
-          id: P00390
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: reductase_ecoli
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: ligase
         expression: high
         fused: false
-        gene:
-          id: P00968
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ligase_ecoli
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
         label: polymerase
         expression: low
         fused: false
-        gene:
-          id: P00582
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: polymerase_ecoli
+              source: uniprot
+    
+    - terminator: rrnB_T1

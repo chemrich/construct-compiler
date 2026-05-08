@@ -1,23 +1,24 @@
-```yaml
 construct:
-  name: CAG_TherapeuticP_mammalian
+  name: "TherapeuticP_mammalian_expression"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: blasticidin
+    ori: pUC
 
   cassette:
-    - promoter: CAG  # CMV enhancer + chicken beta-actin promoter + rabbit beta-globin intron
-
+    - promoter: CAG
+    
     - cistron:
-        label: therapeutic
+        label: TherapeuticP
         expression: high
-        gene:
-          id: TherapeuticP
-          source: uniprot
-
-    - element: WPRE  # Woodchuck Hepatitis Virus Posttranscriptional Regulatory Element
-
+        chain:
+          - gene:
+              id: TherapeuticP
+              source: uniprot
+    
     - terminator: BGH_polyA
-```
+    
+    # WPRE for post-transcriptional stability
+    - regulatory_element: WPRE

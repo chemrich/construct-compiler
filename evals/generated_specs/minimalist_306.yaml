@@ -1,16 +1,20 @@
 construct:
-  name: "bacterial_protein_h_secretion"
-  host: e_coli_bl21_de3
+  name: secreted_protein_H
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_h
+        label: secreted_H
         expression: high
         chain:
-          - tag: PelB  # Signal peptide for periplasmic secretion
+          - tag: pelB_signal_peptide
           - gene:
-              id: P19910
+              id: protein_H
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

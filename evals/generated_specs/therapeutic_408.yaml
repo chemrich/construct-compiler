@@ -1,20 +1,28 @@
 construct:
-  name: "therapeutic_cpp_delivery_construct"
+  name: "mammalian_therapeutic_CPP_purification"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cpp_therapeutic_fusion
+        label: therapeutic_protein
         expression: high
         chain:
-          - tag: 6xHis
-          - tag: TAT
+          - tag: FLAG
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P01241
-              source: uniprot
-    - terminator: bGH_polyA
+              id: "CPP_therapeutic"
+              # Note: CPP sequence (e.g., TAT, polyarginine, or penetratin) should be N-terminal
+              # This represents a fusion protein with cell-penetrating peptide functionality
+
+    - terminator: rrnB_T1

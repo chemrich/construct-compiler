@@ -1,16 +1,20 @@
 construct:
-  name: "constitutive_luciferase_internal_control"
+  name: "mammalian_luciferase_reporter"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    # Using pTwist for mammalian expression; will modify promoter downstream
+
   cassette:
     - promoter: EF1_alpha
+      # EF1_alpha is weaker/more moderate than CMV, suitable for constitutive baseline expression
+
     - cistron:
-        label: luciferase_reporter
+        label: luciferase
         expression: medium
         gene:
-          id: P08659
+          id: Renilla_luciferase
           source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: polyA

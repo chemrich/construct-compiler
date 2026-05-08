@@ -1,24 +1,33 @@
 construct:
-  name: "tet_off_inducible_mammalian_system"
+  name: "inducible_TRE_mammalian_system"
   host: HEK293
+
   backbone:
     resistance: puromycin
     ori: SV40
     source: addgene
+
   cassette:
+    - promoter: CMV
+    
+    - cistron:
+        label: tTA_transactivator
+        expression: high
+        gene:
+          id: tTA
+          source: uniprot
+
+    - terminator: SV40_polyA
+
+    - spacer: 30
+
     - promoter: TRE
+
     - cistron:
         label: target_gene
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: SV40_polyA
-    - promoter: CMV
-    - cistron:
-        label: tet_transactivator
-        expression: medium
-        gene:
-          id: tTA
-          source: uniprot
+
     - terminator: SV40_polyA

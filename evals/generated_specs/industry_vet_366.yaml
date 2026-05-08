@@ -1,22 +1,27 @@
 construct:
-  name: "mammalian_poi_localization_fusion"
+  name: "mammalian_POI_FP_fusion"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: POI_FP_fusion
         expression: high
         chain:
           - gene:
-              id: P28482  # UniProt ID for MAPK1 as a representative protein of interest
+              id: POI
               source: uniprot
-          - cleavage_site: TEV
           - linker:
               type: GS_flexible
               repeats: 2
+          - cleavage_site: TEV
           - gene:
-              id: mCherry
+              id: mNeonGreen
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

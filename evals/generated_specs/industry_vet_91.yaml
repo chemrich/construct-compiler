@@ -1,20 +1,21 @@
 construct:
-  name: "secreted_his_tagged_mammalian_transgene"
+  name: "AAV_secreted_protein_Nterm_His"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
 
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: secreted_target
         expression: high
         chain:
-          - secretion_signal: Igk_leader
+          - signal_peptide: IgE  # mammalian secretion signal
           - tag: 6xHis
-          - cleavage_site: TEV
           - gene:
-              id: FIX
+              id: AAV_transgene
               source: uniprot
-    - terminator: BGH_pA
+
+    - terminator: rrnB_T1

@@ -1,25 +1,33 @@
 construct:
-  name: "dual_orthogonal_mammalian_expression"
+  name: dual_FP_mammalian_independent
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: GFP_expression_unit
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - terminator: SV40_polyA
-    - spacer: 50
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: mCherry_expression_unit
+        label: mCherry
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: BGH_polyA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: bGH_polyA

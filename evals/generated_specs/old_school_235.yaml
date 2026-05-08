@@ -1,24 +1,30 @@
 construct:
-  name: "ccdB_ccdA_toxin_antitoxin_system"
-  host: e_coli_bl21_de3
+  name: ccdB_ccdA_toxin_antitoxin_selection
+  host: e_coli_bl21
+
   backbone:
     resistance: ampicillin
-    ori: pBR322
-    source: custom
+    ori: ColE1
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: ccdB_toxin
+        label: toxin
         expression: high
         gene:
-          id: P0AD61
+          id: ccdB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: ccdA_antitoxin
+        label: antitoxin
         expression: high
         fused: false
         gene:
-          id: P0AD59
+          id: ccdA
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

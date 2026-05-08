@@ -1,18 +1,22 @@
 construct:
-  name: "secreted_peptide_furin_processed_construct"
+  name: "secreted_peptide_precursor_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
-      cistron:
-        label: peptide_precursor
+
+    - cistron:
+        label: secreted_peptide
         expression: high
         chain:
-          - tag: IgK_leader
-          - cleavage_site: Furin
+          - tag: signal_peptide_SP  # N-terminal secretion signal
+          - cleavage_site: Furin    # Processed by furin protease in secretory pathway
           - gene:
               id: SecretedPeptide
               source: uniprot
-          - tag: 6xHis
-      terminator: bGH_pA
+          - tag: 6xHis              # C-terminal His-tag for purification
+
+    - terminator: SV40polyA

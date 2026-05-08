@@ -1,30 +1,37 @@
 construct:
-  name: "pichia_pastoris_dual_expression_subunits"
+  name: "pichia_dual_subunit_coexpression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZalpha"
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: PAOX1
+
     - cistron:
-        label: subunit_a
+        label: Subunit_A
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: Subunit_A
+              id: subunit_A
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_TT
-    - promoter: PAOX1
+
+    - spacer: 30
+
     - cistron:
-        label: subunit_b
+        label: Subunit_B
         expression: high
+        fused: false
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: Subunit_B
+              id: subunit_B
               source: uniprot
           - tag: FLAG
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

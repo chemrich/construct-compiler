@@ -1,12 +1,22 @@
 construct:
-  name: "human_sgRNA_expression_U6"
+  name: "U6_sgRNA"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: guide_RNA
-        gene:
-          id: sgRNA
-    - terminator: U6_terminator
+        label: sgRNA
+        expression: high
+        chain:
+          - gene:
+              id: sgRNA_spacer
+              source: custom
+
+    - terminator: U6_poly_III_term

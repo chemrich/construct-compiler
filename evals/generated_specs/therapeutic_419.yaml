@@ -1,21 +1,27 @@
 construct:
-  name: "human_interactome_bait_TP53"
+  name: human_protein_mammalian_expression_dual_tag
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: bait
+        label: target
         expression: high
         chain:
-          - tag: Twin-Strep
-          - tag: FLAG
-          - cleavage_site: TEV
+          - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - tag: FLAG
+          - cleavage_site: TEV
           - gene:
-              id: P04637
+              id: P12345
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

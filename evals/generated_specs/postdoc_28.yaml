@@ -1,25 +1,27 @@
-```yaml
 construct:
-  name: bacterial_DNA_binding_protein_nuclear
+  name: "bacterial_DBP_yeast_nuclear_localization"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
     source: addgene
 
   cassette:
-    - promoter: EF1_alpha
+    - promoter: GAL1
 
     - cistron:
         label: target
         expression: high
         chain:
           - tag: Myc
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: NLS
           - gene:
-              id: P0A7C2  # Example bacterial DNA-binding protein
+              id: bacterial_DBP
               source: uniprot
 
-    - terminator: rrnB_T1
-```
+    - terminator: CYC1

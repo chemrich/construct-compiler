@@ -1,25 +1,33 @@
 construct:
-  name: "cas9_sgRNA_mammalian_expression"
+  name: "mammalian_CRISPR_Cas9_gRNA"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cas9
+        label: Cas9
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
           - tag: NLS
-    - terminator: BBa_B0015
-    - spacer: 50
+
     - promoter: U6
+
     - cistron:
-        label: sgRNA
+        label: gRNA
+        expression: high
         fused: false
-        gene:
-          id: sgRNA_scaffold
+        chain:
+          - gene:
+              id: CRISPR_gRNA_scaffold
+              source: uniprot
+
     - terminator: BBa_B0015

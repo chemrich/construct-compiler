@@ -1,14 +1,21 @@
 construct:
-  name: "luciferase_transcription_reporter"
-  host: e_coli_bl21_de3
+  name: "report_transcription_luciferase"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: luciferase_reporter
-        expression: medium
-        gene:
-          id: P08659
-          source: uniprot
-    - terminator: T7term
+        label: luciferase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+
+    - terminator: rrnB_T1

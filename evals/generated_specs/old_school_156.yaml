@@ -1,18 +1,22 @@
 construct:
-  name: "pBAD_Strep_sfGFP_expression"
+  name: "strep_tag_protein_pBAD"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: araC
+              source: uniprot
+    
     - terminator: rrnB_T1

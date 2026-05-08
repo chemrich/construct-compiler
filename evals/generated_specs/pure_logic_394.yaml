@@ -1,28 +1,42 @@
 construct:
-  name: "single_bit_event_counter_toggle"
+  name: single_bit_event_counter
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: tac  # Induced by IPTG/repressed by LacI; acts as set/reset input for the toggle
+    - promoter: T7lac
+
     - cistron:
-        label: repressor_A
-        gene:
-          id: P04483  # TetR
-          source: uniprot
-    - promoter: Ptet  # Repressed by TetR; part of the mutual inhibition bistable loop
+        label: input_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PhoQ
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: repressor_B
-        gene:
-          id: P03023  # LacI
-          source: uniprot
-    - spacer: 40
+        label: toggle_switch
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CheY
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: state_reporter
-        fused: false  # Separate translation to report the current bit state (ON/OFF)
+        label: output_reporter
+        expression: medium
+        fused: false
         gene:
-          id: mEGFP
+          id: mScarlet
           source: fpbase
+
     - terminator: rrnB_T1

@@ -1,22 +1,33 @@
 construct:
-  name: "mammalian_IRES_mCherry_mEGFP"
+  name: "CMV_RFP_IRES_GFP"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: neomycin
-    ori: pUC
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: RFP
-        gene:
-          id: mCherry
-          source: fpbase
-    - spacer: 585 # Standard length for EMCV IRES sequence
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    # IRES element for independent translation of second cistron
+    - spacer: 27  # IRES sequence (minimal representation)
+
     - cistron:
         label: GFP
+        expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_pA
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,23 +1,39 @@
 construct:
-  name: "mRNA_vaccine_spike_template"
+  name: "mRNA_vaccine_antigen_IVT_template"
   host: in_vitro
+
   backbone:
-    # Antibiotic resistance is typically required for template plasmid propagation in E. coli
-    # though it is not transcribed into the final mRNA product.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    resistance: null
+    ori: null
+    source: synthetic
 
   cassette:
-    - promoter: T7  # High-efficiency viral promoter required for in vitro transcription
-    
-    - cistron:
-        label: antigen_cistron
-        expression: high
-        # The tool automatically handles standard vaccine optimization (e.g., UTRs and Poly-A) 
-        # when the 'in_vitro' host is selected for mRNA synthesis.
-        gene:
-          id: P0DTC2  # UniProt ID for SARS-CoV-2 Spike glycoprotein
-          source: uniprot
+    - promoter: T7
 
-    - terminator: T7term  # Standard termination for T7 RNA polymerase transcription
+    - cistron:
+        label: 5_UTR
+        expression: null
+        chain:
+          - gene:
+              id: "5_UTR_Kozak_enhanced"
+              source: synthetic
+              sequence: "GCCGCCACCAUGGCCGCC"
+
+    - cistron:
+        label: antigen
+        expression: high
+        chain:
+          - gene:
+              id: "target_antigen"
+              source: uniprot
+
+    - cistron:
+        label: 3_UTR_polyA
+        expression: null
+        chain:
+          - gene:
+              id: "3_UTR_WPRE_polyA"
+              source: synthetic
+              sequence: "AAGCTTCTGACTGAATAGAGGAAGTGTTTGAGCCCCGCTAGACCCTTTTTTTTTTTTTTTTTTTTTT"
+
+    - terminator: null

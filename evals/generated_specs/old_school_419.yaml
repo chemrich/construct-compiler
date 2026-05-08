@@ -1,16 +1,22 @@
 construct:
-  name: mammalian_stable_ef1a_transduction
+  name: "mammalian_stable_expression_blasticidin"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
+    # Override with blasticidin resistance for viral packaging construct
     resistance: blasticidin
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
         label: target
         expression: high
         gene:
-          id: gene_of_interest
-          source: uniprot
-    - terminator: bGH_polyA
+          id: null
+          # User to specify their gene ID and source (uniprot, fpbase, or custom sequence reference)
+
+    - terminator: SV40_polyA

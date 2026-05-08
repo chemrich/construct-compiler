@@ -1,22 +1,42 @@
-```yaml
 construct:
-  name: XOR_logic_gate_protein_C
-  host: e_coli_bl21_de3
-
+  name: XOR_gate_ABC
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
-
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
-
+    
     - cistron:
-        label: XOR_output_C
+        label: repressor_A
+        expression: medium
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: repressor_B
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: output_C
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-            id: P0A9X9  # LacI repressor for logic implementation
-            source: uniprot
-
+              id: sfGFP
+              source: fpbase
+    
     - terminator: rrnB_T1
-```

@@ -1,19 +1,32 @@
 construct:
-  name: "HEK293_AAV_Rep_Stoichiometric"
+  name: "AAV_Rep78_P2A_Rep52"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: rep_polyprotein
+        label: Rep78
         expression: high
         chain:
           - gene:
               id: Rep78
               source: uniprot
-          - cleavage_site: P2A
-          - gene:
-              id: Rep52
-              source: uniprot
-    - terminator: SV40_polyA
+
+    - spacer: 51
+      # P2A sequence (51 bp encodes GSGATNFSLLKQAGDVEENPGP)
+      # This self-cleaving peptide ensures stoichiometric 1:1 expression of Rep78 and Rep52
+
+    - cistron:
+        label: Rep52
+        expression: high
+        fused: false
+        gene:
+          id: Rep52
+          source: uniprot
+
+    - terminator: rrnB_T1

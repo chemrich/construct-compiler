@@ -1,14 +1,23 @@
 construct:
-  name: "My_Therapeutic_Protein_pUC_Expression"
-  host: e_coli_bl21_de3
+  name: "MyTherapeuticProtein_expression"
+  host: e_coli
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: MyTherapeuticProtein
         expression: high
-        gene:
-          id: MyTherapeuticProtein
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: MyTherapeuticProtein
+              source: uniprot
+
+    - terminator: rrnB_T1

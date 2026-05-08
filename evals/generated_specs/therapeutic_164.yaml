@@ -1,18 +1,35 @@
 construct:
-  name: cas9_nuclease_ivt_template
+  name: "IVT_mRNA_codon_optimized_Cas9_NLS"
   host: in_vitro
+
   backbone:
-    resistance: none # Requirement: completely free of antibiotic resistance elements
-    ori: pUC
+    # IVT template: minimal backbone for RNA synthesis
+    # No antibiotic resistance, no viral elements
+    ori: null
+    resistance: null
+    source: synthetic
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: cas9_nuclease
+        label: Cas9_nuclear
         expression: high
         chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: NLS
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: Q99ZW2
+              id: Cas9_human_codon_optimized
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: NLS
-    - terminator: T7term
+
+    - terminator: rrnB_T1

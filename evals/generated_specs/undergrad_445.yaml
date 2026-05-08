@@ -1,18 +1,22 @@
 construct:
-  name: "yeast_secretion_beta_peptide"
+  name: yeast_secreted_beta_peptide
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GAL1  # GAL1 selected as the standard inducible promoter for yeast expression
+    - promoter: GAL1
+
     - cistron:
-        label: therapeutic_peptide
+        label: secreted_beta
         expression: high
         chain:
-          - tag: Alpha_factor  # N-terminal secretion signal for S. cerevisiae
+          - signal_peptide: alpha_factor
           - gene:
-              id: Beta
+              id: beta_peptide
               source: uniprot
-    - terminator: CYC1_term  # Standard yeast transcriptional terminator
+
+    - terminator: rrnB_T1

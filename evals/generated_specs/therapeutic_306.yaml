@@ -1,14 +1,41 @@
 construct:
-  name: "inducible_mammalian_il2_expression"
+  name: inducible_immunomodulator_mammalian
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: TRE3G  # Tet-responsive promoter selected for tightly controlled, dose-dependent induction
+    - promoter: CMV
+
+    - cistron:
+        label: rtTA
+        expression: medium
+        chain:
+          - gene:
+              id: rtTA
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: TRE
+
     - cistron:
         label: immunomodulator
         expression: high
-        gene:
-          id: IL2
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: IL12p35
+              source: uniprot
+
+    - terminator: SV40_polyA

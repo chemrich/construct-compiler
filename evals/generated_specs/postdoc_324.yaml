@@ -1,20 +1,23 @@
 construct:
-  name: "human_enzyme_yeast_sumo_expression"
+  name: "human_enzyme_yeast_expression"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: enzyme_target
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: SUMO
-          - cleavage_site: TEV
           - gene:
-              id: SOD1
+              id: human_enzyme
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

@@ -1,18 +1,23 @@
 construct:
-  name: "GrowthFactorMimic_Inducible_Yeast"
+  name: "GrowthFactorMimic_inducible_yeast"
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GAL1  # Inducible yeast promoter for galactose-specific expression
+    - promoter: GAL1
+
     - cistron:
-        label: mimic_protein
+        label: growth_factor_mimic
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: GrowthFactorMimic
               source: uniprot
+
     - terminator: CYC1

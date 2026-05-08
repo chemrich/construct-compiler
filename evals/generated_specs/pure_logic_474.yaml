@@ -1,26 +1,66 @@
 construct:
-  name: mammalian_genetic_memory_circuit
+  name: "mammalian_bistable_memory_circuit"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TRE  # Stimulated by input S (Tet-inducible system)
+    - promoter: CMV
+
     - cistron:
-        label: trigger_recombinase
+        label: transactivator_rtTA
         expression: high
         chain:
-          - tag: NLS
+          - tag: HA
           - gene:
-              id: P06956
+              id: rtTA
               source: uniprot
-    - terminator: SV40_pA
-    - spacer: 100
-    - promoter: CMV
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: TRE_tight
+
     - cistron:
-        label: memory_state_reporter
+        label: positive_feedback_activator
         expression: high
-        # This cistron is assumed to contain a Lox-Stop-Lox element for DNA-level memory switching
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - tag: FLAG
+          - gene:
+              id: rtTA
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: TRE_tight
+
+    - cistron:
+        label: memory_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: CMV
+
+    - cistron:
+        label: repressor_tTS
+        expression: medium
+        chain:
+          - tag: V5
+          - gene:
+              id: tTS
+              source: uniprot
+
+    - terminator: rrnB_T1

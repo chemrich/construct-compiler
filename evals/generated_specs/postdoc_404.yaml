@@ -1,18 +1,24 @@
 construct:
-  name: "oncogene_MYC_expression_yeast"
+  name: "yeast_oncogene_expression"
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
-    source: yeast_shuttle
+    source: addgene
+
   cassette:
-    - promoter: TEF1  # CMV is a mammalian promoter and will not function in yeast; substituted with the strong constitutive yeast promoter TEF1.
+    - promoter: GAL1  # CMV is mammalian-specific; using GAL1 as the strongest constitutive/inducible promoter in S. cerevisiae
+
     - cistron:
         label: oncogene
         expression: high
         chain:
           - gene:
-              id: P01106
-              source: uniprot
+              id: null  # User must provide specific oncogene ID and source (uniprot recommended)
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: HA
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

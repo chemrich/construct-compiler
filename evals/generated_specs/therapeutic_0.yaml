@@ -1,16 +1,15 @@
-```yaml
 construct:
-  name: human_antibody_fragment_TEV_cleavable
+  name: "human_antibody_fragment_TEV_cleavable"
   host: e_coli_bl21_de3
-
+  
   backbone:
-    resistance: none  # No antibiotic resistance permitted
+    resistance: null  # No antibiotic resistance gene per requirements
     ori: pBR322
-    source: custom
-
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
-
+    - promoter: T7lac  # Tight regulation via IPTG induction
+    
     - cistron:
         label: antibody_fragment
         expression: high
@@ -18,8 +17,7 @@ construct:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-            id: P01834  # Human Ig kappa chain C region - representative antibody fragment
-            source: uniprot
-
+              id: P01857  # Human immunoglobulin heavy chain variable domain (example UniProt ID)
+              source: uniprot
+    
     - terminator: rrnB_T1
-```

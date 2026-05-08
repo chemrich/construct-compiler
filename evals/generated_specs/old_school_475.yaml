@@ -1,27 +1,30 @@
 construct:
-  name: "retroviral_transfer_X_neo"
-  host: HEK293  # HEK293T requested; HEK293 is the closest matching host in the schema.
+  name: retroviral_vector_gene_X
+  host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: pMSCV
+    resistance: neomycin
     source: addgene
+
   cassette:
     - promoter: LTR
+
     - cistron:
         label: packing_signal
+        expression: low
         gene:
-          id: psi_element
+          id: psi_sequence
+          source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: target
+        label: gene_X
+        expression: high
+        fused: false
         gene:
           id: gene_X
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: selection
-        fused: false
-        gene:
-          id: NeoR
-          source: uniprot
+
     - terminator: LTR

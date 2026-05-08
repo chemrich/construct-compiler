@@ -1,16 +1,20 @@
 construct:
-  name: "aav_reporter_z_minimal"
-  host: mammalian
+  name: AAV_reporter_Z
+  host: HEK293
+
   backbone:
-    resistance: kanamycin  # Default per rule 9
-    ori: pUC
-    source: addgene  # Assuming standard AAV transfer backbone like pAAV-CMV
+    catalog_vector: "pAAV-CMV"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: CMV  # Default per rule 8 for mammalian
+    - promoter: CMV
+
     - cistron:
-        label: reporter_z
+        label: reporter_Z
         expression: high
         gene:
-          id: mEGFP  # Used as a representative 'reporter Z'
-          source: fpbase
-    - terminator: bGH_polyA  # Standard mammalian polyA signal for AAV constructs
+          id: reporter_Z
+          source: uniprot
+
+    - terminator: WPRE

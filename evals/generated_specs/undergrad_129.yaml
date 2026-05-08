@@ -1,27 +1,34 @@
 construct:
-  name: "arabinose_inducible_polycistronic_F_G"
+  name: "dual_arabinose_inducible_F_G"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: protein_f
-        expression: medium
+        label: protein_F
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: Protein_F
+              id: protein_F
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: protein_g
-        expression: medium
+        label: protein_G
+        expression: high
         fused: false
         chain:
           - tag: Strep-II
           - gene:
-              id: Protein_G
+              id: protein_G
               source: uniprot
+
     - terminator: rrnB_T1

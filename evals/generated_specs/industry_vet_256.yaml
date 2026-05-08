@@ -1,18 +1,23 @@
 construct:
-  name: "secreted_mammalian_expression_construct"
+  name: mammalian_secreted_protein_with_tags
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: target
+        label: secreted_target
         expression: high
         chain:
-          - tag: Igk_leader
+          - tag: signal_peptide_IgG
           - tag: 6xHis
           - gene:
-              id: target_protein
+              id: GOI
               source: uniprot
           - tag: Strep-II
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

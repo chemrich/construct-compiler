@@ -1,16 +1,22 @@
 construct:
-  name: "protein_a_expression_e_coli"
-  host: e_coli
+  name: ProteinA_expression
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: ProteinA
         expression: high
-        gene:
-          id: P02976
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinA
+              source: uniprot
+
     - terminator: rrnB_T1

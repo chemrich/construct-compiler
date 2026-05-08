@@ -1,19 +1,22 @@
 construct:
-  name: "S2_secreted_therapeutic_expression"
-  host: Drosophila_S2
+  name: "Drosophila_S2_secreted_therapeutic"
+  host: drosophila_s2
+
   backbone:
-    # Kanamycin included for E. coli propagation stage as the compiler requires a selection marker
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    resistance: null  # No antibiotic marker for Drosophila S2 cells
+    ori: pUC  # Standard plasmid replication
+    source: custom
+
   cassette:
-    - promoter: Actin5C # Standard constitutive insect promoter (non-viral)
+    - promoter: Drosophila_actin5C  # Constitutive insect promoter
+
     - cistron:
-        label: therapeutic_protein
+        label: secreted_therapeutic
         expression: high
         chain:
-          - tag: BiP # Drosophila BiP secretion signal sequence
+          - tag: signal_peptide_Drosophila  # Drosophila melanogaster secretion signal (e.g., from Kl-16A or Drs)
           - gene:
-              id: P01133 # Human EGF used as model therapeutic protein
+              id: therapeutic_protein
               source: uniprot
-    - terminator: Hsp70_polyA # Insect-specific non-viral polyadenylation signal
+
+    - terminator: Drosophila_polyadenylation  # Drosophila poly-A signal (e.g., hsp70 or fw4)

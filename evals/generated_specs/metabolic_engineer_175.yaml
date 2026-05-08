@@ -1,49 +1,50 @@
 construct:
-  name: "Bacillus_subtilis_GP_E1_E5_operon"
-  host: bacillus_subtilis
+  name: "GP_enzyme_operon_bacillus"
+  host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110  # Common origin for Bacillus subtilis replication
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: P_veg  # Strong constitutive promoter for Gram-positives like B. subtilis
+    - promoter: P43
+
     - cistron:
         label: GP_E1
         expression: high
         gene:
           id: GP_E1
           source: uniprot
-    - spacer: 30
+
     - cistron:
         label: GP_E2
         expression: high
-        fused: false  # Independent translation with its own RBS
         gene:
           id: GP_E2
           source: uniprot
-    - spacer: 30
+
     - cistron:
         label: GP_E3
         expression: high
-        fused: false
         chain:
           - gene:
               id: GP_E3
               source: uniprot
-          - tag: 6xHis  # C-terminal tag for purification
-    - spacer: 30
+          - tag: 6xHis
+
     - cistron:
         label: GP_E4
         expression: high
-        fused: false
         gene:
           id: GP_E4
           source: uniprot
-    - spacer: 30
+
     - cistron:
         label: GP_E5
         expression: high
-        fused: false
         gene:
           id: GP_E5
           source: uniprot
+
     - terminator: rrnB_T1

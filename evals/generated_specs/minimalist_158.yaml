@@ -1,18 +1,23 @@
 construct:
-  name: yeast_peptide_export_system
+  name: "yeast_secreted_peptide"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
         label: secreted_peptide
         expression: high
         chain:
-          - tag: Alpha_factor
+          - tag: alpha_factor_signal_peptide
           - gene:
-              id: P81557
+              id: small_peptide
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1_terminator

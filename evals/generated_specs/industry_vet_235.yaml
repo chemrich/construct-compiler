@@ -1,14 +1,20 @@
 construct:
-  name: "AAVR_Mammalian_Expression_Construct"
+  name: "AAV_receptor_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: AAV_receptor
         expression: high
-        gene:
-          id: KIAA0319L
-          source: uniprot
-    - terminator: SV40_polyA
+        chain:
+          - tag: NLS
+          - gene:
+              id: AAVR
+              source: uniprot
+
+    - terminator: rrnB_T1

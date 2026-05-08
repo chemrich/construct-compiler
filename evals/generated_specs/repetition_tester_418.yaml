@@ -1,38 +1,51 @@
 construct:
-  name: "bacterial_two_hybrid_bait_prey_unique_linkers"
-  host: e_coli_bl21_de3
+  name: "bacterial_two_hybrid_bait_prey_system"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: bait_fusion
+        label: bait
         expression: high
         chain:
-          - gene:
-              id: P08042
-              source: uniprot
+          - tag: 6xHis
+          - cleavage_site: TEV
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P04637
+              id: LexA_DNA_binding_domain
               source: uniprot
-    - spacer: 30
+          - linker:
+              sequence: "GGAGGTGGAGGTGGA"
+          - gene:
+              id: bait_protein
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: prey_fusion
+        label: prey
         expression: high
         fused: false
         chain:
+          - tag: 8xHis
+          - linker:
+              sequence: "GGATCCGGATCCGGATCC"
           - gene:
-              id: P0A7Z4
+              id: VP16_activation_domain
               source: uniprot
           - linker:
-              type: rigid_EAAAK
-              repeats: 3
+              type: GS_flexible
+              repeats: 2
           - gene:
-              id: Q00987
+              id: prey_protein
               source: uniprot
+
     - terminator: rrnB_T1

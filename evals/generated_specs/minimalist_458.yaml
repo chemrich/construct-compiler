@@ -1,14 +1,23 @@
 construct:
-  name: "GeneU_AMP_expression_construct"
-  host: e_coli_bl21_de3
+  name: "antimicrobial_peptide_GeneU_ecoli"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: geneu_peptide
+        label: GeneU
         expression: high
-        gene:
-          id: GeneU
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: GeneU
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,19 +1,23 @@
 construct:
-  name: "toxic_protein_gst_tev_purification"
-  host: e_coli_bl21_de3
+  name: "toxic_protein_iptg_inducible_gst_tev"
+  host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: T7lac  # T7lac used for tighter IPTG-inducible control required for toxic proteins
+    - promoter: lacUV5
+
     - cistron:
         label: target
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: TEV
           - gene:
               id: toxic_protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

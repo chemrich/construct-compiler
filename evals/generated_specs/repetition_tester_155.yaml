@@ -1,14 +1,18 @@
 construct:
-  name: "cleavageprot_mammalian_expression"
+  name: "CleavageProt_tri_domain_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: CleavageProt_tri_domain
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: DomainH
               source: uniprot
@@ -20,4 +24,6 @@ construct:
           - gene:
               id: DomainJ
               source: uniprot
-    - terminator: BBa_B0015
+          - cleavage_site: Factor_Xa
+
+    - terminator: rrnB_T1

@@ -1,22 +1,25 @@
 construct:
-  name: "pichia_secreted_gpcr_ectodomain"
+  name: GPCR_ectodomain_secreted_yeast
   host: yeast
+
   backbone:
     catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: gpcr_ecto
+        label: GPCR_ectodomain
         expression: high
         chain:
-          - tag: alpha_mating_factor
-          - tag: 8xHis
+          - tag: 6xHis
           - cleavage_site: TEV
-          - solubility_tag: MBP
-          - linker:
-              type: GS_flexible
-              repeats: 3
           - gene:
-              id: ADRB2
+              id: GPCR_ectodomain
               source: uniprot
-    - terminator: AOX1_term
+          - secretion_signal: alpha_factor
+
+    - terminator: rrnB_T1

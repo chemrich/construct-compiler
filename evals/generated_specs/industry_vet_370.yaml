@@ -1,22 +1,28 @@
 construct:
-  name: "aav_cap_fusion_purification"
+  name: "AAV_fusion_capsid_construct"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: AAV_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P03135
+              id: AAV_capsid_domain1
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: mEGFP
-              source: fpbase
-          - tag: 6xHis
-    - terminator: T7term
+              id: AAV_capsid_domain2
+              source: uniprot
+
+    - terminator: rrnB_T1

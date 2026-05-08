@@ -1,28 +1,29 @@
 construct:
-  name: yeast_surface_display_proteinZ_aga2p
+  name: yeast_surface_display_ProteinZ_Aga2p
   host: yeast
 
   backbone:
     resistance: ampicillin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: GAL1
 
     - cistron:
-        label: surface_display
+        label: display_fusion
         expression: high
         chain:
-          - signal_peptide: alpha_factor
-          - gene:
-              id: AGA2
-              source: uniprot
-          - linker:
-              type: randomized_diverse  # Non-repetitive randomized sequence
-              length: 20  # amino acids
+          - tag: HA
           - gene:
               id: ProteinZ
+              source: uniprot
+          - linker:
+              type: randomized_nonrepetitive
+              length_aa: 20
+              description: "Randomized 20 aa linker designed to avoid recombination hotspots and repetitive sequences"
+          - gene:
+              id: Aga2p
               source: uniprot
 
     - terminator: CYC1

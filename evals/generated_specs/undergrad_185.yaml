@@ -1,19 +1,23 @@
 construct:
-  name: "amylase_purification_construct"
+  name: "Amylase_6xHis_purification"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: amylase_target
+        label: Amylase
         expression: high
         chain:
           - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 3
+          - cleavage_site: TEV
           - gene:
-              id: Amylase
+              id: amylase
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

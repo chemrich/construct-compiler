@@ -1,36 +1,39 @@
-```yaml
 construct:
-  name: dual_therapeutic_fragment_expression
-  host: e_coli
-
+  name: "dual_therapeutic_fragment_expression"
+  host: e_coli_bl21
+  
   backbone:
-    resistance: none
-    ori: p15A
+    resistance: null  # antibiotic resistance-free design
+    ori: pBR322
     source: addgene
-
+  
   cassette:
     - promoter: T7lac
     
     - cistron:
-        label: fragment_A
+        label: Fragment_A
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01308
-              source: uniprot
-    
-    - spacer: 30
-    
-    - cistron:
-        label: fragment_B
-        expression: high
-        fused: false
-        chain:
-          - tag: Strep-II
-          - gene:
-              id: P01315
+              id: therapeutic_fragment_A
               source: uniprot
     
     - terminator: rrnB_T1
-```
+    
+    - spacer: 50
+    
+    - promoter: T7lac
+    
+    - cistron:
+        label: Fragment_B
+        expression: high
+        chain:
+          - tag: Strep-II
+          - cleavage_site: 3C
+          - gene:
+              id: therapeutic_fragment_B
+              source: uniprot
+    
+    - terminator: rrnB_T1

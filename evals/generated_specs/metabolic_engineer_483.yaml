@@ -1,18 +1,21 @@
 construct:
-  name: "constitutive_strong_operon_k1_k4"
-  host: e_coli
+  name: "K_enzyme_operon_with_GFP_monitor"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: k1_fusion
+        label: K1_GFP
         expression: high
         chain:
           - gene:
-              id: sfGFP
+              id: mEGFP
               source: fpbase
           - linker:
               type: short_GS
@@ -20,28 +23,35 @@ construct:
           - gene:
               id: K1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: k2_enzyme
+        label: K2
         expression: high
         fused: false
         gene:
           id: K2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: k3_enzyme
+        label: K3
         expression: high
         fused: false
         gene:
           id: K3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: k4_enzyme
+        label: K4
         expression: high
         fused: false
         gene:
           id: K4
           source: uniprot
+
     - terminator: rrnB_T1

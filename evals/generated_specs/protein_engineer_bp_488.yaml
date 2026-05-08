@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_synthetic_promoter_screen"
+  name: bacillus_promoter_screening_mCherry
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+
     - cistron:
-        label: reporter
+        label: mCherry_reporter
         expression: high
         chain:
-          - tag: AmyE
+          - signal_peptide: AmyE
           - gene:
               id: mCherry
               source: fpbase
           - tag: 6xHis
+
     - terminator: rrnB_T1

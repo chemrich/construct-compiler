@@ -1,39 +1,37 @@
 construct:
-  name: "divergent_orthogonal_yeast_secretion_system"
+  name: "dual_secretion_signal_yeast_inducible"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: alpha_factor_fusion
+        label: secretion_variant_alpha
         expression: high
         chain:
+          - tag: alpha_factor_signal
           - gene:
-              id: P01149
+              id: MFalpha1
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: CYC1_term
+
+    - terminator: CYC1
+
     - spacer: 50
-    - promoter: CUP1
+
+    - promoter: ADH2
+
     - cistron:
-        label: suc2_signal_fusion
+        label: secretion_variant_ost
         expression: high
         chain:
+          - tag: OST1_signal
           - gene:
-              id: P00724
+              id: PHO5
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
-          - gene:
-              id: mNeonGreen
-              source: fpbase
-    - terminator: ADH1_term
+
+    - terminator: ADH1

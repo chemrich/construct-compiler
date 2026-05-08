@@ -1,43 +1,49 @@
 construct:
-  name: "operon_enzymes_X_Y_Z_W_solubility_optimized"
+  name: "four_enzyme_operon_X_Y_Z_W"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: J23100
+    
     - cistron:
         label: enzyme_X
         expression: medium
         gene:
           id: enzyme_X
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: enzyme_Y
         expression: medium
-        fused: false
         chain:
           - solubility_tag: MBP
-          - cleavage_site: TEV
           - gene:
               id: enzyme_Y
               source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: enzyme_Z
         expression: medium
-        fused: false
         gene:
           id: enzyme_Z
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: enzyme_W
         expression: medium
-        fused: false
         gene:
           id: enzyme_W
           source: uniprot
+    
     - terminator: rrnB_T1

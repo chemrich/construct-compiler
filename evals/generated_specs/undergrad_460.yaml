@@ -1,15 +1,20 @@
 construct:
-  name: "strong_constitutive_sfgfp_expression"
-  host: e_coli
+  name: "bright_GFP_expression"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100
+    - promoter: T7
+
     - cistron:
-        label: gfp_reporter
+        label: GFP
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - terminator: rrnB_T1

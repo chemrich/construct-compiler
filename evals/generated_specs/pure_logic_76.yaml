@@ -1,18 +1,61 @@
 construct:
-  name: "yeast_rna_nor_gate_therapeutic_output"
+  name: "yeast_RNA_NOR_gate"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: ADH1  # Yeast ADH1 promoter; NOR gate logic is implemented via tandem repressive riboswitches in the 5' UTR
+    - promoter: GAL1
+      comment: "Constitutive promoter for yeast expression"
+
     - cistron:
-        label: therapeutic_Z
+        label: input_A_sensor
         expression: high
         chain:
-          - tag: alpha_factor  # Secretion signal for yeast (Rule 18)
           - gene:
-              id: P60568  # Human Interleukin-2 as a representative therapeutic protein
+              id: hammerhead_ribozyme_A
               source: uniprot
-    - terminator: CYC1  # Standard yeast terminator (Rule 15)
+              comment: "Self-cleaving ribozyme that is inhibited by input RNA A binding"
+
+    - spacer: 30
+
+    - cistron:
+        label: input_B_sensor
+        expression: high
+        chain:
+          - gene:
+              id: varkud_satellite_ribozyme_B
+              source: uniprot
+              comment: "Self-cleaving ribozyme that is inhibited by input RNA B binding"
+
+    - spacer: 30
+
+    - cistron:
+        label: output_Z
+        expression: medium
+        fused: false
+        comment: "Therapeutic gene - translated only when neither A nor B inhibit the riboswitches"
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GFP
+              source: fpbase
+              comment: "Placeholder therapeutic protein; can be replaced with actual therapeutic gene"
+
+    - spacer: 30
+
+    - cistron:
+        label: toehold_switch_controller
+        expression: low
+        comment: "Optional: additional toehold switch for fine-tuning gate response"
+        fused: false
+        chain:
+          - gene:
+              id: MS2_stem_loop
+              source: uniprot
+
+    - terminator: CYC1
+      comment: "Yeast CYC1 terminator for transcript stability"

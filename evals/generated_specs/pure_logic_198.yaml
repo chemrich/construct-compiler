@@ -1,28 +1,47 @@
 construct:
-  name: "reversible_gene_e_ara_switch"
-  host: e_coli_bl21
+  name: "reversible_ON_OFF_switch_Gene_E"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    # Constitutive expression of the activator (AraC) with an SsrA degradation tag
-    - promoter: J23100
+    - promoter: araBAD
+
     - cistron:
-        label: activator_production
-        expression: medium
+        label: activator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: AraC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: ssrA_protease
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ClpX
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: Gene_E_regulated
+        expression: very_low
+        fused: false
         chain:
           - gene:
-              id: P0A6C7
+              id: Gene_E
               source: uniprot
-          - tag: SsrA  # Degradation tag for rapid clearing of the activator
-    - terminator: BBa_B0015
-    - spacer: 50
-    # The target Gene_E is driven by the activator-dependent araBAD promoter
-    - promoter: araBAD
-    - cistron:
-        label: gene_e_expression
-        expression: high
-        gene:
-          id: Gene_E
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: ssrA
+
     - terminator: rrnB_T1

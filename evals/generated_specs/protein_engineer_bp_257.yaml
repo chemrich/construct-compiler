@@ -1,17 +1,27 @@
 construct:
-  name: "bacillus_kinase_solubility_trx"
+  name: "Bacillus_kinase_Trx_dual_promoter"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: Pveg_Pgrac
+    - promoter: Pveg
+
+    - promoter: Pgrac
+
     - cistron:
-        label: kinase_target
+        label: kinase_trx
         expression: high
         chain:
           - solubility_tag: Trx
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: kinase
               source: uniprot
+
     - terminator: rrnB_T1

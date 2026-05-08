@@ -1,20 +1,24 @@
 construct:
-  name: "four_enzyme_pathway_optimization"
+  name: "balanced_pathway_operon_ABCD"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # constitutive promoter, strong
+    
     - cistron:
         label: EnzA
         expression: high
-        fused: false
         gene:
           id: EnzA
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: EnzB
         expression: medium
@@ -22,7 +26,9 @@ construct:
         gene:
           id: EnzB
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: EnzC
         expression: medium
@@ -30,7 +36,9 @@ construct:
         gene:
           id: EnzC
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
         label: EnzD
         expression: low
@@ -38,4 +46,5 @@ construct:
         gene:
           id: EnzD
           source: uniprot
+    
     - terminator: rrnB_T1

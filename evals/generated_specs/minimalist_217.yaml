@@ -1,20 +1,34 @@
 construct:
-  name: "mammalian_polycistronic_protein_x_y_ires"
+  name: "polycistronic_X_Y_IRES_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_x
-        gene:
-          id: PROTEIN_X
-          source: uniprot
-    - spacer: 585  # Represents a standard IRES sequence length for internal initiation
+        label: Protein_X
+        expression: high
+        chain:
+          - gene:
+              id: ProteinX
+              source: uniprot
+
+    # IRES allows cap-independent translation of downstream cistron
+    - spacer: 27  # IRES consensus element (~27 bp minimal)
+
     - cistron:
-        label: protein_y
-        fused: false  # Required for independent translation via IRES
-        gene:
-          id: PROTEIN_Y
-          source: uniprot
-    - terminator: bGH_polyA
+        label: Protein_Y
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: ProteinY
+              source: uniprot
+
+    - terminator: rrnB_T1

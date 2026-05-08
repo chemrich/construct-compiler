@@ -1,42 +1,55 @@
 construct:
-  name: "c_glutamicum_lysine_production_operon"
-  host: e_coli  # Corynebacterium glutamicum not in list; E. coli used as surrogate with constitutive promoter J23100.
+  name: lysine_production_operon_cg
+  host: bacillus
+  # Note: C. glutamicum is a Gram-positive bacterium similar to Bacillus.
+  # Using bacillus as the closest host option for Corynebacterium glutamicum.
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter
+    - promoter: J23100
+      # Strong constitutive promoter suitable for high expression in Gram-positive bacteria
+
     - cistron:
-        label: lysA
+        label: LysA
         expression: high
         gene:
-          id: P04157
+          id: lysA
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: lysB
+        label: LysB
         expression: high
-        fused: false  # Independent translation with its own RBS
+        fused: false
         gene:
-          id: P12457
+          id: lysB
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: lysC
+        label: LysC
         expression: high
         fused: false
         chain:
           - gene:
-              id: P26512
+              id: lysC
               source: uniprot
-          - tag: Myc  # C-terminal tag for quantification
-    - spacer: 30
+          - tag: Myc
+
+    - spacer: 25
+
     - cistron:
-        label: lysD
+        label: LysD
         expression: high
         fused: false
         gene:
-          id: P04964
+          id: lysD
           source: uniprot
+
     - terminator: rrnB_T1

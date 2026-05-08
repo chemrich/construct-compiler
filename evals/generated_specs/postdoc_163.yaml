@@ -1,16 +1,25 @@
 construct:
-  name: "mammalian_secreted_protein_ecoli"
-  host: e_coli_bl21_de3
+  name: mammalian_protein_ecoli_expression
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
-              id: P60568 # Note: Native mammalian signal peptides are generally not recognized by E. coli secretion machinery; PelB or OmpA leaders are recommended for periplasmic export.
+              id: mammalian_secreted_protein
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: "yeast_gfp_expression"
+  name: yeast_GFP_expression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: glow_reporter
+        label: GFP
         expression: high
-        gene:
-          id: GFP
-          source: fpbase
-    - terminator: CYC1
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GFP
+              source: fpbase
+
+    - terminator: rrnB_T1

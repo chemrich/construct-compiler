@@ -1,22 +1,28 @@
 construct:
-  name: yeast_coexpression_protx_proty
+  name: yeast_ProtX_ProtY_coexpression
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
         label: ProtX
-        expression: high
+        expression: very_high
         chain:
           - tag: 6xHis
           - gene:
               id: ProtX
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1
+
     - promoter: ADH1
+
     - cistron:
         label: ProtY
         expression: medium
@@ -25,4 +31,5 @@ construct:
               id: ProtY
               source: uniprot
           - tag: Strep-II
-    - terminator: ADH1_term
+
+    - terminator: CYC1

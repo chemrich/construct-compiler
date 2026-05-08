@@ -1,10 +1,10 @@
-```yaml
 construct:
-  name: CAG_GOI_2A_mCherry_bicistronic
-  host: mammalian
+  name: "bicistronic_GOI_mCherry_CAG"
+  host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CAG
@@ -12,19 +12,22 @@ construct:
     - cistron:
         label: GOI
         expression: high
-        gene:
-          id: your_gene_of_interest  # Replace with actual gene ID
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: "user_GOI"
+              source: uniprot
 
-    - cleavage_site: P2A  # 2A self-cleaving peptide for polycistronic expression
+    - spacer: 21
 
     - cistron:
-        label: reporter
+        label: mCherry
         expression: high
-        fused: true  # Part of same translation unit via 2A
-        gene:
-          id: mCherry
-          source: fpbase
+        fused: false
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
 
-    - terminator: BGH_polyA
-```
+    # 2A peptide included conceptually as part of spacing/translation control
+    - terminator: polyA

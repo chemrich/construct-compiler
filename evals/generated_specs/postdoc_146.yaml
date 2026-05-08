@@ -1,24 +1,32 @@
 construct:
-  name: "mammalian_mCherry_EGFP_IRES_sensor"
+  name: dual_fluorescent_sensor_mCherry_EGFP
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: mCherry_tag
+        label: mCherry
         expression: high
         chain:
           - gene:
               id: mCherry
               source: fpbase
           - tag: HA
-    - spacer: 500  # Spacer representing the IRES sequence for polycistronic expression
+
+    # IRES enables cap-independent translation of the downstream cistron from the same mRNA
+    - spacer: 27  # IRES sequence (approx 27 bp represents minimal IRES functionality)
+
     - cistron:
-        label: EGFP_reporter
+        label: EGFP
         expression: high
         fused: false
         gene:
           id: EGFP
           source: fpbase
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

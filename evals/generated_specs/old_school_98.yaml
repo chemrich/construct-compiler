@@ -1,12 +1,18 @@
 construct:
-  name: "mammalian_shRNA_expression"
+  name: "mammalian_shRNA_U6"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: shRNA_hairpin
-        gene:
-          id: target_shRNA
-    - terminator: polyT # RNA Polymerase III terminator (5T sequence)
+
+    - rna_element:
+        label: shRNA
+        type: hairpin
+        sequence: "GATCCCCGAAGGTGATGTAGAACGCCCGTTTCGAGACGGGCGTTCTACATCACCTTCTTTTTGGAAA"
+
+    - terminator: poly_T_5

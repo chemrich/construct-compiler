@@ -1,24 +1,31 @@
 construct:
-  name: "Yeast_Surface_Display_Aga2_GOI"
+  name: SurfaceDisplayGOI
   host: yeast
+
   backbone:
     resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: Aga2_GOI_fusion
+        label: surface_display
         expression: high
         chain:
+          - tag: Myc
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: AGA2
+              id: SurfaceDisplayGOI
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: Myc
+              repeats: 1
           - gene:
-              id: GOI
+              id: Aga2p
               source: uniprot
+
     - terminator: CYC1

@@ -1,13 +1,14 @@
 construct:
-  name: "gene1_inducible_gene2_constitutive"
-  host: e_coli_bl21_de3
+  name: "Gene1_Gene2_coexpression"
+  host: e_coli_bl21
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target_gene1
+        label: Gene1
         expression: high
         chain:
           - tag: Strep-II
@@ -15,11 +16,12 @@ construct:
               id: Gene1
               source: uniprot
     - terminator: rrnB_T1
-    - promoter: J23100
+    - promoter: J23106
     - cistron:
-        label: reporter_gene2
+        label: Gene2
         expression: medium
-        gene:
-          id: Gene2
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: Gene2
+              source: uniprot
+    - terminator: rrnB_T1

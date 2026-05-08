@@ -1,41 +1,52 @@
-```yaml
 construct:
-  name: orthogonal_viral_protein_triad
-  host: sf9  # insect cells for baculovirus system
-
+  name: "baculovirus_VP1_VP2_VP3_triple_expression"
+  host: insect_cells
+  
   backbone:
-    catalog_vector: pFastBac1
-    source: invitrogen
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
 
   cassette:
     - promoter: polyhedrin
+      
     - cistron:
         label: VP1
         expression: high
-        gene:
-          id: P03300  # VP1 example - replace with actual VP1 UniProt ID
-          source: uniprot
-    - terminator: polyhedrin_3UTR
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: VP1
+              source: uniprot
+    
+    - terminator: SV40_poly_A
 
-    - spacer: 200  # substantial spacing between independent expression units
+    - spacer: 50
 
     - promoter: p10
+      
     - cistron:
         label: VP2
         expression: high
-        gene:
-          id: P03301  # VP2 example - replace with actual VP2 UniProt ID
-          source: uniprot
-    - terminator: SV40_polyA
+        chain:
+          - tag: FLAG
+          - gene:
+              id: VP2
+              source: uniprot
+    
+    - terminator: hGH_poly_A
 
-    - spacer: 200
+    - spacer: 50
 
-    - promoter: ie1  # immediate early 1 promoter - completely orthogonal
+    - promoter: ie1
+      
     - cistron:
         label: VP3
         expression: high
-        gene:
-          id: P03302  # VP3 example - replace with actual VP3 UniProt ID
-          source: uniprot
-    - terminator: hr5_enhancer_term  # baculovirus hr5 region terminator
-```
+        chain:
+          - tag: Strep-II
+          - gene:
+              id: VP3
+              source: uniprot
+    
+    - terminator: TK_poly_A

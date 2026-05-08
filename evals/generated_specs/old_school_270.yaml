@@ -1,14 +1,31 @@
 construct:
-  name: "yeast_ADH1_sfGFP_HIS3_integration"
+  name: "yeast_GFP_ADH1_HIS3_integration"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS403"  # Standard yeast integrative vector with HIS3 marker for selection and recombination
+    resistance: HIS3
+    ori: none
+    source: custom
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: reporter
+        label: GFP_reporter
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: GFP
+              source: fpbase
+
+    - terminator: CYC1
+
+    - cistron:
+        label: HIS3_marker
+        expression: high
+        chain:
+          - gene:
+              id: HIS3
+              source: uniprot
+
     - terminator: CYC1

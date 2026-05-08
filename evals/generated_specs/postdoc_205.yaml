@@ -1,23 +1,30 @@
 construct:
-  name: "Q_GFP_cleavable_fusion"
+  name: Q_GFP_with_TEV_cleavage
   host: yeast
+
   backbone:
     catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2_micron
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: target
+        label: Q_GFP_fusion
         expression: high
         chain:
           - gene:
               id: Q
               source: uniprot
-          - cleavage_site: TEV
           - linker:
               type: GS_flexible
               repeats: 3
+          - cleavage_site: TEV
           - gene:
               id: mEGFP
               source: fpbase
           - tag: HA
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

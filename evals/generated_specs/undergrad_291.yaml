@@ -1,13 +1,15 @@
 construct:
-  name: "SuperProtein_Tandem_Purification"
-  host: e_coli_bl21
+  name: SuperProtein_dual_tag_purification
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: pET-28b(+)
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: SuperProtein
         expression: high
         chain:
           - tag: 6xHis
@@ -15,8 +17,11 @@ construct:
               type: GS_flexible
               repeats: 1
           - tag: Strep-II
-          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: SuperProtein
               source: uniprot
+
     - terminator: rrnB_T1

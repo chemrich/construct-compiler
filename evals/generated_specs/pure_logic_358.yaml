@@ -1,32 +1,49 @@
 construct:
-  name: "xor_gate_osm_ox_diagnostic"
-  host: e_coli
+  name: "XOR_gate_osmotic_oxidative_stress"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: "proU_tetO" # Osmotic stress responsive promoter containing tetO operator for repression
+    - promoter: araBAD
+
     - cistron:
-        label: osmotic_branch
+        label: sensor_A_repressor
         expression: medium
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: OmpR
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: "soxS_tetO" # Oxidative stress responsive promoter containing tetO operator for repression
+
+    - promoter: lacUV5
+
     - cistron:
-        label: oxidative_branch
+        label: sensor_B_activator
         expression: medium
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: SoxR
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: "P_osm_ox_AND" # Synthetic AND gate promoter activated only by simultaneous stress
+
+    - promoter: T7lac
+
     - cistron:
-        label: logic_repressor
+        label: AND_gate_output
         expression: high
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,41 +1,59 @@
 construct:
-  name: "geobacillus_thermophilic_pdh_operon"
-  host: geobacillus_stearothermophilus
+  name: thermophilic_pathway_operon_geobacillus
+  host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: P_veg  # Strong constitutive promoter for robust expression in Geobacillus
+    - promoter: J23100
+      # Strong constitutive promoter compatible with Bacillus/Geobacillus high-temperature expression
+
     - cistron:
-        label: pdhA
+        label: enzyme1
+        expression: high
+        chain:
+          - gene:
+              id: GEO_ORF1_thermophilic
+              source: uniprot
+              # Geobacillus thermophilic pathway enzyme 1, codon-optimized for high GC content
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme2
         expression: high
         fused: false
-        gene:
-          id: P11960
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: GEO_ORF2_thermophilic
+              source: uniprot
+              # Geobacillus thermophilic pathway enzyme 2, codon-optimized for high GC content
+
+    - spacer: 25
+
     - cistron:
-        label: pdhB
+        label: enzyme3
         expression: high
         fused: false
-        gene:
-          id: P11961
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: GEO_ORF3_thermophilic
+              source: uniprot
+              # Geobacillus thermophilic pathway enzyme 3, codon-optimized for high GC content
+
+    - spacer: 25
+
     - cistron:
-        label: pdhC
+        label: enzyme4
         expression: high
         fused: false
-        gene:
-          id: P11959
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: pdhD
-        expression: high
-        fused: false
-        gene:
-          id: P12046
-          source: uniprot
+        chain:
+          - gene:
+              id: GEO_ORF4_thermophilic
+              source: uniprot
+              # Geobacillus thermophilic pathway enzyme 4, codon-optimized for high GC content
+
     - terminator: rrnB_T1

@@ -1,29 +1,42 @@
 construct:
-  name: "quorum_sensing_autoinduction_circuit"
-  host: e_coli_bl21
+  name: quorum_sensing_circuit
+  host: e_coli
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive promoter to drive the quorum receptor
+    - promoter: araBAD
+
     - cistron:
-        label: luxR_receptor
+        label: synthase
         expression: medium
-        gene:
-          id: P12746
-          source: uniprot
-    - promoter: pLuxR  # Inducible promoter activated by the LuxR-AHL complex, creating positive feedback
+        chain:
+          - gene:
+              id: luxI
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: target_X_luxI
+        label: regulator
         expression: high
-        gene:
-          id: P12747
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: reporter_X
-        expression: high
-        fused: false  # Independently translated reporter to monitor circuit activation
-        gene:
-          id: mCherry
-          source: fpbase
+        label: output_X
+        expression: very_low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GFP
+              source: fpbase
+
     - terminator: rrnB_T1

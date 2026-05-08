@@ -1,19 +1,27 @@
 construct:
-  name: "Pichia_pastoris_AOX1_Elastase_CELA1"
+  name: "elastase_pichia_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: elastase_secretion_unit
+        label: elastase
         expression: high
         chain:
-          - tag: "Ost1-alpha-factor"
+          - signal_peptide: Ost1_alpha_factor_preproseq
           - gene:
-              id: "CELA1_HUMAN"
+              id: elastase
               source: uniprot
-          - tag: "6xHis"
-    - terminator: AOX1_term
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

@@ -1,19 +1,24 @@
 construct:
-  name: nattokinase_intracellular_expression_bacillus
+  name: nattokinase_SUMO_TEV_Bacillus
   host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: chloramphenicol
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: solubilized_nattokinase
+        label: nattokinase_construct
         expression: high
         chain:
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: P35462
+              id: nattokinase
               source: uniprot
+              # Codon optimization for B. subtilis is handled by compiler
+
     - terminator: rrnB_T1

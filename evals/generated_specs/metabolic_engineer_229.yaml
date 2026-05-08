@@ -1,10 +1,15 @@
 construct:
-  name: "four_enzyme_biosynthetic_operon"
-  host: e_coli_bl21_de3
+  name: four_enzyme_operon_synthaseA_ligaseB_hydrolaseC_isomeraseD
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: SynthaseA
         expression: high
@@ -14,7 +19,9 @@ construct:
           - gene:
               id: SynthaseA
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: LigaseB
         expression: high
@@ -22,7 +29,9 @@ construct:
         gene:
           id: LigaseB
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: HydrolaseC
         expression: high
@@ -30,7 +39,9 @@ construct:
         gene:
           id: HydrolaseC
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: IsomeraseD
         expression: high
@@ -38,4 +49,5 @@ construct:
         gene:
           id: IsomeraseD
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

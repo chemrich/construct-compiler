@@ -1,17 +1,21 @@
 construct:
-  name: "mitochondrial_matrix_targeted_protein"
+  name: "mitochondrial_matrix_protein_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: mito_protein
         expression: high
         chain:
-          - tag: MTS
           - tag: 6xHis
+          - mito_targeting_sequence: MTS
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: BBa_B0015
+              id: uniprot_lookup_required
+              source: uniprot
+
+    - terminator: rrnB_T1

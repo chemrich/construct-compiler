@@ -1,56 +1,81 @@
 construct:
-  name: "rhaBAD_6_enzyme_flux_balanced_operon"
+  name: "FB_E1_E6_rhamnose_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: rhaBAD  # Tightly regulated L-rhamnose inducible promoter
+    - promoter: rhaBAD
+      # L-rhamnose inducible, tightly regulated, minimal leakiness
+
     - cistron:
         label: FB_E1
         expression: high
+        rbs: RBS_strong_BBa_B0034
+        # Strong RBS for first enzyme to establish pathway flux
         gene:
           id: FB_E1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: FB_E2
-        expression: medium
+        expression: high
+        rbs: RBS_medium_BBa_B0030
+        # Balanced RBS to manage intermediate flow
         fused: false
         gene:
           id: FB_E2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: FB_E3
         expression: medium
+        rbs: RBS_medium_BBa_B0030
         fused: false
         gene:
           id: FB_E3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: FB_E4
         expression: medium
+        rbs: RBS_weak_BBa_B0032
+        # Weaker RBS to prevent intermediate saturation
         fused: false
         gene:
           id: FB_E4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: FB_E5
-        expression: low
+        expression: medium
+        rbs: RBS_weak_BBa_B0032
         fused: false
         gene:
           id: FB_E5
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: FB_E6
         expression: low
+        rbs: RBS_weak_BBa_B0032
+        # Weakest RBS for terminal enzyme to balance flux and enable feedback control
         fused: false
         gene:
           id: FB_E6
           source: uniprot
+
     - terminator: rrnB_T1

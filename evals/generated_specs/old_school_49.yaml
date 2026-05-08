@@ -1,29 +1,46 @@
-```yaml
 construct:
-  name: dual_fluorescent_reporter_SV40
+  name: dual_fluorescent_reporter_mammalian
   host: HEK293
 
   backbone:
+    catalog_vector: pTwist CMV
     resistance: hygromycin
-    ori: pBR322
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: SV40
+
     - cistron:
-        label: green_reporter
-        expression: medium
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_pA
+        label: GFP
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - terminator: SV40poly
 
     - promoter: SV40
+
     - cistron:
-        label: red_reporter
-        expression: medium
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: SV40_pA
-```
+        label: RFP
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: SV40poly
+
+    - promoter: SV40
+
+    - cistron:
+        label: hygromycin_resistance
+        expression: high
+        chain:
+          - gene:
+              id: hygromycin_phosphotransferase
+              source: uniprot
+
+    - terminator: SV40poly

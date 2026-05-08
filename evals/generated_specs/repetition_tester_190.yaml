@@ -1,34 +1,54 @@
 construct:
-  name: "baculovirus_tripartite_expression_system"
-  host: sf9  # Substituted sf9 for baculovirus expression as it is a standard insect cell line
+  name: baculovirus_triple_expression_PQR
+  host: insect  # baculovirus expression in Sf9/Sf21 cells
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pFastBac_dual"
+    source: addgene
+
   cassette:
-    - promoter: polh
+    - promoter: p10  # polyhedrin-independent early promoter
+
     - cistron:
-        label: protein_p
-        fused: false
-        gene:
-          id: PROTEIN_P
-          source: uniprot
-    - terminator: polh_PA
-    - spacer: 40
-    - promoter: p10
+        label: protein_P
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+    - spacer: 30
+
+    - promoter: ie1  # immediate early promoter (non-homologous to p10)
+
     - cistron:
-        label: protein_q
-        fused: false
-        gene:
-          id: PROTEIN_Q
-          source: uniprot
-    - terminator: p10_PA
-    - spacer: 40
-    - promoter: OpIE2
+        label: protein_Q
+        expression: high
+        chain:
+          - tag: 8xHis  # different His-tag length to avoid homology
+          - cleavage_site: 3C  # different protease (non-homologous to TEV)
+          - gene:
+              id: Q
+              source: uniprot
+
+    - terminator: rrnB_T1  # different terminator (non-homologous to SV40)
+
+    - spacer: 30
+
+    - promoter: hsp70  # heat shock protein promoter (third unique promoter)
+
     - cistron:
-        label: protein_r
-        fused: false
-        gene:
-          id: PROTEIN_R
-          source: uniprot
-    - terminator: SV40_PA
+        label: protein_R
+        expression: high
+        chain:
+          - tag: Strep-II  # entirely different tag to avoid homology
+          - cleavage_site: Factor_Xa  # third distinct protease
+          - gene:
+              id: R
+              source: uniprot
+
+    - terminator: T7term  # fourth unique terminator

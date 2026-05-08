@@ -1,23 +1,31 @@
 construct:
-  name: "regulator_s_reporter_r_circuit"
+  name: "RegulatorS_ReporterR"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: regulator_s
+        label: RegulatorS
         expression: medium
         gene:
           id: RegulatorS
           source: uniprot
-    - spacer: 30
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+
     - cistron:
-        label: reporter_r
+        label: ReporterR
         expression: high
-        fused: false
         gene:
           id: ReporterR
           source: uniprot
+
     - terminator: rrnB_T1

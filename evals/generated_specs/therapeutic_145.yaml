@@ -1,16 +1,24 @@
 construct:
-  name: "muscle_specific_antibiotic_free_gene_therapy"
+  name: muscle_specific_therapeutic_gene_therapy
   host: mammalian
+
   backbone:
-    resistance: none # Substituted antibiotic resistance with a comment: design implies pFAR or sucrose-based selection for antibiotic-free regulatory compliance
-    ori: pBR322
-    source: custom
+    # Custom backbone without antibiotic resistance
+    # Suitable for direct in vivo delivery to muscle tissue
+    ori: pUC
+    source: addgene
+    # No resistance marker for clinical safety
+
   cassette:
-    - promoter: MHCK7 # Strong muscle-specific chimeric promoter (MCK/alpha-MHC based)
+    - promoter: MCK  # Muscle Creatine Kinase - muscle-specific promoter
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic
         expression: high
-        gene:
-          id: IGF1
-          source: uniprot
-    - terminator: bGH_pA # Bovine growth hormone polyadenylation signal (non-viral)
+        chain:
+          - gene:
+              id: therapeutic_gene
+              source: uniprot
+        # No tags or cleavage sites to minimize construct size
+
+    - terminator: SV40_polyA  # SV40 polyadenylation signal for efficient mRNA processing

@@ -1,37 +1,66 @@
 construct:
-  name: "genetic_memory_toggle_switch"
-  host: e_coli_bl21
+  name: "genetic_memory_toggle_module"
+  host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    # State 1: Write_ON_Input (Induced by IPTG via lacUV5)
-    # This unit produces the TetR repressor to shut off the OFF state and mEGFP as a readout.
-    - promoter: lacUV5
+    - promoter: T7lac
+    
     - cistron:
-        label: write_on_state_repressor
+        label: CI_repressor
         expression: high
-        gene:
-          id: P04483 # TetR
-          source: uniprot
-    - spacer: 40
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CI
+              source: uniprot
+    
+    - spacer: 25
+    
     - cistron:
-        label: readout_reporter
+        label: Cro_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Cro
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: Write_ON_Input
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PhageT7RNAP
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: Write_OFF_Input
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PhageLambdaRecombinase
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: Readout_Reporter
         expression: medium
-        fused: false # Independent translation for reporter
-        gene:
-          id: mEGFP
-          source: fpbase
+        fused: false
+        chain:
+          - gene:
+              id: sfGFP
+              source: fpbase
+    
     - terminator: rrnB_T1
-
-    # State 2: Write_OFF_Input (Induced by aTc via tet promoter)
-    # This unit produces the LacI repressor to shut off the ON state.
-    - promoter: tet # tet-responsive promoter (P_LtetO-1)
-    - cistron:
-        label: write_off_state_repressor
-        expression: high
-        gene:
-          id: P03023 # LacI
-          source: uniprot
-    - terminator: BBa_B0015

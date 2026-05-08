@@ -1,32 +1,88 @@
 construct:
-  name: "genetic_toggle_latch_differentiation"
-  host: e_coli_bl21
+  name: genetic_latch_differentiation_factor
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tet  # Repressed by TetR; drives the RESET state (LacI production)
+    # SET input promoter - drives expression of LacI repressor
+    - promoter: araBAD
+      label: SET_input
+
     - cistron:
         label: LacI_repressor
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: lacUV5  # Repressed by LacI; drives the SET state (TetR and Differentiation factor)
+
+    # RESET input promoter - drives expression of TetR repressor
+    - spacer: 30
+
+    - promoter: araBAD
+      label: RESET_input
+
     - cistron:
         label: TetR_repressor
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Latch memory element 1 - LacI-repressed promoter
     - spacer: 30
+
+    - promoter: lacUV5
+      label: latch_memory_1
+
+    - cistron:
+        label: CI_lambda
+        expression: high
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Latch memory element 2 - TetR-repressed promoter
+    - spacer: 30
+
+    - promoter: tetO
+      label: latch_memory_2
+
+    - cistron:
+        label: CI_lambda_feedback
+        expression: high
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    # Output gene - driven by CI lambda repressor
+    - spacer: 30
+
+    - promoter: PR_lambda
+      label: output_differentiation_factor
+
     - cistron:
         label: differentiation_factor
         expression: high
-        fused: false  # Independent translation with its own RBS
-        gene:
-          id: P15172
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: BMP4
+              source: uniprot
+
+    - terminator: rrnB_T1

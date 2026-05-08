@@ -1,46 +1,58 @@
 construct:
-  name: "inducible_four_enzyme_operon"
-  host: e_coli_bl21_de3
+  name: "four_enzyme_operon_tiered_expression"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_1
+        label: enzyme1
         expression: high
         chain:
           - gene:
-              id: enzyme_1
+              id: lacZ
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_2
-        expression: high
-        fused: false
-        chain:
-          - gene:
-              id: enzyme_2
-              source: uniprot
-          - tag: 6xHis
-    - spacer: 30
-    - cistron:
-        label: enzyme_3
+        label: enzyme2
         expression: high
         fused: false
         chain:
           - gene:
-              id: enzyme_3
+              id: araB
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_4
+        label: enzyme3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: xylA
+              source: uniprot
+          - tag: 6xHis
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme4
         expression: medium
         fused: false
         gene:
-          id: enzyme_4
+          id: pta
           source: uniprot
+
+    - terminator: rrnB_T1
+
     - terminator: BBa_B0015

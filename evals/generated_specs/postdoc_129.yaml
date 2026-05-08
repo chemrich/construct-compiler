@@ -1,16 +1,23 @@
 construct:
-  name: "tightly_inducible_death_inducer"
-  host: mammalian
+  name: "inducible_DeathInducer_FLAG"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: TRE3G  # Used TRE3G for tight tet-inducible control in mammalian cells as requested
+    - promoter: CMV
+
     - cistron:
-        label: target
+        label: DeathInducer
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: DeathInducer
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

@@ -1,25 +1,49 @@
 construct:
-  name: yeast_dual_dosage_synonymous_mEGFP
+  name: "dual_gene_dosage_yeast_syn_opt"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: G418
+    ori: CEN6-ARSH4
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter (GPD)
+    - promoter: GAL1
+
     - cistron:
-        label: mEGFP_synonym_A
+        label: gene_copy1
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: CYC1_term
-    - spacer: 60  # Spacer to separate the two transcriptional units
-    - promoter: TDH3  # Identical strong promoter as requested
+        chain:
+          - gene:
+              id: "user_provided_sequence_copy1_codon_optimized_variant_A"
+              source: uniprot
+
+    - terminator: ADH1
+
+    # Second integrated copy with different marker and promoter strength maintained
+    # Note: In practice, this would be cloned as a separate integration cassette
+    # For dual dosage, recommend two separate plasmids or chromosomal integrations
+    # Copy 2 uses synonymous optimization to minimize homologous recombination risk
+
+    - promoter: GAL1
+
     - cistron:
-        label: mEGFP_synonym_B  # Different label used to trigger distinct synonymous codon optimization paths
+        label: gene_copy2
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: ADH1_term  # Different terminator to minimize sequence homology and prevent recombination
+        chain:
+          - gene:
+              id: "user_provided_sequence_copy2_codon_optimized_variant_B"
+              source: uniprot
+
+    - terminator: ADH1
+
+  # IMPORTANT: This single construct shows both copies in one cassette for clarity.
+  # For true dual integration with different markers, split into two plasmids:
+  # Plasmid 1: GAL1-gene_copy1(syn_opt_A)-ADH1 with G418 resistance
+  # Plasmid 2: GAL1-gene_copy2(syn_opt_B)-ADH1 with hygromycin resistance
+  #
+  # Synonymous codon optimization strategy:
+  # - Copy 1: Use yeast-preferred codons (Rosetta optimization)
+  # - Copy 2: Use alternative synonymous codons where possible to break homology
+  # - Maintain identical amino acid sequence; diverge DNA at 3rd codon position
+  # - Avoid >15 bp identical stretches between copies

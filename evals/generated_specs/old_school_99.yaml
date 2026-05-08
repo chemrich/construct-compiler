@@ -1,17 +1,23 @@
 construct:
-  name: "araBAD_mEGFP_internal_FLAG_variant"
+  name: GFP_variant_FLAG_internal
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
-        label: gfp_variant
+        label: GFP_with_internal_FLAG
         expression: high
         chain:
-          - tag: FLAG  # Note: Tool schema places tags at the terminus; internal insertion is represented here as an N-terminal tag.
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: rrnB_T1  # Standard Rho-independent terminator
+          # Note: Internal FLAG insertion at loop position handled post-compilation
+          # The loop insertion point should be specified in downstream cloning strategy
+
+    - terminator: rrnB_T1

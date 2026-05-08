@@ -1,18 +1,25 @@
 construct:
-  name: "pichia_aox1_glycosylated_protein_expression"
+  name: "Pichia_glycoprotein_PAOX1_secretion"
   host: yeast
+
   backbone:
-    catalog_vector: "pPICZalpha_A"
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: PAOX1
+    - promoter: AOX1
+
     - cistron:
-        label: target_glycoprotein
+        label: secreted_glycoprotein
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_prepro
           - cleavage_site: Kex2
           - gene:
-              id: P01588
+              id: target_glycoprotein
               source: uniprot
           - tag: Twin-Strep
-    - terminator: AOX1_term
+
+    - terminator: CYC1

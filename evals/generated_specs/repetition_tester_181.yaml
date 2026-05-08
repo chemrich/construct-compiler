@@ -1,26 +1,32 @@
 construct:
-  name: "mammalian_fusion_a_b_diversified"
+  name: "mammalian_fusion_proteinA_linker_proteinB_dual_tags"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: protein_a
+              id: P69905
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: protein_b
+              id: P12345
               source: uniprot
           - linker:
-              type: short_GS
-          - tag: 8xHis
-          - cleavage_site: 3C
-          - tag: Twin-Strep
-    - terminator: bGH_polyA
+              type: rigid_EAAAK
+              repeats: 2
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - tag: Strep-II
+
+    - terminator: rrnB_T1

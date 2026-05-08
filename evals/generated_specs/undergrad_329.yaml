@@ -1,13 +1,25 @@
 construct:
-  name: "HEK293_U6_gRNA_expression"
+  name: "human_CRISPR_guide_RNA"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: sgRNA
+        label: guide_RNA
         expression: high
         gene:
-          id: sgRNA_Cas9_scaffold
-    - terminator: BBa_B0015 # Standard terminator used as placeholder for the Pol III poly-T termination signal.
+          id: SpCas9_gRNA_scaffold
+          source: uniprot
+        # Note: For functional CRISPR guide RNAs, the actual target sequence
+        # should be cloned into the variable region. The compiler will provide
+        # the gRNA scaffold; you will need to insert your specific 20bp target
+        # sequence into the appropriate position during cloning.
+
+    - terminator: rrnB_T1

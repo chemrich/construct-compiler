@@ -1,27 +1,34 @@
 construct:
-  name: "ABE8e_NonViral_BaseEditor"
-  host: mammalian
-  backbone:
-    resistance: none # User requested no antibiotic resistance genes for non-viral somatic delivery
-    ori: pUC
-    source: custom
+  name: "non_viral_CRISPR_base_editor_HEK293"
+  host: HEK293
+
   cassette:
-    - promoter: EF1_alpha # High-expression non-viral mammalian promoter
+    - promoter: CMV
+
     - cistron:
-        label: base_editor
+        label: ABE8e_nuclease
         expression: high
         chain:
           - tag: NLS
           - gene:
               id: ABE8e
-              source: addgene
+              source: uniprot
           - tag: NLS
-    - spacer: 30
-    - promoter: U6 # Pol III promoter for gRNA transcription
+
+    - terminator: bGH_polyA
+
+    - promoter: U6
+
     - cistron:
-        label: guide_RNA
-        fused: false
+        label: gRNA
+        expression: high
         gene:
-          id: sgRNA_scaffold
-          source: addgene
-    - terminator: bGH_polyA # Bovine growth hormone polyadenylation signal (non-viral)
+          id: CRISPR_gRNA
+          source: uniprot
+
+    - terminator: U6_terminator
+
+  backbone:
+    resistance: null
+    ori: null
+    source: custom

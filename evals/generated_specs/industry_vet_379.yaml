@@ -1,16 +1,24 @@
 construct:
-  name: "AAV_Rep78_FLAG_HEK293"
+  name: "AAV_Rep_mammalian_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: AAV_Rep78
+        label: AAV_Rep
         expression: high
         chain:
           - tag: FLAG
+          - linker:
+              type: short_GS
+              repeats: 1
           - gene:
-              id: P03134
+              id: "P04619"
               source: uniprot
-    - terminator: bGHpA
+
+    - terminator: rrnB_T1

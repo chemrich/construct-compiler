@@ -1,40 +1,62 @@
 construct:
-  name: "cofactor_regeneration_4enzyme_operon"
+  name: "cofactor_regeneration_operon_4enzyme"
   host: e_coli_bl21_de3
+
   backbone:
     resistance: chloramphenicol
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: formate_dehydrogenase
+        label: enzyme_1
         expression: high
-        gene:
-          id: P33160
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: formate_dehydrogenase
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: glucose_dehydrogenase
-        expression: high
-        fused: false
-        gene:
-          id: P11550
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: alcohol_dehydrogenase
+        label: enzyme_2
         expression: high
         fused: false
-        gene:
-          id: P00330
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: glucose_6_phosphate_dehydrogenase
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: phosphite_dehydrogenase
+        label: enzyme_3
         expression: high
         fused: false
-        gene:
-          id: O68532
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: phosphite_dehydrogenase
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_4
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: alcohol_dehydrogenase
+              source: uniprot
+
+    - terminator: rrnB_T1

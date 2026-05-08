@@ -1,16 +1,50 @@
 construct:
-  name: "non_viral_car_t_cell_construct"
-  host: mammalian
+  name: "CAR_T_transient_expression"
+  host: HEK293
+
   backbone:
-    resistance: none  # User requested avoidance of antibiotic resistance genes; traditionally replaced by auxotrophic markers or RNA-based selection in non-viral therapy
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression backbone without antibiotic resistance
+    # Integration-free for transient expression in primary T-cells
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+      # Strong mammalian promoter for high transgene expression in T-cells
+
     - cistron:
-        label: car_receptor
+        label: CAR
         expression: high
-        gene:
-          id: anti_CD19_CAR_CD28_CD3z
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: HA
+            # N-terminal epitope tag for CAR detection and tracking
+          - gene:
+              id: "scFv_anti_CD19"
+              # Single-chain variable fragment targeting CD19 (standard CAR architecture)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "CD8a_hinge"
+              # Extracellular spacer domain from CD8α for optimal CAR geometry
+              source: uniprot
+          - gene:
+              id: "CD28_transmembrane"
+              # Transmembrane domain from CD28
+              source: uniprot
+          - gene:
+              id: "CD28_costimulatory"
+              # CD28 co-stimulatory intracellular domain (essential for T-cell activation)
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "CD3zeta_signaling"
+              # CD3ζ signaling domain for TCR-like activation (essential for CAR function)
+              source: uniprot
+          - tag: PEST
+            # C-terminal degron for transient expression (auto-degradation control)
+
+    - terminator: bGH_polyA
+      # Bovine growth hormone polyadenylation signal for mRNA stability and export

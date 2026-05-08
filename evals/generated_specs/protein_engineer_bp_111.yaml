@@ -1,29 +1,36 @@
 construct:
-  name: "antibody_coexpression_pichia_pastoris"
+  name: "pichia_antibody_heavy_light"
   host: yeast
+
   backbone:
     resistance: zeocin
-    ori: pUC
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: AOX1
+    - promoter: PAOX1
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: P01857
+              id: antibody_heavy_chain
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_TT
-    - promoter: AOX1
+
+    - terminator: CYC1
+
+    - promoter: PAOX1
+
     - cistron:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: P01834
+              id: antibody_light_chain
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1

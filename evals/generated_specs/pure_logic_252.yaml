@@ -1,24 +1,52 @@
 construct:
-  name: "delay_circuit_W_to_V"
-  host: e_coli
+  name: "two_hour_delay_circuit_W_to_V"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # Input W (Arabinose) activates this promoter
+    - promoter: T7lac
+
     - cistron:
-        label: delay_activator
+        label: input_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: delay_element_1
         expression: medium
-        gene:
-          id: P00573  # T7 RNA Polymerase (UniProt ID), acts as a transcriptional delay element
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7     # Output V is only expressed once T7 Polymerase has accumulated
+        chain:
+          - gene:
+              id: araB
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: delay_element_2
+        expression: medium
+        chain:
+          - gene:
+              id: araA
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: output_V
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - terminator: BBa_B0015
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1

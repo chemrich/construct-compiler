@@ -1,30 +1,28 @@
-```yaml
 construct:
   name: "yeast_surface_display_therapeutic_peptide"
   host: yeast
 
   backbone:
-    resistance: none
-    ori: CEN_ARS
-    source: custom
+    resistance: null
+    ori: 2_micron
+    source: addgene
 
   cassette:
     - promoter: GAL1
 
     - cistron:
-        label: surface_display
+        label: surface_anchor
         expression: high
         chain:
-          - secretion_signal: alpha_factor
           - gene:
-              id: "therapeutic_peptide"
-              source: custom
+              id: Aga2p
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: "Aga2p"
+              id: therapeutic_peptide
               source: uniprot
+          - tag: HA
 
     - terminator: CYC1
-```

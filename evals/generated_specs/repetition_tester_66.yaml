@@ -1,31 +1,37 @@
 construct:
-  name: "protease_substrate_unique_coexpression"
-  host: e_coli_bl21_de3
+  name: ProA_SubB_coexpression
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: substrate
+        label: SubB
         expression: high
         chain:
           - tag: 8xHis
-          - cleavage_site: TEV
+          - cleavage_site: Factor_Xa
           - gene:
               id: SubB
               source: uniprot
-    - spacer: 35
+
+    - spacer: 25
+
     - cistron:
-        label: protease
+        label: ProA
         expression: high
         fused: false
         chain:
+          - tag: Twin-Strep
           - gene:
               id: ProA
               source: uniprot
-          - linker:
-              type: rigid_EAAAK
-              repeats: 3
-          - solubility_tag: MBP
-          - tag: Twin-Strep
-    - terminator: T7term
+          - solubility_tag: GST
+
+    - terminator: rrnB_T1

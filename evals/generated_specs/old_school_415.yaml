@@ -1,16 +1,27 @@
 construct:
-  name: "cat_promoter_test_vector"
+  name: "promoter_screening_CAT_reporter"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pUC
-    source: custom
+    source: addgene
+
   cassette:
-    - promoter: J23100 # Default constitutive promoter to be replaced via user MCS
+    - mcs:
+        name: promoter_cloning_site
+        sites:
+          - EcoRI
+          - BamHI
+          - HindIII
+
+    - rbs: BBa_B0030
+
     - cistron:
-        label: reporter
-        expression: medium
+        label: CAT_reporter
+        expression: high
         gene:
-          id: P00483
+          id: CAT
           source: uniprot
+
     - terminator: rrnB_T1

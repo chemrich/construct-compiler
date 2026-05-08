@@ -1,21 +1,28 @@
 construct:
-  name: metabolic_enzyme_complex_operon
-  host: e_coli_bl21_de3
+  name: "metabolic_pathway_ABC_complex"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_a
+        label: EnzymeA
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: EnzymeA
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_b
+        label: EnzymeB
         expression: high
         fused: false
         chain:
@@ -23,9 +30,11 @@ construct:
           - gene:
               id: EnzymeB
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_c
+        label: EnzymeC
         expression: high
         fused: false
         chain:
@@ -33,4 +42,5 @@ construct:
           - gene:
               id: EnzymeC
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

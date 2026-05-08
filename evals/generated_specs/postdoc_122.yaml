@@ -1,32 +1,35 @@
 construct:
-  name: "lentiviral_coexpression_factorx_helpery"
+  name: "lentiviral_FactorX_HelperY_bicistronic"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pTwist CMV"
+    resistance: puromycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: factor_x
+        label: FactorX
         expression: high
-        gene:
-          id: FactorX
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FactorX
+              source: uniprot
+
     - spacer: 30
+
+    # IRES element represented as spacer + independent cistron
+    # In practice, an IRES sequence (e.g., EMCV or EIF4E) would be inserted here
     - cistron:
-        label: helper_y
-        expression: medium
+        label: HelperY
+        expression: high
         fused: false
         gene:
           id: HelperY
           source: uniprot
-    - spacer: 30
-    - cistron:
-        label: selection
-        expression: low
-        fused: false
-        gene:
-          id: PuroR
-          source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

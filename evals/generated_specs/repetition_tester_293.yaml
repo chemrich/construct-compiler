@@ -1,18 +1,32 @@
 construct:
-  name: "synthetic_kanamycin_resistance_unit"
+  name: "synthetic_kanamycin_resistance_module"
   host: e_coli
+  
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - spacer: 50 # Upstream novel synthetic flanking region
-    - promoter: J23106 # Distinct synthetic constitutive promoter
+    - promoter: lacUV5
+    
     - cistron:
-        label: kanR
+        label: kanamycin_resistance
         expression: high
-        gene:
-          id: P00552
-          source: uniprot
-    - terminator: BBa_B0015 # Synthetic double terminator
-    - spacer: 50 # Downstream novel synthetic flanking region
+        chain:
+          - gene:
+              id: aph3II
+              source: uniprot
+    
+    - terminator: T7term
+
+# NOTE: The construct_compiler tool does not currently support custom synthetic flanking 
+# sequences or random sequence generation with hairpin/motif avoidance algorithms. 
+# To implement novel 50bp flanking regions with guaranteed no homology to common vectors, 
+# you must either: (1) post-process the compiled YAML output with a custom sequence 
+# design tool, (2) use an external service (e.g., Geneious, SnapGene, or IDT codon 
+# optimization with synthesis), or (3) manually design the flanking sequences using 
+# BLAST/VecScreen validation and hairpin prediction tools (mfold, RNAfold).
+# The promoter (lacUV5) and terminator (T7term) are both non-standard alternatives 
+# to the default T7lac promoter, providing architectural diversity while maintaining 
+# strong expression in E. coli.

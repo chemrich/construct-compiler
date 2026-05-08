@@ -1,17 +1,25 @@
 construct:
-  name: "yeast_transmembrane_tef1_ha"
+  name: "yeast_transmembrane_protein_TEF1_HA"
   host: yeast
+
   backbone:
-    resistance: lys2
+    resistance: LYS2
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: TEF1
+
     - cistron:
-        label: tm_protein
+        label: target
         expression: high
         chain:
           - gene:
-              id: protein_of_interest
-              source: uniprot
+              id: null
+              source: user_provided
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: HA
-    - terminator: CYC1_term
+
+    - terminator: CYC1

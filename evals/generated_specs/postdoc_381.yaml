@@ -1,18 +1,22 @@
 construct:
-  name: human_growth_hormone_secretion_yeast
+  name: "secreted_hGH_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin # Standard G418 selection for yeast
-    ori: pUC
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1 # Standard constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: secreted_hGH
         expression: high
         chain:
-          - tag: Strep-II # User requested N-terminal tag; note: placing this before the signal peptide in P01241 may interfere with secretion
+          - tag: Strep-II
           - gene:
-              id: P01241 # Human Growth Hormone (Somatotropin), including its native human signal peptide (residues 1-26)
+              id: GH1
               source: uniprot
-    - terminator: CYC1 # Standard yeast terminator
+
+    - terminator: CYC1

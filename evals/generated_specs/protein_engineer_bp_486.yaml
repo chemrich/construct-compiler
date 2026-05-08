@@ -1,20 +1,26 @@
 construct:
-  name: "bacillus_subtilis_late_stage_amylase"
+  name: "bacillus_sporulation_amylase_expression"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PspoVG
+
+    - rbs: strong
+
     - cistron:
-        label: secreted_amylase
+        label: amylase
         expression: high
         chain:
-          - tag: YncM
+          - secretion_signal: YncM
           - tag: 6xHis
           - cleavage_site: Thrombin
           - gene:
-              id: amyE
+              id: amylase
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

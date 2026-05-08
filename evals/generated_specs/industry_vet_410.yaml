@@ -1,14 +1,22 @@
 construct:
-  name: "mammalian_goi_high_expression_ecoli"
+  name: "mammalian_GOI_e_coli_codon_optimized"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_protein
+        label: mammalian_GOI
         expression: high
-        gene:
-          id: P53_HUMAN
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mammalian_GOI
+              source: uniprot
+              codon_optimization: e_coli
+
+    - terminator: rrnB_T1

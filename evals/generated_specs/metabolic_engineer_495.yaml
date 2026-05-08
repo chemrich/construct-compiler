@@ -1,40 +1,50 @@
 construct:
-  name: "zeta_pathway_operon"
-  host: e_coli_bl21_de3
+  name: "four_enzyme_pathway_operon"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: zeta1
-        expression: medium
+        label: Zeta1
+        expression: high
         gene:
-          id: Zeta1
+          id: zeta1
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: zeta2
-        expression: medium
-        fused: false
+        label: Zeta2
+        expression: high
         gene:
-          id: Zeta2
+          id: zeta2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: zeta3
-        expression: medium
-        fused: false
+        label: Zeta3
+        expression: high
         gene:
-          id: Zeta3
+          id: zeta3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: zeta4
-        expression: medium
-        fused: false
+        label: Zeta4
+        expression: high
         chain:
           - gene:
-              id: Zeta4
+              id: zeta4
               source: uniprot
+          - cleavage_site: TEV
           - tag: Strep-II
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

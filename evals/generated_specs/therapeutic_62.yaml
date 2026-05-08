@@ -1,23 +1,30 @@
 construct:
-  name: "yeast_solubility_enzyme_expression"
+  name: "yeast_difficult_enzyme_soluble"
   host: yeast
+
   backbone:
-    resistance: HIS3 # Using auxotrophic selection marker to avoid antibiotic resistance as requested
-    ori: 2_micron # High-copy yeast origin for high expression
+    resistance: none
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: GPD # Strong constitutive yeast promoter (TDH3)
+    - promoter: GAL1
+
     - cistron:
-        label: enzyme_target
-        expression: high
+        label: target_enzyme
+        expression: medium
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
-          - cleavage_site: TEV
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - solubility_tag: SUMO
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: P00435
+              id: P12345
               source: uniprot
-    - terminator: CYC1 # Standard yeast terminator
+              # Note: Replace P12345 with actual UniProt ID of target enzyme
+
+    - terminator: CYC1

@@ -1,23 +1,30 @@
 construct:
-  name: "shRNA_geneF_expression_with_puro_selection"
+  name: "shRNA_geneF_with_puro_selection"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    resistance: puromycin
+
   cassette:
     - promoter: U6
     - cistron:
         label: shRNA_geneF
+        expression: high
         gene:
           id: shRNA_geneF
-    - terminator: polyT
+          source: uniprot
+
+    - terminator: rrnB_T1
+
     - spacer: 50
+
     - promoter: CMV
     - cistron:
         label: puromycin_resistance
-        expression: medium
-        fused: false
+        expression: high
         gene:
-          id: PuroR
+          id: puromycin_N_acetyltransferase
           source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: rrnB_T1

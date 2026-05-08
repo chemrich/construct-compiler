@@ -1,26 +1,37 @@
 construct:
-  name: "proteinA_proteinB_coexpression"
+  name: ProteinA_ProteinB_coexpression
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: proteinA
-        expression: medium
+        label: ProteinA
+        expression: high
         chain:
           - tag: Strep-II
           - gene:
               id: ProteinA
               source: uniprot
-    - spacer: 30 # IRES is not functional in E. coli; replaced with a 30bp spacer to facilitate polycistronic expression with independent translation.
+
+    # Note: IRES is a mammalian mechanism and non-functional in bacteria.
+    # Using a ribosome binding site (RBS) spacer instead for independent translation
+    # of ProteinB at comparable levels to ProteinA.
+    - spacer: 35
+
     - cistron:
-        label: proteinB
-        expression: medium
+        label: ProteinB
+        expression: high
         fused: false
         chain:
-          - solubility_tag: SUMO
+          - tag: SUMO
           - gene:
               id: ProteinB
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

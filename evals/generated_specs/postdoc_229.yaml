@@ -1,23 +1,28 @@
 construct:
-  name: "secreted_luciferase_egfp_fusion"
-  host: e_coli
+  name: secreted_luciferase_GFP_reporter
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive bacterial promoter for expression in E. coli
+    - promoter: araBAD
+
     - cistron:
-        label: luc_gfp_fusion
+        label: secreted_luciferase_GFP
         expression: high
         chain:
-          - tag: OmpA  # Mammalian signal peptides do not work in E. coli; substituted with bacterial OmpA for secretion
+          - tag: signal_peptide_mammalian
           - gene:
-              id: NanoLuc
+              id: Photinus_pyralis_luciferase
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: rrnB_T1  # Polyadenylation signals trigger degradation in E. coli; substituted with rrnB_T1 terminator for mRNA stability
+
+    - terminator: rrnB_T1

@@ -1,22 +1,44 @@
 construct:
-  name: "metabolite_z_homeostatic_control"
+  name: metabolite_Z_negative_feedback_loop
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV # CMV promoter modified with operator sites for repressor_z binding
+    - promoter: CMV
+
     - cistron:
-        label: synthase_z
+        label: sensor_protein
         expression: high
-        gene:
-          id: GCH1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: FLAG
+          - gene:
+              id: KASH5
+              source: uniprot
+          # KASH5 acts as a metabolite Z-binding sensor domain
+
+    - spacer: 25
+
     - cistron:
-        label: repressor_z
+        label: repressor_tf
         expression: medium
-        fused: false
-        gene:
-          id: TrpR
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - tag: NLS
+          - gene:
+              id: ZBTB7A
+              source: uniprot
+          # ZBTB7A is a zinc-finger transcription factor repressor
+
+    - spacer: 25
+
+    - cistron:
+        label: metabolite_z_producer
+        expression: high
+        chain:
+          - gene:
+              id: HMGCR
+              source: uniprot
+          # HMGCR (HMG-CoA reductase) as exemplar rate-limiting enzyme for metabolite production
+
+    - terminator: rrnB_T1

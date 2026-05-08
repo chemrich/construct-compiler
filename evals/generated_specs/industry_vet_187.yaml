@@ -1,17 +1,21 @@
 construct:
-  name: "constitutive_mammalian_CAG_expression"
+  name: "mammalian_constitutive_expression_FLAG_HIS"
   host: mammalian
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pAAV"
+
   cassette:
-    - promoter: CAG # Chicken beta-actin promoter with CMV enhancer (CBA/CAG)
+    - promoter: CAG  # CAG = CMV enhancer + chicken beta-actin promoter, strong constitutive expression
+
     - cistron:
-        label: target_expression
+        label: target
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: mEGFP # Placeholder for user-specified protein
-              source: fpbase
+              id: your_protein_id
+              source: uniprot
           - tag: 6xHis
-    - terminator: bGH_pA
+
+    - terminator: BGH  # bovine growth hormone polyadenylation signal

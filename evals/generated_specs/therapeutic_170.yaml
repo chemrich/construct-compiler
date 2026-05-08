@@ -1,24 +1,49 @@
 construct:
-  name: "therapeutic_dual_enzyme_mammalian_plasmid"
+  name: dual_therapeutic_enzyme_mammalian
   host: HEK293
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance; note: bacterial propagation requires selection.
-    ori: pUC
+    catalog_vector: pTwist CMV
+    # Non-viral mammalian expression vector; removing antibiotic resistance not standard for pTwist,
+    # so we note this is a custom backbone requirement for the final construct.
+    # In practice, the resistance cassette would be removed during synthesis.
     source: custom
+
   cassette:
-    - promoter: EF1_alpha  # EF1-alpha used as a high-expression non-viral mammalian promoter.
+    - promoter: CMV
+
     - cistron:
-        label: GLA_enzyme
+        label: enzyme_1
         expression: high
-        gene:
-          id: P06280
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P69905
+              source: uniprot
+        # P69905 is lactase (therapeutic enzyme example)
+
     - spacer: 30
+
+    # 2A self-cleaving peptide for equimolar co-translation
     - cistron:
-        label: F9_enzyme
+        label: P2A_peptide
         expression: high
-        fused: false  # Ensures independent translation for equimolar co-expression from a single transcript.
-        gene:
-          id: P00740
-          source: uniprot
-    - terminator: hGH_pA
+        chain:
+          - gene:
+              id: P2A
+              source: uniprot
+        # P2A self-cleaves, separating the two enzymes post-translationally
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_2
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P04637
+              source: uniprot
+        # P04637 is a therapeutic protease example
+
+    - terminator: rrnB_T1

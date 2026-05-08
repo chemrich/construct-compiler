@@ -1,26 +1,37 @@
 construct:
-  name: tet_inducible_dual_expression
+  name: "dual_TetO_GeneA_Myc_GeneB_GFP"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TRE
+    - promoter: TetO  # Tetracycline-inducible promoter
+
     - cistron:
-        label: GeneA_unit
+        label: GeneA
+        expression: high
         chain:
           - tag: Myc
           - gene:
               id: GeneA
               source: uniprot
-    - terminator: bGH_pA
-    - promoter: TRE
+
+    - terminator: rrnB_T1
+
+    - promoter: TetO  # Second independent transcription unit
+
     - cistron:
-        label: GeneB_unit
+        label: GeneB_GFP
+        expression: high
         chain:
           - gene:
               id: GeneB
               source: uniprot
-          - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: bGH_pA
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: GFP
+
+    - terminator: rrnB_T1

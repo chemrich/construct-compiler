@@ -1,16 +1,21 @@
 construct:
-  name: "lethal_toxin_X_constitutive_expression"
+  name: "toxin_X_expression"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: lacUV5
+    
     - cistron:
         label: toxin_X
         expression: high
-        gene:
-          id: toxin_X
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: toxin_X
+              source: uniprot
+    
+    - terminator: rrnB_T1

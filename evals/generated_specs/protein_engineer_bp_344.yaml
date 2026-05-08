@@ -1,31 +1,37 @@
 construct:
-  name: pichia_pastoris_antibody_dual_aox1
+  name: "pichia_pastoris_antibody_dual_cassette"
   host: yeast
+
   backbone:
     resistance: zeocin
-    ori: pBR322
+    ori: pPIC9
     source: addgene
 
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - tag: 6xHis
           - gene:
-              id: P01857
+              id: antibody_heavy_chain
               source: uniprot
-    - terminator: AOX1_term
 
+    - terminator: TT_AOX1
+
+  cassette:
     - promoter: AOX1
+
     - cistron:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: P01834
+              id: antibody_light_chain
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: TT_AOX1

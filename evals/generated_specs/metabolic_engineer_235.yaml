@@ -1,86 +1,112 @@
 construct:
-  name: "biopolymer_synthesis_scaffold_operon"
+  name: six_enzyme_scaffold_pathway
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: scaffold_enzyme
+        label: ScaffoldA
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ScaffoldA
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: scaffold_domain
-    - spacer: 30
+              repeats: 1
+          - gene:
+              id: ScaffoldProteinDomain
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: polymerase_b
+        label: PolymeraseB
         expression: high
         fused: false
         chain:
-          - tag: scaffold_binding_domain
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: PolymeraseB
               source: uniprot
-    - spacer: 30
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ScaffoldBindingDomainB
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: ligator_c
+        label: LigatorC
         expression: high
         fused: false
         chain:
-          - tag: scaffold_binding_domain
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: LigatorC
               source: uniprot
-    - spacer: 30
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ScaffoldBindingDomainC
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: modulator_d
+        label: ModulatorD
         expression: high
         fused: false
         chain:
-          - tag: scaffold_binding_domain
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: ModulatorD
               source: uniprot
-    - spacer: 30
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ScaffoldBindingDomainD
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: crosslinker_e
+        label: CrosslinkerE
         expression: high
         fused: false
         chain:
-          - tag: scaffold_binding_domain
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: CrosslinkerE
               source: uniprot
-    - spacer: 30
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ScaffoldBindingDomainE
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: finisher_f
+        label: FinisherF
         expression: high
         fused: false
         chain:
-          - tag: scaffold_binding_domain
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
               id: FinisherF
               source: uniprot
-    - terminator: T7term
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: ScaffoldBindingDomainF
+              source: uniprot
+
+    - terminator: rrnB_T1

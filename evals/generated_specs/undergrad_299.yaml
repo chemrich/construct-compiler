@@ -1,22 +1,32 @@
 construct:
-  name: "dual_enzyme_polycistronic_expression"
+  name: "Enzyme_A_2A_Enzyme_B"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_a
+        label: Enzyme_A
         expression: high
-        gene:
-          id: Enzyme_A
-          source: uniprot
-    - spacer: 30  # 2A peptides function via eukaryotic ribosome skipping; polycistronic expression (spacer + separate RBS) is the standard method for E. coli separation.
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Enzyme_A
+              source: uniprot
+
     - cistron:
-        label: enzyme_b
+        label: Enzyme_B
         expression: high
         fused: false
-        gene:
-          id: Enzyme_B
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - cleavage_site: 2A_self_cleaving
+          - gene:
+              id: Enzyme_B
+              source: uniprot
+
+    - terminator: rrnB_T1

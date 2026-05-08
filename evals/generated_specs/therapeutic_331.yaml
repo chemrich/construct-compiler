@@ -1,21 +1,56 @@
 construct:
-  name: "CAR_T_Equimolar_Signaling"
-  host: mammalian
+  name: "dual_CAR_signaling_modules_T_cell"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: signaling_unit
+        label: CAR_extracellular
         expression: high
         chain:
+          - tag: Flag
           - gene:
-              id: P20963 # CD247 (CD3-zeta)
+              id: scFv_domain
               source: uniprot
           - linker:
-              type: P2A
+              type: rigid_EAAAK
+              repeats: 1
+
+    - cistron:
+        label: transmembrane_spacer
+        expression: high
+        fused: true
+        gene:
+          id: CD8a_transmembrane
+          source: uniprot
+
+    - cistron:
+        label: 2A_peptide
+        expression: high
+        fused: true
+        gene:
+          id: T2A
+          source: uniprot
+
+    - cistron:
+        label: costimulatory_module
+        expression: high
+        fused: false
+        chain:
+          - tag: HA
+          - gene:
+              id: 4_1BB_intracellular
+              source: uniprot
+          - linker:
+              type: GS_flexible
               repeats: 1
           - gene:
-              id: Q07011 # TNFRSF9 (4-1BB)
+              id: CD3zeta_signaling
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

@@ -1,6 +1,6 @@
 construct:
-  name: gene_with_strep_and_bgh_polya
-  host: e_coli
+  name: "ecoli_strep_bgh_polya"
+  host: e_coli_bl21
 
   backbone:
     resistance: kanamycin
@@ -15,9 +15,12 @@ construct:
         expression: high
         chain:
           - gene:
-              id: your_gene_id  # Replace with actual gene ID
-              source: uniprot   # Replace with appropriate source
+              id: null
+              # User to supply gene ID
           - tag: Strep-II
 
-    # Note: BGH polyA won't function in E. coli - using rrnB_T1 terminator instead
+    # Note: BGH polyA signals are mammalian-specific and have no functional
+    # effect in E. coli. For mRNA stability in E. coli, use bacterial
+    # terminators (rrnB_T1, T7term) instead. BGH polyA will be transcribed
+    # but not processed by bacterial ribosomes. Including it anyway as requested.
     - terminator: rrnB_T1

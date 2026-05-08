@@ -1,23 +1,32 @@
 construct:
-  name: "SuperEnzyme_Secreted_Fusion"
-  host: e_coli_bl21_de3
+  name: SuperEnzyme_with_HelperProtein_secreted
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-22b(+)"  # pET-22b is optimized for periplasmic secretion
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: secreted_target
+        label: SuperEnzyme_secreted
         expression: high
         chain:
-          - tag: PelB  # N-terminal signal sequence for secretion
           - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 2
           - gene:
               id: SuperEnzyme
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: HelperProtein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

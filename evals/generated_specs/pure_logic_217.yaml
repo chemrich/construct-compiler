@@ -1,17 +1,64 @@
 construct:
-  name: "pH_Temp_Metal_Logic_Enzyme_X_Production"
-  host: e_coli
+  name: conditional_enzyme_x_secretion_system
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: pLogic_pHlow_Thigh_NOTmetal # Logic: (pH_Low AND Temperature_High) AND NOT HeavyMetal_Present
+    - promoter: T7lac
+
     - cistron:
-        label: enzyme_x_expression
-        expression: high
+        label: sensor_pH_low
+        expression: medium
         chain:
-          - tag: PelB # N-terminal secretion signal for E. coli export
-          - tag: 6xHis
-          - cleavage_site: TEV
+          - gene:
+              id: PhoB
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: sensor_temperature_high
+        expression: medium
+        chain:
+          - gene:
+              id: HrcA
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: repressor_heavy_metal
+        expression: medium
+        chain:
+          - gene:
+              id: MerR
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: enzyme_x_secreted
+        expression: high
+        fused: false
+        chain:
+          - tag: signal_peptide_pelB
           - gene:
               id: Enzyme_X
-    - terminator: T7term
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: logic_controller
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: AND_gate_regulatory_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

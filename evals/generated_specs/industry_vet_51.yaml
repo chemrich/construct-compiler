@@ -1,16 +1,22 @@
 construct:
-  name: mammalian_optimized_payload_expression
+  name: "mammalian_optimized_payload_AAV"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: payload
         expression: high
+        codon_optimization: mammalian
         chain:
           - tag: 6xHis
           - gene:
-              id: payload_protein
+              id: payload
               source: uniprot
-    - terminator: bGH_pA
+              codon_optimized: true
+
+    - terminator: rrnB_T1

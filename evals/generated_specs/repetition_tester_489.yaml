@@ -1,35 +1,58 @@
 construct:
-  name: "non_homologous_four_gene_operon"
+  name: "e_coli_four_gene_operon_unique_spacers"
   host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: gene_1
-        expression: medium
-        fused: false
-        gene:
-          id: gene1
-    - spacer: 32
+        label: gene1
+        expression: high
+        chain:
+          - gene:
+              id: gene1
+              source: uniprot
+        rbs: "AGGAGGA"
+    
+    - spacer: 35
+    
     - cistron:
-        label: gene_2
-        expression: medium
+        label: gene2
+        expression: high
         fused: false
-        gene:
-          id: gene2
+        chain:
+          - gene:
+              id: gene2
+              source: uniprot
+        rbs: "GAGGAGG"
+    
+    - spacer: 42
+    
+    - cistron:
+        label: gene3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: gene3
+              source: uniprot
+        rbs: "AGGAGGT"
+    
     - spacer: 38
+    
     - cistron:
-        label: gene_3
-        expression: medium
+        label: gene4
+        expression: high
         fused: false
-        gene:
-          id: gene3
-    - spacer: 44
-    - cistron:
-        label: gene_4
-        expression: medium
-        fused: false
-        gene:
-          id: gene4
-    - terminator: T7term
+        chain:
+          - gene:
+              id: gene4
+              source: uniprot
+        rbs: "TAGGAGG"
+    
+    - terminator: rrnB_T1

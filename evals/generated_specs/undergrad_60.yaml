@@ -1,17 +1,22 @@
 construct:
-  name: "ProteinX_High_Expression"
-  host: e_coli_bl21_de3
+  name: "ProteinX_high_expression_His6"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
-      cistron:
-        label: target
+
+    - cistron:
+        label: ProteinX
         expression: high
         chain:
           - gene:
               id: ProteinX
               source: uniprot
           - tag: 6xHis
-      terminator: T7term
+
+    - terminator: rrnB_T1

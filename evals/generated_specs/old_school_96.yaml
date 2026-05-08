@@ -1,16 +1,22 @@
 construct:
-  name: yeast_secretory_pathway_monitor
+  name: "yeast_secreted_invertase_monitor"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAPDH
+
     - cistron:
         label: secreted_invertase
         expression: high
-        gene:
-          id: SUC2
-          source: uniprot
+        chain:
+          - gene:
+              id: SUC2
+              source: uniprot
+              include_signal_sequence: true
+
     - terminator: CYC1

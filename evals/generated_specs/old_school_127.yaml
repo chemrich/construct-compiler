@@ -1,12 +1,20 @@
 construct:
-  name: "shRNA_geneD_mammalian_knockdown"
+  name: "shRNA_geneD_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: H1
+    
     - cistron:
         label: shRNA_geneD
-        gene:
-          id: shRNA_geneD
-    - terminator: SV40_polyA # Note: H1 is a Pol III promoter typically terminating at a T-stretch, but SV40 polyA was requested.
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_geneD
+              source: uniprot
+    
+    - terminator: SV40_polyA

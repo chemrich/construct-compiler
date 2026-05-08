@@ -1,30 +1,48 @@
 construct:
-  name: "crispr_cas9_mcherry_editing_system"
+  name: CRISPR_humanized_Cas9_mCherry
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+
   cassette:
-    - promoter: U6
-    - cistron:
-        label: guide_RNA
-        gene:
-          id: sgRNA_backbone
-    - terminator: BBa_B0015
-    - spacer: 50
     - promoter: CMV
+
     - cistron:
-        label: cas9_expression
+        label: humanized_Cas9
+        expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: humanized_Cas9
               source: uniprot
-    - terminator: BGH_pA
+
+    - terminator: rrnB_T1
+
     - spacer: 50
+
+    - promoter: U6
+
+    - cistron:
+        label: guide_RNA
+        expression: high
+        gene:
+          id: guide_RNA_scaffold
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
     - promoter: CMV
+
     - cistron:
         label: reporter
+        expression: medium
+        fused: false
         gene:
           id: mCherry
           source: fpbase
-    - terminator: SV40_pA
+
+    - terminator: rrnB_T1

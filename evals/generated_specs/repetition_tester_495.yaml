@@ -1,16 +1,51 @@
 construct:
-  name: "redundant_high_copy_divergent_plasmid"
-  host: e_coli_bl21_de3
+  name: "dual_ori_high_copy_plasmid"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC  # Note: The schema supports one primary origin. Biologically, two high-copy origins from the pMB1/ColE1 group are incompatible and would cause plasmid instability. pUC is the preferred high-copy choice.
+    ori: pBR322
     source: addgene
+    # Note: The construct_compiler does not natively support dual-ori specification in the schema.
+    # This YAML represents the primary ori (pBR322, a pMB1-family origin).
+    # To achieve true dual-ori functionality with sequence divergence, the user should:
+    # 1. Use pBR322 (pMB1-family, ~15-20 copies) as the primary ori in this spec.
+    # 2. Request manual addition of a ColE1 variant (e.g., pSC101-derived ColE1 region, ~5-10 copies when optimized for high-copy)
+    #    or a divergent p15A-family origin as a second, non-homologous origin.
+    # 3. Ensure both origins are flanked by unique, non-homologous sequence context (e.g., synthetic spacers or GC-rich regions)
+    #    to minimize recombination-driven deletion or rearrangement.
+    # The resistance marker (kanamycin) is placed under its own independent promoter and terminator to ensure
+    # it remains functional regardless of any recombination events within the expression cassette.
+
   cassette:
-    - promoter: T7lac
+    - promoter: J23100
+      # Synthetic BioBrick promoter for kanamycin resistance gene (independent of main expression promoter)
+
     - cistron:
-        label: reporter
+        label: resistance_marker
         expression: high
+        fused: false
         gene:
-          id: sfGFP
-          source: fpbase
+          id: neo
+          # Neomycin phosphotransferase II (kanamycin resistance), constitutively expressed
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+      # Unique sequence spacer to separate resistance marker from main expression cassette
+
+    - promoter: T7lac
+      # Main expression cassette promoter
+
+    - cistron:
+        label: expression_target
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mEGFP
+              source: fpbase
+
     - terminator: rrnB_T1

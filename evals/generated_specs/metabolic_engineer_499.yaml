@@ -1,28 +1,39 @@
 construct:
-  name: "kappa_pathway_regulated_kappa3"
-  host: e_coli_bl21_de3
+  name: "five_enzyme_pathway_conditional_kappa3_degradation"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: kappa1
-        expression: medium
-        gene:
-          id: Kappa1
-          source: uniprot
+        label: Kappa1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Kappa1
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: kappa2
-        expression: medium
+        label: Kappa2
+        expression: high
         fused: false
-        gene:
-          id: Kappa2
-          source: uniprot
+        chain:
+          - gene:
+              id: Kappa2
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: kappa3_degron
-        expression: medium
+        label: Kappa3_degron
+        expression: high
         fused: false
         chain:
           - gene:
@@ -30,22 +41,29 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
-          - tag: DHFR_degron
+              repeats: 1
+          - tag: ssrA_degron
+
     - spacer: 30
+
     - cistron:
-        label: kappa4
-        expression: medium
+        label: Kappa4
+        expression: high
         fused: false
-        gene:
-          id: Kappa4
-          source: uniprot
+        chain:
+          - gene:
+              id: Kappa4
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: kappa5
-        expression: medium
+        label: Kappa5
+        expression: high
         fused: false
-        gene:
-          id: Kappa5
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: Kappa5
+              source: uniprot
+
+    - terminator: rrnB_T1

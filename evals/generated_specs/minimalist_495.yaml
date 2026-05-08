@@ -1,14 +1,23 @@
 construct:
-  name: "regulated_cytotoxin_expression"
-  host: e_coli_bl21_de3
+  name: regulated_cytotoxin_expression
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+    
     - cistron:
         label: cytotoxin
-        expression: high
-        gene:
-          id: P0A6G7
-          source: uniprot
-    - terminator: T7term
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: toxA
+              source: uniprot
+    
+    - terminator: rrnB_T1

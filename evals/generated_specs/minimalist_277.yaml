@@ -1,14 +1,20 @@
 construct:
-  name: "cho_mEGFP_integration_system"
+  name: "CHO_chromosomal_integration"
   host: CHO
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_expression
+        label: target
         expression: high
-        gene:
-          id: mEGFP  # Using mEGFP as a representative gene for the integration construct
-          source: fpbase
-    - terminator: BGH_polyA
+        chain:
+          - gene:
+              id: unknown
+              source: uniprot
+
+    - terminator: rrnB_T1

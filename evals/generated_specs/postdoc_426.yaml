@@ -1,17 +1,21 @@
 construct:
-  name: "gst_tev_mammalian_expression"
-  host: HEK293 # Porting the E. coli GST-TEV purification strategy to a mammalian host as requested
+  name: "GST_TEV_mammalian_expression"
+  host: HEK293
+  
   backbone:
     catalog_vector: "pTwist CMV"
+  
   cassette:
     - promoter: CMV
+    
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase # Using mEGFP as a representative full-length protein for the fusion construct
-    - terminator: bGH_pA
+              id: uniprot_ID_required
+              source: uniprot
+    
+    - terminator: rrnB_T1

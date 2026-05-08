@@ -1,19 +1,26 @@
 construct:
-  name: "Bacillus_subtilis_P43_cellulase_secretion_system"
+  name: "bacillus_cellulase_secretion_P43"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: P43
+
     - cistron:
-        label: secretory_cellulase
+        label: secreted_cellulase
         expression: high
         chain:
-          - tag: YncM
+          - signal_peptide: YncM
           - gene:
-              id: P07984
+              id: cellulase
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Twin-Strep
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

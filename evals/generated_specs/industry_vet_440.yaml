@@ -1,17 +1,23 @@
 construct:
-  name: "therapeutic_enzyme_high_mammalian_expression"
+  name: "therapeutic_enzyme_mammalian_hightiter"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_enzyme
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P00740
+              id: uniprot_lookup_required
               source: uniprot
-    - terminator: BGH_polyA # Using BGH_polyA as a standard high-efficiency mammalian terminator
+              # User should specify the actual enzyme UniProt ID or gene name
+
+    - terminator: rrnB_T1

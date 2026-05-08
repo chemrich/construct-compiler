@@ -1,18 +1,22 @@
 construct:
-  name: "dual_tag_purification_system"
+  name: "dual_tag_GST_His_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
         label: target
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: 3C
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: target_protein
+              source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,29 +1,27 @@
 construct:
-  name: "Y2H_Bait_GAL4BD_BaitProtein"
+  name: "yeast_two_hybrid_bait_GAL4BD"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: 2_micron
+    resistance: trp1
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: bait_fusion
+        label: bait
         expression: high
         chain:
-          - tag: GAL4_BD
+          - gene:
+              id: GAL4_DBD
+              source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: BaitProtein
               source: uniprot
-    - spacer: 30
-    - cistron:
-        label: selection_marker
-        expression: low
-        fused: false
-        gene:
-          id: TRP1
-          source: uniprot
+
     - terminator: CYC1

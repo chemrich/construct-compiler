@@ -1,19 +1,24 @@
 construct:
-  name: "interferon_alpha_pichia_secretion"
+  name: "pPICZ_hIFN_alpha_secreted"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: DAS1
+
     - cistron:
-        label: interferon_alpha
+        label: hIFN_alpha
         expression: high
         chain:
-          - secretion_signal: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
               id: P01563
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

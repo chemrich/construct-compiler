@@ -1,29 +1,73 @@
 construct:
-  name: "divergent_triplicate_domain_fusion"
-  host: e_coli_bl21_de3
+  name: "protein_triple_domain_codon_diverged"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: tandem_repeat_target
+        label: target
         expression: high
         chain:
-          - gene:
-              id: "target_domain"
-              source: uniprot
-          # Linker 1: Flexible GS linker to separate first and second domain
+          - tag: 6xHis
+          - cleavage_site: TEV
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: "target_domain"
-              source: uniprot # Note: Backend requested to use divergent codon optimization for repeat 2
-          # Linker 2: Rigid EAAAK linker to provide structural separation and sequence divergence
-          - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              id: domain_repeat_1_codon_set_A
+              source: custom
+              description: "First tandem repeat of 30aa domain (codon-optimized set A)"
+
+    - spacer: 20
+
+    - cistron:
+        label: linker_1
+        expression: high
+        fused: false
+        chain:
           - gene:
-              id: "target_domain"
-              source: uniprot # Note: Backend requested to use divergent codon optimization for repeat 3
-    - terminator: T7term
+              id: rigid_linker_EAAAK_5xrep
+              source: custom
+              description: "Non-homologous rigid linker to prevent recombination"
+
+    - spacer: 20
+
+    - cistron:
+        label: domain_repeat_2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: domain_repeat_2_codon_set_B
+              source: custom
+              description: "Second tandem repeat of 30aa domain (codon-optimized set B)"
+
+    - spacer: 20
+
+    - cistron:
+        label: linker_2
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: GS_linker_variant_GGSGGSGGSGGS
+              source: custom
+              description: "Second non-homologous linker with different GS composition"
+
+    - spacer: 20
+
+    - cistron:
+        label: domain_repeat_3
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: domain_repeat_3_codon_set_C
+              source: custom
+              description: "Third tandem repeat of 30aa domain (codon-optimized set C)"
+
+    - terminator: rrnB_T1

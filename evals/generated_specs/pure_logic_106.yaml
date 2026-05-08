@@ -1,24 +1,58 @@
 construct:
-  name: "deadman_switch_trigger_cascade"
-  host: e_coli_bl21_de3
+  name: "deadmans_switch_survival_circuit"
+  host: mammalian
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  
   cassette:
-    - promoter: T7lac
+    - promoter: CMV
+    
     - cistron:
-        label: "death_trigger"
+        label: survival_signal_sensor
         expression: high
         chain:
-          - tag: 6xHis
+          - tag: HA
           - gene:
-              id: CASP3
+              id: P99072
               source: uniprot
+        notes: "Assumes SurvivalSignal is a growth factor receptor or JAK-STAT component"
+    
     - spacer: 30
+    
     - cistron:
-        label: "activation_reporter"
+        label: timer_protein
         expression: medium
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: FLAG
+          - gene:
+              id: P04637
+              source: uniprot
+        notes: "p53 as molecular timer; phosphorylation/MDM2 interaction extends half-life under survival signal"
+    
+    - spacer: 30
+    
+    - cistron:
+        label: caspase_death_trigger
+        expression: very_low
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P42574
+              source: uniprot
+        notes: "Human Caspase-3 (CASP3); expressed at low basal level, activated when timer protein accumulates"
+    
+    - spacer: 30
+    
+    - cistron:
+        label: apoptosis_effector
+        expression: low
+        chain:
+          - gene:
+              id: P55957
+              source: uniprot
+        notes: "BAX; directly triggered by activated Caspase-3 for mitochondrial outer membrane permeabilization"
+    
+    - terminator: rrnB_T1

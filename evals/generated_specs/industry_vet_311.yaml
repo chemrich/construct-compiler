@@ -1,18 +1,22 @@
 construct:
-  name: "toxic_repA_purification_system"
-  host: e_coli
+  name: "tight_control_toxic_protein_expression"
+  host: e_coli_bl21_de3
+  
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
-        label: toxic_target
-        expression: high
+        label: toxic_protein
+        expression: very_low
         chain:
           - tag: 6xHis
           - gene:
-              id: P03819
+              id: toxic_protein_placeholder
               source: uniprot
+    
     - terminator: rrnB_T1

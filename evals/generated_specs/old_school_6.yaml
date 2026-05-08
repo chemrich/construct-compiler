@@ -1,29 +1,27 @@
-```yaml
 construct:
-  name: Y2H_bait_domain_of_interest
+  name: yeast_two_hybrid_bait_lexA_domain
   host: yeast
 
   backbone:
     resistance: TRP1
-    ori: CEN_ARS
+    ori: 2_micron
     source: addgene
 
   cassette:
     - promoter: ADH1
 
     - cistron:
-        label: bait_fusion
-        expression: medium
+        label: bait
+        expression: high
         chain:
           - gene:
-              id: LexA_DBD
+              id: LexA
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: domain_of_interest
-              source: custom  # user will provide sequence
+              source: uniprot
 
-    - terminator: ADH1
-```
+    - terminator: CYC1

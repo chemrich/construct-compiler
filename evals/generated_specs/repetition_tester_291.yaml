@@ -1,34 +1,46 @@
 construct:
-  name: "mammalian_dual_fusion_expression"
+  name: "dual_promoter_mammalian_proteinA_mCherry_proteinB_EGFP"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_a_fusion
+        label: proteinA_mCherry
+        expression: high
         chain:
           - gene:
               id: ProteinA
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 1
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: bGH_polyA
+              variant: "codon_optimized_v1"
+
+    - terminator: SV40_polyA
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: protein_b_fusion
+        label: proteinB_EGFP
+        expression: high
         chain:
           - gene:
               id: ProteinB
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
-    - terminator: SV40_polyA
+              variant: "codon_optimized_v2"
+
+    - terminator: BGH_polyA

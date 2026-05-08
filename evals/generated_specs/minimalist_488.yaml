@@ -1,13 +1,20 @@
 construct:
-  name: "shRNA_targeting_gene_Y"
-  host: HEK293 # Defaulted to HEK293 as shRNA delivery requires a eukaryotic host
+  name: shRNA_gene_Y
+  host: mammalian
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: U6 # U6 is the standard Pol III promoter for shRNA expression
+    - promoter: U6
+
     - cistron:
-        label: shRNA_cassette
+        label: shRNA_Y
         expression: high
-        gene:
-          id: shRNA_targeting_gene_Y
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: shRNA_gene_Y
+              source: uniprot
+
+    - terminator: rrnB_T1

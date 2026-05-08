@@ -1,22 +1,26 @@
 construct:
-  name: "GFP_LacZ_fusion"
-  host: e_coli
+  name: GFP_LacZ_fusion
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gfp_lacz
+        label: GFP_LacZ
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P00722
+              id: lacZ
               source: uniprot
+
     - terminator: rrnB_T1

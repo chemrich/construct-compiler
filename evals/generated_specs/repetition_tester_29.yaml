@@ -1,33 +1,35 @@
-```yaml
 construct:
-  name: toxin_antitoxin_system_diverged
-  host: e_coli
-
+  name: "toxin_antitoxin_diverged_system"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: p15A
     source: addgene
-
+  
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for antitoxin
-
+    - promoter: T7lac
+    
     - cistron:
         label: antitoxin
         expression: high
-        gene:
-          id: P0C054  # RelB antitoxin from E. coli
-          source: uniprot
-
-    - spacer: 127  # Large spacer with diverged sequence to prevent recombination
-
-    - promoter: J23106  # Weaker constitutive promoter for toxin, different sequence motif
-
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ccdA
+              source: uniprot
+    
+    # Highly diverged spacer: 127 bp with low sequence identity to flanking regions
+    - spacer: 127
+    
+    - promoter: araBAD
+    
     - cistron:
         label: toxin
-        expression: low  # Lower expression to maintain balance
-        gene:
-          id: P0C058  # RelE toxin from E. coli, codon-optimized for divergence
-          source: uniprot
-
-    - terminator: BBa_B0015  # Strong bidirectional terminator to isolate system
-```
+        expression: medium
+        chain:
+          - gene:
+              id: ccdB
+              source: uniprot
+    
+    - terminator: rrnB_T1

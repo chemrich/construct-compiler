@@ -1,22 +1,30 @@
 construct:
-  name: "HEK293_dual_promoter_mCherry_p53"
+  name: "dual_mammalian_expression_mCherry_GOI"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: reporter
+        label: mCherry_reporter
         expression: high
         gene:
           id: mCherry
           source: fpbase
-    - terminator: bGH_pA
+
+    - terminator: bGH_polyA
+
     - promoter: EF1_alpha
+
     - cistron:
-        label: target
+        label: GOI
         expression: medium
         gene:
-          id: P04637
+          id: your_protein_of_interest
           source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: bGH_polyA

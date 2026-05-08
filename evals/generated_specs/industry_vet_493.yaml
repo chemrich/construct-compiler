@@ -1,18 +1,22 @@
 construct:
-  name: "PeriplasmicN"
-  host: e_coli_bl21
+  name: "PeriplasmicN_periplasmic_expression"
+  host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
-      cistron:
+
+    - cistron:
         label: target
         expression: high
         chain:
-          - tag: PelB  # Signal sequence for periplasmic targeting
+          - signal_peptide: pelB  # N-terminal periplasmic targeting signal
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: N
+              id: PeriplasmicN
               source: uniprot
-      terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,24 +1,39 @@
 construct:
-  name: "non_viral_dual_therapeutic_expression_system"
-  host: mammalian
+  name: "dual_therapeutic_mammalian_expression"
+  host: HEK293
+
   backbone:
-    resistance: none # User requested no selection markers reliant on antibiotics
+    catalog_vector: "pTwist CMV"
+    resistance: null
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: EF1_alpha # Strong mammalian promoter; used as a non-viral alternative to CMV
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_tandem
+        label: protein_A
         expression: high
         chain:
-          - tag: Twin-Strep
-          - gene:
-              id: Protein_A
-              source: uniprot
-          - linker:
-              type: P2A # Porcine 2A self-cleaving peptide; used to produce two proteins from one transcript
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Protein_B
+              id: protein_A
               source: uniprot
-    - terminator: hGH_polyA # Human growth hormone polyadenylation signal; used as a non-viral alternative to SV40 or bGH polyA
+
+    - spacer: "P2A"
+      # Comment: P2A self-cleaving peptide enables stoichiometric separation of two proteins from a single transcript without viral components
+
+    - cistron:
+        label: protein_B
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: protein_B
+              source: uniprot
+
+    - terminator: BGH_pA
+      # Comment: BGH polyadenylation signal provides robust 3' end processing and mRNA stability in mammalian cells

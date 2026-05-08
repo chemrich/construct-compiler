@@ -1,54 +1,74 @@
 construct:
-  name: "stabilized_six_enzyme_v1_v6_operon"
-  host: e_coli_bl21_de3
+  name: "six_enzyme_operon_mRNA_stable"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
+    - utr_5: BBa_B0030  # RBS optimized for stability and translation initiation
+    
     - cistron:
-        label: enzyme_v1
-        expression: medium
+        label: V1
+        expression: high
         gene:
-          id: V1
+          id: V1_enzyme
           source: uniprot
-    - spacer: 40
+    
+    - rbs: BBa_B0030  # Ribosome binding site between genes
+    
     - cistron:
-        label: enzyme_v2
+        label: V2
+        expression: high
+        fused: false
+        gene:
+          id: V2_enzyme
+          source: uniprot
+    
+    - rbs: BBa_B0030
+    
+    - cistron:
+        label: V3
+        expression: high
+        fused: false
+        gene:
+          id: V3_enzyme
+          source: uniprot
+    
+    - rbs: BBa_B0030
+    
+    - cistron:
+        label: V4
         expression: medium
         fused: false
         gene:
-          id: V2
+          id: V4_enzyme
           source: uniprot
-    - spacer: 40
+    
+    - rbs: BBa_B0030
+    
     - cistron:
-        label: enzyme_v3
+        label: V5
         expression: medium
         fused: false
         gene:
-          id: V3
+          id: V5_enzyme
           source: uniprot
-    - spacer: 40
+    
+    - rbs: BBa_B0030
+    
     - cistron:
-        label: enzyme_v4
+        label: V6
         expression: medium
         fused: false
         gene:
-          id: V4
+          id: V6_enzyme
           source: uniprot
-    - spacer: 40
-    - cistron:
-        label: enzyme_v5
-        expression: medium
-        fused: false
-        gene:
-          id: V5
-          source: uniprot
-    - spacer: 40
-    - cistron:
-        label: enzyme_v6
-        expression: medium
-        fused: false
-        gene:
-          id: V6
-          source: uniprot
-    - terminator: T7term
+    
+    - utr_3: BBa_B0010_B0012  # rrnB T1 and terminator for mRNA stability
+    
+    - terminator: rrnB_T1

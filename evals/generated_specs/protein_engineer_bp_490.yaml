@@ -1,20 +1,26 @@
 construct:
-  name: "bacillus_cellulase_secretion_tandem"
+  name: "Bacillus_VapA_cellulase_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pveg_Pgrac  # Tandem promoter configuration for high-level expression in Bacillus
-      cistron:
-        label: secreted_cellulase
+    - promoter: Pveg
+    
+    - promoter: Pgrac
+    
+    - cistron:
+        label: cellulase
         expression: high
         chain:
-          - tag: VapA_signal_peptide  # N-terminal secretion signal for Bacillus
+          - tag: signal_peptide_VapA
           - tag: 6xHis
           - cleavage_site: Enterokinase
           - gene:
-              id: P10446
+              id: cellulase
               source: uniprot
-      terminator: BBa_B0015
+
+    - terminator: rrnB_T1

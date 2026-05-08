@@ -1,42 +1,50 @@
 construct:
-  name: "dual_protein_alpha_beta_baculovirus_expression"
-  host: insect
+  name: "baculovirus_dual_protein_expression"
+  host: insect_cells
+
   backbone:
     catalog_vector: "pFastBac_Dual"
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: polh
+    - promoter: p10
+
     - cistron:
-        label: protein_alpha
+        label: ProteinAlpha
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: ProteinAlpha
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - tag: Strep-II
-    - spacer: 50
-    - promoter: p10
+
+    - terminator: SV40_polyA
+
+    - promoter: polh
+
     - cistron:
-        label: protein_beta
+        label: ProteinBeta
         expression: high
         chain:
-          - tag: 6xHis
+          - tag: 8xHis
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 2
           - gene:
               id: ProteinBeta
               source: uniprot
           - linker:
-              type: GS_flexible
-              repeats: 2
+              type: short_GS
+              repeats: 1
           - tag: Myc
+
     - terminator: SV40_polyA

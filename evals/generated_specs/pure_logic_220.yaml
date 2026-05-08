@@ -1,24 +1,31 @@
 construct:
-  name: "core_not_gate_logic"
+  name: NOT_gate_Input_A_represses_Output_Z
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Activated by Input_A (Arabinose)
+    - promoter: araBAD
+
     - cistron:
-        label: repressor_module
-        expression: medium
+        label: Input_A
+        expression: high
         gene:
-          id: P04483  # TetR repressor protein
+          id: tetR
           source: uniprot
-    - terminator: rrnB_T1
-    - promoter: Ptet    # Repressed by TetR (NOT gate logic)
+
+    - spacer: 25
+
+    - promoter: tetO
+
     - cistron:
-        label: output_Z
+        label: Output_Z
         expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

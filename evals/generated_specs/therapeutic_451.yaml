@@ -1,23 +1,29 @@
 construct:
-  name: "therapeutic_cpp_fusion"
-  host: e_coli
+  name: "therapeutic_CPP_fusion"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin # Included for schema compliance; user requested no antibiotic resistance but a selection marker is required.
+    resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac # Bacterial tac promoter substituted for T7 to avoid viral sequences as requested.
+    - promoter: T7lac
+
     - cistron:
-        label: therapy_fusion
+        label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01133
-              source: uniprot
+              id: GFP
+              source: fpbase
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: P0C270
+              id: TAT_CPP
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial rrnB_T1 terminator substituted for T7term to avoid viral sequences.
+
+    - terminator: rrnB_T1

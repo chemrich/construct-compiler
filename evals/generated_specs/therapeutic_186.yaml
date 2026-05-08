@@ -1,19 +1,23 @@
 construct:
-  name: "his_tagged_cpp_expression"
+  name: "CPP_His_tag_expression"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: cpp_fusion
-        expression: high
+        label: CPP_His
+        expression: very_high
         chain:
           - tag: 6xHis
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
-              id: TAT # Using TAT (UniProt P04608) as a representative CPP since 'novel' sequences require database IDs
+              id: cell_penetrating_peptide
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,20 +1,28 @@
 construct:
-  name: "AAV_Rep78_Solubility_Fusion_Yeast"
+  name: "AAV_enzyme_solubility_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: AAV_enzyme
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P03132
+              id: AAV_protease
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1

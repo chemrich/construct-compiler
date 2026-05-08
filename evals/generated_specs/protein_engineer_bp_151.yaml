@@ -1,18 +1,23 @@
 construct:
-  name: "subtilisin_e_secretion_bacillus"
+  name: "Bacillus_subtilis_Subtilisin_E_secretion"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: PxylA
-      cistron:
-        label: subtilisin_e_production
+
+    - cistron:
+        label: subtilisin_E
         expression: high
         chain:
-          - tag: NprE_signal_peptide
+          - signal_peptide: NprE
           - gene:
-              id: P00778
+              id: aprE
               source: uniprot
           - tag: 6xHis
-      terminator: BBa_B0015
+
+    - terminator: rrnB_T1

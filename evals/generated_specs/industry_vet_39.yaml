@@ -1,27 +1,30 @@
-```yaml
 construct:
-  name: membrane_protein_GFP_tracker
+  name: "GFP_membrane_protein_mammalian"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: membrane_tracker
+        label: GFP_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: CD86  # Type I membrane protein for membrane localization
+              id: membrane_protein
               source: uniprot
 
     - terminator: polyA
-```

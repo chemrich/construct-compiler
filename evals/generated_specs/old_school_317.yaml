@@ -1,18 +1,23 @@
 construct:
-  name: "antibody_fragment_secretion_mammalian"
-  host: mammalian
+  name: secreted_antibody_fragment_mammalian
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin # Kanamycin resistance gene (NeoR) provides G418 selection in mammalian cells
-    source: twist
+    catalog_vector: pTwist CMV
+    resistance: G418
+    ori: pUC
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: antibody_fragment
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal peptide for mammalian expression
+          - tag: signal_peptide_IgG
           - gene:
               id: antibody_fragment
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: WPRE

@@ -1,22 +1,57 @@
 construct:
-  name: mammalian_irreversible_positive_feedback_switch
+  name: positive_feedback_commitment_switch
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: UAS  # Synthetic promoter activated by GAL4-VP16 to create the feedback loop
+    - promoter: CMV
+
     - cistron:
-        label: Input_R
+        label: autoamplifying_transcription_factor
         expression: high
-        gene:
-          id: GAL4_VP16
-          source: uniprot
-    - spacer: 600  # IRES element for polycistronic expression in mammalian cells
+        chain:
+          - tag: HA
+          - gene:
+              id: VP16_DBD_fusion
+              source: uniprot
+              description: VP16 activation domain fused to DNA-binding domain for transcriptional amplification
+
+    - spacer: 25
+
     - cistron:
-        label: Output_C
+        label: output_protein_high_affinity
         expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_pA
+        chain:
+          - tag: FLAG
+          - gene:
+              id: Output_C
+              source: uniprot
+              description: Target output protein with multiple CMV-binding sites in its promoter for positive feedback amplification
+
+    - spacer: 25
+
+    - cistron:
+        label: input_receptor_stabilized
+        expression: medium
+        fused: false
+        chain:
+          - tag: NLS
+          - gene:
+              id: Input_R
+              source: uniprot
+              description: Input receptor with nuclear localization and enhanced stability for sustained signaling
+
+    - terminator: rrnB_T1
+
+  # Design rationale:
+  # 1. VP16 activation domain drives strong, constitutive transcription of Output_C
+  # 2. Output_C promoter contains multiple high-affinity binding sites for VP16/Input_R complex
+  # 3. Input_R stabilization ensures receptor persists even after external signal removal
+  # 4. Positive feedback: Output_C production → increased VP16 activity → more Output_C → stable high expression
+  # 5. NLS on Input_R ensures nuclear localization for efficient transcription factor function
+  # 6. HAand FLAG tags enable tracking of both feedback components
+  # 7. This creates a bistable switch: once activated, Output_C sustains its own high expression
+  # 8. For irreversibility, external Input_R signal triggers the loop; endogenous production maintains it

@@ -1,16 +1,22 @@
 construct:
-  name: "antibody_heavy_chain_secreted_HEK293"
+  name: "HEK293_antibody_heavy_chain_secreted"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: CMV  # Standard mammalian promoter; minimal variant assumed if used in this context
+    - promoter: CMV
+
     - cistron:
-        label: heavy_chain
+        label: antibody_heavy_chain
         expression: high
         chain:
-          - tag: IgK_leader  # N-terminal secretion signal for mammalian cell secretion
+          - tag: signal_peptide_IgG  # N-terminal signal peptide for ER secretion
           - gene:
-              id: P01857
+              id: antibody_heavy_chain
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: SV40_polyA

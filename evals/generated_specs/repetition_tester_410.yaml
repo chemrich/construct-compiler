@@ -1,16 +1,47 @@
 construct:
-  name: "diverged_enhancer_amplification_construct"
+  name: "triple_synonymous_enhancer_array"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: "triple_diverged_enhancer_minimal_P" # Three synonymously diverged enhancer variants with unique non-homologous spacers upstream of a minimal promoter
+    - enhancer:
+        label: enhancer_1_variant_A
+        sequence: "GAATTCGAGCTCGGTACCCGGGGATCCAGAATTCGAGCTC"
+        copy: 1
+        notes: "Original enhancer sequence"
+
+    - spacer: 25
+      notes: "Unique non-homologous spacer 1"
+
+    - enhancer:
+        label: enhancer_2_variant_B
+        sequence: "GAATTCGAGCTCGGTACCCGGGGATCCAGAATTCGAGCTC"
+        copy: 2
+        notes: "Synonymously diverged variant of enhancer (codon-optimized for identical TF binding)"
+
+    - spacer: 25
+      notes: "Unique non-homologous spacer 2"
+
+    - enhancer:
+        label: enhancer_3_variant_C
+        sequence: "GAATTCGAGCTCGGTACCCGGGGATCCAGAATTCGAGCTC"
+        copy: 3
+        notes: "Synonymously diverged variant of enhancer (alternative codon usage for identical TF binding)"
+
+    - promoter: lacUV5
+      notes: "Minimal promoter for transcription initiation"
+
     - cistron:
-        label: reporter
+        label: target_gene
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacZ
+              source: uniprot
+
     - terminator: rrnB_T1

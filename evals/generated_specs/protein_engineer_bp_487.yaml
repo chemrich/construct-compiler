@@ -1,20 +1,25 @@
 construct:
-  name: "pichia_rDNA_FLD1_secreted_GST_nanobody"
+  name: pichia_rDNA_nanobody_secretion
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPIC9K"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: secreted_nanobody
+        label: nanobody_secreted
         expression: high
         chain:
-          - tag: Ost1_alpha_factor
-          - solubility_tag: GST
-          - cleavage_site: 3C
+          - tag: GST
+          - cleavage_site: PreScission
           - gene:
               id: nanobody
               source: uniprot
-    - terminator: AOX1_TT
+        secretion_signal: alpha_factor_Ost1_hybrid
+
+    - terminator: CYC1

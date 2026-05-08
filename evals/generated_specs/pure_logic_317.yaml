@@ -1,24 +1,65 @@
 construct:
-  name: "mammalian_transient_pulse_generator"
+  name: "transient_pulse_generator_Input_Q_Output_B"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G # Tet-responsive promoter activated by Input Q (rtTA + Dox)
+    - promoter: CMV
+
     - cistron:
-        label: output_b
+        label: Input_Q_receptor
         expression: high
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - spacer: 25 # Sequence encoding a P2A self-cleaving peptide for stoichiometric polycistronic expression
-    - cistron:
-        label: repressor_r
-        expression: high
-        fused: false # Indicated as a separate protein via P2A/spacer
         chain:
-          - tag: NLS
+          - tag: FLAG
           - gene:
-              id: TetR
-              source: uniprot # P04483 - Represses TRE3G to create the transient pulse
-    - terminator: BBa_B0015
+              id: TRPA1
+              source: uniprot
+
+    - terminator: polyA
+
+    - spacer: 50
+
+    - promoter: CMV
+
+    - cistron:
+        label: transient_amplifier
+        expression: high
+        chain:
+          - gene:
+              id: NFAT1
+              source: uniprot
+
+    - terminator: polyA
+
+    - spacer: 50
+
+    - promoter: NFAT_responsive_element
+
+    - cistron:
+        label: pulse_timer
+        expression: medium
+        chain:
+          - gene:
+              id: GSK3beta
+              source: uniprot
+
+    - terminator: polyA
+
+    - spacer: 50
+
+    - promoter: NFAT_responsive_element
+
+    - cistron:
+        label: Output_B
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: polyA

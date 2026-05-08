@@ -1,19 +1,24 @@
 construct:
-  name: "yeast_secretion_glycopro"
+  name: "GlycoPro_secretion_yeast"
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: 2_micron
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: AOX1
+
     - cistron:
-        label: glycopro_target
+        label: GlycoPro_secreted
         expression: high
         chain:
-          - tag: alpha_factor
-          - tag: 6xHis
+          - tag: signal_peptide_alpha_factor
           - gene:
               id: GlycoPro
               source: uniprot
+          - tag: 6xHis
+
     - terminator: CYC1

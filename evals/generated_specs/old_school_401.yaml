@@ -1,18 +1,25 @@
 construct:
-  name: GST_FactorXa_sfGFP_fusion
+  name: "GST_fusion_Factor_Xa_cleavable"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: tac
+    
+    - rbs: RBS_strong
+    
     - cistron:
-        label: target_fusion
+        label: GST_fusion
         expression: high
         chain:
           - solubility_tag: GST
           - cleavage_site: Factor_Xa
           - gene:
-              id: sfGFP
-              source: fpbase
+              id: null
+              source: null
+    
     - terminator: rrnB_T1

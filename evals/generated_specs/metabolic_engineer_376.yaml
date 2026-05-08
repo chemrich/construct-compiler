@@ -1,53 +1,69 @@
 construct:
-  name: "glycolysis_bypass_operon"
-  host: e_coli
+  name: glycolysis_bypass_operon_5enzyme
+  host: e_coli_bl21_de3
+
   backbone:
+    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
     ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: ppc
+        label: PPC
         expression: high
-        gene:
-          id: ppc
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: PPC
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: pepck
-        expression: high
-        fused: false
-        gene:
-          id: pck
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: fbpase
-        expression: high
-        fused: false
-        gene:
-          id: fbp
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: tpi
-        expression: high
-        fused: false
-        gene:
-          id: tpiA
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: gapdh
+        label: PEPCK
         expression: high
         fused: false
         chain:
-          - solubility_tag: GST
+          - gene:
+              id: PEPCK
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: FBPase
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: FBPase
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: TPI
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: TPI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: GAPDH_rev
+        expression: high
+        fused: false
+        chain:
+          - tag: GST
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: gapA
+              id: GAPDH
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

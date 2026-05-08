@@ -1,22 +1,31 @@
 construct:
-  name: "iptg_inducible_gfp_mcherry_operon"
-  host: e_coli_bl21_de3
+  name: dual_fluorescent_protein_operon
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - spacer: 30
+
     - cistron:
         label: mCherry
         expression: high
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

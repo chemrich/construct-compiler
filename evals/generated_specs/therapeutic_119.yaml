@@ -1,18 +1,25 @@
 construct:
-  name: yeast_pH_inducible_secreted_therapeutic
+  name: "yeast_pH_inducible_secreted_enzyme"
   host: yeast
+
   backbone:
-    resistance: none # User requested no antibiotic markers; auxotrophic selection (e.g., URA3) used for yeast bioprocessing
-    ori: 2_micron
+    resistance: null  # No antibiotic resistance marker for bioprocessing compliance
+    ori: 2_micron    # S. cerevisiae 2-micron plasmid for episomal maintenance
     source: addgene
+
   cassette:
-    - promoter: PDR12 # Yeast promoter robustly induced by acidic pH and weak organic acids
+    - promoter: PHO5  # pH-inducible acid phosphatase promoter; repressed at neutral pH, induced at acidic pH
+
     - cistron:
-        label: secreted_therapeutic
-        expression: high
+        label: secreted_enzyme
+        expression: low  # Basal expression at neutral pH
         chain:
-          - tag: alpha_factor # N-terminal secretion signal for S. cerevisiae
+          - tag: alpha_factor_signal  # N-terminal alpha-factor secretion signal for ER-Golgi trafficking
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: IDUA # Alpha-L-iduronidase enzyme as a therapeutic example
+              id: CEL5A  # Example: cellulase enzyme; replace with specific enzyme ID as needed
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: CYC1  # S. cerevisiae CYC1 transcription terminator

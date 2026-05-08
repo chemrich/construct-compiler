@@ -1,15 +1,15 @@
-```yaml
 construct:
-  name: antibody_heavy_light_chain_expression
+  name: "pichia_pastoris_antibody_biexpress"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: ARS4
     source: addgene
 
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: heavy_chain
         expression: high
@@ -17,19 +17,20 @@ construct:
           - signal_peptide: alpha_factor
           - gene:
               id: heavy_chain
-              source: custom  # User will provide sequence
+              source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_TT
+
+    - terminator: TT_AOX1
 
     - promoter: AOX1
+
     - cistron:
         label: light_chain
         expression: high
-        fused: false
         chain:
           - signal_peptide: alpha_factor
           - gene:
               id: light_chain
-              source: custom  # User will provide sequence
-    - terminator: AOX1_TT
-```
+              source: uniprot
+
+    - terminator: TT_AOX1

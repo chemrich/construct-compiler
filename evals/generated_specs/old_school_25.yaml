@@ -1,36 +1,33 @@
-```yaml
 construct:
-  name: secreted_FactorS_mammalian
+  name: "mammalian_secreted_FactorS"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: neomycin
+    ori: pUC
 
   cassette:
-    - promoter: SV40
+    - promoter: SV40_early
 
     - cistron:
-        label: target
+        label: FactorS_secreted
         expression: high
         chain:
-          - signal_peptide: IgG_heavy_chain
+          - signal_peptide: IgG
           - gene:
               id: FactorS
               source: uniprot
 
     - terminator: BGH_polyA
 
-    - spacer: 50
-
-    - promoter: CMV
+    - promoter: EF1_alpha
 
     - cistron:
-        label: selection
-        expression: medium
-        fused: false
+        label: selection_marker
+        expression: high
         gene:
           id: NeoR
           source: uniprot
 
-    - terminator: SV40_polyA
-```
+    - terminator: BGH_polyA

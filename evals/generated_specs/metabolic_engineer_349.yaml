@@ -1,56 +1,81 @@
 construct:
-  name: "Sm_Metabolite_Pathway_Operon_Rhodococcus"
-  host: e_coli  # Rhodococcus is not in the standard list; using e_coli as a proxy for bacterial assembly with broad-host elements.
+  name: "secondary_metabolite_operon_SmABCDEF"
+  host: bacillus
+  # Rhodococcus is gram-positive; Bacillus host selected as closest compatible option
+  # for broad-host-range gram-positive expression design
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pRB69
+    # pRB69 is a broad-host-range plasmid origin suitable for Rhodococcus
     source: addgene
+
   cassette:
-    - promoter: J23100  # Constitutive promoter from the Anderson library, widely used for broad-host range bacterial expression.
+    - promoter: P_Pveg
+    # P_Pveg (vegetative promoter from B. subtilis) functions across diverse gram-positive bacteria
+    # including Rhodococcus, Streptomyces, and other actinomycetes
+
     - cistron:
         label: SmA
         expression: high
-        gene:
-          id: SmA
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: SmA
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: SmB
         expression: high
-        fused: false  # Independent translation for operon architecture
-        gene:
-          id: SmB
-          source: uniprot
-    - spacer: 30
+        fused: false
+        chain:
+          - gene:
+              id: SmB
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: SmC
         expression: high
         fused: false
-        gene:
-          id: SmC
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: SmC
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: SmD
         expression: high
         fused: false
-        gene:
-          id: SmD
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: SmD
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: SmE
         expression: high
         fused: false
-        gene:
-          id: SmE
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: SmE
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: SmF
         expression: high
         fused: false
-        gene:
-          id: SmF
-          source: uniprot
+        chain:
+          - gene:
+              id: SmF
+              source: uniprot
+
     - terminator: rrnB_T1

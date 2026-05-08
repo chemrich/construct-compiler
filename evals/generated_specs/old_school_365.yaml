@@ -1,39 +1,36 @@
 construct:
-  name: "factorC_dual_selection_CHO"
+  name: "CHO_factorC_dual_selection"
   host: CHO
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    catalog_vector: "pCDNA3.1"
+    resistance: hygromycin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: SV40
+
     - cistron:
-        label: factorC_unit
+        label: factorC
         expression: high
         chain:
           - gene:
-              id: P28175
+              id: factorC
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - tag: V5
-    - terminator: bGH_polyA
-    - spacer: 50
-    - promoter: SV40
-    - cistron:
-        label: hygromycin_selection
-        expression: medium
-        gene:
-          id: P00557
-          source: uniprot
+
     - terminator: SV40_polyA
+
     - spacer: 50
-    - promoter: SV40
+
+    - promoter: CMV
+
     - cistron:
-        label: g418_selection
-        expression: medium
+        label: selection_G418
+        expression: high
         gene:
-          id: P00552
+          id: neomycin_phosphotransferase
           source: uniprot
+
     - terminator: SV40_polyA

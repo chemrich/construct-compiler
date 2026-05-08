@@ -1,40 +1,56 @@
 construct:
-  name: "1_butanol_biosynthesis_operon"
-  host: e_coli_bl21_de3
+  name: butanol_operon_gg_rbs_library
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: hbd
-        # The expression level field maps to the RBS library integration requested
+        label: adhE_rbs_gg
         expression: high
-        fused: false
-        gene:
-          id: Q9X6R0
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: adhE
+              source: uniprot
+    
+    - spacer: 35
+    
     - cistron:
-        label: crt
-        expression: high
-        fused: false
-        gene:
-          id: Q9X6R1
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: ter
+        label: fdhF_rbs_gg
         expression: medium
         fused: false
-        gene:
-          id: Q012Z8
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: fdhF
+              source: uniprot
+    
+    - spacer: 35
+    
     - cistron:
-        label: adhE2
+        label: aldB_rbs_gg
         expression: medium
         fused: false
-        gene:
-          id: Q9ANR5
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - gene:
+              id: aldB
+              source: uniprot
+    
+    - spacer: 35
+    
+    - cistron:
+        label: yqhD_rbs_gg
+        expression: low
+        fused: false
+        chain:
+          - gene:
+              id: yqhD
+              source: uniprot
+    
+    - terminator: rrnB_T1

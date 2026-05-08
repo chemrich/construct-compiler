@@ -1,15 +1,36 @@
 construct:
-  name: "GOI_FP_direct_fusion_HEK293"
+  name: GOI_FP_direct_fusion
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
-    - promoter: EF1_alpha # Shortened EF1a (EFS) promoter for constitutive expression
+    - promoter: EF1_alpha
+
     - cistron:
-        label: target_fusion
+        label: GOI_FP
         expression: high
         chain:
           - gene:
-              id: "GOI"
-          - tag: "FP" # Small functional peptide fused C-terminally
-    - terminator: WPRE_BGH_polyA # Includes WPRE regulatory element followed by polyA signal
+              id: GOI
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: FP
+              source: uniprot
+
+    - spacer: 20
+
+    - cistron:
+        label: WPRE
+        fused: false
+        gene:
+          id: WPRE
+          source: uniprot
+
+    - terminator: BBa_B0015

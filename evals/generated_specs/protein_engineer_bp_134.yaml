@@ -1,20 +1,26 @@
 construct:
-  name: "Pichia_anti_EGFR_nanobody_secretion"
+  name: "Pichia_pastoris_anti_EGFR_nanobody_secreted"
   host: yeast
+
   backbone:
+    catalog_vector: "pPICZ_A"
     resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: secretable_nanobody
+        label: anti_EGFR_nanobody
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: HA
           - cleavage_site: Enterokinase
+          - secretion_signal: alpha_factor
           - gene:
-              id: "7D12"
+              id: anti_EGFR_nanobody
               source: uniprot
-    - terminator: AOX1_term
+              codon_optimization: pichia_pastoris
+
+    - terminator: rrnB_T1

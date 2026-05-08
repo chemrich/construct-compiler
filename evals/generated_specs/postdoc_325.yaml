@@ -1,24 +1,29 @@
 construct:
-  name: "human_glycoprotein_glycosylation_expression"
+  name: "human_glycoprotein_nglyc_ecolibgl21"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_glycoprotein
+        label: glycoprotein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P01588 # Human Erythropoietin (EPO) used as a model human glycoprotein
+              id: "human_glycoprotein"
               source: uniprot
-    - spacer: 30
+
     - cistron:
-        label: glycosylation_machinery
+        label: nglycan_machinery
         expression: medium
-        fused: false # Expressed as a separate protein to modify the target in trans
-        gene:
-          id: P0C1B0 # Campylobacter jejuni PglB, the oligosaccharyltransferase required for N-glycosylation in E. coli
-          source: uniprot
-    - terminator: T7term
+        fused: false
+        chain:
+          - gene:
+              id: "pglB"
+              source: uniprot
+
+    - terminator: rrnB_T1

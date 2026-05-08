@@ -1,61 +1,78 @@
 construct:
-  name: "lignin_degradation_operon_araBAD"
+  name: "lignin_depolymerization_operon_ecoli"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: araBAD
+
     - cistron:
         label: laccase
-        expression: medium
+        expression: high
         chain:
-          - tag: PelB
+          - tag: periplasmic_signal_peptide
           - gene:
-              id: P06811
+              id: laccase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: versatile_peroxidase
-        expression: medium
+        expression: high
         fused: false
         chain:
-          - tag: PelB
+          - tag: periplasmic_signal_peptide
           - gene:
-              id: O42815
+              id: versatile_peroxidase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: manganese_peroxidase
-        expression: medium
+        expression: high
         fused: false
         chain:
-          - tag: PelB
+          - tag: periplasmic_signal_peptide
           - gene:
-              id: P29153
+              id: manganese_peroxidase
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: cellobiose_dehydrogenase
         expression: medium
         fused: false
-        gene:
-          id: O42823
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: esterase
-        expression: medium
-        fused: false
-        gene:
-          id: P29291
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: periplasmic_signal_peptide
+          - gene:
+              id: cellobiose_dehydrogenase
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: feruloyl_esterase
         expression: medium
         fused: false
         gene:
-          id: Q9P979
+          id: feruloyl_esterase
           source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: esterase
+        expression: medium
+        fused: false
+        gene:
+          id: esterase
+          source: uniprot
+
     - terminator: rrnB_T1

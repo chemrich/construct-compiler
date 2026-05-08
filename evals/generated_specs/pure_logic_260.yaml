@@ -1,26 +1,32 @@
 construct:
-  name: "not_gate_arabinose_off_green"
-  host: e_coli
+  name: "NOT_logic_gate_LacI_repressor"
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
-    - promoter: araBAD  # Activated by Arabinose (Ligand A)
+    - promoter: T7lac
+    
     - cistron:
-        label: tetR_repressor
+        label: repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: output
         expression: medium
         fused: false
-        gene:
-          id: P04483
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
     - terminator: rrnB_T1
-    - promoter: Ptet  # Constitutively ON, repressed by TetR
-    - cistron:
-        label: output_protein_x
-        expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015

@@ -1,18 +1,22 @@
 construct:
-  name: "yeast_mitochondrial_targeting"
+  name: "yeast_mitochondrial_protein"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: mito_target
+        label: target
         expression: high
         chain:
-          - tag: MTS
+          - tag: MTS  # Mitochondrial Targeting Sequence (N-terminal)
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: CYC1_term
+              id: YPR001C
+              source: uniprot
+
+    - terminator: rrnB_T1

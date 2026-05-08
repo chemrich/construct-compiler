@@ -1,10 +1,15 @@
 construct:
-  name: "UltraPureProtein_DualTag_Purification"
-  host: e_coli_bl21_de3
+  name: UltraPureProtein_dual_tag
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: UltraPureProtein
         expression: high
@@ -12,6 +17,8 @@ construct:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: target_protein
+              id: UltraPureProtein
+              source: uniprot
           - tag: Strep-II
-    - terminator: T7term
+
+    - terminator: rrnB_T1

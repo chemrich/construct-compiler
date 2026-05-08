@@ -1,23 +1,47 @@
 construct:
-  name: peptide_s_5x_phage_display
+  name: "phage_display_pentameric_peptideS_library"
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: lacUV5
+    
     - cistron:
-        label: diversified_pentamer
-        expression: medium
+        label: display_peptide_library
+        expression: high
         chain:
-          # PelB signal peptide for periplasmic translocation in phage display
-          - tag: PelB
-          # Five concatenated copies of PeptideS
-          # The compiler must use maximum synonymous DNA diversity and staggered restriction sites to avoid recombination
-          - gene: { id: PeptideS, source: uniprot }
-          - gene: { id: PeptideS, source: uniprot }
-          - gene: { id: PeptideS, source: uniprot }
-          - gene: { id: PeptideS, source: uniprot }
-          - gene: { id: PeptideS, source: uniprot }
+          - tag: 6xHis
+          - cleavage_site: Factor_Xa
+          - gene:
+              id: PeptideS_variant_1_NdeI_optimized
+              source: synthetic
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: PeptideS_variant_2_BamHI_codon_shuffled
+              source: synthetic
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: PeptideS_variant_3_EcoRI_synonymous
+              source: synthetic
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: PeptideS_variant_4_HindIII_wobble
+              source: synthetic
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: PeptideS_variant_5_XbaI_silent_mutation
+              source: synthetic
+    
     - terminator: rrnB_T1

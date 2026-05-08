@@ -1,14 +1,45 @@
 construct:
-  name: "pH_sensitive_genetic_switch"
+  name: pH_sensitive_switch_Output_S
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: asr  # Acid-inducible promoter from E. coli (active at low extracellular pH)
+    - promoter: T7lac
+
+    - cistron:
+        label: pH_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CadC
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: pH_response_regulator
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CadBA
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: Output_S
-        expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GFP
+              source: fpbase
+
     - terminator: rrnB_T1

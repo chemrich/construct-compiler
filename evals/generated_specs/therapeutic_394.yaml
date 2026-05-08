@@ -1,19 +1,26 @@
 construct:
-  name: "plant_hGH_clinical_expression"
-  host: plant # plant host selected as requested for production context
+  name: "plant_hGF_apoplast_expression"
+  host: algae
+  
   backbone:
-    resistance: none # Clinical safety: no antibiotic resistance genes included
-    ori: pUC
+    resistance: null  # No antibiotic resistance for clinical safety
+    ori: null
     source: custom
+  
   cassette:
-    - promoter: AtUbi10 # Strong constitutive non-viral Arabidopsis Ubiquitin 10 promoter
+    - promoter: "ubiquitin_constitutive"  # Strong, constitutive plant promoter
+    
     - cistron:
         label: human_growth_factor
         expression: high
         chain:
-          - tag: SP_extensin # Plant-specific signal peptide for apoplast secretion
+          - tag: "signal_peptide_APOPLAST"  # Plant apoplast-targeting secretion signal
           - gene:
-              id: P01241
-              source: uniprot
-          - tag: 6xHis
-    - terminator: Nos_term # Plant-specific polyadenylation signal (non-viral)
+              id: "HGF"
+              source: "uniprot"
+          - linker:
+              type: "GS_flexible"
+              repeats: 1
+          - tag: "6xHis"  # C-terminal His tag for purification
+    
+    - terminator: "plant_polyA_signal"  # Plant-specific polyadenylation signal (e.g., Agrobacterium tumefaciens)

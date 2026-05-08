@@ -1,21 +1,25 @@
 construct:
-  name: "constitutive_soluble_megfp_reporter"
+  name: "diagnostic_GFP_reporter_ecoli"
   host: e_coli
+  
   backbone:
-    resistance: none # User specified no antibiotic resistance; selection must be achieved via alternative methods like auxotrophy.
-    ori: pUC
-    source: custom
+    resistance: null  # No antibiotic resistance gene
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100 # Strong constitutive synthetic promoter (Anderson library), non-viral.
+    - promoter: trc  # Strong constitutive promoter for E. coli
+    
     - cistron:
-        label: target
+        label: GFP_reporter
         expression: high
         chain:
-          - solubility_tag: MBP
+          - solubility_tag: MBP  # Enhances cytoplasmic solubility
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: mNeonGreen
               source: fpbase
-    - terminator: rrnB_T1 # Strong bacterial terminator from E. coli, non-viral.
+    
+    - terminator: rrnB_T1

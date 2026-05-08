@@ -1,13 +1,20 @@
 construct:
-  name: "mammalian_antisense_RNA_Y"
-  host: mammalian
+  name: antisense_RNA_Y
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: U6  # Rule 15: U6 is appropriate for small antisense RNA expression in mammalian cells
+    - promoter: U6
+
     - cistron:
-        label: antisense_payload
-        gene:
-          id: antisense_RNA_Y
-    - terminator: polyT  # Standard termination for Pol III (U6) promoters_
-```
+        label: antisense_Y
+        expression: high
+        chain:
+          - gene:
+              id: antisense_Y
+              sequence: "GCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGC"
+
+    - terminator: rrnB_T1

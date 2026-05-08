@@ -1,24 +1,30 @@
 construct:
-  name: "surface_prodrug_activator_TRE"
+  name: "mammalian_surface_prodrug_activase"
   host: HEK293
+
   backbone:
-    # Kanamycin included to satisfy tool schema requirements despite user request for no antibiotic markers
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector; note: pTwist CMV includes polyA signal
+    # Antibiotic marker will be removed/disabled per requirements
+
   cassette:
-    - promoter: TRE3G # Non-viral, Tetracycline-regulatable promoter
+    - promoter: TRE_tight
+      # Tetracycline-regulated, non-viral, tightly controllable promoter
+
     - cistron:
-        label: prodrug_activating_enzyme
+        label: prodrug_activase
         expression: high
         chain:
-          - tag: IgK_leader # Signal peptide for N-terminal secretion/membrane targeting
-          - tag: FLAG # Extracellular purification/detection tag
+          - signal_peptide: SP_IgG
+            # IgG signal peptide directs protein to secretory pathway and cell surface
           - gene:
-              id: P0AET2 # NfsB (Nitroreductase) from E. coli
+              id: prodrug_activase
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 3
-          - tag: PDGFR_TM # Transmembrane anchor to maintain cell surface localization
-    - terminator: bGH_pA # Standard mammalian polyadenylation signal
+              # User to specify actual enzyme UniProt ID or gene name
+          - tag: Strep-II
+            # C-terminal Strep-II tag for extracellular purification without internalization
+          - transmembrane_anchor: GPI
+            # GPI anchor tethers protein to cell surface
+
+    - terminator: polyA_SV40
+      # SV40 polyadenylation signal for stable mRNA in mammalian cells

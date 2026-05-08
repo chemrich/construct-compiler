@@ -1,24 +1,31 @@
 construct:
-  name: "tac_polycistronic_partnerA_partnerB"
+  name: "PartnerA_PartnerB_coexpression"
   host: e_coli
+  
   backbone:
     resistance: tetracycline
     ori: pBR322
-    source: custom
+    source: addgene
+    repressor: lacIq
+
   cassette:
     - promoter: tac
+
     - cistron:
-        label: partner_a
+        label: PartnerA
         expression: high
         gene:
           id: PartnerA
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: partner_b
+        label: PartnerB
         expression: high
         fused: false
         gene:
           id: PartnerB
           source: uniprot
+
     - terminator: rrnB_T1

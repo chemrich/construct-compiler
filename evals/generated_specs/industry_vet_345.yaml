@@ -1,18 +1,22 @@
 construct:
-  name: "periplasmic_hGH_expression"
-  host: e_coli_bl21_de3
+  name: "human_growth_factor_periplasmic"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: hGH_construct
+        label: growth_factor
         expression: high
         chain:
-          - signal_peptide: pelB
+          - signal_peptide: pelB  # pelB signal peptide for periplasmic secretion
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P01241
+              id: human_growth_factor
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

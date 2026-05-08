@@ -1,14 +1,20 @@
 construct:
-  name: "stress_protein_high_expression"
+  name: "StressProtein_high_expression"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: StressProtein
         expression: high
         gene:
           id: StressProtein
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

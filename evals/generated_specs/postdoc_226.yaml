@@ -1,28 +1,36 @@
 construct:
-  name: "human_fab_secretion_e_coli"
-  host: e_coli_bl21_de3
+  name: human_fab_secreted_ecoli
+  host: e_coli
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: light_chain
+        label: fab_heavy_chain
         expression: high
         chain:
-          - tag: pelB  # Substituted mammalian signal peptide with pelB for E. coli periplasmic translocation as requested
+          - tag: pelB_signal_peptide  # E. coli-compatible secretion signal for periplasmic expression
+          - cleavage_site: Furin
           - gene:
-              id: P01834
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: heavy_chain
-        expression: high
-        fused: false  # Independent translation for polycistronic assembly
-        chain:
-          - tag: pelB  # Substituted mammalian signal peptide with pelB for E. coli periplasmic translocation
-          - cleavage_site: Furin  # Note: Furin is mammalian; cleavage in E. coli may require co-expression or in vitro processing
-          - gene:
-              id: P01857
+              id: human_fab_heavy
               source: uniprot
           - tag: FLAG
-    - terminator: T7term
+
+    - spacer: 30
+
+    - cistron:
+        label: fab_light_chain
+        expression: high
+        fused: false
+        chain:
+          - tag: pelB_signal_peptide
+          - gene:
+              id: human_fab_light
+              source: uniprot
+
+    - terminator: rrnB_T1

@@ -1,40 +1,56 @@
 construct:
-  name: "clostridium_nif_operon"
-  host: clostridium_acetobutylicum
+  name: "nif_operon_C_acetobutylicum"
+  host: bacillus
+
   backbone:
     resistance: chloramphenicol
-    ori: pCB102
+    ori: p15A
     source: addgene
+
   cassette:
-    - promoter: P_hydA  # Anaerobic-inducible promoter in Clostridium
+    - promoter: PnifA
+      # Anaerobic-inducible promoter responsive to NifA transcription factor
+      # Suitable for nitrogen fixation operons in obligate anaerobes
+
     - cistron:
-        label: nifR
+        label: NifR
         expression: high
-        gene:
-          id: nifR
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: nifR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: nifF
-        expression: high
-        fused: false
-        gene:
-          id: nifF
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: nifG
+        label: NifF
         expression: high
         fused: false
-        gene:
-          id: nifG
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: nifF
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: nifH
+        label: NifG
         expression: high
         fused: false
-        gene:
-          id: nifH
-          source: uniprot
+        chain:
+          - gene:
+              id: nifG
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: NifH
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: nifH
+              source: uniprot
+
     - terminator: rrnB_T1

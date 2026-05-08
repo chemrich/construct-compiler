@@ -1,23 +1,28 @@
 construct:
-  name: "POI_C_terminal_HA_Myc_fusion"
+  name: POI_dual_tag_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: POI_with_dual_tags
         expression: high
         chain:
           - gene:
               id: POI
               source: uniprot
+              codon_optimization: mammalian_high_expression
           - linker:
-              type: GS_flexible
-              repeats: 2
+              type: custom_GS
+              sequence: GGSGGSGGS
           - tag: HA
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              type: custom_GS
+              sequence: GGAGAGGAGGC
           - tag: myc
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

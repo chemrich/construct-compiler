@@ -1,30 +1,37 @@
 construct:
-  name: "human_enzyme_pdi_coexpression"
-  host: e_coli_bl21
+  name: GFP_human_enzyme_PDI_coexpression
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_enzyme
+        label: GFP_enzyme
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 2
           - gene:
-              id: P00784  # Human Lysozyme (P00784) used as representative human enzyme requiring disulfides
+              id: P04637  # human enzyme (TP53 example; user should specify actual enzyme)
               source: uniprot
-          - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: folding_helper
+        label: PDI
         expression: medium
         fused: false
         gene:
-          id: P07237  # Human Protein Disulfide Isomerase (P4HB)
+          id: P07237  # human PDI (protein disulfide isomerase)
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

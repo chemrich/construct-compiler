@@ -1,37 +1,75 @@
 construct:
-  name: "lentiviral_recombination_resistant_dual_expression"
+  name: "lentiviral_packaging_vector_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist Lenti"
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: EF1_alpha
+    # 5' LTR (fixed element for viral packaging)
+    - promoter: CMV
+
     - cistron:
-        label: transgene_primary
+        label: packaging_element_psi
+        expression: very_low
+        # Psi (Ψ) packaging signal - essential, fixed sequence
+        gene:
+          id: HIV1_Psi
+          source: uniprot
+
+    - spacer: 25
+
+    # RRE (Rev Response Element) - essential for RNA export
+    - cistron:
+        label: packaging_element_rre
+        expression: very_low
+        gene:
+          id: HIV1_RRE
+          source: uniprot
+
+    - spacer: 30
+
+    # cPPT/CTS (Central Polypurine Tract / Central Termination Sequence)
+    - cistron:
+        label: packaging_element_cppt
+        expression: very_low
+        gene:
+          id: HIV1_cPPT
+          source: uniprot
+
+    - spacer: 28
+
+    # Transgene expression cassette (example: fluorescent reporter)
+    - cistron:
+        label: transgene
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 3
           - gene:
-              id: mNeonGreen
+              id: mEGFP
               source: fpbase
-    - terminator: SV40_polyA
-    - spacer: 60
-    - promoter: CMV
+
+    - spacer: 32
+
+    # First polyA signal (SV40 variant for redundancy)
     - cistron:
-        label: selection_marker
-        expression: medium
-        fused: false
-        chain:
-          - tag: FLAG
-          - linker:
-              type: short_GS
-              repeats: 2
-          - gene:
-              id: P13249
-              source: uniprot
-    - terminator: bGH_polyA
+        label: polya_sv40
+        expression: very_low
+        gene:
+          id: SV40_polyA
+          source: uniprot
+
+    - spacer: 26
+
+    # Second polyA signal (bGH variant - distinct sequence to prevent recombination)
+    - cistron:
+        label: polya_bgh
+        expression: very_low
+        gene:
+          id: bGH_polyA
+          source: uniprot
+
+    - terminator: rrnB_T1

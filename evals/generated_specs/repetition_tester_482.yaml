@@ -1,29 +1,33 @@
 construct:
-  name: yeast_catalase_beta_expression
+  name: "yeast_Catalase_Beta_His_TEV_Strep"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: 2u
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: enzyme_construct
+        label: Catalase_Beta_tagged
         expression: high
         chain:
           - tag: 6xHis
           - linker:
-              type: short_GS
-              repeats: 2
+              type: custom
+              sequence: GGGSGGS
           - cleavage_site: TEV
           - linker:
-              type: GS_flexible
-              repeats: 3
+              type: custom
+              sequence: AAPVAT
           - gene:
               id: Catalase_Beta
               source: uniprot
           - linker:
-              type: rigid_EAAAK
-              repeats: 2
+              type: custom
+              sequence: EAAAKEF
           - tag: Strep-II
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

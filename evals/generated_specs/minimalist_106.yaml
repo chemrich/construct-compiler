@@ -1,13 +1,23 @@
 construct:
-  name: "mammalian_targetgene_knockdown"
+  name: "mammalian_TargetGene_shRNA_knockdown"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pLKO.1"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: U6  # Standard Pol III promoter for shRNA expression
+    - promoter: U6
+
     - cistron:
-        label: shRNA_cassette
-        gene:
-          id: TargetGene
-          source: uniprot
-    - terminator: PolyT  # Standard termination signal for Pol III/U6 promoters
+        label: shRNA_TargetGene
+        expression: high
+        chain:
+          - gene:
+              id: shRNA_TargetGene
+              source: uniprot
+              description: "U6-driven short hairpin RNA targeting TargetGene"
+
+    - terminator: rrnB_T1

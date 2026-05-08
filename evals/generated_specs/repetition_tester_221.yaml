@@ -1,32 +1,44 @@
 construct:
-  name: "diverse_enzyme_operon_E123"
-  host: e_coli
+  name: "multi_enzyme_operon_recombination_resistant"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Using a strong constitutive promoter to meet the "non-standard" request
+    - promoter: trc  # Non-standard strong promoter (IPTG-inducible, distinct from T7/T7lac)
+
     - cistron:
-        label: E1_subunit
+        label: E1
         expression: high
+        rbs: BBa_B0030  # Standard RBS variant 1
         gene:
-          id: P0AFG8
-          source: uniprot
-    - spacer: 30  # Distinct spacer to facilitate unique RBS generation
+          id: E1_codon_variant_A
+          # Codon-optimized variant A with synonymous substitutions
+          source: custom
+
+    - spacer: 25
+
     - cistron:
-        label: E2_subunit
+        label: E2
         expression: high
-        fused: false  # Ensures independent translation with a unique RBS
+        rbs: BBa_B0031  # RBS variant 2 (different strength/sequence)
         gene:
-          id: P0AFG3
-          source: uniprot
-    - spacer: 35  # Distinct spacer to minimize homology/recombination risk
+          id: E2_codon_variant_B
+          # Codon-optimized variant B with distinct synonymous substitutions
+          source: custom
+
+    - spacer: 25
+
     - cistron:
-        label: E3_subunit
+        label: E3
         expression: high
-        fused: false
+        rbs: BBa_B0034  # RBS variant 3 (third distinct RBS)
         gene:
-          id: P0A9P0
-          source: uniprot
-    - terminator: BBa_B0015  # Unique non-T7 terminator for diversity
+          id: E3_codon_variant_C
+          # Codon-optimized variant C with unique synonymous substitutions
+          source: custom
+
+    - terminator: L3S2P54  # Non-standard terminator (distinct from rrnB_T1/T7term/BBa_B0015)

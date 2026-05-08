@@ -1,23 +1,22 @@
 construct:
-  name: "high_yield_solubility_optimized_enzyme"
+  name: "high_yield_enzyme_expression_system"
   host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Standard selection marker substituted for 'no antibiotic' request to ensure plasmid maintenance in BL21(DE3)
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_cistron
+        label: target_enzyme
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
               id: novel_enzyme
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

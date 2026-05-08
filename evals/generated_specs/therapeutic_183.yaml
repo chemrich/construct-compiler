@@ -1,26 +1,34 @@
 construct:
-  name: "dox_inducible_bicistronic_therapeutic"
+  name: "doxycycline_inducible_ProteinA_ProteinB"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TRE3G  # Doxycycline-inducible TRE3G promoter for tight regulation
+    - promoter: TRE3G  # Tetracycline Response Element for doxycycline induction
+
     - cistron:
-        label: therapeutic_protein_a
+        label: ProteinA
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: T2A  # Self-cleaving peptide for effective separation
           - gene:
               id: ProteinA
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: therapeutic_protein_b
+        label: ProteinB
         expression: high
-        fused: false  # Independent translation from single transcript (e.g., via IRES or 2A)
+        fused: false
         chain:
+          - tag: 6xHis
           - gene:
               id: ProteinB
               source: uniprot
-    - terminator: bGH_pA  # Standard mammalian polyadenylation signal and terminator
+
+    - terminator: rrnB_T1

@@ -1,34 +1,50 @@
 construct:
-  name: "subtilisin_secretion_with_chaperone_coexpression"
+  name: "subtilisin_groeles_dual_expression"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: subtilisin_secretion
+        label: subtilisin_secreted
         expression: high
         chain:
-          - tag: SacB
+          - secretion_signal: AmyE
           - gene:
-              id: P04189
+              id: subtilisin_variant
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+    - spacer: 40
+
     - promoter: Pgrac
+
     - cistron:
-        label: groES
-        expression: medium
-        gene:
-          id: P19412
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: groEL
-        expression: medium
+        label: groeles_chaperone
+        expression: high
         fused: false
         gene:
-          id: P19413
+          id: groES
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+    - spacer: 40
+
+    - promoter: Pgrac
+
+    - cistron:
+        label: groel_chaperone
+        expression: high
+        fused: false
+        gene:
+          id: groEL
+          source: uniprot
+
+    - terminator: rrnB_T1

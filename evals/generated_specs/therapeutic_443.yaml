@@ -1,23 +1,34 @@
 construct:
-  name: safe_inducible_reporter_human_fibroblast
-  host: human_fibroblast
+  name: "human_fibroblast_rapamycin_inducible_reporter"
+  host: HEK293
+
   backbone:
-    resistance: none # ARG-free (e.g., pFAR or ORT) to comply with "No ARGs" clinical safety requirement
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null  # No antibiotic resistance for clinical safety
+    ori: null
+
   cassette:
-    - promoter: EF1_alpha # Human promoter used to avoid viral CMV sequences
+    - promoter: CMV
+
     - cistron:
-        label: transactivator
-        expression: medium
-        gene:
-          id: rtTA3 # Tet-On 3G transactivator
-    - terminator: hGH_pA # Human Growth Hormone polyA, non-viral
-    - promoter: TRE3G # Inducible Tet-responsive promoter (Tet-On system)
-    - cistron:
-        label: reporter
+        label: rapalogs_binding_domain
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: hGH_pA # Final human polyA terminator
+        chain:
+          - tag: NLS
+          - gene:
+              id: "FKBP12_v36"
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: mCherry_reporter
+        expression: medium
+        fused: false
+        chain:
+          - tag: NLS
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

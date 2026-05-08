@@ -1,18 +1,23 @@
 construct:
-  name: "MitoProtein_Yeast_Mitochondrial_Expression"
+  name: MitoProtein_yeast_mitochondrial
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: MitoProtein
         expression: high
         chain:
-          - tag: MTS
+          - tag: MLS_N_terminal
           - gene:
               id: MitoProtein
               source: uniprot
+
     - terminator: CYC1

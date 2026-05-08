@@ -1,22 +1,31 @@
 construct:
-  name: "mammalian_polycistronic_coexpression_system"
+  name: "target_with_chaperone_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 40
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: target_protein
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: chaperone_biP
-        expression: medium
+        label: chaperone
+        expression: high
         fused: false
-        gene:
-          id: P11021
-          source: uniprot
-    - terminator: BGH_polyA
+        chain:
+          - gene:
+              id: HSP90
+              source: uniprot
+
+    - terminator: rrnB_T1

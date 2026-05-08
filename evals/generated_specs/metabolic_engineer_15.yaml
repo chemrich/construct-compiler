@@ -1,10 +1,10 @@
-```yaml
 construct:
   name: carotenoid_biosynthesis_operon_pichia
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
     ori: pBR322
     source: addgene
 
@@ -12,61 +12,57 @@ construct:
     - promoter: AOX1
 
     - cistron:
-        label: GGPP_synthase_1
-        expression: high
-        gene:
-          id: P27578
-          source: uniprot
+        label: GGPP_synthase
+        expression: very_high
+        chain:
+          - secretion_signal: alpha_factor
+          - tag: 6xHis
+          - gene:
+              id: GGPP_synthase
+              source: uniprot
 
-    - spacer: 25
-
-    - cistron:
-        label: GGPP_synthase_2
-        expression: high
-        fused: false
-        gene:
-          id: P27578
-          source: uniprot
-
-    - spacer: 25
+    - spacer: 30
 
     - cistron:
         label: phytoene_synthase
         expression: high
         fused: false
-        gene:
-          id: P37269
-          source: uniprot
+        chain:
+          - gene:
+              id: phytoene_synthase
+              source: uniprot
 
-    - spacer: 25
+    - spacer: 30
 
     - cistron:
         label: phytoene_desaturase
         expression: high
         fused: false
-        gene:
-          id: P05797
-          source: uniprot
+        chain:
+          - gene:
+              id: phytoene_desaturase
+              source: uniprot
 
-    - spacer: 25
+    - spacer: 30
 
     - cistron:
         label: zeta_carotene_desaturase
         expression: high
         fused: false
-        gene:
-          id: P05798
-          source: uniprot
+        chain:
+          - gene:
+              id: zeta_carotene_desaturase
+              source: uniprot
 
-    - spacer: 25
+    - spacer: 30
 
     - cistron:
-        label: lycopene_cyclase
+        label: carotenoid_isomerase
         expression: high
         fused: false
-        gene:
-          id: P05799
-          source: uniprot
+        chain:
+          - gene:
+              id: carotenoid_isomerase
+              source: uniprot
 
-    - terminator: CYC1
-```
+    - terminator: CYC1_terminator

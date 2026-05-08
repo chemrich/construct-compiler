@@ -1,19 +1,25 @@
 construct:
-  name: "EnzymeP_yeast_high_production"
+  name: EnzymeP_high_expression_yeast
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2micron
 
   cassette:
-    - promoter: TDH3  # TDH3 (GPD) is one of the strongest constitutive promoters in S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: EnzymeP
         expression: high
         chain:
           - gene:
               id: EnzymeP
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - terminator: CYC1_term
+
+    - terminator: CYC1

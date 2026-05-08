@@ -1,20 +1,27 @@
 construct:
-  name: "yeast_ubiquitin_target_fusion"
+  name: ubiquitin_TargetProtein_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
         label: ubiquitin_fusion
         expression: high
         chain:
           - gene:
-              id: UBB
+              id: P62249
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: TargetProtein
               source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

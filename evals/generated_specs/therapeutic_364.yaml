@@ -1,21 +1,21 @@
 construct:
-  name: "Cas9_Mammalian_Transient_NonViral"
+  name: "mammalian_codon_optimized_Cas9_transient"
   host: HEK293
+
   backbone:
-    # A standard antibiotic resistance (kanamycin) is included for bacterial propagation; 
-    # for clinical-grade markerless DNA (minicircle), this sequence is removed after production.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: Cas9_Nuclease
+        label: Cas9
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: "Cas9_codon_optimized_human"
               source: uniprot
           - tag: NLS
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

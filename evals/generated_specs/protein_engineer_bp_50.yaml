@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_pastoris_intracellular_das1_expression"
+  name: "Pichia_pastoris_intracellular_SUMO_target"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: DAS1
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: target_protein
+              id: target_codon_optimized
               source: uniprot
-    - terminator: AOX1_term # AOX1 terminator is used for optimal termination in methanol-induced Pichia systems
+
+    - terminator: rrnB_T1

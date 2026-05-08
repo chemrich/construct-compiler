@@ -1,29 +1,45 @@
 construct:
-  name: yeast_triple_diverse_crispr_array
+  name: "S_cerevisiae_CRISPR_array_three_guides"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
+    - promoter: U6
+      cistron:
+        label: gRNA1_target_gene1
+        expression: high
+        chain:
+          - gene:
+              id: S_cerevisiae_crRNA_1
+              sequence: "GGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTTTTTTT"
+              # crRNA targeting Gene1 with unique tracrRNA scaffold variant 1
+
+    - spacer: 30
+
     - promoter: SNR52
-    - cistron:
-        label: guide_ADE2
-        expression: medium
-        gene:
-          id: gRNA_ADE2_scaffold_V1
-    - spacer: 40
+      cistron:
+        label: gRNA2_target_gene2
+        expression: high
+        chain:
+          - gene:
+              id: S_cerevisiae_crRNA_2
+              sequence: "GGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTTTTTT"
+              # crRNA targeting Gene2 with unique tracrRNA scaffold variant 2 (modified 3' end)
+
+    - spacer: 30
+
     - promoter: RPR1
-    - cistron:
-        label: guide_CAN1
-        expression: medium
-        gene:
-          id: gRNA_CAN1_scaffold_V2
-    - spacer: 40
-    - promoter: SUP4
-    - cistron:
-        label: guide_LYS2
-        expression: medium
-        gene:
-          id: gRNA_LYS2_scaffold_V3
-    - terminator: BBa_B0015
+      cistron:
+        label: gRNA3_target_gene3
+        expression: high
+        chain:
+          - gene:
+              id: S_cerevisiae_crRNA_3
+              sequence: "GGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTTTTT"
+              # crRNA targeting Gene3 with unique tracrRNA scaffold variant 3 (alternative 3' structure)
+
+    - terminator: rrnB_T1

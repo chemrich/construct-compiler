@@ -1,52 +1,53 @@
 construct:
-  name: "Heavy_Metal_Bioreporter_Operon"
-  host: e_coli_bl21
+  name: "heavy_metal_bioreporter_operon"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac  # T7lac used as the standard strong inducible promoter for E. coli BL21
+    - promoter: araBAD  # Metal-inducible via araBAD regulation; alternative: custom metal-responsive promoter
+
     - cistron:
-        label: sensor_MecR
+        label: MecR
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: MecR
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: transducer_MecT
+        label: MecT
         expression: high
         fused: false
         gene:
           id: MecT
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: reporter_GFP
+        label: GFP
         expression: high
         fused: false
         gene:
           id: sfGFP
           source: fpbase
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: regulator_RegP
+        label: RegP
         expression: high
         fused: false
         gene:
           id: RegP
           source: uniprot
-    - terminator: BBa_B0015
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+
+    - terminator: rrnB_T1
+    - terminator: T7term

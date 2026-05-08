@@ -1,21 +1,32 @@
 construct:
-  name: "synthetic_cell_surface_receptor"
+  name: synthetic_cell_surface_receptor_HEK293
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: receptor
+        label: synthetic_receptor
         expression: high
         chain:
+          - tag: HA
           - gene:
-              id: P01732
+              id: IL2RA_extracellular
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P20963
+              id: CD8A_transmembrane
               source: uniprot
-    - terminator: BBa_B0015
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD3Z_intracellular
+              source: uniprot
+
+    - terminator: rrnB_T1

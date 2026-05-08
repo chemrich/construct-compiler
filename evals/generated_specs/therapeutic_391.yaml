@@ -1,18 +1,24 @@
 construct:
-  name: human_therapeutic_peptide_production
-  host: e_coli
+  name: "E_coli_therapeutic_peptide_hisTag"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin # Note: The schema requires an antibiotic resistance gene; kanamycin is selected as a placeholder despite the request to avoid them.
-    ori: pUC
-    source: addgene
+    resistance: null  # Antibiotic resistance omitted per specification
+    ori: pBR322
+    source: custom
+
   cassette:
-    - promoter: J23100 # Strong constitutive bacterial promoter (non-viral).
+    - promoter: trc  # Strong constitutive promoter suitable for high-yield expression
+
     - cistron:
-        label: target_peptide
+        label: therapeutic_peptide
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01133 # Human Epidermal Growth Factor (EGF), a therapeutic peptide (approx. 50 residues).
+              id: human_therapeutic_peptide_codon_optimized
               source: uniprot
-    - terminator: rrnB_T1 # Bacterial terminator (non-viral).
+              # Note: Sequence must be codon-optimized for E. coli during compilation
+
+    - terminator: rrnB_T1

@@ -1,18 +1,31 @@
 construct:
-  name: "environmental_factor_threshold_sensor"
-  host: e_coli
+  name: environmental_factor_sensor
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD # araBAD is used as a representative inducible sensor for EnvironmentalFactor threshold detection
+    - promoter: T7lac
+
+    - cistron:
+        label: sensor
+        expression: high
+        chain:
+          - gene:
+              id: environmental_factor_sensor
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: warning_signal
         expression: high
+        fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: mScarlet
               source: fpbase
+
     - terminator: rrnB_T1

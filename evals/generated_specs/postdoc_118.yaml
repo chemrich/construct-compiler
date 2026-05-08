@@ -1,23 +1,22 @@
 construct:
-  name: "MitoProtein_yeast_mitochondrial_targeting"
+  name: MitoProtein_mitochondrial_targeting
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Standard constitutive promoter for high expression in S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: mitochondrial_targeted_fusion
-        expression: medium
+        label: MitoProtein
+        expression: high
         chain:
-          - gene:
-              id: COX4I1
-              source: uniprot  # Human cytochrome c oxidase subunit 4 isoform 1 (contains N-term MTS)
-          - linker:
-              type: short_GS
-              repeats: 1
+          - mitochondrial_targeting_signal: COX_IV_MTS
           - gene:
               id: MitoProtein
               source: uniprot
-    - terminator: CYC1_term  # Common yeast terminator for mRNA stability
+
+    - terminator: rrnB_T1

@@ -1,19 +1,29 @@
 construct:
-  name: "nonviral_therapeutic_enzyme_production"
-  host: e_coli_bl21
+  name: "therapeutic_enzyme_expression_pBAD"
+  host: e_coli_bl21_de3
+
   backbone:
-    resistance: kanamycin # Schema requires a resistance marker; kanamycin is selected as a non-beta-lactam standard for clinical plasmid development.
-    ori: pBR322
-    source: custom
+    resistance: null  # No antibiotic resistance - uses auxotrophic selection instead
+    ori: p15A
+    source: addgene
+    # Comment: Using p15A (low-copy) for reduced metabolic burden and lower endotoxin risk
+
   cassette:
-    - promoter: tac # High-level non-viral promoter (hybrid of bacterial trp and lac operons)
+    - promoter: araBAD
+      # Comment: araBAD provides tight, dose-dependent control without T7 phage elements
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: Enterokinase # Non-viral mammalian-derived protease site for clean N-terminal recovery
+            # Comment: His-tag allows IMAC purification; easily cleavable for clinical use
+          - cleavage_site: TEV
+            # Comment: TEV protease removes His-tag post-purification if needed
           - gene:
-              id: ADA
+              id: human_enzyme
               source: uniprot
-    - terminator: rrnB_T1 # Strong bacterial terminator from the rrnB operon
+              # Note: Replace "human_enzyme" with specific UniProt ID (e.g., P12345)
+
+    - terminator: rrnB_T1
+    # Comment: Strong, phage-independent terminator for efficient transcript termination

@@ -1,5 +1,5 @@
 construct:
-  name: "CFP_YFP_FRET_fusion"
+  name: CFP_YFP_FRET_fusion
   host: HEK293
 
   backbone:
@@ -9,15 +9,17 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: FRET_pair
+        label: CFP_YFP_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: mCerulean3
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: mVenus
               source: fpbase

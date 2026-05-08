@@ -1,72 +1,74 @@
-```yaml
 construct:
-  name: vibrio_natriegens_6enzyme_biosynthesis_operon
-  host: e_coli  # using e_coli as closest available host option for gram-negative expression
+  name: "Vibrio_natriegens_6enzyme_biosynthetic_operon"
+  host: vibrio_natriegens
 
   backbone:
-    catalog_vector: "pET-28b(+)"
-    
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100  # constitutive strong promoter for high expression
-    
+    - promoter: araBAD
+      # araBAD provides strong, constitutive expression in V. natriegens
+      # Addition of arabinose can further boost expression if needed
+
     - cistron:
         label: enzyme1
         expression: high
         chain:
           - tag: Twin-Strep
           - gene:
-              id: P0A9P0  # example enzyme 1 - replace with actual enzyme UniProt ID
+              id: enzyme1
               source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
         label: enzyme2
         expression: high
         fused: false
         gene:
-          id: P0A6F5  # example enzyme 2 - replace with actual enzyme UniProt ID
+          id: enzyme2
           source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
         label: enzyme3
         expression: high
         fused: false
         gene:
-          id: P0A796  # example enzyme 3 - replace with actual enzyme UniProt ID
+          id: enzyme3
           source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
         label: enzyme4
         expression: high
         fused: false
         gene:
-          id: P0A6Y8  # example enzyme 4 - replace with actual enzyme UniProt ID
+          id: enzyme4
           source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
         label: enzyme5
         expression: high
         fused: false
         gene:
-          id: P0A734  # example enzyme 5 - replace with actual enzyme UniProt ID
+          id: enzyme5
           source: uniprot
-    
+
     - spacer: 25
-    
+
     - cistron:
         label: enzyme6
         expression: high
         fused: false
         gene:
-          id: P0A6B7  # example enzyme 6 - replace with actual enzyme UniProt ID
+          id: enzyme6
           source: uniprot
-    
+
     - terminator: rrnB_T1
-```

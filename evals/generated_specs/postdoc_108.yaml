@@ -1,16 +1,22 @@
 construct:
-  name: "dox_inducible_enzymex_yeast"
+  name: "dox_inducible_EnzymeX_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: 2micron
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: pTet
+    - promoter: pTET  # Doxycycline-responsive tetracycline-controlled promoter
+
     - cistron:
-        label: target
+        label: EnzymeX
         expression: high
-        gene:
-          id: EnzymeX
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeX
+              source: uniprot
+
+    - terminator: rrnB_T1

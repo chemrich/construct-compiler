@@ -1,24 +1,31 @@
 construct:
-  name: "ecoli_dual_expression_func_helper"
+  name: "dual_protein_expression_FuncProtein_HelperProtein"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: func_protein
-        expression: medium
-        gene:
-          id: FuncProtein
-          source: uniprot
+        label: FuncProtein
+        expression: high
+        chain:
+          - gene:
+              id: FuncProtein
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: helper_protein
-        expression: medium
+        label: HelperProtein
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: HelperProtein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

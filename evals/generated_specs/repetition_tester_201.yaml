@@ -1,32 +1,50 @@
 construct:
-  name: "enzymex_synonymous_triple_operon"
-  host: e_coli
+  name: "triple_EnzymeX_synonymous_operon"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzymex_v1
+        label: EnzymeX_copy1
         expression: high
         gene:
           id: EnzymeX
           source: uniprot
+          codon_usage: ecoli_variant_A
+          description: "First copy with standard E. coli codon optimization"
+
     - spacer: 35
+      rbs_sequence: "AGGAGGA"
+      description: "Unique intergenic linker 1 (35 bp)"
+
     - cistron:
-        label: enzymex_v2
+        label: EnzymeX_copy2
         expression: high
         fused: false
         gene:
           id: EnzymeX
           source: uniprot
-    - spacer: 52
+          codon_usage: ecoli_variant_B
+          description: "Second copy with alternative codon usage"
+
+    - spacer: 42
+      rbs_sequence: "GAGG"
+      description: "Unique intergenic linker 2 (42 bp)"
+
     - cistron:
-        label: enzymex_v3
+        label: EnzymeX_copy3
         expression: high
         fused: false
         gene:
           id: EnzymeX
           source: uniprot
-    - terminator: T7term
+          codon_usage: ecoli_variant_C
+          description: "Third copy with distinct codon usage"
+
+    - terminator: rrnB_T1

@@ -1,22 +1,24 @@
 construct:
-  name: yeast_secreted_therapeutic_enzyme
+  name: "yeast_secreted_enzyme_purification"
   host: yeast
+
   backbone:
-    resistance: none # Auxotrophic marker (e.g., URA3) used to avoid antibiotic resistance genes
-    ori: 2_micron
-    source: addgene
+    resistance: none  # no antibiotic resistance marker
+    ori: 2_micron   # high-copy yeast plasmid origin
+    source: custom
+
   cassette:
-    - promoter: GAL1
+    - promoter: GAL1  # strong inducible promoter in yeast
+
     - cistron:
-        label: therapeutic_enzyme
+        label: secreted_enzyme
         expression: high
         chain:
-          - secretion_signal: alpha_mating_factor
+          - tag: alpha_factor_signal  # yeast N-terminal secretion signal
           - gene:
-              id: P00734
+              id: enzyme_of_interest
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 1
-          - tag: 6xHis
-    - terminator: CYC1
+          - cleavage_site: Kex2  # yeast-native endopeptidase cleavage site
+          - tag: 6xHis  # C-terminal His-tag for purification
+
+    - terminator: CYC1_poly_A  # yeast polyadenylation signal

@@ -1,17 +1,42 @@
 construct:
-  name: "toxin_triggered_lysis_kill_switch"
+  name: toxin_triggered_irreversible_kill_switch
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: araBAD  # Substitution: araBAD used as a proxy for a toxin-responsive sensor promoter
+    - promoter: T7lac
+
+    - cistron:
+        label: toxin_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Input_Toxin_Sensor_Signal
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: lysis_effector
         expression: high
-        chain:
-          - gene:
-              id: P03643  # phiX174 lysis protein E
-              source: uniprot
+        fused: false
+        gene:
+          id: lysozyme
+          source: uniprot
+        # Note: lysozyme degrades peptidoglycan; alternative: use colicin, holin-endolysin system
+
+    - spacer: 25
+
+    - cistron:
+        label: membrane_disruptor
+        expression: high
+        fused: false
+        gene:
+          id: phage_lysis_protein_E
+          source: uniprot
+        # Creates membrane pores; works synergistically with lysozyme
+
     - terminator: rrnB_T1

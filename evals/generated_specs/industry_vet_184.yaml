@@ -1,18 +1,22 @@
 construct:
-  name: "AAV2_VP1_Solubility_Optimized"
+  name: "soluble_protein_with_MBP_His"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: P03135
+              id: target_protein
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

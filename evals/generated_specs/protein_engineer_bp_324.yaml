@@ -1,28 +1,37 @@
 construct:
-  name: "Pichia_pastoris_mAb_expression"
+  name: "pichia_mAb_dual_cistron"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: IgG1_LC
+              id: monoclonal_antibody_light_chain
               source: uniprot
-    - terminator: AOX1_TT
+              codon_optimized: pichia
+
+    - spacer: 30
+
     - promoter: AOX1
+
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: IgG1_HC
+              id: monoclonal_antibody_heavy_chain
               source: uniprot
-    - terminator: AOX1_TT
+              codon_optimized: pichia
+
+    - terminator: rrnB_T1

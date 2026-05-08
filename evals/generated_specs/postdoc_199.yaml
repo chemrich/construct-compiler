@@ -1,15 +1,19 @@
 construct:
-  name: yeast_mammalian_domain_fusion
+  name: "yeast_mammalian_fusion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2μ
     source: addgene
+
   cassette:
-    - promoter: GPD  # Standard yeast constitutive promoter
+    - promoter: GAL1
+
     - cistron:
-        label: chimera
-        expression: medium
+        label: fusion
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
@@ -21,4 +25,5 @@ construct:
           - gene:
               id: MammalianDomain
               source: uniprot
-    - terminator: CYC1  # Standard yeast terminator
+
+    - terminator: CYC1

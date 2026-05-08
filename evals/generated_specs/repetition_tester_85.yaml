@@ -1,17 +1,37 @@
 construct:
-  name: "yeast_dual_secretion_challenging_protein"
+  name: "yeast_dual_secretion_pathway"
   host: yeast
+
   backbone:
-    catalog_vector: "pRS426"  # High-copy yeast shuttle vector with URA3 selection
+    resistance: ampicillin
+    ori: pUC
+    source: addgene
+
   cassette:
-    - promoter: GPD  # Strong constitutive promoter in S. cerevisiae (TDH3)
+    - promoter: GAL1
+
     - cistron:
-        label: target_secretion
+        label: primary_export
         expression: high
         chain:
-          - tag: alpha_factor  # Pre-pro leader sequence from MF-alpha1
-          - tag: SUC2_leader   # Signal peptide from invertase (distinct pathway/sequence)
+          - tag: alpha_factor_signal
           - gene:
-              id: P02768 # Human Serum Albumin (HSA), commonly used in yeast secretion studies
+              id: challenging_protein
               source: uniprot
-    - terminator: CYC1_term
+          - tag: HDEL
+        fused: false
+
+    - spacer: 50
+
+    - cistron:
+        label: alternate_export
+        expression: high
+        chain:
+          - tag: SUC2_signal
+          - gene:
+              id: challenging_protein
+              source: uniprot
+          - tag: c_myc
+        fused: false
+
+    - terminator: CYC1_poly_A

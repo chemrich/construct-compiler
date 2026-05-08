@@ -1,19 +1,23 @@
 construct:
-  name: "AMP_Magainin_araBAD_Expression"
-  host: e_coli
+  name: "antimicrobial_peptide_expression"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin  # Kanamycin is included for initial selection/cloning; user request for no resistance in final material is noted but not supported by standard plasmid schema.
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Tight, inducible bacterial promoter chosen to avoid viral elements (like T7) and manage peptide toxicity.
+    - promoter: T7lac
+
     - cistron:
-        label: "amp_production_cistron"
+        label: AMP
         expression: high
         chain:
-          - solubility_tag: MBP
-          - cleavage_site: Factor_Xa
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P11006
+              id: cecropin_A
               source: uniprot
-    - terminator: rrnB_T1  # Strong bacterial terminator (non-viral).
+
+    - terminator: rrnB_T1

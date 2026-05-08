@@ -1,18 +1,25 @@
 construct:
-  name: "bacillus_subtilis_lipa_secretion"
+  name: "Bacillus_LipA_secretion_cassette"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: lipa_target
+        label: LipA_secreted
         expression: high
         chain:
-          - tag: AmyQ
+          - secretion_signal: AmyQ
           - gene:
-              id: P10480
+              id: LipA
               source: uniprot
+              codon_optimized: true
+              optimization_host: bacillus_subtilis
           - tag: 6xHis
+
     - terminator: rrnB_T1

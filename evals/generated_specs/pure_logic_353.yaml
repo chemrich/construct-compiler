@@ -1,47 +1,82 @@
 construct:
   name: "mammalian_2to4_decoder"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: "p_NOR_AB" # Logical gate: Active when Input A=0 and Input B=0
+    - promoter: CMV
+
     - cistron:
-        label: "Output_00"
-        expression: medium
-        gene:
-          id: "mTagBFP2"
-          source: fpbase
-    - terminator: "SV40_polyA"
+        label: Input_A
+        expression: high
+        chain:
+          - tag: HA
+          - gene:
+              id: rtTA3
+              source: uniprot
 
-    - spacer: 50
+    - terminator: SV40_poly_A
 
-    - promoter: "p_B_NOT_A" # Logical gate: Active when Input A=0 and Input B=1
+    - promoter: CMV
+
     - cistron:
-        label: "Output_01"
-        expression: medium
-        gene:
-          id: "mEGFP"
-          source: fpbase
-    - terminator: "hGH_polyA"
+        label: Input_B
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: tTA
+              source: uniprot
 
-    - spacer: 50
+    - terminator: SV40_poly_A
 
-    - promoter: "p_A_NOT_B" # Logical gate: Active when Input A=1 and Input B=0
+    - promoter: TRE
+
     - cistron:
-        label: "Output_10"
-        expression: medium
-        gene:
-          id: "mScarlet"
-          source: fpbase
-    - terminator: "BGH_polyA"
+        label: Output_00
+        expression: high
+        chain:
+          - gene:
+              id: mEGFP
+              source: fpbase
 
-    - spacer: 50
+    - terminator: SV40_poly_A
 
-    - promoter: "p_AND_AB" # Logical gate: Active when Input A=1 and Input B=1
+    - promoter: TRE_tight
+
     - cistron:
-        label: "Output_11"
-        expression: medium
-        gene:
-          id: "mNeonGreen"
-          source: fpbase
-    - terminator: "rbGlo_polyA"
+        label: Output_01
+        expression: high
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: SV40_poly_A
+
+    - promoter: TRE_tight
+
+    - cistron:
+        label: Output_10
+        expression: high
+        chain:
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: SV40_poly_A
+
+    - promoter: TRE_tight
+
+    - cistron:
+        label: Output_11
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: SV40_poly_A

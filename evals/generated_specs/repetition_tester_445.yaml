@@ -1,34 +1,52 @@
 construct:
-  name: "Orthogonal_Pol_III_CRISPR_Array"
+  name: mammalian_CRISPR_gRNA_array_three_units
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: U6
-    - cistron:
-        label: "gRNA_unit_1"
-        gene:
-          id: "sgRNA_target_1"
-    - terminator: "U6_term"
-    
-    - spacer: 40
-    
-    - promoter: H1
-    - cistron:
-        label: "gRNA_unit_2"
-        gene:
-          id: "sgRNA_target_2"
-    - terminator: "H1_term"
-    
-    - spacer: 40
-    
-    - promoter: 7SK
-    - cistron:
-        label: "gRNA_unit_3"
-        gene:
-          id: "sgRNA_target_3"
-    - terminator: "7SK_term"
+      cistron:
+        label: gRNA_unit_1
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_scaffold_SpCas9
+              sequence: "GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC"
 
-# Note: The user requested a "single transcript" but specified distinct promoters and terminators for each gRNA. 
-# In mammalian systems, Pol III promoters (U6, H1, 7SK) initiate independent transcripts. 
-# This design utilizes three unique expression cassettes to fulfill the requirement for non-homologous regulatory elements.
+    - spacer: 25
+
+    - promoter: H1
+      cistron:
+        label: gRNA_unit_2
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_scaffold_SpCas9
+              sequence: "GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC"
+
+    - spacer: 25
+
+    - promoter: 7SL
+      cistron:
+        label: gRNA_unit_3
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_scaffold_SpCas9
+              sequence: "GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC"
+
+    - terminator: rbcL_poly_T
+      label: terminator_1
+
+    - spacer: 40
+
+    - terminator: histone_H3_poly_T
+      label: terminator_2
+
+    - spacer: 40
+
+    - terminator: polyadenylation_sequence_SV40
+      label: terminator_3

@@ -1,33 +1,63 @@
 construct:
-  name: "yeast_xyz_complex_polyprotein"
+  name: "XYZ_complex_yeast_2A_linked"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: 2_micron
+
   cassette:
     - promoter: TDH3
+
     - cistron:
-        label: xyz_polyprotein
+        label: X
         expression: high
         chain:
-          - gene:
-              id: mEGFP
-              source: fpbase
+          - tag: GFP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: protein_X
+              id: X
               source: uniprot
-          - linker:
-              type: T2A
-          - gene:
-              id: protein_Y
-              source: uniprot
-          - linker:
-              type: F2A
-          - gene:
-              id: protein_Z
-              source: uniprot
+
+    - spacer: 22
+
+    - cistron:
+        label: T2A_separator
+        fused: false
+        gene:
+          id: T2A
+          source: uniprot
+
+    - spacer: 22
+
+    - cistron:
+        label: Y
+        expression: high
+        fused: false
+        gene:
+          id: Y
+          source: uniprot
+
+    - spacer: 22
+
+    - cistron:
+        label: F2A_separator
+        fused: false
+        gene:
+          id: F2A
+          source: uniprot
+
+    - spacer: 22
+
+    - cistron:
+        label: Z
+        expression: high
+        fused: false
+        gene:
+          id: Z
+          source: uniprot
+
     - terminator: CYC1

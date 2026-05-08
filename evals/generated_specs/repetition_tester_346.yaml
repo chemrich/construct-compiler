@@ -1,30 +1,45 @@
 construct:
-  name: "mammalian_tricistronic_ires_therapeutic"
+  name: "mammalian_tricistronic_IRES_therapeutic"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: puromycin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_protein
+        label: resistance_marker
         expression: high
-        gene:
-          id: P01588
-          source: uniprot
-    - spacer: 588 # Internal Ribosome Entry Site (EMCV IRES) optimized for HEK293
+        chain:
+          - gene:
+              id: PuroR
+              source: uniprot
+
+    # IRES1: EMCV optimized variant (encephalomyocarditis virus)
+    - spacer: 25
+
     - cistron:
         label: fluorescent_reporter
         expression: high
-        fused: false
-        gene:
-          id: mNeonGreen
-          source: fpbase
-    - spacer: 615 # Distinct Internal Ribosome Entry Site (EV71 IRES) to avoid homology
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    # IRES2: FMDV-2A fusion variant (foot-and-mouth disease virus)
+    - spacer: 28
+
     - cistron:
-        label: selection_marker
-        expression: medium
-        fused: false
-        gene:
-          id: P13249
-          source: uniprot
-    - terminator: BGH_pA
+        label: therapeutic_protein
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: IL_2
+              source: uniprot
+
+    - terminator: rrnB_T1

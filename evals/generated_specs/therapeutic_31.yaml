@@ -1,26 +1,27 @@
 construct:
-  name: therapeutic_fusion_secretion
+  name: secreted_therapeutic_fusion_protein
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: therapeutic_fusion
+        label: secreted_fusion
         expression: high
         chain:
-          - tag: signal_peptide  # robust mammalian secretion signal
+          - tag: signal_peptide_IgK  # Ig kappa chain signal peptide for robust secretion
           - gene:
-              id: scFv_anti_CD19  # therapeutic binding domain example
+              id: binding_domain
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: IL2  # effector domain example
+              id: effector_domain
               source: uniprot
+          - tag: His6  # C-terminal His6 for purification
 
     - terminator: SV40_polyA

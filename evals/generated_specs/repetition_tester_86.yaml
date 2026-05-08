@@ -1,22 +1,41 @@
 construct:
-  name: "synonymous_enzyme_operon_anti_recombination"
-  host: e_coli_bl21_de3
+  name: "dual_synonymous_enzyme_operon"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: enzyme_copy_a
+        label: enzyme_v1
         expression: high
-        gene:
-          id: P08515
-          source: uniprot
-    - spacer: 40
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_v1_codon_optimized
+              source: uniprot
+              # Note: User must provide or specify the enzyme UniProt ID
+              # This cistron uses standard codon optimization for E. coli
+
+    - spacer: 30
+
     - cistron:
-        label: enzyme_copy_b
+        label: enzyme_v2_synonymous
         expression: high
-        fused: false  # Ensures independent translation from the same transcript
-        gene:
-          id: P08515  # Identical protein ID to copy_a; synonymous DNA recoding requested to prevent recombination
-          source: uniprot
-    - terminator: T7term
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: enzyme_v2_codon_optimized_alt
+              source: uniprot
+              # Note: This is a fully synonymous variant with alternative codon usage
+              # Same amino acid sequence and expression level, but minimized DNA identity
+              # to prevent recombination and mutation propagation
+
+    - terminator: rrnB_T1

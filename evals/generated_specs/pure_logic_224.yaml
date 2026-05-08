@@ -1,41 +1,50 @@
 construct:
-  name: "mammalian_oscillator_output_z"
+  name: mammalian_oscillatory_feedback_loop
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: EF1_alpha
-    - cistron:
-        label: repressor_tetr
-        expression: medium
-        fused: false
-        chain:
-          - tag: NLS
-          - gene:
-              id: P04483
-              source: uniprot
-    - terminator: BBa_B0015
-    - spacer: 40
     - promoter: CMV
+
     - cistron:
-        label: repressor_laci
-        expression: medium
-        fused: false
-        chain:
-          - tag: NLS
-          - gene:
-              id: P03023
-              source: uniprot
-    - terminator: BBa_B0015
-    - spacer: 40
-    - promoter: CMV
-    - cistron:
-        label: output_z
+        label: Repressor_Y
         expression: high
-        fused: false
         chain:
-          - tag: NLS
+          - tag: HA
           - gene:
-              id: mScarlet
+              id: Krüppel_associated_box_repressor
+              source: uniprot
+
+    - terminator: bGH_polyA
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: Activator_X
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: VP16_activation_domain
+              source: uniprot
+
+    - terminator: bGH_polyA
+
+    - promoter: U6
+
+    - cistron:
+        label: Output_Z
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mCherry
               source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: U6_term

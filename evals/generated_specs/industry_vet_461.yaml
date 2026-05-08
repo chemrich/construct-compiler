@@ -1,16 +1,21 @@
 construct:
-  name: "secreted_goi_production"
+  name: "mammalian_secreted_GOI_His"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: secreted_GOI
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_SP  # N-terminal secretion signal for mammalian ER entry
           - gene:
               id: GOI_secreted
-          - tag: 6xHis
-    - terminator: bGH_pA
+              source: uniprot
+          - tag: 6xHis  # C-terminal His-tag for purification
+
+    - terminator: rrnB_T1

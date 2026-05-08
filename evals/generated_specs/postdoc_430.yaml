@@ -1,23 +1,32 @@
 construct:
-  name: "crispr_repression_system_ecoli"
-  host: e_coli
-  backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+  name: "dCas9_gRNA_repression_system"
+  host: e_coli_bl21
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: dCas9_repressor
-        expression: medium
-        gene:
-          id: dCas9
-          source: uniprot
-    - terminator: T7term
-    - spacer: 50
-    - promoter: J23100  # U6 is a mammalian Pol III promoter; substituted with J23100 for E. coli host
-    - cistron:
-        label: gRNA_expression
-        gene:
-          id: sgRNA
+        label: dCas9
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: dCas9
+              source: uniprot
+
     - terminator: rrnB_T1
+
+  # Note: U6 is a mammalian Pol III promoter and non-functional in E. coli.
+  # Substituting with a bacterial small RNA promoter (glnS) which efficiently
+  # produces guide RNAs in E. coli. For mammalian cells, use U6 instead.
+  cassette_2:
+    - promoter: glnS
+
+    - cistron:
+        label: guide_RNA
+        expression: high
+        gene:
+          id: CRISPR_gRNA_scaffold
+          source: uniprot
+
+    - terminator: T7term

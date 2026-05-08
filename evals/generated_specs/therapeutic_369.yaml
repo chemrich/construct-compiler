@@ -1,18 +1,23 @@
 construct:
-  name: "baculovirus_free_intracellular_scfv"
-  host: sf9
+  name: "insect_scfv_intracellular_expression"
+  host: insect
+
   backbone:
-    resistance: kanamycin # Kanamycin included for E. coli cloning; no eukaryotic selection marker included in cassette per request.
+    resistance: null
     ori: pUC
     source: custom
+
   cassette:
-    - promoter: Actin5C # Non-viral cellular promoter chosen to avoid viral elements (e.g., OpIE2/CMV).
+    - promoter: OpIE2
+
     - cistron:
-        label: intracellular_scfv
+        label: scfv
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: scFv_anti_GFP
+              id: scfv_intracellular
               source: uniprot
-    - terminator: Hsp70_polyA # Non-viral polyadenylation signal.
+
+    - terminator: SV40_polyA

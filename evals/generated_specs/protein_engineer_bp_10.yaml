@@ -1,10 +1,10 @@
-```yaml
 construct:
-  name: "pichia_lipase_secretion_system"
+  name: Pichia_lipase_secretion
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ"
+    resistance: zeocin
     ori: pBR322
     source: addgene
 
@@ -12,15 +12,14 @@ construct:
     - promoter: AOX1
 
     - cistron:
-        label: secreted_lipase
+        label: lipase
         expression: high
         chain:
-          - tag: alpha_MF  # secretion signal for yeast
           - tag: FLAG
           - cleavage_site: Enterokinase
           - gene:
-              id: P29391  # Candida antarctica lipase B
+              id: lipase_codon_optimized_pichia
               source: uniprot
+        secretion_signal: alpha_MF
 
-    - terminator: AOX1_TT
-```
+    - terminator: rrnB_T1

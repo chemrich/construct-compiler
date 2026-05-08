@@ -1,21 +1,24 @@
 construct:
-  name: "secreted_cutinase_bacillus"
+  name: "Bacillus_secreted_cutinase"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
 
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: cutinase_expression
+        label: secreted_cutinase
         expression: high
         chain:
-          - secretion_signal: AmyE
-          - tag: 6xHis
+          - tag: AmyE_signal_peptide
           - cleavage_site: TEV
           - gene:
-              id: P0CT14
+              id: cutinase
               source: uniprot
+          - tag: 6xHis
+
     - terminator: rrnB_T1

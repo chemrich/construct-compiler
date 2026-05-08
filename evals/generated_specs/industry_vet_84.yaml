@@ -1,26 +1,39 @@
 construct:
-  name: "polycistronic_his_tagged_interactors"
-  host: e_coli_bl21_de3
+  name: "dual_protein_P2A_His_tags"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: protein_1
+        label: protein1
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P04637
+              id: protein1
               source: uniprot
-    - spacer: 30 # P2A is replaced by a ribosomal spacer; P2A ribosomal skipping does not function in E. coli.
+    
+    - spacer: 20
+    
     - cistron:
-        label: protein_2
+        label: protein2
         expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
-              id: P19174
+              id: protein2
               source: uniprot
-    - terminator: T7term
+    
+    # Note: P2A peptide sequence should be inserted between protein1 stop codon
+    # and protein2 start codon. This design uses a 20bp spacer as placeholder;
+    # in practice, the P2A coding sequence (~57 bp) should replace or extend this spacer.
+    # Post-translational cleavage at P2A will yield two independent proteins.
+    
+    - terminator: rrnB_T1

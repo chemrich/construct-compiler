@@ -1,19 +1,24 @@
 construct:
-  name: "cytokine_y_secretion_hek293"
+  name: "CytokineY_secretion_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: CytokineY_secreted
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IL2
           - tag: Myc
           - gene:
               id: CytokineY
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: SV40_polyA

@@ -1,27 +1,26 @@
 construct:
-  name: "P1_P2_polyprotein_fusion"
+  name: "P1_P2_polyprotein_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: P1_peptide
+        label: polyprotein
         expression: high
-        gene:
-          id: P1
-          source: uniprot
-    - cistron:
-        label: P2_peptide
-        expression: high
-        fused: true
         chain:
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - cleavage_site: TEV  # Cleavage site for post-translational processing
+          - tag: 6xHis
+          - gene:
+              id: P1
+              source: uniprot
+          - cleavage_site: 3C
           - gene:
               id: P2
               source: uniprot
-    - terminator: BBa_B0015
+          - cleavage_site: 3C
+          - tag: FLAG
+
+    - terminator: rrnB_T1

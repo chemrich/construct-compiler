@@ -1,22 +1,25 @@
 construct:
-  name: "phage_display_library_pIII"
+  name: phage_display_pelb_geneIII_library
   host: e_coli
+  
   backbone:
     resistance: ampicillin
-    ori: pBR322 # Standard dsDNA origin for phagemids; f1 origin for ssDNA production is standard in these vectors
-    source: custom
+    ori: f1
+    source: addgene
+  
   cassette:
-    - promoter: lac
+    - promoter: lacUV5
+    
     - cistron:
-        label: pIII_display_fusion
-        expression: medium
+        label: display_fusion
+        expression: high
         chain:
-          - tag: PelB
-          - tag: random_peptide_library
+          - tag: PelB_signal
           - linker:
               type: GS_flexible
-              repeats: 1
+              repeats: 3
           - gene:
-              id: P69168
+              id: gene_III_minor_coat
               source: uniprot
+    
     - terminator: rrnB_T1

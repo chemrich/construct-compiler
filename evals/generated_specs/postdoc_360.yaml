@@ -1,16 +1,28 @@
 construct:
-  name: "secreted_mammalian_cytokine_ecoli"
-  host: e_coli_bl21_de3
+  name: "mammalian_cytokine_ecoli_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-22b(+)" # pET-22b(+) is used for its pelB leader sequence to facilitate periplasmic secretion in E. coli
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: cytokine_secretion
-        expression: medium
+        label: cytokine
+        expression: high
         chain:
-          - tag: pelB # Using pelB signal peptide to direct protein to the E. coli periplasm, mimicking mammalian secretion
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: IL2_HUMAN
+              id: uniprot_id_required
               source: uniprot
-    - terminator: T7term
+              # NOTE: E. coli lacks the mammalian secretory machinery (ER/Golgi).
+              # A mammalian signal peptide alone will NOT enable secretion in E. coli.
+              # For soluble cytoplasmic expression, remove the signal peptide.
+              # For periplasmic export, use an OmpA or PelB signal peptide instead.
+              # For inclusion bodies + refolding, no signal peptide is needed.
+
+    - terminator: rrnB_T1

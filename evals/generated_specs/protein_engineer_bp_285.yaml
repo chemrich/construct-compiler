@@ -1,19 +1,24 @@
 construct:
-  name: "bacillus_intracellular_protease_sumo"
+  name: bacillus_protease_sumo_tev
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pspac
+
     - cistron:
-        label: protease_target
+        label: protease_sumo
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: subtilisin_E
+              id: subtilisin
               source: uniprot
+
     - terminator: rrnB_T1

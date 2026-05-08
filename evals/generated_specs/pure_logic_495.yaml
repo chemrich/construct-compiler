@@ -1,27 +1,58 @@
 construct:
-  name: "yeast_high_gain_cascade"
+  name: "yeast_signal_amplification_cascade"
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: CYC1  # Weak basal promoter representing the sensitive InputSignal stage
+    - promoter: GAL1
+
     - cistron:
-        label: activator
-        expression: low
-        gene:
-          id: GAL4
-          source: uniprot
-    - terminator: CYC1_term
-    - promoter: GAL1  # Strong inducible promoter for stage 2 high-gain amplification
+        label: InputSignal
+        expression: very_low
+        chain:
+          - gene:
+              id: "P65_transactivator"
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: GAL4_UAS
+
     - cistron:
-        label: output_stage
+        label: AmplifierStage
         expression: high
         chain:
-          - solubility_tag: SUMO
-          - cleavage_site: TEV
           - gene:
-              id: OutputEnzymeZ
+              id: "VP16_activation_domain"
               source: uniprot
-    - terminator: ADH1_term
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: GAL1_strong
+
+    - cistron:
+        label: OutputEnzymeZ
+        expression: high
+        chain:
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: "ADH1"
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

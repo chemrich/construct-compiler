@@ -1,15 +1,21 @@
 construct:
-  name: "protein_k_native_production"
-  host: e_coli_bl21_de3
+  name: "ProteinK_native_high_expression"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: ProteinK
         expression: high
-        gene:
-          id: ProteinK
-          source: uniprot
-    - terminator: T7term # Added per system rule 10 requiring a terminator for construct validity despite prompt request
+        chain:
+          - gene:
+              id: ProteinK
+              source: uniprot
+
+    - terminator: rrnB_T1

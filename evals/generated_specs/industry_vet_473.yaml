@@ -1,25 +1,29 @@
 construct:
-  name: dual_inducible_expression_system
+  name: dual_inducible_mammalian_expression
   host: HEK293
-  backbone:
-    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G
+    - promoter: TRE_tight
+      # Tet-On inducible promoter for first gene
+
     - cistron:
-        label: target_gene_a
+        label: GeneA
         expression: high
-        fused: false
         gene:
           id: GeneA
           source: uniprot
-    - terminator: bGH_pA
-    - spacer: 50
-    - promoter: pCMV_CuO
+
+    - terminator: SV40_polyA
+
+  cassette:
+    - promoter: CMV_IE
+      # Independent constitutive/regulatable promoter for second gene
+
     - cistron:
-        label: target_gene_b
+        label: GeneB
         expression: high
-        fused: false
         gene:
           id: GeneB
           source: uniprot
-    - terminator: SV40_pA
+
+    - terminator: SV40_polyA

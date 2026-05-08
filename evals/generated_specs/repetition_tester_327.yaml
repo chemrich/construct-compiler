@@ -1,29 +1,45 @@
 construct:
-  name: "yeast_orthogonal_3x_sgRNA_array"
+  name: "yeast_triple_sgRNA_non_homologous_scaffolds"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: SNR52
-    - cistron:
-        label: sgRNA_ortholog_1
-        fused: false
-        gene:
-          id: SpCas9_sgRNA_scaffold
-    - spacer: 30
-    - promoter: RPR1
-    - cistron:
-        label: sgRNA_ortholog_2
-        fused: false
-        gene:
-          id: SaCas9_sgRNA_scaffold
-    - spacer: 30
     - promoter: U6
-    - cistron:
-        label: sgRNA_ortholog_3
-        fused: false
+      cistron:
+        label: sgRNA_1
+        expression: high
         gene:
-          id: St1Cas9_sgRNA_scaffold
-    - terminator: SUP4
+          id: sgRNA_scaffold_S_cerevisiae_native
+          source: uniprot
+        # Guide sequence targeting Gene A: GATTACAGATCTACGATCTA
+        # Note: guide sequence variable, scaffold from native S. cerevisiae U6 transcript
+
+    - spacer: 25
+
+    - promoter: SNR52
+      cistron:
+        label: sgRNA_2
+        expression: high
+        gene:
+          id: sgRNA_scaffold_synthetic_variant_A
+          source: uniprot
+        # Guide sequence targeting Gene B: GCTAGCTAGCTAGCTAGCTA
+        # Note: scaffold derived from synthetic optimized variant with non-homologous sequence context
+
+    - spacer: 25
+
+    - promoter: RPR1
+      cistron:
+        label: sgRNA_3
+        expression: high
+        gene:
+          id: sgRNA_scaffold_human_U6_ortholog
+          source: uniprot
+        # Guide sequence targeting Gene C: ATCGATCGATCGATCGATCG
+        # Note: scaffold from human U6 RNA pol III promoter region, orthologous but non-recombining with yeast scaffolds
+
+    - terminator: rrnB_T1

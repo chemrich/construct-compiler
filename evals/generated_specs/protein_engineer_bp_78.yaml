@@ -1,22 +1,27 @@
 construct:
-  name: "pichia_interferon_expression_system"
+  name: Pichia_interferon_secretion_system
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PAOX1
-      cistron:
-        label: interferon_production
+
+    - cistron:
+        label: interferon
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: 6xHis
+          - secretion_signal: alpha_factor
           - gene:
-              id: IFNA2
+              id: IFN_alpha
               source: uniprot
           - linker:
               type: rigid_EAAAK
               repeats: 3
-          - tag: 6xHis
-      terminator: AOX1_TT
+
+    - terminator: CYC1

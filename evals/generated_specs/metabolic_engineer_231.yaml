@@ -1,57 +1,82 @@
 construct:
-  name: "metabolic_precursor_six_enzyme_operon"
+  name: "six_enzyme_metabolic_pathway_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # High-strength constitutive promoter for balanced expression
+    - promoter: tac
+
     - cistron:
-        label: enz_A
+        label: PrecursorA
+        expression: high
+        chain:
+          - gene:
+              id: PrecursorA
+              source: uniprot
+              codon_optimization: e_coli
+
+    - spacer: 25
+
+    - cistron:
+        label: PrecursorB
         expression: high
         fused: false
-        gene:
-          id: PrecursorA
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: PrecursorB
+              source: uniprot
+              codon_optimization: e_coli
+
+    - spacer: 25
+
     - cistron:
-        label: enz_B
+        label: PrecursorC
         expression: high
         fused: false
-        gene:
-          id: PrecursorB
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: PrecursorC
+              source: uniprot
+              codon_optimization: e_coli
+
+    - spacer: 25
+
     - cistron:
-        label: enz_C
+        label: PrecursorD
         expression: high
         fused: false
-        gene:
-          id: PrecursorC
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: PrecursorD
+              source: uniprot
+              codon_optimization: e_coli
+
+    - spacer: 25
+
     - cistron:
-        label: enz_D
+        label: PrecursorE
         expression: high
         fused: false
-        gene:
-          id: PrecursorD
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: PrecursorE
+              source: uniprot
+              codon_optimization: e_coli
+
+    - spacer: 25
+
     - cistron:
-        label: enz_E
+        label: PrecursorF
         expression: high
         fused: false
-        gene:
-          id: PrecursorE
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: enz_F
-        expression: high
-        fused: false
-        gene:
-          id: PrecursorF
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: PrecursorF
+              source: uniprot
+              codon_optimization: e_coli
+
+    - terminator: rrnB_T1

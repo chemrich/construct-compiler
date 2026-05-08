@@ -1,20 +1,22 @@
-```yaml
 construct:
-  name: "optogenetic_BLRP_LightGene"
+  name: optogenetic_LightGene_blue_responsive
   host: e_coli
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
-    - promoter: BLRP  # Blue Light Responsive Promoter
+    - promoter: BLRP  # Blue-light responsive promoter
 
     - cistron:
-        label: target
+        label: LightGene
         expression: high
-        gene:
-          id: LightGene
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LightGene
+              source: uniprot
 
     - terminator: rrnB_T1
-```

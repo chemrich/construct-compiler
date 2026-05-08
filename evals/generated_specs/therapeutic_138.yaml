@@ -1,32 +1,40 @@
 construct:
-  name: "yeast_synthetic_vlp_antigen_display"
+  name: "yeast_VLP_therapeutic_antigen_display"
   host: yeast
+
   backbone:
-    # Kanamycin used for E. coli cloning; yeast selection typically uses auxotrophic markers not listed in schema.
-    resistance: kanamycin
-    ori: pUC
+    resistance: hygromycin
+    ori: 2micron
     source: addgene
+
   cassette:
-    - promoter: GPD
+    - promoter: GAL1
+
     - cistron:
-        label: vlp_scaffold_subunit
+        label: VLP_structural
         expression: high
         chain:
           - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: P0A6D2 # Thermotoga maritima I3-01 synthetic VLP scaffold
+              id: gag
               source: uniprot
-    - spacer: 40
+        # gag = viral-like particle structural protein (e.g., from Ty or similar non-human virus)
+
+    - spacer: 30
+
     - cistron:
-        label: therapeutic_antigen_fusion
+        label: antigen_fusion
         expression: high
         fused: false
         chain:
-          - tag: FLAG
+          - tag: Strep-II
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
-              id: Q15116 # Human PD-1 therapeutic antigen
+              id: therapeutic_antigen
               source: uniprot
-    - terminator: CYC1
+        # Independent translation of antigen fusion protein with purification tag
+
+    - terminator: rrnB_T1

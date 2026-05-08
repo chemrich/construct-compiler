@@ -1,19 +1,22 @@
 construct:
-  name: "pichia_yeast_surface_display_nanobody"
+  name: pichia_surface_display_nanobody
   host: yeast
+
   backbone:
     resistance: zeocin
-    ori: pUC
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: surface_display_fusion
+        label: surface_display
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_tag: alpha_factor_prepro
           - gene:
-              id: target_nanobody
+              id: nanobody
               source: uniprot
           - linker:
               type: GS_flexible
@@ -21,5 +24,6 @@ construct:
           - gene:
               id: Aga2p
               source: uniprot
-          - tag: c-Myc
-    - terminator: AOX1_term
+          - tag: c_Myc
+
+    - terminator: rrnB_T1

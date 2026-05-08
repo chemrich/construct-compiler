@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_aox1_nanobody_secretion"
+  name: pichia_nanobody_secretion
   host: yeast
+  
   backbone:
     resistance: zeocin
-    ori: pUC
-    source: addgene
+    ori: 2micron
+    source: standard
+  
   cassette:
     - promoter: AOX1
+    
     - cistron:
-        label: secreted_nanobody
+        label: nanobody
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: 6xHis
           - cleavage_site: TEV
+          - secretion_signal: alpha_factor
           - gene:
-              id: VHH
-              source: uniprot
-    - terminator: AOX1_term
+              id: nanobody_pichia_codon_optimized
+              source: custom
+    
+    - terminator: CYC1

@@ -1,16 +1,25 @@
 construct:
-  name: "scFv_AOX1_extracellular_production"
+  name: "scFv_secretion_Pichia_pastoris"
   host: yeast
+
   backbone:
-    catalog_vector: "pPIC9"
+    catalog_vector: "pPICZαA"
+    resistance: zeocin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: AOX1
-      cistron:
-        label: scFv_secretion
+
+    - cistron:
+        label: scFv_secreted
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: scFv_novel
+              id: scFv_codon_optimized_pichia
+              source: custom
+          - cleavage_site: Kex2
           - tag: 6xHis
-      terminator: AOX1_term
+
+    - terminator: CYC1

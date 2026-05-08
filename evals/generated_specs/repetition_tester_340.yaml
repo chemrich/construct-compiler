@@ -1,25 +1,31 @@
 construct:
-  name: human_scfv_dual_tag_diverse_linkers
-  host: e_coli_bl21
+  name: "scFv_dual_tag_optimized"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: scfv_target
+        label: scFv_with_tags
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - tag: Strep-II
           - linker:
-              type: rigid_EAAAK
-              repeats: 3
+              sequence: "GGGSSGGGSGGG"
           - gene:
-              id: P01730  # Human Ig heavy chain V-I region EU; representing the scFv framework
+              id: scFv_human
+              codon_optimization: true
+              optimization_settings:
+                avoid_repeats: true
+                target_gc: 0.50
+                minimize_homopolymer_runs: true
               source: uniprot
-    - terminator: T7term  # Standard T7 terminator for pET vectors
-# Note: Distinct linker types (GS_flexible and rigid_EAAAK) are used to ensure no DNA homology.
-# The compiler will perform host-specific codon optimization for E. coli BL21 with repeat minimization.
+
+    - terminator: rrnB_T1

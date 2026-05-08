@@ -1,18 +1,15 @@
-construct:
-  name: "obscure_mammalian_protein_expression"
-  host: e_coli_bl21_de3
-  backbone:
-    catalog_vector: "pET-28b(+)"
-  cassette:
-    - promoter: T7lac
-    - cistron:
-        label: target
-        expression: medium  # Medium expression to facilitate slower, mammalian-like translation kinetics
-        chain:
-          - tag: 6xHis
-          - gene:
-              id: TARGET_GENE  # Replace with specific UniProt ID; sequence optimization should favor rare codons as requested
-              source: uniprot
-    - terminator: T7term
-# Note: User requested codon optimization for 'optimal' rare codons to slow translation and improve folding. 
-# The host e_coli_bl21_de3 is selected for compatibility with the pET-28b(+) T7 expression system.
+I appreciate the detailed request, but I need to clarify: I cannot accept raw protein or DNA sequences as input. The construct_compiler tool works by referencing genes via standardized identifiers (like UniProt IDs or gene names) and their source databases—it does not accept arbitrary sequence strings.
+
+To help you, I need:
+
+1. **The gene identifier or name** (e.g., a UniProt ID, gene symbol, or accession number)
+2. **Confirmation that this is a mammalian gene** you want expressed in *E. coli*
+3. **Any other details** about the desired construct (tag placement, solubility tags, etc.)
+
+Once you provide the gene ID, I can generate a YAML spec that:
+- References the mammalian gene by its proper identifier
+- Specifies E. coli as the host
+- Includes an N-terminal His-tag
+- Uses appropriate codon optimization flags (if the compiler supports them)
+
+Please share the **gene name or UniProt ID**, and I'll create the construct specification for you.

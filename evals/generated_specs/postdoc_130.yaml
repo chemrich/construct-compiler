@@ -1,24 +1,33 @@
 construct:
-  name: "yeast_coexpression_proteinA_proteinB"
+  name: ProteinA_ProteinB_yeast_dual_promoter
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: protein_a
+        label: ProteinA
         expression: high
         gene:
           id: ProteinA
           source: uniprot
+
     - terminator: CYC1
-    - promoter: TEF1
+
+    - spacer: 100
+
+    - promoter: GAL10
+
     - cistron:
-        label: protein_b
+        label: ProteinB
         expression: high
         gene:
           id: ProteinB
           source: uniprot
-    - terminator: ADH1
+
+    - terminator: CYC1

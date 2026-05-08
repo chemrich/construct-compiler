@@ -1,17 +1,24 @@
 construct:
-  name: human_tp53_expression_ecoli
+  name: human_gene_his_myc_expression
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - tag: Myc
           - gene:
-              id: P04637 # Defaulted to human TP53 as no specific gene name was provided in the prompt
+              id: human_codon_optimized
               source: uniprot
-    - terminator: T7term # The request for human codon optimization in E. coli is noted; however, optimization parameters are handled by the compiler logic and are not explicit fields in the YAML spec.
+              # Note: Gene ID should be replaced with actual UniProt accession or gene symbol.
+              # Codon optimization for human expression requested; compiler will apply
+              # human codon optimization despite E. coli host selection.
+
+    - terminator: rrnB_T1

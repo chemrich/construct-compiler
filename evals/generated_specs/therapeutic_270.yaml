@@ -1,18 +1,26 @@
 construct:
-  name: "ER_retained_therapeutic_IL10"
+  name: "ER_retained_therapeutic_protein_HEK293"
   host: HEK293
+
   backbone:
-    resistance: none # User requested no antibiotic resistance genes; note that this requires alternative selection methods for plasmid maintenance.
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector; no antibiotic resistance
+
   cassette:
     - promoter: EF1_alpha
+      # Strong, constitutive non-viral mammalian promoter
+
     - cistron:
-        label: therapeutic_payload
+        label: therapeutic_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: P22301
+              id: IGHG1
+              # Using IgG1 as representative therapeutic protein; customize with specific protein ID
               source: uniprot
-          - tag: KDEL
-    - terminator: hGH_polyA
+          - er_retention_signal: KDEL
+            # C-terminal KDEL motif for ER retention
+
+    - terminator: rrnB_T1

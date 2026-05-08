@@ -1,16 +1,24 @@
 construct:
-  name: "tobacco_virus_coat_protein_expression"
-  host: tobacco
+  name: "tobacco_mosaic_virus_coat_protein"
+  host: plant
+  
   backbone:
+    catalog_vector: "pTRA"
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: CaMV_35S
+    
     - cistron:
-        label: virus_coat_protein
+        label: coat_protein
         expression: high
-        gene:
-          id: P03576
-          source: uniprot
-    - terminator: NOS
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: TMV_coat_protein
+              source: uniprot
+    
+    - terminator: nos_polya

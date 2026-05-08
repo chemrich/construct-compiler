@@ -1,26 +1,17 @@
 construct:
-  name: "pET28_IMAC_MBP_TEV_mEGFP_mCherry_reporter"
-  host: e_coli_bl21_de3
+  name: purifiable_eGFP
+  host: e_coli_bl21
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: target
+        label: eGFP
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
-    - spacer: 30
-    - cistron:
-        label: reporter
-        expression: low
-        fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+    - terminator: rrnB_T1

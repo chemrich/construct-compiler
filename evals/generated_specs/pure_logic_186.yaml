@@ -1,14 +1,41 @@
 construct:
-  name: "sharp_threshold_detector_circuit"
-  host: e_coli_bl21_de3
+  name: threshold_detector_circuit
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
+
   cassette:
-    - promoter: T7lac # T7lac provides a sharp, all-or-nothing threshold response in BL21(DE3) strains upon IPTG induction
+    - promoter: T7lac
+
     - cistron:
-        label: Reporter_Protein
+        label: sensor_protein
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LacI
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: reporter_protein
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: cooperative_activator
+        expression: medium
+        chain:
+          - gene:
+              id: AraC
+              source: uniprot
+
+    - terminator: rrnB_T1

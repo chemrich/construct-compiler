@@ -1,23 +1,27 @@
 construct:
-  name: "Yeast_ACT1_mEGFP_C_Terminal_Fusion"
+  name: yeast_protein_GFP_fusion
   host: yeast
+
   backbone:
     resistance: LEU2
-    ori: 2_micron
+    ori: 2-micron
     source: addgene
+
   cassette:
     - promoter: ADH1
+
     - cistron:
-        label: target_fusion
+        label: fusion_protein
         expression: high
         chain:
           - gene:
-              id: P60010
+              id: your_protein
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: ADH1_term
+
+    - terminator: rrnB_T1

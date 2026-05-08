@@ -1,24 +1,73 @@
 construct:
-  name: "genetic_binary_adder_poc"
+  name: "binary_adder_logic_circuit"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD # Representative logic surrogate for SUM output (A XOR B)
+    - promoter: araBAD
+      label: "input_A_sensor"
+      # Arabinose-inducible promoter represents binary input A
+    
     - cistron:
-        label: SUM_reporter
+        label: "TF_A"
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: tac # Representative logic surrogate for CARRY output (A AND B)
+
+    - spacer: 25
+
+    - promoter: rhamnose
+      label: "input_B_sensor"
+      # Rhamnose-inducible promoter represents binary input B
+    
     - cistron:
-        label: CARRY_reporter
+        label: "TF_B"
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: rhaR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 25
+
+    - promoter: custom_and_gate
+      label: "SUM_output"
+      # AND-NOT gate: (A AND NOT B) OR (NOT A AND B)
+
+    - cistron:
+        label: "SUM_reporter"
+        expression: high
+        fused: false
         gene:
-          id: mScarlet
+          id: sfGFP
           source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1
+
+    - spacer: 25
+
+    - promoter: custom_carry_gate
+      label: "CARRY_output"
+      # AND gate: A AND B
+
+    - cistron:
+        label: "CARRY_reporter"
+        expression: high
+        fused: false
+        gene:
+          id: mCherry
+          source: fpbase
+
+    - terminator: rrnB_T1

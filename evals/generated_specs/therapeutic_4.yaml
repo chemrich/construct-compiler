@@ -1,10 +1,10 @@
-```yaml
 construct:
-  name: dCas9_KRAB_gRNA_knockdown_system
+  name: dCas9_KRAB_gRNA_mammalian
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
@@ -13,26 +13,29 @@ construct:
         label: dCas9_KRAB
         expression: high
         chain:
+          - tag: NLS
           - gene:
-              id: P0DMV0  # dCas9 (catalytically dead Cas9)
+              id: dCas9
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P51608  # KRAB domain from KOX1
+              id: KRAB
               source: uniprot
+          - tag: NLS
 
     - terminator: rrnB_T1
 
-    - promoter: U6  # RNA Pol III promoter for gRNA
+    # Second cassette for gRNA expression using Pol III promoter
+    - promoter: U6
 
     - cistron:
         label: gRNA
         expression: high
+        fused: false
         gene:
-          id: guide_RNA_scaffold  # Cas9 gRNA scaffold
-          source: addgene
+          id: gRNA_scaffold
+          source: uniprot
 
-    - terminator: rrnB_T1
-```
+    - terminator: BBa_B0015

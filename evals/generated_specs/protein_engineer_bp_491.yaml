@@ -1,17 +1,20 @@
 construct:
-  name: "pichia_bispecific_scfv_expression"
+  name: "pichia_bispecific_scFv_AOX1"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: bispecific_antibody
+        label: bispecific_scFv
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal_peptide
           - gene:
               id: scFv1
               source: uniprot
@@ -21,6 +24,7 @@ construct:
           - gene:
               id: scFv2
               source: uniprot
-          - tag: c-Myc
+          - tag: c_Myc
           - tag: 6xHis
-    - terminator: AOX1_terminator
+
+    - terminator: rrnB_T1

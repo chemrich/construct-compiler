@@ -1,54 +1,86 @@
 construct:
-  name: "yeast_methionine_pathway_multigene"
+  name: "Met_pathway_5enzyme_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pYES2"
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: metA_metB_coexpression
+        label: MetA
         expression: high
         chain:
           - gene:
               id: MetA
               source: uniprot
           - tag: Strep-II
-          - linker:
-              type: P2A
+
+    - spacer: 30
+
+    - cistron:
+        label: 2A_peptide
+        expression: high
+        fused: false
+        gene:
+          id: T2A
+          source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: MetB
+        expression: high
+        chain:
           - gene:
               id: MetB
               source: uniprot
           - tag: Strep-II
+
     - terminator: CYC1
+
+  cassette_2:
     - promoter: CUP1
+
     - cistron:
-        label: metC_expression
+        label: MetC
         expression: medium
         chain:
           - gene:
               id: MetC
               source: uniprot
           - tag: Strep-II
+
     - terminator: CYC1
+
+  cassette_3:
     - promoter: CUP1
+
     - cistron:
-        label: metD_expression
+        label: MetD
         expression: medium
         chain:
           - gene:
               id: MetD
               source: uniprot
           - tag: Strep-II
+
     - terminator: CYC1
+
+  cassette_4:
     - promoter: CUP1
+
     - cistron:
-        label: metE_expression
+        label: MetE
         expression: medium
         chain:
           - gene:
               id: MetE
               source: uniprot
           - tag: Strep-II
+
     - terminator: CYC1

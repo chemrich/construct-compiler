@@ -1,16 +1,20 @@
 construct:
-  name: "baculovirus_human_viral_protein_expression"
-  host: Sf9 # Sf9 insect cells are standard for baculovirus expression systems
+  name: baculovirus_viral_protein_expression
+  host: insect
+  
   backbone:
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: polh # Strong polyhedrin promoter for baculovirus
+    - promoter: polyhedrin
+    
     - cistron:
-        label: viral_target
+        label: viral_protein
         expression: high
         gene:
-          id: P03366 # Example: HIV-1 Gag protein
+          id: viral_protein
           source: uniprot
+    
     - terminator: SV40_polyA

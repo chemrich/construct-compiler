@@ -1,24 +1,24 @@
 construct:
-  name: "PeriplasmicProtein_Secretion_lambdaPL"
+  name: "PeriplasmicProtein_pelB_secretion"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23106
+    - promoter: lambda_P_L
+      # Temperature-inducible via cI857 repressor (heat inactivation at ~42°C)
+
     - cistron:
-        label: repressor
-        gene:
-          id: cI857
-          source: uniprot
-    - spacer: 40
-    - promoter: lambda_PL
-    - cistron:
-        label: secreted_target
+        label: periplasmic_target
         expression: high
         chain:
           - tag: pelB
+            # N-terminal pelB leader sequence for periplasmic targeting/secretion
           - gene:
               id: PeriplasmicProtein
               source: uniprot
+
     - terminator: rrnB_T1

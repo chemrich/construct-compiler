@@ -1,31 +1,44 @@
 construct:
-  name: bacterial_trimeric_complex
-  host: e_coli
+  name: "bacterial_complex_subunits_polycistronic"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: subunit_1
-        expression: medium
-        gene:
-          id: Subunit1
-          source: uniprot
+        label: Subunit1
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Subunit1
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: subunit_2
-        expression: medium
+        label: Subunit2
+        expression: high
         fused: false
-        gene:
-          id: Subunit2
-          source: uniprot
+        chain:
+          - gene:
+              id: Subunit2
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: subunit_3
-        expression: medium
+        label: Subunit3
+        expression: high
         fused: false
-        gene:
-          id: Subunit3
-          source: uniprot
+        chain:
+          - gene:
+              id: Subunit3
+              source: uniprot
+
     - terminator: rrnB_T1

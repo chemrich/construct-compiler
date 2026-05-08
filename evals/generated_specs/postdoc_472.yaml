@@ -1,18 +1,25 @@
 construct:
-  name: "aggregator_solubility_enhancement"
+  name: "Aggregator_solubility_enhanced"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: aggregator_target
+        label: Aggregator_soluble
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
               id: Aggregator
               source: uniprot
           - tag: Myc
-    - terminator: T7term
+
+    - terminator: rrnB_T1

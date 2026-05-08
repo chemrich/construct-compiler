@@ -1,16 +1,24 @@
 construct:
-  name: "lysosomal_ERT_GAA_delivery"
+  name: "lysosomal_enzyme_ERT_construct"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: alpha_glucosidase
+        label: lysosomal_enzyme
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
           - gene:
-              id: P10253
+              id: GLA
               source: uniprot
-    - terminator: bGH_PA
+          - tag: KFERQ
+          # KFERQ is a lysosomal targeting motif; alternatively could use M6P (mannose-6-phosphate)
+          # for N-glycosylation-dependent lysosomal sorting via M6P receptor pathway
+
+    - terminator: rrnB_T1

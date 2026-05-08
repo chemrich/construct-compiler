@@ -1,15 +1,40 @@
 construct:
-  name: "proportional_controller_sfGFP"
-  host: e_coli
+  name: proportional_controller_graded_response
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Graded response promoter for proportional control with L-arabinose
+    - promoter: araBAD
+      # araBAD provides graded, dose-dependent response to L-arabinose
+      # enabling proportional control over a wide dynamic range
+
+    - cistron:
+        label: input_sensor
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+              # araC encodes the arabinose operon regulatory protein
+              # enables graded transcriptional response
+
+    - spacer: 30
+
     - cistron:
         label: output_reporter
-        expression: medium  # Represents a medium-strength RBS for tunable dynamic range
-        gene:
-          id: sfGFP
-          source: fpbase
+        expression: medium
+        # medium expression level balances signal and metabolic burden
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+              # mNeonGreen provides bright, tunable fluorescent output
+              # proportional to input arabinose concentration
+
     - terminator: rrnB_T1

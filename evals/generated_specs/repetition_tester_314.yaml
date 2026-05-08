@@ -1,22 +1,29 @@
 construct:
-  name: "yeast_tandem_secretion_sfGFP"
+  name: "tandem_secretion_signal_enhanced_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: alpha_factor_prepro
+          - secretion_signal: alpha_factor_prepro
           - linker:
-              type: short_GS
-              repeats: 1
-          - tag: SUC2_signal
+              type: custom_GGSGGS
+              sequence: GGTGGTAGTGGTTCT
+          - secretion_signal: Suc2_signal
+          - linker:
+              type: custom_APAQ
+              sequence: GCTCCAGCTCAAGCT
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: CYC1_terminator
+              id: target_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

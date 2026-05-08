@@ -1,14 +1,17 @@
 construct:
-  name: "yeast_mystery_protein_localization"
+  name: MysteryProtein_mCherry_yeast
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
           - gene:
@@ -16,8 +19,9 @@ construct:
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

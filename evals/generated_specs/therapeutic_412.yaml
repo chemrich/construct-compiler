@@ -1,16 +1,44 @@
 construct:
-  name: "CAR_T_mammalian_expression_construct"
+  name: CAR_T_single_chain_expression
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: CAR_receptor
+        label: CAR
         expression: high
         chain:
-          - tag: FLAG  # Purification and detection tag for quality control
+          - tag: FLAG
           - gene:
-              id: P01732 # Human CD8 alpha, providing the signal peptide and transmembrane domain
+              id: SP_CD8alpha
               source: uniprot
-    - terminator: bGH_polyA
+          - gene:
+              id: scFv_targeting_domain
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD8alpha_hinge
+              source: uniprot
+          - gene:
+              id: CD28_transmembrane
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: CD3zeta_ITAM
+              source: uniprot
+          - gene:
+              id: CD28_costimulatory_domain
+              source: uniprot
+          - tag: 8xHis
+
+    - terminator: SV40_polyA

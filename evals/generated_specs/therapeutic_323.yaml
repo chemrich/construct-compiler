@@ -1,22 +1,45 @@
 construct:
-  name: "synthetic_TCR_alpha_beta_coexpression"
-  host: mammalian
+  name: bicistronic_TCR_alpha_beta_HEK293
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: ampicillin
+    ori: pUC
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: "tcr_alpha"
+        label: TCR_alpha
         expression: high
-        gene:
-          id: TRAC
-          source: uniprot
-    - spacer: 20
+        chain:
+          - tag: HA
+          - gene:
+              id: TCR_alpha_chain
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: "tcr_beta"
+        label: IRES_2A_linker
         expression: high
         fused: false
-        gene:
-          id: TRBC1
-          source: uniprot
-    - terminator: BGH_polyA
+        chain:
+          - gene:
+              id: P2A_self_cleaving_peptide
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: TCR_beta
+        expression: high
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: TCR_beta_chain
+              source: uniprot
+
+    - terminator: rrnB_T1

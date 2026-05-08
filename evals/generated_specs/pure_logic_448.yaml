@@ -1,16 +1,42 @@
 construct:
-  name: "xnor_logic_gate"
-  host: e_coli
+  name: "XNOR_logic_gate"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Synthetic promoter acting as an XNOR gate (active when inputs A and B are both present or both absent)
+    - promoter: araBAD
+
+    - cistron:
+        label: input_A
+        expression: medium
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: input_B
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: output_Z
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: gfp
+              source: fpbase
+
     - terminator: rrnB_T1

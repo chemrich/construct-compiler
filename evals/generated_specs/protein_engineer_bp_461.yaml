@@ -1,20 +1,24 @@
 construct:
-  name: "bacillus_amylase_secretion_optimization"
+  name: "Bacillus_amylase_secretion_optimized"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: amylase_expression
+        label: secreted_amylase
         expression: high
         chain:
-          - tag: AmyE
           - tag: Strep-II
           - cleavage_site: TEV
+          - secretion_signal: AmyE
           - gene:
-              id: amyL
+              id: amylase_codon_optimized
               source: uniprot
+
     - terminator: rrnB_T1

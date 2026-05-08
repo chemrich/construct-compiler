@@ -1,22 +1,22 @@
 construct:
-  name: "human_transmembrane_inducible_nonviral"
+  name: "human_TM_protein_structural_bio_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: custom
+
   cassette:
-    - promoter: TRE  # Inducible Tetracycline Response Element, non-viral origin
+    - promoter: EF1_alpha
+
     - cistron:
-        label: target_receptor
+        label: TM_protein
         expression: high
         chain:
-          - tag: IgK_leader  # Signal peptide for ER insertion/transmembrane targeting
+          - signal_peptide: SP_KDEL  # ER signal peptide for transmembrane insertion
           - gene:
-              id: ADRB2
+              id: human_TM_protein
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - tag: 8xHis  # C-terminal purification tag
-    - terminator: hGH_pA  # Human growth hormone polyadenylation signal, non-viral
+
+    - polyadenylation_signal: SV40_pA  # Standard mammalian poly(A) signal, non-viral alternative

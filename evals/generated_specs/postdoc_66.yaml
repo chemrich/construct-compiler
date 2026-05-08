@@ -1,16 +1,22 @@
 construct:
-  name: "SmallPeptide_GST_Fusion"
-  host: e_coli_bl21_de3  # Using e_coli_bl21_de3 to provide T7 polymerase for the T7lac promoter
+  name: "SmallPeptide_GST_highsolubility"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: SmallPeptide
         expression: high
         chain:
           - solubility_tag: GST
           - gene:
               id: SmallPeptide
+              source: uniprot
+
     - terminator: rrnB_T1

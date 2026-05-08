@@ -1,24 +1,32 @@
 construct:
-  name: "dual_luciferase_reporter_mammalian"
+  name: dual_luciferase_reporter_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: CMV  # Represents the test promoter (placeholder)
+    - promoter: CMV
+    
     - cistron:
         label: firefly_luciferase
         expression: high
-        gene:
-          id: P13127
-          source: uniprot
-    - terminator: SV40_polyA
-    - spacer: 100
-    - promoter: EF1_alpha  # Constitutive control promoter
+        chain:
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+        poly_a: true
+
+    - promoter: EF1_alpha
+
     - cistron:
         label: renilla_luciferase
-        expression: medium
+        expression: high
         fused: false
-        gene:
-          id: P27652
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: Renilla_reniformis_luciferase
+              source: uniprot
+        poly_a: true
+
+    - terminator: SV40_polyA

@@ -1,16 +1,16 @@
-```yaml
 construct:
-  name: protein_X_soluble_expression
+  name: "mammalian_protein_X_soluble"
   host: HEK293
-  
+
   backbone:
     catalog_vector: "pTwist CMV"
-  
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
-    
+
     - cistron:
-        label: target
+        label: protein_X_fusion
         expression: high
         chain:
           - tag: 6xHis
@@ -20,10 +20,10 @@ construct:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 2
+          - cleavage_site: TEV
           - gene:
-              id: protein_X  # Replace with actual UniProt ID
+              id: protein_X
               source: uniprot
-    
+
     - terminator: rrnB_T1
-```

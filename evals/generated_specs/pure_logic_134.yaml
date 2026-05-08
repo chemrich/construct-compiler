@@ -1,16 +1,32 @@
 construct:
-  name: "mercury_ion_sensor"
-  host: e_coli
+  name: heavy_metal_sensor_ecoli
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: PmerT  # Mercury-responsive promoter induced in the presence of Hg(II) and MerR
+    - promoter: araBAD
+
     - cistron:
-        label: fluorescent_reporter
+        label: metal_sensing_transcription_factor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: P_ZntA
+              source: uniprot
+              description: zinc-responsive transcriptional regulator
+
+    - spacer: 30
+
+    - cistron:
+        label: fluorescent_output
         expression: high
+        fused: false
         gene:
-          id: sfGFP
+          id: mNeonGreen
           source: fpbase
+
     - terminator: rrnB_T1

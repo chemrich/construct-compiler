@@ -1,16 +1,22 @@
 construct:
-  name: "mEGFP_His_Purification"
-  host: e_coli_bl21_de3 # DE3 strain required for T7-based expression
+  name: "GFP_with_C_terminal_His_tag"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: GFP
         expression: high
         chain:
-          - tag: 6xHis
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: T7term
+          - tag: 6xHis
+    
+    - terminator: rrnB_T1

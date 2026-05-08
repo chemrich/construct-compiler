@@ -1,19 +1,24 @@
 construct:
-  name: "yeast_secretory_aav_vp1"
+  name: "glycoprotein_yeast_secretion"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
+    source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: alpha_factor
           - tag: 6xHis
-          - cleavage_site: TEV
+          - cleavage_site: 3C
+          - signal_peptide: alpha_factor  # N-terminal secretion signal for yeast ER targeting
           - gene:
-              id: P03135
+              id: target_protein
               source: uniprot
-    - terminator: CYC1
+
+    - terminator: CYC1_poly_A

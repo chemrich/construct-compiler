@@ -1,16 +1,22 @@
 construct:
-  name: "human_albumin_secretion_ecoli"
-  host: e_coli_bl21_de3
+  name: "cytokine_secretion_ecoli"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: cytokine_target
+        label: secreted_cytokine
         expression: high
         chain:
-          - tag: PelB  # Substituted PelB for the human albumin signal peptide to ensure functional secretion in E. coli per rule 18.
+          - tag: human_albumin_signal_peptide
           - gene:
-              id: ALB
+              id: cytokine
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

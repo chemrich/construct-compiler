@@ -1,17 +1,26 @@
 construct:
-  name: "chloroplast_targeted_mcherry_plant"
-  host: plant  # Host set to plant as requested; using standard plant cell parameters
+  name: "chloroplast_targeting_mCherry"
+  host: algae
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: CaMV35S  # Standard constitutive plant promoter
+    - promoter: EF1_alpha
+
     - cistron:
-        label: mcherry_fusion
+        label: chloroplast_mCherry
         expression: high
         chain:
-          - tag: CTP  # Chloroplast Transit Peptide for targeting
+          - tag: CTP  # Chloroplast Transit Peptide
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: mCherry
               source: fpbase
-    - terminator: NOS  # Standard Agrobacterium-derived nopaline synthase terminator for plants
+
+    - terminator: rrnB_T1

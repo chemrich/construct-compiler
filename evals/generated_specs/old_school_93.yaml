@@ -1,25 +1,31 @@
 construct:
-  name: "t7lac_enzyme_lacI_repressor_system"
-  host: e_coli_bl21_de3
+  name: "T7_enzyme_lacI_repression"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: target_enzyme
+        label: enzyme
         expression: high
         gene:
-          id: P00644
+          id: enzyme
           source: uniprot
-    - terminator: T7term
-    - spacer: 50
-    - promoter: lac
+
+    - terminator: rrnB_T1
+
+    - promoter: lacUV5
+
     - cistron:
         label: lacI_repressor
         expression: medium
         gene:
-          id: P03023
+          id: lacI
           source: uniprot
+
     - terminator: rrnB_T1

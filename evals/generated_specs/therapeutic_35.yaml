@@ -1,26 +1,26 @@
 construct:
-  name: therapeutic_protein_with_cleavable_prodomain
+  name: therapeutic_protein_prodomain_cleavable
   host: e_coli_bl21_de3
 
   backbone:
-    resistance: none  # No antibiotic resistance as requested
+    resistance: null  # No antibiotic resistance marker
     ori: pBR322
-    source: custom
+    source: addgene
 
   cassette:
     - promoter: T7lac
 
     - cistron:
-        label: therapeutic_fusion
+        label: prodomain_therapeutic
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: prodomain_placeholder  # Replace with specific pro-domain sequence
+              id: prodomain
               source: uniprot
           - cleavage_site: TEV
           - gene:
-              id: therapeutic_protein_placeholder  # Replace with specific therapeutic protein
+              id: therapeutic_protein
               source: uniprot
 
     - terminator: rrnB_T1

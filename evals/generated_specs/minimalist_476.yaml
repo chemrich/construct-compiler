@@ -1,14 +1,22 @@
 construct:
-  name: "TM_Protein_E_coli_expression"
-  host: e_coli_bl21_de3
+  name: "TM_Protein_expression"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: TM_Protein
         expression: medium
-        gene:
-          id: TM-Protein
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TM_Protein
+              source: uniprot
+
+    - terminator: rrnB_T1

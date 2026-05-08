@@ -1,17 +1,22 @@
 construct:
-  name: "liver_specific_therapeutic_AAV"
-  host: mammalian
+  name: "liver_specific_enzyme_aav"
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+    ori: pBR322
+
   cassette:
-    - promoter: ALB
+    - promoter: albumin  # Liver-specific promoter
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P00740
+              id: P12345  # Replace with actual UniProt ID of your therapeutic enzyme
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

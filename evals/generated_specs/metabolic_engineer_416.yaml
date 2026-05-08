@@ -1,19 +1,26 @@
 construct:
-  name: "syc_autoinducible_operon"
+  name: "Syc_five_gene_operon_autoinducible"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: luxR_pLux
+    - promoter: araBAD
+      # araBAD provides tunable, density-responsive control when used with L-arabinose
+      # For autoinduction at high cell density, pair with arabinose autoinduction medium
+
     - cistron:
         label: Syc1
         expression: medium
-        fused: false
         gene:
           id: Syc1
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Syc2
         expression: medium
@@ -21,7 +28,9 @@ construct:
         gene:
           id: Syc2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Syc3
         expression: medium
@@ -29,7 +38,9 @@ construct:
         gene:
           id: Syc3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Syc4
         expression: medium
@@ -37,7 +48,9 @@ construct:
         gene:
           id: Syc4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Syc5
         expression: medium
@@ -45,4 +58,5 @@ construct:
         gene:
           id: Syc5
           source: uniprot
+
     - terminator: rrnB_T1

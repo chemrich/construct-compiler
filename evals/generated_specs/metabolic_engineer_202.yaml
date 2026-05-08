@@ -1,6 +1,6 @@
 construct:
-  name: "clostridial_butanol_pathway_gradient"
-  host: e_coli  # Clostridium acetobutylicum host not in schema; substituted with e_coli for compilation
+  name: "C_acetobutylicum_butanol_pathway_gradient"
+  host: bacillus
 
   backbone:
     resistance: chloramphenicol
@@ -8,54 +8,58 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: ptb  # Phosphotransbutyrylase promoter (active under anaerobic conditions in Clostridia)
+    - promoter: anaerobic_Pfdx
 
     - cistron:
-        label: thl
-        expression: very_low
-        fused: false
-        gene:
-          id: P45359
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: hbd
+        label: Thiolase
         expression: low
-        fused: false
+        rbs_strength: weak
         gene:
-          id: P45362
+          id: thl
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: crt
+        label: Hbd
+        expression: low
+        rbs_strength: medium_weak
+        fused: false
+        gene:
+          id: hbd
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Crotonase
         expression: medium
+        rbs_strength: medium
         fused: false
         gene:
-          id: P45361
+          id: crt
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: bcd
-        expression: high
+        label: Bcd
+        expression: medium
+        rbs_strength: medium_strong
         fused: false
         gene:
-          id: P45350
+          id: bcd
           source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: adhe
+        label: AdhE
         expression: high
+        rbs_strength: strong
         fused: false
         gene:
-          id: P33744
+          id: adhE
           source: uniprot
 
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1

@@ -1,35 +1,52 @@
 construct:
-  name: "therapeutic_bicistronic_ires_x_y"
+  name: "dual_therapeutic_IRES_HEK293"
   host: HEK293
+
   backbone:
-    resistance: none # Prohibited by user request
-    ori: pBR322      # Non-viral bacterial origin
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+    ori: null
 
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: protein_x
+        label: Protein_X
         expression: high
         chain:
-          - tag: NES
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: P04637 # Placeholder UniProt ID for Protein X
+              id: NES_tag
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: X_therapeutic
               source: uniprot
 
-    - spacer: 600 # Spacer represents the IRES sequence for bicistronic expression
+    - spacer: 25
 
     - cistron:
-        label: protein_y
+        label: IRES_element
         expression: high
-        fused: false # Independent translation via IRES
         chain:
-          - tag: FLAG
-          - cleavage_site: TEV
           - gene:
-              id: P01137 # Placeholder UniProt ID for Protein Y
+              id: EMCV_IRES
               source: uniprot
 
-    - terminator: bGH_polyA
+    - spacer: 25
+
+    - cistron:
+        label: Protein_Y
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Y_therapeutic
+              source: uniprot
+
+    - terminator: rrnB_T1

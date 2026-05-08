@@ -1,6 +1,6 @@
 construct:
-  name: pulse_generator_circuit
-  host: e_coli_bl21_de3
+  name: pulse_generator
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -9,24 +9,27 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: pulse_output
+        label: input_sensor
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: mEGFP
-              source: fpbase
-          - tag: LAA  # rapid degradation tag for pulse decay
+              id: luxR
+              source: uniprot
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: negative_feedback
-        expression: medium
-        fused: false
+        label: output_pulse
+        expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: P0A7E4  # lacI repressor
-              source: uniprot
+              id: mNeonGreen
+              source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: ssrA
 
     - terminator: rrnB_T1

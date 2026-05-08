@@ -1,28 +1,36 @@
 construct:
-  name: "synonymous_triple_repeat_binder"
+  name: "triple_binding_domain_mammalian_codon_optimized"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: tandem_repeat_fusion
+        label: triple_BD
         expression: high
-        # Note: The three identical protein domains must be encoded by synonymous DNA variants to prevent recombination.
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: "GFP_nanobody"
-              source: uniprot
+              id: "binding_domain_v1_codon_opt"
+              source: custom
+              note: "First tandem repeat - codon optimized variant A"
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: "GFP_nanobody"
-              source: uniprot
+              id: "binding_domain_v2_codon_opt"
+              source: custom
+              note: "Second tandem repeat - codon optimized variant B (synonymous to v1, no homology)"
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: "GFP_nanobody"
-              source: uniprot
-    - terminator: bGH_polyA
+              id: "binding_domain_v3_codon_opt"
+              source: custom
+              note: "Third tandem repeat - codon optimized variant C (synonymous to v1 and v2, no homology)"
+
+    - terminator: WPRE

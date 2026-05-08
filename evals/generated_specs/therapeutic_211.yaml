@@ -1,17 +1,34 @@
 construct:
-  name: "therapeutic_rna_aptamer_ivt"
+  name: "T7_RNA_aptamer_IVT"
   host: in_vitro
+
   backbone:
-    # A standard backbone is included to fulfill schema requirements for template synthesis;
-    # however, this construct is intended for linear template generation for IVT.
-    resistance: kanamycin
-    ori: pUC
-    source: custom
+    resistance: none
+    ori: none
+    source: synthetic
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: rna_aptamer
+        label: aptamer_5prime_utr
         expression: high
         gene:
-          id: therapeutic_rna_aptamer
+          id: aptamer_5_stabilizer
+          source: synthetic
+
+    - cistron:
+        label: therapeutic_aptamer
+        expression: high
+        gene:
+          id: aptamer_core
+          source: synthetic
+
+    - cistron:
+        label: aptamer_3prime_utr
+        expression: high
+        gene:
+          id: aptamer_3_stabilizer
+          source: synthetic
+
     - terminator: T7term

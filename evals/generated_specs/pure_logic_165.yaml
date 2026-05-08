@@ -1,42 +1,67 @@
 construct:
-  name: repressilator_secreted_insulin_oscillator
-  host: e_coli_bl21
+  name: "secreted_therapeutic_repressilator"
+  host: mammalian
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: SC101
-    source: addgene
+
   cassette:
-    - promoter: L_lacO1
+    - promoter: CMV
+
     - cistron:
-        label: tetR_repressor
-        expression: low
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: L_tetO1
-    - cistron:
-        label: cI_repressor
-        expression: low
-        gene:
-          id: P03034
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: lambda_PR
-    - cistron:
-        label: lacI_repressor
-        expression: low
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 35
-    - cistron:
-        label: secreted_insulin
-        expression: medium
-        fused: false
+        label: LacI_repressor
+        expression: high
         chain:
-          - tag: OmpA
+          - tag: 6xHis
           - gene:
-              id: P01308
+              id: LacI
               source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: lacUV5
+
+    - cistron:
+        label: TetR_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: tetO
+
+    - cistron:
+        label: CI_repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: CI
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: pRM
+
+    - cistron:
+        label: therapeutic_peptide
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - gene:
+              id: GLP1R_agonist
+              source: uniprot
+
     - terminator: rrnB_T1

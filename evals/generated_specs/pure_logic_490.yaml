@@ -1,28 +1,34 @@
 construct:
-  name: "positive_feedback_loop_activator"
-  host: e_coli
+  name: positive_feedback_loop_with_blue_reporter
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: araBAD  # araBAD is commonly used for positive feedback loops with AraC
+    - promoter: T7lac
+
     - cistron:
-        label: activator
+        label: ActivationProtein
         expression: low
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: AraC
+              id: tetR
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: reporter
-        expression: low
+        label: FluorescentBlue
+        expression: high
         fused: false
         gene:
           id: mTagBFP2
           source: fpbase
+
     - terminator: rrnB_T1

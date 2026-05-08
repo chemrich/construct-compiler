@@ -1,21 +1,28 @@
 construct:
-  name: "yeast_surface_display_vaccine_csp"
+  name: yeast_surface_antigen_vaccine
   host: yeast
+
   backbone:
-    resistance: "ura3" # Substituted antibiotic resistance with auxotrophic marker to meet requirements for vaccine candidate
-    ori: "pUC"
-    source: "addgene"
+    resistance: none
+    ori: 2-micron
+    source: addgene
+
   cassette:
-    - promoter: "GAL1"
+    - promoter: GAL1
+
     - cistron:
-        label: "antigen_display"
-        expression: "high"
+        label: surface_antigen
+        expression: high
         chain:
-          - solubility_tag: "AGA2"
-          - linker:
-              type: "GS_flexible"
-              repeats: 3
+          - tag: HA
           - gene:
-              id: "circumsporozoite_protein"
-              source: "uniprot"
-    - terminator: "CYC1"
+              id: OVA
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: Aga2p_anchor
+              source: uniprot
+
+    - terminator: CYC1

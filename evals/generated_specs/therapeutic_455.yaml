@@ -1,24 +1,43 @@
 construct:
-  name: "Non_Viral_CPP_Therapeutic_Coexpression_System"
+  name: "CPP_cargo_coexpression_mammalian"
   host: HEK293
+
   backbone:
-    # Antibiotic resistance genes omitted per user requirement; design assumes alternative selection or transient transfection
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector without antibiotic resistance
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral constitutive mammalian promoter
+    - promoter: CMV
+
     - cistron:
-        label: cpp_penetratin
+        label: CPP
         expression: high
-        gene:
-          id: P02881
-          source: uniprot
-    - spacer: 40
+        chain:
+          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: TAT_peptide
+              source: uniprot
+              # Cell-penetrating peptide (HIV TAT)
+
+    - terminator: polyA
+
+    - promoter: EF1_alpha
+      # Separate strong mammalian promoter for independent expression
+
     - cistron:
-        label: therapeutic_cargo_IL2
+        label: therapeutic_cargo
         expression: high
-        fused: false  # Ensures independent translation (separate protein)
-        gene:
-          id: P60568
-          source: uniprot
-    - terminator: hGH_polyA  # Non-viral mammalian polyadenylation signal
+        chain:
+          - tag: FLAG
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: cargo_protein
+              source: uniprot
+              # User to specify actual therapeutic protein UniProt ID
+
+    - terminator: polyA

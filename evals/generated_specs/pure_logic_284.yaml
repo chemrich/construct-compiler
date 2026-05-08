@@ -1,24 +1,34 @@
 construct:
-  name: "negative_feedback_loop_protein_H"
-  host: e_coli
+  name: negative_feedback_H_homeostasis
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac  # Strong promoter repressed by LacI; provides high initial expression and negative feedback control
+    - promoter: J23100
+
     - cistron:
-        label: target_protein_H
+        label: H_protein
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxI
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: repressor
-        expression: low
-        fused: false  # Independent translation of the LacI repressor
-        gene:
-          id: P00308  # UniProt ID for LacI repressor
-          source: uniprot
+        label: H_repressor
+        expression: medium
+        fused: false
+        chain:
+          - promoter: araBAD
+          - gene:
+              id: tetR
+              source: uniprot
+
     - terminator: rrnB_T1

@@ -1,14 +1,17 @@
 construct:
-  name: "scFv_TargetM_constitutive_cytoplasmic"
+  name: scFv_TargetM_cytoplasmic_expression
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin # Non-antibiotic selection is not supported by current schema; kanamycin used as standard substitute.
-    ori: pUC
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
-        label: target
+        label: scFv_TargetM
         expression: high
         chain:
           - solubility_tag: MBP
@@ -16,6 +19,7 @@ construct:
           - gene:
               id: scFv_TargetM
               source: uniprot
-          - cleavage_site: 3C
+          - cleavage_site: Factor_Xa
           - tag: 6xHis
+
     - terminator: rrnB_T1

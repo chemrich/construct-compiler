@@ -1,13 +1,24 @@
 construct:
-  name: "sgRNA_TargetU_U6_Expression_Cassette"
-  host: mammalian
+  name: "sgRNA_TargetU_mammalian_expression"
+  host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pX330"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: "sgRNA_target"
+        label: sgRNA_TargetU
         expression: high
-        gene:
-          id: "sgRNA_TargetU"
-    - terminator: PolyT  # Standard Pol III termination signal (T-track) as per rule 15
+        chain:
+          - gene:
+              id: sgRNA_TargetU
+              source: uniprot
+              # Note: sgRNA sequence should be designed targeting the specific genomic locus
+              # Standard 20bp guide sequence + PAM context for SpCas9
+
+    - terminator: U6_poly_T

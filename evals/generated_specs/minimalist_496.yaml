@@ -1,18 +1,22 @@
 construct:
-  name: "mitochondrial_gfp_expression_yeast"
+  name: "mitochondrial_GFP_yeast"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: mito_gfp
+        label: mitochondrial_GFP
         expression: high
         chain:
-          - tag: MTS
+          - tag: mitochondrial_targeting_signal
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: GFP
+              source: uniprot
+
     - terminator: CYC1

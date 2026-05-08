@@ -1,10 +1,15 @@
 construct:
-  name: "my_awesome_protein_expression"
+  name: "MyAwesomeProtein_Nterm_6xHis"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: target
         expression: high
@@ -12,4 +17,6 @@ construct:
           - tag: 6xHis
           - gene:
               id: MyAwesomeProtein
-    - terminator: T7term
+              source: uniprot
+
+    - terminator: rrnB_T1

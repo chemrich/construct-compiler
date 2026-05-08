@@ -1,12 +1,17 @@
 construct:
-  name: "CarrierProtein_SmallPeptide_Dual_Cleavage_Fusion"
-  host: e_coli_bl21
+  name: "CarrierProtein_SmallPeptide_dual_cleavage"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: fusion_construct
+        label: fusion_protein
         expression: high
         chain:
           - tag: 6xHis
@@ -18,4 +23,5 @@ construct:
           - gene:
               id: SmallPeptide
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

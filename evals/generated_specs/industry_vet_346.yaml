@@ -1,17 +1,25 @@
 construct:
-  name: "t7lac_gst_enzyme_expression"
+  name: "E_coli_GST_enzyme_expression"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-41a(+)"
+    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: enzyme_target
+        label: enzyme
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
-              id: P00330
+              id: "USER_ENZYME"
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

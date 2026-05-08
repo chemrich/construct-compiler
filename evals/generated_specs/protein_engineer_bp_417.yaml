@@ -1,19 +1,25 @@
 construct:
-  name: "gst_reductase_bacillus_subtilis"
+  name: "Bacillus_intracellular_reductase_GST"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pspac
+
     - cistron:
-        label: reductase_expression
+        label: reductase
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: reductase
+              id: thioredoxin_reductase
               source: uniprot
+              codon_optimization: B_subtilis
+              localization: cytoplasmic
+
     - terminator: rrnB_T1

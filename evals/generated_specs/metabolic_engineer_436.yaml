@@ -1,49 +1,61 @@
 construct:
-  name: "cold_shock_inducible_five_enzyme_operon"
+  name: "E_coli_cold_shock_pathway_operon"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: cspA
+    
     - cistron:
-        label: enzyme_1
+        label: E_cold_1
         expression: high
         gene:
           id: E_cold_1
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_2
+        label: E_cold_2
         expression: high
-        fused: false
         gene:
           id: E_cold_2
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_3
+        label: E_cold_3
         expression: high
-        fused: false
         gene:
           id: E_cold_3
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_4
+        label: E_cold_4
         expression: high
-        fused: false
         gene:
           id: E_cold_4
           source: uniprot
-    - spacer: 30
+    
+    - spacer: 25
+    
     - cistron:
-        label: enzyme_5
+        label: E_cold_5
         expression: high
-        fused: false
         chain:
           - gene:
               id: E_cold_5
               source: uniprot
-          - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: GST
+    
     - terminator: rrnB_T1

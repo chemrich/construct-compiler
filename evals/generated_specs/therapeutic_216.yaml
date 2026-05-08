@@ -1,19 +1,25 @@
 construct:
-  name: "CHO_therapeutic_scFv_secretion"
+  name: "CHO_scFv_secretion_expression"
   host: CHO
+
   backbone:
-    resistance: none  # User requested: No antibiotic resistance genes allowed
-    ori: pUC         # Bacterial origin (non-viral) for plasmid maintenance
-    source: custom
+    catalog_vector: "pTwist CMV"
+    ori: null
+    resistance: null
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_scFv
+        label: scFv_secreted
         expression: high
         chain:
-          - tag: IgK_leader  # Mammalian secretion signal peptide
-          - solubility_tag: SUMO  # Facilitates robust protein folding
+          - tag: signal_peptide_Igk
           - gene:
-              id: therapeutic_scFv
-          - tag: 6xHis  # For purification and detection
-    - terminator: bGH_polyA  # Robust mammalian polyadenylation signal
+              id: scFv_humanized
+              source: uniprot
+          - tag: His6
+          - cleavage_site: Factor_Xa
+          - solubility_tag: Trx
+
+    - polyadenylation_signal: bGH_pA

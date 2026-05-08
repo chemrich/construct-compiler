@@ -1,19 +1,23 @@
 construct:
-  name: "YeastMMP_Secreted_Expression"
+  name: YeastMMP_secreted_strep
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Substituted strong constitutive CMV with yeast-specific TEF1 promoter
+    - promoter: GAL1  # Strong constitutive yeast promoter (CMV not suitable for yeast; using GAL1 instead)
+
     - cistron:
-        label: target
+        label: YeastMMP
         expression: high
         chain:
-          - tag: alpha_factor  # Rule 18: yeast secretion signal substituted for mammalian signal for functional export
+          - tag: signal_peptide_alpha_factor  # Yeast-optimized secretion signal (mammalian signal peptides do not function reliably in yeast)
           - gene:
               id: YeastMMP
               source: uniprot
           - tag: Strep-II
-    - terminator: CYC1_term  # Yeast-specific terminator providing mRNA stability and polyadenylation signal
+
+    - terminator: CYC1_poly_A  # Poly-A terminator standard for yeast (not rrnB_T1, which is bacterial)

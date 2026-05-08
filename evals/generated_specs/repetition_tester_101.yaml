@@ -1,37 +1,39 @@
 construct:
-  name: triple_orthogonal_effector_expression
-  host: e_coli
+  name: "tri_effector_no_repeat"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+      rbs: BBa_B0030
     - cistron:
-        label: effector_sopE
+        label: effector_1
         expression: high
-        fused: false
         gene:
-          id: P0CL48
+          id: toxin_A
           source: uniprot
     - terminator: rrnB_T1
-    - spacer: 40
+
     - promoter: J23106
+      rbs: BBa_B0031
     - cistron:
-        label: effector_sptP
+        label: effector_2
         expression: high
-        fused: false
         gene:
-          id: P0DPA2
+          id: toxin_B
           source: uniprot
-    - terminator: BBa_B0015
-    - spacer: 40
-    - promoter: J23119
+    - terminator: rrnB_T2
+
+    - promoter: trc
+      rbs: BBa_B0034
     - cistron:
-        label: effector_sipA
+        label: effector_3
         expression: high
-        fused: false
         gene:
-          id: P0CL51
+          id: toxin_C
           source: uniprot
     - terminator: T7term

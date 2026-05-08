@@ -1,17 +1,22 @@
 construct:
-  name: "gene_x_overexpression_kan"
+  name: "Gene_X_His_overexpression"
   host: e_coli_bl21_de3
+  
   backbone:
     resistance: kanamycin
     ori: pUC
-    source: custom
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: target
+        label: Gene_X
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: Gene_X
-    - terminator: T7term
+              source: uniprot
+    
+    - terminator: rrnB_T1

@@ -1,45 +1,46 @@
-```yaml
 construct:
-  name: delayed_ON_detox_gate
-  host: e_coli_bl21_de3
+  name: Delayed_ON_gate
+  host: e_coli_bl21
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pET-28b(+)
 
   cassette:
-    - promoter: araBAD  # Input-inducible promoter for arabinose
+    - promoter: T7lac
 
     - cistron:
-        label: delay_timer
-        expression: medium
-        chain:
-          - gene:
-              id: P0A9Q7  # LacI repressor
-              source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: delay_timer_degrader
-        expression: low
-        fused: false
-        chain:
-          - tag: ssrA  # Degradation tag for delayed protein turnover
-          - gene:
-              id: P76129  # ClpP protease
-              source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: detox_enzyme
+        label: delay_circuit_repressor
         expression: high
-        fused: false
         chain:
-          - promoter: lacUV5  # Repressed by LacI initially
+          - tag: 6xHis
           - gene:
-              id: P32131  # Glutathione S-transferase (detoxification enzyme)
+              id: lacI
               source: uniprot
 
     - terminator: rrnB_T1
-```
+
+    - promoter: lacUV5
+
+    - cistron:
+        label: temporal_controller
+        expression: high
+        chain:
+          - gene:
+              id: ssrA_tagged_RNase
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: araBAD
+
+    - cistron:
+        label: detoxification_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: katG
+              source: uniprot
+
+    - terminator: rrnB_T1

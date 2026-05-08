@@ -1,16 +1,21 @@
 construct:
-  name: "secreted_hGH_expression_mammalian"
+  name: "mammalian_secreted_growth_factor"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: hGH_cistron
+        label: growth_factor
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgE
           - gene:
-              id: P01241
+              id: HGF
               source: uniprot
-    - terminator: bGH_pA
+
+    - polyadenylation: SV40_late_polyA

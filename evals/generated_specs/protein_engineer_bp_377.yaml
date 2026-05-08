@@ -1,20 +1,25 @@
 construct:
-  name: "Pichia_TEF1_secretion_cellulase_Myc_His"
+  name: "Pichia_pastoris_cellulase_secretion"
   host: yeast
+
   backbone:
+    catalog_vector: "pPICZ_A"
     resistance: zeocin
     ori: pUC
-    source: pGAPZ
+    source: addgene
+
   cassette:
     - promoter: TEF1
+
     - cistron:
-        label: industrial_cellulase
+        label: cellulase
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: P62694
+              id: cellulase
               source: uniprot
           - tag: Myc
           - tag: 6xHis
-    - terminator: CYC1
+
+    - terminator: AOX1_TT

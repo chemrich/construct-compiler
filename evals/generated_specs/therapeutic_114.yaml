@@ -1,23 +1,27 @@
 construct:
-  name: "bacterial_diagnostic_soluble_expression"
-  host: e_coli
+  name: "diagnostic_reagent_expression_system"
+  host: e_coli_bl21
+
   backbone:
-    resistance: metabolic  # Metabolic selection (e.g. thyA, infA) requested instead of antibiotic resistance
-    ori: pUC
-    source: custom
+    resistance: null  # metabolic selection via sacB instead of antibiotic
+    ori: pBR322
+    source: addgene
+    # Note: sacB (sucrose sensitivity) provides metabolic selection on sucrose-containing media
+
   cassette:
-    - promoter: tac  # Non-viral hybrid bacterial promoter
+    - promoter: T7lac
+
     - cistron:
-        label: diagnostic_target
+        label: diagnostic_protein
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: MBP
           - gene:
-              id: P01555  # Bacterial-derived diagnostic protein (Protein A)
+              id: sacB
               source: uniprot
+              # sacB acts as metabolic marker; replace with actual diagnostic protein ID
+              # This is a placeholder—substitute with your bacterial protein of interest
+
     - terminator: rrnB_T1

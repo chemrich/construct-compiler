@@ -1,35 +1,35 @@
-```yaml
 construct:
-  name: "ProteinP_IRES_ProteinQ_bicistronic"
+  name: "mammalian_bicistronic_ProteinP_ProteinQ_custom_IRES"
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: proteinP
+        label: ProteinP
         expression: high
         chain:
           - gene:
-              id: "ProteinP"  # User must provide actual protein ID
+              id: ProteinP
               source: uniprot
-          - tag: V5  # Unique C-terminal tag for ProteinP
+          - tag: FLAG
 
-    - spacer: 150  # IRES-like element (user must provide non-standard scrambled IRES sequence)
-    # Note: This spacer represents the custom scrambled IRES - actual sequence must be provided by user
+    # Custom scrambled IRES variant (non-homologous to encephalomyocarditis or poliovirus IRES)
+    # Represents a synthetic IRES element with codon-optimized non-essential regions
+    - spacer: 580  # bp - synthetic IRES variant with scrambled internal elements
 
     - cistron:
-        label: proteinQ
+        label: ProteinQ
         expression: medium
-        fused: false  # Independent translation via IRES
+        fused: false
         chain:
           - gene:
-              id: "ProteinQ"  # User must provide actual protein ID
+              id: ProteinQ
               source: uniprot
-          - tag: Myc  # Unique C-terminal tag for ProteinQ
+          - tag: HA
 
     - terminator: rrnB_T1
-```

@@ -1,21 +1,26 @@
 construct:
-  name: mammalian_dual_promoter_comparison
+  name: dual_promoter_comparison_GFP_mCherry
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
-    - cistron:
-        label: green_reporter
+      cistron:
+        label: GFP_CMV
+        expression: high
         gene:
           id: mEGFP
           source: fpbase
-    - terminator: SV40_polyA
-    - spacer: 50
+      terminator: rrnB_T1
+
     - promoter: EF1_alpha
-    - cistron:
-        label: red_reporter
+      cistron:
+        label: mCherry_EF1a
+        expression: high
         gene:
           id: mCherry
           source: fpbase
-    - terminator: bGH_polyA
+      terminator: rrnB_T1

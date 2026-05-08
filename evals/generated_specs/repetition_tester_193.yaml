@@ -1,29 +1,33 @@
 construct:
-  name: "yeast_multitag_recombination_resistant"
+  name: "yeast_triple_epitope_divergent"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: divergent_triple_tag
+        label: target_triple_epitope
         expression: high
         chain:
           - tag: FLAG
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 3
           - tag: Myc
           - linker:
-              type: short_GS
-              repeats: 3
+              type: rigid_EAAAK
+              repeats: 2
           - tag: HA
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 2
           - gene:
-              id: sfGFP
+              id: GFP
               source: fpbase
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

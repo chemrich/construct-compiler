@@ -1,28 +1,60 @@
 construct:
-  name: "mammalian_self_regulating_feedback_loop"
+  name: "mammalian_self_regulating_therapeutic_protein"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
-    - promoter: TRE_CMV # Synthetic Tet-responsive promoter allows for negative feedback regulation by TetR
+    - promoter: CMV
+
     - cistron:
         label: therapeutic_protein
         expression: high
         chain:
-          - tag: IgK_leader # Secretion signal for optimized export in mammalian cells
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01588 # Erythropoietin (EPO), used here as a representative therapeutic protein
+              id: PDGF
               source: uniprot
-    - spacer: 30
+        description: "Primary therapeutic protein with N-terminal 6xHis tag for detection and purification"
+
+    - spacer: 35
+
+    - cistron:
+        label: miR_sponge
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: miR_122_sponge
+              source: uniprot
+        description: "miRNA sponge (decoy) that sequesters miR-122 in low therapeutic protein state"
+
+    - spacer: 35
+
+    - cistron:
+        label: feedback_miRNA
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: miR_122
+              source: uniprot
+        description: "Primary miRNA under control of Therapeutic_Protein-responsive promoter element; represses miR_sponge when protein levels are high"
+
+    - spacer: 35
+
     - cistron:
         label: feedback_regulator
-        expression: medium
-        fused: false # Independent translation via IRES/RBS to produce a separate repressor protein
+        expression: low
+        fused: false
         chain:
-          - tag: NLS # Nuclear Localization Signal to ensure the repressor enters the nucleus
+          - tag: FLAG
           - gene:
-              id: P04483 # Tet repressor protein (TetR), which binds the TRE_CMV promoter to inhibit further transcription
+              id: KRAB_repressor
               source: uniprot
-    - terminator: bGH_pA # Standard bovine growth hormone polyadenylation signal for mammalian termination
+        description: "KRAB-containing repressor protein that suppresses therapeutic protein translation when activated by elevated protein concentrations"
+
+    - terminator: bGH_polyA

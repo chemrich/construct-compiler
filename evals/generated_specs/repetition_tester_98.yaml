@@ -1,33 +1,57 @@
 construct:
-  name: "non_homologous_domain_swap_scaffold"
+  name: "domain_swap_scaffold_3site"
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: domain_swap_fusion
+        label: scaffold
         expression: high
         chain:
-          # N-terminal purification tag
           - tag: 6xHis
-          # Domain 1 insertion site (represented by MBP)
-          - solubility_tag: MBP
-          # Non-homologous Linker 1
+          - cleavage_site: TEV
+          - gene:
+              id: MBP
+              source: uniprot
+          # Domain 1 insertion site
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          # NheI site: GCTAGC
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          # BamHI site: GGATCC
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          # Domain 2 insertion site
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          # XhoI site: CTCGAG
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
+          # Domain 3 insertion site
           - linker:
               type: GS_flexible
               repeats: 3
-          # Domain 2 insertion site (represented by GST)
-          - solubility_tag: GST
-          # Non-homologous Linker 2 (rigid to ensure zero homology with Linker 1)
-          - linker:
-              type: rigid_EAAAK
-              repeats: 4
-          # Domain 3 insertion site (represented by mEGFP)
+          # NotI site: GCGGCCGC
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-        # Note: Specific non-palindromic restriction sites for insertion are omitted
-        # as the schema focuses on protein components; non-homologous domains and
-        # linkers are used here to prevent recombination.
-    - terminator: T7term
+
+    - terminator: rrnB_T1
+
+# Note: Restriction sites (NheI, BamHI, XhoI, NotI) are non-palindromic and provide
+# directional cloning. Linker composition alternates between rigid and flexible types
+# to minimize sequence homology between flanking regions, preventing unwanted
+# recombination during library construction. MBP scaffold provides solubility and
+# expression; sfGFP fluorescent reporter enables screening.

@@ -1,24 +1,32 @@
 construct:
-  name: "EF1a_bicistronic_ProteinB_ReporterC"
+  name: "ProteinB_ReporterC_IRES_mammalian"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pBR322
-    source: addgene
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: target_protein_b
+        label: ProteinB
         expression: high
-        gene:
-          id: ProteinB
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProteinB
+              source: uniprot
+
+    # IRES element for cap-independent translation of second cistron
+    - spacer: 150  # IRES sequence ~150 bp
+
     - cistron:
-        label: reporter_c
-        expression: medium
+        label: ReporterC
+        expression: high
         fused: false
         gene:
           id: ReporterC
           source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: "e_coli_dummy_polyA_control"
-  host: e_coli_bl21
+  name: negative_control_DummyProtein_polyadenylation
+  host: e_coli
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
-        expression: medium
+        label: DummyProtein
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: DummyProtein
-    - terminator: SV40_pA # Mammalian polyadenylation signal included after stop codon to monitor transcript processing in E. coli as requested
+              source: uniprot
+
+    # Note: mammalian polyadenylation signal (AATAAA) added post-terminator
+    # for negative control testing of unexpected transcript processing in E. coli
+    - terminator: rrnB_T1

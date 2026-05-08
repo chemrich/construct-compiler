@@ -1,17 +1,28 @@
 construct:
   name: "protein_C_solubility_optimized"
   host: e_coli_bl21_de3
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+    
     - cistron:
-        label: target
-        expression: medium  # Adjusted to medium to mitigate aggregation issues and support low-temperature expression
+        label: protein_C
+        expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: "C"
+              id: protein_C
               source: uniprot
           - solubility_tag: SUMO
-    - terminator: T7term
+    
+    - terminator: rrnB_T1
+  
+  # Note: Expression temperature should be optimized post-compilation.
+  # Recommend induction at OD600 ~0.6–0.8 followed by 4–6 hour expression at 16–20 °C
+  # to reduce aggregation. BL21(DE3) with T7 RNA polymerase allows tight, inducible control.
+  # SUMO tag enhances solubility; consider co-expression with GroEL/ES chaperones if aggregation persists.

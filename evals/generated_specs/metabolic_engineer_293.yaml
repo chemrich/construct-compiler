@@ -1,14 +1,17 @@
 construct:
-  name: "terpene_biosynthesis_constitutive_high"
+  name: "E_coli_terpene_biosynthesis_pentacistronic"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100 # High-level constitutive promoter for E. coli
+    - promoter: T7lac
+
     - cistron:
-        label: synth_fusion_1_2_3
+        label: terp_synth_fusion_1_2_3
         expression: high
         chain:
           - gene:
@@ -16,20 +19,22 @@ construct:
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - gene:
               id: terp_synth2
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - gene:
               id: terp_synth3
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: synth_4
+        label: terp_synth4
         expression: high
         fused: false
         chain:
@@ -37,9 +42,11 @@ construct:
               id: terp_synth4
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: synth_5
+        label: terp_synth5
         expression: high
         fused: false
         chain:
@@ -47,4 +54,5 @@ construct:
               id: terp_synth5
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

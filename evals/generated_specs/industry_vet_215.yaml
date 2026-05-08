@@ -1,21 +1,23 @@
 construct:
-  name: "transmembrane_protein_expression_strategy"
-  host: e_coli_bl21_de3 # DE3 strain for T7-based expression; C43(DE3) or Lemo21(DE3) are preferred for transmembrane proteins if available
+  name: "multipass_TM_protein_ecoli_cterminal_his"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac # T7lac allows tight regulation to prevent leaky expression of potentially toxic membrane proteins
+    - promoter: T7lac
+
     - cistron:
         label: target
-        expression: medium # Medium expression prevents overwhelming the Sec translocon and reducing cell viability
+        expression: medium
         chain:
-          - solubility_tag: MBP # N-terminal MBP fusion is a standard strategy to improve membrane insertion and solubility
-          - cleavage_site: TEV
           - gene:
-              id: target_protein
+              id: "YOUR_GENE_ID"
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - tag: 6xHis # C-terminal His-tag ensures purification of only the full-length translated protein
-    - terminator: T7term
+              repeats: 1
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

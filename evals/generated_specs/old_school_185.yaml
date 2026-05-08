@@ -1,20 +1,27 @@
 construct:
-  name: "MBP_archaeal_enzyme_fusion"
+  name: MBP_archaeal_enzyme_fusion
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: tac
+
     - cistron:
-        label: target
+        label: MBP_archaeal_fusion
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: archaeal_enzyme
               source: uniprot
+
     - terminator: rrnB_T1

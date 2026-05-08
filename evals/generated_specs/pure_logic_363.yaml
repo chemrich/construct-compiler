@@ -1,26 +1,39 @@
 construct:
-  name: "not_gate_inverter_f_w"
-  host: e_coli
+  name: NOT_gate_inverter
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Inducer_F (Arabinose) triggers expression of the repressor
+    - promoter: araBAD
+
     - cistron:
-        label: repressor_logic
-        expression: medium
-        chain:
-          - gene:
-              id: lacI
-              source: uniprot
-    - terminator: rrnB_T1
-    - promoter: lacUV5  # Repressed by LacI; active only when Inducer_F is absent
-    - cistron:
-        label: reporter_W
+        label: repressor_protein
         expression: high
         chain:
           - gene:
-              id: mScarlet
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: reporter_W
+        expression: medium
+        fused: false
+        chain:
+          - promoter: Ptet
+
+    - cistron:
+        label: output_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
               source: fpbase
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

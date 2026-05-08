@@ -1,18 +1,31 @@
 construct:
-  name: "mitotarget_mitochondrial_expression_puromycin"
+  name: "HEK293_MitoTarget_puromycin"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: mitochondrial_target
+        label: MitoTarget
         expression: high
         chain:
-          - tag: MTS  # Mitochondrial targeting signal zip code
+          - tag: MTS
           - gene:
               id: MitoTarget
               source: uniprot
-    - terminator: bGH_polyA
+
+    - spacer: 30
+
+    - cistron:
+        label: PuroR
+        expression: high
+        fused: false
+        gene:
+          id: puromycin_N_acetyltransferase
+          source: uniprot
+
+    - terminator: rrnB_T1

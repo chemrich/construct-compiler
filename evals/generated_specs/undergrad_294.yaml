@@ -1,16 +1,25 @@
 construct:
-  name: "rapidly_degradable_protein_expression"
+  name: DegradableProtein_CMV_PEST
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: DegradableProtein
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: PEST
-    - terminator: BGH_pA
+
+    - terminator: rrnB_T1

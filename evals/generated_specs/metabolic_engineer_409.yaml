@@ -1,46 +1,57 @@
 construct:
-  name: "human_metabolic_enzyme_targeting"
+  name: "mammalian_glycolysis_enzymes_compartmentalized"
   host: HEK293
-  backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
     - promoter: CMV
     - cistron:
-        label: HK1_cytoplasmic
+        label: HK1_cytoplasm
         expression: high
-        gene:
-          id: HK1
-          source: uniprot
-    - terminator: bGH_pA
-    - spacer: 50
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: HK1
+              source: uniprot
+
+    - terminator: SV40_poly_A
+
+  cassette:
     - promoter: CMV
     - cistron:
         label: PFKFB3_nuclear
         expression: high
         chain:
+          - tag: 6xHis
           - tag: NLS
           - gene:
               id: PFKFB3
               source: uniprot
-    - terminator: bGH_pA
-    - spacer: 50
+
+    - terminator: SV40_poly_A
+
+  cassette:
     - promoter: CMV
     - cistron:
-        label: GPI_cytoplasmic
+        label: GPI_cytoplasm
         expression: high
-        gene:
-          id: GPI
-          source: uniprot
-    - terminator: bGH_pA
-    - spacer: 50
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GPI
+              source: uniprot
+
+    - terminator: SV40_poly_A
+
+  cassette:
     - promoter: CMV
     - cistron:
         label: PKM2_mitochondrial
         expression: high
         chain:
+          - tag: 6xHis
           - tag: MTS
           - gene:
               id: PKM2
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: SV40_poly_A

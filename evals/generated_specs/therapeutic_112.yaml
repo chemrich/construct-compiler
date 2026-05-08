@@ -1,16 +1,24 @@
 construct:
-  name: "yeast_food_grade_metabolic_engine_IDH1"
+  name: "S_cerevisiae_human_enzyme_metabolic_pathway"
   host: yeast
+
   backbone:
-    resistance: kanamycin  # Required for E. coli cloning; final genomic integration is markerless/auxotrophic for food-grade compliance
-    ori: pUC
+    resistance: none
+    ori: none
+    integration_site: URA3
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive yeast promoter (GPD) for high-level expression
+    - promoter: PGK1
+
     - cistron:
-        label: target_enzyme
+        label: human_enzyme
         expression: high
-        gene:
-          id: P48735  # Human Isocitrate Dehydrogenase 1 (IDH1)
-          source: uniprot
-    - terminator: CYC1  # Standard yeast transcriptional terminator
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: human_enzyme
+              source: uniprot
+
+    - terminator: CYC1

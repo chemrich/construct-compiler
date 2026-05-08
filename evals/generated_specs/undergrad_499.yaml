@@ -1,10 +1,11 @@
 construct:
-  name: "dual_mammalian_selection_vector_neo_hygro"
-  host: mammalian
+  name: "dual_antibiotic_resistance_mammalian"
+  host: HEK293
 
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pTwist CMV"
+    resistance: neomycin
+    ori: pBR322
     source: addgene
 
   cassette:
@@ -12,19 +13,20 @@ construct:
 
     - cistron:
         label: neomycin_resistance
-        expression: medium
+        expression: high
         gene:
-          id: P00552
+          id: neo
           source: uniprot
 
-    - spacer: 40
+    - terminator: BBa_B0015
+
+    - promoter: EF1_alpha
 
     - cistron:
         label: hygromycin_resistance
-        expression: medium
-        fused: false
+        expression: high
         gene:
-          id: P00557
+          id: hph
           source: uniprot
 
-    - terminator: SV40_polyA
+    - terminator: BBa_B0015

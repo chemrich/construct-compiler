@@ -1,15 +1,23 @@
 construct:
-  name: "U6_shRNA_TargetGene_silencing"
+  name: "shRNA_TargetGene_silencing"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: shRNA_unit
+        label: shRNA_TargetGene
         expression: high
-        fused: false
-        gene:
-          id: TargetGene
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: TargetGene_shRNA
+              source: custom
+              # Note: shRNA sequence design requires target selection from TargetGene mRNA
+              # Recommend using design tools (e.g., Broad RNAi Consortium, BLOCK-iT) to generate
+              # a 21bp targeting sequence with proper stem-loop structure for processing by Drosha/Dicer
+
+    - terminator: U6term

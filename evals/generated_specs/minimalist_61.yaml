@@ -1,18 +1,27 @@
 construct:
-  name: "mCherry_mEGFP_direct_fusion"
-  host: e_coli_bl21_de3
+  name: "mCherry_GFP_fusion"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: fusion_protein
+        label: fusion
         expression: high
         chain:
           - gene:
               id: mCherry
               source: fpbase
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: mEGFP
+              id: EGFP
               source: fpbase
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

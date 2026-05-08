@@ -1,19 +1,23 @@
 construct:
-  name: "yeast_secreted_poi"
+  name: yeast_secretion_construct
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: GPD # High-level constitutive promoter for yeast
+    - promoter: GAL1
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: alpha_factor_signal # Substituted mammalian IgK/secretion signal with yeast alpha-mating factor prepro-sequence for efficient secretion
+          - secretion_signal: alpha_factor
           - gene:
-              id: POI
-              source: uniprot
+              id: YFP
+              source: fpbase
           - tag: 6xHis
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

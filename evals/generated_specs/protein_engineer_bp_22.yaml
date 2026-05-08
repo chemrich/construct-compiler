@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: "secA_amyE_gfp_secretion_optimizer"
+  name: bacillus_secretory_pathway_optimizer
   host: bacillus
 
   backbone:
@@ -12,24 +11,23 @@ construct:
     - promoter: Pxyl
 
     - cistron:
-        label: secA
+        label: SecA
         expression: high
         gene:
-          id: P37368
+          id: SecA
           source: uniprot
 
     - spacer: 30
 
     - cistron:
-        label: secreted_reporter
+        label: secreted_GFP_reporter
         expression: high
         fused: false
         chain:
-          - tag: AmyE_signal  # secretion signal for B. subtilis
+          - signal_peptide: AmyE
           - gene:
               id: sfGFP
               source: fpbase
           - tag: 6xHis
 
     - terminator: rrnB_T1
-```

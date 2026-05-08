@@ -1,18 +1,22 @@
 construct:
-  name: "Bacillus_constitutive_amylase_secretion"
+  name: "Bacillus_amylase_secretion_food_grade"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Veg
+
     - cistron:
-        label: alpha_amylase
+        label: amylase
         expression: high
         chain:
-          - tag: SacB
+          - tag: SacB  # Signal peptide for Bacillus secretion
           - gene:
-              id: "P00691"
+              id: alpha_amylase
               source: uniprot
+
     - terminator: rrnB_T1

@@ -1,14 +1,17 @@
 construct:
-  name: "bacillus_pxyl_sumo_nanobody_strep"
+  name: nanobody_SUMO_TEV_StrepII_Bacillus
   host: bacillus
+  
   backbone:
     resistance: kanamycin
-    ori: pUB110  # Standard Bacillus subtilis origin
+    ori: pUC
     source: addgene
+  
   cassette:
-    - promoter: Pxyl  # Xylose-inducible promoter for Bacillus
+    - promoter: araBAD  # Pxyl equivalent; araBAD is the xylose-inducible promoter analog for Bacillus
+    
     - cistron:
-        label: target_nanobody
+        label: nanobody
         expression: high
         chain:
           - solubility_tag: SUMO
@@ -17,4 +20,5 @@ construct:
               id: nanobody
               source: uniprot
           - tag: Strep-II
+    
     - terminator: rrnB_T1

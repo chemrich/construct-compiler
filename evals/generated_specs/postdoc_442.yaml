@@ -1,19 +1,26 @@
 construct:
-  name: "protein_x_solubility_purification_system"
-  host: e_coli_bl21_de3
+  name: protein_X_MBP_Strep_TEV_His
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7
+    
     - cistron:
-        label: target
+        label: protein_X
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: MBP
           - tag: Strep-II
           - cleavage_site: TEV
           - gene:
-              id: protein_x
+              id: protein_X
               source: uniprot
-          - tag: 6xHis
-    - terminator: T7term
+        c_tag: 6xHis
+    
+    - terminator: rrnB_T1

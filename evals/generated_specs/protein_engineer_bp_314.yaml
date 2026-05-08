@@ -1,21 +1,29 @@
 construct:
-  name: "bacillus_spore_surface_display_system"
+  name: "bacillus_spore_display_antigen_cotG"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110
+    resistance: ampicillin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: display_fusion
+        label: spore_display
         expression: high
         chain:
-          - tag: amyE_signal_peptide
+          - tag: signal_peptide_amyE
           - gene:
               id: target_antigen
+              source: uniprot
           - tag: V5
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: cotG
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

@@ -1,16 +1,21 @@
 construct:
-  name: "retroviral_cmv_goi_puromycin"
-  host: mammalian
+  name: retroviral_vector_CMV_gene_of_interest
+  host: HEK293
+
   backbone:
     resistance: puromycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: gene_of_interest
-        # Defaulting 'gene of interest' to mEGFP as a representative reporter
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_polyA
+        expression: high
+        chain:
+          - gene:
+              id: null
+              source: custom
+
+    - terminator: rrnB_T1

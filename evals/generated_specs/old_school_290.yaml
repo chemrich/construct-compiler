@@ -1,24 +1,31 @@
 construct:
-  name: "pCMV_Myc_Gene1_IRES_Gene2_Puro"
-  host: mammalian
+  name: "CMV_Gene1_Myc_IRES_Gene2_polyA"
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
-    ori: pUC
-    source: custom
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: Gene1_cistron
+        label: Gene1
         expression: high
         chain:
           - tag: Myc
           - gene:
               id: Gene1
-    - spacer: 574  # IRES (Internal Ribosome Entry Site) sequence length for polycistronic translation
+              source: uniprot
+
+    - spacer: 50  # IRES element (represented as spacer; compiler will insert IRES)
+
     - cistron:
-        label: Gene2_cistron
+        label: Gene2
         expression: high
-        fused: false  # Independently translated via the IRES
+        fused: false
         gene:
           id: Gene2
-    - terminator: bGH_polyA
+          source: uniprot
+
+    - terminator: polyA

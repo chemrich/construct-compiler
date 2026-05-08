@@ -1,25 +1,90 @@
 construct:
-  name: "metabolic_load_balancer_P_Q"
+  name: metabolic_load_balancer_P_Q
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: PgadA  # Senses metabolic stress/acid load from pathway P
+    - promoter: araBAD
+
     - cistron:
-        label: resource_repressor
+        label: pathway_P_enzyme_1
         expression: high
-        gene:
-          id: LacI
-          source: uniprot
-    - spacer: 40
-    - promoter: lacUV5  # Regulated by LacI; active only when load from P is low
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P_enzyme_1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: pathway_Q
+        label: pathway_P_enzyme_2
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P_enzyme_2
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: metabolic_sensor
         expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
+        chain:
+          - gene:
+              id: acyl_CoA_binding_protein
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_Q
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+  # Second construct on same plasmid for pathway Q with dynamic repression
+  cassette_2:
+    - promoter: tac
+
+    - cistron:
+        label: pathway_Q_enzyme_1
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q_enzyme_1
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: pathway_Q_enzyme_2
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: Q_enzyme_2
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressible_regulator
+        expression: low
+        chain:
+          - gene:
+              id: dnaA_binding_protein
+              source: uniprot
+
     - terminator: rrnB_T1

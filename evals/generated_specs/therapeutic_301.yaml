@@ -1,14 +1,25 @@
 construct:
-  name: "lysosomal_gaa_native_expression"
-  host: mammalian
+  name: lysosomal_enzyme_mammalian_expression
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: acid_alpha_glucosidase
+        label: lysosomal_enzyme
         expression: high
-        gene:
-          id: P10253
-          source: uniprot
-    - terminator: BGH_polyA
+        chain:
+          - tag: HA
+          - cleavage_site: 3C
+          - gene:
+              id: CTSD
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: KFERQ  # Intrinsic lysosomal targeting motif for chaperone-mediated autophagy
+
+    - terminator: rrnB_T1

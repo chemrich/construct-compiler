@@ -1,24 +1,21 @@
 construct:
-  name: "factor_y_expression_cos7"
-  host: COS-7
+  name: "Factor_Y_mammalian_expression"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
-    - promoter: SV40
+    - promoter: SV40_early
+
     - cistron:
-        label: factor_y
-        expression: medium
+        label: Factor_Y
+        expression: high
         gene:
           id: Factor_Y
           source: uniprot
-    - terminator: SV40_pA
-  constraints:
-    assembly: golden_gate
-    enzyme: BsaI
-    codon_optimization: local
-    gc_window: [0.35, 0.65]
-    max_homopolymer: 6
-  synthesis:
-    vendor: twist
-    budget_per_gene: 400
-    max_turnaround_days: 21
+
+    - polyadenylation_signal: SV40_late
+
+    - terminator: rrnB_T1

@@ -1,35 +1,55 @@
-```yaml
 construct:
-  name: negative_feedback_stabilizer
+  name: "negative_feedback_loop_yeast"
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: 2_micron
     source: addgene
 
   cassette:
-    - promoter: GAL1  # Galactose-inducible promoter for input G responsiveness
+    - promoter: GAL1
 
     - cistron:
-        label: output_protein
+        label: input_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GAL4
+              source: uniprot
+
+    - terminator: CYC1
+
+    - spacer: 30
+
+    - promoter: GAL1
+
+    - cistron:
+        label: output_F
+        expression: high
+        chain:
+          - tag: alpha_factor_signal_peptide
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: CYC1
+
+    - spacer: 30
+
+    - promoter: TetO
+
+    - cistron:
+        label: repressor_R
         expression: medium
         chain:
-          - tag: alpha_factor  # Yeast secretion signal
+          - tag: 6xHis
           - gene:
-              id: F_output
+              id: tTA_tetracycline_controlled_transactivator
               source: uniprot
 
-    - spacer: 50
-
-    - cistron:
-        label: repressor
-        expression: high
-        fused: false
-        chain:
-          - gene:
-              id: GAL80  # Galactose repressor for negative feedback
-              source: uniprot
-
-    - terminator: CYC1_T1
-```
+    - terminator: CYC1

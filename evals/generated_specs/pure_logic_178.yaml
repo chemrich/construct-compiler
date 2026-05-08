@@ -1,16 +1,52 @@
 construct:
-  name: "xor_logic_gate_mEGFP"
-  host: e_coli
+  name: "XOR_gate_ecoli"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: p15A
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: "ara_lac_xor_hybrid" # Substitution: XOR logic requires a hybrid promoter (e.g. araBAD with lacO sites) to achieve 'A OR B BUT NOT BOTH' behavior; standard promoters are substituted with this chimeric design.
+    - promoter: araBAD
+
     - cistron:
-        label: xor_output
+        label: input_A_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: input_B_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: XOR_logic_controller
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
     - terminator: rrnB_T1

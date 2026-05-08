@@ -1,23 +1,37 @@
 construct:
-  name: "orthogonal_inducible_coexpression_mammalian"
+  name: "FactorX_FactorY_dual_inducible_mammalian"
   host: HEK293
-  backbone:
-    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: TRE3G
+    - promoter: TRE_tight
+      # Tet-On inducible promoter (tetracycline response element)
+
     - cistron:
         label: FactorX
         expression: high
-        gene:
-          id: FactorX
-          source: uniprot
-    - terminator: SV40_polyA
-    - spacer: 100
-    - promoter: CuO
+        chain:
+          - tag: FLAG
+          - gene:
+              id: FactorX
+              source: uniprot
+
+    - polyadenylation: SV40_poly_A
+      # SV40 polyadenylation signal
+
+    - promoter: Cumate_inducible
+      # Cumate-responsive promoter (non-homologous to TRE)
+
     - cistron:
         label: FactorY
         expression: high
-        gene:
-          id: FactorY
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: HA
+          - gene:
+              id: FactorY
+              source: uniprot
+
+    - polyadenylation: BGH_poly_A
+      # BGH (bovine growth hormone) polyadenylation signal (structurally divergent from SV40)
+
+    - terminator: rrnB_T1
+      # Prokaryotic terminator for final construct boundary

@@ -1,19 +1,23 @@
 construct:
-  name: "pichia_aox1_gst_thrombin_kinase"
+  name: "pichia_kinase_GST_thrombin"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: zeocin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: kinase_assay
+        label: kinase
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: Thrombin
           - gene:
-              id: P17612
+              id: kinase
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

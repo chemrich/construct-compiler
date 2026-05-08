@@ -1,34 +1,42 @@
 construct:
-  name: "yeast_pathway_abc_operon"
+  name: "yeast_GeneA_GeneB_GeneC_pathway"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1  # Common constitutive promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: gene_a
-        expression: medium
+        label: GeneA
+        expression: high
         gene:
           id: GeneA
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: gene_b
-        expression: medium
+        label: GeneB
+        expression: high
         fused: false
         chain:
           - tag: 6xHis
           - gene:
               id: GeneB
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: gene_c
-        expression: medium
+        label: GeneC
+        expression: high
         fused: false
         gene:
           id: GeneC
           source: uniprot
-    - terminator: CYC1_term  # Standard yeast terminator
+
+    - terminator: rrnB_T1

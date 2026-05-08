@@ -1,16 +1,24 @@
 construct:
-  name: "high_level_constitutive_therapeutic_expression"
+  name: "constitutive_therapeutic_protein"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Strongest constitutive promoter in the Anderson library for high-level always-on expression
+    - promoter: trc  # trc is a strong constitutive promoter, stronger than lacUV5 alone
+
     - cistron:
-        label: therapeutic_protein
+        label: therapeutic
         expression: high
-        gene:
-          id: P01308  # Human insulin as a representative therapeutic protein
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: ""
+              source: uniprot
+              # User should specify their therapeutic protein ID
+
     - terminator: rrnB_T1

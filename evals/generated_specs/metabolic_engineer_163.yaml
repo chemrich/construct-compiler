@@ -1,47 +1,59 @@
 construct:
-  name: "atc_inducible_low_copy_pathway"
+  name: "aTc_inducible_P1P2P3P4_operon"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: p15A
+    source: addgene
+
   cassette:
-    - promoter: Ptet
+    - promoter: tetR_pTet
+      # aTc-inducible promoter, tightly repressed without inducer
+
     - cistron:
-        label: enzyme_P1
-        expression: low
+        label: P1
+        expression: high
         chain:
           - gene:
               id: P1
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_P2
-        expression: low
+        label: P2
+        expression: high
         fused: false
         chain:
           - gene:
               id: P2
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_P3
-        expression: low
+        label: P3
+        expression: high
         fused: false
         chain:
           - gene:
               id: P3
               source: uniprot
           - tag: 6xHis
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_P4
-        expression: low
+        label: P4
+        expression: high
         fused: false
         chain:
           - gene:
               id: P4
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

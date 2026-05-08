@@ -1,26 +1,22 @@
 construct:
-  name: "HEK293_Dual_Localization_NLS_MTS"
-  host: HEK293
+  name: "mito_targeted_mEGFP"
+  host: mammalian
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha
+    - promoter: CMV
+
     - cistron:
-        label: nuclear_GFP
+        label: mito_GFP
         expression: high
         chain:
-          - tag: NLS
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - tag: MTS
           - gene:
               id: mEGFP
               source: fpbase
-    - spacer: 40
-    - cistron:
-        label: mitochondrial_mCherry
-        expression: high
-        fused: false
-        chain:
-          - tag: MTS
-          - gene:
-              id: mCherry
-              source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

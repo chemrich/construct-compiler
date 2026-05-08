@@ -1,14 +1,20 @@
 construct:
-  name: "inducible_tetR_expression"
-  host: e_coli
+  name: tetR_inducible
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: tetR_repressor
-        expression: medium
+        label: tetR
+        expression: high
         gene:
           id: tetR
           source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

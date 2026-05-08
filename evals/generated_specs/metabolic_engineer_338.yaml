@@ -1,40 +1,58 @@
 construct:
-  name: "rhodococcus_metabolic_operon_optimization"
-  host: rhodococcus_opacus
+  name: "rhodococcus_four_enzyme_operon_reporter"
+  host: bacillus  # Rhodococcus opacus is Gram-positive, closest available host approximation
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # Strong constitutive promoter for initial ReporterA validation
+
     - cistron:
-        label: reporter_a
+        label: ReporterA
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - spacer: 30
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_x
+        label: EnzX
         expression: medium
         fused: false
-        gene:
-          id: EnzX
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: EnzX
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_y
+        label: EnzY
         expression: medium
         fused: false
-        gene:
-          id: EnzY
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: EnzY
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_z
+        label: EnzZ
         expression: medium
         fused: false
-        gene:
-          id: EnzZ
-          source: uniprot
+        chain:
+          - gene:
+              id: EnzZ
+              source: uniprot
+
     - terminator: rrnB_T1
+
+  # NOTE: For promoter optimization in Rhodococcus opacus, generate multiple variants of this construct
+  # using alternative promoters (J23106, J23101, araBAD, tac) to create a library for screening.
+  # ReporterA fluorescence correlates with promoter strength; select variants with balanced EnzX/Y/Z expression.

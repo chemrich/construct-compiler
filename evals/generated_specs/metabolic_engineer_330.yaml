@@ -1,42 +1,87 @@
 construct:
-  name: "pks_operon_fusion_assembly"
-  host: streptomyces_coelicolor
+  name: "PKS_five_enzyme_operon"
+  host: bacillus  # Streptomyces coelicolor not directly supported; using bacillus as closest high-expression actinomycete alternative
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: p15A
+    source: addgene
+
   cassette:
-    - promoter: tipA  # Strong thiostrepton-inducible regulated promoter for Streptomyces
+    - promoter: tac  # strong, regulated promoter suitable for Streptomyces
+
     - cistron:
-        label: pks_assembly
+        label: Module1
         expression: high
-        # The 'chain' format with 'linker' elements creates a multi-domain fusion protein
-        # to aid complex formation as requested, despite the 'operon' nomenclature.
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Module1
+              id: PKS_Module1
               source: uniprot
+
+    - linker:
+        type: GS_flexible
+        repeats: 1
+
+    - cistron:
+        label: Module2
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
-              id: Module2
+              id: PKS_Module2
               source: uniprot
+
+    - linker:
+        type: GS_flexible
+        repeats: 1
+
+    - cistron:
+        label: Module3
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
-              id: Module3
+              id: PKS_Module3
               source: uniprot
+
+    - linker:
+        type: GS_flexible
+        repeats: 1
+
+    - cistron:
+        label: Module4
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
-              id: Module4
+              id: PKS_Module4
               source: uniprot
+
+    - linker:
+        type: GS_flexible
+        repeats: 1
+
+    - cistron:
+        label: ModifyingEnz
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: short_GS
+              type: GS_flexible
               repeats: 1
           - gene:
-              id: ModifyingEnz
+              id: PKS_ModifyingEnz
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

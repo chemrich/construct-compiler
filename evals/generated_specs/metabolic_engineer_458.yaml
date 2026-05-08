@@ -1,48 +1,65 @@
 construct:
-  name: "biofilm_enhancement_5_enzyme_operon"
+  name: biofilm_formation_operon_5enzyme
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: J23100  # Very strong constitutive promoter
+
     - cistron:
-        label: biofilm1
+        label: Biofilm1
         expression: high
-        gene:
-          id: Biofilm1
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: Biofilm1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: biofilm2
-        expression: high
-        fused: false
-        gene:
-          id: Biofilm2
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: biofilm3
+        label: Biofilm2
         expression: high
         fused: false
-        gene:
-          id: Biofilm3
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: Biofilm2
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: biofilm4
+        label: Biofilm3
         expression: high
         fused: false
-        gene:
-          id: Biofilm4
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: Biofilm3
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: biofilm5
+        label: Biofilm4
         expression: high
         fused: false
-        gene:
-          id: Biofilm5
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: Biofilm4
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: Biofilm5
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: Biofilm5
+              source: uniprot
+
+    - terminator: rrnB_T1_double  # Double terminator for enhanced mRNA stability

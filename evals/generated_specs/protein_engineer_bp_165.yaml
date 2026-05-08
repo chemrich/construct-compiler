@@ -1,28 +1,36 @@
 construct:
-  name: "pichia_heterodimer_aox1_expression"
+  name: "pichia_heterodimeric_complex"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+
   cassette:
-    - promoter: AOX1
+    - promoter: PAOX1
+
     - cistron:
-        label: subunit_a
+        label: subunit_A
         expression: high
         chain:
           - tag: alpha_factor
           - gene:
               id: subunit_A
               source: uniprot
-    - terminator: AOX1_TT
-    - promoter: AOX1
+
+    - terminator: CYC1
+
+  cassette_2:
+    - promoter: PAOX1
+
     - cistron:
-        label: subunit_b
+        label: subunit_B
         expression: high
         chain:
           - tag: alpha_factor
           - gene:
               id: subunit_B
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1

@@ -1,5 +1,5 @@
 construct:
-  name: "Bacillus_starch_degradation_operon"
+  name: "bacillus_starch_degradation_operon"
   host: bacillus
 
   backbone:
@@ -8,75 +8,81 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: Pveg  # Strong constitutive Bacillus subtilis promoter
-    
-    - cistron:
-        label: alpha_amylase
-        expression: high
-        chain:
-          - tag: AmyE_signal
-          - gene:
-              id: P00691
-              source: uniprot
+    - promoter: P_veg  # Strong constitutive promoter for Bacillus subtilis
 
-    - spacer: 30
+    - cistron:
+        label: amylase_1
+        expression: high
+        codon_optimization: bacillus
+        chain:
+          - signal_peptide: AmyE_signal  # B. subtilis AmyE secretion signal
+          - gene:
+              id: amyA
+              source: uniprot  # Alpha-amylase
+
+    - spacer: 25
+
+    - cistron:
+        label: amylase_2
+        expression: high
+        codon_optimization: bacillus
+        fused: false
+        chain:
+          - signal_peptide: AmyE_signal
+          - gene:
+              id: amyB
+              source: uniprot  # Beta-amylase
+
+    - spacer: 25
 
     - cistron:
         label: pullulanase
         expression: high
+        codon_optimization: bacillus
         fused: false
         chain:
-          - tag: AmyE_signal
+          - signal_peptide: AmyE_signal
           - gene:
-              id: P07206
-              source: uniprot
+              id: pulA
+              source: uniprot  # Pullulanase
 
-    - spacer: 30
-
-    - cistron:
-        label: glucoamylase
-        expression: high
-        fused: false
-        chain:
-          - tag: AmyE_signal
-          - gene:
-              id: P04064
-              source: uniprot
-
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
         label: isoamylase
         expression: high
+        codon_optimization: bacillus
         fused: false
         chain:
-          - tag: AmyE_signal
+          - signal_peptide: AmyE_signal
           - gene:
-              id: P39120
-              source: uniprot
+              id: isoA
+              source: uniprot  # Isoamylase
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: maltogenic_amylase
+        label: maltase
         expression: high
+        codon_optimization: bacillus
         fused: false
         chain:
-          - tag: AmyE_signal
+          - signal_peptide: AmyE_signal
           - gene:
-              id: P15334
-              source: uniprot
+              id: malA
+              source: uniprot  # Maltase
 
-    - spacer: 30
+    - spacer: 25
 
     - cistron:
-        label: alpha_glucosidase
+        label: glucoamylase
         expression: high
+        codon_optimization: bacillus
         fused: false
         chain:
-          - tag: AmyE_signal
+          - signal_peptide: AmyE_signal
           - gene:
-              id: P40208
-              source: uniprot
+              id: glaA
+              source: uniprot  # Glucoamylase
 
-    - terminator: BBa_B0015
+    - terminator: rrnB_T1  # Robust transcription terminator

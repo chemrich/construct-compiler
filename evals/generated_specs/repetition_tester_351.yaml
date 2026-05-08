@@ -1,32 +1,70 @@
 construct:
-  name: yeast_tricolor_2a_polyprotein
+  name: yeast_tricolor_2A_reporter
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
-    source: addgene
+    ori: pBR322
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: gfp_segment
+        label: GFP
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - cistron:
-        label: bfp_segment
-        fused: true
         chain:
-          - cleavage_site: P2A
+          - gene:
+              id: sGFP
+              source: fpbase
+              optimization: codon_optimized_s_cerevisiae
+
+    - spacer: 25
+
+    - cistron:
+        label: 2A_P2A
+        expression: high
+        chain:
+          - linker:
+              type: P2A
+              repeats: 1
+
+    - cistron:
+        label: BFP
+        expression: high
+        chain:
           - gene:
               id: mTagBFP2
               source: fpbase
+              optimization: codon_optimized_s_cerevisiae
+
+    - spacer: 25
+
     - cistron:
-        label: rfp_segment
-        fused: true
+        label: 2A_T2A
+        expression: high
         chain:
-          - cleavage_site: T2A
+          - linker:
+              type: T2A
+              repeats: 1
+
+    - cistron:
+        label: RFP
+        expression: high
+        chain:
           - gene:
-              id: mScarlet
+              id: mCherry
               source: fpbase
-    - terminator: CYC1
+              optimization: codon_optimized_s_cerevisiae
+
+    - spacer: 25
+
+    - cistron:
+        label: 2A_F2A
+        expression: high
+        chain:
+          - linker:
+              type: F2A
+              repeats: 1
+
+    - terminator: rrnB_T1

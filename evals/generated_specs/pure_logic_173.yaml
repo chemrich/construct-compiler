@@ -1,25 +1,37 @@
 construct:
-  name: "yeast_multiplexer_switch"
+  name: yeast_multiplexer_switch
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pUC
+    resistance: kanamycin
+    ori: 2_micron
     source: addgene
+
   cassette:
-    - promoter: GAL1  # Induced by Galactose; represents Input C = ON
+    - promoter: GAL1
+      description: "Inducible by galactose; represents control input C (ON state)"
+
     - cistron:
-        label: output_x
+        label: Output_X
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: CYC1_term
-    - spacer: 50
-    - promoter: MET3  # Repressed by Methionine; used to facilitate C = OFF state logic
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: CYC1
+
+    - promoter: GAL10
+      description: "Repressed when GAL1 is active; represents control input C (OFF state)"
+
     - cistron:
-        label: output_y
+        label: Output_Y
         expression: high
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: ADH1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: CYC1

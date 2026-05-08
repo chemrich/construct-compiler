@@ -1,29 +1,39 @@
 construct:
-  name: "bicistronic_protein_x_y_expression"
-  host: e_coli_bl21_de3
+  name: bicistronic_ProteinX_ProteinY_2A
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: protein_x
+        label: ProteinX
         expression: high
         chain:
           - tag: FLAG
           - gene:
-              id: Protein_X
+              id: ProteinX
               source: uniprot
-    # 2A peptides (P2A/T2A) do not function in E. coli as they require eukaryotic translation machinery.
-    # Replaced with a 30bp intergenic spacer and independent translation initiation (RBS) for Protein Y.
-    - spacer: 30
+
     - cistron:
-        label: protein_y
+        label: 2A_peptide
         expression: high
         fused: false
+        gene:
+          id: P2A
+          source: uniprot
+
+    - cistron:
+        label: ProteinY
+        expression: high
         chain:
           - gene:
-              id: Protein_Y
+              id: ProteinY
               source: uniprot
           - tag: Strep-II
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,20 +1,19 @@
-```yaml
 construct:
-  name: AAV_promoter_screening_luciferase
+  name: AAV_tissue_specific_luciferase
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pTwist AAV"
+    resistance: ampicillin
 
   cassette:
-    - promoter: CMV  # Replace with candidate tissue-specific promoters
+    - promoter: null  # placeholder for tissue-specific promoter screening
 
     - cistron:
-        label: reporter
+        label: luciferase
         expression: high
         gene:
-          id: P14249
+          id: Renilla_luciferase
           source: uniprot
 
-    - terminator: polyA
-```
+    - polyA: SV40

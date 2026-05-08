@@ -1,27 +1,29 @@
 construct:
-  name: "pichia_secretion_ifna2_ypt1"
+  name: Pichia_IFN_alpha_SUMO_secretion
   host: yeast
-  backbone:
-    resistance: zeocin
-    source: addgene
+
   cassette:
     - promoter: YPT1
+
     - cistron:
-        label: target_interferon
+        label: interferon
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha-factor
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: P01563
+              id: IFNA1
               source: uniprot
-    - spacer: 40
+
+    - spacer: 30
+
     - cistron:
-        label: zeocin_selection
+        label: selection
         expression: medium
         fused: false
         gene:
-          id: P05730
+          id: Zeocin_resistance
           source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: CYC1

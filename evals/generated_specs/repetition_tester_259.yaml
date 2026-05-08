@@ -1,28 +1,29 @@
 construct:
-  name: "gateway_entry_p15A_spectinomycin_divergent"
+  name: "Gateway_entry_vector_unique_attL_variants"
   host: e_coli
+  
   backbone:
-    resistance: spectinomycin  # Selected for uniqueness and to avoid cross-reactivity with common Amp/Kan markers
-    ori: CloDF13               # Chosen for high divergence from common pUC/pBR322 origins
+    resistance: chloramphenicol  # chloramphenicol chosen for uniqueness vs. standard kan/amp libraries
+    ori: CloDF13                  # CloDF13 chosen for low-copy, reduced recombination risk
     source: addgene
+
   cassette:
-    - promoter: lacUV5         # Strong but distinct from standard T7 or tac promoters
+    - promoter: lacUV5  # lacUV5 for chloramphenicol resistance (distinct from typical promoters)
+
     - cistron:
-        label: gateway_negative_selection
-        expression: medium
-        chain:
-          - tag: attL1         # Recombination site variant 1
-          - gene:
-              id: ccdB
-              source: uniprot
-    - spacer: 30
-    - cistron:
-        label: gateway_positive_selection
-        expression: medium
-        fused: false           # Independent translation via separate RBS
-        chain:
-          - gene:
-              id: cat          # Chloramphenicol acetyltransferase for cassette maintenance
-              source: uniprot
-          - tag: attL2         # Recombination site variant 2 (divergent from attL1)
-    - terminator: rrnB_T1      # Robust terminator for distinct expression boundaries
+        label: chloramphenicol_acetyltransferase
+        expression: high
+        gene:
+          id: cat
+          source: uniprot
+
+    - terminator: T7term  # T7 terminator for unique flanking sequence context
+
+    # attL1 variant (sequence-divergent from standard Gateway)
+    - comment: "attL1_variant_custom: AACAAAGCTGGAGCTCCACCCGCAGACGTACGAAACACCCGCCTG"
+
+    # Entry cassette spacer for cloning insert
+    - spacer: 50
+
+    # attL2 variant (sequence-divergent from standard Gateway)
+    - comment: "attL2_variant_custom: CTGGAGACGACGAAACACCGCCTGCGCTACGAGCTGCAGCTG"

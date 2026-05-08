@@ -1,24 +1,27 @@
 construct:
-  name: "yeast_surface_display_human_adrb2"
+  name: yeast_GPCR_surface_display
   host: yeast
+
   backbone:
-    resistance: URA3 # Substituted for antibiotic resistance per user request to use nutritional selection
-    ori: CEN6_ARSH4
+    resistance: auxotrophic_marker  # URA3 or LEU2 instead of antibiotic resistance
+    ori: 2_micron                   # high copy yeast plasmid
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: gpcr_display_fusion
+        label: GPCR_display
         expression: high
         chain:
+          - tag: alpha_factor_secretion_signal  # N-terminal secretion signal for yeast ER/Golgi trafficking
           - gene:
-              id: AGA2
+              id: ADRB2  # human beta-2 adrenergic receptor (common GPCR model)
               source: uniprot
+          - tag: HA  # C-terminal epitope tag for detection and immunofluorescence
           - linker:
               type: GS_flexible
-              repeats: 3
-          - gene:
-              id: ADRB2
-              source: uniprot
-          - tag: FLAG
-    - terminator: CYC1
+              repeats: 1
+          - tag: Aga2p  # yeast cell surface display anchor (binds to Aga1p on cell wall)
+
+    - terminator: CYC1  # yeast terminator

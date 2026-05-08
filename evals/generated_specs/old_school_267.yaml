@@ -1,18 +1,24 @@
 construct:
-  name: "BioDrug_Mammalian_High_Expression_Secretion"
-  host: CHO
+  name: BioDrug_mammalian_secreted
+  host: HEK293
+
   backbone:
-    resistance: dhfr
-    ori: pUC
-    source: custom
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: BioDrug_therapeutic
+        label: BioDrug
         expression: high
         chain:
-          - tag: IL2_signal_peptide
+          - signal_peptide: IL2
           - gene:
               id: BioDrug
               source: uniprot
-    - terminator: bGH_polyA  # Standard polyadenylation signal for high expression in mammalian systems
+
+    - terminator: SV40
+
+    - selection_marker:
+        gene: DHFR
+        source: uniprot

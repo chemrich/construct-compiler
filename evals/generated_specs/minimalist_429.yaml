@@ -1,14 +1,20 @@
 construct:
-  name: "MWLGA_peptide_expression"
-  host: e_coli
+  name: "MWLGA_peptide"
+  host: e_coli_bl21
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target_peptide
+        label: peptide
         expression: high
-        gene:
-          id: MWLGA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: MWLGA
+              source: custom_peptide
+    
     - terminator: rrnB_T1

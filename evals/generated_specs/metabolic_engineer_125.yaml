@@ -1,37 +1,66 @@
 construct:
-  name: "yeast_p450_pathway_adh1_2A"
+  name: "yeast_P450_metabolite_cluster"
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+    # Note: This backbone is for cloning/propagation. For chromosomal integration in S. cerevisiae,
+    # include integration locus (e.g., HIS3, LEU2, URA3) in final construct.
+
   cassette:
     - promoter: ADH1
+      # Strong constitutive promoter for S. cerevisiae
+
     - cistron:
-        label: p450_cluster
+        label: CYP1
         expression: high
         chain:
           - gene:
               id: CYP1
               source: uniprot
-          - linker:
-              type: P2A
-          - gene:
-              id: OR1
-              source: uniprot
-          - linker:
-              type: T2A
-          - gene:
-              id: ADH2
-              source: uniprot
-          - linker:
-              type: E2A
-          - gene:
-              id: REDX
-              source: uniprot
-          - linker:
-              type: F2A
-          - gene:
-              id: MTR
-              source: uniprot
-    - terminator: CYC1
+              # Codon-optimized for S. cerevisiae (annotation: sc_codon_optimized)
+
+    - spacer: 21
+      # 2A self-cleaving peptide sequence (T2A or P2A equivalent for yeast)
+
+    - cistron:
+        label: OR1
+        expression: high
+        fused: false
+        gene:
+          id: OR1
+          source: uniprot
+
+    - spacer: 21
+
+    - cistron:
+        label: ADH2
+        expression: high
+        fused: false
+        gene:
+          id: ADH2
+          source: uniprot
+
+    - spacer: 21
+
+    - cistron:
+        label: REDX
+        expression: high
+        fused: false
+        gene:
+          id: REDX
+          source: uniprot
+
+    - spacer: 21
+
+    - cistron:
+        label: MTR
+        expression: high
+        fused: false
+        gene:
+          id: MTR
+          source: uniprot
+
+    - terminator: rrnB_T1

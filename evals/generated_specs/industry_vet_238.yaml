@@ -1,22 +1,27 @@
 construct:
-  name: "Lysosomal_EnzymeX_Targeting"
+  name: EnzymeX_lysosomal_targeting
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_fusion
+        label: EnzymeX_lysosomal
         expression: high
         chain:
-          - tag: LAMP1_signal
+          - tag: FLAG
           - gene:
               id: EnzymeX
               source: uniprot
+          - tag: KFERQ
+          # KFERQ is a chaperone-mediated autophagy targeting motif for lysosomal delivery
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mCherry
-              source: fpbase
-    - terminator: bGH_polyA
+              repeats: 1
+          - tag: mCherry
+          # mCherry as C-terminal reporter for tracking
+
+    - terminator: rrnB_T1

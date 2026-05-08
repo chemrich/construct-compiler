@@ -1,14 +1,69 @@
 construct:
-  name: "conditional_cell_elimination_logic_gate"
+  name: conditional_cell_elimination_gate_mammalian
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
-    - promoter: TRE_LacO # Hybrid promoter: TRE requires ToxinInducer (Dox), LacO is repressed in presence of SurvivalFactor (via LacI)
+    - promoter: CMV
+
     - cistron:
-        label: toxin_effector
+        label: ToxinInducer_sensor
+        expression: medium
+        chain:
+          - tag: HA
+          - gene:
+              id: ToxinInducer
+              source: uniprot
+              # Acts as input signal; expression tunable via external induction
+
+    - terminator: SV40
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: SurvivalFactor_sensor
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: SurvivalFactor
+              source: uniprot
+              # Acts as repressor/anti-apoptotic signal; presence inhibits apoptosis pathway
+
+    - terminator: SV40
+
+    - promoter: U6
+      # Pol III promoter for constitutive miRNA/RNA stability element expression
+
+    - cistron:
+        label: gated_apoptosis_controller
+        expression: very_low
+        # Very low basal expression ensures robustness and prevents premature cell death
+        chain:
+          - gene:
+              id: BAX
+              source: uniprot
+              # Pro-apoptotic protein; expression tightly controlled to prevent leakage
+              # Should only accumulate when ToxinInducer present AND SurvivalFactor absent
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+
+    - terminator: rrnB_T1
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: logic_buffer_protein
         expression: high
-        gene:
-          id: BAX
-          source: uniprot
-    - terminator: bGH_PA # Robust mammalian polyadenylation signal
+        # Stable protein that integrates signals; high expression for robustness
+        chain:
+          - gene:
+              id: p53
+              source: uniprot
+              # Tumor suppressor that responds to stress; coordinates apoptosis only under dual conditions
+
+    - terminator: SV40

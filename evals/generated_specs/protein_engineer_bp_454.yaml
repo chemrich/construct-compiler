@@ -1,20 +1,25 @@
 construct:
-  name: "pGAP_alphaFactor_His_Thrombin_IFNA2"
+  name: "Pichia_IFN_alpha_GAP_constitutive"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: interferon_alpha_2
+        label: IFN_alpha
         expression: high
         chain:
-          - tag: alpha_factor # Modified: lacking EAEA repeats for improved N-terminal processing
           - tag: 6xHis
           - cleavage_site: Thrombin
+          - signal_sequence: alpha_factor_modified
           - gene:
-              id: P01563
+              id: "IFN2"
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

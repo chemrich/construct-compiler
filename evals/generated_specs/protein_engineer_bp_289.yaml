@@ -1,19 +1,24 @@
 construct:
-  name: "bacillus_subtilis_xylanase_secretion"
+  name: "Bacillus_subtilis_xylanase_secretion_system"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
-      cistron:
+
+    - cistron:
         label: secreted_xylanase
         expression: high
         chain:
-          - tag: SacB_signal_peptide
+          - signal_peptide: SacB
           - gene:
-              id: P10629
+              id: xylanase
               source: uniprot
+          - cleavage_site: Factor_Xa
           - tag: 6xHis
-      terminator: BBa_B0015
+
+    - terminator: rrnB_T1

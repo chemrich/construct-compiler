@@ -1,23 +1,26 @@
 construct:
-  name: "high_yield_e_coli_operon"
-  host: e_coli_bl21_de3
+  name: "dual_protein_operon_high_yield"
+  host: e_coli_bl21
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: protein_a
+        label: Protein_A
         expression: high
-        gene:
-          id: P0A8V2
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: proteinA
+              source: uniprot
     - spacer: 30
     - cistron:
-        label: protein_b
+        label: Protein_B
         expression: high
         fused: false
-        gene:
-          id: P0A9A6
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: proteinB
+              source: uniprot
     - terminator: rrnB_T1

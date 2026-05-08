@@ -1,37 +1,26 @@
 construct:
-  name: "GST_KinaseK_Yeast_Expression"
+  name: "KinaseK_GST_yeast_high_expression"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Strong constitutive promoter for S. cerevisiae
+    - promoter: GAL1
+
     - cistron:
-        label: kinase_target
+        label: KinaseK_GST
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: KinaseK
               source: uniprot
-    - terminator: CYC1_term  # Standard yeast transcription terminator```yaml
-construct:
-  name: "GST_KinaseK_Yeast_Expression"
-  host: yeast
-  backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
-  cassette:
-    - promoter: TDH3
-    - cistron:
-        label: kinase_target
-        expression: high
-        chain:
-          - solubility_tag: GST
-          - gene:
-              id: KinaseK
-              source: uniprot
-    - terminator: CYC1_term
-```
+
+    - terminator: CYC1

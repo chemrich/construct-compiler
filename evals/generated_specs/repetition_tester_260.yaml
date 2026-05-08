@@ -1,23 +1,32 @@
 construct:
-  name: "HEK293_secreted_dual_tag_diversity_construct"
+  name: "secreted_dual_tagged_mammalian_protein"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: target
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_SP  # N-terminal secretion signal
           - tag: 6xHis
           - linker:
-              type: short_GS
-          - tag: Strep-II
-          - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
+          - tag: Twin-Strep
+          - linker:
+              type: rigid_EAAAK
+              repeats: 1
           - gene:
-              id: P02768
+              id: "human_growth_hormone"
               source: uniprot
-    - terminator: bGH_PA
+        # Note: Linkers use distinct sequences (GS_flexible vs rigid_EAAAK)
+        # and distinct DNA codons to prevent recombination.
+        # His-tag and Twin-Strep use different epitope designs.
+        # Signal peptide ensures secretion from mammalian cells.
+
+    - terminator: rrnB_T1

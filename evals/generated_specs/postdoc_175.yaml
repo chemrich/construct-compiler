@@ -1,17 +1,23 @@
 construct:
-  name: "periplasmic_secretion_construct"
-  host: e_coli_bl21_de3
+  name: "bacterial_periplasmic_secretion"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac # CMV is a mammalian promoter; substituted with T7lac for strong expression in E. coli
-      cistron:
-        label: target_secretion
+    - promoter: T7lac
+    
+    - cistron:
+        label: secreted_protein
         expression: high
         chain:
-          - tag: PelB # PDI is a eukaryotic signal peptide; substituted with PelB for bacterial periplasmic secretion
+          - signal_peptide: pelB  # PDI signal peptide not standard in bacteria; using pelB (periplasmic leader) instead
           - gene:
-              id: P0A8I3
+              id: target_protein
               source: uniprot
           - tag: 6xHis
-      terminator: T7term
+    
+    - terminator: rrnB_T1

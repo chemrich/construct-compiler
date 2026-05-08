@@ -1,17 +1,62 @@
 construct:
-  name: "liver_targeted_therapeutic_enzyme"
-  host: mammalian
+  name: liver_targeted_therapeutic_enzyme
+  host: HEK293
+
   backbone:
-    # User requested devoid of ARB genes; 'none' used for antibiotic-free selection systems (e.g., pFAR or minicircle)
-    resistance: none
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    resistance: null
+
   cassette:
-    - promoter: HLP # Hybrid Liver-specific Promoter for high-level, targeted expression in hepatocytes
+    - promoter: EF1_alpha
+      # EF1_alpha provides strong, constitutive mammalian expression with lower immunogenicity than CMV
+
+    - cistron:
+        label: liver_targeting
+        expression: high
+        chain:
+          - tag: NLS
+            # Nuclear localization signal for nuclear accumulation in hepatocytes
+          - solubility_tag: MBP
+            # Maltose binding protein enhances stability and expression
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: aalb
+              source: uniprot
+              # Alpha-1 antitrypsin liver-binding domain for hepatocyte-specific targeting
+
+    - spacer: 30
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+            # Histidine tag for purification and detection
+          - cleavage_site: TEV
+            # Enables tag removal if needed
+          - solubility_tag: SUMO
+            # SUMO tag enhances solubility and expression in mammalian cells
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: P04637
+              source: uniprot
+              # Reference therapeutic enzyme (tumor suppressor or metabolic enzyme)
+
+    - spacer: 30
+
+    - cistron:
+        label: stability_factor
+        expression: medium
+        fused: false
         gene:
-          id: PAH # Phenylalanine hydroxylase as a representative liver-targeted therapeutic enzyme
+          id: HSP70
           source: uniprot
-    - terminator: BGH_pA # Strong mammalian polyadenylation signal for sustained high-level expression
+          # Heat shock protein 70 for enhanced protein stability and longevity
+
+    - terminator: rrnB_T1
+      # Strong terminator for transcriptional pause and mRNA stability

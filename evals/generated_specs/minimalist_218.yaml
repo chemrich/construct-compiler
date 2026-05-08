@@ -1,25 +1,29 @@
 construct:
-  name: yeast_dual_minimal_reporter
+  name: yeast_dual_reporter_mCherry_Luciferase
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: CYC1_min
+    - promoter: J23100
+
     - cistron:
         label: mCherry_reporter
-        expression: medium
+        expression: high
         gene:
           id: mCherry
           source: fpbase
-    - spacer: 50
-    - promoter: CYC1_min
+
+    - spacer: 30
+
+    - promoter: J23106
+
     - cistron:
-        label: luciferase_reporter
-        expression: medium
-        fused: false
+        label: Luciferase_reporter
+        expression: high
         gene:
-          id: P08659
+          id: Renilla_reniformis_luciferase
           source: uniprot
-    - terminator: ADH1_term  # Included ADH1_term to satisfy Rule 10, despite user request for no terminators.

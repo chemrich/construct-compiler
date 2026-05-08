@@ -1,18 +1,22 @@
 construct:
-  name: "AwesomeProtein_N_His_Expression"
+  name: "E_coli_AwesomeProtein_His_inducible"
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: tetA  # Substitution: tetA (bacterial tet-inducible) used for E. coli host instead of mammalian Tet-On system
+    - promoter: tetA  # Tet-inducible promoter for precise control
+    
     - cistron:
-        label: target
+        label: AwesomeProtein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: AwesomeProtein
               source: uniprot
+    
     - terminator: rrnB_T1

@@ -1,11 +1,10 @@
-```yaml
 construct:
-  name: heterodimeric_fab_pichia_expression
+  name: "Pichia_heterodimeric_Fab"
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
 
   cassette:
@@ -15,23 +14,23 @@ construct:
         label: light_chain
         expression: high
         chain:
-          - tag: alpha_factor  # secretion signal for yeast
+          - tag: alpha_factor
           - gene:
-              id: P01834  # human immunoglobulin kappa light chain constant region
+              id: fab_light_chain
               source: uniprot
 
     - terminator: CYC1
 
+  cassette:
     - promoter: GAP
 
     - cistron:
         label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor  # secretion signal for yeast
+          - tag: alpha_factor
           - gene:
-              id: P01857  # human immunoglobulin heavy chain constant region Fab fragment
+              id: fab_heavy_chain
               source: uniprot
 
     - terminator: CYC1
-```

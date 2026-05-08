@@ -1,14 +1,21 @@
 construct:
-  name: "lambda_toxin_overexpression_constitutive"
-  host: e_coli_bl21
+  name: "Lambda_toxin_overexpression"
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter used to achieve "all the time" expression
+    - promoter: T7
+
     - cistron:
-        label: target
+        label: Lambda_toxin
         expression: high
-        gene:
-          id: Lambda
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: Lambda_toxin
+              source: uniprot
+
     - terminator: rrnB_T1

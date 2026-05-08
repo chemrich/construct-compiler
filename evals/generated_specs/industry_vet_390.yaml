@@ -1,18 +1,21 @@
 construct:
-  name: "mammalian_secretory_cargo_EF1a"
+  name: "mammalian_secreted_cargo_production"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: cargo
+        label: secreted_cargo
         expression: high
         chain:
-          - tag: Igk_leader
+          - signal_peptide: SP_hIgG  # human IgG signal peptide for robust ER targeting and secretion
           - gene:
               id: cargo
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: bGH_polyA  # bovine growth hormone polyadenylation signal for robust 3' end processing

@@ -1,39 +1,50 @@
 construct:
   name: "thermophilic_glycolytic_operon"
-  host: e_coli
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: trc  # strong constitutive promoter, works well at elevated temperatures
+
     - cistron:
         label: GAPDH
         expression: high
         gene:
-          id: P00362
+          id: GAPDH_thermophile
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: PGK
         expression: high
         fused: false
         gene:
-          id: P16263
+          id: PGK_thermophile
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: PGM
         expression: high
         fused: false
         gene:
-          id: Q56230
+          id: PGM_thermophile
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: Eno
         expression: high
         fused: false
         gene:
-          id: Q56184
+          id: Eno_thermophile
           source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

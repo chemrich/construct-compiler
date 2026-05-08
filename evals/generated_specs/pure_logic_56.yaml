@@ -1,18 +1,59 @@
 construct:
-  name: "qs_logic_and_biofilm_integrator"
+  name: dual_quorum_sensing_biofilm_integrator
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: "pLux_pLas_AND" # Logical AND-gate promoter requiring both Q1 (AHL) and Q2 (3-oxo-C12-HSL) inputs
+    - promoter: araBAD
+
     - cistron:
-        label: biofilm_effector
+        label: Q1_receptor
         expression: high
         chain:
-          - tag: "OmpA" # N-terminal membrane localization signal peptide
+          - tag: 6xHis
           - gene:
-              id: "bolA"
+              id: luxR
               source: uniprot
-    - terminator: "rrnB_T1"
+
+    - spacer: 25
+
+    - cistron:
+        label: Q2_receptor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: rhlR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: dual_integrase
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: cre
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: biofilm_effector
+        expression: low
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - gene:
+              id: pgaA
+              source: uniprot
+
+    - terminator: rrnB_T1

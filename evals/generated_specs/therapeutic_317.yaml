@@ -1,26 +1,66 @@
 construct:
-  name: "DC_Antigen_Presentation_Enhancer_NYESO1"
-  host: mammalian
+  name: "dendritic_cell_antigen_presentation_enhancer"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: MHC_I_Pathway
+        label: antigen_MHC_I
         expression: high
         chain:
-          - tag: Ubiquitin
+          - tag: NLS
           - gene:
-              id: P14210
+              id: P04637
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: MHC_II_Pathway
+        label: CLIP_removal_cathepsin
+        expression: medium
+        chain:
+          - tag: signal_peptide_CD33
+          - gene:
+              id: P07339
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - cleavage_site: 3C
+
+    - spacer: 30
+
+    - cistron:
+        label: MHC_II_loading_factor
+        expression: medium
+        chain:
+          - tag: NLS
+          - gene:
+              id: P29774
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: FLAG
+
+    - spacer: 30
+
+    - cistron:
+        label: immunostimulatory_adjuvant
         expression: high
         fused: false
         chain:
-          - tag: CD74_targeting_signal
+          - tag: signal_peptide_IgE
           - gene:
-              id: P14210
+              id: P19438
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

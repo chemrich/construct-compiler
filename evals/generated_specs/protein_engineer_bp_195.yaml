@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_aox1_secretion_mbp_fusion"
+  name: "Pichia_AOX1_MBP_enzyme"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: secreted_solubility_enzyme
+        label: secreted_enzyme
         expression: high
         chain:
-          - tag: alpha_factor
-          - solubility_tag: MBP
+          - tag: alpha_factor_signal
+          - tag: MBP
           - cleavage_site: Factor_Xa
           - gene:
-              id: target_enzyme
+              id: enzyme
               source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: CYC1_polA

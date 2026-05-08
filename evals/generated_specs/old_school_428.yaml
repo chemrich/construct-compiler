@@ -1,15 +1,21 @@
 construct:
-  name: "trp_repressible_metabolic_enzyme"
+  name: trp_promoter_metabolic_enzyme
   host: e_coli
+
   backbone:
     resistance: tetracycline
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: trp
+
     - cistron:
-        label: enzyme_cistron
+        label: metabolic_enzyme
         expression: high
         gene:
-          id: metabolic_enzyme
+          id: null
           source: uniprot
+        # Note: Gene ID not specified by user; compiler will require explicit UniProt ID
+
     - terminator: rrnB_T1

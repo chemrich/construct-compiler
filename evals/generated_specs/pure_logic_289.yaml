@@ -1,15 +1,42 @@
 construct:
-  name: "xnor_equality_detector"
+  name: "XNOR_logic_gate_equality_detector"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: "P_xnor_I1_I2" # Synthetic XNOR promoter: ON if (I1 AND I2) OR (NOT I1 AND NOT I2)
+    - promoter: T7lac
+    
     - cistron:
-        label: "output_protein_R"
+        label: input_1_sensor
         expression: high
-        gene:
-          id: mScarlet # mScarlet serves as the reporter for protein R
-          source: fpbase
+        chain:
+          - gene:
+              id: LacI
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: input_2_sensor
+        expression: high
+        chain:
+          - gene:
+              id: AraC
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: output_R
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+    
     - terminator: rrnB_T1

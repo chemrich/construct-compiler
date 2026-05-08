@@ -1,56 +1,104 @@
 construct:
-  name: "tristable_switch_genetic_spec"
-  host: e_coli_bl21
+  name: "three_state_genetic_switch"
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: tac
+    - promoter: araBAD
+
     - cistron:
-        label: repressor_1_TetR
-        expression: medium
-        gene:
-          id: TetR
-          source: uniprot
+        label: State1_repressor
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: State2_repressor
+        expression: high
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: State3_repressor
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: reporter_1_mEGFP
+        label: memory_register_state1
         expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: FLAG
+          - gene:
+              id: CI_like_domain
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: memory_register_state2
+        expression: medium
+        chain:
+          - tag: HA
+          - gene:
+              id: TetR_domain
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: memory_register_state3
+        expression: medium
+        chain:
+          - tag: FLAG
+          - gene:
+              id: AraC_domain
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: input_sensor_pulse1
+        expression: low
+        chain:
+          - gene:
+              id: holin
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: input_sensor_pulse2
+        expression: low
+        chain:
+          - gene:
+              id: recombinase_flp
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: input_sensor_pulse3
+        expression: low
+        chain:
+          - gene:
+              id: cre_recombinase
+              source: uniprot
+
     - terminator: rrnB_T1
-    - promoter: pTet
-    - cistron:
-        label: repressor_2_cI
-        expression: medium
-        gene:
-          id: cI
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reporter_2_mScarlet
-        expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: rrnB_T1
-    - promoter: pL
-    - cistron:
-        label: repressor_3_LacI
-        expression: medium
-        gene:
-          id: LacI
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: reporter_3_mTagBFP2
-        expression: medium
-        fused: false
-        gene:
-          id: mTagBFP2
-          source: fpbase
-    - terminator: BBa_B0015

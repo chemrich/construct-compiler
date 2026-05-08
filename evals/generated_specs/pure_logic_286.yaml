@@ -1,15 +1,41 @@
 construct:
-  name: "metabolite_M_responsive_proportional_controller"
+  name: metabolite_M_sensor_actuator_proportional_controller
   host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: araBAD  # Acts as a proportional sensor for metabolite M (e.g., L-arabinose)
+    - promoter: araBAD
+      # araBAD provides dose-dependent expression proportional to L-arabinose concentration
+      # Metabolite M will regulate this via a biosensor regulatory element
+    
     - cistron:
-        label: degradation_enzyme_E
+        label: metabolite_sensor
         expression: high
-        gene:
-          id: P0A944  # AraA (L-arabinose isomerase), a representative enzyme E that degrades metabolite M
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: PcaQ
+              # PcaQ is a LysR-type transcriptional regulator that senses protocatechuate
+              # User should substitute with appropriate metabolite M-binding sensor protein
+              source: uniprot
+    
+    - spacer: 25
+    
+    - cistron:
+        label: actuator_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: MBP
+          - gene:
+              id: PcaH
+              # PcaH is a 3-ketoadipyl-CoA thiolase that degrades aromatic compounds
+              # User should substitute with enzyme E specific to metabolite M degradation
+              source: uniprot
+    
     - terminator: rrnB_T1

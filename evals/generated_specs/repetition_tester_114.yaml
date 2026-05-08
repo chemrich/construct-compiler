@@ -1,19 +1,28 @@
 construct:
-  name: "destabilized_sfgfp_ecoli"
+  name: "eGFP_destabilization_tag_ecoli"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: fluorescent_protein
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: sfGFP
+              id: mEGFP
               source: fpbase
           - linker:
               type: rigid_EAAAK
-              repeats: 3
-          - tag: ssrA_LVA  # Non-standard variant of the ssrA degradation tag
-    - terminator: T7term
+              repeats: 1
+          - tag: degron_variant_PEST
+            # Non-standard PEST-like degron variant optimized for rapid proteasomal degradation
+            # Sequence context: enriched in Pro/Glu/Ser/Thr but with codon optimization
+            # to avoid homology with common degron libraries
+
+    - terminator: rrnB_T1

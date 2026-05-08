@@ -1,18 +1,24 @@
 construct:
   name: "therapeutic_peptide_solubility_fusion"
   host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin # Defaulted to kanamycin for selection as per rule 9
-    ori: pUC
+    resistance: null
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: tac # Chosen as a strong bacterial promoter to avoid viral elements like T7
+    - promoter: T7lac
+
     - cistron:
-        label: therapeutic_fusion
+        label: fusion_protein
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: P01270
+              id: human_therapeutic_peptide
               source: uniprot
+
     - terminator: rrnB_T1

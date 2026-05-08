@@ -1,15 +1,21 @@
 construct:
-  name: "my_protein_x_expression_plasmid"
+  name: "ecoli_MyProteinX_expression"
   host: e_coli
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: lacUV5  # Lac-derived promoter chosen to match user request
+    - promoter: lacUV5
+
     - cistron:
-        label: target
+        label: MyProteinX
         expression: high
-        gene:
-          id: MyProteinX
+        chain:
+          - gene:
+              id: MyProteinX
+              source: uniprot
+
     - terminator: rrnB_T1

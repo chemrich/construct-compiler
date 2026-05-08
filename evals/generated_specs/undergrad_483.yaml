@@ -1,17 +1,24 @@
 construct:
-  name: "TrickyProtein_MBP_His_High_Expression"
+  name: TrickyProtein_expression_vector
   host: e_coli_bl21_de3
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: TrickyProtein
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: TrickyProtein
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

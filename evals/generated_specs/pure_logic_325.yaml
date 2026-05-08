@@ -1,34 +1,69 @@
 construct:
-  name: "recombinase_three_pulse_counter"
+  name: "genetic_counter_3pulse_J_detector"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD # Signal J is Arabinose
+    - promoter: T7lac
+
     - cistron:
-        label: counter_stage_1
-        expression: medium
-        gene:
-          id: P06956 # Cre recombinase
-          source: uniprot
-    - spacer: 30 # Spacers contain the logic-gating recombination sites (lox/FRT)
-    - cistron:
-        label: counter_stage_2
-        expression: medium
-        fused: false
-        gene:
-          id: P03870 # Flp recombinase
-          source: uniprot
+        label: counter_logic_unit
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: LacI
+              source: uniprot
+        # LacI represses output reporter unless counter state = ON
+
     - spacer: 30
+
     - cistron:
-        label: reporter_stage_3
+        label: state_memory_1
+        expression: high
+        chain:
+          - gene:
+              id: cI
+              source: uniprot
+        # First pulse: cI activates memory_1
+
+    - spacer: 30
+
+    - cistron:
+        label: state_memory_2
+        expression: medium
+        chain:
+          - gene:
+              id: cII
+              source: uniprot
+        # Second pulse: cII activates memory_2 (requires memory_1 ON)
+
+    - spacer: 30
+
+    - cistron:
+        label: state_memory_3
+        expression: medium
+        chain:
+          - gene:
+              id: cIII
+              source: uniprot
+        # Third pulse: cIII activates memory_3 (requires memory_2 ON)
+
+    - spacer: 30
+
+    - cistron:
+        label: output_reporter
         expression: high
         fused: false
         chain:
-          - tag: 6xHis
           - gene:
-              id: mEGFP
+              id: mNeonGreen
               source: fpbase
+        # ON only when all three memory states are activated (cI + cII + cIII present)
+
     - terminator: rrnB_T1

@@ -1,27 +1,37 @@
 construct:
-  name: "yeast_ergosterol_pathway_ho_integration"
+  name: ergosterol_pathway_five_enzyme_yeast
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene # Standard for HO-integration plasmids (e.g., pHO-Pol-kanMX-LacZ)
+    resistance: G418  # nourseothricin for yeast integration
+    ori: 2micron      # 2micron for yeast episomal, or use integration locus (HO)
+    source: addgene
+    integration_locus: HO
+
   cassette:
-    - promoter: GAL1 # Galactose-inducible promoter for yeast
+    - promoter: GAL1
+
     - cistron:
         label: erg1
         expression: medium
-        gene:
-          id: P32377
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: ERG1
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: erg3
         expression: medium
         fused: false
-        gene:
-          id: P32357
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: ERG3
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: erg6
         expression: medium
@@ -30,24 +40,31 @@ construct:
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P38444
+              id: ERG6
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: erg9
         expression: medium
         fused: false
-        gene:
-          id: P29704
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: ERG9
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: erg11
         expression: medium
         fused: false
-        gene:
-          id: P10614
-          source: uniprot
-    - terminator: CYC1 # Standard yeast terminator; BBa_B0015 also acceptable
+        chain:
+          - gene:
+              id: ERG11
+              source: uniprot
+
+    - terminator: CYC1

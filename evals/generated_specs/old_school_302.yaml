@@ -1,16 +1,22 @@
 construct:
-  name: "HEK293_human_factor_Y_SV40"
+  name: hFY_HEK293_expression
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: neomycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: SV40
+    - promoter: SV40_early
+
     - cistron:
-        label: target
+        label: human_factor_Y
         expression: high
-        gene:
-          id: human_factor_Y
-          source: uniprot
-    - terminator: SV40_pA
+        chain:
+          - gene:
+              id: human_factor_Y
+              source: uniprot
+
+    - terminator: SV40_poly_A

@@ -1,18 +1,24 @@
 construct:
-  name: "human_interferon_alpha_2_pelB_secretion"
-  host: e_coli_bl21_de3
+  name: human_interferon_periplasmic_expression
+  host: e_coli_bl21
+
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: T7
+
+    - rbs: RBS_strong
+
     - cistron:
-        label: interferon_target
+        label: interferon
         expression: high
         chain:
-          - tag: pelB
+          - signal_peptide: pelB
           - gene:
-              id: P01563
+              id: "P01563"
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

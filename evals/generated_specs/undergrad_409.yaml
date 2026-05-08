@@ -1,23 +1,32 @@
 construct:
-  name: "constitutive_signaling_operon"
+  name: "SensorKinase_ResponseRegulator_operon"
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: J23100
+    - promoter: tac
+    
     - cistron:
-        label: sensor_kinase
-        expression: medium
-        gene:
-          id: SensorKinase
-          source: uniprot
+        label: SensorKinase
+        expression: high
+        chain:
+          - gene:
+              id: SensorKinase
+              source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: response_regulator
-        expression: medium
+        label: ResponseRegulator
+        expression: high
         fused: false
-        gene:
-          id: ResponseRegulator
-          source: uniprot
+        chain:
+          - gene:
+              id: ResponseRegulator
+              source: uniprot
+    
     - terminator: rrnB_T1

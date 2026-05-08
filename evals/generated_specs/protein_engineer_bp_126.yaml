@@ -1,19 +1,26 @@
 construct:
-  name: "pFLD1_Secreted_Lipase_Myc"
+  name: "Pichia_pastoris_FLD1_lipase_secretion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: target_lipase
+        label: lipase
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor_pre_pro
           - gene:
-              id: P10480
+              id: lipase_novel
               source: uniprot
-          - tag: Myc
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: myc
+
     - terminator: AOX1

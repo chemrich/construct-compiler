@@ -1,22 +1,30 @@
 construct:
-  name: "negative_feedback_pathway_operon"
-  host: e_coli
+  name: "auto_regulated_metabolic_operon"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: lacUV5  # Chosen for medium, balanced expression and regulatory potential in E. coli
+    - promoter: lacUV5
+      # lacUV5 provides tunable, repressible expression suitable for product-feedback regulation
+
     - cistron:
         label: prod1
         expression: medium
-        fused: false
         chain:
           - gene:
               id: prod1
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: prod2
         expression: medium
@@ -25,8 +33,13 @@ construct:
           - gene:
               id: prod2
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: prod3
         expression: medium
@@ -35,8 +48,13 @@ construct:
           - gene:
               id: prod3
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: prod4
         expression: medium
@@ -45,8 +63,13 @@ construct:
           - gene:
               id: prod4
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: prod5
         expression: medium
@@ -55,8 +78,13 @@ construct:
           - gene:
               id: prod5
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
         label: prod6
         expression: medium
@@ -65,5 +93,16 @@ construct:
           - gene:
               id: prod6
               source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - tag: Strep-II
+
     - terminator: rrnB_T1
+
+  # Note: Negative autoregulation is achieved through a separate regulatory circuit
+  # (trans-acting repressor gene or allosteric binding to lacUV5 operator).
+  # The lacUV5 promoter allows fine-tuned, medium expression with tunable repression
+  # by pathway product or an inducible repressor system (e.g., araBAD-controlled
+  # repressor). Consider co-transforming with a repressor plasmid or adding a
+  # dedicated regulatory cassette on this or a companion plasmid.

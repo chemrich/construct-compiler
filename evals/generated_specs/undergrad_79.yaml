@@ -1,21 +1,22 @@
 construct:
-  name: "yeast_protein_j_cterm_flag"
+  name: "ProteinJ_Cterm_Flag_yeast"
   host: yeast
+
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: pUC
     source: addgene
+
   cassette:
-    - promoter: GPD  # Strong constitutive yeast promoter
+    - promoter: GAL1
+
     - cistron:
-        label: target
+        label: ProteinJ
         expression: high
         chain:
           - gene:
               id: ProteinJ
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 1
           - tag: FLAG
-    - terminator: CYC1_term # Standard yeast terminator
+
+    - terminator: CYC1

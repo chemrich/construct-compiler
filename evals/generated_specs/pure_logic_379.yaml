@@ -1,32 +1,44 @@
 construct:
-  name: "spatial_patterning_logic_circuit"
-  host: e_coli_bl21_de3
+  name: "spatial_boundary_patterning_circuit"
+  host: mammalian
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+  
   cassette:
-    - promoter: T7lac
+    - promoter: CMV
+    
     - cistron:
-        label: luxR_receiver
-        expression: medium
+        label: sender
+        expression: high
         chain:
-          - tag: 6xHis
+          - tag: HA
           - gene:
-              id: P12746
+              id: wnt3a
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: neighbor_signal_N
-        expression: medium
-        fused: false
-        gene:
-          id: P12990
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: boundary_reporter_B
+        label: receiver
         expression: high
         fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - gene:
+              id: frizzled_7
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: boundary_reporter
+        expression: medium
+        fused: false
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - terminator: rrnB_T1

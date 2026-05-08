@@ -1,37 +1,57 @@
 ```yaml
 construct:
-  name: genetic_delay_element_mammalian
+  name: mammalian_delay_circuit
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: delay_circuit
+        label: input_sensor
+        expression: high
+        chain:
+          - tag: FLAG
+          - gene:
+              id: rtTA3
+              source: uniprot
+
+    - terminator: SV40_polyA
+
+    - promoter: TRE3G
+
+    - cistron:
+        label: delay_integrator
         expression: medium
         chain:
           - gene:
-              id: rtTA3  # tetracycline-controlled transactivator for delay
+              id: dNLuc
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - tag: PEST  # degradation tag for rapid turnover
-    - terminator: BGH_polyA
+          - cleavage_site: T2A
+          - tag: degron_D-box
+          - gene:
+              id: mCherry
+              source: fpbase
 
-    - promoter: TRE3GS  # tetracycline response element - activated by rtTA3
+    - terminator: SV40_polyA
+
+    - promoter: CMV
+
     - cistron:
-        label: output_protein
+        label: output_reporter
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
-              id: mScarlet  # output protein J
+              id: mVenus
               source: fpbase
           - linker:
               type: GS_flexible
               repeats: 1
-          - tag: CL1  # degradation tag for quick shutdown
+          - tag: degron_PEST
+              source: uniprot
+
     - terminator: SV40_polyA
 ```

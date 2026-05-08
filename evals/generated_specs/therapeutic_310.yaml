@@ -1,30 +1,39 @@
 construct:
-  name: "dCas9_KRAB_epigenetic_modulator"
+  name: dCas9_epigenetic_modulator_transient_silencing
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: dCas9_effector_fusion
+        label: dCas9_KRAB
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2 # UniProt ID for Cas9 (dCas9 mutations D10A/H840A assumed for silencing)
+              id: dCas9
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P21506 # UniProt ID for ZNF10 (contains the KRAB silencing domain)
+              id: KRAB
               source: uniprot
-          - tag: NLS
-    - spacer: 40
-    - promoter: U6
+          - tag: HA
+
+    - spacer: 30
+
     - cistron:
-        label: sgRNA
+        label: guide_RNA_scaffold
+        expression: high
+        fused: false
         gene:
-          id: sgRNA_scaffold
-    - terminator: BBa_B0015
+          id: gRNA_scaffold
+          source: uniprot
+        # Note: gRNA sequence should be designed targeting specific locus; 
+        # scaffold includes U6 terminator compatibility for standalone gRNA expression
+
+    - terminator: rrnB_T1

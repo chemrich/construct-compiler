@@ -1,32 +1,75 @@
 construct:
   name: "transcriptional_cascade_amplifier"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23106
+    - promoter: araBAD
+      # Stage 1: Input promoter responds to weak signal (arabinose)
+
     - cistron:
-        label: intermediate_regulator_B
-        expression: low
-        gene:
-          id: P00573
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7
-    - cistron:
-        label: intermediate_regulator_C
+        label: stage_1_activator
         expression: medium
-        gene:
-          id: P07659
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC_variant
+              source: uniprot
+        # araC is a positive regulator that activates downstream promoters
+
     - terminator: rrnB_T1
-    - promoter: T3
+
+    - spacer: 30
+
+    - promoter: araBAD
+      # Stage 2: Intermediate promoter activated by araC product from Stage 1
+
     - cistron:
-        label: stable_output_reporter
+        label: stage_2_activator
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: tetR
+              source: uniprot
+        # tetR is a repressor that can be used in reverse logic or acts as intermediate amplifier
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: lacUV5
+      # Stage 3: Output promoter with tunable response
+
+    - cistron:
+        label: stage_2_repressor
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+        # Provides feedback control and temporal delay
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - promoter: T7lac
+      # Final stage: Output fluorescent protein (de-repressed or activated by cascade)
+
+    - cistron:
+        label: output_reporter
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

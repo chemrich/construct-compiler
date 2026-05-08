@@ -1,38 +1,51 @@
 construct:
-  name: "Pichia_pastoris_metabolic_pathway"
+  name: "pichia_3gene_metabolic_pathway"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: gene_a_cistron
+        label: gene_A
         expression: high
         chain:
           - gene:
-              id: Gene_A
-              source: uniprot
+              id: gene_A
+              source: custom
+              codon_optimized: pichia_pastoris
           - tag: 6xHis
-    - terminator: CYC1_term
+
+    - terminator: CYC1
+
     - promoter: TEF1
+
     - cistron:
-        label: gene_b_cistron
+        label: gene_B
         expression: high
         chain:
           - gene:
-              id: Gene_B
-              source: uniprot
+              id: gene_B
+              source: custom
+              codon_optimized: pichia_pastoris
           - tag: FLAG
-    - terminator: CYC1_term
+
+    - terminator: CYC1
+
     - promoter: PGK1
+
     - cistron:
-        label: gene_c_cistron
+        label: gene_C
         expression: high
         chain:
           - gene:
-              id: Gene_C
-              source: uniprot
+              id: gene_C
+              source: custom
+              codon_optimized: pichia_pastoris
           - tag: HA
-    - terminator: CYC1_term
+
+    - terminator: CYC1

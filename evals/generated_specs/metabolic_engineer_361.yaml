@@ -1,44 +1,58 @@
 construct:
-  name: "limonene_biosynthesis_operon"
+  name: limonene_production_operon
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: mvsk
-        expression: medium
-        gene:
-          id: P00551
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: mvk
-        expression: medium
-        gene:
-          id: P33277
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: ispa
-        expression: medium
-        gene:
-          id: P00501
-          source: uniprot
-    - spacer: 30
-    - cistron:
-        label: idi
+        label: Mvsk
         expression: high
         gene:
-          id: P62923
+          id: dxs
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: ls
+        label: Mvk
         expression: high
+        gene:
+          id: aact
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: IspA
+        expression: medium
+        gene:
+          id: ispA
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: IDI
+        expression: medium
+        gene:
+          id: idi1
+          source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: LS
+        expression: medium
         chain:
           - gene:
-              id: Q8L5K1
+              id: lims
               source: uniprot
           - tag: Strep-II
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

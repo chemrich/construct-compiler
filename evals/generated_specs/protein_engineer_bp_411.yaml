@@ -1,19 +1,23 @@
 construct:
-  name: "bacillus_subtilis_phytase_secretion"
+  name: "B_subtilis_secreted_phytase"
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
-        label: fungal_phytase
+        label: phytase
         expression: high
         chain:
-          - tag: WprA  # Bacillus secretion signal peptide
+          - signal_peptide: WprA
           - gene:
-              id: P34752
+              id: phytase
               source: uniprot
           - tag: 6xHis
-    - terminator: trpA_term  # Strong Bacillus rho-independent terminator_termings
+
+    - terminator: rrnB_T1

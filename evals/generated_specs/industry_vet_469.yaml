@@ -1,17 +1,27 @@
 construct:
-  name: "InsolubleProtein_GST_His_Fusion"
+  name: InsolubleProtein_GST_fusion
   host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    catalog_vector: pGEX-4T-1
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: InsolubleProtein_GST
         expression: high
         chain:
           - solubility_tag: GST
-          - tag: 6xHis
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: InsolubleProtein
               source: uniprot
-    - terminator: T7term
+          - tag: 6xHis
+
+    - terminator: rrnB_T1

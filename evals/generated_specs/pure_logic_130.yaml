@@ -1,24 +1,50 @@
 construct:
-  name: "inducible_mammalian_crispr_editor"
+  name: conditional_crispr_cas9_mammalian_editor
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: TRE3G # Tet-inducible promoter requiring Doxycycline/rtTA for Cas9 and reporter expression
+    - promoter: CMV
+
     - cistron:
-        label: cas9_effector
+        label: doxycycline_controlled_cas9
         expression: high
         chain:
           - tag: NLS
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-    - spacer: 30 # Spacer representing a P2A self-cleaving peptide for independent translation in mammalian cells
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: HA
+        # Note: This Cas9 should be fused to a doxycycline-responsive degron or conditional domain
+        # In practice, implement rtTA (reverse tTA) system or conditional protein degradation tag
+
+    - spacer: 25
+
     - cistron:
-        label: activation_reporter
+        label: gfp_reporter
         expression: medium
         fused: false
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: SV40_polyA
+        chain:
+          - tag: NLS
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: inducible_guide_rna
+        expression: high
+        fused: false
+        # Note: sgRNA targeting specific genomic locus; expression controlled by inducible U6 or H1 promoter
+        # This is a structural RNA, not a protein
+
+    - terminator: rrnB_T1

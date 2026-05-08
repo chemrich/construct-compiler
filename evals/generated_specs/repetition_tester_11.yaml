@@ -1,24 +1,22 @@
-```yaml
 construct:
-  name: "EnzymeE_chloroplast_targeted"
-  host: plant
-
+  name: "chloroplast_targeted_EnzymeE_plant"
+  host: algae
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: spectinomycin
+    ori: pSC101
     source: addgene
-
+  
   cassette:
-    - promoter: 35S  # CaMV 35S promoter for plant expression
-
+    - promoter: rbcL
+    
     - cistron:
-        label: target
+        label: chloroplast_target
         expression: high
         chain:
-          - tag: chloroplast_transit_peptide  # Custom designed with maximal codon diversity, screened for repeats
+          - tag: chloroplast_transit_peptide_optimized
           - gene:
               id: EnzymeE
               source: uniprot
-
-    - terminator: nos  # nopaline synthase terminator
-```
+    
+    - terminator: rrnB_T1

@@ -1,56 +1,78 @@
 construct:
-  name: "yeast_high_flux_metabolic_cassette"
+  name: high_flux_central_metabolic_pathway_yeast
   host: yeast
+
   backbone:
+    catalog_vector: "pYES2"
     resistance: ampicillin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1
+
     - cistron:
-        label: flux_enzyme_1
-        expression: high
+        label: Flux1
+        expression: very_high
+        utr_5: PGK1_strong
+        utr_3: PGK1_terminator
         gene:
           id: Flux1
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: flux_enzyme_2
-        expression: high
-        fused: false
+        label: Flux2
+        expression: very_high
+        utr_5: TPI1_strong
+        utr_3: CYC1_terminator
         gene:
           id: Flux2
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: flux_enzyme_3
-        expression: high
-        fused: false
+        label: Flux3
+        expression: very_high
+        utr_5: ENO2_strong
+        utr_3: PGK1_terminator
         gene:
           id: Flux3
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: flux_enzyme_4
-        expression: high
-        fused: false
+        label: Flux4
+        expression: very_high
+        utr_5: ADH1_strong
+        utr_3: ADH1_terminator
         gene:
           id: Flux4
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: flux_enzyme_5
-        expression: high
-        fused: false
+        label: Flux5
+        expression: very_high
+        utr_5: GAP_strong
+        utr_3: CYC1_terminator
         gene:
           id: Flux5
           source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: flux_enzyme_6
-        expression: high
-        fused: false
+        label: Flux6
+        expression: very_high
+        utr_5: RPS0B_strong
+        utr_3: PGK1_terminator
         gene:
           id: Flux6
           source: uniprot
-    - terminator: CYC1
+
+    - terminator: CYC1_poly_A

@@ -1,15 +1,32 @@
 construct:
-  name: "arabinose_inducible_on_off_gate"
+  name: "digital_switch_chemical_input_detector"
   host: e_coli
+  
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: araBAD
+    
     - cistron:
-        label: switch_output
+        label: sensor_input
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: output_reporter
+        expression: medium
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+    
     - terminator: rrnB_T1

@@ -1,38 +1,50 @@
 construct:
-  name: "NADPH_regeneration_operon"
+  name: "NADPH_regeneration_four_enzyme_operon"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: synthase
+        label: NADPH_Synthase1
         expression: high
         gene:
           id: NADPH_Synthase1
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: reductase
+        label: Reductase2
         expression: high
         fused: false
         gene:
           id: Reductase2
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: dehydrogenase
+        label: Dehydrogenase3
         expression: high
         fused: false
         gene:
           id: Dehydrogenase3
           source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: kinase
+        label: Kinase4
         expression: high
         fused: false
         gene:
           id: Kinase4
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

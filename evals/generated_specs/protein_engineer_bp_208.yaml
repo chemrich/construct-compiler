@@ -1,32 +1,46 @@
 construct:
-  name: "Bacillus_subtilis_polycistronic_metabolic_pathway"
+  name: "bacillus_metabolic_pathway_three_enzyme"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
-    ori: pUB110 # Standard Bacillus subtilis replication origin
+    resistance: spectinomycin
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pveg # Strong constitutive Bacillus promoter
+    - promoter: Pveg
+
     - cistron:
         label: enzyme_1
         expression: high
-        gene:
-          id: ribA
-          source: uniprot
-    - spacer: 30
+        chain:
+          - gene:
+              id: P37140
+              source: uniprot
+        rbs: RBS_strong_bsub_1
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_2
-        expression: medium
-        fused: false # Ensures a separate RBS and start codon for stoichiometry tuning
-        gene:
-          id: ribB
-          source: uniprot
-    - spacer: 30
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: P39768
+              source: uniprot
+        rbs: RBS_medium_bsub_1
+
+    - spacer: 25
+
     - cistron:
         label: enzyme_3
-        expression: low
+        expression: medium
         fused: false
-        gene:
-          id: ribH
-          source: uniprot
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: P42877
+              source: uniprot
+        rbs: RBS_weak_bsub_1
+
+    - terminator: rrnB_T1

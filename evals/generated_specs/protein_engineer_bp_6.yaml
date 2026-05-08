@@ -1,26 +1,24 @@
-```yaml
 construct:
-  name: pichia_HSA_secretion_cassette
+  name: pichia_AOX1_hSA_secretion
   host: yeast
 
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pUC
     source: addgene
 
   cassette:
     - promoter: AOX1
 
     - cistron:
-        label: secreted_HSA
+        label: hSA_secreted
         expression: high
         chain:
-          - tag: alpha_factor_prepro
+          - secretion_signal: alpha_mating_factor_preproleader
           - cleavage_site: Kex2
           - cleavage_site: TEV
           - gene:
               id: P02768
               source: uniprot
 
-    - terminator: AOX1_TT
-```
+    - terminator: rrnB_T1

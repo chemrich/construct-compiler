@@ -1,23 +1,21 @@
 construct:
-  name: "high_yield_soluble_therapeutic_enzyme"
-  host: e_coli
+  name: "therapeutic_enzyme_expression"
+  host: e_coli_bl21
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
-    source: addgene
+    catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: J23100
+    - promoter: T7lac
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: P00805
+              id: therapeutic_enzyme
               source: uniprot
+
     - terminator: rrnB_T1

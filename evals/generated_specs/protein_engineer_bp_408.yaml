@@ -1,20 +1,22 @@
 construct:
-  name: "P_pastoris_Ost1_SUMO_Kinase"
+  name: "pichia_soluble_kinase_secretion"
   host: yeast
+  
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: zeocin
+    ori: pPIC9
     source: addgene
+  
   cassette:
     - promoter: AOX1
+    
     - cistron:
-        label: target_kinase
+        label: kinase_construct
         expression: high
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - solubility_tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: kinase
-              source: uniprot
-    - terminator: AOX1_TT
+              id: target_kinase
+              codon_optimization: pichia_pastoris

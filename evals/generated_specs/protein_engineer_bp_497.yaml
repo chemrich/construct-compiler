@@ -1,20 +1,26 @@
 construct:
-  name: "Pichia_GPCR_YPT1_Expression"
+  name: "Pichia_GPCR_YPT1_FLAG_TEV_10xHis"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: YPT1
+
     - cistron:
-        label: gpcr_target
+        label: GPCR
         expression: medium
         chain:
           - tag: FLAG
           - cleavage_site: TEV
           - gene:
-              id: ADRB2
+              id: GPCR
               source: uniprot
+              codon_optimization: pichia_pastoris
           - tag: 10xHis
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

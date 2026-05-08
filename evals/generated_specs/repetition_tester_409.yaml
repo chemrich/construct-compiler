@@ -1,27 +1,52 @@
 construct:
-  name: "quad_gRNA_nonhomologous_array"
+  name: "mammalian_quad_gRNA_array_U6"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: U6
+
     - cistron:
-        label: gRNA_target_1
-        gene:
-          id: gRNA_spacer_1_scaffold
-    - spacer: 26  # Varied spacer lengths to ensure non-homologous flanking sequences
+        label: gRNA_1
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_target_1
+              source: uniprot
+        # Note: gRNA spacer sequence must be user-specified and target-unique
+
+    - spacer: 100  # Non-homologous flanking region to prevent recombination
+
     - cistron:
-        label: gRNA_target_2
-        gene:
-          id: gRNA_spacer_2_scaffold
-    - spacer: 33  # Distinct sequence length to minimize recombination risk
+        label: gRNA_2
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_target_2
+              source: uniprot
+
+    - spacer: 100  # Distinct from first spacer region
+
     - cistron:
-        label: gRNA_target_3
-        gene:
-          id: gRNA_spacer_3_scaffold
-    - spacer: 41  # Distinct sequence length to minimize recombination risk
+        label: gRNA_3
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_target_3
+              source: uniprot
+
+    - spacer: 100  # Non-homologous to all previous spacers
+
     - cistron:
-        label: gRNA_target_4
-        gene:
-          id: gRNA_spacer_4_scaffold
+        label: gRNA_4
+        expression: high
+        chain:
+          - gene:
+              id: gRNA_target_4
+              source: uniprot
+
     - terminator: rrnB_T1

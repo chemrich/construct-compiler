@@ -1,14 +1,19 @@
 construct:
-  name: "ComplexW_tandem_fusion"
+  name: ComplexW_tandem_DomainB_dual_cleavage
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
         label: ComplexW
         expression: high
         chain:
+          - tag: 6xHis
           - cleavage_site: TEV
           - gene:
               id: DomainB
@@ -17,4 +22,5 @@ construct:
           - gene:
               id: DomainB
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

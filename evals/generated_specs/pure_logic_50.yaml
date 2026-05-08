@@ -1,16 +1,41 @@
+```yaml
 construct:
-  name: "metabolite_m_toxin_t_comparator"
-  host: e_coli
+  name: metabolite_M_toxin_T_comparator
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Responds to metabolite M (modeled as L-arabinose) to trigger expression
+    - promoter: araBAD
+
     - cistron:
-        label: toxin_degrader
+        label: metabolite_sensor
         expression: high
-        gene:
-          id: P62593  # TEM-1 Beta-lactamase, representative enzyme for degrading toxin T (beta-lactams)
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: FapR
+              source: uniprot
+        comment: "Metabolite M-responsive transcriptional repressor; binds M above threshold"
+
     - terminator: rrnB_T1
+
+    - promoter: lacUV5
+        comment: "Repressed by FapR when M is below threshold; derepressed when M exceeds threshold"
+
+    - cistron:
+        label: toxin_degradation_enzyme
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: DegP
+              source: uniprot
+        comment: "Protease active only when promoter is derepressed (M above threshold)"
+
+    - terminator: rrnB_T1
+```

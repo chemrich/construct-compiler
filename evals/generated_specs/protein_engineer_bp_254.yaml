@@ -1,29 +1,42 @@
 construct:
-  name: "pichia_gap_secretion_t2a_gfp"
+  name: pichia_secreted_gfp_reporter_t2a
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: target
+        label: gfp_reporter
         expression: high
         chain:
-          - tag: alpha_factor
+          - signal_peptide: alpha_factor
           - gene:
-              id: target_protein
-              source: uniprot
-    - spacer: 20  # T2A self-cleaving peptide junction
-    - cistron:
-        label: reporter
-        expression: medium
-        fused: true  # part of the same translational unit via T2A
-        chain:
-          - cleavage_site: T2A
-          - tag: alpha_factor
-          - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
-    - terminator: AOX1
+
+    - spacer: 18
+
+    - cistron:
+        label: t2a_peptide
+        fused: false
+        gene:
+          id: T2A
+          source: synthetic
+
+    - spacer: 18
+
+    - cistron:
+        label: target_protein
+        expression: high
+        chain:
+          - signal_peptide: alpha_factor
+          - gene:
+              id: MBP
+              source: uniprot
+
+    - terminator: CYC1

@@ -1,29 +1,30 @@
-```yaml
 construct:
-  name: GFP_MyNuclearProtein_localization
-  host: e_coli
-
+  name: MyNuclearProtein_GFP_localization
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
-
+  
   cassette:
-    - promoter: T7lac  # Using T7lac instead of SV40 since this is E. coli - SV40 won't function in prokaryotes
-
+    - promoter: T7lac
+      # Note: SV40 is a mammalian promoter and non-functional in E. coli.
+      # Substituted T7lac for rapid, high-level expression in E. coli BL21.
+    
     - cistron:
-        label: fusion_protein
+        label: GFP_fusion
         expression: high
         chain:
+          - tag: 6xHis
           - gene:
               id: mEGFP
               source: fpbase
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
               id: MyNuclearProtein
               source: uniprot
-
+    
     - terminator: rrnB_T1
-```

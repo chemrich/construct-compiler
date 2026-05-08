@@ -1,14 +1,20 @@
 construct:
-  name: "e_coli_high_glow_sfGFP"
-  host: e_coli_bl21_de3
+  name: "E_coli_GFP_expression"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: glow_protein
+        label: GFP
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

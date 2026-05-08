@@ -1,50 +1,62 @@
 construct:
-  name: "bacillus_subtilis_5_enzyme_operon"
+  name: "bacillus_five_enzyme_operon"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pveg  # Strong constitutive Bacillus subtilis promoter
+    - promoter: P43  # Strong constitutive B. subtilis promoter
+
     - cistron:
-        label: secreted_enzyme_1
+        label: enzyme_1_secreted
         expression: high
         chain:
-          - tag: AmyE  # Bacillus subtilis alpha-amylase signal peptide for secretion
+          - signal_peptide: AmyE  # B. subtilis signal peptide for secretion
           - gene:
               id: enzyme_1
               source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cytoplasmic_enzyme_2
+        label: enzyme_2
         expression: high
         fused: false
         gene:
           id: enzyme_2
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cytoplasmic_enzyme_3
+        label: enzyme_3
         expression: high
         fused: false
         gene:
           id: enzyme_3
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cytoplasmic_enzyme_4
+        label: enzyme_4
         expression: high
         fused: false
         gene:
           id: enzyme_4
           source: uniprot
-    - spacer: 30
+
+    - spacer: 25
+
     - cistron:
-        label: cytoplasmic_enzyme_5
+        label: enzyme_5
         expression: high
         fused: false
         gene:
           id: enzyme_5
           source: uniprot
+
     - terminator: rrnB_T1

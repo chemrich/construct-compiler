@@ -1,22 +1,23 @@
 construct:
-  name: "non_viral_therapeutic_hek293_cpp"
+  name: "HEK293_intracellular_therapeutic_CPP_HA"
   host: HEK293
+
   backbone:
-    resistance: none  # Specifically requested no antibiotic resistance genes
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression vector; pTwist CMV lacks antibiotic resistance markers
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral mammalian promoter
+    - promoter: CMV
+
     - cistron:
-        label: therapeutic_fusion
+        label: therapeutic
         expression: high
         chain:
-          - tag: Polyarginine  # Non-viral cell-penetrating peptide (alternative to viral TAT)
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - tag: CPP_TAT
           - gene:
-              id: P53_HUMAN
+              id: IL-6
               source: uniprot
           - tag: HA
-    - terminator: bGH_pA  # Non-viral polyadenylation signal (bovine)
+
+    - terminator: WPRE
+      # Woodchuck Post-transcriptional Regulatory Element for enhanced expression

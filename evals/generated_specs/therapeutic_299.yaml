@@ -1,17 +1,28 @@
 construct:
-  name: "cell_cycle_regulated_therapeutic_hEPO"
+  name: "cell_cycle_regulated_therapeutic"
   host: HEK293
+
   backbone:
-    # Resistance and ori are included for E. coli propagation prior to transfection
-    resistance: kanamycin
+    catalog_vector: "pTwist CMV"
+    # Custom backbone with minimal immunogenic elements
     ori: pUC
-    source: custom
+    # No antibiotic resistance marker; selection via fluorescent marker or other method
+    # User should implement alternative selection strategy
+
   cassette:
-    - promoter: CCNB1 # Human Cyclin B1 promoter for G2/M phase-specific expression
+    - promoter: cyclin_B1  # Cell cycle-regulated promoter; peaks at G2/M phase
+
     - cistron:
-        label: therapeutic_protein
-        expression: medium
-        gene:
-          id: P01588
-          source: uniprot
-    - terminator: bGH_pA # Non-viral polyadenylation signal
+        label: therapeutic
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: 3C
+          - gene:
+              id: "therapeutic_protein"
+              source: uniprot
+              # Note: Replace with actual UniProt ID of therapeutic target
+
+    - polyadenylation_signal: SV40_polyA  # Standard mammalian polyA signal; minimal immunogenicity
+
+    - terminator: SV40_polyA

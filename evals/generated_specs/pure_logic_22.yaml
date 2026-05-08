@@ -1,48 +1,46 @@
-```yaml
 construct:
-  name: yeast_OR_gate_circuit
+  name: "yeast_OR_gate_logic_circuit"
   host: yeast
 
   backbone:
     resistance: kanamycin
-    ori: pBR322
+    ori: 2micron
     source: addgene
 
   cassette:
     - promoter: GAL1
-      
+
     - cistron:
         label: input_A_sensor
         expression: medium
         chain:
           - gene:
-              id: P04386
-              source: uniprot  # GAL4 transcription factor
-              
-    - terminator: CYC1
+              id: LexA_DBD
+              source: uniprot
 
-    - promoter: GAL10
-      
+    - spacer: 25
+
     - cistron:
-        label: input_B_sensor  
+        label: input_B_sensor
         expression: medium
         chain:
           - gene:
-              id: P04386
-              source: uniprot  # GAL4 transcription factor
-              
-    - terminator: CYC1
+              id: GAL4_DBD
+              source: uniprot
 
-    - promoter: GAL4_UAS
-      
+    - spacer: 25
+
     - cistron:
         label: output_D
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: sfGFP
+              id: mCherry
               source: fpbase
-              
-    - terminator: ADH1
-```
+
+    - terminator: CYC1

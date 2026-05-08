@@ -1,27 +1,35 @@
 construct:
-  name: "differential_aav_rep_cap_expression"
+  name: "dual_protein_mammalian_differential_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cap_protein
+        label: high_expression_protein
         expression: high
         chain:
           - tag: 6xHis
           - cleavage_site: TEV
           - gene:
-              id: CAP_AAV2S
+              id: AAV_Rep78
               source: uniprot
-    - spacer: 40
+
+    - spacer: 30
+
     - cistron:
-        label: rep_protein
+        label: low_expression_protein
         expression: low
         fused: false
         chain:
-          - tag: Strep-II
+          - tag: FLAG
+          - cleavage_site: 3C
           - gene:
-              id: REP_AAV2S
+              id: AAV_Cap
               source: uniprot
-    - terminator: bgh_polya
+
+    - terminator: rrnB_T1

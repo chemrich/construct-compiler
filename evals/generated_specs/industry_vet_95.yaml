@@ -1,21 +1,28 @@
 construct:
-  name: "TAP_tagged_protein_expression"
+  name: "tandem_affinity_purification_protein"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: tap_target
+        label: target
         expression: high
         chain:
           - tag: 6xHis
           - linker:
               type: GS_flexible
+              repeats: 1
+          - tag: Strep-II
+          - linker:
+              type: GS_flexible
               repeats: 2
-          - tag: Twin-Strep
           - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: PLACEHOLDER
+              source: uniprot
+
+    - terminator: rrnB_T1

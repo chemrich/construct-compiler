@@ -1,18 +1,22 @@
 construct:
-  name: "glucose_balancer_production"
-  host: e_coli_bl21
+  name: "glucose_balancer_his_expression"
+  host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: glucose_balancer
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P01275
+              id: glucose_balancer
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

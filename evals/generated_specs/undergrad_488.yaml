@@ -1,26 +1,34 @@
 construct:
-  name: "dual_his_tagged_protein_inducible_expression"
-  host: e_coli_bl21_de3
+  name: "ProteinAlpha_ProteinBeta_dual_expression"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: protein_alpha
+        label: ProteinAlpha
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: ProteinAlpha
               source: uniprot
+    
     - spacer: 30
+    
     - cistron:
-        label: protein_beta
+        label: ProteinBeta
         expression: high
         fused: false
         chain:
-          - tag: 10xHis
+          - tag: 8xHis
           - gene:
               id: ProteinBeta
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

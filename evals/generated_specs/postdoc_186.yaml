@@ -1,16 +1,28 @@
 construct:
-  name: FragileProtein_E_coli_Production
-  host: e_coli_bl21_de3
+  name: FragileProtein_stabilized
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac # Mammalian Kozak and UTRs are incompatible with E. coli; substituted with T7lac and a high-expression prokaryotic RBS/terminator system.
+    - promoter: T7lac
+
+    - utr_5: mammalian_optimized  # 5' UTR from highly expressed mammalian gene (e.g., β-globin) for enhanced stability
+
     - cistron:
-        label: target
+        label: FragileProtein
         expression: high
         chain:
           - tag: 6xHis
           - gene:
               id: FragileProtein
               source: uniprot
-    - terminator: T7term
+
+    - utr_3: mammalian_optimized  # 3' UTR for mRNA stability
+
+    - terminator: rrnB_T1
+
+# Note: pET-28b(+) includes optimized Kozak consensus sequence (GCCRCCATGG) around the ATG.
+# Mammalian UTRs (5' and 3') enhance mRNA half-life in E. coli by providing structural stability
+# and reducing nuclease susceptibility. The strong promoter and optimized RBS ensure robust expression.

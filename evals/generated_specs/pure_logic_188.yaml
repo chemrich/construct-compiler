@@ -1,28 +1,56 @@
 construct:
-  name: "negative_feedback_stabilized_IL2_production"
-  host: e_coli_bl21
+  name: Negative_Feedback_Loop_Therapeutic_Stabilizer
+  host: mammalian
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pBR322
-    source: addgene
+
   cassette:
-    - promoter: lacUV5  # lacUV5 is sensitive to LacI repression, enabling the negative feedback loop
-    - cistron:
-        label: feedback_repressor
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 35
+    - promoter: CMV
+
     - cistron:
         label: therapeutic_target
         expression: high
-        fused: false
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
-              id: P60568
+              id: BDNF
               source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: EF1_alpha
+
+    - cistron:
+        label: negative_feedback_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: KRAB
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: feedback_targeting_element
+        expression: medium
+        fused: false
+        chain:
+          - gene:
+              id: dCas9
+              source: uniprot
+
+    - spacer: 30
+
+    - cistron:
+        label: guide_rna_scaffold
+        expression: very_low
+        fused: false
+        chain:
+          - gene:
+              id: crRNA_therapeutic_promoter
+              source: uniprot
+
     - terminator: rrnB_T1

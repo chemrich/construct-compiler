@@ -1,20 +1,24 @@
 construct:
-  name: "pichia_fld1_antigen_expression"
+  name: "pichia_viral_antigen_FLD1"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeomycin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: FLD1
+
     - cistron:
-        label: target_antigen
+        label: secreted_antigen
         expression: high
         chain:
-          - tag: alpha-factor
-          - solubility_tag: SUMO
+          - tag: alpha_factor_signal
+          - tag: SUMO
           - cleavage_site: TEV
           - gene:
-              id: surface_antigen
+              id: viral_surface_antigen
               source: uniprot
-    - terminator: AOX1_term_v2 # Standard terminator for Pichia systems to ensure proper mRNA processing.
+
+    - terminator: CYC1_terminator

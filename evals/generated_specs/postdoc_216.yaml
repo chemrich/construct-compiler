@@ -1,10 +1,15 @@
 construct:
-  name: stoichiometric_LMN_expression
-  host: e_coli_bl21_de3
+  name: "E_coli_LMN_polycistronic_2A_F2A"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: L
         expression: high
@@ -13,7 +18,9 @@ construct:
           - gene:
               id: L
               source: uniprot
-    - spacer: 30 # P2A/F2A peptides are eukaryotic-specific and do not skip in E. coli; substituted with intergenic spacers to achieve stoichiometric polycistronic expression
+    
+    - cleavage_site: P2A
+    
     - cistron:
         label: M
         expression: high
@@ -21,7 +28,9 @@ construct:
         gene:
           id: M
           source: uniprot
-    - spacer: 30 # P2A/F2A peptides are eukaryotic-specific and do not skip in E. coli; substituted with intergenic spacers to achieve stoichiometric polycistronic expression
+    
+    - cleavage_site: F2A
+    
     - cistron:
         label: N
         expression: high
@@ -29,4 +38,5 @@ construct:
         gene:
           id: N
           source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

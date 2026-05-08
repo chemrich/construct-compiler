@@ -1,10 +1,11 @@
-```yaml
 construct:
-  name: "cell_free_luciferase"
+  name: cell_free_luciferase
   host: in_vitro
 
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
 
   cassette:
     - promoter: T7
@@ -12,9 +13,10 @@ construct:
     - cistron:
         label: luciferase
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: P08659
+              source: uniprot
 
-    - terminator: T7term
-```
+    - terminator: rrnB_T1

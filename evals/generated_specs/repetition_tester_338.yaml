@@ -1,11 +1,15 @@
 construct:
-  name: "therapeutic_enzyme_3x_repeat"
-  host: e_coli_bl21
+  name: therapeutic_enzyme_coiled_coil_repeats
+  host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
     resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
         label: therapeutic_enzyme
         expression: high
@@ -13,24 +17,19 @@ construct:
           - tag: 6xHis
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: P00750
-              source: uniprot
-          - linker:
-              type: short_GS
               repeats: 1
           - gene:
-              id: P00750
+              id: coiled_coil_repeat_1_optimized_codon_set_A
               source: uniprot
-          - linker:
-              type: short_GS
-              repeats: 2
           - gene:
-              id: P00750
+              id: coiled_coil_repeat_2_optimized_codon_set_B
+              source: uniprot
+          - gene:
+              id: coiled_coil_repeat_3_optimized_codon_set_C
               source: uniprot
           - linker:
               type: rigid_EAAAK
-              repeats: 2
+              repeats: 1
           - tag: Strep-II
-    - terminator: T7term # Note: Repeated Gene IDs require maximally distinct synonymous codon optimization to prevent recombination.
+
+    - terminator: rrnB_T1

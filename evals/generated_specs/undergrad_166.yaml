@@ -1,17 +1,22 @@
 construct:
-  name: "GST_TEV_ChallengingProtein_Expression"
-  host: e_coli_bl21_de3
+  name: ChallengingProtein_GST_TEV
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: T7lac
+    - promoter: T7
+
     - cistron:
-        label: target
+        label: ChallengingProtein
         expression: high
         chain:
+          - tag: 6xHis
           - solubility_tag: GST
           - cleavage_site: TEV
           - gene:
               id: ChallengingProtein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

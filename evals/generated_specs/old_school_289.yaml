@@ -1,17 +1,23 @@
 construct:
-  name: "PeptideD_lac_expression"
+  name: PeptideD_HA_thrombin
   host: e_coli
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: lac
+    - promoter: lacUV5
+    
     - cistron:
-        label: target
+        label: PeptideD
         expression: high
         chain:
           - tag: HA
           - cleavage_site: Thrombin
           - gene:
               id: PeptideD
+              source: uniprot
+    
     - terminator: rrnB_T1

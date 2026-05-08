@@ -1,27 +1,35 @@
 construct:
-  name: "pGAP_HSA_Zeo_rDNA_integration"
+  name: "Pichia_rDNA_HSA_Zeocin"
   host: yeast
+
   backbone:
     resistance: zeocin
     ori: pUC
     source: addgene
+    # Note: rDNA integration cassette for Pichia pastoris
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: hsa_secretion
+        label: HSA
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - gene:
               id: P02768
               source: uniprot
-    - spacer: 50
-    - promoter: TEF1
+
+    - spacer: 30
+
+    - promoter: constitutive
+
     - cistron:
-        label: zeo_selection
-        expression: medium
+        label: Zeocin_resistance
+        expression: high
         fused: false
         gene:
-          id: P17493
+          id: Sh_ble
           source: uniprot
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

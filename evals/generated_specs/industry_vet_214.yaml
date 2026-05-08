@@ -1,18 +1,24 @@
 construct:
-  name: "Cas9_Mammalian_High_Expression"
+  name: "mammalian_Cas9_expression"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cas9_nuclease
+        label: Cas9
         expression: high
         chain:
-          - tag: NLS
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: Q99ZW2
+              id: SpCas9
               source: uniprot
-          - tag: NLS
-          - tag: FLAG
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

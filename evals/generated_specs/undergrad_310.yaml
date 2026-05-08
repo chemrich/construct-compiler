@@ -1,20 +1,22 @@
 construct:
-  name: "GST_solubility_fusion_sfGFP"
-  host: e_coli_bl21_de3
+  name: "GST_solubility_fusion_high_expression"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: gst_target_fusion
+        label: target
         expression: high
         chain:
-          - solubility_tag: GST
+          - tag: 6xHis
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - solubility_tag: GST
           - gene:
-              id: sfGFP  # sfGFP used as a placeholder for the user's protein to ensure solubility/folding
-              source: fpbase
-    - terminator: T7term
+              id: your_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

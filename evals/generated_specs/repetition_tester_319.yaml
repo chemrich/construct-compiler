@@ -1,27 +1,37 @@
 construct:
-  name: "multiplex_gRNA_mammalian_expression"
+  name: "multiplex_gRNA_editor_three_targets"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
-    resistance: kanamycin
+
   cassette:
-    - promoter: hU6
-    - cistron:
-        label: gRNA_target_1
+    - promoter: U6
+      cistron:
+        label: gRNA_target1
+        expression: high
         gene:
-          id: sgRNA_1
-    - terminator: polyT_6
-    - spacer: 40
-    - promoter: mU6
-    - cistron:
-        label: gRNA_target_2
+          id: gRNA_spacer1
+          source: uniprot
+
+    - terminator: rrnB_T1
+
+    - promoter: H1
+      cistron:
+        label: gRNA_target2
+        expression: high
         gene:
-          id: sgRNA_2
-    - terminator: polyT_5
-    - spacer: 40
-    - promoter: hH1
-    - cistron:
-        label: gRNA_target_3
+          id: gRNA_spacer2
+          source: uniprot
+
+    - terminator: polT
+
+    - promoter: 7SL
+      cistron:
+        label: gRNA_target3
+        expression: high
         gene:
-          id: sgRNA_3
+          id: gRNA_spacer3
+          source: uniprot
+
     - terminator: BBa_B0015

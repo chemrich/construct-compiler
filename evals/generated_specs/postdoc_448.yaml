@@ -1,24 +1,27 @@
 construct:
-  name: "CAG_6xHis_Luciferase_R_fusion"
+  name: "His_Luc_R_fusion"
   host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: kanamycin
-    ori: pUC
-    source: addgene
+
   cassette:
     - promoter: CAG
+
     - cistron:
-        label: his_luc_r
+        label: luciferase_R_fusion
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: P08659
+              id: Renilla_luciferase
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
               id: R
               source: uniprot
-    - terminator: SV40_polyA
+
+    - terminator: rrnB_T1

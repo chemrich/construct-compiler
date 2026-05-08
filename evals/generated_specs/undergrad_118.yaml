@@ -1,21 +1,25 @@
 construct:
-  name: "cytosolic_protein_egfp_fusion_localization"
+  name: CytosolicProtein_GFP_fusion
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: cytosolic_fusion
+        label: target
         expression: high
         chain:
           - gene:
-              id: "CytosolicProtein"
+              id: CytosolicProtein
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: "mEGFP"
+              id: mEGFP
               source: fpbase
-    - terminator: bGH_polyA
+
+    - terminator: rrnB_T1

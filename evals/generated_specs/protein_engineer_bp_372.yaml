@@ -1,19 +1,24 @@
 construct:
-  name: "bacillus_esterase_secretion_construct"
+  name: bacillus_esterase_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: Pgrac
+
     - cistron:
-        label: secreted_esterase
+        label: target
         expression: high
         chain:
-          - tag: YncM
+          - signal_peptide: YncM
           - gene:
-              id: P37967
+              id: esterase
               source: uniprot
           - cleavage_site: Factor_Xa
           - tag: HA
+
     - terminator: rrnB_T1

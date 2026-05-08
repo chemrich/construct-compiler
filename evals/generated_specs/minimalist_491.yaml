@@ -1,14 +1,22 @@
 construct:
   name: "in_vitro_peptide_synthesis"
   host: in_vitro
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7
+
     - cistron:
-        label: target_peptide
+        label: peptide
         expression: high
-        gene:
-          id: P01133
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: short_peptide
+              source: custom
+
+    - terminator: rrnB_T1

@@ -1,23 +1,52 @@
+```yaml
 construct:
-  name: "tandem_magainin_2_array"
-  host: e_coli_bl21_de3
+  name: "trimerized_AMP_synth_recoded"
+  host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: "magainin_tandem"
+        label: AMP_array
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P11006
-              source: uniprot
-          - cleavage_site: TEV  # DNA sequence 1
+              id: "AMP_variant_A"
+              source: "custom_synth_recoded_v1"
+              description: "First AMP coding sequence - original codon usage"
+          
+          - cleavage_site: 3C
+              description: "3C protease site - distinct DNA from TEV despite same amino acid motif"
+          
           - gene:
-              id: P11006        # DNA sequence 2 (synonymously recoded)
-              source: uniprot
-          - cleavage_site: TEV  # DNA sequence 3 (synonymously recoded)
+              id: "AMP_variant_B"
+              source: "custom_synth_recoded_v2"
+              description: "Second AMP coding sequence - synonymously recoded, codon-optimized variant"
+          
+          - cleavage_site: Factor_Xa
+              description: "Factor Xa protease site - third distinct DNA encoding same protease recognition"
+          
           - gene:
-              id: P11006        # DNA sequence 4 (synonymously recoded)
-              source: uniprot
-    - terminator: T7term
+              id: "AMP_variant_C"
+              source: "custom_synth_recoded_v3"
+              description: "Third AMP coding sequence - alternative synonymous recoding, wobble-optimized"
+    
+    - terminator: rrnB_T1
+
+  # CRITICAL NOTES (for compiler implementation):
+  # 1. Each "AMP_variant_*" ID points to a custom sequence resource that uses synonymous recoding.
+  #    These three sequences encode the SAME amino acid peptide but differ in codon composition.
+  # 2. TEV, 3C, and Factor_Xa all encode protease cleavage motifs (different amino acids each),
+  #    but when expressed, they will produce identical cleavage products post-digestion.
+  #    The DNA sequences encoding these sites differ to prevent repetitive elements.
+  # 3. No spacers are used between elements to maximize compactness and minimize repetition.
+  # 4. Upon expression and protease digestion (TEV → 3C → Factor_Xa), three identical AMP
+  #    molecules are released from a single fusion protein.
+```

@@ -1,30 +1,33 @@
 construct:
-  name: "mammalian_alpha_beta_gamma_fusion"
+  name: "complex_mammalian_triple_fusion_optimized"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: multi_fusion_target
+        label: ProteinAlpha_construct
         expression: high
         chain:
-          - solubility_tag: MBP  # N-terminal solubility tag for ProteinAlpha
-          - gene:
-              id: P02768  # ProteinAlpha (Human Serum Albumin)
-              source: uniprot
-          - cleavage_site: TEV  # Unique Cleavage Site 1
-          - gene:
-              id: P01375  # ProteinBeta (Tumor Necrosis Factor)
-              source: uniprot
-          - cleavage_site: 3C   # Unique Cleavage Site 2 (using different protease to ensure unique DNA)
-          - gene:
-              id: P05231  # ProteinGamma (Interleukin-6)
-              source: uniprot
+          - tag: 6xHis
+          - solubility_tag: NusA
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: mNeonGreen  # C-terminal Fluorescent Tag
-              source: fpbase
-    - terminator: BBa_B0015  # Standard terminator; compiler will use mammalian-appropriate polyA signal for HEK293
+              id: ProteinAlpha
+              source: uniprot
+          - cleavage_site: TEV
+          - gene:
+              id: ProteinBeta
+              source: uniprot
+          - cleavage_site: 3C
+          - gene:
+              id: ProteinGamma
+              source: uniprot
+          - tag: mNeonGreen
+
+    - terminator: rrnB_T1

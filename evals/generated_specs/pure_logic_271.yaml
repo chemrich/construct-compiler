@@ -1,15 +1,35 @@
 construct:
-  name: cold_inducible_gene_switch
-  host: e_coli
+  name: temperature_controlled_switch_X
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: cspA  # Cold-inducible promoter from E. coli; active at 30C, repressed at 37C
+    - promoter: T7lac
+
     - cistron:
-        label: protein_x
+        label: thermosensor
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: cI857
+              source: uniprot
+        comment: "cI857 is temperature-sensitive repressor (active at 30°C, inactive at 37°C)"
+
+    - spacer: 30
+
+    - cistron:
+        label: output_protein_X
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: output_protein_X
+              source: uniprot
+        comment: "Expression controlled by cI857-regulated promoter; ON at 30°C, OFF at 37°C"
+
     - terminator: rrnB_T1

@@ -1,26 +1,47 @@
 construct:
-  name: "high_gain_not_gate_ccdB"
+  name: "high_gain_NOT_gate_cytotoxic"
   host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Inducer_X (Arabinose) responsive promoter
+    - promoter: lacUV5
+
     - cistron:
-        label: repressor_module
+        label: repressor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: LacI
+              source: uniprot
+          - linker:
+              type: GS_flexible
+              repeats: 1
+          - tag: ssrA_degron
+
+    - spacer: 25
+
+    - cistron:
+        label: cytotoxin
         expression: high
         chain:
           - gene:
-              id: P03023
+              id: ccdB
               source: uniprot
-          - tag: LVA  # C-terminal degradation tag for rapid protein turnover
-    - terminator: T7term
-    - promoter: tac  # Strong promoter repressed by LacI; active in absence of inducer
+
+    - spacer: 25
+
     - cistron:
-        label: toxin_effector
-        expression: high
-        gene:
-          id: P0CC85
-          source: uniprot
+        label: inducer_sensor
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
     - terminator: rrnB_T1

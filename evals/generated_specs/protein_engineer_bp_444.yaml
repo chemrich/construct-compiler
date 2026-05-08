@@ -1,19 +1,23 @@
 construct:
-  name: "Pichia_AOX1_Ost1_mEGFP_Strep"
+  name: "pichia_pastoris_GFP_secretion_Ost1"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: target
+        label: secreted_GFP
         expression: high
         chain:
-          - tag: Ost1
+          - signal_peptide: Ost1
           - gene:
-              id: mEGFP
+              id: sfGFP
               source: fpbase
           - tag: Strep-II
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

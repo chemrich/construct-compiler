@@ -1,19 +1,24 @@
 construct:
-  name: "mannitol_inducible_toxic_protein_bacillus"
+  name: "bacillus_toxic_protein_mtlA"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
-    source: generic
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: PmtlA
+
     - cistron:
-        label: toxic_payload
-        expression: high
+        label: toxic_protein
+        expression: medium
         chain:
+          - tag: 6xHis
           - solubility_tag: Trx
           - cleavage_site: TEV
           - gene:
               id: toxic_protein
               source: uniprot
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

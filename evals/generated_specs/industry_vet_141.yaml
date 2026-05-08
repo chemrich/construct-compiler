@@ -1,16 +1,22 @@
 construct:
-  name: "antigen_vHH_expression"
+  name: "sdAb_His_expression"
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: antigen
+        label: sdAb
         expression: high
         chain:
           - tag: 6xHis
           - gene:
-              id: vHH
+              id: sdAb
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

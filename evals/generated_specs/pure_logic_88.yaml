@@ -1,32 +1,66 @@
 construct:
-  name: "T7_Amplified_OR_Gate_EColi"
-  host: e_coli
+  name: two_input_OR_gate_amplified
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Input X (Arabinose)
+    - promoter: araBAD
+      # Input X: arabinose-inducible promoter
+
     - cistron:
-        label: t7_pol_driver_x
-        gene:
-          id: P00573
-          source: uniprot
-    - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: lacUV5  # Input Y (IPTG)
-    - cistron:
-        label: t7_pol_driver_y
-        gene:
-          id: P00573
-          source: uniprot
-    - terminator: rrnB_T1
-    - spacer: 40
-    - promoter: T7  # Amplification step
-    - cistron:
-        label: high_output_effector
+        label: input_X_sensor
         expression: high
-        gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+              # AraC activator for araBAD promoter
+
+    - spacer: 30
+
+    - promoter: T7lac
+      # Input Y: IPTG-inducible promoter
+
+    - cistron:
+        label: input_Y_sensor
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+              # LacI repressor; absence (high Y) derepresses output
+
+    - spacer: 30
+
+    - promoter: araBAD
+      # Output promoter: activated by araC (from input X) OR constitutively active when LacI is absent (input Y OFF state)
+      # This achieves OR logic: output ON if X present OR Y absent
+
+    - cistron:
+        label: output_amplifier
+        expression: high
+        chain:
+          - tag: 6xHis
+          - solubility_tag: MBP
+          - gene:
+              id: gfp
+              source: fpbase
+              # mEGFP for strong fluorescent signal amplification
+
+    - spacer: 30
+
+    - cistron:
+        label: output_effector
+        expression: very_high
+        fused: false
+        chain:
+          - gene:
+              id: luxAB
+              source: uniprot
+              # Bioluminescence operon for strong amplified output signal
+
+    - terminator: rrnB_T1

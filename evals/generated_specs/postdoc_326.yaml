@@ -1,22 +1,27 @@
 construct:
-  name: "CHO_secreted_antibody_Fc_fusion"
+  name: "antibody_fragment_Fc_CHO_secreted"
   host: CHO
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: ampicillin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: antibody_Fc_fusion
+        label: antibody_Fc
         expression: high
         chain:
-          - tag: Albumin_signal_peptide
+          - signal_peptide: albumin_signal
           - gene:
               id: antibody_fragment
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 1
           - gene:
-              id: P01857
+              id: human_Fc
               source: uniprot
-    - terminator: bGH_PA
+
+    - terminator: WPRE

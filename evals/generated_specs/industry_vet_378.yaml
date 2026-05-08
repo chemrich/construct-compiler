@@ -1,17 +1,23 @@
 construct:
-  name: "precursor_protein_cterm_processing"
-  host: e_coli_bl21_de3
+  name: "precursor_protease_cleavage_purification"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: precursor_target
+        label: precursor
         expression: high
         chain:
           - gene:
-              id: mEGFP
-              source: fpbase
+              id: precursor_protein
+              source: uniprot
           - cleavage_site: TEV
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

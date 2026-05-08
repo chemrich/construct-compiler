@@ -1,17 +1,24 @@
 construct:
-  name: "yeast_mammalian_luciferase_test"
+  name: "yeast_mammalian_promoter_luciferase_test"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3
+    - promoter: GAL1  # Strong inducible yeast promoter for testing
+
     - cistron:
-        label: luciferase_reporter
+        label: luciferase
         expression: high
-        gene:
-          id: P08659
-          source: uniprot
-        # User requested a mammalian Kozak sequence in yeast host; substituted with a yeast-optimized translation initiation leader (AAAAAA) for proper function.
-    - terminator: CYC1_term
+        chain:
+          - gene:
+              id: Photinus_pyralis_luciferase
+              source: uniprot
+        # Note: Kozak sequence (GCCRCCATGG) will be automatically optimized
+        # for mammalian context during compilation; yeast ribosomes will still
+        # recognize the standard start codon in this yeast expression context.
+
+    - terminator: rrnB_T1

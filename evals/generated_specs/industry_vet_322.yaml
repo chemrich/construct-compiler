@@ -1,21 +1,24 @@
 construct:
-  name: "high_yield_solubility_fusion_target"
+  name: "soluble_fusion_protein_high_yield"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: fusion_protein
+        label: target
         expression: high
         chain:
           - tag: 6xHis
-          - cleavage_site: TEV
           - solubility_tag: MBP
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: P03135
+              id: target_protein
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

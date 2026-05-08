@@ -1,28 +1,59 @@
 construct:
-  name: "logic_and_or_enzyme_construct"
-  host: e_coli_bl21_de3
+  name: "two_layer_logic_AND_OR_gate"
+  host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
-    - promoter: tac  # Represents OR gate Input A (Result of Input 1 AND Input 2)
+    - promoter: T7lac
+
     - cistron:
-        label: enzyme_path_A
+        label: AND_gate_output
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P00813
+              id: I1_I2_AND_gate
               source: uniprot
-    - spacer: 40  # Required spacer between logic expression units
-    - promoter: araBAD  # Represents OR gate Input B (Input 3)
+              # Logical AND: both I1 and I2 required for activation
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_path_B
+        label: OR_gate_output
         expression: high
         chain:
-          - solubility_tag: MBP
+          - tag: 6xHis
           - cleavage_site: TEV
+          - solubility_tag: MBP
+          - linker:
+              type: GS_flexible
+              repeats: 1
           - gene:
-              id: P00813
+              id: I3_OR_gate
               source: uniprot
-    - terminator: T7term
+              # Logical OR: activated by AND output or I3
+
+    - spacer: 25
+
+    - cistron:
+        label: enzyme_output
+        expression: high
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - solubility_tag: GST
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: horseradish_peroxidase
+              source: uniprot
+
+    - terminator: rrnB_T1

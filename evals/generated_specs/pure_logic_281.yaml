@@ -1,34 +1,48 @@
 construct:
-  name: "and_gate_split_t7_logic"
-  host: e_coli
+  name: "two_input_AND_logic_gate"
+  host: e_coli_bl21
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # Induced by Input B (Arabinose)
+    - promoter: araBAD
+
     - cistron:
-        label: n_terminal_t7_rnap
+        label: input_B_sensor
         expression: medium
-        gene:
-          id: P00573
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
     - terminator: rrnB_T1
 
-    - promoter: lacUV5  # Induced by Input C (IPTG)
+    - promoter: T7lac
+
     - cistron:
-        label: c_terminal_t7_rnap
+        label: input_C_sensor
         expression: medium
-        gene:
-          id: P00573
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: luxR
+              source: uniprot
+
     - terminator: rrnB_T1
 
-    - promoter: T7      # Logic gate output: requires assembled N-T7 and C-T7
+    - promoter: lacUV5
+
     - cistron:
-        label: output_protein_y
+        label: output_Y_AND_gate
         expression: high
-        gene:
-          id: sfGFP     # Representing protein Y as requested
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+
+    - terminator: rrnB_T1

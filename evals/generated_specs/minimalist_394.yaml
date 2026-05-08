@@ -1,22 +1,32 @@
 construct:
-  name: "mammalian_alpha_beta_heterodimer"
+  name: "heterodimer_alpha_beta_mammalian"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: alpha_subunit
+        label: Alpha
         expression: high
-        gene:
-          id: Alpha
-          source: uniprot
-    - spacer: 30  # Intergenic spacer for mammalian polycistronic expression
+        chain:
+          - tag: FLAG
+          - gene:
+              id: alpha_subunit
+              source: uniprot
+
+    - spacer: 30
+
     - cistron:
-        label: beta_subunit
+        label: Beta
         expression: high
         fused: false
-        gene:
-          id: Beta
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - tag: HA
+          - gene:
+              id: beta_subunit
+              source: uniprot
+
+    - terminator: rrnB_T1

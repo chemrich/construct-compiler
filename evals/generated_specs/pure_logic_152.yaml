@@ -1,14 +1,48 @@
 construct:
-  name: "implication_gate_A_NOT_B"
-  host: e_coli_bl21_de3
+  name: "genetic_implication_gate_A_implies_notB"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+      # araBAD is repressed by AraC in absence of arabinose
+      # araC gene product acts as input A detector
+    
+    - cistron:
+        label: araC
+        expression: high
+        gene:
+          id: araC
+          source: uniprot
+    
+    - spacer: 30
+    
+    - cistron:
+        label: tetR
+        expression: high
+        gene:
+          id: tetR
+          source: uniprot
+      # tetR is input B detector: when B (tetracycline) is present,
+      # tetR protein is inactivated, preventing repression of output
+    
+    - spacer: 30
+    
+    - promoter: Ptet
+      # Ptet is tetracycline-responsive: repressed by TetR when B absent,
+      # derepressed when B (tet) is present
+    
     - cistron:
         label: output_R
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mCherry
+              source: fpbase
+    
+    - terminator: rrnB_T1

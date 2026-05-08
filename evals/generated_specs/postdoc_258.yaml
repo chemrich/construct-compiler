@@ -1,16 +1,46 @@
 construct:
-  name: "t7_lentiviral_transfer_system"
-  host: e_coli_bl21_de3  # Selected to support T7-driven RNA production in E. coli
+  name: "pseudo_lentivirus_packaging_construct"
+  host: e_coli_bl21
+  # Note: True lentiviral particles require mammalian packaging machinery (gag, pol, env proteins).
+  # This E. coli construct produces the DNA template/plasmid containing lentiviral elements,
+  # which would need to be transfected into mammalian cells with packaging helper plasmids
+  # to generate actual pseudoviral particles. E. coli cannot assemble virions.
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: T7  # High-level transcription for RNA payload production
+    - promoter: T7lac
+
     - cistron:
-        label: "lentiviral_payload"
-        expression: high
+        label: lentiviral_packaging_signal
+        expression: medium
         gene:
-          id: sfGFP
-          source: fpbase
-    - terminator: T7term  # Note: Lentiviral assembly requires mammalian host machinery (Gag/Pol/Env); this construct is for RNA/DNA production in E. coli.
+          id: psi_packaging_signal
+          source: uniprot
+        # 5' LTR and ψ (psi) packaging signal would be positioned upstream in a real design
+
+    - spacer: 50
+
+    - cistron:
+        label: gene_of_interest
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: insert_your_gene_here
+              source: uniprot
+
+    - spacer: 50
+
+    - cistron:
+        label: lentiviral_3prime_ltr
+        expression: very_low
+        gene:
+          id: ltr_3prime_region
+          source: uniprot
+        # 3' LTR would be positioned at the terminus for proper viral structure
+
+    - terminator: rrnB_T1

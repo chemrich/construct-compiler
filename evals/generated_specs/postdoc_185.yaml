@@ -1,20 +1,24 @@
 construct:
-  name: "ToughProtein_Yeast_Constitutive_Expression"
+  name: "yeast_ToughProtein_GST_TEV_FLAG"
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3  # Standard constitutive yeast promoter
+    - promoter: ADH1
+
     - cistron:
-        label: target
-        expression: medium
+        label: ToughProtein
+        expression: high
         chain:
-          - solubility_tag: GST
+          - tag: GST
           - cleavage_site: TEV
           - gene:
               id: ToughProtein
               source: uniprot
           - tag: FLAG
-    - terminator: CYC1
+
+    - terminator: rrnB_T1

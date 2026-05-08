@@ -1,15 +1,22 @@
 construct:
-  name: "my_awesome_protein_c_myc_expression"
+  name: MyAwesomeProtein_Myc_expression
   host: e_coli_bl21
+  
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
         label: target
         expression: high
         chain:
           - gene:
               id: MyAwesomeProtein
+              source: uniprot
           - tag: Myc
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

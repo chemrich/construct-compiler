@@ -1,7 +1,6 @@
-```yaml
 construct:
-  name: periplasmic_expression_construct
-  host: e_coli
+  name: "periplasmic_secretion_his_tag"
+  host: e_coli_bl21
 
   backbone:
     resistance: kanamycin
@@ -9,17 +8,16 @@ construct:
     source: addgene
 
   cassette:
-    - promoter: T7
+    - promoter: T7lac
 
     - cistron:
-        label: target
+        label: periplasmic_protein
         expression: high
         chain:
-          - signal_peptide: pelB  # periplasmic secretion signal
           - tag: 6xHis
+          - signal_peptide: pelB
           - gene:
-              id: P0A6F5  # example protein - replace with desired target
+              id: target_protein
               source: uniprot
 
     - terminator: rrnB_T1
-```

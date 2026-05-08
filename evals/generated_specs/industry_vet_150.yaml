@@ -1,15 +1,21 @@
 construct:
-  name: "mammalian_kozak_optimized_expression"
+  name: "mammalian_AAV_optimized_kozak"
   host: HEK293
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pAAV-CMV"
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_protein
+        label: target
         expression: high
-        # The compiler automatically optimizes the Kozak sequence for the HEK293 host
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_pA
+        kozak: GCCRCCATGG
+        chain:
+          - gene:
+              id: null
+              source: user_provided
+
+    - terminator: polyA

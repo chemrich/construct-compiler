@@ -1,23 +1,38 @@
 construct:
-  name: "mab_pichia_aox1_p2a"
+  name: "Pichia_pastoris_mAb_bicistronic_AOX1"
   host: yeast
+
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: antibody_expression
+        label: heavy_chain
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - gene:
-              id: trastuzumab_hc
+              id: "mAb_HC_codon_optimized"
               source: uniprot
-          - cleavage_site: P2A
-          - tag: alpha_factor
+              note: "Pichia pastoris codon optimization required"
+
+    - spacer: 51
+
+    - cistron:
+        label: light_chain
+        expression: high
+        fused: false
+        chain:
+          - tag: P2A
+          - tag: alpha_factor_signal
           - gene:
-              id: trastuzumab_lc
+              id: "mAb_LC_codon_optimized"
               source: uniprot
-    - terminator: AOX1_term
+              note: "Pichia pastoris codon optimization required"
+
+    - terminator: AOX1_TT

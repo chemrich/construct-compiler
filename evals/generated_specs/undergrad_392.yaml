@@ -1,22 +1,27 @@
 construct:
-  name: "proteinM_mEGFP_fusion"
+  name: "ProteinM_GFP_fusion"
   host: e_coli_bl21
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
               id: ProteinM
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 3
+              repeats: 2
           - gene:
               id: mEGFP
               source: fpbase
-          - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

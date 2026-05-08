@@ -1,24 +1,37 @@
 construct:
-  name: "EF1a_proteinI_IRES_proteinJ_Puro"
-  host: mammalian
+  name: "mammalian_proteinI_IRES_proteinJ"
+  host: HEK293
+
   backbone:
+    catalog_vector: "pTwist CMV"
     resistance: puromycin
     ori: pUC
     source: addgene
+
   cassette:
     - promoter: EF1_alpha
+
     - cistron:
-        label: protein_I
+        label: proteinI
         expression: high
-        gene:
-          id: proteinI
-          source: uniprot
-    - spacer: 585
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: proteinI
+              source: uniprot
+
+    # IRES (Internal Ribosome Entry Site) represented as spacer with note
+    # In mammalian polycistronic designs, an IRES enables cap-independent translation of downstream cistron
+    - spacer: 600  # IRES sequence (e.g., EMCV IRES ~600 bp)
+
     - cistron:
-        label: protein_J
+        label: proteinJ
         expression: high
         fused: false
-        gene:
-          id: proteinJ
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: proteinJ
+              source: uniprot
+
+    - terminator: rrnB_T1

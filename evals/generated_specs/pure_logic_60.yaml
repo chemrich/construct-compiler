@@ -1,26 +1,42 @@
 construct:
-  name: transcriptional_not_gate_lacI
+  name: transcriptional_NOT_gate_A_represses_Y
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100
+    - promoter: lacUV5
+      label: input_promoter_A
+      comment: "Inducible promoter controlled by external signal (e.g., IPTG or arabinose)"
+
     - cistron:
-        label: repressor_lacI
+        label: repressor_A
         expression: high
-        fused: false
         gene:
-          id: P03023
+          id: lacI
           source: uniprot
-    - terminator: BBa_B0015
-    - promoter: tac
+        comment: "Expresses repressor protein that binds operator_Y"
+
+    - terminator: rrnB_T1
+
+    - spacer: 50
+
+    - promoter: custom
+      label: output_promoter_Y
+      operator_site: lacO
+      comment: "Promoter with operator site that is repressed by repressor_A"
+
     - cistron:
         label: output_Y
-        expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: sfGFP
+              source: fpbase
+        comment: "Output protein; expression is OFF when repressor_A is present, ON when repressor_A is absent"
+
     - terminator: rrnB_T1

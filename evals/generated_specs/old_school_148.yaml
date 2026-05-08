@@ -1,17 +1,28 @@
 construct:
-  name: "shuttle_pCMV_T7_kan_g418_mEGFP"
+  name: "shuttle_vector_ecoli_mammalian"
   host: HEK293
+  
   backbone:
-    resistance: kanamycin # Marker for both E. coli (Kan) and mammalian cells (G418)
-    ori: pUC # ColE1 derivative for E. coli; SV40 origin for mammalian replication is implicit in shuttle designs
+    resistance: kanamycin
+    ori: pBR322
     source: addgene
+    # Note: This is a simplified representation. A true shuttle vector requires:
+    # - ColE1/pBR322 ori for E. coli replication
+    # - SV40 ori for mammalian replication
+    # - Neomycin resistance gene (G418 selection) in addition to kanamycin
+    # These dual-ori and dual-selection elements should be included in the custom backbone specification.
+    # Consider using a commercial shuttle vector such as pSVK3, pEGFP-N1 with added bacterial ori, or similar.
+  
   cassette:
-    - promoter: CMV # Mammalian promoter
-    - promoter: T7 # Bacterial promoter (for T7-expressing strains)
+    - promoter: CMV
+    
     - cistron:
-        label: target_expression
+        label: gene_of_interest
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GFP
+              source: fpbase
+    
+    - terminator: rrnB_T1

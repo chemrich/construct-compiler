@@ -1,23 +1,34 @@
 construct:
-  name: orthogonal_dual_reporter_mammalian
-  host: mammalian
+  name: "dual_independent_fluorescent_reporters_mammalian"
+  host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV
-    - cistron:
-        label: green_reporter
-        expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: SV40_polyA
-    - spacer: 50
     - promoter: EF1_alpha
+
     - cistron:
-        label: red_reporter
+        label: reporter_1
         expression: high
-        gene:
-          id: mCherry
-          source: fpbase
-    - terminator: bGH_polyA
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: SV40_polyA
+
+    - promoter: U6
+      # U6 is a strong Pol III mammalian promoter (distinct from EF1α which is Pol II)
+
+    - cistron:
+        label: reporter_2
+        expression: high
+        chain:
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: rrnB_T1
+      # rrnB_T1 is used here as a non-SV40 polyadenylation signal (distinct genetic context)

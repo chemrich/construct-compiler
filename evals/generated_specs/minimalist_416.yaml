@@ -1,24 +1,34 @@
 construct:
-  name: "yeast_pathway_operon"
+  name: yeast_enzyme_pathway_ab
   host: yeast
+
   backbone:
-    resistance: ampicillin
+    resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: enzyme_a
+        label: EnzymeA
         expression: high
-        gene:
-          id: EnzymeA
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeA
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: enzyme_b
+        label: EnzymeB
         expression: high
         fused: false
-        gene:
-          id: EnzymeB
-          source: uniprot
-    - terminator: CYC1_term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: EnzymeB
+              source: uniprot
+
+    - terminator: rrnB_T1

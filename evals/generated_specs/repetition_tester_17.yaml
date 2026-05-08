@@ -1,6 +1,5 @@
-```yaml
 construct:
-  name: synthetic_three_gene_operon_dual_control
+  name: "synthetic_operon_G1_G2_G3_dual_repression"
   host: e_coli
 
   backbone:
@@ -9,39 +8,54 @@ construct:
     source: addgene
 
   cassette:
-    - operator: LacO1  # First operator site for LacI repressor
-    - operator: AraO2  # Second operator site for AraC repressor (non-homologous)
-    - promoter: tac    # Hybrid promoter responsive to both operators
-    
+    # Operator sites (upstream of promoter, non-homologous)
+    - regulatory_element:
+        type: operator
+        label: operator_TetR
+        sequence: TCCCTATCAGTGATAGAGA  # TetO consensus, binds TetR
+
+    - regulatory_element:
+        type: operator
+        label: operator_LacI
+        sequence: AATTGTGAGCGCTCACAATT  # LacO consensus, binds LacI
+
+    # Promoter
+    - promoter: tac
+
+    # Gene 1 with distinct RBS1
     - cistron:
-        label: gene_G1
+        label: G1
         expression: high
-        rbs: BBa_B0034  # Strong RBS for first gene
+        rbs_sequence: AGGAGGU  # RBS1 (Shine-Dalgarno variant)
+        fused: false
         gene:
           id: G1
           source: uniprot
-    
+
+    # Spacer before Gene 2
     - spacer: 25
-    
+
+    # Gene 2 with distinct RBS2
     - cistron:
-        label: gene_G2
-        expression: medium
+        label: G2
+        expression: high
+        rbs_sequence: GAGG  # RBS2 (alternative Shine-Dalgarno)
         fused: false
-        rbs: BBa_B0032  # Medium strength RBS, non-homologous to B0034
         gene:
           id: G2
           source: uniprot
-    
-    - spacer: 30
-    
+
+    # Spacer before Gene 3
+    - spacer: 25
+
+    # Gene 3 with distinct RBS3
     - cistron:
-        label: gene_G3
-        expression: medium
+        label: G3
+        expression: high
+        rbs_sequence: AGGAGGA  # RBS3 (third non-homologous variant)
         fused: false
-        rbs: BBa_B0030  # Different RBS sequence, non-homologous to previous
         gene:
           id: G3
           source: uniprot
-    
+
     - terminator: rrnB_T1
-```

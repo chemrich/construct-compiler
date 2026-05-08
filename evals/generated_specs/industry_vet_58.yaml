@@ -1,19 +1,26 @@
 construct:
-  name: "dual_tag_sequential_purification_construct"
+  name: "clinical_grade_AAV_dual_purification"
   host: e_coli_bl21_de3
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: high_purity_target
+        label: target_dual_tagged
         expression: high
         chain:
-          - tag: 6xHis
+          - tag: 8xHis
           - cleavage_site: TEV
-          - tag: Twin-Strep
-          - cleavage_site: 3C
+          - tag: Strep-II
+          - cleavage_site: Factor_Xa
+          - solubility_tag: MBP
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: T7term
+              id: AAV_capsid_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

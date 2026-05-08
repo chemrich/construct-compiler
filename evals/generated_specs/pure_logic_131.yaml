@@ -1,18 +1,22 @@
 construct:
-  name: "high_yield_purification_target"
-  host: e_coli_bl21
+  name: high_yield_target_purification
+  host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target_fusion
+        label: target
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
           - cleavage_site: TEV
+          - solubility_tag: MBP
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: target
+              source: uniprot
+
+    - terminator: rrnB_T1

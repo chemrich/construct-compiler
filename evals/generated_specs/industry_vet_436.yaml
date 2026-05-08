@@ -1,18 +1,22 @@
 construct:
-  name: "AAV_RepDomainE_SUMO_Fusion"
+  name: "RepDomainE_SUMO_His"
   host: e_coli_bl21_de3
+
   backbone:
     catalog_vector: "pET-28b(+)"
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: target
+        label: RepDomainE
         expression: high
         chain:
           - tag: 6xHis
           - solubility_tag: SUMO
-          - cleavage_site: Ulp1
+          - cleavage_site: TEV
           - gene:
               id: RepDomainE
               source: uniprot
-    - terminator: T7term
+
+    - terminator: rrnB_T1

@@ -1,30 +1,46 @@
 construct:
-  name: "genetic_and_gate_split_t7"
-  host: e_coli
+  name: "E_coli_AND_gate_ReporterGreen"
+  host: e_coli_bl21
+  
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+  
   cassette:
-    - promoter: araBAD  # Inducer A: Arabinose
+    - promoter: T7lac
+    
     - cistron:
-        label: "t7_rnap_fragment_n"
-        gene:
-          id: "P00573"
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: tac  # Inducer B: IPTG
-    - cistron:
-        label: "t7_rnap_fragment_c"
-        gene:
-          id: "P00573"
-          source: uniprot
-    - terminator: rrnB_T1
-    - promoter: T7  # Output: Contingent on presence of both T7 fragments
-    - cistron:
-        label: "ReporterGreen"
+        label: InducerA_sensor
         expression: high
-        gene:
-          id: "sfGFP"
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: LuxR
+              source: uniprot
+    
+    - spacer: 35
+    
+    - cistron:
+        label: InducerB_sensor
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: TraR
+              source: uniprot
+    
+    - spacer: 35
+    
+    - cistron:
+        label: AND_output
+        expression: high
+        fused: false
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+    
+    - terminator: rrnB_T1

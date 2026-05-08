@@ -1,33 +1,40 @@
 construct:
-  name: "non_viral_CAR_HEK293"
+  name: CAR_T_mammalian_nonviral
   host: HEK293
 
   backbone:
-    resistance: kanamycin  # Required for bacterial propagation; omitted from eukaryotic cassette
+    catalog_vector: "pTwist CMV"
+    # Non-viral mammalian expression backbone without antibiotic selection markers
     ori: pUC
-    source: custom
+    source: addgene
 
   cassette:
-    - promoter: EF1_alpha  # Strong constitutive human promoter, non-viral
+    - promoter: EF1_alpha
+      # Strong constitutive mammalian promoter, non-viral
 
     - cistron:
-        label: chimeric_antigen_receptor
+        label: CAR
         expression: high
         chain:
+          - tag: signal_peptide_CD8a
+            # N-terminal signal peptide for proper ER translocation and surface expression
           - gene:
-              id: CD8A_signal_peptide
-              source: uniprot
-          - gene:
-              id: FMC63_scFv
+              id: scFv
+              # Generic scFv placeholder; user should specify antigen target (e.g., anti-CD19)
               source: uniprot
           - linker:
               type: GS_flexible
               repeats: 3
+              # Flexible linker between scFv and transmembrane domain
           - gene:
-              id: CD28_hinge_transmembrane
+              id: CD8a_transmembrane
+              # Transmembrane domain from CD8a for membrane anchoring
               source: uniprot
           - gene:
-              id: CD247_CD3_zeta_signaling
+              id: CD3zeta_ITAM
+              # Intracellular signaling domain from CD3-zeta (endodomain with ITAM motifs)
               source: uniprot
 
-    - terminator: hGH_pA  # Human Growth Hormone polyadenylation signal, non-viral
+    - terminator: WPRE_polyA
+      # Woodchuck Posttranscriptional Regulatory Element + poly(A) for efficient mRNA stabilization
+      # Non-viral regulatory element for enhanced expression and mRNA export

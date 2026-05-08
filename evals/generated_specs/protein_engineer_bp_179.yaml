@@ -1,21 +1,26 @@
 construct:
-  name: "pichia_scfv_aggregation_prone"
+  name: "aggregation_prone_scFv_MBP_His_pichia"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeomycin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: PGAP
+
     - cistron:
-        label: target_protein
+        label: scFv_MBP_His
         expression: high
         chain:
-          - tag: alpha-factor
+          - tag: alpha_factor_signal
           - solubility_tag: MBP
           - cleavage_site: TEV
           - gene:
               id: scFv
               source: uniprot
           - tag: 6xHis
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

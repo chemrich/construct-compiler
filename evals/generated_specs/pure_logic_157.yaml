@@ -1,39 +1,50 @@
 construct:
-  name: "three_stage_inverter_chain"
-  host: e_coli_bl21
+  name: three_stage_genetic_inverter
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    # Stage 1: Input I (LacI protein) represses Gene 1
-    - promoter: lacUV5
+    - promoter: J23100
+
+    - cistron:
+        label: Input_I
+        expression: high
+        gene:
+          id: tetR
+          source: uniprot
+
+    - spacer: 30
+
     - cistron:
         label: Gene1
-        expression: medium
-        gene:
-          id: P04483 # TetR repressor
-          source: uniprot
-    - terminator: rrnB_T1
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
     - spacer: 30
-    # Stage 2: Gene 1 (TetR) represses Gene 2
-    # Note: 3-stage repression (I -| G1 -| G2 -| Out) logically results in Out = NOT I.
-    # To achieve Out = I, a 2-stage or 4-stage chain would be required.
-    - promoter: Ptet
+
     - cistron:
         label: Gene2
-        expression: medium
-        gene:
-          id: P03034 # lambda cI repressor
-          source: uniprot
-    - terminator: rrnB_T1
+        expression: high
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
     - spacer: 30
-    # Stage 3: Gene 2 (cI) represses the final Output
-    - promoter: Plambda
+
     - cistron:
         label: Output
         expression: high
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: BBa_B0015
+        chain:
+          - gene:
+              id: gfp
+              source: fpbase
+
+    - terminator: rrnB_T1

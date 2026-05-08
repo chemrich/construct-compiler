@@ -1,19 +1,23 @@
 construct:
-  name: "thermostable_cellulase_secretion_bacillus"
+  name: "thermostable_cellulase_secreted_bacillus"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: ampicillin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pxyl
+
     - cistron:
         label: cellulase
         expression: high
         chain:
-          - tag: AprE_signal_peptide
+          - signal_peptide: AprE
           - gene:
-              id: P26222
+              id: thermostable_cellulase
               source: uniprot
           - tag: 6xHis
+
     - terminator: rrnB_T1

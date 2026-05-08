@@ -1,26 +1,34 @@
-# Note: E. coli lacks the machinery for human-like glycosylation. The resulting Fab fragment will be aglycosylated.
-# Note: Periplasmic secretion or a specialized strain like SHuffle is typically required for disulfide bond formation in E. coli.
 construct:
-  name: "human_fab_his_tagged_ecoli"
+  name: "human_Fab_with_His_tag_E_coli"
   host: e_coli_bl21_de3
   backbone:
     catalog_vector: "pET-28b(+)"
   cassette:
     - promoter: T7lac
     - cistron:
-        label: light_chain
+        label: Fab_heavy_chain
         expression: high
-        gene:
-          id: P01834
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: "P01857"
+              source: uniprot
+        # Note: E. coli lacks N-linked glycosylation machinery (no OST, Asn-X-Ser/Thr recognition).
+        # Full mammalian-type glycosylation is not achievable in standard E. coli.
+        # Consider: (1) Use Bacillus subtilis or P. pastoris for authentic glycosylation,
+        # (2) Use E. coli SHuffle strains (e.g., BL21-SHuffle) for correct disulfide bond formation,
+        # (3) Perform in vitro glycosylation post-expression.
+        # This construct expresses the polypeptide backbone with correct disulfides in SHuffle strains.
     - spacer: 30
     - cistron:
-        label: heavy_chain_fd
+        label: Fab_light_chain
         expression: high
         fused: false
         chain:
           - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: P01857
+              id: "P01834"
               source: uniprot
-    - terminator: T7term
+    - terminator: rrnB_T1

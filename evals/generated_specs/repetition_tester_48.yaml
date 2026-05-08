@@ -1,45 +1,76 @@
-```yaml
 construct:
-  name: quintuple_ribozyme_unique_linkers
+  name: pentameric_ribozyme_mammalian
   host: HEK293
 
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
 
   cassette:
     - promoter: CMV
 
     - cistron:
-        label: ribozyme_array
+        label: ribozyme_1
         expression: high
         chain:
           - gene:
               id: hammerhead_ribozyme
               source: uniprot
+
+    - spacer: 45
+
+    - cistron:
+        label: ribozyme_2
+        expression: high
+        fused: false
+        chain:
           - linker:
-              type: custom
-              sequence: GGAGGCGGAGGC  # GG-rich flexible
-          - gene:
-              id: hammerhead_ribozyme
-              source: uniprot
-          - linker:
-              type: custom
-              sequence: AACAACAACAAC  # polyasparagine coding
-          - gene:
-              id: hammerhead_ribozyme
-              source: uniprot
-          - linker:
-              type: custom
-              sequence: CCACCGCCACCT  # proline-rich rigid
-          - gene:
-              id: hammerhead_ribozyme
-              source: uniprot
-          - linker:
-              type: custom
-              sequence: TCTAAGTCTAAG  # serine-lysine alternating
+              type: GS_flexible
+              repeats: 3
           - gene:
               id: hammerhead_ribozyme
               source: uniprot
 
-    - terminator: BGH_polyA
-```
+    - spacer: 45
+
+    - cistron:
+        label: ribozyme_3
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: rigid_EAAAK
+              repeats: 2
+          - gene:
+              id: hammerhead_ribozyme
+              source: uniprot
+
+    - spacer: 45
+
+    - cistron:
+        label: ribozyme_4
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: short_GS
+              repeats: 4
+          - gene:
+              id: hammerhead_ribozyme
+              source: uniprot
+
+    - spacer: 45
+
+    - cistron:
+        label: ribozyme_5
+        expression: high
+        fused: false
+        chain:
+          - linker:
+              type: GS_flexible
+              repeats: 2
+          - gene:
+              id: hammerhead_ribozyme
+              source: uniprot
+
+    - terminator: rrnB_T1

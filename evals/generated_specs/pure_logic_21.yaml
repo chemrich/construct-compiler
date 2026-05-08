@@ -1,71 +1,38 @@
-```yaml
 construct:
-  name: mammalian_AND_gate_with_NLS
+  name: mammalian_AND_logic_gate
   host: HEK293
 
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: pTwist CMV
 
   cassette:
     - promoter: CMV
-    
+
     - cistron:
-        label: input_A_detector
-        expression: medium
+        label: input_A_sensor
+        expression: high
         chain:
           - gene:
-              id: P2A4-1-dCas9
+              id: rtTA3
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 1
-          - gene:
-              id: VP64
-              source: uniprot
+        # rtTA3: reverse tetracycline transactivator (Tet-On) — activated by doxycycline
 
-    - spacer: 30
+    - terminator: rrnB_T1
+
+    - promoter: CMV
 
     - cistron:
-        label: input_B_detector
-        expression: medium
-        fused: false
+        label: input_B_sensor
+        expression: high
         chain:
           - gene:
-              id: P2A4-1-dCas9
+              id: TetR
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 1
-          - gene:
-              id: VPR
-              source: uniprot
+        # TetR: tetracycline repressor — active by default, inhibited by doxycycline
 
-    - spacer: 50
+    - terminator: rrnB_T1
 
-    - promoter: U6
-
-    - cistron:
-        label: guide_RNA_A
-        expression: high
-        fused: false
-        gene:
-          id: gRNA_target_A
-          source: uniprot
-
-    - spacer: 30
-
-    - cistron:
-        label: guide_RNA_B
-        expression: high
-        fused: false
-        gene:
-          id: gRNA_target_B
-          source: uniprot
-
-    - spacer: 50
-
-    # Minimal promoter activated by both inputs
-    - promoter: CMV  # This would be a minimal promoter with both gRNA target sites
+    - promoter: CMV
 
     - cistron:
         label: output_C
@@ -73,8 +40,12 @@ construct:
         chain:
           - tag: NLS
           - gene:
-              id: mEGFP
+              id: mVenus
               source: fpbase
+        # Output: mVenus (yellow fluorescent protein) with NLS for nuclear localization
+        # Logic: mVenus is expressed only when rtTA3 (input A, doxycycline-activated) 
+        # is present AND TetR (input B, doxycycline-inhibited) is absent.
+        # This creates an AND gate: A AND NOT B, which can be configured as A AND B 
+        # by using input logic inversion upstream.
 
     - terminator: rrnB_T1
-```

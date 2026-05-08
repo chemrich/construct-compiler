@@ -1,17 +1,24 @@
 construct:
-  name: "mammalian_geney_recombination_system"
+  name: "mammalian_site_specific_integration_GeneY"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target_gene
+        label: GeneY_integrated
         expression: high
         chain:
-          - tag: LoxP
+          - recombinase_site: loxP
+            orientation: forward
           - gene:
               id: GeneY
               source: uniprot
-          - tag: FRT
-    - terminator: bGH_polyA
+          - recombinase_site: FRT
+            orientation: forward
+
+    - terminator: rrnB_T1

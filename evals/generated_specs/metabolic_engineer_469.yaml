@@ -1,12 +1,16 @@
 construct:
   name: "cold_adapted_enzyme_operon"
-  host: e_coli_bl21
+  host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: J23100  # Strong constitutive promoter for robust expression at 18°C
+    - promoter: lacUV5
+      # lacUV5 is a strong constitutive promoter that functions well at low temperatures
+
     - cistron:
         label: CA1
         expression: high
@@ -15,16 +19,22 @@ construct:
           - gene:
               id: CA1
               source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: CA2
         expression: high
-        fused: false  # Independent translation with own RBS
+        fused: false
+        # Alternative start codon GTG for improved translation initiation at 18°C
+        codon_override:
+          start: GTG
         gene:
           id: CA2
           source: uniprot
-          start_codon: GTG  # Alternative start codon for low-temp translation efficiency
+
     - spacer: 30
+
     - cistron:
         label: CA3
         expression: high
@@ -32,13 +42,18 @@ construct:
         gene:
           id: CA3
           source: uniprot
+
     - spacer: 30
+
     - cistron:
         label: CA4
         expression: high
         fused: false
+        # Alternative start codon TTG for improved translation initiation at 18°C
+        codon_override:
+          start: TTG
         gene:
           id: CA4
           source: uniprot
-          start_codon: TTG  # Alternative start codon for low-temp translation efficiency
+
     - terminator: rrnB_T1

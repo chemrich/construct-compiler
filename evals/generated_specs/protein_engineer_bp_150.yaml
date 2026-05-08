@@ -1,18 +1,23 @@
 construct:
-  name: "Pichia_Ost1_scFv_TwinStrep"
+  name: "Pichia_pastoris_Ost1_scFv_TwinStrep"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2micron
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: target_scFv
+        label: secreted_scFv
         expression: high
         chain:
-          - tag: Ost1
+          - secretion_signal: Ost1
           - gene:
               id: scFv
+              source: uniprot
           - tag: Twin-Strep
-    - terminator: AOX1_TT
+
+    - terminator: rrnB_T1

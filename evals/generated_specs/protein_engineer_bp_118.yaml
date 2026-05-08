@@ -1,20 +1,23 @@
 construct:
-  name: "bacillus_bsla_surface_display"
+  name: "bacillus_autodisplay_passenger"
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: Pxyl # Inducible xylose promoter for B. subtilis
+    - promoter: Pxyl
+
     - cistron:
-        label: passenger_display
+        label: autodisplay
         expression: high
         chain:
-          - tag: AmyE_signal # Required for secretion in Bacillus (Rule 18)
-          - tag: BslA # N-terminal anchoring motif (YuaB)
+          - tag: YuaB_BslA
           - cleavage_site: TEV
           - gene:
-              id: mEGFP
-              source: fpbase
-    - terminator: BBa_B0015
+              id: passenger_protein
+              source: uniprot
+
+    - terminator: rrnB_T1

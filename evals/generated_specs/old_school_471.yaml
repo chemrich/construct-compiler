@@ -1,27 +1,27 @@
 construct:
-  name: "yeast_tf_aequorea_indicator_fusion"
+  name: transcription_factor_aequorea_indicator
   host: yeast
 
   backbone:
     resistance: trp1
-    ori: pUC
+    ori: 2_micron
     source: addgene
 
   cassette:
-    - promoter: native  # User requested native promoter for expression
+    - promoter: native  # Native promoter of transcription factor gene
 
     - cistron:
-        label: tf_fusion
-        expression: medium
+        label: transcription_factor_aequorea
+        expression: high
         chain:
           - gene:
               id: transcription_factor
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
+              repeats: 1
           - gene:
-              id: mEGFP
-              source: fpbase  # Aequorea-derived indicator
+              id: aequorea_indicator
+              source: fpbase
 
-    - terminator: CYC1_term
+    - terminator: rrnB_T1

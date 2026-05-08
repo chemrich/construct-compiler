@@ -1,23 +1,27 @@
 construct:
-  name: "inducible_cytotoxic_therapeutic_nonviral"
+  name: inducible_cytotoxic_therapeutic_mammalian
   host: HEK293
+
   backbone:
-    resistance: none  # Avoidance of antibiotic resistance for clinical safety
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+    # Clinical-grade mammalian expression vector without antibiotic selection markers
+    # Uses puromycin N-acetyltransferase for transient selection, removable before manufacturing
+
   cassette:
-    - promoter: EF1_alpha  # Constitutive non-viral promoter for the regulator
+    - promoter: TRE3G
+      # Tetracycline Response Element 3G: tight, inducible by doxycycline
+      # Requires co-expression of rtTA3 transactivator (typically on separate plasmid or genomic integration)
+
     - cistron:
-        label: tet_on_regulator
-        gene:
-          id: P04483  # TetR-based transactivator (rtTA)
-          source: uniprot
-    - terminator: bGH_pA
-    - promoter: TRE3G  # Inducible promoter (Tetracycline-Responsive Element) for tight regulation
-    - cistron:
-        label: therapeutic_cytotoxin
+        label: therapeutic_protein
         expression: high
-        gene:
-          id: P50591  # TNFSF10 (TRAIL), a cytotoxic therapeutic protein
-          source: uniprot
-    - terminator: bGH_pA
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: caspase_3
+              # Representative cytotoxic protein; substitute with actual therapeutic target
+              source: uniprot
+
+    - terminator: SV40_polyA
+      # SV40 polyadenylation signal for efficient mammalian transcript maturation and stability

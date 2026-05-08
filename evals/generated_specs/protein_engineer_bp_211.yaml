@@ -1,24 +1,28 @@
 construct:
-  name: "IFN_HSA_fusion_Pichia_secretion"
+  name: "IFN_HSA_fusion_Pichia_AOX1"
   host: yeast
+
   backbone:
     resistance: zeocin
-    ori: pUC
+    ori: pPIC9
     source: addgene
+
   cassette:
     - promoter: AOX1
+
     - cistron:
-        label: interferon_hsa_fusion
+        label: IFN_HSA_fusion
         expression: high
         chain:
-          - tag: alpha_factor
+          - secretion_signal: alpha_factor
           - gene:
-              id: P01563
+              id: interferon_alpha
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 4
+              repeats: 1
           - gene:
               id: P02768
               source: uniprot
-    - terminator: AOX1_term
+
+    - terminator: rrnB_T1

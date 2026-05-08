@@ -1,51 +1,64 @@
-```yaml
 construct:
   name: bistable_toggle_switch
   host: e_coli
-  
+
   backbone:
-    catalog_vector: "pET-28b(+)"
-    
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: araBAD  # Signal A inducible promoter
-    
+    - promoter: araBAD
+      label: araBAD_promoter_for_G1
+
     - cistron:
-        label: repressor_B
+        label: G1_reporter
         expression: high
-        gene:
-          id: P0351_CI  # lambda CI repressor
-          source: uniprot
-          
-    - spacer: 30
-    
-    - cistron:
-        label: reporter_G1
-        expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-          
+        chain:
+          - gene:
+              id: mGFP
+              source: fpbase
+
     - terminator: rrnB_T1
-    
-    - promoter: lacUV5  # Signal B inducible promoter (repressed by CI)
-    
+
+    - spacer: 30
+
+    - promoter: lacUV5
+      label: lacUV5_promoter_for_G2
+
     - cistron:
-        label: repressor_A
+        label: G2_reporter
         expression: high
-        gene:
-          id: P03023_ARAC  # AraC repressor domain
-          source: uniprot
-          
-    - spacer: 30
-    
-    - cistron:
-        label: reporter_G2
-        expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-          
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
     - terminator: rrnB_T1
-```
+
+    - spacer: 30
+
+    - promoter: T7lac
+      label: T7lac_promoter_for_repressors
+
+    - cistron:
+        label: araBAD_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: araC
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
+    - cistron:
+        label: lacUV5_repressor
+        expression: medium
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - terminator: rrnB_T1

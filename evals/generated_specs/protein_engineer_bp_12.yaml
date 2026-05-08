@@ -1,31 +1,35 @@
-```yaml
 construct:
-  name: "dual_chaperone_target_expression_pichia"
+  name: "Pichia_pastoris_dual_chaperone_expression"
   host: yeast
 
   backbone:
-    resistance: kanamycin
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
     ori: pBR322
     source: addgene
 
   cassette:
     - promoter: GAP
-      cistron:
+    
+    - cistron:
         label: chaperone
         expression: high
         gene:
-          id: P16474
+          id: KAR2
           source: uniprot
-      terminator: rrnB_T1
 
+    - terminator: CYC1
+
+  cassette_2:
     - promoter: AOX1
-      cistron:
-        label: target
+    
+    - cistron:
+        label: target_protein
         expression: high
         chain:
           - gene:
-              id: P16474  # placeholder - replace with actual target protein
+              id: target_protein
               source: uniprot
           - tag: 6xHis
-      terminator: rrnB_T1
-```
+
+    - terminator: TT_AOX1

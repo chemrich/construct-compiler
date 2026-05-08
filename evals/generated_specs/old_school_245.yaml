@@ -1,20 +1,27 @@
 construct:
-  name: "gene_alpha_beta_fusion"
+  name: "Gene_Alpha_Beta_fusion"
   host: e_coli
+  
   backbone:
     resistance: ampicillin
     ori: pBR322
     source: addgene
+  
   cassette:
     - promoter: lacUV5
+    
     - cistron:
-        label: fusion_protein
-        expression: medium
+        label: fusion
+        expression: high
         chain:
           - gene:
               id: Gene_Alpha
+              source: uniprot
           - linker:
-              type: short_GS
+              type: GS_flexible
+              repeats: 1
           - gene:
               id: Gene_Beta
+              source: uniprot
+    
     - terminator: rrnB_T1

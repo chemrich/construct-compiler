@@ -1,16 +1,22 @@
 construct:
   name: "FactorZ_mammalian_expression"
-  host: mammalian
+  host: HEK293
+
   backbone:
-    catalog_vector: "pcDNA3.1(+)" # Includes NeoR for G418 selection and CMV promoter
+    catalog_vector: "pTwist CMV"
+    resistance: neomycin
+    ori: pUC
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: FactorZ
         expression: high
         chain:
           - tag: FLAG
           - gene:
               id: FactorZ
               source: uniprot
-    - terminator: bGH_polyA
+
+    - terminator: polyA

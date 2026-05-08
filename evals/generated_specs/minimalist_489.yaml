@@ -1,24 +1,32 @@
 construct:
-  name: "mammalian_bicistronic_secretion_x_y"
+  name: "mammalian_secreted_X_coexpressed_Y"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: secreted_protein_x
+        label: secreted_X
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_SP  # N-terminal secretion signal
           - gene:
-              id: Protein_X
+              id: X
               source: uniprot
+
     - spacer: 30
+
     - cistron:
-        label: protein_y
-        expression: medium
+        label: Y_via_2A
+        expression: high
         fused: false
-        gene:
-          id: Protein_Y
-          source: uniprot
-    - terminator: bGH_polyA
+        chain:
+          - cleavage_site: T2A  # Self-cleaving peptide for independent translation
+          - gene:
+              id: Y
+              source: uniprot
+
+    - terminator: rrnB_T1

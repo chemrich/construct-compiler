@@ -1,6 +1,6 @@
 construct:
-  name: cytoplasmic_enzyme_with_KDEL
-  host: e_coli
+  name: enzyme_cytoplasmic_expression
+  host: e_coli_bl21
 
   backbone:
     catalog_vector: "pET-28b(+)"
@@ -9,12 +9,13 @@ construct:
     - promoter: T7lac
 
     - cistron:
-        label: target_enzyme
+        label: enzyme
         expression: high
         chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
           - gene:
-              id: # Please specify the enzyme you want to express
+              id: enzyme
               source: uniprot
-          - tag: KDEL  # Note: KDEL is an ER retention signal for mammalian cells, not functional in E. coli cytoplasm
 
     - terminator: rrnB_T1

@@ -1,37 +1,82 @@
 construct:
-  name: "mitochondrial_logic_metabolic_circuit"
+  name: "dual_input_metabolic_pathway_mitochondrial"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+    resistance: kanamycin
+
   cassette:
-    - promoter: CMV # Modified synthetic promoter for Nutrient AND Quorum sensing logic gate
+    - promoter: CMV
+      comment: "CMV promoter for constitutive mammalian expression"
+
     - cistron:
-        label: enzyme_a
+        label: logic_controller
         expression: high
-        fused: false
         chain:
-          - tag: MTS # Mitochondrial Targeting Sequence
+          - gene:
+              id: Input_N_sensor
+              source: uniprot
+              comment: "Nutrient sensor protein (e.g., nutrient-responsive transcription factor)"
+
+    - spacer: 20
+
+    - cistron:
+        label: quorum_sensing_detector
+        expression: high
+        chain:
+          - gene:
+              id: Input_Q_sensor
+              source: uniprot
+              comment: "Quorum sensing signal detector (e.g., LuxR ortholog or mammalian QS equivalent)"
+
+    - spacer: 20
+
+    - cistron:
+        label: Enzyme_A
+        expression: high
+        chain:
+          - tag: MTS
+            comment: "Mitochondrial targeting sequence at N-terminus"
           - gene:
               id: Enzyme_A
               source: uniprot
-    - spacer: 30
+              comment: "First metabolic enzyme (sequence from UniProt)"
+
+    - spacer: 20
+
     - cistron:
-        label: enzyme_b
+        label: Enzyme_B
         expression: high
-        fused: false
         chain:
           - tag: MTS
+            comment: "Mitochondrial targeting sequence at N-terminus"
           - gene:
               id: Enzyme_B
               source: uniprot
-    - spacer: 30
+              comment: "Second metabolic enzyme (sequence from UniProt)"
+
+    - spacer: 20
+
     - cistron:
-        label: enzyme_c
+        label: Enzyme_C
         expression: high
-        fused: false
         chain:
           - tag: MTS
+            comment: "Mitochondrial targeting sequence at N-terminus"
           - gene:
               id: Enzyme_C
               source: uniprot
-    - terminator: SV40_polyA
+              comment: "Third metabolic enzyme (sequence from UniProt)"
+
+    - terminator: BBa_B0015
+      comment: "Dual terminator for stable transcript end"
+
+  regulatory_note: |
+    Logic gate implementation strategy:
+    - Input_N_sensor and Input_Q_sensor proteins form an AND gate by co-translational control or post-translational interaction
+    - When both nutrient (Input_N) AND quorum signal (Input_Q) are present, the sensor proteins become active
+    - Active sensor complex recruits a synthetic transcription factor or activates an inducible promoter driving a second expression cassette containing the three enzymes
+    - Alternatively, use a DUAL-INPUT inducible promoter (e.g., engineered synthetic promoter responding to both inputs) upstream of the enzyme cassette
+    - Each enzyme carries an MTS (mitochondrial targeting sequence) for subcellular localization to mitochondria
+    - Co-expression from same CMV promoter ensures stoichiometric production of all three enzymes

@@ -1,16 +1,22 @@
 construct:
-  name: "Periplasmic_Enzyme_Secretion_Construct"
-  host: e_coli_bl21_de3
+  name: "PeriplasmicEnzyme_periplasmic_export"
+  host: e_coli
+  
   backbone:
-    catalog_vector: "pET-22b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: target
+        label: periplasmic_enzyme
         expression: high
         chain:
-          - tag: pelB  # N-terminal signal peptide for periplasmic targeting
+          - signal_peptide: pelB  # pelB signal peptide for periplasmic export
           - gene:
               id: PeriplasmicEnzyme
               source: uniprot
-    - terminator: T7term
+    
+    - terminator: rrnB_T1

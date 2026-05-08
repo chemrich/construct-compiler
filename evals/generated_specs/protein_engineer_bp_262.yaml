@@ -1,21 +1,25 @@
 construct:
-  name: "K_phaffii_scFv_solubility_optimization"
+  name: "scFv_SUMO_secretion_Komagataella_phaffii"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    resistance: zeocin
+    ori: 2_micron
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: scFv_target
+        label: scFv_construct
         expression: high
         chain:
-          - tag: alpha_factor
+          - tag: alpha_factor_signal
           - solubility_tag: SUMO
           - cleavage_site: Kex2
           - gene:
               id: scFv
               source: uniprot
           - tag: Strep-II
-    - terminator: AOX1_term
+
+    - terminator: CYC1

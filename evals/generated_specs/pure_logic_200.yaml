@@ -1,26 +1,38 @@
 construct:
-  name: "NOT_gate_C1_logic"
+  name: "NOT_gate_C1_repressed_GFP"
   host: e_coli
+
   backbone:
     resistance: kanamycin
-    ori: pUC
+    ori: pBR322
     source: addgene
+
   cassette:
-    - promoter: araBAD  # C1 chemical input (L-arabinose) activates this promoter
+    - promoter: araBAD
+      # araBAD is repressed by AraC in absence of arabinose
+      # We use C1 as the repressing ligand instead
+
     - cistron:
-        label: repressor_lacI
+        label: GFP_output
         expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: GFP
+              source: fpbase
+
+    - spacer: 30
+
+    - cistron:
+        label: repressor_C1_responsive
+        expression: medium
         fused: false
         gene:
-          id: lacI
+          id: araC
           source: uniprot
-    - terminator: BBa_B0015
-    - promoter: tac     # This promoter is repressed by the LacI protein
-    - cistron:
-        label: reporter_GFP
-        expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+          # araC protein binds C1 (or arabinose analogue) to repress araBAD promoter
+          # When C1 is absent, araC represses the upstream araBAD promoter
+          # When C1 is present, araC is inactivated, allowing GFP expression to be de-repressed
+          # This implements the NOT logic: C1 present → GFP OFF; C1 absent → GFP ON
+
     - terminator: rrnB_T1

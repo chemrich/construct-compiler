@@ -1,17 +1,21 @@
 construct:
-  name: "secreted_CoolFactor_purification"
+  name: "CoolFactor_secreted_HisTag"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: target
+        label: CoolFactor
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_IgG  # N-terminal signal peptide for mammalian secretion
           - gene:
               id: CoolFactor
               source: uniprot
-          - tag: 6xHis
-    - terminator: bGH_polyA
+          - tag: 6xHis  # C-terminal His-tag for purification from media
+
+    - terminator: SV40_polyA

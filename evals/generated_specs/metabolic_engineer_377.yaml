@@ -1,35 +1,58 @@
 construct:
-  name: "CHO_multienzyme_secretion_pathway"
+  name: "CHO_4enzyme_pathway_F2A_secreted"
   host: CHO
+
   backbone:
-    catalog_vector: "pTwist CMV"
+    catalog_vector: "pCDNA3.1"
+    resistance: ampicillin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: therapeutic_pathway
+        label: E1
         expression: high
         chain:
-          - tag: IgK_leader
+          - tag: signal_peptide_SP  # N-terminal secretion signal for mammalian ER
           - gene:
-              id: E1_enzyme
+              id: E1
               source: uniprot
-          - linker:
-              type: F2A
-              repeats: 1
+              codon_optimization: CHO
+
+    - cistron:
+        label: F2A_E2
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: F2A  # Self-cleaving 2A peptide for translational decoupling
           - gene:
-              id: E2_enzyme
+              id: E2
               source: uniprot
-          - linker:
-              type: F2A
-              repeats: 1
+              codon_optimization: CHO
+
+    - cistron:
+        label: F2A_E3
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: F2A
           - gene:
-              id: E3_enzyme
+              id: E3
               source: uniprot
-          - linker:
-              type: F2A
-              repeats: 1
+              codon_optimization: CHO
+
+    - cistron:
+        label: F2A_E4
+        expression: high
+        fused: false
+        chain:
+          - cleavage_site: F2A
           - gene:
-              id: E4_enzyme
+              id: E4
               source: uniprot
-          - tag: 8xHis
-    - terminator: bGH_polyA
+              codon_optimization: CHO
+          - tag: 6xHis  # C-terminal His-tag for purification
+
+    - terminator: SV40_polyA  # Mammalian polyadenylation signal for stable integration

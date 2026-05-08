@@ -1,22 +1,32 @@
 construct:
-  name: "protein_a_b_tight_coexpression"
-  host: e_coli
+  name: "co_express_ProtA_ProtB"
+  host: e_coli_bl21
+  
   backbone:
     catalog_vector: "pET-28b(+)"
+  
   cassette:
     - promoter: T7lac
+    
     - cistron:
-        label: protein_a
+        label: ProtA
         expression: high
-        gene:
-          id: Protein_A
-          source: uniprot
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProtA
+              source: uniprot
+    
     - spacer: 20
+    
     - cistron:
-        label: protein_b
+        label: ProtB
         expression: high
         fused: false
-        gene:
-          id: Protein_B
-          source: uniprot
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ProtB
+              source: uniprot
+    
+    - terminator: rrnB_T1

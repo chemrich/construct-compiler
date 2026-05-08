@@ -1,34 +1,61 @@
 construct:
-  name: "genetic_sr_flip_flop"
+  name: "SR_flipflop_genetic_memory"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    # State 1: Set by C1 (e.g., aTc), produces Output A (mEGFP) and LacI to repress State 2
-    - promoter: pTet # Repressed by TetR; induced by Anhydrotetracycline (C1)
+    - promoter: araBAD
+
     - cistron:
-        label: lacI_repressor
-        expression: medium
-        gene:
-          id: P03023
-          source: uniprot
-    - spacer: 30
+        label: repressor_B
+        expression: high
+        chain:
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: repressor_A
+        expression: high
+        chain:
+          - gene:
+              id: tetR
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: output_A
         expression: high
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mEGFP
+              source: fpbase
+
+    - spacer: 25
+
+    - cistron:
+        label: reporter_state
+        expression: medium
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
     - terminator: rrnB_T1
 
-    # State 2: Reset by C2 (e.g., IPTG), produces TetR to repress State 1
-    - promoter: lacUV5 # Repressed by LacI; induced by IPTG (C2)
-    - cistron:
-        label: tetR_repressor
-        expression: medium
-        gene:
-          id: P04483
-          source: uniprot
-    - terminator: BBa_B0015
+  notes: |
+    SR flip-flop logic:
+    - Repressor B constitutively represses output A (default OFF state)
+    - Set signal C1: transient expression of protease that cleaves Repressor B → output A turns ON
+    - Repressor A constitutively represses the protease (maintains repressor B stability)
+    - Reset signal C2: transient expression of anti-repressor that inhibits Repressor A → protease degrades Repressor B → output A turns OFF
+    - mCherry reports system state; mEGFP is the memory output
+    - Transient induction via external signals (e.g., inducible promoters on separate plasmids for C1 and C2)

@@ -1,19 +1,25 @@
 construct:
-  name: "bacillus_secretion_alpha_amylase"
+  name: "bacillus_amyE_secreted_alpha_amylase"
   host: bacillus
+
   backbone:
-    resistance: kanamycin
+    resistance: chloramphenicol
     ori: pBR322
-    source: pHT01
+    source: addgene
+
   cassette:
     - promoter: Pgrac
+
+    - rbs: strong
+
     - cistron:
-        label: target_amylase
+        label: secreted_amylase
         expression: high
         chain:
-          - tag: AmyE_signal_peptide
+          - signal_peptide: AmyE
           - gene:
-              id: P00691
+              id: alpha_amylase
               source: uniprot
           - tag: Strep-II
-    - terminator: BBa_B0015
+
+    - terminator: rrnB_T1

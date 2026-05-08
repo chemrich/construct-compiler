@@ -1,16 +1,20 @@
 construct:
-  name: "super_strong_yeast_luciferase_reporter"
+  name: strong_luciferase_reporter_yeast
   host: yeast
+
   backbone:
     resistance: kanamycin
     ori: pUC
     source: addgene
+
   cassette:
-    - promoter: TDH3 # User requested CMV (mammalian); substituted with TDH3, which is a strong constitutive promoter in S. cerevisiae.
+    - promoter: GAL1  # CMV is a mammalian promoter; GAL1 is the yeast equivalent for strong inducible expression
+
     - cistron:
-        label: luciferase_reporter
+        label: luciferase
         expression: high
         gene:
-          id: NanoLuc
+          id: P09041  # Photinus pyralis luciferase
           source: uniprot
-    - terminator: CYC1_term
+
+    - terminator: rrnB_T1

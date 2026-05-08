@@ -1,35 +1,50 @@
 construct:
-  name: "bacillus_secretion_optimization_system"
+  name: bacillus_groES_groEL_therapeutic_secretion
   host: bacillus
+
   backbone:
     resistance: kanamycin
-    ori: pUB110
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: Pveg
+
     - cistron:
-        label: GroES_chaperone
-        expression: medium
-        gene:
-          id: P0C070
-          source: uniprot
+        label: GroES
+        expression: high
+        chain:
+          - gene:
+              id: groES
+              source: uniprot
+
+    - terminator: rrnB_T1
+
     - spacer: 30
+
+    - promoter: Pveg
+
     - cistron:
-        label: GroEL_chaperone
-        expression: medium
-        fused: false
-        gene:
-          id: P0C071
-          source: uniprot
-    - spacer: 40
+        label: GroEL
+        expression: high
+        chain:
+          - gene:
+              id: groEL
+              source: uniprot
+
+    - terminator: rrnB_T1
+
+    - spacer: 30
+
     - promoter: Pgrac
+
     - cistron:
         label: therapeutic_target
         expression: high
-        fused: false
         chain:
-          - tag: AmyE_signal
+          - tag: AmyE_signal_peptide
           - gene:
-              id: P01241
+              id: therapeutic_protein
               source: uniprot
+
     - terminator: rrnB_T1

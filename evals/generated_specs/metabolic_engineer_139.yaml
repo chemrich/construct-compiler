@@ -1,22 +1,32 @@
 construct:
-  name: "pathway_a_inducible_operon"
-  host: e_coli_bl21_de3
+  name: "IPTG_inducible_four_enzyme_pathway"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - terminator: rrnB_T1
+      # Upstream terminator to prevent leaky transcription from upstream elements
+
     - promoter: T7lac
+      # IPTG-inducible promoter for tight control
+
     - cistron:
-        label: enzyme_1
+        label: PathA_1
         expression: high
         chain:
           - gene:
               id: PathA_1
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_2
+        label: PathA_2
         expression: high
         fused: false
         chain:
@@ -24,9 +34,11 @@ construct:
               id: PathA_2
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_3
+        label: PathA_3
         expression: high
         fused: false
         chain:
@@ -34,9 +46,11 @@ construct:
               id: PathA_3
               source: uniprot
           - tag: 6xHis
+
     - spacer: 30
+
     - cistron:
-        label: enzyme_4
+        label: PathA_4
         expression: high
         fused: false
         chain:
@@ -44,4 +58,5 @@ construct:
               id: PathA_4
               source: uniprot
           - tag: 6xHis
-    - terminator: T7term
+
+    - terminator: rrnB_T1

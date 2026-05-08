@@ -1,15 +1,25 @@
 construct:
-  name: "insect_viral_protein_human_optimized"
+  name: "insect_virus_GOI_humanized"
   host: HEK293
+  
   backbone:
     catalog_vector: "pTwist CMV"
+  
   cassette:
     - promoter: CMV
+    
     - cistron:
-        label: insect_goi
+        label: target
         expression: high
-        gene:
-          id: P04604  # Baculovirus GP64 protein used as a representative insect viral GOI
-          source: uniprot
-    - terminator: bGH_pA  # Standard mammalian polyadenylation signal/terminator_
-# Codon optimization for human cells is automatically performed by the compiler based on the HEK293 host selection.
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: insect_virus_GOI_humanized
+              source: uniprot
+              # Note: This gene ID represents the codon-optimized version for human expression.
+              # The construct_compiler will use the human-codon-optimized variant,
+              # similar to AAV capsid gene optimization. Ensure the source sequence
+              # database or synthesis provider delivers the human-optimized coding sequence.
+    
+    - terminator: rrnB_T1

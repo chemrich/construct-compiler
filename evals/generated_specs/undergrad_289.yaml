@@ -1,16 +1,20 @@
 construct:
-  name: mitoprotein_mammalian_mitochondrial_expression
+  name: "MitoProtein_mammalian_mitochondrial"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
+
   cassette:
     - promoter: CMV
+
     - cistron:
-        label: mitochondrial_target
+        label: MitoProtein
         expression: high
         chain:
-          - tag: MTS # Mitochondrial Targeting Signal (typically from COX4 or SOD2)
+          - tag: MTS  # Mitochondrial Targeting Signal (N-terminal)
           - gene:
               id: MitoProtein
               source: uniprot
-    - terminator: bGH_pA
+
+    - terminator: rrnB_T1

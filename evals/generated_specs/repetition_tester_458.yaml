@@ -1,24 +1,33 @@
 construct:
-  name: "toxin_antitoxin_stabilization_system"
+  name: "toxin_antitoxin_stabilization"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
     source: addgene
+
   cassette:
     - promoter: J23100
+      
     - cistron:
-        label: toxin_mazF
-        expression: high
+        label: toxin
+        expression: medium
         gene:
-          id: P0AE70
+          id: RelE
           source: uniprot
+          codon_optimization: ecoli_high_expression
+
     - terminator: rrnB_T1
+
     - promoter: J23106
+      
     - cistron:
-        label: antitoxin_mazE
-        expression: high
+        label: antitoxin
+        expression: medium
         gene:
-          id: P0AE67
+          id: RelB
           source: uniprot
+          codon_optimization: ecoli_standard
+
     - terminator: BBa_B0015

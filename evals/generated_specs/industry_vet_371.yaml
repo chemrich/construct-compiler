@@ -1,21 +1,23 @@
 construct:
-  name: "high_throughput_peptide_screening_vector"
-  host: e_coli_bl21_de3
+  name: "high_throughput_peptide_variant_library_vector"
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
     - promoter: T7lac
+
     - cistron:
-        label: peptide_fusion
+        label: peptide_variant
         expression: high
         chain:
           - tag: 6xHis
-          - solubility_tag: SUMO
           - cleavage_site: TEV
-          - linker:
-              type: GS_flexible
-              repeats: 2
           - gene:
-              id: sfGFP
-              source: fpbase
-    - terminator: T7term
+              id: peptide_variant
+              source: user_defined
+
+    - terminator: rrnB_T1

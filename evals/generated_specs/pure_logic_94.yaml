@@ -1,24 +1,52 @@
 construct:
-  name: "yeast_lineage_tracking_memory_switch"
+  name: yeast_signal_register_memory_switch
   host: yeast
+
   backbone:
-    resistance: ampicillin
-    ori: pBR322
+    resistance: kanamycin
+    ori: pUC
     source: addgene
+
   cassette:
     - promoter: GAL1
+
     - cistron:
-        label: signal_detector_recombinase
+        label: signal_detector
         expression: high
-        gene:
-          id: P06956
-          source: uniprot
-    - terminator: CYC1_term
-    - promoter: TEF1
+        chain:
+          - gene:
+              id: LexA_DBD
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
-        label: permanent_memory_reporter
+        label: integrase
         expression: medium
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: ADH1_term
+        chain:
+          - gene:
+              id: Cre
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: memory_lock
+        expression: high
+        chain:
+          - gene:
+              id: CI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: output_reporter
+        expression: high
+        fused: false
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
+
+    - terminator: rrnB_T1

@@ -1,16 +1,22 @@
 construct:
-  name: "plant_chloroplast_protein_x_expression"
-  host: algae  # Algae is selected as the representative photosynthetic host for plant-based chloroplast delivery
+  name: "chloroplast_protein_X"
+  host: algae
+
   backbone:
-    resistance: kanamycin
-    ori: pBR322
+    resistance: spectinomycin
+    ori: pSC101
     source: addgene
+
   cassette:
-    - promoter: CaMV_35S
+    - promoter: Prrn
+
     - cistron:
-        label: protein_x
+        label: protein_X
         expression: high
-        gene:
-          id: PROTEIN_X
-          source: uniprot
-    - terminator: NOS_term
+        chain:
+          - tag: cTP
+          - gene:
+              id: protein_X
+              source: uniprot
+
+    - terminator: rrnB_T1

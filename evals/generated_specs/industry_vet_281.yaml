@@ -1,6 +1,7 @@
 construct:
-  name: "mammalian_bicistronic_reporter_system"
+  name: "mammalian_dual_expression_GFP_readout"
   host: HEK293
+
   backbone:
     catalog_vector: "pTwist CMV"
     resistance: kanamycin
@@ -9,25 +10,23 @@ construct:
     - promoter: CMV
 
     - cistron:
-        label: target_protein
+        label: protein_of_interest
         expression: high
         chain:
-          - tag: 6xHis
-          - linker:
-              type: GS_flexible
-              repeats: 2
+          - tag: FLAG
           - gene:
-              id: P04637
-              source: uniprot
+              id: EGFP
+              source: fpbase
 
-    - spacer: 40
+    - spacer: 30
 
     - cistron:
-        label: reporter
-        expression: medium
+        label: fluorescent_marker
+        expression: high
         fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
+        chain:
+          - gene:
+              id: mCherry
+              source: fpbase
 
-    - terminator: BGH_pA  # Standard mammalian polyadenylation signal for high expression in HEK293
+    - terminator: rrnB_T1

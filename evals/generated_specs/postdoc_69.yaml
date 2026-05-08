@@ -1,19 +1,28 @@
 construct:
-  name: "tough_protein_solubility_expression"
+  name: "ToughProtein_low_expression_SUMO"
   host: e_coli
+
   backbone:
     resistance: kanamycin
     ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: J23106  # Weak constitutive promoter for low expression level
+    - promoter: lacUV5
+      # lacUV5 is a weak, constitutive promoter ideal for reducing aggregation
+
+    - rbs: RBS_B0030
+      # Standard strong RBS; will be modulated by weak promoter
+
     - cistron:
-        label: target
+        label: ToughProtein
         expression: low
         chain:
           - tag: 6xHis
-          - solubility_tag: MBP
+          - solubility_tag: SUMO
           - cleavage_site: Thrombin
           - gene:
               id: ToughProtein
               source: uniprot
+
     - terminator: rrnB_T1

@@ -1,23 +1,27 @@
+```yaml
 construct:
-  name: "mitochondrial_human_enzyme_tracker"
+  name: human_enzyme_mitochondrial_targeting_mEGFP
   host: HEK293
+
   backbone:
-    resistance: none  # User requested no antibiotic resistance; substituted with none
-    ori: pBR322       # Non-viral origin
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral constitutive mammalian promoter
+    - promoter: EF1_alpha
+
     - cistron:
-        label: mito_enzyme_fusion
+        label: enzyme_mito_track
         expression: medium
         chain:
           - gene:
-              id: P04179  # Human SOD2 (Superoxide dismutase, mitochondrial)
+              id: MIM1
               source: uniprot
           - linker:
               type: GS_flexible
-              repeats: 2
-          - gene:
-              id: mCherry
+              repeats: 1
+          - tag: 6xHis
+          - tag: mEGFP
               source: fpbase
-    - terminator: bGH_pA  # Bovine growth hormone polyadenylation signal (non-viral)
+
+    - terminator: rrnB_T1
+```

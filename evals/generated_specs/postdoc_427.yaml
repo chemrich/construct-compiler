@@ -1,19 +1,22 @@
 construct:
-  name: yeast_strep_flag_enzyme_expression
+  name: "yeast_enzyme_dual_tag"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
-    source: addgene
+    catalog_vector: "pYES2"
+    resistance: ampicillin
+
   cassette:
-    - promoter: TEF1
+    - promoter: GAL1
+
     - cistron:
-        label: tagged_enzyme
+        label: enzyme
         expression: high
         chain:
           - tag: Strep-II
           - gene:
-              id: ADH1 # Using S. cerevisiae ADH1 (P00330) as a placeholder for the enzyme
+              id: enzyme
               source: uniprot
           - tag: FLAG
-    - terminator: CYC1_term
+
+    - terminator: CYC1

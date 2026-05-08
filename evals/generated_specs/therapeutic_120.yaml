@@ -1,23 +1,22 @@
 construct:
-  name: "Secreted_hGH_NonViral_High_Expression"
+  name: "secreted_human_growth_factor_mammalian"
   host: HEK293
+
   backbone:
-    # Antibiotic resistance omitted per request for systemic/therapeutic safety; using a custom backbone spec.
-    resistance: none
-    ori: pUC
-    source: custom
+    catalog_vector: "pTwist CMV"
+
   cassette:
-    - promoter: EF1_alpha  # Non-viral, high-expression mammalian promoter substituted for CMV
+    - promoter: CMV
+
     - cistron:
-        label: human_growth_factor
+        label: secreted_growth_factor
         expression: high
         chain:
+          - signal_peptide: IgG_leader  # N-terminal secretion signal for mammalian ER targeting
+          - tag: 8xHis
+          - cleavage_site: Factor_Xa  # for removal of His-tag if needed post-purification
           - gene:
-              id: P01241
+              id: FGF2
               source: uniprot
-          - linker:
-              type: GS_flexible
-              repeats: 2
-          - cleavage_site: 3C
-          - tag: Twin-Strep
-    - terminator: bGH_polyA  # Standard high-efficiency mammalian polyadenylation signal
+
+    - terminator: polyA  # mammalian polyadenylation signal

@@ -1,16 +1,44 @@
 construct:
-  name: "prophylactic_mrna_vaccine_spike"
+  name: "mRNA_vaccine_viral_antigen"
   host: in_vitro
+
   backbone:
-    resistance: kanamycin # Kanamycin is used for DNA template propagation in E. coli; the IVT mRNA product is marker-free.
-    ori: pUC
-    source: custom
+    # Cell-free IVT backbone for mRNA vaccine production
+    resistance: none  # No antibiotic selection in IVT
+    ori: none
+    source: synthetic
+
   cassette:
-    - promoter: T7
+    - promoter: T7  # T7 RNA polymerase for IVT
+
+    - feature:
+        label: "5_prime_UTR"
+        type: "kozak_optimized"
+        sequence: "GCCACCAUGG"  # Kozak consensus + start codon
+
     - cistron:
-        label: viral_surface_antigen
+        label: "modified_surface_antigen"
         expression: high
-        gene:
-          id: P0DTC2
-          source: uniprot
-    - terminator: T7term # Standard terminator for T7-driven in vitro transcription templates
+        chain:
+          - linker:
+              type: "GS_flexible"
+              repeats: 1
+          - gene:
+              id: "synthetic_surface_protein_antigen"
+              source: "custom"
+              notes: "Non-infectious ectodomain, codon-optimized for mammalian expression"
+
+    - feature:
+        label: "3_prime_UTR"
+        type: "stability_UTR"
+        sequence: "AATAAA"  # Polyadenylation signal
+        notes: "Enhances mRNA stability and translation efficiency"
+
+    - terminator: "poly_A_tail"  # 120-200 adenines added post-transcriptionally
+
+    - feature:
+        label: "5_prime_cap"
+        type: "7mG_cap"
+        notes: "Added during or immediately post-transcription for stability and immunogenicity modulation"
+
+  notes: "IVT-produced mRNA for prophylactic vaccine. No viral backbone sequences, no antibiotic markers. Optimized for enhanced stability, translation, and innate immune recognition. Purification by HPLC or tangential flow filtration recommended to remove dsRNA and other immunogenic contaminants."

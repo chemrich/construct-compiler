@@ -1,22 +1,68 @@
 construct:
-  name: "frequency_selective_yellow_filter"
-  host: e_coli_bl21_de3
+  name: frequency_filter_reporter_yellow
+  host: e_coli_bl21
+
   backbone:
-    catalog_vector: "pET-28b(+)"
+    resistance: kanamycin
+    ori: pBR322
+    source: addgene
+
   cassette:
-    - promoter: T7lac
+    - promoter: araBAD
+
     - cistron:
-        label: signal_processor
+        label: signal_input_sensor
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: envZ
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: frequency_decoder
+        expression: high
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: ompR
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: filter_oscillator
         expression: medium
-        gene:
-          id: P04483 # TetR repressor for signal modulation
-          source: uniprot
-    - spacer: 30
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: lacI
+              source: uniprot
+
+    - spacer: 25
+
+    - cistron:
+        label: bandpass_integrator
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: araC
+              source: uniprot
+
+    - spacer: 25
+
     - cistron:
         label: reporter_yellow
         expression: high
         fused: false
-        gene:
-          id: mVenus
-          source: fpbase
-    - terminator: T7term
+        chain:
+          - tag: 6xHis
+          - cleavage_site: TEV
+          - gene:
+              id: mVenus
+              source: fpbase
+
+    - terminator: rrnB_T1

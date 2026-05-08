@@ -1,15 +1,22 @@
 construct:
-  name: cas9_sgrna_ivt_template
+  name: "Cas9_gRNA_IVT_template"
   host: in_vitro
+
   backbone:
-    resistance: kanamycin # Standard selection for plasmid maintenance prior to IVT; omitted if linear template
-    ori: pUC
+    resistance: none
+    ori: none
+    source: synthetic
+
   cassette:
-    - promoter: T7 # Standard promoter for high-yield in vitro transcription
+    - promoter: T7
+
     - cistron:
-        label: sgrna_scaffold
+        label: gRNA_scaffold
         expression: high
-        gene:
-          id: cas9_sgrna_scaffold
-          source: addgene
-    - terminator: T7term
+        chain:
+          - gene:
+              id: cas9_grna_scaffold
+              source: uniprot
+              description: "CRISPR/Cas9 guide RNA scaffold optimized for target binding and cleavage"
+
+    - terminator: rrnB_T1

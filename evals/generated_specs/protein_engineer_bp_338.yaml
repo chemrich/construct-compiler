@@ -1,20 +1,25 @@
 construct:
-  name: "pichia_cytokine_stabilization_fusion"
+  name: "pichia_cytokine_thioredoxin_fusion"
   host: yeast
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pPICZ_A"
+    resistance: zeocin
+    ori: pBR322
     source: addgene
+
   cassette:
     - promoter: GAP
+
     - cistron:
-        label: cytokine_fusion
+        label: secreted_cytokine
         expression: high
         chain:
           - tag: alpha-factor
           - solubility_tag: Trx
           - cleavage_site: Enterokinase
           - gene:
-              id: IL2
+              id: cytokine
               source: uniprot
-    - terminator: AOX1
+
+    - terminator: rrnB_T1

@@ -1,15 +1,14 @@
-```yaml
 construct:
-  name: "GeneY_expression_yeast"
+  name: "GeneY_yeast_expression"
   host: yeast
 
   backbone:
-    resistance: G418  # neomycin/geneticin resistance
-    ori: 2_micron
+    resistance: ampicillin
+    ori: pUC
     source: addgene
 
   cassette:
-    - promoter: TEF1  # strong constitutive promoter in yeast
+    - promoter: GAL1
 
     - cistron:
         label: target
@@ -18,14 +17,14 @@ construct:
           id: GeneY
           source: uniprot
 
-    - terminator: synthetic_unique  # completely synthetic terminator with no homology to yeast terminators
+    - terminator: SV40_polyA
 
-    - promoter: ADH1  # promoter for selection marker
+    - spacer: 50
 
     - cistron:
         label: selection_marker
-        expression: medium
+        expression: high
         gene:
-          id: KanMX_codon_scrambled  # extensively codon-optimized G418 resistance gene
-          source: synthetic
-```
+          id: kanMX_codon_scrambled
+          source: custom
+          note: "Extensively codon-optimized variant of kanMX with wobble-position synonymous substitutions to minimize homologous recombination with host genomic sequences"

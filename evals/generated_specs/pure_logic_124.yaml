@@ -1,44 +1,67 @@
 construct:
-  name: "eukaryotic_bistable_toggle_switch_HEK293"
+  name: "eukaryotic_bistable_toggle_switch"
   host: HEK293
+
   backbone:
-    resistance: kanamycin
-    ori: pUC
+    catalog_vector: "pTwist CMV"
+    resistance: neomycin
     source: addgene
+
   cassette:
-    - promoter: TRE_Tight
+    - promoter: CMV
+
     - cistron:
-        label: state_1_repressor
+        label: repressor_A
         expression: high
         chain:
-          - tag: NLS
+          - tag: 6xHis
           - gene:
-              id: "P03023"
+              id: tetR
               source: uniprot
-    - spacer: 30
+
+    - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: TRE
+
     - cistron:
-        label: state_1_reporter
-        expression: medium
-        fused: false
-        gene:
-          id: mScarlet
-          source: fpbase
-    - terminator: bGH_PA
-    - promoter: LacO_CMV
-    - cistron:
-        label: state_2_repressor
+        label: repressor_B
         expression: high
         chain:
-          - tag: NLS
+          - tag: HA
           - gene:
-              id: "P04483"
+              id: lacI
               source: uniprot
-    - spacer: 30
+
+    - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: tetO_minimal
+
     - cistron:
-        label: state_2_reporter
+        label: reporter_ON_state
         expression: medium
-        fused: false
-        gene:
-          id: mEGFP
-          source: fpbase
-    - terminator: bGH_PA
+        chain:
+          - tag: FLAG
+          - gene:
+              id: mNeonGreen
+              source: fpbase
+
+    - terminator: SV40_polyA
+
+    - spacer: 50
+
+    - promoter: lacO_minimal
+
+    - cistron:
+        label: reporter_OFF_state
+        expression: medium
+        chain:
+          - tag: 6xHis
+          - gene:
+              id: mScarlet
+              source: fpbase
+
+    - terminator: SV40_polyA
