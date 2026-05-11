@@ -1,36 +1,32 @@
 # construct-compiler
 
-> **Note:** This project is under active development and APIs, file formats, and behavior may change significantly between commits. Not yet recommended for production use.
+> **Note:** This project is under active development. APIs, file formats, and behavior may change significantly between commits. Not yet recommended for production use.
 
-A conversational genetic construct design compiler. Describe what you want to express in plain English — through [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview), [gemini-cli](https://github.com/google-gemini/gemini-cli), or any MCP-compatible agent — and the compiler produces annotated DNA sequences, assembly plans, plasmid maps, vendor cost estimates, and GenBank files. No YAML knowledge required: the LLM drafts the spec, compiles it, validates it, and iterates until every check passes.
+A genetic construct design compiler for polycistronic expression vectors. Describe what you want to express in plain English through [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview), [gemini-cli](https://github.com/google-gemini/gemini-cli), or any MCP-compatible agent — and the compiler produces annotated DNA sequences, assembly plans, vendor cost estimates, and GenBank files. The LLM drafts the YAML spec, compiles it, validates it, and iterates until every check passes.
 
-Also usable as a traditional CLI tool or through the visual web UI for hands-on design. Supports **E. coli**, **mammalian**, and **lentiviral** expression systems with 23 catalog vectors spanning Twist Bioscience's full product line.
-
-<p align="center">
-  <img src="docs/images/pipeline.svg" alt="Compilation Pipeline" width="700"/>
-</p>
+Also usable as a standalone CLI tool or Python library. Supports **E. coli**, **mammalian**, and **lentiviral** expression systems with 23 catalog vectors spanning Twist Bioscience's full product line.
 
 ---
 
 ## Quick start
 
 ```bash
-# Install (editable, with dev + web extras)
-pip install -e ".[dev,web]"
+pip install -e ".[dev]"
 
-# Launch the web UI at http://localhost:8421
-python -m construct_compiler.server
+# Compile a spec to GenBank + assembly plan
+construct-compiler compile examples/his_tev_mbp_egfp.yaml -o output/
+
+# Run validity checks
+construct-compiler check examples/his_tev_mbp_egfp.yaml
 ```
 
 ---
 
-## Four ways to use it
+## Three ways to use it
 
-### 1. Conversational / LLM agent (recommended)
+### 1. MCP agent (recommended)
 
-The primary interface. Describe your construct in plain English and let the agent handle everything — YAML generation, compilation, validation, and iteration. Works with any MCP-compatible coding agent:
-
-**Claude Code:**
+The primary interface. Describe your construct in plain English and let the agent handle YAML generation, compilation, validation, and iteration.
 
 ```bash
 pip install -e ".[mcp]"
@@ -48,70 +44,44 @@ Add to your project's `.mcp.json`:
 }
 ```
 
-**gemini-cli** and other MCP-compatible agents use the same server configuration.
+Works with Claude Code, gemini-cli, and any other MCP-compatible agent.
 
-Example conversation:
+Example:
 
 > *"I need a polycistronic construct with His-TEV-MBP-EGFP as the main target and mScarlet as a reporter, in BL21(DE3)."*
-
-The agent drafts a YAML spec, compiles it, runs all four validity checks, and presents you with annotated DNA, an assembly plan, and a cost estimate — no manual YAML editing needed.
 
 Three MCP tools are exposed:
 
 | Tool | Description |
 |------|-------------|
-| `compile_spec` | Full pipeline compilation → parts list, assembly strategies with costs, optional GenBank |
-| `check_spec` | 4 validity checks (reading frame, start codons, translation fidelity, internal stops) → pass/fail + score |
+| `compile_spec` | Full pipeline → parts list, assembly strategies with costs, optional GenBank |
+| `check_spec` | 4 validity checks → pass/fail + score |
 | `evaluate_variants` | Combinatorial design space exploration (up to 50 variants) → ranked results |
 
 Validated specs are auto-saved to `examples/agent_generated/` and become permanent regression tests.
 
-### 2. Web UI (interactive visual design)
-
-```bash
-python -m construct_compiler.server
-# Open http://localhost:8421
-```
-
-The web UI gives you a visual construct builder with:
-
-- Catalog vector selector with categorized dropdown (E. coli, Mammalian, Lentiviral, Cloning/Gateway)
-- Per-cistron configuration: expression level, gene source (FPbase/UniProt), N-term tags, cleavage sites, solubility tags
-- Interactive plasmid map via [seqviz](https://github.com/Lattice-Automation/seqviz) — circular, linear, or split view with color-coded annotations
-- Side-by-side cost comparison of assembly strategies
-- One-click GenBank export and YAML spec download
-
-![Plasmid Map](docs/images/web_ui_plasmid_map.png)
-
-| Cost Analysis | Parts List |
-|:---:|:---:|
-| ![Cost Analysis](docs/images/web_ui_cost_analysis.png) | ![Parts List](docs/images/web_ui_parts_list.png) |
-
-### 3. CLI
+### 2. CLI
 
 ```bash
 # Compile a YAML spec — outputs cost comparison + GenBank
 construct-compiler compile examples/his_tev_mbp_egfp.yaml -o output/
 
-# Cost comparison only (quiet mode)
+# Cost comparison only
 construct-compiler compile examples/his_tev_mbp_egfp.yaml --cost-only -q
 
 # Override cost parameters for contract pricing
 construct-compiler compile spec.yaml --sequencing-cost 15.0 --competent-cells-cost 8.0
 
-# Validate without compiling
-construct-compiler validate spec.yaml
-
 # Run validity checks (reading frame, start codons, translation fidelity, internal stops)
 construct-compiler check spec.yaml
 construct-compiler check spec.yaml --json
 
-# List available parts in the database
+# List available parts
 construct-compiler parts --list tags
 construct-compiler parts --list promoters
 ```
 
-### 4. Python API
+### 3. Python API
 
 ```python
 from construct_compiler import compile_construct, export_genbank
@@ -127,38 +97,58 @@ With custom cost parameters:
 from construct_compiler.passes.assembly_planning import CostParams
 
 params = CostParams(
-    researcher_hourly_rate=100.0,   # your lab's rate
-    twist_gene_per_bp=0.06,         # volume discount
-    overhead_multiplier=1.65,       # institutional overhead
-    plasmidsaurus_sequencing=15.0,  # whole-plasmid sequencing
+    researcher_hourly_rate=100.0,
+    twist_gene_per_bp=0.06,
+    overhead_multiplier=1.65,
+    plasmidsaurus_sequencing=15.0,
 )
 graph, plan = compile_construct("spec.yaml", cost_params=params)
 ```
 
 ---
 
-## Validation & automated testing
+## Compilation pipeline
 
-The compiler includes a validation harness that checks every compiled construct for biological correctness. Use it to gate designs before synthesis, or to sweep a design space and rank variants automatically.
+The compiler lowers a high-level construct description through four passes into concrete, annotated DNA with a costed build plan:
+
+```mermaid
+flowchart TD
+    A["YAML Spec / CLI / Python API"] --> B
+    B["1. Part Resolution\nProtein seqs from UniProt, FPbase\nRegulatory parts from curated local DB"] --> C
+    C["2. Reverse Translation\nAA → DNA using host codon tables\n(E. coli, yeast, mammalian)"] --> D
+    D["3. Constraint Resolution\nDNA Chisel: codon-optimize while enforcing\nno BsaI sites, GC 35–65%, no homopolymer >6"] --> E
+    E["4. Assembly Planning\nCompare strategies with fully-loaded cost model\n(Twist Clonal, 2-Part GG, IDT gBlock)"] --> F
+    F["GenBank + Cost Breakdown + Assembly Instructions"]
+
+    style A fill:#e8eaf6,stroke:#5c6bc0,color:#283593
+    style B fill:#e3f2fd,stroke:#1976d2,color:#0d47a1
+    style C fill:#e0f7fa,stroke:#00838f,color:#004d40
+    style D fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
+    style E fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
+    style F fill:#fff3e0,stroke:#e65100,color:#bf360c
+```
+
+The IR is a directed graph where nodes are genetic parts with typed ports. Port types (TRANSCRIPTION, TRANSLATION_INIT, PEPTIDE_CHAIN, DNA_CONTEXT) enforce biological validity at composition time — putting a terminator after a promoter with no coding sequence in between is a type error.
+
+---
+
+## Validation & automated testing
 
 ### What gets checked
 
 1. **Reading frame continuity** — every coding part's DNA is codon-aligned (length divisible by 3), no frame drift across fusion chains
-2. **Start codon placement** — the first coding element in each cistron starts with ATG, including when it's a tag rather than a CDS
+2. **Start codon placement** — the first coding element in each cistron starts with ATG
 3. **Translation fidelity** — translating the final DNA back to protein matches the expected sequence, even after codon optimization
-4. **Internal stop codons** — no premature stops within coding regions or at part junctions in fusion chains
+4. **Internal stop codons** — no premature stops within coding regions or at part junctions
 
 ### CLI
 
 ```bash
-# Check a single spec (exit code 0 = pass, 1 = fail)
+# Single spec (exit code 0 = pass, 1 = fail)
 construct-compiler check examples/his_tev_mbp_egfp.yaml
 
 # JSON output for machine consumption
 construct-compiler check spec.yaml --json
-
-# Batch mode
-construct-compiler check variants/*.yaml
 
 # With intermediate pipeline stage diagnostics
 construct-compiler check spec.yaml --intermediate -v
@@ -174,8 +164,6 @@ from construct_compiler.validation.variants import DesignAxis, vary_spec_dicts
 result = evaluate_spec("spec.yaml")
 assert result.passed, result.summary()
 print(result.score)           # 0.0–1.0
-print(result.insert_length_bp)
-print(result.cistron_count)
 
 # Sweep a design space: 3 expression levels × 4 spacer lengths = 12 variants
 axes = [
@@ -187,130 +175,82 @@ results = evaluate_batch(specs, skip_constraints=True)
 best = results[0]  # sorted by score descending
 ```
 
-### Runner script
-
-```bash
-# Evaluate a single spec
-python scripts/design_evaluate.py examples/his_tev_mbp_egfp.yaml
-
-# Sweep expression level and spacer length
-python scripts/design_evaluate.py examples/his_tev_mbp_egfp.yaml \
-    --axes "expression=high,medium,low" "spacer=20,30,50"
-
-# Fast mode (skip codon optimization) with JSON output
-python scripts/design_evaluate.py spec.yaml --fast --json
-```
-
-### LLM eval harness
-
-The eval harness tests the full natural-language → YAML spec → compilation → validation loop. It sends prompts to an LLM (Anthropic or Gemini), parses the generated specs, compiles them, and checks both harness validity and expectation properties (host, cistron count, required parts).
-
-#### Environment Setup
-
-Set your API keys as environment variables or in a `.env` file in the project root:
-
-```bash
-# For Anthropic (Claude)
-export ANTHROPIC_API_KEY="your_anthropic_key"
-
-# For Gemini
-export GEMINI_API_KEY="your_gemini_key"
-# OR (fallback supported by the script)
-export GOOGLE_API_KEY="your_gemini_key"
-```
-
-#### Running Evaluations
-
-```bash
-# Run all prompts using default Claude model (requires ANTHROPIC_API_KEY)
-python evals/run_eval.py
-
-# Run using Gemini 2.5 Flash
-python evals/run_eval.py --model gemini-2.5-flash
-
-# Run using Gemini 3.0 Preview models
-python evals/run_eval.py --model gemini-3-flash-preview
-python evals/run_eval.py --model gemini-3-pro-preview
-
-# Use a specific corpus
-python evals/run_eval.py --corpus evals/prompt_corpus_v2.yaml
-
-# Run a single prompt or category
-python evals/run_eval.py --id basic_gfp
-python evals/run_eval.py --category polycistronic
-
-# Re-evaluate previously generated specs (no API calls)
-python evals/run_eval.py --reeval
-
-# Name the results file
-python evals/run_eval.py --run-name my_experiment
-```
-
-#### Parallelization & Limits
-
-The harness supports parallel execution to speed up the process. However, you must be mindful of API rate limits (RPM - Requests Per Minute).
-
-```bash
-# Run with parallel API calls (e.g., 5 workers)
-python evals/run_eval.py -j 5
-
-# Explicit rate limit (requests per minute)
-python evals/run_eval.py -j 5 --rpm 15
-```
-
-**Notes on Limits:**
-*   **Gemini Free Tier:** Typically **15 RPM**. Use `--rpm 15` to avoid rate limit errors.
-*   **Gemini Paid Tier / Internal Projects:** Typically **360 RPM** or higher. You can increase concurrency (e.g., `-j 10`) and RPM accordingly.
-*   If you set concurrency but not RPM, the script auto-calculates a limit of `max(30, concurrency * 8)`.
-
-Five prompt corpora are included:
-
-| Corpus | File | Description |
-|--------|------|-------------|
-| v1 | `evals/prompt_corpus.yaml` | Original 250 prompts (tuning set) |
-| v2 | `evals/prompt_corpus_v2.yaml` | Fresh 250 prompts (holdout validation) |
-| v3 | `evals/prompt_corpus_v3.yaml` | Fresh 250 prompts (includes split-GFP tags) |
-| v4 | `evals/prompt_corpus_v4.yaml` | Expanded corpus with 1000 prompts |
-| Baseline 1000 | `evals/prompt_corpus_baseline_1000.yaml` | 1000 prompts across 10 personas (baseline calibration) |
-
-Categories: basic, tags, polycistronic, edge_cases, constraints, realistic, mammalian, lentiviral, stress, robustness. Results are written to `evals/results/` as structured JSON.
-
-For detailed evaluation results and persona breakdowns, see [evals/README.md](evals/README.md).
-
 ### Test suite
 
 ```bash
-# Run all tests (validators, harness, variants, MCP server, regression)
+# Run all tests
 pytest tests/ -v
 
-# Fast mode — skip codon optimization tests
+# Skip codon optimization tests (faster)
 pytest tests/ -v -m "not slow"
 ```
 
-The test suite validates at every pipeline stage — after parsing, after part resolution, after reverse translation, and after constraint resolution — to catch exactly where issues are introduced. The regression suite auto-discovers example specs (including agent-generated ones), so the test corpus grows as you design constructs through Claude Code.
+The regression suite auto-discovers example specs including agent-generated ones, so the test corpus grows as you design constructs through Claude Code.
 
 ---
 
-## Compilation pipeline
+## LLM eval harness
 
-The compiler lowers a high-level construct description through four passes into concrete, annotated DNA with a costed build plan:
+Tests the full natural-language → YAML spec → compilation → validation loop. Prompts are sent to an LLM, the generated specs are compiled, and both harness validity and expectation properties (host, cistron count, required parts) are checked.
 
-```mermaid
-flowchart TD
-    A["YAML Spec / Web UI / Python API"] --> B
-    B["1. Part Resolution\nProtein seqs from UniProt, FPbase\nRegulatory parts from curated local DB"] --> C
-    C["2. Reverse Translation\nAA → DNA using host codon tables\n(E. coli, yeast, mammalian)"] --> D
-    D["3. Constraint Resolution\nDNA Chisel: codon-optimize while enforcing\nno BsaI sites, GC 35–65%, no homopolymer >6"] --> E
-    E["4. Assembly Planning\nCompare strategies with fully-loaded cost model\n(Twist Clonal, 2-Part GG, IDT gBlock)"] --> F
-    F["GenBank + Plasmid Map + Cost Breakdown"]
+### Environment
 
-    style A fill:#e8eaf6,stroke:#5c6bc0,color:#283593
-    style B fill:#e3f2fd,stroke:#1976d2,color:#0d47a1
-    style C fill:#e0f7fa,stroke:#00838f,color:#004d40
-    style D fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
-    style E fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
-    style F fill:#fff3e0,stroke:#e65100,color:#bf360c
+```bash
+export ANTHROPIC_API_KEY="your_key"
+export GEMINI_API_KEY="your_key"
 ```
+
+### Running evals
+
+```bash
+# Run all prompts with default Claude model
+python evals/run_eval.py
+
+# Use Gemini
+python evals/run_eval.py --model gemini-2.5-flash
+
+# Run a specific corpus, prompt ID, or category
+python evals/run_eval.py --corpus evals/prompt_corpus_v4.yaml
+python evals/run_eval.py --id basic_gfp
+python evals/run_eval.py --category polycistronic
+
+# Parallel execution with rate limiting
+python evals/run_eval.py -j 5 --rpm 15
+
+# Re-evaluate previously generated specs (no API calls)
+python evals/run_eval.py --reeval
+```
+
+### Batch API runner
+
+`run_eval_batch.py` uses the Anthropic Message Batches API to run all persona corpora (~5,000 prompts across 10 personas) at 50% cost. It submits spec generation and LLM judging as two sequential batch jobs, polling until complete, and can resume if interrupted:
+
+```bash
+uv run python evals/run_eval_batch.py
+uv run python evals/run_eval_batch.py --resume evals/results/batch_state_<run>.json
+uv run python evals/run_eval_batch.py --dry-run
+uv run python evals/run_eval_batch.py --no-llm-judge   # deterministic expectations only
+```
+
+### Re-judging
+
+`rejudge.py` re-runs only the LLM expectation judge over existing results files without regenerating specs — useful for applying a better judge model to prior runs:
+
+```bash
+python evals/rejudge.py evals/results/eval_250_baseline.json \
+    --judge-model claude-sonnet-4-20250514 --batch
+```
+
+### Corpora
+
+| Corpus | Description |
+|--------|-------------|
+| `prompt_corpus_v4.yaml` | 1000 prompts (general, expanded) |
+| `prompt_corpus_baseline_1000.yaml` | 1000 prompts across 10 personas (baseline calibration) |
+| `prompt_corpus_v2.yaml` / `v3.yaml` | 250-prompt holdout sets |
+| `prompt_corpus_postdoc.yaml`, `undergrad.yaml`, `minimalist.yaml`, `therapeutic.yaml`, … | Persona-specific corpora for targeted regression |
+
+Categories: basic, tags, polycistronic, edge\_cases, constraints, realistic, mammalian, lentiviral, stress, robustness. Results are written to `evals/results/` as structured JSON.
 
 ---
 
@@ -318,10 +258,8 @@ flowchart TD
 
 ### Backbone
 
-Use a **catalog vector** (recommended) or define a **custom backbone**:
-
 ```yaml
-# Catalog vector — auto-configures resistance, ori, promoter, tags
+# Catalog vector (recommended)
 backbone:
   catalog_vector: pET-28b(+)
 
@@ -341,8 +279,8 @@ backbone:
 | | pET-28a(+) | 5,369 bp | Kan | N-His + Thrombin |
 | | pET-28b(+) | 5,368 bp | Kan | N-His + Thrombin (alt MCS) |
 | | pET-32a(+) | 5,900 bp | Amp | Trx-His-S-Enterokinase |
-| | pRSET A/B/C | ~2,900 bp | Amp | High copy (pUC), N-His |
-| | pUC19 | 2,686 bp | Amp | Cloning only (pUC ori) |
+| | pRSET A/B/C | ~2,900 bp | Amp | High copy (pUC ori), N-His |
+| | pUC19 | 2,686 bp | Amp | Cloning only |
 | **Mammalian Expression** | pTwist CMV | 4,831 bp | — | Transient expression |
 | | pTwist CMV BetaGlobin | 4,893 bp | — | + β-globin intron |
 | | pTwist CMV BG WPRE Neo | 6,737 bp | Neo/G418 | + WPRE element |
@@ -367,8 +305,6 @@ Mammalian/lentiviral promoters (`CMV`, `EF1a`, `SFFV`) are provided by catalog v
 
 ### RBS / expression levels
 
-Specify an expression level and the compiler picks a context-insensitive bicistronic design (BCD) element, or name a part directly:
-
 ```yaml
 cistron:
   expression: high    # auto-selects BCD2
@@ -385,10 +321,8 @@ cistron:
 
 ### Fusion tags and cleavage sites
 
-Tags and cleavage sites can be specified in a `chain` (ordered, explicit) or as `n_tag`/`c_tag` shorthand:
-
 ```yaml
-# Chain syntax — each element individually annotated on the plasmid map
+# Chain syntax — each element individually annotated
 chain:
   - tag: 6xHis
   - cleavage_site: TEV
@@ -396,7 +330,7 @@ chain:
   - linker: {type: GS_flexible, repeats: 3}
   - gene: {id: mEGFP, source: fpbase}
 
-# Shorthand syntax
+# Shorthand
 n_tag: [6xHis, TEV]
 gene: {id: mEGFP, source: fpbase}
 c_tag: Strep-II
@@ -412,8 +346,6 @@ c_tag: Strep-II
 
 ### Polycistronic designs
 
-Multiple `cistron` blocks under a single promoter, separated by spacers:
-
 ```yaml
 cassette:
   - promoter: T7lac
@@ -428,7 +360,6 @@ cassette:
   - cistron:
       label: reporter
       expression: low
-      fused: false
       gene: {id: mScarlet-I, source: fpbase}
   - terminator: rrnB_T1
 ```
@@ -438,8 +369,8 @@ cassette:
 ```yaml
 constraints:
   assembly: golden_gate
-  enzyme: BsaI               # BsaI, BpiI, BbsI
-  codon_optimization: local   # DNA Chisel
+  enzyme: BsaI
+  codon_optimization: local
   gc_window: [0.35, 0.65]
   max_homopolymer: 6
 ```
@@ -448,31 +379,9 @@ constraints:
 
 ## Cost model
 
-The assembly planner compares strategies using a fully-loaded cost model. All 17 parameters are configurable via the web UI, CLI flags, or Python API:
+The assembly planner compares strategies using a fully-loaded cost model covering synthesis, reagents, researcher time, overhead, and sequencing. All parameters are configurable via CLI flags or the Python `CostParams` dataclass. Defaults assume $150/hr researcher rate, 1.5× overhead, Twist synthesis at $0.07/bp (gene) or $0.09/bp (clonal), and Plasmidsaurus whole-plasmid sequencing.
 
-| Parameter | Default |
-|-----------|--------:|
-| Researcher hourly rate | $150/hr |
-| Overhead multiplier | 1.5x |
-| Twist gene synthesis | $0.07/bp |
-| Twist clonal gene | $0.09/bp |
-| IDT gBlock | $0.08/bp |
-| BsaI restriction enzyme | $3.00/rxn |
-| T4 DNA ligase | $0.25/rxn |
-| Competent cells | $10.00/rxn |
-| Plates + antibiotics | $2.00/rxn |
-| Colony PCR screening | $5.00/rxn |
-| Miniprep kit | $5.00/rxn |
-| Plasmidsaurus sequencing | $15.00/rxn |
-| Golden Gate setup labor | 1.5 hrs |
-| Colony screening labor | 0.0 hrs * |
-| Miniprep + sequencing labor | 1.0 hrs |
-| Troubleshooting (per retry) | 3.0 hrs |
-| 2-part / 3-part GG success rate | 90% / 80% |
-
-\* Colony screening labor is zero — automated by colony picking robots.
-
-### Example output: His-TEV-MBP-mEGFP (~3 kb insert)
+Example output for a ~3 kb insert (His-TEV-MBP-mEGFP):
 
 ```
 Strategy: Twist Clonal Gene ★ RECOMMENDED
@@ -484,8 +393,8 @@ Strategy: Twist Clonal Gene ★ RECOMMENDED
 
 Strategy: Synthesis + 2-Part Golden Gate
   Twist gene synthesis (3015 bp @ $0.07/bp)                $211.05
-  Reagents (base)                                           $40.25
-  Overhead (1.5x on reagents)                              $20.13
+  Reagents (base)                                            $40.25
+  Overhead (1.5x on reagents)                               $20.13
   Researcher time (2.5 hrs @ $150/hr)                      $375.00
   ─────────────────────────────────────────────────────────────────
   TOTAL                                                     $646.43
@@ -494,148 +403,14 @@ Strategy: Synthesis + 2-Part Golden Gate
 
 ---
 
-## Architecture
-
-```mermaid
-graph LR
-    subgraph Inputs
-        Y["YAML Spec"]
-        W["Web UI (React)"]
-        C["CLI (Click)"]
-    end
-
-    subgraph "IR: Typed DAG"
-        G["ConstructGraph\nPart nodes with typed ports\nTRANSCRIPTION · TRANSLATION\nPEPTIDE_CHAIN · DNA_CONTEXT"]
-    end
-
-    subgraph "Compiler Passes"
-        P1["1. Part resolve"]
-        P2["2. Rev translate"]
-        P3["3. Constraints"]
-        P4["4. Assembly plan"]
-    end
-
-    subgraph Outputs
-        GB["GenBank (.gb)"]
-        PM["Plasmid map (seqviz)"]
-        CC["Cost comparison"]
-        AI["Assembly instructions"]
-    end
-
-    subgraph "External DBs"
-        FP["FPbase"]
-        UP["UniProt"]
-        LC["Local cache"]
-    end
-
-    Y --> G
-    W --> G
-    C --> G
-    G --> P1 --> P2 --> P3 --> P4
-    P4 --> GB
-    P4 --> PM
-    P4 --> CC
-    P4 --> AI
-    P1 -.-> FP
-    P1 -.-> UP
-    P1 -.-> LC
-```
-
-The IR is a directed graph where nodes are genetic parts with typed ports. Port types (TRANSCRIPTION, TRANSLATION_INIT, PEPTIDE_CHAIN, DNA_CONTEXT) enforce biological validity at composition time — putting a terminator after a promoter with no coding sequence in between is a type error.
-
----
-
-## Project structure
-
-```
-construct_compiler/
-├── src/construct_compiler/
-│   ├── __main__.py          # CLI entry point (compile, check, validate, parts)
-│   ├── server.py            # FastAPI server + REST API
-│   ├── mcp_server.py        # MCP server for Claude Code (stdio transport)
-│   ├── core/                # IR: types, parts, graph, port system
-│   ├── frontend/            # YAML parser (spec → IR graph)
-│   ├── passes/              # Compiler passes + assembly cost model
-│   │   ├── part_resolution.py
-│   │   ├── reverse_translation.py
-│   │   ├── constraint_resolution.py
-│   │   ├── assembly_planning.py
-│   │   └── pipeline.py
-│   ├── validation/          # In silico construct validation
-│   │   ├── construct_checks.py  # 4 validators (frame, start, fidelity, stops)
-│   │   ├── harness.py           # Evaluation engine (evaluate_spec, evaluate_batch)
-│   │   └── variants.py          # Parametric design space generator
-│   ├── backends/            # GenBank export (+ future SBOL3)
-│   ├── vendors/             # Twist, IDT API stubs
-│   ├── data/                # Curated parts DB (23 vectors, codon
-│   │   └── parts_db.py      #   tables, overhang sets)
-│   └── plugins/             # Plugin system (future)
-├── tests/                   # pytest suite (49+ tests)
-│   ├── conftest.py          # Fixtures at each pipeline stage
-│   ├── test_construct_validity.py  # Validator unit + integration tests
-│   ├── test_harness.py      # Harness + variant generator tests
-│   ├── test_harness_regression.py  # Auto-discovered regression tests
-│   ├── test_harness_variants.py    # Variant evaluation smoke tests
-│   └── test_mcp_server.py   # MCP tool handler tests
-├── evals/                   # LLM eval harness
-│   ├── run_eval.py          # Eval runner (parallel, rate-limited)
-│   ├── spec_generation_prompt.txt  # System prompt for spec generation
-│   ├── prompt_corpus.yaml   # 250 eval prompts (v1)
-│   ├── prompt_corpus_v2.yaml  # 250 eval prompts (v2, holdout)
-│   ├── prompt_corpus_v3.yaml  # 250 eval prompts (v3, split-GFP)
-│   ├── generated_specs/     # Cached LLM outputs for re-eval
-│   └── results/             # Structured JSON eval results
-├── scripts/
-│   └── design_evaluate.py   # Standalone design-evaluate runner
-├── frontend/
-│   └── index.html           # React SPA + seqviz plasmid viewer
-├── examples/
-│   ├── his_tev_mbp_egfp.yaml
-│   ├── agent_generated/     # Auto-saved specs from Claude Code sessions
-│   └── run_example.py
-├── pyproject.toml
-└── README.md
-```
-
----
-
-## API reference
-
-### REST endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/compile` | Compile a construct spec → plasmid map + cost plan |
-| `GET` | `/api/vectors/catalog` | All 23 catalog vectors |
-| `GET` | `/api/vectors/catalog/mammalian` | 8 mammalian expression vectors |
-| `GET` | `/api/vectors/catalog/lentiviral` | 3 lentiviral transfer vectors |
-| `GET` | `/api/vectors/catalog/cloning` | 4 cloning/Gateway vectors |
-| `GET` | `/api/vectors/categories` | Vectors grouped by category |
-| `GET` | `/api/parts/{category}` | List parts (promoters, tags, etc.) |
-
-### Compile request body
-
-```json
-{
-  "spec": { "construct": { ... } },
-  "cost_params": {
-    "researcher_hourly_rate": 150,
-    "twist_clonal_per_bp": 0.09,
-    "plasmidsaurus_sequencing": 15.0
-  }
-}
-```
-
----
-
 ## Vendor integration
 
-Twist and IDT vendor plugins support screening, codon optimization, and (for IDT) ordering via their APIs. Set credentials as environment variables:
+Set credentials as environment variables or in a `.env` file:
 
 ```bash
 export TWIST_JWT_TOKEN=your_jwt
 export TWIST_END_USER_TOKEN=your_end_user_token
-export TWIST_USER_EMAIL=you@example.com    # required for path construction
+export TWIST_USER_EMAIL=you@example.com
 
 export IDT_CLIENT_ID=your_id
 export IDT_CLIENT_SECRET=your_secret
@@ -645,73 +420,89 @@ export IDT_PASSWORD=your_password
 
 ### Twist Bioscience
 
-`TwistVendor` wraps Twist's TAPI for live sequence screening, vector lookups, and codon optimization. Without credentials, it falls back to local heuristic screening.
+`TwistVendor` wraps Twist's TAPI for live sequence screening, vector lookups, and codon optimization. Without credentials it falls back to local heuristic screening.
 
-- **`screen(sequence)`** — submits a Construct, polls Twist's bulk-retrieve scoring endpoint, returns real `score_data` with `difficulty`, GC stats, and 35 mapped issue codes (`ISSUE_MESSAGES` in `vendors/twist.py`). 4xxx codes become `warnings`; 5xxx codes become `errors` and force `feasible=False`.
-- **`list_vectors()` / `get_vector(id)`** — fetch the user's available vectors and insertion sites for cloned-gene targeting.
-- **`get_codon_optimization_choices()`** — valid `organism` and `avoid_introducing` enum values for codon-opt jobs.
-- **`optimize_codons(protein, organism)`** — chains two async TAPI jobs: reverse translation (protein → DNA on the host's codon table) followed by codon-fitting optimization (DNA → manufacturability-optimised DNA). Returns the optimised sequence plus `OptimizationResult.notes` populated from `score_data.scoring_metrics`: GC content, GC delta across 50 bp windows, max homopolymer run, max long-repeat length and homology, banned/warning sub-sequence flags, and any per-issue codes. `gc_content` is a fraction (0–1), despite Twist's `overall_gc_percent` field name.
-- **Order placement** (quotes → orders, plate maps, CoA download) is fully implemented but intentionally separated from the synthesis workflow — only call after constructs have screened `BUILDABLE` and the quote reaches `SUCCESS`.
+- **`screen(sequence)`** — submits a Construct, polls the bulk-retrieve scoring endpoint, returns `score_data` with `difficulty`, GC stats, and 35 mapped issue codes. 4xxx codes become warnings; 5xxx codes become errors and force `feasible=False`.
+- **`optimize_codons(protein, organism)`** — chains reverse translation + codon-fitting optimization. Returns the optimized sequence plus `OptimizationResult.notes` populated from `score_data.scoring_metrics`.
+- **Order placement** (quotes → orders, plate maps, CoA download) is fully implemented but intentionally separated from the synthesis workflow.
 
-Twist async jobs (reverse-translate, codon-opt, construct scoring) are polled via `_poll_async_job` / `_bulk_retrieve_construct` with `id__in=` filtering so the server only returns the caller's job. Defaults: 3 s poll interval, 5 min timeout for codon-opt jobs, 3 min for scoring.
+Async jobs are polled via `_poll_async_job` / `_bulk_retrieve_construct` with per-job `id__in=` filtering. Use `optimize_codons` only on proteins ≥100 aa — shorter inputs hit Twist's minimum-length threshold.
 
-#### Live smoke test
+Smoke test against the live API:
 
 ```bash
 uv run python scripts/test_twist_api.py
 ```
 
-The script exercises auth, codon-opt choices, vector listing, screening, and the full reverse-translate + codon-opt chain against the live API. A clean run on a 239 aa protein (eGFP) typically takes ~25 s end-to-end:
-
-```
-[PASS] Auth Probe                        (0.5s)
-[PASS] Codon Optimization Choices        (0.4s)
-[PASS] List Vectors                      (2.8s)
-[PASS] Sequence Screening                (7.5s)   ← real score_data, not mock
-[PASS] Codon Optimization (RT + optimize) (10.7s)  ← STANDARD difficulty, GC 46.1%
-```
-
-`test["likely_mock"]` flags whether `screen()` fell back to the heuristic path (real path returns `estimated_price=0.0`; mock returns `length × $0.07/bp`). Use `optimize_codons` only on proteins that produce ≥300 bp of DNA (≥100 aa) — shorter inputs hit Twist's minimum-length thresholds and come back as `NOT ACCEPTED` with no scoring metrics.
-
-Twist also whitelists the requesting IP and maps it back to the tokens — calls from a different network will fail auth. Full architecture, endpoint mappings, and known issues in [docs/twist_integration.md](docs/twist_integration.md).
+Full architecture and known issues in [docs/twist_integration.md](docs/twist_integration.md).
 
 ### IDT
 
-Live IDT API integration is enabled automatically when the 4 IDT variables above are set. Tests can be run with `pytest tests/test_idt_live.py`. Without credentials, the plugin runs in mock mode with heuristic feasibility checks.
+Live IDT integration activates automatically when the four `IDT_*` variables are set. Without credentials the plugin runs in mock mode with heuristic feasibility checks.
+
+```bash
+pytest tests/test_idt_live.py
+```
+
+---
+
+## Project structure
+
+```
+src/construct_compiler/
+  __main__.py          # CLI (compile, check, validate, parts)
+  mcp_server.py        # MCP server (stdio transport)
+  server.py            # FastAPI server (REST backend)
+  core/                # IR: types, parts, graph, port system
+  frontend/            # YAML parser (spec → IR graph)
+  passes/              # 4-pass pipeline + assembly cost model
+  validation/          # construct_checks.py, harness.py, variants.py
+  backends/            # GenBank export
+  vendors/             # twist.py, idt.py — synthesis vendor APIs
+  data/parts_db.py     # 23 vectors, codon tables, overhang sets
+  plugins/             # Plugin system
+tests/                 # pytest suite
+  conftest.py
+  test_construct_validity.py
+  test_harness.py
+  test_harness_regression.py   # auto-discovers agent_generated/ specs
+  test_mcp_server.py
+evals/                 # LLM eval harness
+  run_eval.py          # Online runner (parallel, rate-limited)
+  run_eval_batch.py    # Batch API runner (50% cost, resumable)
+  rejudge.py           # Re-run LLM judge over existing results
+  prompt_corpus*.yaml  # Eval corpora (general + persona-specific)
+  generated_specs/     # Cached LLM outputs for re-eval
+  results/             # Structured JSON eval results
+scripts/
+  design_evaluate.py   # Standalone design-space sweep runner
+  test_twist_api.py    # Live Twist API smoke test
+  twist_codon_eval.py  # Codon eval harness sidecar
+  twist_pricing_annotate.py  # Annotate corpus specs with Twist pricing
+examples/
+  his_tev_mbp_egfp.yaml
+  agent_generated/     # Auto-saved specs from Claude Code sessions
+```
 
 ---
 
 ## Roadmap
 
-- [x] Variant library fan-out (compile N constructs from parameterized specs) — `vary_spec()` + `evaluate_batch()` + `design_evaluate.py` runner
-- [x] Construct validation harness (reading frame, start codons, translation fidelity, internal stops)
-- [x] MCP server for Claude Code — agent-driven design with `compile_spec`, `check_spec`, `evaluate_variants` tools
-- [x] Automated regression testing — auto-discovered specs, CI-ready with fast/slow markers
-- [x] LLM eval harness — 750 prompts across 3 corpora, parallel execution, rate-limited API calls
-- [x] Assembled view — merges insert + backbone features with real DNA sequences from GenBank annotations
-- [x] Restriction site-aware cloning pair inference — auto-selects best RE pair based on insert vs backbone features
-- [x] Live Twist API integration (screening + vendor codon optimization, with rich `score_data` surfacing)
-- [x] Live IDT API integration (screening + vendor codon optimization)
-- [ ] Protocol generation backend (human-readable step-by-step assembly instructions)
-- [ ] Primer design backend (primer3-py for Golden Gate primers with overhangs)
-- [ ] SBOL3 export via pySBOL3
-- [ ] Addgene backbone fetching (auto-download backbone sequences by ID)
-- [ ] Salis RBS Calculator integration for computed translation initiation rates
-- [ ] Verification targets (expected digest fragments, colony PCR bands)
+- [ ] Protocol generation backend — human-readable step-by-step assembly instructions
+- [ ] Primer design — primer3-py for Golden Gate primers with overhangs
+- [ ] Salis RBS Calculator integration — computed translation initiation rates
+- [ ] Verification targets — expected digest fragments and colony PCR bands
 - [ ] Mammalian codon optimization tables
-- [ ] Multi-plasmid systems (co-transformation, lentiviral packaging sets)
 
 ---
 
 ## Acknowledgments
 
-This project builds on excellent work from the synthetic biology and open-source communities:
-
-- **[Biopython](https://biopython.org/)** — sequence manipulation, GenBank export, and restriction enzyme analysis
-- **[DNA Chisel](https://edinburgh-genome-foundry.github.io/DnaChisel/)** — codon optimization and constraint resolution engine
-- **[iGEM Registry of Standard Biological Parts](http://parts.igem.org/)** — RBS and terminator sequences (BBa_B0034, BBa_B0032, BBa_B0015, and others)
+- **[Biopython](https://biopython.org/)** — sequence manipulation, GenBank export, restriction enzyme analysis
+- **[DNA Chisel](https://edinburgh-genome-foundry.github.io/DnaChisel/)** — codon optimization and constraint resolution
+- **[iGEM Registry of Standard Biological Parts](http://parts.igem.org/)** — RBS and terminator sequences
 - **[Mutalik et al. (2013)](https://doi.org/10.1038/nmeth.2404)** — bicistronic design (BCD) elements for context-insensitive translation initiation
-- **[Potapov et al. (2018)](https://doi.org/10.1021/acssynbio.8b00242)** — high-fidelity Golden Gate overhang sets
+- **[Potapov et al. (2018)](https://doi.org/10.1021/acssynbio.8b00202)** — high-fidelity Golden Gate overhang sets
 - **[Twist Bioscience](https://www.twistbioscience.com/)** — catalog vector specifications and synthesis parameters
 - **[FPbase](https://www.fpbase.org/)** — fluorescent protein sequences and spectral data
 
