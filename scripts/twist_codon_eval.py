@@ -62,7 +62,6 @@ from construct_compiler.validation.construct_checks import (
 from construct_compiler.vendors.twist import TwistVendor
 
 CODING_TYPES = (CDS, PurificationTag, SolubilityTag, CleavageSite, Linker)
-FALLBACK_USER_EMAIL = "REMOVED"
 
 
 # ---------------------------------------------------------------------------
@@ -244,8 +243,9 @@ def main() -> int:
                    default=ROOT / "evals" / "generated_specs")
     p.add_argument("--output", type=Path,
                    default=ROOT / "evals" / "results" / "twist_codon_eval.jsonl")
-    p.add_argument("--user-email", default=os.environ.get("TWIST_USER_EMAIL")
-                                            or FALLBACK_USER_EMAIL)
+    p.add_argument("--user-email", default=os.environ.get("TWIST_USER_EMAIL"),
+                   required=not os.environ.get("TWIST_USER_EMAIL"),
+                   help="Twist account email (or set TWIST_USER_EMAIL)")
     p.add_argument("--sandbox", action="store_true")
     p.add_argument("--specs", nargs="+", type=Path, default=None,
                    help="Explicit spec paths (overrides random sampling).")

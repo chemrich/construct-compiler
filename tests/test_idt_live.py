@@ -7,8 +7,7 @@ import pytest
 from dotenv import load_dotenv
 from construct_compiler.vendors.idt import IDTVendor
 
-load_dotenv()  # Load local .env
-load_dotenv("~/.env")  # Fallback to other workspace .env
+load_dotenv()
 
 
 

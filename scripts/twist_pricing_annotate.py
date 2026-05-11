@@ -73,7 +73,6 @@ from twist_codon_eval import RateLimitedTwist  # type: ignore
 
 logger = logging.getLogger(__name__)
 
-FALLBACK_USER_EMAIL = "REMOVED"
 BASE_RATE_USD_PER_BP = 0.07          # NON_CLONED_GENE
 DIFFICULTY_MULTIPLIER = {
     "STANDARD":     1.00,
@@ -377,8 +376,9 @@ def main() -> int:
                    help="Annotated JSONL to write")
     p.add_argument("--interval", type=float, default=0.5,
                    help="Min seconds between Twist HTTP calls")
-    p.add_argument("--user-email", default=os.environ.get("TWIST_USER_EMAIL")
-                                            or FALLBACK_USER_EMAIL)
+    p.add_argument("--user-email", default=os.environ.get("TWIST_USER_EMAIL"),
+                   required=not os.environ.get("TWIST_USER_EMAIL"),
+                   help="Twist account email (or set TWIST_USER_EMAIL)")
     p.add_argument("--sandbox", action="store_true")
     p.add_argument("--address-id", default=None,
                    help="Override the picked shipping address ID")
