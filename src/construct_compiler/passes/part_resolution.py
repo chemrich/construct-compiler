@@ -14,6 +14,7 @@ or CONCRETE (DNA sequences assigned for non-coding parts).
 from __future__ import annotations
 
 import logging
+import re
 from typing import Optional
 
 from Bio.Seq import Seq
@@ -163,33 +164,64 @@ def _resolve_linker(part: Linker) -> None:
 def _resolve_cds(part: CDS) -> None:
     """
     Resolve a CDS — fetch protein sequence from the appropriate source.
-    Supports: fpbase, uniprot, local.
-    Falls back to built-in common sequences when remote fetch fails.
+    Resolution order:
+    1. Protein sequence already set on the part.
+    2. Source-specific fetch (fpbase / uniprot accession / uniprot gene-name search).
+    3. Built-in sequence dicts with case-insensitive lookup and aliases.
+    4. UniProt gene-name search as last resort for any source.
     """
     if part.protein_sequence:
         part.resolution = ResolutionState.RESOLVED
         return
 
     source = (part.source_db or "").lower()
+    name_key = (part.source_id or part.name or "").strip()
     seq = None
 
     if source == "fpbase":
-        seq = _fetch_fpbase(part.source_id)
+        seq = _fetch_fpbase(name_key)
         if not seq:
-            seq = _BUILTIN_FP_SEQUENCES.get(part.source_id)
+            seq = _lookup_builtin(name_key, _BUILTIN_FP_SEQUENCES, _FP_ALIASES)
             if seq:
                 logger.info(f"CDS '{part.name}' resolved from built-in FP database")
 
     elif source == "uniprot":
-        seq = _fetch_uniprot(part.source_id)
-        if not seq:
-            seq = _BUILTIN_UNIPROT_SEQUENCES.get(part.source_id)
-            if seq:
-                logger.info(f"CDS '{part.name}' resolved from built-in UniProt cache")
+        if _is_uniprot_accession(name_key):
+            seq = _fetch_uniprot(name_key)
+            if not seq:
+                seq = (
+                    _lookup_builtin(name_key, _BUILTIN_UNIPROT_SEQUENCES) or
+                    _lookup_builtin(name_key, _BUILTIN_COMMON_SEQUENCES)
+                )
+        else:
+            # name_key is a gene name, not an accession
+            seq = (
+                _lookup_builtin(name_key, _BUILTIN_FP_SEQUENCES, _FP_ALIASES) or
+                _lookup_builtin(name_key, _BUILTIN_COMMON_SEQUENCES)
+            )
+            if not seq:
+                seq = _fetch_uniprot_by_gene(name_key)
+                if seq:
+                    logger.info(f"CDS '{part.name}' resolved via UniProt gene-name search")
 
     elif source in ("local", ""):
-        seq = _BUILTIN_FP_SEQUENCES.get(part.source_id) or \
-              _BUILTIN_UNIPROT_SEQUENCES.get(part.source_id)
+        seq = (
+            _lookup_builtin(name_key, _BUILTIN_FP_SEQUENCES, _FP_ALIASES) or
+            _lookup_builtin(name_key, _BUILTIN_UNIPROT_SEQUENCES) or
+            _lookup_builtin(name_key, _BUILTIN_COMMON_SEQUENCES)
+        )
+
+    # Last resort: try all built-ins, then gene-name search regardless of declared source
+    if not seq:
+        seq = (
+            _lookup_builtin(name_key, _BUILTIN_FP_SEQUENCES, _FP_ALIASES) or
+            _lookup_builtin(name_key, _BUILTIN_UNIPROT_SEQUENCES) or
+            _lookup_builtin(name_key, _BUILTIN_COMMON_SEQUENCES)
+        )
+    if not seq and name_key and not _is_uniprot_accession(name_key):
+        seq = _fetch_uniprot_by_gene(name_key)
+        if seq:
+            logger.info(f"CDS '{part.name}' resolved via UniProt gene-name search (fallback)")
 
     if seq:
         part.protein_sequence = seq
@@ -252,6 +284,54 @@ _BUILTIN_UNIPROT_SEQUENCES = {
     ),
 }
 
+# Built-in sequences for common regulatory / enzyme gene names.
+# Keyed by canonical gene name (lowercase) so _lookup_builtin can find them
+# case-insensitively. Extend this as new targets are identified.
+_BUILTIN_COMMON_SEQUENCES: dict[str, str] = {}
+
+# Aliases: common informal names → canonical key in _BUILTIN_FP_SEQUENCES
+_FP_ALIASES: dict[str, str] = {
+    "GFP":  "mEGFP",
+    "EGFP": "mEGFP",
+    "RFP":  "mCherry",
+}
+
+# UniProt accession pattern (6- or 10-character formats)
+_UNIPROT_ACCESSION_RE = re.compile(
+    r'^[OPQ][0-9][A-Z0-9]{3}[0-9]$'
+    r'|^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$',
+    re.ASCII,
+)
+
+# In-memory cache for UniProt gene-name search results (per process)
+_uniprot_gene_cache: dict[str, Optional[str]] = {}
+
+
+def _is_uniprot_accession(s: str) -> bool:
+    return bool(_UNIPROT_ACCESSION_RE.match(s))
+
+
+def _lookup_builtin(
+    name: str,
+    sequences: dict[str, str],
+    aliases: Optional[dict[str, str]] = None,
+) -> Optional[str]:
+    """Case-insensitive dict lookup with optional alias resolution."""
+    if name in sequences:
+        return sequences[name]
+    if aliases:
+        name_upper = name.upper()
+        for alias_key, canonical in aliases.items():
+            if alias_key.upper() == name_upper:
+                result = sequences.get(canonical)
+                if result:
+                    return result
+    name_lower = name.lower()
+    for k, v in sequences.items():
+        if k.lower() == name_lower:
+            return v
+    return None
+
 
 def _resolve_spacer(part: Spacer) -> None:
     """Generate a random-ish spacer sequence that avoids secondary structure."""
@@ -296,6 +376,34 @@ def _fetch_fpbase(slug: str) -> Optional[str]:
     except Exception as e:
         logger.error(f"FPbase fetch failed for '{slug}': {e}")
     return None
+
+
+def _fetch_uniprot_by_gene(gene_name: str) -> Optional[str]:
+    """Search UniProt for the first reviewed entry matching gene_name."""
+    cache_key = gene_name.lower()
+    if cache_key in _uniprot_gene_cache:
+        return _uniprot_gene_cache[cache_key]
+
+    import requests
+    seq = None
+    try:
+        query = f"gene_exact:{gene_name}+AND+reviewed:true"
+        url = (
+            "https://rest.uniprot.org/uniprotkb/search"
+            f"?query={query}&format=fasta&size=1"
+        )
+        resp = requests.get(url, timeout=10, headers={"Accept": "text/plain"})
+        if resp.status_code == 200:
+            text = resp.text.strip()
+            if text:
+                seq_lines = [l.strip() for l in text.split("\n") if not l.startswith(">")]
+                candidate = "".join(seq_lines)
+                seq = candidate or None
+    except Exception as e:
+        logger.error(f"UniProt gene search failed for '{gene_name}': {e}")
+
+    _uniprot_gene_cache[cache_key] = seq
+    return seq
 
 
 def _fetch_uniprot(accession: str) -> Optional[str]:

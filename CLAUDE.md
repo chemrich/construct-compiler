@@ -131,4 +131,20 @@ Field paths point into the YAML `construct` block using dot-separated keys and i
 
 ## Dependencies
 
-Python 3.10+. Key libraries: biopython, dnachisel, pyyaml, click. Install with `pip install -e ".[dev]"`.
+Python 3.10+. Key libraries: biopython, dnachisel, pyyaml, click.
+
+**Use `uv` for all package management and script/test execution.** Do not use bare `python`, `pip`, or `pytest` commands.
+
+```bash
+# Install deps
+uv pip install -e ".[dev]"
+
+# Run tests
+uv run pytest tests/ -v
+
+# Run CLI
+uv run construct-compiler compile examples/his_tev_mbp_egfp.yaml -o output/
+
+# Run a script
+uv run python scripts/design_evaluate.py examples/his_tev_mbp_egfp.yaml
+```
