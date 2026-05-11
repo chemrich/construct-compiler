@@ -40,7 +40,7 @@ class OmegaResult:
     pool_count: int
     min_fidelity: float
     avg_fidelity: float
-    oligo_cost_usd: float
+    oligo_cost_usd: float   # oligopool synthesis + primer pairs
     output_dir: Path
 
     def summary(self) -> str:
@@ -50,7 +50,7 @@ class OmegaResult:
             f"  Pools:         {self.pool_count}",
             f"  Min fidelity:  {self.min_fidelity:.3f}",
             f"  Avg fidelity:  {self.avg_fidelity:.3f}",
-            f"  Oligo cost:   ${self.oligo_cost_usd:.2f}",
+            f"  Total cost:   ${self.oligo_cost_usd:.2f}  (oligopool + primers)",
             f"  Output dir:    {self.output_dir}",
         ]
         return "\n".join(lines)
@@ -118,11 +118,16 @@ def _read_pool_stats(pool_stats_path: Path) -> tuple[float, float]:
 
 
 def _read_oligo_cost(cost_summary_path: Path) -> float:
-    """Return the total oligo synthesis cost from cost_summary.csv."""
+    """Return total synthesis cost (oligopool + primers) from cost_summary.csv."""
     with open(cost_summary_path) as f:
         for row in csv.DictReader(f):
+            pool = float(row.get("offline_pool_price_usd") or 0)
+            primers = float(row.get("primers_total_usd") or 0)
+            if pool or primers:
+                return pool + primers
+            # fallback for older schema
             for key in ("oligo_cost_usd", "total_synth_cost_usd", "oligo_cost"):
-                if key in row:
+                if row.get(key):
                     return float(row[key])
     return 0.0
 
@@ -171,7 +176,7 @@ def run_omega(
         Path to the omegamega repo root. Falls back to OMEGAMEGA_DIR env var.
     """
     omegamega_dir = _locate_omegamega(omegamega_dir)
-    output_dir = Path(output_dir)
+    output_dir = Path(output_dir).resolve()  # must be absolute — subprocess cwd differs
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # -- Write FASTA ----------------------------------------------------------
