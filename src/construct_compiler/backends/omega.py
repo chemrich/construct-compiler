@@ -19,7 +19,6 @@ from __future__ import annotations
 import csv
 import os
 import subprocess
-import sys
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -208,9 +207,11 @@ def run_omega(
     with open(config_path, "w") as f:
         yaml.dump(config, f)
 
-    # -- Invoke omega.py ------------------------------------------------------
+    # -- Invoke omega.py via omegamega's own uv environment -------------------
+    # omegamega is a `package = false` scripts project with its own deps
+    # (jsonargparse, etc.) not present in construct-compiler's venv.
     omega_script = omegamega_dir / "code" / "omega.py"
-    cmd = [sys.executable, str(omega_script), "genes", "--config", str(config_path)]
+    cmd = ["uv", "run", "python", str(omega_script), "genes", "--config", str(config_path)]
 
     proc = subprocess.run(
         cmd,
