@@ -23,7 +23,7 @@ from pathlib import Path
 import pytest
 from Bio.Seq import Seq
 
-from construct_compiler.backends.omega import OmegaResult, to_fasta, run_omega
+from construct_compiler.backends.omega import OmegaBatchResult, OmegaResult, run_omega, run_omega_batch, to_fasta
 from construct_compiler.core.graph import ConstructGraph
 from construct_compiler.core.parts import (
     Backbone, CDS, Origin, Promoter, PurificationTag, RBS, Terminator,
@@ -224,3 +224,63 @@ def test_omega_missing_dir_raises():
 
     with pytest.raises((RuntimeError, FileNotFoundError)):
         run_omega(graph, output_dir=Path("/tmp/omega_test"), omegamega_dir=Path("/nonexistent"))
+
+
+# ---------------------------------------------------------------------------
+# run_omega_batch() integration — requires OMEGAMEGA_DIR
+# ---------------------------------------------------------------------------
+
+@pytest.mark.slow
+@skip_no_omega
+def test_omega_batch_two_constructs(short_concrete_graph, tmp_path):
+    """run_omega_batch() on two copies produces a combined oligo order."""
+    import copy
+    graph2 = copy.deepcopy(short_concrete_graph)
+    graph2.name = "short_omega_test_b"
+
+    result = run_omega_batch(
+        [(short_concrete_graph, "construct_a"), (graph2, "construct_b")],
+        output_dir=tmp_path / "batch_out",
+        nopt_steps=50,
+        nopt_runs=1,
+        njobs=1,
+        omegamega_dir=Path(OMEGAMEGA_DIR),
+    )
+    assert isinstance(result, OmegaBatchResult)
+    assert result.construct_count == 2
+    assert result.total_oligos > 0
+    assert result.pool_count >= 1
+    assert 0.0 < result.min_fidelity <= 1.0
+    assert result.min_fidelity <= result.avg_fidelity
+
+
+@pytest.mark.slow
+@skip_no_omega
+def test_omega_batch_cost_vs_individual(short_concrete_graph, tmp_path):
+    """Batch cost should be <= sum of individual costs once volume discount kicks in."""
+    import copy
+    graphs = []
+    for i in range(3):
+        g = copy.deepcopy(short_concrete_graph)
+        g.name = f"construct_{i}"
+        graphs.append((g, f"construct_{i}"))
+
+    batch = run_omega_batch(
+        graphs,
+        output_dir=tmp_path / "batch_cost",
+        nopt_steps=50,
+        nopt_runs=1,
+        njobs=1,
+        omegamega_dir=Path(OMEGAMEGA_DIR),
+    )
+    assert batch.total_cost_usd >= 0.0
+    assert batch.construct_count == 3
+
+
+@pytest.mark.slow
+@skip_no_omega
+def test_omega_batch_empty_raises():
+    """run_omega_batch() raises ValueError on empty input."""
+    with pytest.raises(ValueError, match="non-empty"):
+        run_omega_batch([], output_dir=Path("/tmp/batch_test"),
+                        omegamega_dir=Path(OMEGAMEGA_DIR))

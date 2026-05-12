@@ -56,6 +56,31 @@ class OmegaResult:
         return "\n".join(lines)
 
 
+@dataclass
+class OmegaBatchResult:
+    """Summary of a combined multi-construct omegamega oligopool design run."""
+    construct_count: int
+    total_oligos: int
+    pool_count: int
+    min_fidelity: float
+    avg_fidelity: float
+    total_cost_usd: float   # oligopool synthesis + primer pairs
+    output_dir: Path
+
+    def summary(self) -> str:
+        lines = [
+            f"Batch oligopool design complete",
+            f"  Constructs:    {self.construct_count}",
+            f"  Oligos:        {self.total_oligos}",
+            f"  Pools:         {self.pool_count}",
+            f"  Min fidelity:  {self.min_fidelity:.3f}",
+            f"  Avg fidelity:  {self.avg_fidelity:.3f}",
+            f"  Total cost:   ${self.total_cost_usd:.2f}  (oligopool + primers)",
+            f"  Output dir:    {self.output_dir}",
+        ]
+        return "\n".join(lines)
+
+
 # ---------------------------------------------------------------------------
 # FASTA export
 # ---------------------------------------------------------------------------
@@ -257,5 +282,134 @@ def run_omega(
         min_fidelity=min_fidelity,
         avg_fidelity=avg_fidelity,
         oligo_cost_usd=oligo_cost,
+        output_dir=output_dir,
+    )
+
+
+def run_omega_batch(
+    graphs: list[tuple[ConstructGraph, str]],
+    output_dir: Path,
+    *,
+    enzyme: str = "BsaI",
+    njunctions: int = 50,
+    oligo_len: int = 350,
+    upstream_bbsite: str = "AATG",
+    downstream_bbsite: str = "TTAG",
+    nopt_steps: int = 500,
+    nopt_runs: int = 3,
+    njobs: int = 1,
+    omegamega_dir: Optional[Path] = None,
+) -> OmegaBatchResult:
+    """Run omegamega on multiple constructs as a single combined pool.
+
+    Writes a multi-sequence FASTA and runs omegamega once, allowing the
+    combined oligo count to reach a higher Twist pricing tier (e.g. tier 2
+    at 101–500 oligos: $2,575 vs. tier 1 at 2–100 oligos: $1,288 × N).
+
+    Parameters
+    ----------
+    graphs:
+        List of (ConstructGraph, label) pairs. Each graph must be compiled
+        through at least pass 2 (reverse_translate).
+    output_dir:
+        Directory where omegamega writes its combined output CSVs.
+    """
+    if not graphs:
+        raise ValueError("graphs must be non-empty")
+
+    omegamega_dir = _locate_omegamega(omegamega_dir)
+    output_dir = Path(output_dir).resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # -- Write combined FASTA --------------------------------------------------
+    fasta_lines: list[str] = []
+    seen: set[str] = set()
+    for graph, label in graphs:
+        safe = label.replace(" ", "_")
+        if safe in seen:
+            safe = f"{safe}_{len(seen)}"
+        seen.add(safe)
+        seq = graph.full_insert_sequence()
+        if seq is None:
+            raise ValueError(
+                f"Graph '{label}' has no concrete sequences — compile through "
+                "reverse_translate (pass 2) before calling run_omega_batch()."
+            )
+        fasta_lines.append(f">{safe}\n{seq}\n")
+
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".fasta", delete=False, dir=output_dir
+    ) as fasta_file:
+        fasta_file.write("".join(fasta_lines))
+        fasta_path = Path(fasta_file.name)
+
+    primers_path = omegamega_dir / "data" / "subramanian_orthogonal.csv"
+
+    # -- Write omegamega config ------------------------------------------------
+    config = {
+        "input_seqs": str(fasta_path),
+        "output_dir": str(output_dir),
+        "primers": str(primers_path),
+        "upstream_bbsite": upstream_bbsite,
+        "downstream_bbsite": downstream_bbsite,
+        "enzyme": enzyme,
+        "njunctions": njunctions,
+        "oligo_len": oligo_len,
+        "nopt_steps": nopt_steps,
+        "nopt_runs": nopt_runs,
+        "njobs": njobs,
+        "add_primers": True,
+        "pad_oligos": True,
+        "ligation_data": "T4_18h_37C",
+        "pricing_enabled": True,
+        "twist_quote": False,
+    }
+    config_path = output_dir / "omega_config.yml"
+    with open(config_path, "w") as f:
+        yaml.dump(config, f)
+
+    # -- Invoke omega.py -------------------------------------------------------
+    omega_script = omegamega_dir / "code" / "omega.py"
+    cmd = ["uv", "run", "python", str(omega_script), "genes", "--config", str(config_path)]
+
+    proc = subprocess.run(
+        cmd,
+        cwd=str(omegamega_dir),
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode != 0:
+        raise RuntimeError(
+            f"omegamega exited with code {proc.returncode}.\n"
+            f"stdout:\n{proc.stdout}\n"
+            f"stderr:\n{proc.stderr}"
+        )
+
+    # -- Parse outputs ---------------------------------------------------------
+    oligo_order_path = output_dir / "oligo_order.csv"
+    pool_stats_path = output_dir / "pool_stats.csv"
+    cost_summary_path = output_dir / "cost_summary.csv"
+
+    for path in (oligo_order_path, pool_stats_path):
+        if not path.exists():
+            raise FileNotFoundError(
+                f"Expected omegamega output not found: {path}\n"
+                f"omega.py stdout:\n{proc.stdout}"
+            )
+
+    total_oligos = sum(1 for _ in open(oligo_order_path)) - 1
+    pool_count = sum(1 for _ in open(pool_stats_path)) - 1
+    min_fidelity, avg_fidelity = _read_pool_stats(pool_stats_path)
+    total_cost = _read_oligo_cost(cost_summary_path) if cost_summary_path.exists() else 0.0
+
+    fasta_path.unlink(missing_ok=True)
+
+    return OmegaBatchResult(
+        construct_count=len(graphs),
+        total_oligos=total_oligos,
+        pool_count=pool_count,
+        min_fidelity=min_fidelity,
+        avg_fidelity=avg_fidelity,
+        total_cost_usd=total_cost,
         output_dir=output_dir,
     )
