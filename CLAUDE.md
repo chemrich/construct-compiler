@@ -101,6 +101,50 @@ Field paths point into the YAML `construct` block using dot-separated keys and i
 - Spacers between cistrons should be at least 20 bp
 - Terminators go at the end of the cassette (after all cistrons)
 
+## Gene resolution data gap
+
+**Current state:** `passes/part_resolution.py::_resolve_cds` can resolve CDS parts from:
+1. A protein sequence already in the spec
+2. `source: fpbase` — fetches by FPbase slug (e.g. `mEGFP`, `mCherry`) via REST API, with a 6-protein built-in fallback
+3. `source: uniprot` — fetches by accession (e.g. `P42212`) via UniProt REST API, with a 1-protein built-in fallback
+
+**The gap:** LLM-generated specs use gene names without accessions (`lacI`, `tetR`, `araC`, `luxR`, `luxI`, `dCas9`, `rtTA3`, `cI`, `araC`) and common aliases (`GFP`, `EGFP`, `mVenus`, `YFP`). These all silently fail with "CDS could not be resolved." In the 100-spec panel test this accounts for ~93% of failures.
+
+**Planned approach:**
+
+1. **Expand built-in FP sequences** in `_BUILTIN_FP_SEQUENCES` — add `mVenus`, `mTurquoise2`, `mTagBFP2`, `mCerulean3`, `tdTomato`, `mCitrine`, `iRFP713`, and common aliases (`GFP`/`EGFP` → mEGFP). Sources: FPbase slugs.
+
+2. **Add built-in regulatory/enzyme sequences** in a new `_BUILTIN_COMMON_SEQUENCES` dict. Priority targets (E. coli expression biology):
+   - Repressors/activators: `lacI` (P03023), `tetR` (P0ACT4), `araC` (P0A9E0), `cI` (P03034), `luxR` (P12746), `luxI` (P12747), `rtTA3` (synthetic), `KRAB` (human KRAB domain)
+   - Enzymes: `dCas9` (synthetic S. pyogenes), common metabolic enzymes from the eval corpus
+
+3. **UniProt gene-name search fallback** — when `source: uniprot` but the ID looks like a gene name (not an accession), call `https://rest.uniprot.org/uniprotkb/search?query=gene:{name}+AND+organism_id:83333&format=fasta` and take the first reviewed hit. Add a small in-memory cache to avoid duplicate requests.
+
+4. **Case-insensitive lookup** — normalize gene names before dict lookup (e.g. `TetR` → `tetR`, `GFP` → `EGFP`).
+
+**Files to change:**
+- `src/construct_compiler/passes/part_resolution.py` — main implementation
+- `tests/test_part_resolution.py` — add tests for each new resolution path
+- `scripts/omega_panel_test.py` — re-run with `--n 100` to measure improvement in pass rate
+
+**Success metric:** panel pass rate ≥50% without requiring any spec changes.
+
 ## Dependencies
 
-Python 3.10+. Key libraries: biopython, dnachisel, pyyaml, click. Install with `pip install -e ".[dev]"`.
+Python 3.10+. Key libraries: biopython, dnachisel, pyyaml, click.
+
+**Use `uv` for all package management and script/test execution.** Do not use bare `python`, `pip`, or `pytest` commands.
+
+```bash
+# Install deps
+uv pip install -e ".[dev]"
+
+# Run tests
+uv run pytest tests/ -v
+
+# Run CLI
+uv run construct-compiler compile examples/his_tev_mbp_egfp.yaml -o output/
+
+# Run a script
+uv run python scripts/design_evaluate.py examples/his_tev_mbp_egfp.yaml
+```
